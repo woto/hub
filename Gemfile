@@ -36,6 +36,7 @@ end
 
 group :development, :test do
   gem 'action-cable-testing'
+  gem 'awesome_print'
   gem 'bullet'
   gem 'bundler-audit'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
