@@ -6,6 +6,7 @@ RUN apk add --no-cache --update build-base \
                                 git \
                                 postgresql-dev \
                                 nodejs \
+                                yarn \
                                 tzdata
 
 ENV APP_PATH /usr/src/app
