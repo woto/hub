@@ -30,6 +30,7 @@ services:
     environment:
       - BASE_URL=/swagger
       - URLS=[{"name":"swagger", "url":"project/swagger.json"}]
+      - OAUTH2_REDIRECT_URL=https://nv6.ru/swagger/oauth2-redirect.html
     volumes:
       - ./docker/swagger:/usr/share/nginx/html/project
     depends_on:
