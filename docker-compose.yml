@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
 
   nginx:
@@ -11,8 +11,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    depends_on:
-      - rails
+    restart: always
 
   postgres:
     image: postgres
@@ -26,6 +25,16 @@ services:
       - ./docker/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
+  swagger:
+    image: swaggerapi/swagger-ui:v3.23.5
+    environment:
+      - BASE_URL=/swagger
+      - URLS=[{"name":"swagger", "url":"project/swagger.json"}]
+    volumes:
+      - ./docker/swagger:/usr/share/nginx/html/project
+    depends_on:
+      - nginx
+
   rails:
     build: .
     command: bin/rails s -p 3000 -b '0.0.0.0' --pid /tmp/server.pid
@@ -35,9 +44,10 @@ services:
       - .:/usr/src/app
     ports:
       - "3000:3000"
-    depends_on:
-      - postgres
     volumes:
       - ./:/usr/src/app
+    depends_on:
+      - nginx
+      - postgres
     stdin_open: true
     tty: true

@@ -1,24 +1,6 @@
-# README
+# nv6.ru
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Notes
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Obtaining of SSL Certificate with certbot is based on article:
+https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71

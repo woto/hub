@@ -16,13 +16,17 @@ WORKDIR $APP_PATH
 
 ADD Gemfile $APP_PATH
 ADD Gemfile.lock $APP_PATH
-RUN bundle --version
-RUN bundle install --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
+# ADD vendor/bundle $APP_PATH/vendor/bundle
+
+RUN bundle install --path ./vendor/bundle --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
 
 ADD package.json $APP_PATH
 ADD yarn.lock $APP_PATH
+# ADD node_modules $APP_PATH/node_modules
+
 RUN yarn install
 
+ADD . $APP_PATH
+
 # Copy the application into the container
-COPY . $APP_PATH
 EXPOSE 3000
