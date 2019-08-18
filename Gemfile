@@ -86,17 +86,27 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'devise'
-gem 'devise-security'
-gem 'doorkeeper'
 gem 'elasticsearch-rails'
 gem 'numbers_and_words'
-gem 'pundit'
 gem 'redis'
 gem 'request_store'
 gem 'rpush'
 gem 'sidekiq'
+gem 'rack-attack'
+
+# Authorization
 gem 'simple_token_authentication'
+gem 'devise-security'
+gem 'devise'
+gem 'doorkeeper'
+
+# Authentication
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-instagram'
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'pundit'
 
 # Application monitoring
 gem 'newrelic_rpm'
