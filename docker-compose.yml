@@ -16,7 +16,7 @@ services:
   postgres:
     image: postgres
     env_file:
-      - .env
+      - .env.dev
 
   certbot:
     image: certbot/certbot
@@ -40,7 +40,7 @@ services:
     build: .
     command: bin/rails s -p 3000 -b '0.0.0.0' --pid /tmp/server.pid
     env_file:
-      - .env
+      - .env.dev
     volumes:
       - .:/usr/src/app
     ports:
