@@ -98,3 +98,5 @@ gem 'rpush'
 gem 'sidekiq'
 gem 'simple_token_authentication'
 
+# Application monitoring
+gem 'newrelic_rpm'
