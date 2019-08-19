@@ -38,6 +38,7 @@ services:
 
   rails:
     build: .
+    image: rails
     command: bin/rails s -p 3000 -b '0.0.0.0' --pid /tmp/server.pid
     env_file:
       - .env.dev
@@ -52,3 +53,11 @@ services:
       - postgres
     stdin_open: true
     tty: true
+
+  webpacker:
+    image: rails
+    command: bin/webpack-dev-server
+    env_file:
+      - .env.dev
+    volumes:
+      - .:/usr/src/app
