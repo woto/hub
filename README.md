@@ -1,5 +1,10 @@
 # nv6.ru
 
+```
+docker-compose up -d
+docker-compose exec rails ./bin/setup
+```
+
 ## Notes
 
 Obtaining of SSL Certificate with certbot is based on article:  
