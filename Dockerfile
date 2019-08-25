@@ -26,7 +26,5 @@ ADD yarn.lock $APP_PATH
 
 RUN yarn install
 
-ADD . $APP_PATH
-
 # Copy the application into the container
-EXPOSE 3000
+ADD . $APP_PATH

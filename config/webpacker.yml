@@ -61,7 +61,7 @@ development:
     https: false
     host: webpacker
     port: 3035
-    public: webpacker:3035
+    public: nv6.ru:3035
     hmr: false
     # Inline should be set to true if using HMR
     inline: true

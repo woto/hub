@@ -20,6 +20,7 @@
     "rc-tween-one": "^2.6.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-i18next": "^10.12.2",
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {

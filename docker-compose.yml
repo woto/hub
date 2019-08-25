@@ -11,6 +11,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "3035:3035"
     restart: always
 
   postgres:
@@ -51,6 +52,8 @@ services:
       - postgres
     stdin_open: true
     tty: true
+    expose: 
+      - 3000
 
   webpacker:
     image: rails
@@ -59,3 +62,5 @@ services:
       - .env.dev
     volumes:
       - .:/usr/src/app
+    expose:
+      - 3035

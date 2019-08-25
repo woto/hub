@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation, initReactI18next } from "react-i18next";
+const { t } = useTranslation();
 export const Nav30DataSource = {
   wrapper: { className: 'header3 home-page-wrapper jzih1dpqqrg-editor_css' },
   page: { className: 'home-page' },
@@ -71,16 +73,16 @@ export const Banner50DataSource = {
   childWrapper: {
     className: 'banner5-title-wrapper',
     children: [
-      { name: 'title', children: '产品名', className: 'banner5-title' },
+      { name: 'title', children: t('banner5-title'), className: 'banner5-title' },
       {
         name: 'explain',
         className: 'banner5-explain',
-        children: '产品标语介绍',
+        children: t('banner5-explain'),
       },
       {
         name: 'content',
         className: 'banner5-content',
-        children: '产品的详细说明，如是什么东西之类的文字',
+        children: t('banner5-content'),
       },
       {
         name: 'button',
@@ -89,7 +91,7 @@ export const Banner50DataSource = {
           href: '#',
           className: 'banner5-button',
           type: 'primary',
-          children: '开始使用',
+          children: t('banner5-button'),
         },
       },
     ],
