@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    [
+      // Recommended way of adding styles for antd as described in docs. ES6 way with tree shaking
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
+    ] // `style: true` for less
+  ]
+}
