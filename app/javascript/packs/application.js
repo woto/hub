@@ -25,7 +25,6 @@ import App from './landing'
 // import App from './pages/Login'
 
 const ru = {
-  welcome: `123`,
   "banner5-title": "Проект nv6.ru",
   "banner5-explain": "Контентная площадка",
   "banner5-content": "Заработок на обзоре товаров с интернет магазинов",

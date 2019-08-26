@@ -86,10 +86,10 @@ export const Banner50DataSource = {
         children: (<>{<FormattedMessage id="banner5-content" />}</>),
       },
       {
-        name: 'button',
+        name: 'register',
         className: 'banner5-button-wrapper',
         children: {
-          href: '#',
+          //href: '#',
           className: 'banner5-button',
           type: 'primary',
           children: (<>{<FormattedMessage id="banner5-button" />}</>),
@@ -545,9 +545,12 @@ export const Feature80DataSource = {
     className: 'feature8-button-wrapper',
     children: [
       {
-        name: 'button',
+        name: 'register',
         className: 'feature8-button',
-        children: { href: '#', children: (<>{<FormattedMessage id="feature8-button" />}</>) },
+        children: {
+          //href: '#',
+          children: (<>{<FormattedMessage id="feature8-button" />}</>)
+        },
       },
     ],
   },
