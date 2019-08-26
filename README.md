@@ -5,6 +5,10 @@ docker-compose up -d
 docker-compose exec rails ./bin/setup
 ```
 
+```
+ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 -R 3035:localhost:3035 root@nv6.ru
+```
+
 ## Issues
 
 ### In case of incomprehensible mistakes
