@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import Register from './Register';
+import RegisterButton from './RegisterButton';
+
 
 export const isImg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/;
 export const getChildrenToRender = (item, i) => {
@@ -14,7 +15,7 @@ export const getChildrenToRender = (item, i) => {
       ...item.children
     });
   } else if (item.name.indexOf('register') === 0 && typeof item.children === 'object') {
-    children = React.createElement(Register, {
+    children = React.createElement(RegisterButton, {
       ...item.children
     });
   }

@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Modal, Button } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import React, { Component, createContext } from 'react';
+import { Modal } from 'antd';
 
-class Register extends React.Component {
-    state = { visible: false };
+const ModalContext = createContext({
+});
+
+export class ModalProvider extends Component {
 
     showModal = () => {
         this.setState({
@@ -26,23 +26,22 @@ class Register extends React.Component {
         });
     };
 
+    state = { visible: false };
+
     render() {
         return (
-            <div>
-                <Button { ...this.props } onClick={this.showModal} />
+            <ModalContext.Provider value={this.showModal}>
+                {this.props.children}
                 <Modal
-                    title={<FormattedMessage id="banner5-button-modal" />}
+                    title="Basic Modal"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <p>{new Date().toString()}</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
                 </Modal>
-            </div>
+            </ModalContext.Provider>
         );
     }
 }
 
-export default Register;
+export const ModalConsumer = ModalContext.Consumer;
