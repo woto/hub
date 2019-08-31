@@ -1,10 +1,10 @@
 import React, { Component, createContext } from 'react';
 import { Modal } from 'antd';
 
-const ModalContext = createContext({
+const RegisterModalContext = createContext({
 });
 
-export class ModalProvider extends Component {
+export class RegisterModalProvider extends Component {
 
     showModal = () => {
         this.setState({
@@ -30,18 +30,19 @@ export class ModalProvider extends Component {
 
     render() {
         return (
-            <ModalContext.Provider value={this.showModal}>
+            <RegisterModalContext.Provider value={this.showModal}>
                 {this.props.children}
                 <Modal
                     title="Basic Modal"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    width={300}
                 >
                 </Modal>
-            </ModalContext.Provider>
+            </RegisterModalContext.Provider >
         );
     }
 }
 
-export const ModalConsumer = ModalContext.Consumer;
+export const RegisterModalConsumer = RegisterModalContext.Consumer;

@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import { ModalConsumer } from './ModalContext';
+import { RegisterModalConsumer } from './RegisterModal';
 
 class RegisterButton extends React.Component {
 
@@ -13,7 +13,7 @@ class RegisterButton extends React.Component {
 
     render() {
         return (
-            <ModalConsumer>
+            <RegisterModalConsumer>
                 {(showModal) => (
                     <Fragment>
                         <Button {...this.props} onClick={showModal}>
@@ -21,7 +21,7 @@ class RegisterButton extends React.Component {
                         </Button>
                     </Fragment>
                 )}
-            </ModalConsumer>
+            </RegisterModalConsumer>
         );
     }
 }
