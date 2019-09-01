@@ -40,7 +40,7 @@ services:
   rails:
     build: .
     image: rails
-    command: bin/rails s -b '0.0.0.0' --pid /tmp/server.pid
+    command: ["sh", "-c", "rm -f tmp/server.pid && bin/rails s -b '0.0.0.0'"]
     env_file:
       - .env.dev
     volumes:
