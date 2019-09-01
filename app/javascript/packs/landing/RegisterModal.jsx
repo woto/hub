@@ -1,5 +1,6 @@
 import React, { Component, createContext } from 'react';
 import { Modal } from 'antd';
+import RegisterForm from './RegisterForm'
 
 const RegisterModalContext = createContext({
 });
@@ -37,8 +38,9 @@ export class RegisterModalProvider extends Component {
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
-                    width={300}
+                    width={600}
                 >
+                    <RegisterForm />
                 </Modal>
             </RegisterModalContext.Provider >
         );
