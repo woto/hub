@@ -62,6 +62,7 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do
@@ -101,6 +102,7 @@ gem 'devise'
 gem 'doorkeeper'
 
 # Authentication
+gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-instagram'
