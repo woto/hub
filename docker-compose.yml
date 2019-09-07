@@ -64,3 +64,13 @@ services:
       - .:/usr/src/app
     expose:
       - 3035
+
+  # This service may live separated per Rails application.
+  # Data stored in this service should be considered as "don't be worried if it's lost"
+  # because it could be retrivable from persist storages (postgres for example)
+  redis_cache:
+    image: redis
+
+  # This service must be shared accross all servers with Rails application
+  redis_oauth:
+    image: redis
