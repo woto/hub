@@ -5,6 +5,14 @@ docker-compose up -d
 docker-compose exec rails ./bin/setup
 ```
 
+### Testing
+
+```shell
+dco run --rm rails rspec
+dco run --rm webpacker yarn test
+```
+
+
 ```
 ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 -R 3035:localhost:3035 root@nv6.ru
 ```
