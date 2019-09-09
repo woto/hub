@@ -12,7 +12,7 @@ build:
   stage: build
   script:
     - docker-compose build
-    - docker-compose run --rm webpacker yarn test
-    - docker-compose run --rm rails bundle exec rspec
+    - docker-compose -f docker-compose.yml run --rm webpacker yarn test
+    - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
   tags:
     - docker

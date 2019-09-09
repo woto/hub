@@ -43,10 +43,6 @@ services:
     command: ["sh", "-c", "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid"]
     env_file:
       - .env.dev
-    volumes:
-      - .:/usr/src/app"
-    volumes:
-      - ./:/usr/src/app
     depends_on:
       - nginx
       - postgres
@@ -60,8 +56,6 @@ services:
     command: bin/webpack-dev-server
     env_file:
       - .env.dev
-    volumes:
-      - .:/usr/src/app
     expose:
       - 3035
 

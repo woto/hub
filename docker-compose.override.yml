@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  rails:
+    volumes:
+      - .:/usr/src/app"
+
+  webpacker:
+    volumes:
+      - .:/usr/src/app

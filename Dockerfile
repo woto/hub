@@ -19,9 +19,7 @@ ADD Gemfile.lock $APP_PATH
 # ADD vendor/bundle $APP_PATH/vendor/bundle
 
 # FIXME:
-# RUN bundle install --path ./vendor/bundle --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
-# I have no idea why installing gems in ./vendor/bundle leads to gilab error https://gitlab.com/woto/hub/-/jobs/291156211
-RUN bundle install
+RUN bundle install --path ./vendor/bundle --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
 
 ADD package.json $APP_PATH
 ADD yarn.lock $APP_PATH
