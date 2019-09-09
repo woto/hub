@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     unlocks: 'api/v1/users/unlocks'
   }
 
+  # Used for helpers in Rails mailers. Actually this routes processes React
+  get 'users/confirmation', to: 'home#index'
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resource 'pet', controller: 'pet'
