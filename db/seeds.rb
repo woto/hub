@@ -1,7 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# frozen_string_literal: true
+
+User.create(
+  email: 'oganer@gmail.com',
+  password: 'asdQWE!@#123',
+  role: 'admin'
+)
+
+Doorkeeper::Application.create(
+  name: 'Swagger',
+  uid: 'fforGBoTVuZaMNMbp9jY7VEjk03_MX7On38Dtzt7Ei4',
+  secret: '_Dn1afy_S9487VxKMp56LnaKwcob9EjgRoKl1mWBzG4',
+  redirect_uri: 'https://nv6.ru/swagger/oauth2-redirect.html',
+  scopes: 'read',
+  confidential: true
+)

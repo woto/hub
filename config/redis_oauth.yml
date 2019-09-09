@@ -1,0 +1,18 @@
+default: &default
+  host: 'redis_oauth'
+
+development:
+  <<: *default
+  db: 0
+
+test:
+  <<: *default
+  db: 1
+
+staging:
+  <<: *default
+  db: 2
+
+production:
+  <<: *default
+  db: 3

@@ -17,10 +17,12 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom'
-import { IntlProvider } from 'react-intl';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-
-import App from './landing'
+import { IntlProvider } from 'react-intl'
+import Proxy from './pages/users/Proxy'
+import Home from './pages/Home'
+import Landing from './landing'
 // import App from './example'
 // import App from './pages/Login'
 
@@ -61,7 +63,11 @@ const ru = {
 document.addEventListener("DOMContentLoaded", function (event) {
   ReactDOM.render(
     <IntlProvider locale="ru" messages={ru}>
-      <App />
+      <Router>
+        <Route exact path='/' component={Landing} />
+        <Route path="/users/proxy/:id" component={Proxy} />
+        <Route path='/home' component={Home} />
+      </Router>
     </IntlProvider>,
     document.getElementById('root')
   );

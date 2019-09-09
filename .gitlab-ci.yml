@@ -1,0 +1,18 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - apk add py-pip
+  - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
+  - pip install docker-compose
+
+build:
+  stage: build
+  script:
+    - docker-compose build
+    - docker-compose run --rm webpacker yarn test
+    - docker-compose run --rm rails bundle exec rspec
+  tags:
+    - docker

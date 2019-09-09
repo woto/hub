@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -8,6 +10,14 @@ Bundler.require(*Rails.groups)
 
 module Hub
   class Application < Rails::Application
+    config.redis_cable = config_for(:redis_cable)
+    config.redis_cache = config_for(:redis_cache)
+    config.redis_oauth = config_for(:redis_oauth)
+
+    config.oauth_providers = %w[facebook github google_oauth2 instagram
+                                twitter].freeze
+    config.action_mailer.default_url_options = { host: 'nv6.ru', protocol: 'https' }
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 

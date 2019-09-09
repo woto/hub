@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import RegisterButton from './RegisterButton';
+import RegisterButton from './components/RegisterButton';
 
 
 export const isImg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/;

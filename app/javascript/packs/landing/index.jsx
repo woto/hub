@@ -10,7 +10,7 @@ import Feature7 from './Feature7';
 import Feature0 from './Feature0';
 import Feature8 from './Feature8';
 import Footer1 from './Footer1';
-import { RegisterModalProvider } from './RegisterModal';
+import { ModalProvider } from './components/AuthorizationModal';
 
 import {
   Nav30DataSource,
@@ -110,9 +110,9 @@ export default class Home extends React.Component {
         }}
       >
         {/* 如果不是 dva 2.0 替换成 {children} start */}
-        <RegisterModalProvider>
+        <ModalProvider>
           {this.state.show && children}
-        </RegisterModalProvider>
+        </ModalProvider>
         {/* 如果不是 dva 2.0 替换成 {children} end */}
       </div>
     );

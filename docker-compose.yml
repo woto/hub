@@ -40,7 +40,7 @@ services:
   rails:
     build: .
     image: rails
-    command: bin/rails s -b '0.0.0.0' --pid /tmp/server.pid
+    command: ["sh", "-c", "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid"]
     env_file:
       - .env.dev
     volumes:
@@ -65,12 +65,14 @@ services:
     expose:
       - 3035
 
+  redis_cable:
+    image: redis
+
   # This service may live separated per Rails application.
   # Data stored in this service should be considered as "don't be worried if it's lost"
   # because it could be retrivable from persist storages (postgres for example)
   redis_cache:
     image: redis
 
-  # This service must be shared accross all servers with Rails application
   redis_oauth:
     image: redis

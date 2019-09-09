@@ -18,7 +18,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[5.2]
 
     create_table :oauth_access_grants do |t|
       t.references :resource_owner,  null: false
-      t.references :application,     null: false
+      t.references :application
       t.string   :token,             null: false
       t.integer  :expires_in,        null: false
       t.text     :redirect_uri,      null: false
@@ -36,7 +36,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[5.2]
 
     create_table :oauth_access_tokens do |t|
       t.references :resource_owner, index: true
-      t.references :application,    null: false
+      t.references :application
 
       # If you use a custom token generator you may need to change this column
       # from string to text, so that it accepts tokens larger than 255
