@@ -46,6 +46,7 @@ services:
     depends_on:
       - nginx
       - postgres
+      - redis_oauth
     stdin_open: true
     tty: true
     expose: 
