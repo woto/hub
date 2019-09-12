@@ -7,7 +7,8 @@ RUN apk add --no-cache --update build-base \
                                 postgresql-dev \
                                 nodejs \
                                 yarn \
-                                tzdata
+                                tzdata \
+                                less
 
 ENV APP_PATH /usr/src/app
 
