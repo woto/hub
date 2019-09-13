@@ -4,6 +4,21 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   protect_from_forgery unless: -> { request.format.json? }
   respond_to :json
 
+  # TODO: move out
+  def current_resource_owner
+    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  end
+
+  # def current_user
+  #   debugger
+  #   current_resource_owner
+  # end
+
+  def update_resource(resource, params)
+    resource.update(params)
+  end
+
+
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -45,7 +60,6 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
   def authenticate_scope!
-    debugger
     self.resource = send(:"current_#{resource_name}")
   end
 

@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# TODO: move this test to authentication test made without shrared.rb
 describe Api::V1::PetController, type: :request do
   let!(:token) { create(:oauth_access_tokens) }
 

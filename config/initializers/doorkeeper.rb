@@ -6,7 +6,6 @@ Doorkeeper.configure do
 
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
   resource_owner_authenticator do
-    debugger
     current_user || warden.authenticate!(:scope => :user)
   end
 
