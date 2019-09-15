@@ -28,4 +28,17 @@ describe Api::V1::Users::ConfirmationsController, type: :request do
       expect(JSON.parse(response.body)).to eq('confirmation_token' => ['is invalid'])
     end
   end
+
+  context 'when confirmed user' do
+    let(:user) { create(:user) }
+
+    it { expect(user).to be_confirmed }
+    it { expect(ActionMailer::Base.deliveries.count).to be_zero }
+    it 'changes his email confirmation email sends' do
+      # TODO: rewrite with dynamic host
+      expect do
+        user.update(email: user.email.prepend('changed_'))
+      end.to change(ActionMailer::Base.deliveries, :count).by(1)
+    end
+  end
 end
