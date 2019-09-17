@@ -15,7 +15,7 @@ dco run --rm webpacker yarn test
 ```
 
 ```shell
-ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 -R 3035:localhost:3035 root@nv6.ru
+ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 -R 3035:localhost:3035 -R 19999:localhost:19999 root@nv6.ru
 ```
 
 ## Issues
