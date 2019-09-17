@@ -49,8 +49,8 @@ services:
       - redis_oauth
     stdin_open: true
     tty: true
-    expose: 
-      - 3000
+    ports:
+      - "3000:3000"
 
   webpacker:
     image: rails
