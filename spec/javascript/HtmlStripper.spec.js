@@ -1,4 +1,4 @@
-import HtmlStripper from '../../app/javascript/packs/HtmlStripper'
+import HtmlStripper from '../../app/javascript/temp/HtmlStripper';
 
 test('strips html tags from a string', () => {
   const htmlStripper = new HtmlStripper({
