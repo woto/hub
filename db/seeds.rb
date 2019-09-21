@@ -2,7 +2,7 @@
 
 User.create(
   email: 'oganer@gmail.com',
-  password: 'asdQWE!@#123',
+  password: 'qweQWE123!@#',
   role: 'admin'
 )
 
