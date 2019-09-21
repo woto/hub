@@ -4,6 +4,14 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "roots": [
+      "spec/javascript"
+    ],
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ]
+  },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
     "@material-ui/core": "^4.3.2",
@@ -38,12 +46,10 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^24.9.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "jest-puppeteer": "^4.3.0",
+    "json-loader": "^0.5.7",
     "react-test-renderer": "^16.9.0",
     "webpack-dev-server": "^3.8.0"
-  },
-  "jest": {
-    "roots": [
-      "spec/javascript"
-    ]
   }
 }
