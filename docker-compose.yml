@@ -1,6 +1,7 @@
 version: '3.7'
 services:
 
+  # WEB INGRESS
   nginx:
     image: nginx:alpine
     volumes:
@@ -14,11 +15,7 @@ services:
       - "3035:3035"
     restart: always
 
-  postgres:
-    image: postgres
-    env_file:
-      - .env.dev
-
+  # SSL CERTIFICATE
   certbot:
     image: certbot/certbot
     volumes:
@@ -26,6 +23,7 @@ services:
       - ./docker/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
+  # API DOCS
   swagger:
     image: swaggerapi/swagger-ui:v3.23.5
     environment:
@@ -37,6 +35,7 @@ services:
     depends_on:
       - nginx
 
+  # MAIN APPLICATION
   rails:
     build: .
     image: rails
@@ -52,6 +51,7 @@ services:
     ports:
       - "3000:3000"
 
+  # ASSETS FOR APPLICATION
   webpacker:
     image: rails
     command: bin/webpack-dev-server
@@ -60,18 +60,7 @@ services:
     expose:
       - 3035
 
-  redis_cable:
-    image: redis
-
-  # This service may live separated per Rails application.
-  # Data stored in this service should be considered as "don't be worried if it's lost"
-  # because it could be retrivable from persist storages (postgres for example)
-  redis_cache:
-    image: redis
-
-  redis_oauth:
-    image: redis
-
+  # MONITORING
   netdata:
     hostname: netdata.nv6.ru
     image: netdata/netdata
@@ -85,3 +74,24 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  # MAIN DATABASE
+  postgres:
+    image: postgres
+    env_file:
+      - .env.dev
+
+  # FOR WEBSOCKETS
+  redis_cable:
+    image: redis
+
+  # This service may live separated per Rails application.
+  # Data stored in this service should be considered as "don't be worried if it's lost"
+  # because it could be retrivable from persist storages (postgres for example)
+  # FOR CACHING
+  redis_cache:
+    image: redis
+
+  # FOR OMNIAUTH
+  redis_oauth:
+    image: redis
