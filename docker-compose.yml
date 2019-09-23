@@ -3,6 +3,9 @@ services:
 
   # WEB INGRESS
   nginx:
+    env_file:
+      - .env.dev
+      - .env.local
     image: nginx:alpine
     volumes:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
@@ -17,6 +20,9 @@ services:
 
   # SSL CERTIFICATE
   certbot:
+    env_file:
+      - .env.dev
+      - .env.local
     image: certbot/certbot
     volumes:
       - ./docker/certbot/conf:/etc/letsencrypt
@@ -25,6 +31,9 @@ services:
 
   # API DOCS
   swagger:
+    env_file:
+      - .env.dev
+      - .env.local
     image: swaggerapi/swagger-ui:v3.23.5
     environment:
       - BASE_URL=/swagger
@@ -37,11 +46,12 @@ services:
 
   # MAIN APPLICATION
   rails:
+    env_file:
+      - .env.dev
+      - .env.local
     build: .
     image: rails
     command: ["sh", "-c", "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid"]
-    env_file:
-      - .env.dev
     depends_on:
       - nginx
       - postgres
@@ -53,15 +63,19 @@ services:
 
   # ASSETS FOR APPLICATION
   webpacker:
-    image: rails
-    command: bin/webpack-dev-server
     env_file:
       - .env.dev
+      - .env.local
+    image: rails
+    command: bin/webpack-dev-server
     expose:
       - 3035
 
   # E2E tests
   puppeteer:
+    env_file:
+      - .env.dev
+      - .env.local
     build:
       context: .
       dockerfile: ./docker/puppeteer/Dockerfile
@@ -73,6 +87,9 @@ services:
 
   # MONITORING
   netdata:
+    env_file:
+      - .env.dev
+      - .env.local
     hostname: netdata.nv6.ru
     image: netdata/netdata
     ports:
@@ -88,12 +105,16 @@ services:
 
   # MAIN DATABASE
   postgres:
-    image: postgres
     env_file:
       - .env.dev
+      - .env.local
+    image: postgres
 
   # FOR WEBSOCKETS
   redis_cable:
+    env_file:
+      - .env.dev
+      - .env.local
     image: redis
 
   # This service may live separated per Rails application.
@@ -101,8 +122,14 @@ services:
   # because it could be retrivable from persist storages (postgres for example)
   # FOR CACHING
   redis_cache:
+    env_file:
+      - .env.dev
+      - .env.local
     image: redis
 
   # FOR OMNIAUTH
   redis_oauth:
+    env_file:
+      - .env.dev
+      - .env.local
     image: redis
