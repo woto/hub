@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 axios.defaults.headers.common.Accept = 'application/json';
 
 const setXCSRFToken = () => {
@@ -20,7 +21,7 @@ const setAccessToken = () => {
 setXCSRFToken();
 setAccessToken();
 
-const Axios = axios;
-export default Axios;
+export default axios;
+window.axios = axios;
 
 // TODO: seems should be added DOMContentLoaded

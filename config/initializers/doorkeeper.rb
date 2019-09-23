@@ -6,15 +6,15 @@ Doorkeeper.configure do
 
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
   resource_owner_authenticator do
-    current_user || warden.authenticate!(:scope => :user)
+    current_user || warden.authenticate!(scope: :user)
   end
 
   resource_owner_from_credentials do
     user = User.find_for_database_authentication(email: params[:username])
     if user&.valid_for_authentication? { user.valid_password?(params[:password]) } && user&.active_for_authentication?
-        # Updates current_sign_in_at, last_sign_in_at, sign_in_count, updated_at
-        request.env['warden'].set_user(user, store: false)
-        user
+      # Updates current_sign_in_at, last_sign_in_at, sign_in_count, updated_at
+      request.env['warden'].set_user(user, store: false)
+      user
     end
   end
 

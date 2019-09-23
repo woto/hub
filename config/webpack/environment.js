@@ -19,5 +19,5 @@ environment.loaders.append('less-loader',
       },
     }],
   });
-  
+
 module.exports = environment;

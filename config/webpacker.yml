@@ -43,6 +43,7 @@ default: &default
     - .module.sass
     - .module.scss
     - .module.css
+    - .less
     - .png
     - .svg
     - .gif
