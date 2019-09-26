@@ -1,81 +1,98 @@
-version: '3.7'
+version: "3.7"
 services:
-
-  # WEB INGRESS
-  nginx:
-    env_file:
-      - .env.dev
-      - .env.local
-    image: nginx:alpine
-    volumes:
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
-      - ./docker/certbot/conf:/etc/letsencrypt
-      - ./docker/certbot/www:/var/www/certbot
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  traefik:
+    image: "traefik:v2.0"
     ports:
       - "80:80"
       - "443:443"
       - "3035:3035"
-    restart: always
-
-  # SSL CERTIFICATE
-  certbot:
-    env_file:
-      - .env.dev
-      - .env.local
-    image: certbot/certbot
+      - "8080:8080"
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.webpacker.address=:3035
+      - --providers.docker=true
+      - --api.insecure=true
+      # --log.level=DEBUG
+      - --certificatesResolvers.myhttpchallenge.acme.email=oganer@gmail.com
+      - --certificatesResolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json
+      # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
+    labels:
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     volumes:
-      - ./docker/certbot/conf:/etc/letsencrypt
-      - ./docker/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      - "./docker/traefik/letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   # API DOCS
   swagger:
-    env_file:
-      - .env.dev
-      - .env.local
-    image: swaggerapi/swagger-ui:v3.23.5
+    image: swaggerapi/swagger-ui:v3.23.11
     environment:
       - BASE_URL=/swagger
-      - URLS=[{"name":"swagger", "url":"project/swagger.json"}]
+      - URLS=[{"name":"swagger", "url":"/swagger/project/swagger.json"}]
       - OAUTH2_REDIRECT_URL=https://nv6.ru/swagger/oauth2-redirect.html
     volumes:
       - ./docker/swagger:/usr/share/nginx/html/project
-    depends_on:
-      - nginx
+    labels:
+      - "traefik.http.routers.swagger.entrypoints=websecure"
+      - "traefik.http.routers.swagger.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.swagger.rule=Host(`nv6.ru`) && PathPrefix(`/swagger/`)"
+      - "traefik.http.services.swagger.loadbalancer.server.port=8080"
+      - "traefik.http.routers.swagger.service=swagger"
 
   # MAIN APPLICATION
   rails:
     env_file:
       - .env.dev
-      - .env.local
+    networks:
+      default:
+        aliases:
+          - nv6.ru
+          - en.nv6.ru
+          - ru.nv6.ru
     build: .
     image: rails
-    command: ["sh", "-c", "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid"]
-    depends_on:
-      - nginx
-      - postgres
-      - redis_oauth
+    command:
+      [
+        "sh",
+        "-c",
+        "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid",
+      ]
     stdin_open: true
     tty: true
-    ports:
-      - "3000:3000"
+    expose:
+      - 3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nv6.entrypoints=websecure"
+      - "traefik.http.routers.nv6.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.nv6.rule=Host(`nv6.ru`)"
+      - "traefik.http.routers.ru.entrypoints=websecure"
+      - "traefik.http.routers.ru.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.ru.rule=Host(`ru.nv6.ru`)"
+      - "traefik.http.routers.en.entrypoints=websecure"
+      - "traefik.http.routers.en.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.en.rule=Host(`en.nv6.ru`)"
 
   # ASSETS FOR APPLICATION
   webpacker:
     env_file:
       - .env.dev
-      - .env.local
     image: rails
     command: bin/webpack-dev-server
     expose:
       - 3035
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webpacker.entrypoints=webpacker"
+      - "traefik.http.routers.webpacker.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.webpacker.rule=Host(`nv6.ru`)"
 
   # E2E tests
   puppeteer:
-    env_file:
-      - .env.dev
-      - .env.local
     build:
       context: .
       dockerfile: ./docker/puppeteer/Dockerfile
@@ -87,10 +104,6 @@ services:
 
   # MONITORING
   netdata:
-    env_file:
-      - .env.dev
-      - .env.local
-    hostname: netdata.nv6.ru
     image: netdata/netdata
     ports:
       - 19999:19999
@@ -107,14 +120,12 @@ services:
   postgres:
     env_file:
       - .env.dev
-      - .env.local
     image: postgres
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
 
   # FOR WEBSOCKETS
   redis_cable:
-    env_file:
-      - .env.dev
-      - .env.local
     image: redis
 
   # This service may live separated per Rails application.
@@ -122,14 +133,14 @@ services:
   # because it could be retrivable from persist storages (postgres for example)
   # FOR CACHING
   redis_cache:
-    env_file:
-      - .env.dev
-      - .env.local
     image: redis
 
   # FOR OMNIAUTH
   redis_oauth:
-    env_file:
-      - .env.dev
-      - .env.local
     image: redis
+
+networks:
+  default:
+
+volumes:
+  postgres:
