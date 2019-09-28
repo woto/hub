@@ -39,7 +39,7 @@ services:
     labels:
       - "traefik.http.routers.swagger.entrypoints=websecure"
       - "traefik.http.routers.swagger.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.swagger.rule=Host(`nv6.ru`) && PathPrefix(`/swagger/`)"
+      - "traefik.http.routers.swagger.rule=PathPrefix(`/swagger/`)"
       - "traefik.http.services.swagger.loadbalancer.server.port=8080"
       - "traefik.http.routers.swagger.service=swagger"
 
