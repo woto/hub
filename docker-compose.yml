@@ -1,6 +1,14 @@
 version: "3.7"
 services:
+
   traefik:
+    networks:
+      hub:
+        aliases:
+          - traefik
+          - nv6.ru
+          - en.nv6.ru
+          - ru.nv6.ru
     image: "traefik:v2.0"
     ports:
       - "80:80"
@@ -29,6 +37,10 @@ services:
 
   # API DOCS
   swagger:
+    networks:
+      hub:
+        aliases:
+          - swagger
     image: swaggerapi/swagger-ui:v3.23.11
     environment:
       - BASE_URL=/swagger
@@ -45,14 +57,12 @@ services:
 
   # MAIN APPLICATION
   rails:
+    networks:
+      hub:
+        aliases:
+          - rails
     env_file:
       - .env.dev
-    networks:
-      default:
-        aliases:
-          - nv6.ru
-          - en.nv6.ru
-          - ru.nv6.ru
     build: .
     image: rails
     command:
@@ -79,6 +89,10 @@ services:
 
   # ASSETS FOR APPLICATION
   webpacker:
+    networks:
+      hub:
+        aliases:
+          - webpacker
     env_file:
       - .env.dev
     image: rails
@@ -93,17 +107,26 @@ services:
 
   # E2E tests
   puppeteer:
+    networks:
+      hub:
+        aliases:
+          - puppeteer
     build:
       context: .
       dockerfile: ./docker/puppeteer/Dockerfile
+    ports:
+      - "9229:9229"
     volumes:
       - "./docker/puppeteer/tests:/tests"
       - "./docker/puppeteer/screenshots:/screenshots"
-    # command: "wait-for-it.sh -t 1 https://nv6.ru -- mocha --recursive /tests"
-    command: "mocha --recursive /tests"
+    command: "wait-for-it.sh -t 1 https://nv6.ru -- mocha --inspect=0.0.0.0 --inspect-brk --recursive /tests"
 
   # MONITORING
   netdata:
+    networks:
+      hub:
+        aliases:
+          - netdata
     image: netdata/netdata
     ports:
       - 19999:19999
@@ -118,6 +141,10 @@ services:
 
   # MAIN DATABASE
   postgres:
+    networks:
+      hub:
+        aliases:
+          - postgres
     env_file:
       - .env.dev
     image: postgres
@@ -126,6 +153,10 @@ services:
 
   # FOR WEBSOCKETS
   redis_cable:
+    networks:
+      hub:
+        aliases:
+          - redis_cable
     image: redis
 
   # This service may live separated per Rails application.
@@ -133,14 +164,32 @@ services:
   # because it could be retrivable from persist storages (postgres for example)
   # FOR CACHING
   redis_cache:
+    networks:
+      hub:
+        aliases:
+          - redis_cache
     image: redis
 
   # FOR OMNIAUTH
   redis_oauth:
+    networks:
+      hub:
+        aliases:
+          - redis_oauth
     image: redis
 
+  alpine:
+    image: alpine
+    networks:
+      hub:
+        aliases:
+          - alpine
+    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
+    stdin_open: true
+    tty: true
+
 networks:
-  default:
+  hub:
 
 volumes:
   postgres:
