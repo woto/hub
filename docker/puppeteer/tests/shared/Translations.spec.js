@@ -24,6 +24,6 @@ describe('Translations', function() {
     await this.page.waitForSelector('[jid="project-title"]');
     const text = await this.page.$eval('[jid="project-title"]', el => el.textContent);
     expect(text).to.equal('Project nv6.ru');
-  });  
+  });
 
 });
