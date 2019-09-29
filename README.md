@@ -45,7 +45,21 @@ error Found 1 errors.
 Sometimes when forgotten that all work being done in container, accidentaly commands like 'yarn install' or 'bundle install' may be issued on a host system then i highly recommend to remove './node_modules' or './vendor/bundle' and reinstall them with `docker-compose run --rm rails yarn install` or `docker-compose run --rm rails bundle install` and then recreate container `docker-compose restart webpacker` or `docker-compose restart rails`
 
 
-## Notes
+## TODO
 
-Obtaining of SSL Certificate with certbot is based on article:  
-https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
+### Domain Names
+
+skunote.com  
+shopregard.com  
+skuseeker.com  
+skueye.com  
+
+### Localization
+
+https://www.transifex.com/pricing/  
+https://phrase.com/ru/pricing/  
+https://weblate.org/ru/hosting/  
+https://webtranslateit.com/en  
+https://www.langapi.co/pricing  
+https://www.oneskyapp.com/pricing/  
+https://crowdin.com/pricing#annual  
