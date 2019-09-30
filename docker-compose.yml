@@ -35,6 +35,18 @@ services:
       - "./docker/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
+  elastic:
+    networks:
+      hub:
+        aliases:
+          - elastic
+    image: elasticsearch:7.3.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+
   # API DOCS
   swagger:
     networks:
