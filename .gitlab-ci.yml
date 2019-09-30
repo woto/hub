@@ -12,8 +12,9 @@ build:
   stage: build
   script:
     - docker-compose build
-    - docker-compose -f docker-compose.yml run --rm webpacker yarn test
+    - docker-compose -f docker-compose.yml up -d webpacker traefik postgres redis_oauth rails
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:load
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
+    - docker-compose -f docker-compose.yml up puppeteer
   tags:
     - docker
