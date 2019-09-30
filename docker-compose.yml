@@ -131,7 +131,7 @@ services:
     volumes:
       - "./docker/puppeteer/tests:/tests"
       - "./docker/puppeteer/screenshots:/screenshots"
-    command: "wait-for-it.sh -t 1 https://nv6.ru -- mocha --inspect=0.0.0.0 --inspect-brk --recursive /tests"
+    command: "wait-for-it.sh nv6.ru:443 -- mocha --inspect=0.0.0.0 --recursive /tests"
 
   # MONITORING
   netdata:
