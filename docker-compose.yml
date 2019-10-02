@@ -40,6 +40,12 @@ services:
       hub:
         aliases:
           - elastic
+    networks:
+      cpa:
+        aliases:
+          # - elasticsearch
+          # - elastic
+          - cpa-elastic
     image: elasticsearch:7.3.2
     ports:
       - "9200:9200"
@@ -202,6 +208,9 @@ services:
 
 networks:
   hub:
+  cpa:
+    external: true
+
 
 volumes:
   postgres:
