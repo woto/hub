@@ -35,23 +35,33 @@ services:
       - "./docker/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
+  # ELASTICSEARCH
   elastic:
     networks:
       hub:
         aliases:
           - elastic
-    networks:
-      cpa:
-        aliases:
-          # - elasticsearch
-          # - elastic
-          - cpa-elastic
     image: elasticsearch:7.3.2
-    ports:
-      - "9200:9200"
-      - "9300:9300"
     environment:
       - discovery.type=single-node
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elastic.entrypoints=websecure"
+      - "traefik.http.routers.elastic.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.elastic.rule=Host(`elastic.nv6.ru`)"
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+
+  # MONGODB
+  mongo:
+    networks:
+      hub:
+        aliases:
+          - mongo
+    image: mongo:3.6.2-jessie
+    volumes:
+      - mongo:/data/db
+
 
   # API DOCS
   swagger:
@@ -208,9 +218,8 @@ services:
 
 networks:
   hub:
-  cpa:
-    external: true
-
 
 volumes:
   postgres:
+  mongo:
+  elastic:
