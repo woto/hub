@@ -37,3 +37,8 @@ coverage
 
 /docker/traefik/letsencrypt/acme.json
 /docker/puppeteer/screenshots
+
+# Python tools (remove later)
+/docker/feeder/feeds
+__pycache__/
+*.py[cod]

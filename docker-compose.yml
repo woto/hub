@@ -78,6 +78,17 @@ services:
     volumes:
       - mongo:/data/db
 
+  # FEEDER
+  feeder:
+    networks:
+      hub:
+        aliases:
+          - feeder
+    build:
+      context: ./docker/feeder
+      dockerfile: Dockerfile
+    volumes:
+      - feeder:/app/feeds
 
   # API DOCS
   swagger:
@@ -239,3 +250,4 @@ volumes:
   postgres:
   mongo:
   elastic:
+  feeder:

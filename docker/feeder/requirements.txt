@@ -1,0 +1,7 @@
+admitad
+pymongo
+python-slugify
+xmljson
+elasticsearch
+progressbar2
+pymongo
