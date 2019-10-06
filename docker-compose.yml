@@ -41,7 +41,8 @@ services:
       hub:
         aliases:
           - elastic
-    image: elasticsearch:7.3.2
+          - elasticsearch
+    image: elasticsearch:7.4.0
     environment:
       - discovery.type=single-node
     labels:
@@ -51,6 +52,21 @@ services:
       - "traefik.http.routers.elastic.rule=Host(`elastic.nv6.ru`)"
     volumes:
       - elastic:/usr/share/elasticsearch/data
+
+  # KIBANA
+  kibana:
+    networks:
+      hub:
+        aliases:
+          - kibana
+    image: kibana:7.4.0
+    # environment:
+    #   - ELASTICSEARCH_URL=http://cpa-elastic:9200
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kibana.entrypoints=websecure"
+      - "traefik.http.routers.kibana.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.kibana.rule=Host(`kibana.nv6.ru`)"
 
   # MONGODB
   mongo:
