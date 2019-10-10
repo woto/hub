@@ -91,13 +91,25 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'elasticsearch-rails'
 gem 'numbers_and_words'
 gem 'redis'
 gem 'request_store'
 gem 'rpush'
 gem 'sidekiq'
 gem 'rack-attack'
+gem 'nokogiri'
+gem 'typhoeus'
+gem 'aasm'
+gem 'paper_trail'
+gem 'kaminari'
+
+gem 'elasticsearch'
+gem 'elasticsearch-transport'
+gem 'elasticsearch-api'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-ruby'
+gem 'elasticsearch-persistence'
 
 # Authorization
 gem 'simple_token_authentication'
