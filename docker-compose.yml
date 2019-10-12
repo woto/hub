@@ -234,7 +234,9 @@ services:
     image: redis
 
   alpine:
-    image: alpine
+    build:
+      context: ./docker/alpine
+      dockerfile: Dockerfile
     networks:
       hub:
         aliases:
