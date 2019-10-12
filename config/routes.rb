@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resource 'pet', controller: 'pet'
+      resource 'profile', controller: 'profile'
       namespace :staff do
         resource :clean_stores do
           collection do
