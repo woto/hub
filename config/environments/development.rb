@@ -33,6 +33,11 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 
+  # Mount Action Cable outside main process or domain
+  config.action_cable.mount_path = '/cable'
+  # config.action_cable.url = 'wss://example.com/cable'
+  config.action_cable.allowed_request_origins = ['https://nv6.ru', %r{https://.*\.nv6.ru}]
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
