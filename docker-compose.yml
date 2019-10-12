@@ -9,6 +9,7 @@ services:
           - nv6.ru
           - en.nv6.ru
           - ru.nv6.ru
+          - zh.nv6.ru
     image: "traefik:v2.0"
     ports:
       - "80:80"
@@ -135,12 +136,19 @@ services:
       - "traefik.http.routers.nv6.entrypoints=websecure"
       - "traefik.http.routers.nv6.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.nv6.rule=Host(`nv6.ru`)"
+
       - "traefik.http.routers.ru.entrypoints=websecure"
       - "traefik.http.routers.ru.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.ru.rule=Host(`ru.nv6.ru`)"
+
       - "traefik.http.routers.en.entrypoints=websecure"
       - "traefik.http.routers.en.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.en.rule=Host(`en.nv6.ru`)"
+
+      - "traefik.http.routers.zh.entrypoints=websecure"
+      - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.zh.rule=Host(`zh.nv6.ru`)"
+
 
   # ASSETS FOR APPLICATION
   webpacker:
