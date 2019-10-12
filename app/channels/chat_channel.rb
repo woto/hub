@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ChatChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "room"
+    stream_from 'room'
   end
 
   def unsubscribed
@@ -8,6 +10,6 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def speak
-    ActionCable.server.broadcast('room', {"key" => "value"})
+    ActionCable.server.broadcast('room', 'key' => 'value')
   end
 end
