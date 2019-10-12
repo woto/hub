@@ -1,10 +1,19 @@
 development:
-  adapter: async
+  adapter: redis
+  url: redis://redis_cable:6379/0
+  channel_prefix: hub_development
 
 test:
-  adapter: async
+  adapter: redis
+  url: redis://redis_cable:6379/1
+  channel_prefix: hub_test
+
+staging:
+  adapter: redis
+  url: redis://redis_cable:6379/2
+  channel_prefix: hub_staging
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  url: redis://redis_cable:6379/3
   channel_prefix: hub_production
