@@ -48,7 +48,6 @@ group :development, :test, :staging do
 end
 
 group :development, :test do
-  # debugging
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'pry-byebug'
@@ -65,8 +64,8 @@ group :development, :test do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-  gem 'webmock'
   gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
@@ -74,8 +73,8 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # gem 'spring'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
@@ -90,41 +89,45 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+gem 'aasm'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'kaminari'
+gem 'nokogiri'
 gem 'numbers_and_words'
+gem 'paper_trail'
+gem 'rack-attack'
 gem 'redis'
 gem 'request_store'
 gem 'rpush'
 gem 'sidekiq'
-gem 'rack-attack'
-gem 'nokogiri'
 gem 'typhoeus'
-gem 'aasm'
-gem 'paper_trail'
-gem 'kaminari'
 
-gem 'elasticsearch'
-gem 'elasticsearch-transport'
-gem 'elasticsearch-api'
-gem 'elasticsearch-model'
+# gem 'elasticsearch'
+# gem 'elasticsearch-transport'
+# gem 'elasticsearch-api'
+# gem 'elasticsearch-model'
+gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-ruby'
-gem 'elasticsearch-persistence'
 
 # Authorization
-gem 'simple_token_authentication'
-gem 'devise-security'
 gem 'devise'
+gem 'devise-security'
 gem 'doorkeeper'
+gem 'simple_token_authentication'
 
 # Authentication
 gem 'omniauth'
-gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
-gem 'omniauth-instagram'
 gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-instagram'
 gem 'omniauth-twitter'
 gem 'pundit'
 
 # Application monitoring
 gem 'newrelic_rpm'
+
+# Dry family
+gem 'dry-types'
+gem 'dry-struct'

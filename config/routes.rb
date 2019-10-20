@@ -27,8 +27,19 @@ Rails.application.routes.draw do
   get 'confirm', to: 'home#index', as: 'confirm_password'
   get 'proxy/:token', to: 'home#index'
 
+  resources :offers, only: %i[index] do
+  end
+  resources :feeds, only: %i[index] do
+    resources :offers, only: %i[index] do
+    end
+  end
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      resources :feeds, only: %i[index] do
+        resources :offers, only: %i[index]
+      end
+      resources :offers, only: %i[index]
       resource 'profile', controller: 'profile'
       namespace :staff do
         resource :clean_stores do
