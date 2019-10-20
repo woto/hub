@@ -29,8 +29,8 @@ Rails.application.routes.draw do
 
   resources :offers, only: %i[index] do
   end
-  resources :feeds, only: %i[index] do
-    resources :offers, only: %i[index] do
+  resources :feeds, controller: 'home', action: 'index', only: %i[index] do
+    resources :offers, controller: 'offers', action: 'index', only: %i[index] do
     end
   end
 
