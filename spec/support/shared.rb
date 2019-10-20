@@ -19,4 +19,5 @@ RSpec.shared_context 'with shared authentication', shared_context: :metadata do
       process(method, path, **args.symbolize_keys)
     end
   end
+
 end

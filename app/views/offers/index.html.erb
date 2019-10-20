@@ -1,0 +1,10 @@
+<% @result[:offers].each do |product| %>
+    <% source = product["_source"] %>
+    <div jid="offer">
+        <h1 jid="name"><%= source['name'] %></h3>
+        <img jid="picture" src="<%= source['picture']&.first || '' %>" height="300px" />
+        <p jid="description"><%= source['description'] %></p>
+        <p jid="price"><%= source['price'] %> <%= source['currencyId'] %></p>
+        <p jid="url"><%= link_to 'Перейти в магазин', source['url'] %></p>
+    </div>
+<% end %>

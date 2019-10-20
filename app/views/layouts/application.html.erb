@@ -10,12 +10,18 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <div id="root"></div>
+    <%= javascript_pack_tag 'application' %>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
   </head>
+
   <body>
-    <%= yield %>
+
+    <div id="root">
+      <%= yield %>
+    </div>
+
+    <script>
+    </script>
+
   </body>
 </html>
