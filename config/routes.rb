@@ -42,11 +42,20 @@ Rails.application.routes.draw do
       resources :offers, only: %i[index]
       resource 'profile', controller: 'profile'
       namespace :staff do
-        resource :clean_stores do
-          collection do
-            get 'start'
-            get 'test'
-            get 'clean'
+        namespace :cropper do
+          namespace 'elastic' do
+            get 'crop'
+          end
+          namespace 'postgres' do
+            get 'crop'
+          end
+        end
+        namespace 'seeder' do
+          namespace 'elastic' do
+            get 'pagination'
+          end
+          namespace 'postgres' do
+            get 'seed'
           end
         end
       end

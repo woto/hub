@@ -64,12 +64,12 @@ module Staff
             _index: "#{index_index.to_words}_#{index_name}",
             _id: document_id.to_s,
             data: Offer.new(
-              name: "#{offer_index.to_words}_#{offer_name}",
+              name: "[#{offer_index.to_words}] [#{offer_name}] #{offer_index.to_words}_#{offer_name}",
               price: Faker::Commerce.price,
               currencyId: %w[RUR EUR USD].sample,
               url: Faker::Internet.url,
               picture: rand(5).times.map do
-                Faker::LoremFlickr.image
+                Faker::LoremPixel.image
               end
             )
           )

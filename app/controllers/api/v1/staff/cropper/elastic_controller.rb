@@ -3,12 +3,10 @@
 module Api
   module V1
     module Staff
-      module Seeder
-        # ElasticController
+      module Cropper
         class ElasticController < Api::V1::Staff::BaseController
-          def pagination
-            ::Staff::Seeder::Elastic.pagination
-            head :ok
+          def crop
+            ::Staff::Cropper::Elastic.crop
           end
         end
       end

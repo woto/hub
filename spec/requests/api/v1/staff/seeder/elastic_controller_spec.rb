@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 describe Api::V1::Staff::Seeder::ElasticController, type: :request do
+
+  include_examples "restricted in production", "/api/v1/staff/seeder/elastic/pagination"
+
   it 'Fills elastic for pagination tests' do
     elastic_client.indices.delete index: ::Elastic::IndexName.all_offers
     get '/api/v1/staff/seeder/elastic/pagination'
