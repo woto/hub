@@ -1,6 +1,17 @@
 /* eslint-disable mocha/no-mocha-arrows */
 const puppeteer = require('puppeteer');
 
+exports.login = async function login(username, password) {
+  await this.page.waitFor('[jid="login-form-username"]');
+
+  await this.page.type('input[jid="login-form-username"]', username, { delay: 20 });
+  await this.page.type('input[jid="login-form-password"]', password, { delay: 20 });
+  await Promise.all([
+    this.page.waitForNavigation(),
+    this.page.click('[jid="login-form-login-button"]'),
+  ]);
+};
+
 exports.preparePuppeteer = function () {
 
   before(async () => {
