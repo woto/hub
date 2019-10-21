@@ -23,6 +23,7 @@ exports.preparePuppeteer = function () {
 
   beforeEach(async () => {
     this.page = await this.browser.newPage();
+    this.page.deleteCookie({ name: 'access_token', domain: '.nv6.ru' })
   });
 
   afterEach(async () => {
