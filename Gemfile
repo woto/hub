@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.6'
+ruby '2.5.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -96,6 +96,7 @@ gem 'nokogiri'
 gem 'numbers_and_words'
 gem 'paper_trail'
 gem 'rack-attack'
+gem 'rails-i18n'
 gem 'redis'
 gem 'request_store'
 gem 'rpush'
