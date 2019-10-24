@@ -6,7 +6,7 @@ module Authenticatable
 
   included do
     devise :database_authenticatable, :registerable,
-           :recoverable, :rememberable, :validatable,
+           :recoverable, :rememberable,
            :confirmable, :lockable, :timeoutable, :trackable
 
     has_many :access_grants,
