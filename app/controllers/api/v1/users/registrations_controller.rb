@@ -1,85 +1,34 @@
 # frozen_string_literal: true
 
-class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
-  protect_from_forgery unless: -> { request.format.json? }
-  respond_to :json
+module Api
+  module V1
+    module Users
+      # Registrations
+      class RegistrationsController < Devise::RegistrationsController
+        include DoorkeeperTokenable
 
-  # TODO: move out
-  def current_resource_owner
-    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+        def create
+          # copied from confirmation controller
+          super do |user|
+            # TODO: check confirm, unlock... i.e. all inside block
+            # also have to reset confirmation_token
+            if user.persisted?
+              render(json: build_token_response(user).body) && return
+            end
+          end
+        end
+
+        def update_resource(resource, params)
+          resource.update(params)
+        end
+
+        protected
+
+        # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
+        def authenticate_scope!
+          self.resource = send(:"current_#{resource_name}")
+        end
+      end
+    end
   end
-
-  # def current_user
-  #   debugger
-  #   current_resource_owner
-  # end
-
-  def update_resource(resource, params)
-    resource.update(params)
-  end
-
-
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
-
-  # GET /resource/sign_up
-  # def new
-  #   super
-  # end
-
-  # POST /resource
-  # def create
-  #   super
-  # end
-
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
-
-  # PUT /resource
-  # def update
-  #   super
-  # end
-
-  # DELETE /resource
-  # def destroy
-  #   super
-  # end
-
-  # GET /resource/cancel
-  # Forces the session data which is usually expired after sign
-  # in to be expired now. This is useful if the user wants to
-  # cancel oauth signing in/up in the middle of the process,
-  # removing all OAuth session data.
-  # def cancel
-  #   super
-  # end
-
-  protected
-
-  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
-  def authenticate_scope!
-    self.resource = send(:"current_#{resource_name}")
-  end
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
-
-  # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
-
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
 end

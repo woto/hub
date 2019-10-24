@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-# class comment
+# Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
-  #protect_from_forgery unless: -> { request.format.json? }
-  #skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+  protect_from_forgery unless: -> { request.format.json? }
+  around_action :switch_locale
 
-  #include Pundit
-  #
-  #after_action :verify_authorized, except: :index
-  #after_action :verify_policy_scoped, only: :index
+  private
 
-  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
-  def current_resource_owner
-    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  # Locale switching copied from official Rails Guides without any modifications
+  # This makes me happy :)
+
+  def switch_locale(&action)
+    locale = extract_locale_from_subdomain || I18n.default_locale
+    I18n.with_locale(locale, &action)
   end
 
-  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Running-Doorkeeper-with-Devise
-  def current_user
-    current_resource_owner
+  def extract_locale_from_subdomain
+    parsed_locale = request.subdomains.first
+    I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
   end
 end

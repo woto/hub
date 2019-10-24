@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   # Used for helpers in Rails mailers. Actually this routes processes React
   get 'users/password/edit', to: 'home#index', as: 'edit_password'
   get 'login', to: 'home#index', as: 'user_login'
+  get 'register', to: 'home#index', as: 'user_register'
   get 'restore', to: 'home#index', as: 'restore_password'
   get 'reset', to: 'home#index', as: 'reset_password'
   get 'confirm', to: 'home#index', as: 'confirm_password'
@@ -55,7 +56,7 @@ Rails.application.routes.draw do
             get 'pagination'
           end
           namespace 'postgres' do
-            get 'seed'
+            get 'create_user'
           end
         end
       end

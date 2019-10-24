@@ -5,8 +5,8 @@ module Api
     module Staff
       module Seeder
         class PostgresController < Api::V1::Staff::BaseController
-          def seed
-            user = FactoryBot.create(:user)
+          def create_user
+            user = FactoryBot.create(:user, email: 'user@example.com', password: '123123')
             respond_with user
           end
         end
