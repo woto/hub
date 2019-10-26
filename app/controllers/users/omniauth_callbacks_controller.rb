@@ -9,7 +9,7 @@ module Users
       auth = request.env['omniauth.auth']
       redis = Redis.new(Rails.configuration.redis_oauth)
       redis.set(key, auth.to_json)
-      redirect_to "/users/proxy/#{key}"
+      redirect_to "/proxy/#{key}"
     end
   end
 end

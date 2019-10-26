@@ -1,39 +1,48 @@
 # frozen_string_literal: true
 
-class Api::V1::Users::BindsController < ApplicationController
-  include DoorkeeperTokenable
-  respond_to :json
+module Api
+  module V1
+    module Users
+      # This class used in oauth authentication process
+      class BindsController < BaseController
+        include DoorkeeperTokenable
+        before_action :doorkeeper_authorize!, if: -> { valid_doorkeeper_token? }
+        before_action :read_oauth_info_from_redis
 
-  before_action do
-    @redis = Redis.new(Rails.configuration.redis_oauth)
-    @auth = JSON.parse(@redis.get(params[:id]))
-    @uid = @auth['uid']
-    @provider = @auth['provider']
-    @email = @auth['info']['email']
-    @user = User.find_by(email: @email)
-  end
+        def update
+          user = current_user || User.new(email: @oauth.info['email'])
+          bind_identity(user)
+          request.env['warden'].set_user(user, store: false)
+          render json: build_token_response(user).body
+        end
 
-  def update
-    if current_user
-      bind_new_provider
-    else
-      login_or_register
+        private
+
+        def read_oauth_info_from_redis
+          redis = Redis.new(Rails.configuration.redis_oauth)
+          raw = JSON.parse(redis.get(params[:id]))
+          @oauth = OauthStruct.new(raw)
+        end
+
+        # Every identity will be binded to this user.
+        # Pay attention that there is can be situations with orphan users
+        # (from which identity was unbinded)
+        def bind_identity(user)
+          identity = Identity.find_by(uid: @oauth.uid,
+                                      provider: @oauth.provider)
+          if identity
+            identity.update!(user: user, auth: @oauth)
+          else
+            Identity.create!(
+              uid: @oauth.uid,
+              provider: @oauth.provider,
+              user: user,
+              auth: @oauth
+            )
+          end
+          # user = identity.user
+        end
+      end
     end
-  end
-
-  private
-
-  def bind_new_provider
-    raise 'not implemented'
-  end
-
-  def login_or_register
-    @user ||= User.create_user_for_oauth(@email)
-    @user.skip_confirmation!
-    @user.save!
-    Identity.create_with(auth: @auth, user: @user)
-            .find_or_create_by!(uid: @uid, provider: @provider)
-    request.env['warden'].set_user(@user, store: false)
-    render json: build_token_response(@user).body
   end
 end

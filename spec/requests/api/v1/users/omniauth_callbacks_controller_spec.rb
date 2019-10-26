@@ -26,7 +26,7 @@ describe Users::OmniauthCallbacksController, type: :request do
       end
 
       it 'redirects to react bind page' do
-        expect(response).to redirect_to("/users/proxy/#{key}")
+        expect(response).to redirect_to(user_proxy_path(token: key))
       end
     end
   end
