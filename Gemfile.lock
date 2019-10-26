@@ -529,7 +529,7 @@ DEPENDENCIES
   webpacker
 
 RUBY VERSION
-   ruby 2.5.6p201
+   ruby 2.5.7p206
 
 BUNDLED WITH
    1.17.3
