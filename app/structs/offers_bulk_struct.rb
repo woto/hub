@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class OffersBulk < Dry::Struct
-  attribute :data, Offer
+class OffersBulkStruct < Dry::Struct
+  attribute :data, OfferStruct
   attribute :_index, Types::String
   attribute :_id, Types::String
 end

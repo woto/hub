@@ -6,7 +6,7 @@ module Types
   include Dry.Types()
 end
 
-class Offer < Dry::Struct
+class OfferStruct < Dry::Struct
   attribute :name, Types::String
   attribute :price, Types::Float
   attribute :currencyId, Types::String
