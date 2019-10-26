@@ -4,6 +4,7 @@
 
 // const assert = require('assert');
 const { expect } = require('chai');
+const axios = require('axios');
 
 const shared = require('../../support/puppeteer');
 
@@ -29,6 +30,9 @@ describe('LoginButton', function () {
   });
 
   it('Authenticated user redirects to "Dashboard page" after clicking on "Login Button"', async () => {
+    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+
     await this.page.goto('https://ru.nv6.ru', { waitUntil: 'networkidle0' });
 
     await Promise.all([
@@ -36,7 +40,7 @@ describe('LoginButton', function () {
       this.page.click('[jid="login-button"]'),
     ]);
 
-    await shared.login.call(this, 'oganer@gmail.com', '123123');
+    await shared.login.call(this, 'user@example.com', '123123');
 
     expect(await this.page.url()).to.equal('https://ru.nv6.ru/dashboard');
 

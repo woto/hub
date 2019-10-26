@@ -12,7 +12,7 @@ describe('RegisterForm', function () {
   this.timeout(10000);
   shared.preparePuppeteer.call(this);
 
-  it('Prevent registration displaing server sider Devise validation errors', async () => {
+  it('Prevent registration displaing server side Devise validation errors', async () => {
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
     await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
     await this.page.goto('https://ru.nv6.ru/register', { waitUntil: 'networkidle0' });

@@ -7,7 +7,7 @@ exports.login = async function login(username, password) {
   await this.page.type('input[jid="login-form-username"]', username, { delay: 20 });
   await this.page.type('input[jid="login-form-password"]', password, { delay: 20 });
   await Promise.all([
-    this.page.waitForNavigation(),
+    this.page.waitForNavigation({ waitUntil: 'networkidle0' }),
     this.page.click('[jid="login-form-login-button"]'),
   ]);
 };

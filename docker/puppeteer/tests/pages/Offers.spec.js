@@ -4,6 +4,7 @@
 
 // const assert = require('assert');
 const { expect } = require('chai');
+const axios = require('axios');
 
 const shared = require('../support/puppeteer');
 
@@ -19,8 +20,8 @@ describe('Offers', function () {
 
   it('Unauthorized users get "Login modal" offer when clicking on "Write a post"', async () => {
     const initialUrl = 'https://nv6.ru/offers?page=2&q=zero';
-    await this.page.goto(initialUrl);
-    await this.page.waitFor(1000);
+    await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
+    //// await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     // If unexpected request will be made we will catch
@@ -32,13 +33,27 @@ describe('Offers', function () {
     }
     this.page.on('request', logRequest);
 
-    await this.page.click('[jid="write-a-post"]');
+    console.log('1');
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click('[jid="write-a-post"]'),
+    ]);
+    console.log('2');
+
     await this.page.waitFor('.ant-modal');
+    console.log('3');
     expect(await this.page.url()).to.equal('https://nv6.ru/offers/login?page=2&q=zero');
 
     // Closing modal returns to previous page
-    await this.page.click('[aria-label="Close"]');
+    console.log('4');
+    await this.page.screenshot({ path: '/screenshots/app4.png' });
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click('[aria-label="Close"]'),
+    ]);
+    console.log('5');
     await this.page.waitFor(() => !document.querySelector('.ant-modal'));
+    console.log('6');
 
     expect(unexpectedRequests).to.be.empty;
   });
@@ -46,17 +61,13 @@ describe('Offers', function () {
   it('Redirect to first page when new value in "Search input" submitted')
 
   it('Authorized users redirects to "New post page" when clicking on "Write a post"', async () => {
-    await this.page.goto('https://nv6.ru/login');
-    await this.page.waitFor(1000);
+    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
 
-    await this.page.waitForSelector('[jid="login-form-username"]');
+    await this.page.goto('https://nv6.ru/login', { waitUntil: 'networkidle0' });
+    //// await this.page.waitFor(1000);
 
-    await this.page.type('input[jid="login-form-username"]', 'oganer@gmail.com', { delay: 20 });
-    await this.page.type('input[jid="login-form-password"]', '123123', { delay: 20 });
-    await Promise.all([
-      this.page.waitForNavigation(), // The promise resolves after navigation has finished
-      this.page.click('[jid="login-form-login-button"]'), // Clicking the link will indirectly cause a navigation
-    ]);
+    await shared.login.call(this, 'user@example.com', '123123');
 
     await this.page.goto('https://nv6.ru/offers?page=1&q=twenty');
     await this.page.waitFor('[jid="write-a-post"]');
@@ -70,8 +81,8 @@ describe('Offers', function () {
 
   it('Resets (url, search, pagination) to defaults when clicking on "Offers" in left menu', async () => {
     const initialUrl = 'https://nv6.ru/offers?page=1&q=ten';
-    await this.page.goto(initialUrl);
-    await this.page.waitFor(1000);
+    await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
+    //// await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     expect((await this.page.$$('.ant-table-row')).length).to.equal(1);
@@ -92,8 +103,8 @@ describe('Offers', function () {
 
   it('Redirects to correct page when back button pressed in browser from "Login form"', async () => {
     const initialUrl = 'https://nv6.ru/offers?page=2&q=zero';
-    await this.page.goto(initialUrl);
-    await this.page.waitFor(1000);
+    await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
+    //// await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     // If unexpected request will be made we will catch
@@ -120,8 +131,8 @@ describe('Offers', function () {
 
   it('Returns user to correct page without web requests when initially were opened "Offers page" with opened "Login modal" window', async () => {
     const initialUrl = 'https://nv6.ru/feeds/zero_my_index_name/offers/login?page=1&q=one'
-    await this.page.goto(initialUrl);
-    await this.page.waitFor(1000);
+    await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
+    //// await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     // If unexpected request will be made we will catch
