@@ -12,6 +12,7 @@
     "or-register-now": "Или зарегистрируйтесь сейчас используя e-mail!",
     "please-enter-email": "Пожалуйста введите E-mail",
     "inconsistent-confirmation": "Введённые пароли не совпадают",
+    "unable-to-login": "Неверные логин или пароль",
     "email": "E-mail",
     "email-format-invalid": "Введённый E-mail неверен",
     "please-enter-password": "Пожалуйста введите пароль",
