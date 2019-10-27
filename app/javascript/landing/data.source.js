@@ -12,55 +12,6 @@ export const Nav30DataSource = {
   },
   Menu: {
     className: 'header3-menu',
-    children: [
-      {
-        name: 'item1',
-        className: 'header3-item',
-        children: {
-          href: '#',
-          children: [
-            {
-              children: (
-                <>
-                  <p>{(<>{<FormattedMessage id="header3-item" />}</>)}</p>
-                </>
-              ),
-              name: 'text',
-            },
-          ],
-        },
-        subItem: [
-          {
-            className: 'item-sub',
-            children: {
-              className: 'item-sub-item jzj8295azrs-editor_css',
-              children: [
-                {
-                  name: 'image0',
-                  className: 'item-image jzj81c9wabh-editor_css',
-                  children:
-                    'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*4_S6ToPfj-QAAAAAAAAAAABkARQnAQ',
-                },
-              ],
-            },
-            name: 'sub~jzj8hceysgj',
-          },
-        ],
-      },
-      {
-        name: 'item2',
-        className: 'header3-item',
-        children: {
-          href: '#',
-          children: [
-            {
-              children: (<p>{<FormattedMessage id="header3-item" />}</p>),
-              name: 'text',
-            },
-          ],
-        },
-      },
-    ],
   },
   mobileMenu: { className: 'header3-mobile-menu' },
 };
@@ -87,13 +38,12 @@ export const Banner50DataSource = {
         children: (<>{<FormattedMessage id="banner5-content" />}</>),
       },
       {
-        name: 'register',
+        name: 'login',
         className: 'banner5-button-wrapper',
         children: {
-          //href: '#',
           className: 'banner5-button',
           type: 'primary',
-          children: (<>{<FormattedMessage id="banner5-button" />}</>),
+          children: (<>{<FormattedMessage id="log-in" />}</>),
         },
       },
     ],
@@ -546,11 +496,10 @@ export const Feature80DataSource = {
     className: 'feature8-button-wrapper',
     children: [
       {
-        name: 'register',
+        name: 'login',
         className: 'feature8-button',
         children: {
-          //href: '#',
-          children: (<>{<FormattedMessage id="feature8-button" />}</>)
+          children: (<>{<FormattedMessage id="log-in" />}</>)
         },
       },
     ],

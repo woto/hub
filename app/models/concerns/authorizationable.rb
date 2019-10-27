@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Used in User model
-module Authenticationable
+module Authorizationable
   extend ActiveSupport::Concern
   include RolesConstants
 

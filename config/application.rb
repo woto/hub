@@ -25,9 +25,9 @@ Bundler.require(*Rails.groups)
 
 module Hub
   class Application < Rails::Application
-    config.redis_cable = config_for(:redis_cable)
     config.redis_cache = config_for(:redis_cache)
     config.redis_oauth = config_for(:redis_oauth)
+    config.elastic = config_for(:elastic)
 
     config.oauth_providers = %w[facebook github google_oauth2 instagram
                                 twitter].freeze
@@ -35,6 +35,8 @@ module Hub
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
+
+    # config.debug_exception_response_format = :api
 
     # config.api_only = true
 

@@ -20,15 +20,5 @@ module Authenticatable
              dependent: :delete_all # or :destroy if you need callbacks
 
     has_many :identities
-
-    class << self
-      def create_user_for_oauth(email)
-        user = User.new(
-          email: email,
-          password: Devise.friendly_token.first(8)
-        )
-        user
-      end
-    end
   end
 end

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import RegisterButton from './components/RegisterButton';
+import LoginButton from './components/LoginButton';
 
 
 export const isImg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-.\/?%&=]*)?/;
@@ -14,8 +14,8 @@ export const getChildrenToRender = (item, i) => {
     children = React.createElement(Button, {
       ...item.children
     });
-  } else if (item.name.indexOf('register') === 0 && typeof item.children === 'object') {
-    children = React.createElement(RegisterButton, {
+  } else if (item.name.indexOf('login') === 0 && typeof item.children === 'object') {
+    children = React.createElement(LoginButton, {
       ...item.children
     });
   }

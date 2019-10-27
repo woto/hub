@@ -33,7 +33,7 @@ class Import:
     PRINT_PROGRESS_EVERY_N_ROWS_COUNTER = 100
     ELASTIC = 'http://elastic:9200'
     IMPORT_EVERY_N_OFFER = 1
-    TOTAL_IMPORTING_OFFERS = 2000
+    TOTAL_IMPORTING_OFFERS = 500
 
     def __init__(self, index):
 

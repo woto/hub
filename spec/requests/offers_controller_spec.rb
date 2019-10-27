@@ -10,7 +10,7 @@ describe OffersController, type: :request do
 
   it 'Is simply works :)' do
     get '/feeds/zero_my_index_name/offers?page=1&q=one_my_offer_name'
-    assert_select 'h1[jid="name"]', count: 1, text: 'one_my_offer_name'
+    assert_select 'h1[jid="name"]', count: 1, text: '[one] [my_offer_name] one_my_offer_name'
   end
 
   it 'Is simple works too :)' do

@@ -60,10 +60,10 @@ module Staff
         end
 
         def offer(index_index, index_name, offer_index, offer_name, document_id)
-          OffersBulk.new(
+          OffersBulkStruct.new(
             _index: "#{index_index.to_words}_#{index_name}",
             _id: document_id.to_s,
-            data: Offer.new(
+            data: OfferStruct.new(
               name: "[#{offer_index.to_words}] [#{offer_name}] #{offer_index.to_words}_#{offer_name}",
               price: Faker::Commerce.price,
               currencyId: %w[RUR EUR USD].sample,

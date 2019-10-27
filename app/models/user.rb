@@ -2,5 +2,5 @@
 
 class User < ApplicationRecord
   include Authenticatable
-  include Authenticationable
+  include Authorizationable
 end

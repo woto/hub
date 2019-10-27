@@ -20,7 +20,7 @@ describe Api::V1::OffersController, type: :request do
         '_id' => '22'
       )
       expect(json_response_body['items'].first['_source']).to match(
-        'name' => 'one_my_offer_name',
+        'name' => '[one] [my_offer_name] one_my_offer_name',
         'price' => an_instance_of(Float),
         'currencyId' => an_instance_of(String),
         'url' => an_instance_of(String),
@@ -53,7 +53,7 @@ describe Api::V1::OffersController, type: :request do
         '_id' => '22'
       )
       expect(json_response_body['items'].first['_source']).to match(
-        'name' => 'one_my_offer_name',
+        'name' => '[one] [my_offer_name] one_my_offer_name',
         'price' => an_instance_of(Float),
         'currencyId' => an_instance_of(String),
         'url' => an_instance_of(String),

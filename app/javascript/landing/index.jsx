@@ -10,7 +10,6 @@ import Feature7 from './Feature7';
 import Feature0 from './Feature0';
 import Feature8 from './Feature8';
 import Footer1 from './Footer1';
-import { ModalProvider } from './components/AuthorizationModal';
 
 import {
   Nav30DataSource,
@@ -28,7 +27,8 @@ enquireScreen((b) => {
   isMobile = b;
 });
 
-const { location } = window;
+// const { location } = window;
+const location = { port: true };
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class Home extends React.Component {
         this.setState({
           show: true,
         });
-      }, 500);
+      }, 300);
     }
     /* 如果不是 dva 2.0 请删除 end */
   }
@@ -110,9 +110,7 @@ export default class Home extends React.Component {
         }}
       >
         {/* 如果不是 dva 2.0 替换成 {children} start */}
-        <ModalProvider>
-          {this.state.show && children}
-        </ModalProvider>
+        {this.state.show && children}
         {/* 如果不是 dva 2.0 替换成 {children} end */}
       </div>
     );

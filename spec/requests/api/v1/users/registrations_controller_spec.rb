@@ -2,8 +2,9 @@
 
 require 'rails_helper'
 
-describe Api::V1::Users::RegistrationsController,
-         type: :request, include_shared: true do
+describe Api::V1::Users::RegistrationsController, type: :request do
+  include_context 'with shared authentication'
+
   describe 'Registration' do
     let(:email) { Faker::Internet.email }
     let(:password) { Faker::Internet.password }

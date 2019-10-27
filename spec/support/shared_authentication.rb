@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context 'with shared authentication', shared_context: :metadata do
+RSpec.shared_context 'with shared authentication' do
   let(:user) do
     create(:user)
   end
@@ -9,6 +9,7 @@ RSpec.shared_context 'with shared authentication', shared_context: :metadata do
     create(:oauth_access_tokens, resource_owner_id: user.id)
   end
 
+  # Homeland of xget xpost xpatch xput xhead xdelete
   %w[get post patch put head delete].each do |method|
     define_method("x#{method}") do |*args|
       path, args = args
