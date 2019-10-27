@@ -16,29 +16,39 @@ describe Api::V1::Users::ConfirmationsController, type: :request do
 
     it 'returns access_token' do
       make
-      expect(JSON.parse(response.body)).to have_key('access_token')
+      expect(json_response_body).to be_like_tokenable
+    end
+
+    it "doesn't clean up confirmation_token after confirmation" do
+      make
+      expect(user.reload.confirmation_token).not_to be_nil
+    end
+
+    it 'sets confirmed_at after confirmation' do
+      make
+      expect(user.reload.confirmed_at).to be_within(0.1).of(Time.zone.now)
+    end
+
+    context 'when email already confirmed' do
+      it 'returns error' do
+        user.confirm
+        make
+        expect(json_response_body).to eq('email' => ['E-mail was already confirmed, please try signing in'])
+      end
     end
   end
 
   context 'when confirmation_token invalid' do
     let(:token) { '123' }
 
+    it "doesn't returns access_token" do
+      make
+      expect(json_response_body).not_to be_like_tokenable
+    end
+
     it 'returns error' do
       make
-      expect(JSON.parse(response.body)).to eq('confirmation_token' => ['is invalid'])
-    end
-  end
-
-  context 'when confirmed user' do
-    let(:user) { create(:user) }
-
-    it { expect(user).to be_confirmed }
-    it { expect(ActionMailer::Base.deliveries.count).to be_zero }
-    it 'changes his email confirmation email sends' do
-      # TODO: rewrite with dynamic host
-      expect do
-        user.update(email: user.email.prepend('changed_'))
-      end.to change(ActionMailer::Base.deliveries, :count).by(1)
+      expect(json_response_body).to eq('confirmation_token' => ['Confirmation link is invalid'])
     end
   end
 end

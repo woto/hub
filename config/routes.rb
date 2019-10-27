@@ -60,8 +60,10 @@ Rails.application.routes.draw do
           end
           namespace 'postgres' do
             get 'create_user'
+            get 'create_unconfirmed_user'
             get 'get_user'
             get 'send_reset_password_instructions'
+            get 'send_confirmation_instructions'
           end
         end
       end

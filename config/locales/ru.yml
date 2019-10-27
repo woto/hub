@@ -1,0 +1,10 @@
+ru:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
+            confirmation_token:
+              invalid: "Ссылка для подтверждения неверна"
