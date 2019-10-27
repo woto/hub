@@ -10,11 +10,11 @@ import {
 } from "react-router-dom";
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import axios from '../../../shared/axios';
+import axios from '../../shared/axios';
 
-import { AuthContext } from '../../../shared/AuthContext';
-import ModalWrapper from '../../components/ModalWrapper';
-import withPopup from '../../../shared/withPopup';
+import { AuthContext } from '../../shared/AuthContext';
+import ModalWrapper from '../components/ModalWrapper';
+import withPopup from '../../shared/withPopup';
 
 class _Form extends React.Component {
 
@@ -124,12 +124,12 @@ class _Form extends React.Component {
             </Col>
           </Row>
 
-          <p style={{ paddingTop: "0.5rem" }}>
+          <p style={{ paddingTop: "0.3rem" }}>
             <Link className="login-form-forgot" to='/restore'>
               <FormattedMessage id="forgot-password" />
             </Link>
           </p>
-          <p style={{ paddingTop: "0.5rem" }}>
+          <p style={{ paddingTop: "0.3rem" }}>
             <Link jid="register" to='/register'>
               <FormattedMessage id="or-register-now" />
             </Link>

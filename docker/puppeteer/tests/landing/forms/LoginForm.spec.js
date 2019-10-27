@@ -8,7 +8,7 @@ const axios = require('axios');
 
 const shared = require('../../support/puppeteer');
 
-describe.only('RegisterForm', function () {
+describe('LoginForm', function () {
   this.timeout(10000);
   shared.preparePuppeteer.call(this);
 
