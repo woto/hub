@@ -45,7 +45,7 @@ export default class ModalWrapper extends React.Component {
           <Modal
             width={600}
             centered={true}
-            title="&nbsp;"
+            title={this.props.modal_title}
             visible={this.state.visible}
             onOk={this.handleOk}
             onCancel={this.handleCancel}

@@ -61,7 +61,7 @@ class _Form extends React.Component {
     const { intl } = this.props;
 
     return (
-      <ModalWrapper>
+      <ModalWrapper modal_title={<FormattedMessage id="login-form-title" />}>
         <div jid="login-form">
           <Row gutter={30}>
             <Col span={12} style={{ borderRight: "1px dashed #e8e8e8" }}>

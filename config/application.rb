@@ -36,7 +36,7 @@ module Hub
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
-    # config.debug_exception_response_format = :api
+    config.debug_exception_response_format = :api
 
     # config.api_only = true
 

@@ -7,6 +7,7 @@ import {
   Icon,
   Button,
   message,
+  Alert
 } from 'antd';
 
 import {
@@ -23,7 +24,7 @@ import ModalWrapper from '../components/ModalWrapper';
 class _Form extends React.Component {
 
   handleSubmit = e => {
-    const { intl } = this.props;
+    const { intl, history } = this.props;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -35,6 +36,7 @@ class _Form extends React.Component {
         })
           .then(({ data }) => {
             message.info(intl.formatMessage({ id: 'please-check-email' }));
+            history.push('/');
           })
           .catch((response) => {
             message.error(intl.formatMessage({ id: 'such-email-not-registered' }));
@@ -71,7 +73,7 @@ class _Form extends React.Component {
     };
 
     return (
-      <ModalWrapper>
+      <ModalWrapper  modal_title={<FormattedMessage id="restore-form-title" />}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
           <Form.Item label={<FormattedMessage id="email" />} hasFeedback>

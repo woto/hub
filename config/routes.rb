@@ -27,11 +27,14 @@ Rails.application.routes.draw do
   get 'reset', to: 'home#index', as: 'reset_password'
   get 'confirm', to: 'home#index', as: 'confirm_password'
   get 'proxy/:token', to: 'home#index'
+  get 'dashboard', to: 'home#index'
 
   resources :offers, only: %i[index] do
+    get 'login', on: :collection, to: 'home#index'
   end
   resources :feeds, controller: 'home', action: 'index', only: %i[index] do
     resources :offers, controller: 'offers', action: 'index', only: %i[index] do
+      get 'login', on: :collection, to: 'home#index'
     end
   end
 
@@ -57,12 +60,14 @@ Rails.application.routes.draw do
           end
           namespace 'postgres' do
             get 'create_user'
+            get 'get_user'
+            get 'send_reset_password_instructions'
           end
         end
       end
 
       namespace :users do
-        resources :binds
+        resources :binds, only: [:update]
       end
     end
   end

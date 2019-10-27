@@ -17,9 +17,8 @@ class _RegisterForm extends React.Component {
   };
 
   handleSubmit = e => {
-    const { intl } = this.props;
     let { context } = this;
-    const { history } = this.props;
+    const { history, intl } = this.props;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -112,7 +111,7 @@ class _RegisterForm extends React.Component {
     };
 
     return (
-      <ModalWrapper>
+      <ModalWrapper modal_title={<FormattedMessage id="register-form-title" />}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
           <Form.Item

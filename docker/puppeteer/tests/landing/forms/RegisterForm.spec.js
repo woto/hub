@@ -31,9 +31,11 @@ describe('RegisterForm', function () {
 
     await this.page.goto('https://en.nv6.ru/register', { waitUntil: 'networkidle0' });
 
-    await this.page.type('input[jid="register-form-email"]', 'user@example.com', { delay: 20 });
-    await this.page.type('input[jid="register-form-password"]', '123123', { delay: 20 });
-    await this.page.type('input[jid="register-form-password-confirmation"]', '123123', { delay: 20 });
+    const password = '123123123';
+    const email = 'user@example.com';
+    await this.page.type('input[jid="register-form-email"]', email, { delay: 20 });
+    await this.page.type('input[jid="register-form-password"]', password, { delay: 20 });
+    await this.page.type('input[jid="register-form-password-confirmation"]', password, { delay: 20 });
     await Promise.all([
       this.page.waitForNavigation(),
       this.page.click('[jid="register-form-submit"]'),

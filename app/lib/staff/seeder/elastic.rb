@@ -69,7 +69,7 @@ module Staff
               currencyId: %w[RUR EUR USD].sample,
               url: Faker::Internet.url,
               picture: rand(5).times.map do
-                Faker::LoremPixel.image
+                "https://nv6.ru/dummy.jpeg"
               end
             )
           )
