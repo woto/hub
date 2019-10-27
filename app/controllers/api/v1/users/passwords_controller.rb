@@ -7,6 +7,7 @@ module Api
       class PasswordsController < Devise::PasswordsController
         include DoorkeeperTokenable
 
+        # confirms email
         def update
           super do
             if resource.errors.empty?

@@ -22,6 +22,7 @@
     "password-successfully-changed": "Password successfully changed",
     "try-to-reconfirm-password-restoration": "Request password reset link on e-mail again",
     "reset-form-change-password-button": "Change password",
+    "email-successfully-confirmed": "E-mail successfully confirmed",
     "register-form-title": "Registration",
     "restore-form-title": "Password reset",
     "login-form-title": "Login",

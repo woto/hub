@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from '../../shared/axios';
-import { Route, Redirect } from 'react-router'
 
 import {
   Form,

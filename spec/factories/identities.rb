@@ -7,6 +7,7 @@ FactoryBot.define do
     provider { linkedin['provider'] }
     auth { linkedin }
 
+    # FIXME: it can't be an identity without user
     trait :with_user do
       association :user, email: linkedin['info']['email']
     end
