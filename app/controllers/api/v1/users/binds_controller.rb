@@ -20,8 +20,12 @@ module Api
 
         def read_oauth_info_from_redis
           redis = Redis.new(Rails.configuration.redis_oauth)
-          raw = JSON.parse(redis.get(params[:id]))
-          @oauth = OauthStruct.new(raw)
+          str = redis.get(params[:id])
+          return head(:gone) if str.nil?
+
+          redis.del(params[:id])
+          json = JSON.parse(str)
+          @oauth = OauthStruct.new(json)
         end
 
         # Every identity will be binded to this user.

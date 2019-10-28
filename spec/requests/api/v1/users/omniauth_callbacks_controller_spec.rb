@@ -3,7 +3,17 @@
 require 'spec_helper'
 
 describe Users::OmniauthCallbacksController, type: :request do
-  OmniAuth.config.test_mode = true
+  # Not sure if this needed (save and restore test_mode)
+  # for now will be think that yes
+
+  before(:all) do
+    @initial_test_mode = OmniAuth.config.test_mode
+    OmniAuth.config.test_mode = true
+  end
+
+  after(:all) do
+    OmniAuth.config.test_mode = @initial_test_mode
+  end
 
   Rails.configuration.oauth_providers.each do |provider|
     it "redirects to appropriate provider url when requesting /users/auth/#{provider}" do

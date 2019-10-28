@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get 'restore', to: 'home#index', as: 'restore_password'
   get 'reset', to: 'home#index', as: 'reset_password'
   get 'confirm', to: 'home#index', as: 'confirm_password'
-  get 'proxy/:token', to: 'home#index'
+  get 'proxy/:token', to: 'home#index', as: 'user_proxy'
   get 'dashboard', to: 'home#index'
 
   resources :offers, only: %i[index] do
@@ -64,6 +64,9 @@ Rails.application.routes.draw do
             get 'get_user'
             get 'send_reset_password_instructions'
             get 'send_confirmation_instructions'
+          end
+          namespace 'redis' do
+            get 'get_ready_for_proxy'
           end
         end
       end
