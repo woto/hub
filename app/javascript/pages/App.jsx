@@ -48,12 +48,6 @@ export default class App extends React.Component {
       [lang] = parts;
     }
     this.state = { localeProp: lang };
-
-    // AUTH
-    const accessToken = Cookies.get('access_token');
-    if (accessToken) {
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    }
   }
 
   render() {
@@ -61,44 +55,41 @@ export default class App extends React.Component {
       <Router>
         <IntlProvider locale={this.state.localeProp} key={this.state.localeProp} messages={locales[this.state.localeProp]}>
           <AuthProvider>
-            <ConfigProvider>
-            <IntlProvider locale={this.state.localeProp} key={this.state.localeProp} messages={locales[this.state.localeProp]}>
-              <Route path="/login" component={LoginForm} />
-              <Route path="/register" component={RegisterForm} />
-              <Route path="/confirm" component={ConfirmForm} />
-              <Route path="/restore" component={RestoreForm} />
-              <Route path="/reset" component={ResetForm} />
-              <Route path="/proxy/:id" component={Proxy} />
-              <Route path="/dashboard" component={Dashboard} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/register" component={RegisterForm} />
+            <Route path="/confirm" component={ConfirmForm} />
+            <Route path="/restore" component={RestoreForm} />
+            <Route path="/reset" component={ResetForm} />
+            <Route path="/proxy/:id" component={Proxy} />
+            <Route path="/dashboard" component={Dashboard} />
 
-              <Route exact path="/feeds/page/:page" component={Feeds} />
-              <Route exact path="/feeds" component={Feeds} />
+            <Route exact path="/feeds/page/:page" component={Feeds} />
+            <Route exact path="/feeds" component={Feeds} />
 
-              <Route exact path={['/feeds/:id/offers', '/feeds/:id/offers/login']} component={Offers} />
-              <Route exact path={['/feeds/:id/offers/page/:page', '/feeds/:id/offers/page/:page/login']} component={Offers} />
+            <Route exact path={['/feeds/:id/offers', '/feeds/:id/offers/login']} component={Offers} />
+            <Route exact path={['/feeds/:id/offers/page/:page', '/feeds/:id/offers/page/:page/login']} component={Offers} />
 
-              <Route exact path={['/feeds/:id/offers/login']} component={LoginForm} />
-              <Route exact path={['/feeds/:id/offers/page/:page/login']} component={LoginForm} />
+            <Route exact path={['/feeds/:id/offers/login']} component={LoginForm} />
+            <Route exact path={['/feeds/:id/offers/page/:page/login']} component={LoginForm} />
 
-              <Route exact path={['/offers', '/offers/login']} component={Offers} />
-              <Route exact path={['/offers/page/:page', '/offers/page/:page/login']} component={Offers} />
+            <Route exact path={['/offers', '/offers/login']} component={Offers} />
+            <Route exact path={['/offers/page/:page', '/offers/page/:page/login']} component={Offers} />
 
-              <Route path="/offers/login" component={LoginForm} />
-              <Route path="/offers/page/:page/login" component={LoginForm} />
+            <Route path="/offers/login" component={LoginForm} />
+            <Route path="/offers/page/:page/login" component={LoginForm} />
 
-              <Route exact path="/posts" component={Posts} />
-              <Route exact path="/posts/new" component={Post} />
-              <Route exact path="/posts/:id/edit" component={Post} />
+            <Route exact path="/posts" component={Posts} />
+            <Route exact path="/posts/new" component={Post} />
+            <Route exact path="/posts/:id/edit" component={Post} />
 
-              <Route exact path="/settings/password" component={Password} />
-              <Route path="/settings/profile" component={Profile} />
-              <Route exact path="/settings/email" component={Email} />
-              <Route exact path="/settings/social-networks" component={SocialNetworks} />
+            <Route exact path="/settings/password" component={Password} />
+            <Route path="/settings/profile" component={Profile} />
+            <Route exact path="/settings/email" component={Email} />
+            <Route exact path="/settings/social-networks" component={SocialNetworks} />
 
-              <Route exact path={['/', '/login', '/register', '/confirm', '/restore', '/reset']} component={Landing} />
-            </IntlProvider>
-            </ConfigProvider>
+            <Route exact path={['/', '/login', '/register', '/confirm', '/restore', '/reset']} component={Landing} />
           </AuthProvider>
+        </IntlProvider>
       </Router>
     );
   }

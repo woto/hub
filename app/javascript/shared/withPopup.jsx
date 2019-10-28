@@ -5,6 +5,7 @@ function withPopup(Component) {
       `scrollbars=no, alwaysRaise=yes`);
 
     const authHandler = (event) => {
+      // TODO: To write tests
       if (event.data === 'Oauth authenticated') {
         popup.close();
         const { context } = this;

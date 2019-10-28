@@ -39,7 +39,9 @@ describe('LoginForm', function () {
     await this.page.type('input[jid="login-form-username"]', username, { delay: 20 });
     await this.page.type('input[jid="login-form-password"]', password, { delay: 20 });
     await this.page.click('[jid="login-form-login-button"]');
+    console.log('1');
     await this.page.waitFor("//span[contains(text(), 'Wrong e-mail or password')]");
+    console.log('2');
     expect(await this.page.url()).to.equal('https://en.nv6.ru/login');
   });
 });
