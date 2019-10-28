@@ -42,7 +42,6 @@ describe('RegisterForm', function () {
     ]);
 
     expect(await this.page.url()).to.equal('https://en.nv6.ru/dashboard');
-    // Checking checkProfile() call. Make it more flexible somehow.
     await this.page.waitFor("//header//p[contains(text(), 'Exit')]");
   });
 });

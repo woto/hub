@@ -11,7 +11,7 @@ function withPopup(Component) {
         const accessToken = context.readAccessToken();
         context.setAxiosAuthorizationHeader(accessToken);
         window.removeEventListener('message', authHandler);
-        this.setState({ isAuthenticated: true });
+        this.redirectToDashboard();
       }
     };
 

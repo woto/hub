@@ -13,7 +13,7 @@ describe('App', function () {
   this.timeout(10000);
   shared.preparePuppeteer.call(this);
 
-  it('Makes requests with authorization headers on page reload', async () => {
+  it('Makes requests with authorization headers when page reloaded', async () => {
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
     await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
 

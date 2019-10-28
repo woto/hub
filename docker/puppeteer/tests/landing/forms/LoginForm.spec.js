@@ -22,13 +22,12 @@ describe('LoginForm', function () {
 
     expect(await this.page.url()).to.equal('https://ru.nv6.ru/dashboard');
 
-    const result = await this.page.evaluate(() => {
-      return window.history.length;
-    });
+    const result = await this.page.evaluate(() => window.history.length);
     expect(result).to.equal(2);
+    await this.page.waitFor("//header//p[contains(text(), 'Выход')]");
   });
 
-  it('Respects "Remember me checkbox"')
+  it('Respects "Remember me checkbox"');
 
   it('Displays error message if login or password are wrong', async () => {
     await this.page.goto('https://en.nv6.ru/login', { waitUntil: 'networkidle0' });

@@ -84,5 +84,7 @@
     "feature8-button": "寄存器",
     "current-email-address": "当前的电子邮件地址",
     "confirmed": "已确认",
-    "unconfirmed": "未确认"
+    "unconfirmed": "未确认",
+    "successfully-logged-in": "您已成功登录",
+    "goodbye": "再见"
 }

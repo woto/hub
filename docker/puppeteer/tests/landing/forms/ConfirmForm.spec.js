@@ -13,14 +13,22 @@ describe('ConfirmForm', function () {
   shared.preparePuppeteer.call(this);
 
   it('Confirms user email and redirects to "Dashboard page"', async () => {
+    console.log('1');
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    console.log('2');
     await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_unconfirmed_user');
+    console.log('3');
     const confirmationToken = await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/send_confirmation_instructions');
 
+    console.log('4');
     await this.page.goto(`https://nv6.ru/confirm?confirmation_token=${confirmationToken.data}`, { waitUntil: 'networkidle0' })
 
+    console.log('5');
     expect(await this.page.url()).to.equal('https://nv6.ru/dashboard');
+    console.log('6');
     await this.page.waitFor("//span[contains(text(), 'E-mail successfully confirmed')]");
+    console.log('7');
+    await this.page.waitFor("//header//p[contains(text(), 'Exit')]");
   });
 
   it('Asks to login if e-mail already confirmed', async () => {

@@ -38,7 +38,7 @@ class _Form extends React.Component {
             message.info(intl.formatMessage({ id: 'please-check-email' }));
             history.push('/');
           })
-          .catch((response) => {
+          .catch((error) => {
             message.error(intl.formatMessage({ id: 'such-email-not-registered' }));
           });
       }

@@ -18,12 +18,6 @@ import withPopup from '../../shared/withPopup';
 
 class _Form extends React.Component {
 
-  constructor(props) {
-    super(props);
-    // this.popupWindow = popupWindow.bind(this);
-    this.state = { isAuthenticated: false }
-  }
-
   handleSubmit = (e) => {
     let context = this.context;
     e.preventDefault();
@@ -38,27 +32,27 @@ class _Form extends React.Component {
         })
           .then(({ data }) => {
             context.setAxiosAuthorizationHeader(data.access_token);
-            this.setState({ isAuthenticated: true });
+            this.redirectToDashboard();
           })
-          .catch((response) => {
+          .catch((error) => {
             message.error(intl.formatMessage({ id: 'unable-to-login' }));
-            this.setState({ isAuthenticated: false });
           });
       }
     });
   };
 
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    if (this.state.isAuthenticated) {
-      let context = this.context;
-      context.checkProfile();
-      return (
-        <Redirect to="/dashboard" />
-      )
-    }
+  redirectToDashboard = () => {
+    let context = this.context;
+    const { history, intl } = this.props;
+    context.checkProfile();
+    history.replace('/dashboard');
+    message.info(intl.formatMessage({ id: 'successfully-logged-in' }))
+  }
 
+
+  render() {
     const { intl } = this.props;
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <ModalWrapper modal_title={<FormattedMessage id="login-form-title" />}>
@@ -68,7 +62,12 @@ class _Form extends React.Component {
               <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
                   {getFieldDecorator('username', {
-                    rules: [{ required: true, message: <FormattedMessage id="please-enter-email" /> }],
+                    rules: [
+                      {
+                        required: true,
+                        message: <FormattedMessage id="please-enter-email" />,
+                      },
+                    ],
                   })(
                     <Input
                       jid="login-form-username"
@@ -79,7 +78,12 @@ class _Form extends React.Component {
                 </Form.Item>
                 <Form.Item>
                   {getFieldDecorator('password', {
-                    rules: [{ required: true, message: <FormattedMessage id="please-enter-password" /> }],
+                    rules: [
+                      {
+                        required: true,
+                        message: <FormattedMessage id="please-enter-password" />
+                      }
+                    ],
                   })(
                     <Input
                       jid="login-form-password"
@@ -142,5 +146,6 @@ class _Form extends React.Component {
 
 _Form.contextType = AuthContext;
 _Form = withPopup(_Form);
-const LoginForm = injectIntl(Form.create({ name: 'login' })(_Form));
+_Form = injectIntl(_Form);
+const LoginForm = Form.create({ name: 'login' })(_Form);
 export default LoginForm;

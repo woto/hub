@@ -84,5 +84,7 @@
     "feature8-button": "Register",
     "current-email-address": "Current e-mail address",
     "confirmed": "Confirmed",
-    "unconfirmed": "Unconfirmed"
+    "unconfirmed": "Unconfirmed",
+    "successfully-logged-in": "You are successfully logged in",
+    "goodbye": "Goodbye"
 }

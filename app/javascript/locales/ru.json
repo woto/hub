@@ -84,5 +84,7 @@
     "feature8-button": "Зарегистрироваться",
     "current-email-address": "Текущий адрес e-mail",
     "confirmed": "Подтверждён",
-    "unconfirmed": "Не подтверждён"
+    "unconfirmed": "Не подтверждён",
+    "successfully-logged-in": "Вы успешно вошли в систему",
+    "goodbye": "До свидания"
 }

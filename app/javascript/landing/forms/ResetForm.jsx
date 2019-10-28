@@ -40,7 +40,7 @@ class _Form extends React.Component {
             message.info(intl.formatMessage({ id: 'password-successfully-changed' }));
             history.push('/dashboard');
           })
-          .catch((response) => {
+          .catch((error) => {
             message.error(intl.formatMessage({ id: 'try-to-reconfirm-password-restoration' }));
           });
 
