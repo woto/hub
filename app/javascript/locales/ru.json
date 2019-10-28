@@ -10,12 +10,13 @@
     "register": "Зарегистрироваться",
     "unable-to-proceed": "Невозможно продолжить",
     "or-register-now": "Или зарегистрируйтесь сейчас используя e-mail!",
-    "please-enter-email": "Пожалуйста введите e-mail",
+    "please-enter-email": "Пожалуйста введите свой e-mail",
     "inconsistent-confirmation": "Введённые пароли не совпадают",
     "unable-to-login": "Неверные логин или пароль",
     "please-check-email": "Пожалуйста, проверьте почту",
     "such-email-not-registered": "Введённый e-mail не зарегистрирован",
     "email": "E-mail",
+    "save": "Сохранить",
     "email-format-invalid": "Введённый e-mail неверен",
     "please-enter-password": "Пожалуйста введите пароль",
     "please-confirm-password": "Пожалуйста подтвердите пароль",
@@ -23,6 +24,7 @@
     "try-to-reconfirm-password-restoration": "Запросите ссылку для восстановления пароля повторно",
     "reset-form-change-password-button": "Сменить пароль",
     "email-successfully-confirmed": "E-mail успешно подтвержден",
+    "alert-settings-email": "Вы можете изменить свой адрес e-mail. Он будет обновлён после перехода по ссылке в подтверждающем письме.",
     "register-form-title": "Регистрация",
     "restore-form-title": "Восстановление пароля",
     "login-form-title": "Вход на сайт",
@@ -79,5 +81,8 @@
     "feature6-unit-2": "тыс. руб.",
     "feature7-block-title": "Супер яркий фонарь XML-T6",
     "feature7-block-content": "Подходит для самообеспечения, охоты, езды на велосипеде, альпинизма, кемпинга и активного отдыха и т. д. Лампа XPE beads, люменов высокой яркости, срок службы 100000 часов",
-    "feature8-button": "Зарегистрироваться"
+    "feature8-button": "Зарегистрироваться",
+    "current-email-address": "Текущий адрес e-mail",
+    "confirmed": "Подтверждён",
+    "unconfirmed": "Не подтверждён"
 }

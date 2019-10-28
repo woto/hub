@@ -15,6 +15,7 @@
 * [x] Redo the multiple oauth authentication https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers Changing email leads to problems which doesn't covers by current implementation.
 
 # v1.1
+* [ ] To test https://ru.nv6.ru/settings/email
 * [ ] Add validation to User (accommodate validatable Devise module)
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
 * [ ] Ckeditor images upload.

@@ -16,6 +16,7 @@
     "please-check-email": "Please check e-mail",
     "such-email-not-registered": "Such e-mail is not registered",
     "email": "E-mail",
+    "save": "Save",
     "email-format-invalid": "Entered e-mail is not valid",
     "please-enter-password": "Please enter password",
     "please-confirm-password": "Please confirm password",
@@ -23,6 +24,7 @@
     "try-to-reconfirm-password-restoration": "Request password reset link on e-mail again",
     "reset-form-change-password-button": "Change password",
     "email-successfully-confirmed": "E-mail successfully confirmed",
+    "alert-settings-email": "You may change your e-mail address. It will be updated after following link in confirmation e-mail.",
     "register-form-title": "Registration",
     "restore-form-title": "Password reset",
     "login-form-title": "Login",
@@ -79,5 +81,8 @@
     "feature6-unit-2": "thousands $",
     "feature7-block-title": "Super Bright XML-T6 Flashlight",
     "feature7-block-content": "Suitable for self-sufficiency, hunting, cycling, mountaineering, camping and outdoor activities, etc. XPE beads lamp, high brightness lumens, life of 100,000 hours",
-    "feature8-button": "Register"
+    "feature8-button": "Register",
+    "current-email-address": "Current e-mail address",
+    "confirmed": "Confirmed",
+    "unconfirmed": "Unconfirmed"
 }

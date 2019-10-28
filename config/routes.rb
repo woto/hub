@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   get 'proxy/:token', to: 'home#index', as: 'user_proxy'
   get 'dashboard', to: 'home#index'
 
+  scope '/settings' do
+    get 'email', to: 'home#index'
+  end
   resources :offers, only: %i[index] do
     get 'login', on: :collection, to: 'home#index'
   end
