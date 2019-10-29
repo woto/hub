@@ -39,3 +39,9 @@ en:
               already_confirmed: "E-mail was already confirmed, please try signing in"
             confirmation_token:
               invalid: "Confirmation link is invalid"
+  doorkeeper:
+    errors:
+      messages:
+        wrong_password: "Wrong password. Please use recovery password form"
+        email_unconfirmed: "You email unconfirmed. Please rerequest confirmation link"
+        not_registered: "Entered e-mail doesn't registered"

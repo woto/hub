@@ -8,6 +8,7 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
+import _ from 'lodash';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import axios from '../../shared/axios';
@@ -35,7 +36,12 @@ class _Form extends React.Component {
             this.redirectToDashboard();
           })
           .catch((error) => {
-            message.error(intl.formatMessage({ id: 'unable-to-login' }));
+            const message = _.get(error, ['response', 'data', 'error_description']);
+            if (_.isString(message)) {
+              message.error(message);
+            } else {
+              message.error(intl.formatMessage({ id: 'unexpected-error-try-again-later' }));
+            }
           });
       }
     });

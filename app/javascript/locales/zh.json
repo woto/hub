@@ -12,7 +12,7 @@
     "or-register-now": "或立即使用电子邮件注册！",
     "please-enter-email": "请输入邮箱",
     "inconsistent-confirmation": "您输入的两个密码不一致!",
-    "unable-to-login": "错误的邮件地址或密码",
+    "unexpected-error-try-again-later": "意外错误。 请稍后再试。",
     "please-check-email": "请检查您的邮件",
     "such-email-not-registered": "输入的电子邮件未注册",
     "email": "电邮",

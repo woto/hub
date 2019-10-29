@@ -8,3 +8,9 @@ ru:
               already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
             confirmation_token:
               invalid: "Ссылка для подтверждения неверна"
+  doorkeeper:
+    errors:
+      messages:
+        wrong_password: "Неверный пароль. Используйте форму восстановления пароля"
+        email_unconfirmed: "Ваш e-mail не подтверждён. Пожалуйста запросите письмо с ссылкой для подтверждения"
+        not_registered: "Введённый e-mail не зарегистрирован в системе"

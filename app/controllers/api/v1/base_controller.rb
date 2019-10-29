@@ -2,7 +2,6 @@
 
 module Api
   module V1
-
     # Absolutely all api controllers should inherit from this class!
     class BaseController < ApplicationController
       respond_to :json

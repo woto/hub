@@ -12,7 +12,7 @@
     "or-register-now": "Or register now using e-mail!",
     "please-enter-email": "Please enter e-mail",
     "inconsistent-confirmation": "Two passwords that you enter is inconsistent!",
-    "unable-to-login": "Wrong e-mail or password",
+    "unexpected-error-try-again-later": "Unexpected error. Please try again later",
     "please-check-email": "Please check e-mail",
     "such-email-not-registered": "Such e-mail is not registered",
     "email": "E-mail",

@@ -3,22 +3,36 @@
 require 'rails_helper'
 
 describe Doorkeeper::TokensController, type: :request do
-  def make
+  def make(email, password)
     post '/oauth/token', params: {
       grant_type: 'password',
-      username: user.email,
-      password: user.password
+      username: email,
+      password: password
     }
   end
 
-  context 'user confirmed' do
+  context 'unexisted email' do
     let(:user) { create(:user) }
 
-    it do
-      make
+    specify do
+      make("not_existing_#{user.email}", user.password)
+      expect(json_response_body).to include('error' => 'not_registered')
+    end
+  end
+
+  context 'when user confirmed' do
+    let(:user) { create(:user) }
+
+    it 'getting access_token' do
+      make(user.email, user.password)
       # TODO: why it doesn't behave like be_like_tokenable?
       # it doesn't include refresh_token
       expect(json_response_body).to have_key('access_token')
+    end
+
+    it 'getting error if password is wrong' do
+      make(user.email, "#{user.password} !")
+      expect(json_response_body).to include('error' => 'wrong_password')
     end
   end
 
@@ -26,8 +40,8 @@ describe Doorkeeper::TokensController, type: :request do
     context 'when registered less than two weeks ago' do
       let(:user) { create(:user, :unconfirmed) }
 
-      it do
-        make
+      it 'getting access_token' do
+        make(user.email, user.password)
         # TODO: why it doesn't behave like be_like_tokenable?
         # it doesn't include refresh_token
         expect(json_response_body).to have_key('access_token')
@@ -41,12 +55,9 @@ describe Doorkeeper::TokensController, type: :request do
         end
       end
 
-      it do
-        make
-        expect(json_response_body).to eq(
-          'error' => 'invalid_grant',
-          'error_description' => 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
-        )
+      specify do
+        make(user.email, user.password)
+        expect(json_response_body).to include('error' => 'email_unconfirmed')
       end
     end
   end

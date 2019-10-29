@@ -10,12 +10,21 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do
+    # TODO: to add lockable Devise strategy
     user = User.find_for_database_authentication(email: params[:username])
-    if user&.valid_for_authentication? { user.valid_password?(params[:password]) } && user&.active_for_authentication?
-      # Updates current_sign_in_at, last_sign_in_at, sign_in_count, updated_at
-      request.env['warden'].set_user(user, store: false)
-      user
+    raise Doorkeeper::Errors::DoorkeeperError, :not_registered unless user
+
+    check = user.valid_for_authentication? do
+      user.valid_password?(params[:password])
     end
+    raise Doorkeeper::Errors::DoorkeeperError, :wrong_password unless check
+
+    check = user.active_for_authentication?
+    raise Doorkeeper::Errors::DoorkeeperError, :email_unconfirmed unless check
+
+    # Updates current_sign_in_at, last_sign_in_at, sign_in_count, updated_at
+    request.env['warden'].set_user(user, store: false)
+    user
   end
 
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb

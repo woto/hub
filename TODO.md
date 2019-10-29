@@ -3,7 +3,7 @@
 * [x] Link from offers list should follow to login page for unauthenticated users.
 * [x] To do address bar pagination at offers list.
 * [x] Fix oauth authentication.
-* [ ] Check all pages which underwent a changes due removing MyAuth and axios.
+* [x] Check all pages which underwent a changes due removing MyAuth and axios.
 * [x] Changing email by user with confirmed email leads to the fact that if he will not confirm new email then he will lose access to website after 2 weeks. Wtf?!
 * [x] Oauth login from any subdomain doesn't work due postMessage restriction.
 * [x] Closing login page should lead to correct page (not main page).
@@ -21,3 +21,6 @@
 * [ ] Ckeditor images upload.
 * [ ] Pagination with more than 10 000 items.
 * [ ] Sorting in the offers list.
+* [ ] Internationalization in Login Form
+* [ ] To spruce up Emails (Registration, confirmation, password recovery)
+* [ ] To add lockable Devise strategy

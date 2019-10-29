@@ -12,7 +12,7 @@
     "or-register-now": "Или зарегистрируйтесь сейчас используя e-mail!",
     "please-enter-email": "Пожалуйста введите свой e-mail",
     "inconsistent-confirmation": "Введённые пароли не совпадают",
-    "unable-to-login": "Неверные логин или пароль",
+    "unexpected-error-try-again-later": "Неожиданная ошибка. Пожалуйста попробуйте попозже",
     "please-check-email": "Пожалуйста, проверьте почту",
     "such-email-not-registered": "Введённый e-mail не зарегистрирован",
     "email": "E-mail",
