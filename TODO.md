@@ -28,3 +28,4 @@
 * [ ] Heh. license agreenment may be skiped if used social login.
 * [ ] To test /settings/email
 * [ ] To test /settings/password
+* [ ] To test /confirmation

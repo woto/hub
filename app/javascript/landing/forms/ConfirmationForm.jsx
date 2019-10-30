@@ -30,7 +30,7 @@ class _Form extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values);
-        axios.post(`/api/v1/users/password/`, {
+        axios.post(`/api/v1/users/confirmation/`, {
           user: {
             ...values
           }
@@ -74,7 +74,7 @@ class _Form extends React.Component {
     };
 
     return (
-      <ModalWrapper modal_title={<FormattedMessage id="restore-form-title" />}>
+      <ModalWrapper modal_title={<FormattedMessage id="confirmation-form-title" />}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
           <Form.Item label={<FormattedMessage id="email" />} hasFeedback>
@@ -89,12 +89,12 @@ class _Form extends React.Component {
                   message: <FormattedMessage id="please-enter-email" />,
                 },
               ],
-            })(<Input jid='restore-form-email' />)}
+            })(<Input jid='confirmation-form-email' />)}
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>
-            <Button jid="restore-form-button" type="primary" htmlType="submit">
-              <FormattedMessage id="restore-form-button" />
+            <Button jid="confirmation-form-button" type="primary" htmlType="submit">
+              <FormattedMessage id="confirmation-form-button" />
             </Button>
           </Form.Item>
 
@@ -108,6 +108,5 @@ class _Form extends React.Component {
   }
 }
 
-const RestoreForm = injectIntl(Form.create({ name: 'restore' })(_Form));
-
-export default RestoreForm
+const ConfirmationForm = injectIntl(Form.create({ name: 'confirmation' })(_Form));
+export default ConfirmationForm

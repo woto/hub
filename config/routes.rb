@@ -26,18 +26,25 @@ Rails.application.routes.draw do
   get 'restore', to: 'home#index', as: 'restore_password'
   get 'reset', to: 'home#index', as: 'reset_password'
   get 'confirm', to: 'home#index', as: 'confirm_password'
+  get 'confirmation', to: 'home#index', as: 'confirmation'
   get 'proxy/:token', to: 'home#index', as: 'user_proxy'
   get 'dashboard', to: 'home#index'
 
   scope '/settings' do
     get 'email', to: 'home#index'
+    get 'profile', to: 'home#index'
+    get 'password', to: 'home#index'
+    get 'social-networks', to: 'home#index'
   end
+
   resources :offers, only: %i[index] do
     get 'login', on: :collection, to: 'home#index'
+    # TODO: add register, etc...
   end
   resources :feeds, controller: 'home', action: 'index', only: %i[index] do
     resources :offers, controller: 'offers', action: 'index', only: %i[index] do
       get 'login', on: :collection, to: 'home#index'
+      # TODO: add register, etc...
     end
   end
 

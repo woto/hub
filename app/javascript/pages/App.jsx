@@ -27,6 +27,7 @@ import Dashboard from './Dashboard';
 import LoginForm from '../landing/forms/LoginForm';
 import RegisterForm from '../landing/forms/RegisterForm';
 import ConfirmForm from '../landing/forms/ConfirmForm';
+import ConfirmationForm from '../landing/forms/ConfirmationForm';
 import RestoreForm from '../landing/forms/RestoreForm';
 import ResetForm from '../landing/forms/ResetForm';
 import { AuthProvider } from '../shared/AuthContext';
@@ -38,7 +39,7 @@ const locales = {
 };
 
 function assembleAuthRoutes(url) {
-  return [url, `${url}/login`, `${url}/register`, `${url}/restore`];
+  return [url, `${url}/login`, `${url}/register`, `${url}/restore`, `${url}/confirmation`];
 }
 
 export default class App extends React.Component {
@@ -62,6 +63,7 @@ export default class App extends React.Component {
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/confirm" component={ConfirmForm} />
+            <Route path="/confirmation" component={ConfirmationForm} />
             <Route path="/restore" component={RestoreForm} />
             <Route path="/reset" component={ResetForm} />
             <Route path="/proxy/:id" component={Proxy} />
@@ -73,11 +75,13 @@ export default class App extends React.Component {
             <Route exact path={['/feeds/:id/offers/login']} component={LoginForm} />
             <Route exact path={['/feeds/:id/offers/register']} component={RegisterForm} />
             <Route exact path={['/feeds/:id/offers/restore']} component={RestoreForm} />
+            <Route exact path={['/feeds/:id/offers/confirmation']} component={ConfirmationForm} />
 
             <Route exact path={assembleAuthRoutes('/offers')} component={Offers} />
             <Route path={['/offers/login']} component={LoginForm} />
             <Route path={['/offers/register']} component={RegisterForm} />
             <Route path={['/offers/restore']} component={RestoreForm} />
+            <Route path={['/offers/confirmation']} component={ConfirmationForm} />
 
             <Route exact path="/posts" component={Posts} />
             <Route exact path="/posts/new" component={Post} />
@@ -88,7 +92,7 @@ export default class App extends React.Component {
             <Route exact path="/settings/email" component={Email} />
             <Route exact path="/settings/social-networks" component={SocialNetworks} />
 
-            <Route exact path={['/', '/login', '/register', '/confirm', '/restore', '/reset']} component={Landing} />
+            <Route exact path={['/', '/login', '/register', '/confirm', '/confirmation', '/restore', '/reset']} component={Landing} />
           </AuthProvider>
         </IntlProvider>
       </Router>

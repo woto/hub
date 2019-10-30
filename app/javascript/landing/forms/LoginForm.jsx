@@ -135,16 +135,24 @@ class _Form extends React.Component {
             </Col>
           </Row>
 
-          <p style={{ paddingTop: "0.3rem" }}>
+          <p style={{ paddingTop: "0.1rem" }}>
             <Link jid="login-form-forgot" className="login-form-forgot" to={replaceLastPathName('/restore')}>
-              <FormattedMessage id="forgot-password" />
+              <FormattedMessage id="login-form-forgot-password" />
             </Link>
           </p>
-          <p style={{ paddingTop: "0.3rem" }}>
+
+          <p style={{ paddingTop: "0.1rem" }}>
             <Link jid="login-form-register" to={replaceLastPathName('/register')}>
-              <FormattedMessage id="or-register-now" />
+              <FormattedMessage id="login-form-or-register-now" />
             </Link>
           </p>
+
+          <p style={{ paddingTop: "0.1rem" }}>
+            <Link jid="login-form-confirmation" to={replaceLastPathName('/confirmation')}>
+              <FormattedMessage id="login-form-confirmation" />
+            </Link>
+          </p>
+
         </div>
       </ModalWrapper>
     );
