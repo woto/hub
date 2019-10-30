@@ -8,15 +8,16 @@
 * [x] Oauth login from any subdomain doesn't work due postMessage restriction.
 * [x] Closing login page should lead to correct page (not main page).
 * [x] Left vertical menu link (same section) doesn't updates results if filter or page were set.
-* [ ] Heh. license agreenment may be skiped if used social login.
 * [ ] Filtering in feeds list.
 * [x] Write tests for offers lists raw html response (for SEO indexing purposes).
 * [x] Check response on api controllers related to authentication. It should not contain any sensitive data. Only token or nothing.
 * [x] Redo the multiple oauth authentication https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers Changing email leads to problems which doesn't covers by current implementation.
+* [ ] To add request form for email with confirmation link.
+* [ ] To test https://ru.nv6.ru/settings/email
+* [ ] Add validation to User (accommodate validatable Devise module).
+* [ ] Links in login form (Restore password, Register) should not link on home page with opened modal.
 
 # v1.1
-* [ ] To test https://ru.nv6.ru/settings/email
-* [ ] Add validation to User (accommodate validatable Devise module)
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
 * [ ] Ckeditor images upload.
 * [ ] Pagination with more than 10 000 items.
@@ -24,3 +25,5 @@
 * [ ] Internationalization in Login Form
 * [ ] To spruce up Emails (Registration, confirmation, password recovery)
 * [ ] To add lockable Devise strategy
+* [ ] Redirect on a previous page after login.
+* [ ] Heh. license agreenment may be skiped if used social login.
