@@ -25,6 +25,7 @@
     "reset-form-change-password-button": "Change password",
     "email-successfully-confirmed": "E-mail successfully confirmed",
     "alert-settings-email": "You may change your e-mail address. It will be updated after following link in confirmation e-mail.",
+    "alert-settings-password": "Immediately after changing your password, we will send you an email about it, so do not be alarmed. :)",
     "register-form-title": "Registration",
     "restore-form-title": "Password reset",
     "login-form-title": "Login",

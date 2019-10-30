@@ -25,6 +25,7 @@
     "reset-form-change-password-button": "修改密码",
     "email-successfully-confirmed": "电子邮件已成功验证",
     "alert-settings-email": "您可以更改您的电子邮件地址。 单击确认电子邮件中的链接后，它将进行更新。",
+    "alert-settings-password": "更改密码后，我们会立即向您发送有关该密码的电子邮件，因此请不要感到惊慌。 :)",
     "register-form-title": "报名",
     "restore-form-title": "密码恢复",
     "login-form-title": "登录该网站",

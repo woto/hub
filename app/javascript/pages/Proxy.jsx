@@ -4,6 +4,7 @@ import { AuthContext } from '../shared/AuthContext';
 
 import axios from '../shared/axios';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Proxy extends React.Component {
   componentDidMount() {
     const { context } = this;

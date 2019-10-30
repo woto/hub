@@ -11,6 +11,17 @@ export const AuthContext = React.createContext({})
 
 class _AuthProvider extends React.Component {
 
+  constructor(props) {
+    // TODO: to write tests
+    super(props);
+
+    const accessToken = this.readAccessToken();
+    if (accessToken) {
+      this.setAxiosAuthorizationHeader(accessToken);
+    }
+    this.checkProfile();
+  }
+
   setAxiosAuthorizationHeader(accessToken) {
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     // It's normal for standard login workflow, but for Oauth workflow it looks
@@ -57,16 +68,6 @@ class _AuthProvider extends React.Component {
       user: {}
     })
     setTimeout(() => message.info(intl.formatMessage({ id: 'goodbye' })), 500);
-  }
-
-  componentDidMount() {
-    // TODO: to write tests
-    console.log('mounted');
-    const accessToken = this.readAccessToken();
-    if (accessToken) {
-      this.setAxiosAuthorizationHeader(accessToken);
-    }
-    this.checkProfile();
   }
 
   state = {

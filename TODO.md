@@ -13,7 +13,6 @@
 * [x] Check response on api controllers related to authentication. It should not contain any sensitive data. Only token or nothing.
 * [x] Redo the multiple oauth authentication https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers Changing email leads to problems which doesn't covers by current implementation.
 * [ ] To add request form for email with confirmation link.
-* [ ] To test https://ru.nv6.ru/settings/email
 * [ ] Add validation to User (accommodate validatable Devise module).
 * [x] Links in login form (Restore password, Register) should not link on home page with opened modal.
 
@@ -23,7 +22,9 @@
 * [ ] Pagination with more than 10 000 items.
 * [ ] Sorting in the offers list.
 * [ ] Internationalization in Login Form
-* [ ] To spruce up Emails (Registration, confirmation, password recovery)
+* [ ] To spruce up Emails (Registration, confirmation, password recovery, password change)
 * [ ] To add lockable Devise strategy
 * [ ] Redirect on a previous page after login.
 * [ ] Heh. license agreenment may be skiped if used social login.
+* [ ] To test /settings/email
+* [ ] To test /settings/password

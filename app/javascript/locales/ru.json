@@ -25,6 +25,7 @@
     "reset-form-change-password-button": "Сменить пароль",
     "email-successfully-confirmed": "E-mail успешно подтвержден",
     "alert-settings-email": "Вы можете изменить свой адрес e-mail. Он будет обновлён после перехода по ссылке в подтверждающем письме.",
+    "alert-settings-password": "Сразу после смены пароля мы отправим вам письмо об этом, так что не пугайтесь. :)",
     "register-form-title": "Регистрация",
     "restore-form-title": "Восстановление пароля",
     "login-form-title": "Вход на сайт",

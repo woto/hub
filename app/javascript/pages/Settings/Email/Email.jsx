@@ -58,10 +58,11 @@ class _Email extends React.Component {
           user: {
             ...values
           }
-        }).then(({ data }) => {
-          message.info(intl.formatMessage({ id: 'please-check-email' }));
-          console.log(data);
         })
+          .then(({ data }) => {
+            message.info(intl.formatMessage({ id: 'please-check-email' }));
+            // console.log(data);
+          })
           .catch((error) => {
             console.log(error);
           });
