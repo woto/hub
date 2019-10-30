@@ -13,6 +13,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 
 import axios from '../../shared/axios';
 
+import { replaceLastPathName } from '../../shared/helpers'
 import { AuthContext } from '../../shared/AuthContext';
 import ModalWrapper from '../components/ModalWrapper';
 import withPopup from '../../shared/withPopup';
@@ -135,12 +136,12 @@ class _Form extends React.Component {
           </Row>
 
           <p style={{ paddingTop: "0.3rem" }}>
-            <Link className="login-form-forgot" to='/restore'>
+            <Link jid="login-form-forgot" className="login-form-forgot" to={replaceLastPathName('/restore')}>
               <FormattedMessage id="forgot-password" />
             </Link>
           </p>
           <p style={{ paddingTop: "0.3rem" }}>
-            <Link jid="register" to='/register'>
+            <Link jid="login-form-register" to={replaceLastPathName('/register')}>
               <FormattedMessage id="or-register-now" />
             </Link>
           </p>

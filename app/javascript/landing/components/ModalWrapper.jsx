@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
 import { Redirect } from "react-router-dom";
+import { replaceLastPathName } from '../../shared/helpers'
 
 export default class ModalWrapper extends React.Component {
   state = {
@@ -30,12 +31,7 @@ export default class ModalWrapper extends React.Component {
     let redirect = null;
 
     if (!this.state.visible) {
-
-      const backdropUrl =
-        window.location.pathname.replace(/login(\/)?$/, "") +
-        window.location.search +
-        window.location.hash;
-
+      const backdropUrl = replaceLastPathName('');
       redirect = <Redirect push to={backdropUrl}></Redirect>
     }
 

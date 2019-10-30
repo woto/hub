@@ -154,7 +154,7 @@ describe('Offers', function () {
     expect(unexpectedRequests).to.be.empty;
 
     // Checks route same but without login modal
-    expect(await this.page.url()).to.equal('https://nv6.ru/feeds/zero_my_index_name/offers/?page=1&q=one');
+    expect(await this.page.url()).to.equal('https://nv6.ru/feeds/zero_my_index_name/offers?page=1&q=one');
 
     // Clean up
     this.page.removeListener('request', logRequest);

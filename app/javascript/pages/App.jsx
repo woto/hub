@@ -37,6 +37,10 @@ const locales = {
   zh: locales_zh,
 };
 
+function assembleAuthRoutes(url) {
+  return [url, `${url}/login`, `${url}/register`, `${url}/restore`];
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -63,20 +67,17 @@ export default class App extends React.Component {
             <Route path="/proxy/:id" component={Proxy} />
             <Route path="/dashboard" component={Dashboard} />
 
-            <Route exact path="/feeds/page/:page" component={Feeds} />
             <Route exact path="/feeds" component={Feeds} />
 
-            <Route exact path={['/feeds/:id/offers', '/feeds/:id/offers/login']} component={Offers} />
-            <Route exact path={['/feeds/:id/offers/page/:page', '/feeds/:id/offers/page/:page/login']} component={Offers} />
-
+            <Route exact path={assembleAuthRoutes('/feeds/:id/offers')} component={Offers} />
             <Route exact path={['/feeds/:id/offers/login']} component={LoginForm} />
-            <Route exact path={['/feeds/:id/offers/page/:page/login']} component={LoginForm} />
+            <Route exact path={['/feeds/:id/offers/register']} component={RegisterForm} />
+            <Route exact path={['/feeds/:id/offers/restore']} component={RestoreForm} />
 
-            <Route exact path={['/offers', '/offers/login']} component={Offers} />
-            <Route exact path={['/offers/page/:page', '/offers/page/:page/login']} component={Offers} />
-
-            <Route path="/offers/login" component={LoginForm} />
-            <Route path="/offers/page/:page/login" component={LoginForm} />
+            <Route exact path={assembleAuthRoutes('/offers')} component={Offers} />
+            <Route path={['/offers/login']} component={LoginForm} />
+            <Route path={['/offers/register']} component={RegisterForm} />
+            <Route path={['/offers/restore']} component={RestoreForm} />
 
             <Route exact path="/posts" component={Posts} />
             <Route exact path="/posts/new" component={Post} />

@@ -29,6 +29,17 @@ describe('ModalWrapper', function () {
     expect(result).to.equal(3);
   });
 
+  it('Preserves backdrop url while clicking on links', async () => {
+    await this.page.goto('https://nv6.ru/feeds/zero_my_index_name/offers/login?page=1&q=zero+one', { waitUntil: 'networkidle0' });
+
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click('[jid="login-form-forgot"]'),
+    ]);
+
+    expect(await this.page.url()).to.equal('https://nv6.ru/feeds/zero_my_index_name/offers/restore?page=1&q=zero+one');
+  });
+
   it('Returns to "Home page" after authorizing and clicking back from "Dashboard page"', async () => {
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
     await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');

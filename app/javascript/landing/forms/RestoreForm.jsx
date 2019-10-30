@@ -17,8 +17,9 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
-import {FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
+import { replaceLastPathName } from '../../shared/helpers'
 import ModalWrapper from '../components/ModalWrapper';
 
 class _Form extends React.Component {
@@ -73,7 +74,7 @@ class _Form extends React.Component {
     };
 
     return (
-      <ModalWrapper  modal_title={<FormattedMessage id="restore-form-title" />}>
+      <ModalWrapper modal_title={<FormattedMessage id="restore-form-title" />}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
           <Form.Item label={<FormattedMessage id="email" />} hasFeedback>
@@ -98,7 +99,7 @@ class _Form extends React.Component {
           </Form.Item>
 
           <Form.Item style={{ marginBottom: 0 }}>
-            <Link to='/login'><FormattedMessage id="or-log-in" /></Link>
+            <Link to={replaceLastPathName('/login')}><FormattedMessage id="or-log-in" /></Link>
           </Form.Item>
 
         </Form>

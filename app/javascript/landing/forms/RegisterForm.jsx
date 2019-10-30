@@ -6,6 +6,7 @@ import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 
 import ModalWrapper from '../components/ModalWrapper';
 import { AuthContext } from '../../shared/AuthContext';
+import { replaceLastPathName } from '../../shared/helpers'
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -178,7 +179,7 @@ class _RegisterForm extends React.Component {
           </Form.Item>
 
           <Form.Item style={{ marginBottom: 0 }}>
-            <Link to='/login'><FormattedMessage id="or-log-in" /></Link>
+            <Link to={replaceLastPathName('/login')}><FormattedMessage id="or-log-in" /></Link>
           </Form.Item>
 
         </Form>
