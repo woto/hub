@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get 'login', on: :collection, to: 'home#index'
     # TODO: add register, etc...
   end
+  resources :posts, to: 'home#index'
   resources :feeds, controller: 'home', action: 'index', only: %i[index] do
     resources :offers, controller: 'offers', action: 'index', only: %i[index] do
       get 'login', on: :collection, to: 'home#index'
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
       resources :feeds, only: %i[index] do
         resources :offers, only: %i[index]
       end
+      resources :posts
       resources :offers, only: %i[index]
       resource 'profile', controller: 'profile'
       namespace :staff do

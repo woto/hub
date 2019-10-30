@@ -34,7 +34,9 @@ Doorkeeper.configure do
 
   admin_authenticator do
     if current_user
-      head :forbidden unless RolePolicy.new(current_user, nil).manage_applications?
+      unless RolePolicy.new(current_user, nil).manage_applications?
+        head :forbidden
+      end
     else
       redirect_to new_user_session_path
     end
