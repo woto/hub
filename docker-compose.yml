@@ -119,6 +119,7 @@ services:
           - rails
     env_file:
       - .env.dev
+      - .env.prod
     build: .
     image: rails
     command:
@@ -158,6 +159,7 @@ services:
           - webpacker
     env_file:
       - .env.dev
+      - .env.prod
     image: rails
     command: bin/webpack-dev-server
     expose:
@@ -214,6 +216,7 @@ services:
           - postgres
     env_file:
       - .env.dev
+      - .env.prod
     image: postgres
     volumes:
       - "postgres:/var/lib/postgresql/data"

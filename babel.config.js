@@ -74,7 +74,7 @@ module.exports = function (api) {
           async: false
         }
       ],
-      isProductionEnv && [
+      false && isProductionEnv && [
         require('babel-plugin-transform-react-remove-prop-types').default,
         {
           removeImport: true
