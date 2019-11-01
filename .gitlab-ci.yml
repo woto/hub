@@ -1,5 +1,8 @@
 image: docker:latest
 
+variables:
+  HUB_ENV: "test"
+
 services:
   - docker:dind
 

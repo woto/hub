@@ -118,8 +118,8 @@ services:
         aliases:
           - rails
     env_file:
-      - .env.dev
-      - .env.prod
+      - .env
+      - .env.${HUB_ENV}
     build: .
     image: rails
     command:
@@ -158,8 +158,8 @@ services:
         aliases:
           - webpacker
     env_file:
-      - .env.dev
-      - .env.prod
+      - .env
+      - .env.${HUB_ENV}
     image: rails
     command: bin/webpack-dev-server
     expose:
@@ -215,8 +215,8 @@ services:
         aliases:
           - postgres
     env_file:
-      - .env.dev
-      - .env.prod
+      - .env
+      - .env.${HUB_ENV}
     image: postgres
     volumes:
       - "postgres:/var/lib/postgresql/data"
