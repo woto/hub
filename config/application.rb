@@ -38,7 +38,7 @@ module Hub
 
     config.debug_exception_response_format = :api
 
-    # config.api_only = true
+    config.action_cable.allowed_request_origins = ['https://nv6.ru', %r{https://.*\.nv6.ru}]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
