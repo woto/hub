@@ -1,12 +1,13 @@
-const { environment } = require('@rails/webpacker');
+const { environment, config } = require('@rails/webpacker');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-// less-loader used at least for landing page
 environment.loaders.append('less-loader',
   {
     test: /\.less$/,
     use: [{
-      loader: 'style-loader',
-    }, {
+      loader: config.extract_css ? MiniCssExtractPlugin.loader : 'style-loader',
+    },
+    {
       loader: 'css-loader',
       options: {
         sourceMap: true,
