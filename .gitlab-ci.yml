@@ -16,9 +16,10 @@ build:
   script:
     - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
     - docker-compose build
-    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth rails elastic
+    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:load
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
-    - docker-compose -f docker-compose.yml up puppeteer
+    - docker-compose -f docker-compose.yml run --rm alpine curl https://nv6.ru
+    - docker-compose -f docker-compose.yml run --rm puppeteer
   tags:
     - docker
