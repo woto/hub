@@ -35,8 +35,12 @@ yarn-debug.log*
 .yarn-integrity
 coverage
 
-/docker/traefik/letsencrypt/acme.json
+# TODO: not good to store SSL certificates in open repo
+# /docker/traefik/letsencrypt/acme.json
 /docker/puppeteer/screenshots
+
+# Gitlab runner directory
+/builds
 
 # Python tools (remove later)
 /docker/feeder/feeds
