@@ -20,12 +20,21 @@ describe('Proxy', function () {
     const [popup] = await Promise.all([
       new Promise(resolve => this.page.once('popup', resolve)),
       this.page.evaluate((k) => { window.open(`https://nv6.ru/proxy/${k}`); }, key.data),
-      this.page.waitFor(1000),
     ]);
 
-    const arr = Array.from(await this.page.cookies());
-    const accessTokenCookie = arr.find(el => el.name === 'access_token');
-    expect(accessTokenCookie).to.be.an('object');
+    let i = 0;
+    let accessTokenCookie;
+    while (true) {
+      await this.page.waitFor(1000);
+      try {
+        const arr = Array.from(await this.page.cookies());
+        accessTokenCookie = arr.find(el => el.name === 'access_token');
+        return expect(accessTokenCookie).to.be.an('object');
+      } catch (e) {
+
+      }
+      i++;
+    }
   });
 
   // https://stackoverflow.com/a/55195729/237090

@@ -21,15 +21,19 @@ describe('Offers', function () {
   it('Unauthorized users get "Login modal" offer when clicking on "Write a post"', async () => {
     const initialUrl = 'https://nv6.ru/offers?page=2&q=zero';
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
-    //// await this.page.waitFor(1000);
+    // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
+    await this.page.waitFor('[jid="write-a-post"]');
 
     // If unexpected request will be made we will catch
     // them and remember to check later
     const unexpectedRequests = [];
     function logRequest(interceptedRequest) {
-      unexpectedRequests.push(interceptedRequest.url());
-      console.log(interceptedRequest.url());
+      const url = interceptedRequest.url();
+      if (url.startsWith('https://nv6.ru/')) {
+        unexpectedRequests.push(url);
+        console.log(url);
+      }
     }
     this.page.on('request', logRequest);
 
@@ -82,7 +86,7 @@ describe('Offers', function () {
   it('Resets (url, search, pagination) to defaults when clicking on "Offers" in left menu', async () => {
     const initialUrl = 'https://nv6.ru/offers?page=1&q=ten';
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
-    //// await this.page.waitFor(1000);
+    // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     expect((await this.page.$$('.ant-table-row')).length).to.equal(1);
@@ -104,15 +108,19 @@ describe('Offers', function () {
   it('Redirects to correct page when back button pressed in browser from "Login form"', async () => {
     const initialUrl = 'https://nv6.ru/offers?page=2&q=zero';
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
-    //// await this.page.waitFor(1000);
+    // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
+    await this.page.waitFor('[jid="write-a-post"]');
 
     // If unexpected request will be made we will catch
     // them and remember to check later
     const unexpectedRequests = [];
     function logRequest(interceptedRequest) {
-      unexpectedRequests.push(interceptedRequest.url());
-      console.log(interceptedRequest.url());
+      const url = interceptedRequest.url();
+      if (url.startsWith('https://nv6.ru/')) {
+        unexpectedRequests.push(url);
+        console.log(url);
+      }
     }
     this.page.on('request', logRequest);
 
@@ -126,14 +134,16 @@ describe('Offers', function () {
     await this.page.waitFor(() => !document.querySelector('.ant-modal'));
 
     expect(unexpectedRequests).to.be.empty;
-
   });
 
   it('Returns user to correct page without web requests when initially were opened "Offers page" with opened "Login modal" window', async () => {
     const initialUrl = 'https://nv6.ru/feeds/zero_my_index_name/offers/login?page=1&q=one'
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
-    //// await this.page.waitFor(1000);
+    // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
+
+    // Checks modal is present
+    await this.page.waitFor('.ant-modal');
 
     // If unexpected request will be made we will catch
     // them and remember to check later
@@ -142,9 +152,6 @@ describe('Offers', function () {
       unexpectedRequests.push(interceptedRequest.url());
     }
     this.page.on('request', logRequest);
-
-    // Checks modal is present
-    await this.page.waitFor('.ant-modal');
 
     // Closes modal
     await this.page.mouse.click(1, 1);
@@ -162,7 +169,7 @@ describe('Offers', function () {
 
   it('Pagination works correctly', async () => {
     const initialUrl = 'https://nv6.ru/feeds/zero_my_index_name/offers?q=my_offer_name'
-    await this.page.goto(initialUrl);
+    await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
 
     await this.page.waitFor("//td[contains(text(), 'one_my_offer_name')]");
     // let [element] = await this.page.$x("//td[contains(text(), 'one_my_offer_name')]");
