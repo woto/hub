@@ -40,7 +40,18 @@ class _Form extends React.Component {
             history.push('/');
           })
           .catch((error) => {
-            message.error(intl.formatMessage({ id: 'such-email-not-registered' }));
+
+            message.error(intl.formatMessage({ id: 'unable-to-proceed' }));
+
+            // TODO: don't know better way to make it for now (declarative)
+            // the problem arises with joining with antd statndard form validations
+            this.props.form.setFields({
+              email: {
+                value: values.email,
+                errors: [new Error(error.response.data.errors.email)],
+              },
+            });
+
           });
       }
     });

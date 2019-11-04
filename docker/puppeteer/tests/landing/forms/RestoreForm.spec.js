@@ -36,6 +36,8 @@ describe('RestoreForm', function () {
 
     await this.page.type('input[jid="restore-form-email"]', email, { delay: 20 });
     await this.page.click('[jid="restore-form-button"]');
-    await this.page.waitFor("//span[contains(text(), 'Such e-mail is not registered')]");
+
+    await this.page.waitFor("//div[contains(text(), 'Entered e-mail was not found')]");
+    await this.page.waitFor("//span[contains(text(), 'Unable to proceed')]");
   });
 });
