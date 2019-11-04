@@ -42,10 +42,26 @@ describe Api::V1::Users::BindsController, type: :request do
     end
   end
 
-  RSpec.shared_examples 'it unbinds identity from another user' do
+  RSpec.shared_examples "it unbinds identity from another_user" do
     specify do
       make
-      expect(identity.reload).not_to eq another_user
+      expect(identity.reload.user).not_to eq another_user.reload
+    end
+  end
+
+
+  RSpec.shared_examples "it doesn't unbind identity from another_user" do
+    specify do
+      make
+      expect(identity.reload.user).to eq another_user.reload
+    end
+  end
+
+  RSpec.shared_examples 'it rebinds identity to user maked request' do
+    specify do
+      expect(identity.reload.user).not_to eq user
+      make
+      expect(identity.reload.user).to eq user
     end
   end
 
@@ -98,8 +114,8 @@ describe Api::V1::Users::BindsController, type: :request do
       include_examples "it doesn't confirm user email"
       include_examples "it doesn't create new user"
       include_examples "it doesn't create new identity"
+      include_examples "it doesn't unbind identity from another_user"
       include_examples 'it rebinds identity to newly created user'
-      include_examples 'it unbinds identity from another user'
       include_examples 'it updates identity auth attribute'
 
       it 'authenticates as newly created user' do
@@ -145,7 +161,8 @@ describe Api::V1::Users::BindsController, type: :request do
       include_examples "it doesn't confirm user email"
       include_examples "it doesn't create new user"
       include_examples "it doesn't create new identity"
-      include_examples 'it unbinds identity from another user'
+      include_examples "it unbinds identity from another_user"
+      include_examples 'it rebinds identity to user maked request'
       include_examples 'it updates identity auth attribute'
     end
   end
