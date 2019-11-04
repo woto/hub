@@ -114,6 +114,7 @@ gem 'elasticsearch-ruby'
 # Authorization
 gem 'devise'
 gem 'devise-security'
+gem 'devise-i18n'
 gem 'doorkeeper'
 gem 'simple_token_authentication'
 
