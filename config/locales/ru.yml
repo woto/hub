@@ -6,6 +6,7 @@ ru:
           attributes:
             email:
               already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
+              not_found: "Указанный E-mail не найден"
             confirmation_token:
               invalid: "Ссылка для подтверждения неверна"
   doorkeeper:

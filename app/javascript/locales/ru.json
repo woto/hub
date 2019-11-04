@@ -16,7 +16,6 @@
     "inconsistent-confirmation": "Введённые пароли не совпадают",
     "unexpected-error-try-again-later": "Неожиданная ошибка. Пожалуйста попробуйте попозже",
     "please-check-email": "Пожалуйста, проверьте почту",
-    "such-email-not-registered": "Введённый e-mail не зарегистрирован",
     "email": "E-mail",
     "save": "Сохранить",
     "email-format-invalid": "Введённый e-mail неверен",

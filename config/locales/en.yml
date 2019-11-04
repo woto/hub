@@ -37,6 +37,7 @@ en:
           attributes:
             email:
               already_confirmed: "E-mail was already confirmed, please try signing in"
+              not_found: "Entered e-mail was not found"
             confirmation_token:
               invalid: "Confirmation link is invalid"
   doorkeeper:

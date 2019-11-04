@@ -15,6 +15,7 @@
 * [ ] To add request form for email with confirmation link.
 * [x] Add validation to User (accommodate validatable Devise module).
 * [x] Links in login form (Restore password, Register) should not link on home page with opened modal.
+* [x] To test /confirmation
 
 # v1.1
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
@@ -28,4 +29,3 @@
 * [ ] Heh. license agreenment may be skiped if used social login.
 * [ ] To test /settings/email
 * [ ] To test /settings/password
-* [ ] To test /confirmation
