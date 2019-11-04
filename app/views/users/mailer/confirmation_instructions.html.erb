@@ -1,5 +1,5 @@
-<p>TODO: localize <%= @email %>!</p>
+<p><%= t('greeting', scope: ['devise', 'mailer', 'confirmation_instructions'], recipient: @email) %></p>
 
-<p>You can confirm your account email through the link below:</p>
+<p><%= t('instruction', scope: ['devise', 'mailer', 'confirmation_instructions']) %></p>
 
-<p><%= link_to 'Confirm my account', confirm_password_url(confirmation_token: @token) %></p>
+<p><%= link_to t('action', scope: ['devise', 'mailer', 'confirmation_instructions']), confirm_password_url(confirmation_token: @token) %></p>
