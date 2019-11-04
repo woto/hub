@@ -10,8 +10,7 @@ module Api
         before_action :read_oauth_info_from_redis
 
         def update
-          user = current_user || User.new(email: @oauth.info['email'])
-          bind_identity(user)
+          user = bind_identity
           request.env['warden'].set_user(user, store: false)
           render json: build_token_response(user).body
         end
@@ -31,9 +30,10 @@ module Api
         # Every identity will be binded to this user.
         # Pay attention that there is can be situations with orphan users
         # (from which identity was unbinded)
-        def bind_identity(user)
+        def bind_identity
           identity = Identity.find_by(uid: @oauth.uid,
                                       provider: @oauth.provider)
+          user = current_user || identity&.user || User.new(email: @oauth.info['email'], oauthenticable: true)
           if identity
             identity.update!(user: user, auth: @oauth)
           else
@@ -44,7 +44,7 @@ module Api
               auth: @oauth
             )
           end
-          # user = identity.user
+          user
         end
       end
     end

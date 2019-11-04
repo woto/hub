@@ -19,7 +19,7 @@ describe Api::V1::Users::BindsController, type: :request do
 
   RSpec.shared_examples "it doesn't create new user" do
     specify do
-      expect { make }.to change(User, :count)
+      expect { make }.not_to change(User, :count)
     end
   end
 
@@ -87,7 +87,7 @@ describe Api::V1::Users::BindsController, type: :request do
     end
 
     context 'when identity already exists and belongs to another user' do
-      let(:another_user) { create(:user) }
+      let!(:another_user) { create(:user, :unconfirmed) }
       let!(:identity) do
         create(:identity, uid: auth['uid'],
                           provider: auth['provider'],
@@ -96,7 +96,7 @@ describe Api::V1::Users::BindsController, type: :request do
 
       include_examples 'it contains token'
       include_examples "it doesn't confirm user email"
-      include_examples 'it creates new user'
+      include_examples "it doesn't create new user"
       include_examples "it doesn't create new identity"
       include_examples 'it rebinds identity to newly created user'
       include_examples 'it unbinds identity from another user'
@@ -118,7 +118,7 @@ describe Api::V1::Users::BindsController, type: :request do
     end
 
     include_context 'with shared authentication' do
-      let(:user) { create(:user, :unconfirmed) }
+      let!(:user) { create(:user, :unconfirmed, email: "getting@example.com") }
     end
 
     context 'when identity is new' do
@@ -134,7 +134,7 @@ describe Api::V1::Users::BindsController, type: :request do
     end
 
     context 'when identity already exists' do
-      let(:another_user) { create(:user) }
+      let!(:another_user) { create(:user, :unconfirmed, email: "giving@example.com", ) }
       let!(:identity) do
         create(:identity, uid: auth['uid'],
                           provider: auth['provider'],
@@ -146,7 +146,6 @@ describe Api::V1::Users::BindsController, type: :request do
       include_examples "it doesn't create new user"
       include_examples "it doesn't create new identity"
       include_examples 'it unbinds identity from another user'
-      include_examples 'it rebinds identity to newly created user'
       include_examples 'it updates identity auth attribute'
     end
   end

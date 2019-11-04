@@ -6,7 +6,7 @@ module Authenticatable
 
   included do
     devise :database_authenticatable, :registerable,
-           :recoverable, :rememberable,
+           :recoverable, :rememberable, :validatable,
            :confirmable, :lockable, :timeoutable, :trackable
 
     has_many :access_grants,
@@ -20,5 +20,15 @@ module Authenticatable
              dependent: :delete_all # or :destroy if you need callbacks
 
     has_many :identities
+
+    protected
+
+    def password_required?
+      super && !oauthenticable
+    end
+
+    def email_required?
+      super && !oauthenticable
+    end
   end
 end
