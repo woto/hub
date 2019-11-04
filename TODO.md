@@ -12,10 +12,12 @@
 * [x] Write tests for offers lists raw html response (for SEO indexing purposes).
 * [x] Check response on api controllers related to authentication. It should not contain any sensitive data. Only token or nothing.
 * [x] Redo the multiple oauth authentication https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers Changing email leads to problems which doesn't covers by current implementation.
-* [ ] To add request form for email with confirmation link.
+* [x] To add request form for email with confirmation link.
 * [x] Add validation to User (accommodate validatable Devise module).
 * [x] Links in login form (Restore password, Register) should not link on home page with opened modal.
 * [x] To test /confirmation
+* [ ] Redesign user settings as it made [here](https://preview.pro.ant.design/account/settings/base)
+* [ ] User can't resend confirmation e-mail if it's already stored in email in database and unconfirmed. Page (https://nv6.ru/settings/email). Might be need a link to confirm on this page which will do same things as a https://nv6.ru/confirmation
 
 # v1.1
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
