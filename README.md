@@ -20,6 +20,14 @@ ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 -R 3035:local
 
 ## Issues
 
+### In case of problems with SSL certificate
+
+```
+traefik_1      | time="2019-11-04T19:21:54Z" level=info msg="Configuration loaded from flags."
+traefik_1      | time="2019-11-04T19:21:54Z" level=error msg="Unable to add ACME provider to the providers list: unable to get ACME account: permissions 644 for /letsencrypt/acme.json are too open, please use 600"
+```
+and if will see same problem then do `chmod 600 docker/traefik/letsencrypt/acme.json`
+
 ### In case of incomprehensible mistakes
 
 ```
