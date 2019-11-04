@@ -254,6 +254,9 @@ services:
           - redis_oauth
     image: redis
 
+  # FOR DEBUGGING
+  # to get into docker-compose network and for example
+  # execute `docker-compose run --rm alpine curl -k "https://nv6.ru"`
   alpine:
     build:
       context: ./docker/alpine
@@ -265,6 +268,20 @@ services:
     command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
     stdin_open: true
     tty: true
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    networks:
+      hub:
+        aliases:
+          - mailcatcher
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.mailcatcher.entrypoints=websecure"
+      - "traefik.http.routers.mailcatcher.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.mailcatcher.rule=Host(`mailcatcher.nv6.ru`)"
+      - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
 
 networks:
   hub:
