@@ -2,7 +2,11 @@
 
 ### Setup
 
+Add `127.0.0.1 nv6.ru` to /etc/hosts  
+Also you can use dnsmasq. Add `address=/nv6.ru/127.0.0.1` to `/etc/dnsmasq.conf` and restart service `systemctl restart dnsmasq.service`. It supports wildcard domains.
+
 ```shell
+export HUB_ENV=development
 docker-compose up -d
 docker-compose exec rails ./bin/setup
 ```
@@ -10,12 +14,14 @@ docker-compose exec rails ./bin/setup
 ### Testing
 
 ```shell
-dco run --rm rails rspec
-dco run --rm webpacker yarn test
+docker-compose run --rm rails rspec
+docker-compose run --rm puppeteer
 ```
 
+### Reverse ssh tunnel
+
 ```shell
-ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 -R 3035:localhost:3035 -R 19999:localhost:19999 root@nv6.ru
+ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 root@nv6.ru
 ```
 
 ## Issues
@@ -28,7 +34,7 @@ traefik_1      | time="2019-11-04T19:21:54Z" level=error msg="Unable to add ACME
 ```
 and if will see same problem then do `chmod 600 docker/traefik/letsencrypt/acme.json`
 
-### In case of incomprehensible mistakes
+### In case of incomprehensible mistakes with bundler gems
 
 ```
 /usr/src/app/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.4/lib/bootsnap/compile_cache/iseq.rb:37: G] Segmentation fault at 0x00000000000011c6
@@ -39,6 +45,8 @@ c:0031 p:---- s:0188 e:000187 CFUNC  :fetch
 c:0030 p:0069 s:0181 e:000180 METHOD /usr/src/app/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4lib/bootsnap/compile_cache/iseq.rb:37 [FINISH]
 c:0029 p:---- s:0175 e:000174 CFUNC  :require
 ```
+
+### In case of incomprehensible mistakes with yarn node modules
 
 ```
 warning Integrity check: System parameters don't match
