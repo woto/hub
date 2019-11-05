@@ -1,0 +1,3 @@
+[submodule "public/ckeditor"]
+	path = public/ckeditor
+	url = https://github.com/woto/ckeditor5-build-balloon-block
