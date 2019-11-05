@@ -14,24 +14,35 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
     command:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --providers.docker=true
-      - --api.insecure=true
+      - --api.dashboard=true
       # --log.level=DEBUG
       - --certificatesResolvers.myhttpchallenge.acme.email=oganer@gmail.com
       - --certificatesResolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json
       # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
     labels:
+      - "traefik.enable=true"
+
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.http-catchall.entrypoints=web"
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.enable=true"
+
+      # https://docs.traefik.io/operations/dashboard/
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.api.rule=Host(`traefik.nv6.ru`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=auth"
+      # I've used https://www.web2generators.com/apache-tools/htpasswd-generator
+      # don't forget to replace $ to $$ (don't know the reason)
+      - "traefik.http.middlewares.auth.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
+
     volumes:
       - "./docker/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
