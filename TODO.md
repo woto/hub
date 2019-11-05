@@ -18,6 +18,7 @@
 * [x] To test /confirmation
 * [ ] Redesign user settings as it made [here](https://preview.pro.ant.design/account/settings/base)
 * [ ] User can't resend confirmation e-mail if it's already stored in email in database and unconfirmed. Page (https://nv6.ru/settings/email). Might be need a link to confirm on this page which will do same things as a https://nv6.ru/confirmation
+* [x] To spruce up Emails (Registration, confirmation, password recovery, password change)
 
 # v1.1
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
@@ -25,9 +26,11 @@
 * [ ] Pagination with more than 10 000 items.
 * [ ] Sorting in the offers list.
 * [ ] Internationalization in Login Form
-* [ ] To spruce up Emails (Registration, confirmation, password recovery, password change)
 * [ ] To add lockable Devise strategy
 * [ ] Redirect on a previous page after login.
 * [ ] Heh. license agreenment may be skiped if used social login.
 * [ ] To test /settings/email
 * [ ] To test /settings/password
+* [ ] To test /settings/social-networks
+* [ ] To test + refactor d4ff25ab504818eb4e932df4e92fbe7b289dcdf9
+* [ ] To test + refactor 5959146e775140d2b385c49c91cc39f69ac8624f

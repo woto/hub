@@ -11,6 +11,24 @@ docker-compose up -d
 docker-compose exec rails ./bin/setup
 ```
 
+**The following addressess available after project start up:**  
+https://nv6.ru  
+https://en.nv6.ru  
+https://ru.nv6.ru  
+...  
+https://traefik.nv6.ru  
+https://mailcatcher.nv6.ru  
+https://elastic.nv6.ru  
+https://kibana.nv6.ru  
+https://netdata.nv6.ru  
+https://swagger.nv6.ru  
+https://mailcatcher.nv6.ru  
+https://webpacker.nv6.ru  
+
+**Anywere your encountered entering login / password try:**  
+username: oganer@gmail.com  
+password: qweQWE123!@#  
+
 ### Testing
 
 ```shell
@@ -21,7 +39,7 @@ docker-compose run --rm puppeteer
 ### Reverse ssh tunnel
 
 ```shell
-ssh -R 80:localhost:80 -R 443:localhost:443 -R 8080:localhost:8080 root@nv6.ru
+ssh -R 80:localhost:80 -R 443:localhost:443 root@nv6.ru
 ```
 
 ## Issues
