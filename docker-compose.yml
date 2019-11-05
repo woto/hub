@@ -102,17 +102,22 @@ services:
           - swagger
     image: swaggerapi/swagger-ui:v3.23.11
     environment:
-      - BASE_URL=/swagger
-      - URLS=[{"name":"swagger", "url":"/swagger/project/swagger.json"}]
-      - OAUTH2_REDIRECT_URL=https://nv6.ru/swagger/oauth2-redirect.html
+      - BASE_URL=/
+      - URLS=[{"name":"swagger", "url":"/project/swagger.json"}]
+      - OAUTH2_REDIRECT_URL=https://nv6.ru/oauth2-redirect.html
     volumes:
       - ./docker/swagger:/usr/share/nginx/html/project
     labels:
+      - "traefik.enable=true"
+
+      # TODO: this settings also as an envirnment settings were changed from https://nv6.ru/swagger
+      # to https://swagger.nv6.ru I think environment settings may be even simplified
+      # consider this later
+
       - "traefik.http.routers.swagger.entrypoints=websecure"
       - "traefik.http.routers.swagger.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.swagger.rule=PathPrefix(`/swagger/`)"
+      - "traefik.http.routers.swagger.rule=Host(`swagger.nv6.ru`)"
       - "traefik.http.services.swagger.loadbalancer.server.port=8080"
-      - "traefik.http.routers.swagger.service=swagger"
 
   # MAIN APPLICATION
   rails:
