@@ -269,6 +269,8 @@ GEM
     parser (2.6.3.0)
       ast (~> 2.4.0)
     pg (1.1.4)
+    prometheus-client (1.0.0)
+    prometheus_exporter (0.4.16)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -410,6 +412,8 @@ GEM
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sidekiq-prometheus-exporter (0.1.12)
+      sidekiq (>= 3.3.1)
     simple_token_authentication (1.15.1)
       actionmailer (>= 3.2.6, < 6)
       actionpack (>= 3.2.6, < 6)
@@ -500,6 +504,8 @@ DEPENDENCIES
   omniauth-twitter
   paper_trail
   pg (>= 0.18, < 2.0)
+  prometheus-client
+  prometheus_exporter
   pry
   pry-byebug
   puma (~> 3.11)
@@ -521,6 +527,7 @@ DEPENDENCIES
   seedbank
   selenium-webdriver
   sidekiq
+  sidekiq-prometheus-exporter (~> 0.1)
   simple_token_authentication
   simplecov
   typhoeus

@@ -129,6 +129,9 @@ gem 'pundit'
 
 # Application monitoring
 gem 'newrelic_rpm'
+gem 'sidekiq-prometheus-exporter', '~> 0.1'
+gem 'prometheus_exporter'
+gem 'prometheus-client'
 
 # Dry family
 gem 'dry-types'
