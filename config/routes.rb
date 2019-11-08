@@ -51,6 +51,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      get 'environment', to: "environment#index"
       resources :feeds, only: %i[index] do
         resources :offers, only: %i[index]
       end
