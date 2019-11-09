@@ -38,6 +38,7 @@ en:
             email:
               already_confirmed: "E-mail was already confirmed, please try signing in"
               not_found: "Entered e-mail was not found"
+              taken: 'Entered e-mail already taken by another user'
             confirmation_token:
               invalid: "Confirmation link is invalid"
   doorkeeper:
