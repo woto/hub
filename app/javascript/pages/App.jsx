@@ -67,9 +67,20 @@ export default class App extends React.Component {
             <Route path="/restore" component={RestoreForm} />
             <Route path="/reset" component={ResetForm} />
             <Route path="/proxy/:id" component={Proxy} />
-            <Route path="/dashboard" component={Dashboard} />
 
-            <Route exact path="/feeds" component={Feeds} />
+            {/* TODO: do with this something :) */}
+
+            <Route exact path={assembleAuthRoutes('/dashboard')} component={Dashboard} />
+            <Route exact path={['/dashboard/login']} component={LoginForm} />
+            <Route exact path={['/dashboard/register']} component={RegisterForm} />
+            <Route exact path={['/dashboard/restore']} component={RestoreForm} />
+            <Route exact path={['/dashboard/confirmation']} component={ConfirmationForm} />
+
+            <Route exact path={assembleAuthRoutes('/feeds')} component={Feeds} />
+            <Route exact path={['/feeds/login']} component={LoginForm} />
+            <Route exact path={['/feeds/register']} component={RegisterForm} />
+            <Route exact path={['/feeds/restore']} component={RestoreForm} />
+            <Route exact path={['/feeds/confirmation']} component={ConfirmationForm} />
 
             <Route exact path={assembleAuthRoutes('/feeds/:id/offers')} component={Offers} />
             <Route exact path={['/feeds/:id/offers/login']} component={LoginForm} />

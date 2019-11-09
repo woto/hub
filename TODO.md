@@ -21,6 +21,8 @@
 * [x] To spruce up Emails (Registration, confirmation, password recovery, password change)
 
 # v1.1
+
+* [ ] Ckeditor should autosave drafts.
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
 * [ ] Ckeditor images upload.
 * [ ] Pagination with more than 10 000 items.

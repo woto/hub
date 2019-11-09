@@ -2,11 +2,39 @@
 import React, { Component } from 'react'
 import { Menu, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import { getLoginPath } from '../../shared/helpers'
 
 const { SubMenu } = Menu;
 
 import languages from '../../shared/languages.json';
 import { AuthConsumer, AuthContext } from '../../shared/AuthContext';
+
+const ExitItem = ({ context, ...props }) => {
+  // debugger
+  return (
+    <Menu.Item key="exit" style={{float: "right"}} {...props}>
+      <a className="header3-item-block" onClick={context.logout} rel="noopener noreferrer">
+        <p>
+          <FormattedMessage id="exit" />
+        </p>
+      </a>
+    </Menu.Item>
+  )
+}
+
+const LoginItem = ({ history, ...props }) => {
+  // debugger
+  return (
+    <Menu.Item key="login" style={{float: "right"}} {...props}>
+      <a className="header3-item-block" onClick={() => history.push(getLoginPath())} rel="noopener noreferrer">
+        <p>
+          <FormattedMessage id="login" />
+        </p>
+      </a>
+    </Menu.Item>
+  )
+}
 
 class _TopMenu extends React.Component {
 
@@ -31,24 +59,17 @@ class _TopMenu extends React.Component {
 
   render() {
 
-    // TODO: this code repeats in Nav3.jsx
-    // Library issue? https://github.com/ant-design/ant-design/issues/4853
+    let { history } = this.props;
     let context = this.context;
-    let exitItem = '';
-    if (this.props.auth.isAuthorized) {
-      exitItem = <Menu.Item key="exit" style={{ float: "right" }}>
-        <a className="header3-item-block" onClick={context.logout} rel="noopener noreferrer">
-          <p>
-            <FormattedMessage id="exit" />
-          </p>
-        </a>
-      </Menu.Item>
-    }
 
     return (
       <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
 
-        {exitItem}
+        {this.props.auth.isAuthorized ?
+          (<ExitItem context={context}></ExitItem>)
+          :
+          (<LoginItem history={history}></LoginItem>)
+        }
 
         <SubMenu
           style={{ float: "right" }}
@@ -91,4 +112,4 @@ function TopMenu(props) {
   );
 }
 
-export default TopMenu;
+export default withRouter(TopMenu);

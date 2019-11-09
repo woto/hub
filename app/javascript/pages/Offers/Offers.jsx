@@ -3,6 +3,7 @@ import { Pagination, Table, Button } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { FormattedMessage } from 'react-intl';
 import axios from 'axios';
+import { getLoginPath } from '../../shared/helpers'
 
 import PrivateLayout from '../../layouts/PrivateLayout';
 import WhereAmI from './WhereAmI';
@@ -63,15 +64,11 @@ class Offers extends React.Component {
       render: (item) => {
         const context = this.context;
 
-        let linkToNewPostOrLogin = window.location.pathname +
-          '/login' +
-          window.location.search +
-          window.location.hash;
-        // TODO: wat?! where is path.join?
-        linkToNewPostOrLogin = linkToNewPostOrLogin.replace('//', '/');
-
+        let linkToNewPostOrLogin = '';
         if (context.isAuthorized) {
           linkToNewPostOrLogin = `/posts/new?url=${encodeURIComponent(item._source.url)}`;
+        } else {
+          linkToNewPostOrLogin = getLoginPath()
         }
 
         return (

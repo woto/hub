@@ -4,6 +4,6 @@ export function replaceLastPathName(to) {
   return path + window.location.search + window.location.hash;
 }
 
-export function foo() {
-
+export function getLoginPath() {
+  return `${window.location.pathname}/login${window.location.search}${window.location.hash}`;
 }

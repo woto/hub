@@ -57,11 +57,18 @@ class _Post extends React.Component {
               <TextArea className="textarea-large-hack" placeholder="Url of a reviewed product" autosize />
             )}
           </Form.Item>
-          <Form.Item>
-            {getFieldDecorator('body')(
-              <textarea className="editor"></textarea>
-            )}
-          </Form.Item>
+          <Row>
+            <Col offset={1} span={22}>
+              <Form.Item>
+                {getFieldDecorator('body')(
+                  // <textarea className="editor"></textarea>
+                  <div className="editor"></div>
+                )}
+              </Form.Item>
+
+            </Col>
+          </Row>
+
           <Form.Item>
             <Button htmlType="submit" type="primary" size="large">Submit</Button>
           </Form.Item>
