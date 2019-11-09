@@ -24,6 +24,10 @@ https://netdata.nv6.ru
 https://swagger.nv6.ru  
 https://mailcatcher.nv6.ru  
 https://webpacker.nv6.ru  
+https://prometheus.nv6.ru  
+https://grafana.nv6.ru  
+https://sentry.nv6.ru  
+https://jaeger.nv6.ru  
 
 **Anywere your encountered entering login / password try:**  
 username: oganer@gmail.com  

@@ -14,17 +14,23 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    expose:
+      - 8082
     command:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
+      - --entrypoints.metrics.address=:8082
       - --providers.docker=true
       - --api.dashboard=true
+      - --metrics.prometheus=true
       # --log.level=DEBUG
       - --certificatesResolvers.myhttpchallenge.acme.email=oganer@gmail.com
       - --certificatesResolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json
       # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
+      - --metrics.prometheus.entryPoint=metrics
+
     labels:
       - "traefik.enable=true"
 
@@ -39,12 +45,83 @@ services:
 
       # https://docs.traefik.io/operations/dashboard/
       - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
+      - "traefik.http.routers.api.middlewares=auth-traefik"
+      - "traefik.http.middlewares.auth-traefik.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
 
     volumes:
       - "./docker/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  # jaeger:
+  #   networks:
+  #     hub:
+  #       aliases:
+  #         - jaeger
+  #   image: jaegertracing/all-in-one:1.14
+  #   ports:
+  #     - "5775:5775/udp"
+  #     - "6831:6831/udp"
+  #     - "6832:6832/udp"
+  #     - "5778:5778"
+  #     - "16686:16686"
+  #     - "14268:14268"
+  #     - "9411:9411"
+  #   environment:
+  #     - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+  #   labels:
+  #     - "traefik.enable=true"
+
+  #     - "traefik.http.routers.jaeger.entrypoints=websecure"
+  #     - "traefik.http.routers.jaeger.tls.certresolver=myhttpchallenge"
+  #     - "traefik.http.routers.jaeger.rule=Host(`jaeger.nv6.ru`)"
+
+
+  # # Mock
+  # sentry:
+  #   networks:
+  #     hub:
+  #       aliases:
+  #         - sentry
+  #   build:
+  #     context: ./docker/alpine
+  #     dockerfile: Dockerfile
+  #   # command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
+  #   stdin_open: true
+  #   tty: true
+  #   labels:
+  #     - "traefik.enable=true"
+
+  #     - "traefik.http.routers.sentry.entrypoints=websecure"
+  #     - "traefik.http.routers.sentry.tls.certresolver=myhttpchallenge"
+  #     - "traefik.http.routers.sentry.rule=Host(`sentry.nv6.ru`)"
+
+  # grafana:
+  #   networks:
+  #     hub:
+  #       aliases:
+  #         - grafana
+  #   image: grafana/grafana
+  #   labels:
+  #     - "traefik.enable=true"
+
+  #     - "traefik.http.routers.grafana.entrypoints=websecure"
+  #     - "traefik.http.routers.grafana.tls.certresolver=myhttpchallenge"
+  #     - "traefik.http.routers.grafana.rule=Host(`grafana.nv6.ru`)"
+
+  prometheus:
+    networks:
+      hub:
+        aliases:
+          - prometheus
+    image: prom/prometheus
+    volumes:
+        - ./docker/prometheus:/etc/prometheus
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.prometheus.entrypoints=websecure"
+      - "traefik.http.routers.prometheus.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.nv6.ru`)"
 
   # ELASTICSEARCH
   elastic:
@@ -259,10 +336,10 @@ services:
           - redis_cable
     image: redis
 
+  # FOR CACHING
   # This service may live separated per Rails application.
   # Data stored in this service should be considered as "don't be worried if it's lost"
   # because it could be retrivable from persist storages (postgres for example)
-  # FOR CACHING
   redis_cache:
     networks:
       hub:
