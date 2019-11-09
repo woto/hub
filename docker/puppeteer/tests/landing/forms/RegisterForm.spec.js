@@ -22,7 +22,7 @@ describe('RegisterForm', function () {
     await this.page.type('input[jid="register-form-password-confirmation"]', '123', { delay: 20 });
     this.page.click('[jid="register-form-submit"]');
 
-    await this.page.waitFor("//div[contains(text(), 'уже существует')]");
+    await this.page.waitFor("//div[contains(text(), 'Указанный e-mail уже указан другим пользователем')]");
     await this.page.waitFor("//div[contains(text(), 'недостаточной длины (не может быть меньше 6 символов)')]");
   });
 

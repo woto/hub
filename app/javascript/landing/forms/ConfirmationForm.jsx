@@ -51,7 +51,6 @@ class _Form extends React.Component {
                 errors: [new Error(error.response.data.errors.email)],
               },
             });
-
           });
       }
     });
