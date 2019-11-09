@@ -33,7 +33,7 @@ module Api
         def bind_identity
           identity = Identity.find_by(uid: @oauth.uid,
                                       provider: @oauth.provider)
-          user = current_user || identity&.user || User.new(email: @oauth.info['email'], oauthenticable: true)
+          user = current_user || identity&.user || User.new(oauthenticable: true)
           if identity
             identity.update!(user: user, auth: @oauth)
           else
