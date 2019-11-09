@@ -42,6 +42,6 @@ describe('RegisterForm', function () {
     ]);
 
     expect(await this.page.url()).to.equal('https://en.nv6.ru/dashboard');
-    await this.page.waitFor("//header//p[contains(text(), 'Exit')]");
+    await this.page.waitFor("//header//span[contains(text(), 'Profile')]");
   });
 });

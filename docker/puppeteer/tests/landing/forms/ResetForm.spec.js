@@ -29,7 +29,7 @@ describe('RestoreForm', function () {
     ]);
     expect(await this.page.url()).to.equal('https://nv6.ru/dashboard');
     await this.page.waitFor("//span[contains(text(), 'Password successfully changed')]");
-    await this.page.waitFor("//header//p[contains(text(), 'Exit')]");
+    await this.page.waitFor("//header//span[contains(text(), 'Profile')]");
   });
 
   it('Asks to request new reset password link if reset_password_token is invalid', async () => {

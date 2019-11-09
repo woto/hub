@@ -2,31 +2,57 @@
 import React, { Component } from 'react'
 import { Menu, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
-import { getLoginPath } from '../../shared/helpers'
+import { getLoginPath } from '../../shared/helpers';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from "react-router-dom";
 
 const { SubMenu } = Menu;
 
-import languages from '../../shared/languages.json';
 import { AuthConsumer, AuthContext } from '../../shared/AuthContext';
+import LanguageSwitchItem from '../../shared/LanguageSwitchItem';
+import ExitItem from '../../shared/ExitItem';
 
-const ExitItem = ({ context, ...props }) => {
+const ProfileItem = ({ context, ...props }) => {
   // debugger
   return (
-    <Menu.Item key="exit" style={{float: "right"}} {...props}>
-      <a className="header3-item-block" onClick={context.logout} rel="noopener noreferrer">
-        <p>
-          <FormattedMessage id="exit" />
-        </p>
-      </a>
-    </Menu.Item>
+
+    <SubMenu
+      {...props}
+      style={{ float: "right" }}
+      key="profile"
+      title={
+        <div className="header3-item-block">
+          <span className="submenu-title-wrapper">
+            <Icon type="user" />
+            <FormattedMessage id="profile" />
+          </span>
+        </div>
+      }
+    >
+
+      <Menu.Item key="settings">
+        <Link className="header3-item-block" to="/settings/profile" rel="noopener noreferrer">
+          <p>
+            <FormattedMessage id="settings" />
+          </p>
+        </Link>
+      </Menu.Item>
+
+      <ExitItem context={context}></ExitItem>
+
+    </SubMenu>
   )
 }
 
 const LoginItem = ({ history, ...props }) => {
   // debugger
   return (
-    <Menu.Item key="login" style={{float: "right"}} {...props}>
+    <Menu.Item key="login" style={{ float: "right" }} {...props}>
       <a className="header3-item-block" onClick={() => history.push(getLoginPath())} rel="noopener noreferrer">
         <p>
           <FormattedMessage id="login" />
@@ -48,15 +74,6 @@ class _TopMenu extends React.Component {
     });
   };
 
-  // TODO: merge with another occurence
-  // the problem happens due impossibility to use custom component inside antd menu
-  switchLanguage = (obj) => (e) => {
-    window.location = obj.domain +
-      window.location.pathname +
-      window.location.search +
-      window.location.hash;
-  }
-
   render() {
 
     let { history } = this.props;
@@ -66,34 +83,13 @@ class _TopMenu extends React.Component {
       <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
 
         {this.props.auth.isAuthorized ?
-          (<ExitItem context={context}></ExitItem>)
+          (<ProfileItem context={context}></ProfileItem>)
           :
           (<LoginItem history={history}></LoginItem>)
         }
 
-        <SubMenu
-          style={{ float: "right" }}
-          key="languages"
-          title={
-            <div className="header3-item-block">
-              <span className="submenu-title-wrapper">
-                <Icon type="global" />
-                <FormattedMessage id="language" />
-              </span>
-            </div>
-          }
-        >
+        <LanguageSwitchItem style={{ float: "right" }}></LanguageSwitchItem>
 
-          {languages.map(obj =>
-            <Menu.Item disabled={obj.disabled} key={obj.language}>
-              <a className="header3-item-block" onClick={this.switchLanguage(obj)}>
-                <p>
-                  {obj.language}
-                </p>
-              </a>
-            </Menu.Item>
-          )}
-        </SubMenu>
       </Menu>
     );
   }

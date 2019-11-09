@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import languages from '../shared/languages.json';
 import axios from './../shared/axios'
 import { AuthContext } from '../shared/AuthContext';
+import LanguageSwitchItem from '../shared/LanguageSwitchItem';
+import ExitItem from '../shared/ExitItem';
 
 const { Item, SubMenu } = Menu;
 
@@ -35,31 +37,9 @@ class Header3 extends React.Component {
     });
   };
 
-  // TODO: merge with another occurence
-  // the problem happens due impossibility to use custom component inside antd menu
-  switchLanguage = (obj) => (e) => {
-    window.location = obj.domain +
-      window.location.pathname +
-      window.location.search +
-      window.location.hash;
-  }
 
   render() {
-
-    // TODO: this code repeats in PrivateLayout
-    // Library issue? https://github.com/ant-design/ant-design/issues/4853
-    let exitItem = '';
     let context = this.context;
-    if (context.isAuthorized) {
-      exitItem = <Menu.Item key="exit">
-        <a className="header3-item-block" onClick={context.logout} rel="noopener noreferrer">
-          <p>
-            <FormattedMessage id="exit" />
-          </p>
-        </a>
-      </Menu.Item>
-    }
-
     const { dataSource, isMobile, ...props } = this.props;
     const { phoneOpen } = this.state;
     const moment = phoneOpen === undefined ? 300 : null;
@@ -120,37 +100,19 @@ class Header3 extends React.Component {
               onClick={this.handleClick} selectedKeys={[this.state.current]}
             >
 
+              <LanguageSwitchItem></LanguageSwitchItem>
+
               <Menu.Item key="dashboard">
-                <Icon type="user" />
+                <Icon type="shop" />
                 <FormattedMessage id="dashboard" />
                 <Link to="/dashboard"></Link>
               </Menu.Item>
 
-              <SubMenu
-                key="languages"
-                title={
-                  <div className="header3-item-block">
-                    <span className="submenu-title-wrapper">
-                      <Icon type="global" />
-                      <FormattedMessage id="language" />
-                    </span>
-                  </div>
-                }
-              >
-
-                {languages.map(obj =>
-                  <Menu.Item disabled={obj.disabled} key={obj.language}>
-                    <a className="header3-item-block" onClick={this.switchLanguage(obj)}>
-                      <p>
-                        {obj.language}
-                      </p>
-                    </a>
-                  </Menu.Item>
-                )}
-
-              </SubMenu>
-
-              {exitItem}
+              {context.isAuthorized ?
+                (<ExitItem context={context}></ExitItem>)
+                :
+                ('')
+              }
 
             </Menu>
           </TweenOne>
