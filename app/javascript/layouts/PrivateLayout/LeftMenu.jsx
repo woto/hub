@@ -8,7 +8,7 @@ import { AuthConsumer } from '../../shared/AuthContext';
 
 const { SubMenu } = Menu;
 
-const LinkMenuWithRouter = withRouter((props) => {
+const LeftMenuWithRouter = withRouter((props) => {
   const { location } = props;
   let selectedKeys = null;
   let openKeys = null;
@@ -116,14 +116,14 @@ const LinkMenuWithRouter = withRouter((props) => {
 });
 
 // A component may consume multiple contexts
-function LinkMenu(props) {
+function LeftMenu(props) {
   return (
     <AuthConsumer>
       {(auth) => (
-        <LinkMenuWithRouter auth={auth} {...props} />
+        <LeftMenuWithRouter auth={auth} {...props} />
       )}
     </AuthConsumer>
   );
 }
 
-export default LinkMenu;
+export default LeftMenu;

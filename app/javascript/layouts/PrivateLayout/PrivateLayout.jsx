@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from '../../shared/axios';
 import { Layout, Menu } from 'antd';
 import { Link } from "react-router-dom";
-import LinkMenu from './LinkMenu';
+import LeftMenu from './LeftMenu';
 import TopMenu from './TopMenu';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -23,7 +23,7 @@ class PrivateLayout extends React.Component {
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
           <Link to="/"><div className="private-logo" /></Link>
-          <LinkMenu />
+          <LeftMenu />
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} >
