@@ -46,6 +46,10 @@ docker-compose run --rm puppeteer
 ssh -R 80:localhost:80 -R 443:localhost:443 root@nv6.ru
 ```
 
+### Style guide
+
+- [Git commit messages rules](https://chris.beams.io/posts/git-commit/)
+
 ## Issues
 
 ### In case of problems with SSL certificate
