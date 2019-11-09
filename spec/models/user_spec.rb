@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
       # TODO: rewrite with dynamic host
       expect do
         user.update(email: user.email.prepend('changed_'))
-      end.to change(ActionMailer::Base.deliveries, :count).by(1)
+      end.to change(ActionMailer::Base.deliveries, :count).by(2)
     end
   end
 end
