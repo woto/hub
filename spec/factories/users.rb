@@ -7,5 +7,11 @@ FactoryBot.define do
     trait(:unconfirmed) {
       confirmed_at { nil }
     }
+
+    trait(:without_email_and_password) {
+      unconfirmed
+      email { nil }
+      password { nil }
+    }
   end
 end

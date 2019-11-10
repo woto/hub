@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useContext } from 'react'
 import axios from 'axios';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
@@ -18,20 +18,37 @@ import {
   Input,
   message,
   Alert,
-  Tooltip
+  Tooltip,
+  PageHeader,
+  Typography,
 } from 'antd';
 
-import { AuthContext } from '../../../shared/AuthContext';
-import PrivateLayout from '../../../layouts/PrivateLayout'
-import WhereAmI from './WhereAmI';
+const { Text } = Typography;
+
+
+import { AuthContext } from '../../shared/AuthContext';
+
+const CurrentEmailAddress = injectIntl((props) => {
+  return (
+    <Form.Item
+      style={{ marginBottom: "1rem" }}
+      help={props.is_confirmed ? <Confirmed /> : <Unconfirmed />}
+      label={<FormattedMessage id="current-email-address" />}
+    >
+      {props.main_address}
+    </Form.Item>
+  )
+})
 
 
 const Confirmed = injectIntl((props) => {
   return (
     <>
-      <Tooltip placement="topLeft" title={props.intl.formatMessage({ id: 'confirmed' })}>
+      <Text type="secondary">
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-      </Tooltip>
+        {" "}
+        <span jid="email-confirmation-status"><FormattedMessage id="confirmed" /></span>
+      </Text>
     </>
   )
 });
@@ -39,9 +56,11 @@ const Confirmed = injectIntl((props) => {
 const Unconfirmed = injectIntl((props) => {
   return (
     <>
-      <Tooltip placement="topLeft" title={props.intl.formatMessage({ id: 'unconfirmed' })}>
+      <Text type="danger">
         <Icon type="close-circle" theme="twoTone" twoToneColor="#f5222d" />
-      </Tooltip>
+        {" "}
+        <span jid="email-confirmation-status"><FormattedMessage id="unconfirmed" /></span>
+      </Text>
     </>
   )
 });
@@ -49,6 +68,7 @@ const Unconfirmed = injectIntl((props) => {
 class _Email extends React.Component {
 
   handleSubmit = e => {
+    let { context } = this;
     const { intl, history } = this.props;
     e.preventDefault();
 
@@ -61,10 +81,21 @@ class _Email extends React.Component {
         })
           .then(({ data }) => {
             message.info(intl.formatMessage({ id: 'please-check-email' }));
-            // console.log(data);
+            context.checkProfile();
+            this.props.form.setFieldsValue({
+              email: "",
+            });
           })
           .catch((error) => {
-            console.log(error);
+
+            message.error(intl.formatMessage({ id: 'unable-to-proceed' }));
+
+            this.props.form.setFields({
+              email: {
+                value: values.email,
+                errors: [new Error(error.response.data.errors.email)],
+              },
+            });
           });
       }
     });
@@ -79,21 +110,23 @@ class _Email extends React.Component {
     };
 
     let { context } = this;
+
     return (
-
-      <PrivateLayout whereAmI={<WhereAmI />}>
-
-        <Alert style={{ marginBottom: "2rem" }} message={intl.formatMessage({ id: 'alert-settings-email' })} type="info" />
+      <>
+        <PageHeader
+          title={intl.formatMessage({ id: 'email-change-title' })}
+        />
 
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
-          <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <FormattedMessage id="current-email-address" />: {context.user.confirmed_at ? <Confirmed /> : <Unconfirmed />} {context.user.email}
-          </Form.Item>
+          {(context.user.email.main_address)
+            && <CurrentEmailAddress
+              main_address={context.user.email.main_address}
+              is_confirmed={context.user.email.is_confirmed}
+            />}
 
-          <Form.Item label="E-mail">
+          <Form.Item label={<FormattedMessage id="new-email-address" />}>
             {getFieldDecorator('email', {
-              initialValue: context.user.unconfirmed_email,
               rules: [
                 {
                   type: 'email',
@@ -104,16 +137,21 @@ class _Email extends React.Component {
                   message: <FormattedMessage id="please-enter-email" />,
                 },
               ],
-            })(<Input />)}
+            })(<Input jid="email-tab-address" />)}
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Button type="primary" htmlType="submit">
-              <FormattedMessage id="save" />
+            <Button jid="email-tab-button" type="primary" htmlType="submit">
+              <FormattedMessage id="send-confirmation-email" />
             </Button>
           </Form.Item>
         </Form>
-      </PrivateLayout>
+
+        <Text type="secondary">
+          <FormattedMessage id='alert-settings-email' />
+        </Text>
+
+      </>
     );
   }
 }

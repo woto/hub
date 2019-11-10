@@ -71,7 +71,13 @@ class _AuthProvider extends React.Component {
   }
 
   state = {
-    user: {},
+    user: {
+      email: {
+        main_address: null,
+        unconfirmed_address: null,
+        is_confirmed: null
+      }
+    },
     isAuthorized: false,
     checkProfile: () => { this.checkProfile() },
     setAxiosAuthorizationHeader: (val) => { this.setAxiosAuthorizationHeader(val) },
