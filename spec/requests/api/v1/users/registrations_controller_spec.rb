@@ -35,7 +35,17 @@ describe Api::V1::Users::RegistrationsController, type: :request do
       # TODO: rewrite with dynamic host
       make
       content = ActionMailer::Base.deliveries.first.body.encoded
-      expect(content).to include("https://nv6.ru/confirm?confirmation_token=#{User.last.confirmation_token}")
+      expect(content).to include("https://en.nv6.ru/confirm?confirmation_token=#{User.last.confirmation_token}")
+    end
+
+    context 'with russian subdomain' do
+      before { host! "ru.nv6.ru" }
+
+      it 'contains link to russian subdomain' do
+        make
+        content = ActionMailer::Base.deliveries.first.body.encoded
+        expect(content).to include("https://ru.nv6.ru/confirm?confirmation_token=#{User.last.confirmation_token}")
+      end
     end
   end
 
@@ -62,20 +72,55 @@ describe Api::V1::Users::RegistrationsController, type: :request do
     end
 
     describe 'Email' do
-      let(:new_email) { Faker::Internet.email }
 
       def make
         xpatch '/api/v1/users', params: { user: { email: new_email } }
       end
 
-      specify do
-        make
-        expect(user.reload.unconfirmed_email).to eq new_email
+      context 'new email unequal to an old email' do
+        let(:new_email) { Faker::Internet.email }
+
+        specify do
+          make
+          expect(user.reload.unconfirmed_email).to eq new_email
+        end
+
+        specify do
+          make
+          expect(user.reload.email).to eq old_email
+        end
+
+        it 'sends two emails' do
+          expect do
+            make
+          end.to change(ActionMailer::Base.deliveries, :count).by(2)
+        end
+
+        context 'with russian subdomain' do
+          before { host! "ru.nv6.ru" }
+
+          it 'contains link to russian subdomain' do
+            make
+            content = ActionMailer::Base.deliveries.last.body.encoded
+            expect(content).to include("https://ru.nv6.ru/confirm?confirmation_token=#{user.reload.confirmation_token}")
+          end
+        end
       end
 
-      specify do
-        make
-        expect(user.reload.email).to eq old_email
+      context 'new email equal to an old email' do
+        let(:new_email) { old_email }
+
+        it 'still can rerequest confirmation' do
+          make
+          content = ActionMailer::Base.deliveries.last.body.encoded
+          expect(content).to include("https://en.nv6.ru/confirm?confirmation_token=#{user.reload.confirmation_token}")
+        end
+
+        it 'sends only one email' do
+          expect do
+            make
+          end.to change(ActionMailer::Base.deliveries, :count).by(1)
+        end
       end
     end
   end

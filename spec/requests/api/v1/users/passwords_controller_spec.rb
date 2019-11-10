@@ -34,11 +34,14 @@ describe Api::V1::Users::PasswordsController, type: :request do
         expect { make }.to change(ActionMailer::Base.deliveries, :count).by(1)
       end
 
-      it 'contains valid restore link' do
-        # TODO: rewrite with dynamic host
-        make
-        content = ActionMailer::Base.deliveries.first.body.encoded
-        expect(content).to include("https://nv6.ru/reset?reset_password_token=#{user.reset_password_token}")
+      context 'with russian subdomain' do
+        before { host! "ru.nv6.ru" }
+
+        it 'contains link to russian subdomain' do
+          make
+          content = ActionMailer::Base.deliveries.last.body.encoded
+          expect(content).to include("https://ru.nv6.ru/reset?reset_password_token=")
+        end
       end
     end
   end

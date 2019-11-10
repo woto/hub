@@ -17,7 +17,7 @@
 * [x] Links in login form (Restore password, Register) should not link on home page with opened modal.
 * [x] To test /confirmation
 * [ ] Redesign user settings as it made [here](https://preview.pro.ant.design/account/settings/base)
-* [ ] User can't resend confirmation e-mail if it's already stored in email in database and unconfirmed. Page (https://nv6.ru/settings/email). Might be need a link to confirm on this page which will do same things as a https://nv6.ru/confirmation
+* [x] User can't resend confirmation e-mail if it's already stored in email in database and unconfirmed. Page (https://nv6.ru/settings/email).
 * [x] To spruce up Emails (Registration, confirmation, password recovery, password change)
 
 # v1.1
@@ -36,3 +36,4 @@
 * [ ] To test /settings/social-networks
 * [ ] To test + refactor d4ff25ab504818eb4e932df4e92fbe7b289dcdf9
 * [ ] To test + refactor 5959146e775140d2b385c49c91cc39f69ac8624f
+* [ ] User has unconfirmed e-mail address in e-mail attribute. User has misspelled e-mail address in unconfirmed_email attribute. User logs out. Confirmation period finished. Now confirmation link can be sent only on misspelled e-mail address.

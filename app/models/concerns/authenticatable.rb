@@ -30,5 +30,11 @@ module Authenticatable
     def email_required?
       super && !oauthenticable
     end
+
+    def send_email_changed_notification
+      unless email_before_last_save.nil?
+        send_devise_notification(:email_changed, to: email_before_last_save)
+      end
+    end
   end
 end
