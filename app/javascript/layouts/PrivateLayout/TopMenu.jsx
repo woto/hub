@@ -29,7 +29,7 @@ const ProfileItem = ({ context, ...props }) => {
         <div className="header3-item-block">
           <span className="submenu-title-wrapper">
             <Icon type="user" />
-            <FormattedMessage id="profile" />
+            { context.user.email.is_confirmed && context.user.email.main_address || <FormattedMessage id="profile" />}
           </span>
         </div>
       }

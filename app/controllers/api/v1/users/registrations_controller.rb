@@ -26,7 +26,7 @@ module Api
 
           # Stupidest hack
           old_email = resource.email
-          if account_update_params[:email] == old_email
+          if old_email && account_update_params[:email] == old_email
             resource.update_columns(email: nil)
           end
 
@@ -35,7 +35,7 @@ module Api
           # till here
 
           # Stupidest hack
-          if account_update_params[:email] == old_email
+          if old_email && account_update_params[:email] == old_email
             resource.update_columns(account_update_params)
           end
 

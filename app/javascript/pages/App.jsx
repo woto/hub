@@ -18,10 +18,7 @@ import Feeds from './Feeds';
 import Offers from './Offers';
 import Posts from './Posts';
 import Post from './Post';
-import Profile from './Settings/Profile';
-import Password from './Settings/Password';
-import Email from './Settings/Email';
-import SocialNetworks from './Settings/SocialNetworks';
+import Settings from './Settings';
 import Dashboard from './Dashboard';
 
 import LoginForm from '../landing/forms/LoginForm';
@@ -98,10 +95,7 @@ export default class App extends React.Component {
             <Route exact path="/posts/new" component={Post} />
             <Route exact path="/posts/:id/edit" component={Post} />
 
-            <Route exact path="/settings/password" component={Password} />
-            <Route path="/settings/profile" component={Profile} />
-            <Route exact path="/settings/email" component={Email} />
-            <Route exact path="/settings/social-networks" component={SocialNetworks} />
+            <Route path="/settings" component={Settings} />
 
             <Route exact path={['/', '/login', '/register', '/confirm', '/confirmation', '/restore', '/reset']} component={Landing} />
           </AuthProvider>

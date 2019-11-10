@@ -11,7 +11,6 @@ const { SubMenu } = Menu;
 const LeftMenuWithRouter = withRouter((props) => {
   const { location } = props;
   let selectedKeys = null;
-  let openKeys = null;
 
   if (location.pathname.startsWith('/dashboard')) {
     selectedKeys = ['0'];
@@ -26,22 +25,10 @@ const LeftMenuWithRouter = withRouter((props) => {
     selectedKeys = ['3'];
   }
   if (location.pathname.startsWith('/settings')) {
-    openKeys = ['4'];
-  }
-  if (location.pathname.startsWith('/settings/profile')) {
-    selectedKeys = ['5'];
-  }
-  if (location.pathname.startsWith('/settings/password')) {
-    selectedKeys = ['6'];
-  }
-  if (location.pathname.startsWith('/settings/email')) {
-    selectedKeys = ['7'];
-  }
-  if (location.pathname.startsWith('/settings/social-networks')) {
-    selectedKeys = ['8'];
+    selectedKeys = ['4'];
   }
   return (
-    <Menu theme="dark" defaultOpenKeys={openKeys} defaultSelectedKeys={selectedKeys} mode="inline">
+    <Menu theme="dark" defaultSelectedKeys={selectedKeys} mode="inline">
 
       <Menu.Item key="0">
         <Link jid="left-menu-dashboard" to="/dashboard">
@@ -74,43 +61,15 @@ const LeftMenuWithRouter = withRouter((props) => {
         </Link>
       </Menu.Item>
 
-      <SubMenu
+      <Menu.Item
         key="4"
         disabled={!props.auth.isAuthorized}
-        title={(
-          <span>
-            <Icon type="setting" />
-            <span><FormattedMessage id="settings" /></span>
-          </span>
-        )}
       >
-
-        <Menu.Item key="5">
-          <Link jid="left-menu-settings-profile" to="/settings/profile">
-            <span><FormattedMessage id="profile" /></span>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item key="6">
-          <Link jid="left-menu-settings-password" to="/settings/password">
-            <span><FormattedMessage id="change-password" /></span>
-          </Link>
-        </Menu.Item>
-
-
-        <Menu.Item key="7">
-          <Link jid="left-menu-settings-email" to="/settings/email">
-            <span><FormattedMessage id="change-email" /></span>
-          </Link>
-        </Menu.Item>
-
-
-        <Menu.Item key="8">
-          <Link jid="left-menu-settings-social-networks" to="/settings/social-networks">
-            <span><FormattedMessage id="social-networks" /></span>
-          </Link>
-        </Menu.Item>
-      </SubMenu>
+        <Link jid="left-menu-settings" to="/settings/profile">
+          <Icon type="setting" />
+          <span><FormattedMessage id="settings" /></span>
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 });

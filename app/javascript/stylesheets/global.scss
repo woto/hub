@@ -1,31 +1,52 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic');
 
-
 body {
-    font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
 
 .textarea-large-hack {
-    font-size: 16px;
-    padding: 6px 11px;
-    height: 40px;
-    font-size: 16px;
+	font-size: 16px;
+	padding: 6px 11px;
+	height: 40px;
+	font-size: 16px;
 }
 
 .dynamic-delete-button {
-    font-size: 24px;
-    position: relative;
-    top: 14px;
+	font-size: 24px;
+	position: relative;
+	top: 14px;
 }
 
 .private-logo {
-    height: 32px;
-    background: url('https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*GzZ-QqkpH4AAAAAAAAAAAABkARQnAQ');
-    margin: 16px;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
+	height: 32px;
+	background: url('https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*GzZ-QqkpH4AAAAAAAAAAAABkARQnAQ');
+	margin: 16px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
 
-  .ant-page-header {
-    margin-bottom: 2.5rem !important;
-  }
+.ant-page-header {
+	margin-bottom: 2.5rem !important;
+}
+
+.editor {
+	font-size: 18px;
+	ol {
+		list-style-type: decimal;
+		padding: 0;
+		margin-left: 1rem;
+	}
+	ul {
+		list-style-type: disc;
+		padding: 0;
+		margin-left: 1rem;
+	}
+	li {
+		padding: 0;
+		margin-left: 1rem;
+	}
+	p {
+		padding: 0;
+		margin: 1rem 0;
+	}
+}
