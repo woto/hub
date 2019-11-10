@@ -24,7 +24,7 @@ describe('LoginForm', function () {
 
     const result = await this.page.evaluate(() => window.history.length);
     expect(result).to.equal(2);
-    await this.page.waitFor("//header//span[contains(text(), 'Профиль')]");
+    await this.page.waitFor("//header//span[contains(text(), 'user@example.com')]");
   });
 
   it('Respects "Remember me checkbox"');

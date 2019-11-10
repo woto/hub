@@ -28,7 +28,7 @@ describe('ConfirmForm', function () {
     console.log('6');
     await this.page.waitFor("//span[contains(text(), 'E-mail successfully confirmed')]");
     console.log('7');
-    await this.page.waitFor("//header//span[contains(text(), 'Profile')]");
+    await this.page.waitFor("//header//span[contains(text(), 'user@example.com')]");
   });
 
   it('Asks to login if e-mail already confirmed', async () => {
