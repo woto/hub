@@ -20,7 +20,7 @@
 * [x] To spruce up Emails (Registration, confirmation, password recovery, password change)
 * [x] To test /settings/email
 * [ ] To test /settings/password
-* [ ] To test /settings/social-networks
+* [x] To test /settings/social
 * [ ] Ckeditor images upload.
 * [ ] Ckeditor should autosave drafts.
 

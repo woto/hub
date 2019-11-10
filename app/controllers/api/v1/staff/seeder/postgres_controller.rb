@@ -26,8 +26,8 @@ module Api
             respond_with user
           end
 
-          def create_user_without_email_and_password
-            user = FactoryBot.create(:user, :without_email_and_password)
+          def create_social_user
+            user = FactoryBot.create(:user, :social)
             respond_with user
           end
 

@@ -31,9 +31,9 @@ describe('Proxy', function () {
         accessTokenCookie = arr.find(el => el.name === 'access_token');
         return expect(accessTokenCookie).to.be.an('object');
       } catch (e) {
-
+        // it's ok go to next iteration
       }
-      i++;
+      i += 1;
     }
   });
 

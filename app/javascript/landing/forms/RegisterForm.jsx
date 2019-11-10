@@ -33,6 +33,14 @@ class _RegisterForm extends React.Component {
             context.setAxiosAuthorizationHeader(data.access_token);
             context.checkProfile();
             history.push('/dashboard');
+            // notification.open({
+            //   message: 'Congratulation! You are successfully registered.',
+            //   placement: 'bottomLeft',
+            //   description:
+            //     'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            //   icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+            //   duration: 0,
+            // })
           })
           .catch((error) => {
             // this.setState(error.response.data);

@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     get 'email', to: 'home#index'
     get 'profile', to: 'home#index'
     get 'password', to: 'home#index'
-    get 'social-networks', to: 'home#index'
+    get 'social', to: 'home#index'
   end
 
   resources :offers, only: %i[index] do
@@ -75,7 +75,7 @@ Rails.application.routes.draw do
             get 'create_user'
             get 'create_another_user'
             get 'create_unconfirmed_user'
-            get 'create_user_without_email_and_password'
+            get 'create_social_user'
             get 'send_reset_password_instructions'
             get 'send_confirmation_instructions'
           end
@@ -87,6 +87,7 @@ Rails.application.routes.draw do
 
       namespace :users do
         resources :binds, only: [:update]
+        resources :unbinds, only: [:destroy]
       end
     end
   end

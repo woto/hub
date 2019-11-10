@@ -1,0 +1,29 @@
+/* eslint-disable mocha/no-mocha-arrows */
+/* eslint-disable no-console */
+/* eslint-disable prefer-arrow-callback */
+
+// const assert = require('assert');
+const { expect } = require('chai');
+const axios = require('axios');
+
+const shared = require('../../support/puppeteer');
+
+describe('SocialTab', function () {
+
+  this.timeout(10000);
+  shared.preparePuppeteer.call(this);
+
+  // TODO: this test should be rewritten
+  it('Takes away "unbind button" when unbinding social account', async () => {
+    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    await this.page.goto('https://ru.nv6.ru/login', { waitUntil: 'networkidle0' });
+
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click('[jid="login-form-oauth-test"]'),
+    ]);
+
+    this.page.goto('https://ru.nv6.ru/settings/social');
+    await this.page.waitFor('[jid="social-tab-google_oauth2-unbind"]');
+  });
+});

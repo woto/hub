@@ -8,7 +8,7 @@ module Api
         class RedisController < Api::V1::Staff::BaseController
           def get_ready_for_proxy
             key = SecureRandom.hex
-            auth = Faker::Omniauth.linkedin
+            auth = Faker::Omniauth.google
             redis = Redis.new(Rails.configuration.redis_oauth)
             redis.set(key, auth.to_json)
             respond_with key

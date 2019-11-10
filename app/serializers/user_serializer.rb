@@ -13,6 +13,6 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   class IdentitySerializer < ActiveModel::Serializer
-    attributes :provider
+    attributes :provider, :uid
   end
 end

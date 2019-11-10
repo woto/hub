@@ -76,7 +76,8 @@ class _AuthProvider extends React.Component {
         main_address: null,
         unconfirmed_address: null,
         is_confirmed: null
-      }
+      },
+      identities: []
     },
     isAuthorized: false,
     checkProfile: () => { this.checkProfile() },

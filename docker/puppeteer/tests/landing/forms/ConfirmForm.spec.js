@@ -37,7 +37,7 @@ describe('ConfirmForm', function () {
     const confirmationToken = await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/send_confirmation_instructions');
 
     const confirmationUrl = `https://nv6.ru/confirm?confirmation_token=${confirmationToken.data}`;
-    await this.page.goto(confirmationUrl, { waitUntil: 'networkidle0' });
+    await this.page.goto(confirmationUrl);
 
     expect(await this.page.url()).to.equal(confirmationUrl);
     await this.page.waitFor("//span[contains(text(), 'E-mail was already confirmed, please try signing in')]");
