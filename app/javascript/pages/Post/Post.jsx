@@ -78,5 +78,5 @@ class _Post extends React.Component {
     );
   }
 }
-const Post = Form.create({ name: 'Post' })(_Post);
+const Post = injectIntl(Form.create({ name: 'post_form' })(_Post));
 export default Post;

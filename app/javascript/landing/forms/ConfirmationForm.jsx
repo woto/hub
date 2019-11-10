@@ -118,5 +118,5 @@ class _Form extends React.Component {
   }
 }
 
-const ConfirmationForm = injectIntl(Form.create({ name: 'confirmation' })(_Form));
+const ConfirmationForm = injectIntl(Form.create({ name: 'confirmation_form' })(_Form));
 export default ConfirmationForm

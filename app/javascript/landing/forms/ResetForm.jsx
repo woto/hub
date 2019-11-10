@@ -143,5 +143,5 @@ class _Form extends React.Component {
 }
 
 _Form.contextType = AuthContext;
-const ResetForm = injectIntl(Form.create({ name: 'reset' })(_Form));
+const ResetForm = injectIntl(Form.create({ name: 'reset_password' })(_Form));
 export default ResetForm;

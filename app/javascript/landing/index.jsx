@@ -52,7 +52,7 @@ export default class Home extends React.Component {
         this.setState({
           show: true,
         });
-      }, 300);
+      }, 100);
     }
     /* 如果不是 dva 2.0 请删除 end */
   }

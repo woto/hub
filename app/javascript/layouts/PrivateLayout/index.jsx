@@ -1,3 +1,2 @@
-import './PrivateLayout.css';
-import PrivateLayout from './PrivateLayout.jsx';
+import PrivateLayout from './PrivateLayout';
 export default PrivateLayout;

@@ -162,5 +162,5 @@ class _Form extends React.Component {
 _Form.contextType = AuthContext;
 _Form = withPopup(_Form);
 _Form = injectIntl(_Form);
-const LoginForm = Form.create({ name: 'login' })(_Form);
+const LoginForm = Form.create({ name: 'login_form' })(_Form);
 export default LoginForm;

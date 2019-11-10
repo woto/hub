@@ -119,6 +119,6 @@ class _Form extends React.Component {
   }
 }
 
-const RestoreForm = injectIntl(Form.create({ name: 'restore' })(_Form));
+const RestoreForm = injectIntl(Form.create({ name: 'restore_password' })(_Form));
 
 export default RestoreForm

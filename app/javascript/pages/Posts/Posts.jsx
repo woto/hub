@@ -11,7 +11,7 @@ const columns = [
   {
     title: 'Id',
     dataIndex: 'id',
-    width: '20%',
+    width: '5%',
   },
   {
     title: 'Title',
@@ -21,12 +21,12 @@ const columns = [
   {
     title: 'Url',
     dataIndex: 'url',
-    width: '60%',
+    width: '20%',
   },
   {
     title: 'Status',
     dataIndex: 'status_state',
-    width: '20%'
+    width: '10%'
   },
   {
     title: 'Created At',

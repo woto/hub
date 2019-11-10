@@ -2,4 +2,4 @@
 
 <p><%= t('instruction', scope: ['devise', 'mailer', 'confirmation_instructions']) %></p>
 
-<p><%= link_to t('action', scope: ['devise', 'mailer', 'confirmation_instructions']), confirm_password_url(confirmation_token: @token) %></p>
+<p><%= link_to t('action', scope: ['devise', 'mailer', 'confirmation_instructions']), confirm_password_url(confirmation_token: @token, subdomain: I18n.locale) %></p>

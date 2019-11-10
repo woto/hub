@@ -314,7 +314,6 @@ services:
       - "traefik.http.routers.netdata.middlewares=auth-netdata"
       - "traefik.http.middlewares.auth-netdata.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
 
-
   # MAIN DATABASE
   postgres:
     networks:

@@ -18,6 +18,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import App from '../pages/App';
+import '../stylesheets/global';
 
 require('channels');
 

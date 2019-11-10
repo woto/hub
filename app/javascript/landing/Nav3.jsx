@@ -103,7 +103,7 @@ class Header3 extends React.Component {
               <LanguageSwitchItem></LanguageSwitchItem>
 
               <Menu.Item key="dashboard">
-                <Icon type="shop" />
+                <Icon type="appstore" />
                 <FormattedMessage id="dashboard" />
                 <Link to="/dashboard"></Link>
               </Menu.Item>

@@ -189,5 +189,5 @@ class _RegisterForm extends React.Component {
 }
 
 _RegisterForm.contextType = AuthContext;
-const RegisterForm = injectIntl(Form.create({ name: 'register' })(_RegisterForm));
+const RegisterForm = injectIntl(Form.create({ name: 'register_form' })(_RegisterForm));
 export default RegisterForm;
