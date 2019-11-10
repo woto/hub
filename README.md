@@ -50,6 +50,13 @@ ssh -R 80:localhost:80 -R 443:localhost:443 root@nv6.ru
 
 - [Git commit messages rules](https://chris.beams.io/posts/git-commit/)
 
+## Notes you should know
+
+### Dynamic traefik routing
+
+Due to the nature of dynamic routing in Traefik you may get stuck with unexpected problems with `Bad gateway`. It can happen because of launched engineering container. Suppose this situation. You started `rails` container (1) and you started another `rails` (2) container with console. Now Traefik may route web requests to (2) container where is the web server didn't run. To avoid this problems you should run container with `traefik.enable=false` label. Ex. `docker-compose run -l "traefik.enable=false" --rm rails ./bin/rails c`
+
+
 ## Issues
 
 ### In case of problems with SSL certificate
