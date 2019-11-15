@@ -90,7 +90,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'aasm'
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'fast_jsonapi'
 gem 'kaminari'
 gem 'nokogiri'
 gem 'numbers_and_words'
@@ -116,7 +116,6 @@ gem 'devise'
 gem 'devise-security'
 gem 'devise-i18n'
 gem 'doorkeeper'
-gem 'simple_token_authentication'
 
 # Authentication
 gem 'omniauth'
@@ -134,5 +133,6 @@ gem 'prometheus_exporter'
 gem 'prometheus-client'
 
 # Dry family
-gem 'dry-types'
 gem 'dry-struct'
+gem 'dry-validation'
+gem 'dry-transaction'
