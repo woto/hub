@@ -8,7 +8,8 @@ RUN apk add --no-cache --update build-base \
                                 nodejs \
                                 yarn \
                                 tzdata \
-                                less
+                                less \
+                                python2
 
 ENV APP_PATH /usr/src/app
 
