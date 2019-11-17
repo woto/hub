@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-User.create(
+User.create!(
   email: 'oganer@gmail.com',
   password: 'qweQWE123!@#',
   role: 'admin'
 )
 
-Doorkeeper::Application.create(
+Doorkeeper::Application.create!(
   name: 'Swagger',
   uid: 'fforGBoTVuZaMNMbp9jY7VEjk03_MX7On38Dtzt7Ei4',
   secret: '_Dn1afy_S9487VxKMp56LnaKwcob9EjgRoKl1mWBzG4',

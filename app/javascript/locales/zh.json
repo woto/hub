@@ -101,5 +101,18 @@
     "edit-profile-title": "个人资料编辑",
     "email-change-title": "变更电邮地址",
     "password-change-title": "修改密码",
-    "social-account-links-title": "关联社交网络帐户"
+    "social-account-links-title": "关联社交网络帐户",
+    "profile-tab-name": "名",
+    "profile-tab-messengers": "即时通讯工具",
+    "profile-tab-bio": "关于我自己",
+    "profile-tab-location": "所在位置",
+    "profile-tab-languages": "语言能力",
+    "profile-tab-name-is-required": "名称为必填项",
+    "profile-tab-messengers-is-required": "请提供至少一个使者",
+    "profile-tab-bio-is-required": "您的字段为必填项",
+    "profile-tab-location-is-required": "必须填写位置",
+    "profile-tab-languages-is-required": "请指出您使用的至少一种语言",
+    "profile-tab-add-messenger": "添加即时通讯工具",
+    "profile-successfully-saved": "个人资料已成功保存",
+    "profile-tab-avatar-successfull-uploaded": "图片上传成功"
 }

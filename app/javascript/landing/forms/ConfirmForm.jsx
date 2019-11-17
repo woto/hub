@@ -14,7 +14,7 @@ class ConfirmForm extends React.Component {
       .then(({ data }) => {
         message.info(intl.formatMessage({ id: 'email-successfully-confirmed' }));
         context.setAxiosAuthorizationHeader(data.access_token);
-        context.checkProfile();
+        context.checkUser();
         history.push('/dashboard');
       })
       .catch((error) => {

@@ -29,7 +29,7 @@ import { AuthContext } from '../../shared/AuthContext';
 
 
 const isBinded = (context, provider) => {
-  return context.user.identities.find((el) => el.provider == provider)
+  return context.user && context.user.identities.find((el) => el.provider == provider)
 }
 
 class SocialNetworks extends React.Component {
@@ -41,7 +41,7 @@ class SocialNetworks extends React.Component {
     axios.delete(`/api/v1/users/unbinds/${provider}`)
       .then(({ data }) => {
         message.info(intl.formatMessage({ id: 'social-account-successfully-unlinked' }));
-        context.checkProfile();
+        context.checkUser();
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +52,7 @@ class SocialNetworks extends React.Component {
   redirectToDashboard = () => {
     const { intl } = this.props;
     let context = this.context;
-    context.checkProfile();
+    context.checkUser();
     message.info(intl.formatMessage({ id: 'social-account-successfully-linked' }))
     // const { history, intl } = this.props;
     // history.replace('/dashboard');
@@ -80,8 +80,8 @@ class SocialNetworks extends React.Component {
           <Col span={1}>
             {isBinded(context, 'facebook') &&
               <Icon
+                style={{ fontSize: '24px', position: 'relative', top: '14px' }}
                 jid="social-tab-facebook-unbind"
-                className="dynamic-delete-button"
                 type="minus-circle-o"
                 onClick={() => this.unbind('facebook')}
               />
@@ -102,6 +102,7 @@ class SocialNetworks extends React.Component {
           <Col span={1}>
             {isBinded(context, 'google_oauth2') &&
               <Icon
+                style={{ fontSize: '24px', position: 'relative', top: '14px' }}
                 jid="social-tab-google_oauth2-unbind"
                 className="dynamic-delete-button"
                 type="minus-circle-o"
@@ -123,6 +124,7 @@ class SocialNetworks extends React.Component {
           <Col span={1}>
             {isBinded(context, 'twitter') &&
               <Icon
+                style={{ fontSize: '24px', position: 'relative', top: '14px' }}
                 jid="social-tab-twitter-unbind"
                 className="dynamic-delete-button"
                 type="minus-circle-o"
@@ -144,6 +146,7 @@ class SocialNetworks extends React.Component {
           <Col span={1}>
             {isBinded(context, 'instagram') &&
               <Icon
+                style={{ fontSize: '24px', position: 'relative', top: '14px' }}
                 jid="social-tab-instagram-unbind"
                 className="dynamic-delete-button"
                 type="minus-circle-o"

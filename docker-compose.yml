@@ -285,6 +285,7 @@ services:
     ports:
       - "9229:9229"
     volumes:
+      - "./docker/puppeteer/fixtures:/fixtures"
       - "./docker/puppeteer/tests:/tests"
       - "./docker/puppeteer/screenshots:/screenshots"
     command: "wait-for-it.sh nv6.ru:443 -- mocha --inspect=0.0.0.0 --recursive /tests"

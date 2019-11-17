@@ -81,7 +81,7 @@ class _Email extends React.Component {
         })
           .then(({ data }) => {
             message.info(intl.formatMessage({ id: 'please-check-email' }));
-            context.checkProfile();
+            context.checkUser();
             this.props.form.setFieldsValue({
               email: "",
             });
@@ -102,6 +102,8 @@ class _Email extends React.Component {
   };
 
   render() {
+    let { context } = this;
+
     const { intl } = this.props;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -109,7 +111,6 @@ class _Email extends React.Component {
       wrapperCol: { span: 10 },
     };
 
-    let { context } = this;
 
     return (
       <>
@@ -119,7 +120,7 @@ class _Email extends React.Component {
 
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
-          {(context.user.email.main_address)
+          {(context.user && context.user.email.main_address)
             && <CurrentEmailAddress
               main_address={context.user.email.main_address}
               is_confirmed={context.user.email.is_confirmed}

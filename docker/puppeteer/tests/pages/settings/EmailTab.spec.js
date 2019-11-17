@@ -21,6 +21,7 @@ describe('EmailTab', function () {
     await shared.login.call(this, 'user@example.com', '123123');
 
     await this.page.goto('https://ru.nv6.ru/settings/email');
+    await this.page.waitFor('[jid="email-confirmation-status"]');
     const text = await this.page.$eval('[jid="email-confirmation-status"]', el => el.textContent);
     expect(text).to.equal('Подтверждён');
   });
@@ -48,6 +49,7 @@ describe('EmailTab', function () {
     await shared.login.call(this, 'user@example.com', '123123');
 
     await this.page.goto('https://ru.nv6.ru/settings/email');
+    await this.page.waitFor('[jid="email-confirmation-status"]');
     const text = await this.page.$eval('[jid="email-confirmation-status"]', el => el.textContent);
     expect(text).to.equal('Не подтверждён');
   });

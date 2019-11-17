@@ -7,7 +7,7 @@ const WhereAmI = () => {
   return (
     <Breadcrumb style={{ margin: '16px 0' }}>
       <Breadcrumb.Item><Link to="/dashboard"><FormattedMessage id="home" /></Link></Breadcrumb.Item>
-      <Breadcrumb.Item><FormattedMessage id="profile" /></Breadcrumb.Item>
+      <Breadcrumb.Item><FormattedMessage id="settings" /></Breadcrumb.Item>
     </Breadcrumb>
   )
 }

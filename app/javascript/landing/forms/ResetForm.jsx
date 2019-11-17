@@ -36,7 +36,7 @@ class _Form extends React.Component {
         })
           .then(({ data }) => {
             context.setAxiosAuthorizationHeader(data.access_token);
-            context.checkProfile();
+            context.checkUser();
             message.info(intl.formatMessage({ id: 'password-successfully-changed' }));
             history.push('/dashboard');
           })

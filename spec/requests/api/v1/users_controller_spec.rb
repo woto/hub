@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 # TODO: move this test to authentication test made without shrared.rb
-describe Api::V1::ProfileController, type: :request do
+describe Api::V1::UsersController, type: :request do
   let!(:token) { create(:oauth_access_tokens) }
 
   context 'when authenticates with params' do
     def make
-      post '/api/v1/profile', params: { access_token: token.token }
+      get '/api/v1/users', params: { access_token: token.token }
     end
 
     it do
@@ -22,7 +22,7 @@ describe Api::V1::ProfileController, type: :request do
       headers = {
         'Authorization' => "Bearer #{token.token}"
       }
-      post '/api/v1/profile', headers: headers
+      get '/api/v1/users', headers: headers
     end
 
     it 'authenticates with headers' do

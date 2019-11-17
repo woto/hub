@@ -17,7 +17,7 @@ import { AuthConsumer, AuthContext } from '../../shared/AuthContext';
 import LanguageSwitchItem from '../../shared/LanguageSwitchItem';
 import ExitItem from '../../shared/ExitItem';
 
-const ProfileItem = ({ context, ...props }) => {
+const UserItem = ({ context, ...props }) => {
   // debugger
   return (
 
@@ -83,7 +83,7 @@ class _TopMenu extends React.Component {
       <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
 
         {this.props.auth.isAuthorized ?
-          (<ProfileItem context={context}></ProfileItem>)
+          (<UserItem context={context}></UserItem>)
           :
           (<LoginItem history={history}></LoginItem>)
         }

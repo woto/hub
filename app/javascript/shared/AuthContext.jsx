@@ -19,7 +19,7 @@ class _AuthProvider extends React.Component {
     if (accessToken) {
       this.setAxiosAuthorizationHeader(accessToken);
     }
-    this.checkProfile();
+    this.checkUser();
   }
 
   setAxiosAuthorizationHeader(accessToken) {
@@ -31,6 +31,12 @@ class _AuthProvider extends React.Component {
     this.writeAccessToken(accessToken);
   }
 
+  authrizationHeader() {
+    return {
+      Authorization: `Bearer ${this.readAccessToken()}`
+    }
+  }
+
   readAccessToken() {
     // TODO: call not tested in oauth scenario
     return Cookies.get('access_token');
@@ -40,14 +46,14 @@ class _AuthProvider extends React.Component {
     return Cookies.set('access_token', accessToken, { domain: 'nv6.ru', secure: true });
   }
 
-  checkProfile() {
+  checkUser() {
     let that = this;
-    axios.get('/api/v1/profile')
+    axios.get('/api/v1/users')
       .then(response => {
         that.setState({
           isAuthorized: true,
-          // TODO: nowhere in tests checks its presence
-          user: response.data,
+          // TODO: nowhere in tests checking its presence
+          user: response.data.data.attributes,
         });
       })
       .catch(() => {
@@ -70,19 +76,12 @@ class _AuthProvider extends React.Component {
     setTimeout(() => message.info(intl.formatMessage({ id: 'goodbye' })), 500);
   }
 
+
   state = {
-    user: {
-      email: {
-        main_address: null,
-        unconfirmed_address: null,
-        is_confirmed: null
-      },
-      identities: []
-    },
-    isAuthorized: false,
-    checkProfile: () => { this.checkProfile() },
+    checkUser: () => { this.checkUser() },
     setAxiosAuthorizationHeader: (val) => { this.setAxiosAuthorizationHeader(val) },
     readAccessToken: this.readAccessToken,
+    authrizationHeader: this.authrizationHeader,
     writeAccessToken: this.writeAccessToken,
     logout: () => { this.logout() }
   };

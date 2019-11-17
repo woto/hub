@@ -14,6 +14,7 @@ describe('SocialTab', function () {
   shared.preparePuppeteer.call(this);
 
   // TODO: this test should be rewritten
+  // don't like idea with login-form-oauth-test
   it('Takes away "unbind button" when unbinding social account', async () => {
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
     await this.page.goto('https://ru.nv6.ru/login', { waitUntil: 'networkidle0' });

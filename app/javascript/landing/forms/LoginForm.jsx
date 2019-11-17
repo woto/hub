@@ -51,7 +51,7 @@ class _Form extends React.Component {
   redirectToDashboard = () => {
     let context = this.context;
     const { history, intl } = this.props;
-    context.checkProfile();
+    context.checkUser();
     history.replace('/dashboard');
     message.info(intl.formatMessage({ id: 'successfully-logged-in' }))
   }

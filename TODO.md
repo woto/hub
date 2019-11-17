@@ -19,13 +19,17 @@
 * [x] User can't resend confirmation e-mail if it's already stored in email in database and unconfirmed. Page (https://nv6.ru/settings/email).
 * [x] To spruce up Emails (Registration, confirmation, password recovery, password change)
 * [x] To test /settings/email
-* [ ] To test /settings/password
+* [x] To test /settings/password
 * [x] To test /settings/social
+* [x] To test /settings/profile (rspec, puppeteer)
+* [x] To test avatar upload on profile page (rspec, puppeteer)
+* [ ] To test messengers on profile page (rspec, puppeteer)
 * [ ] Ckeditor images upload.
 * [ ] Ckeditor should autosave drafts.
 
 # v1.1
 
+* [ ] Add pagination to server side rendered offers page
 * [ ] Filtering in feeds list.
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
 * [ ] Pagination with more than 10 000 items.

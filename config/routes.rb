@@ -51,13 +51,15 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get 'environment', to: "environment#index"
+      get 'environment', to: 'environment#index'
       resources :feeds, only: %i[index] do
         resources :offers, only: %i[index]
       end
       resources :posts
       resources :offers, only: %i[index]
-      resource 'profile', controller: 'profile'
+      resource :users, only: %i[show]
+      resource :profile, only: %i[show update]
+      resource :avatar, only: %i[show update]
       namespace :staff do
         namespace :cropper do
           namespace 'elastic' do

@@ -4,6 +4,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
+// post url textarea
 .textarea-large-hack {
 	font-size: 16px;
 	padding: 6px 11px;
@@ -11,12 +12,14 @@ body {
 	font-size: 16px;
 }
 
+// unbind social account button
 .dynamic-delete-button {
 	font-size: 24px;
 	position: relative;
 	top: 14px;
 }
 
+// top logo in left menu
 .private-logo {
 	height: 32px;
 	background: url('https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*GzZ-QqkpH4AAAAAAAAAAAABkARQnAQ');
@@ -29,6 +32,7 @@ body {
 	margin-bottom: 2.5rem !important;
 }
 
+// ckeditor on post page
 .editor {
 	font-size: 18px;
 	ol {
@@ -49,4 +53,10 @@ body {
 		padding: 0;
 		margin: 1rem 0;
 	}
+}
+
+// user avatar
+.avatar-uploader > .ant-upload {
+	width: 128px;
+	height: 128px;
 }

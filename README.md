@@ -33,11 +33,22 @@ https://jaeger.nv6.ru
 username: oganer@gmail.com  
 password: qweQWE123!@#  
 
+### Useful commands
+
+```shell
+docker-compose run -l "traefik.enable=false" --rm rails ./bin/rails c
+docker-compose run -l "traefik.enable=false" --rm rails ./bin/setup
+docker-compose up -d rails; docker attach hub_rails_1
+
+docker-compose run -l "traefik.enable=false" --rm postgres psql -U hub -d postgres -h postgres
+docker exec -i -t hub_postgres_1 psql -U hub -d postgres
+```
+
 ### Testing
 
 ```shell
-docker-compose run --rm rails rspec
-docker-compose run --rm puppeteer
+docker-compose run -l "traefik.enable=false" --rm rails rspec
+docker-compose run -l "traefik.enable=false" --rm puppeteer
 ```
 
 ### Reverse ssh tunnel

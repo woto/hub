@@ -15,6 +15,7 @@ describe('Offers', function () {
 
   it('Returns table of 10th rows', async () => {
     await this.page.goto('https://nv6.ru/offers');
+    this.page.waitFor('.ant-table-row');
     expect((await this.page.$$('.ant-table-row')).length).to.equal(10);
   });
 

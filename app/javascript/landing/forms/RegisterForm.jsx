@@ -14,7 +14,6 @@ const AutoCompleteOption = AutoComplete.Option;
 class _RegisterForm extends React.Component {
   state = {
     confirmDirty: false,
-    errors: {}
   };
 
   handleSubmit = e => {
@@ -31,7 +30,7 @@ class _RegisterForm extends React.Component {
         })
           .then(({ data }) => {
             context.setAxiosAuthorizationHeader(data.access_token);
-            context.checkProfile();
+            context.checkUser();
             history.push('/dashboard');
             // notification.open({
             //   message: 'Congratulation! You are successfully registered.',

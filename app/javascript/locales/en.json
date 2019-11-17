@@ -101,5 +101,18 @@
     "edit-profile-title": "Edit profile",
     "email-change-title": "Email change",
     "password-change-title": "Password change",
-    "social-account-links-title": "Social account links"    
+    "social-account-links-title": "Social account links",
+    "profile-tab-name": "Name",
+    "profile-tab-messengers": "Messengers",
+    "profile-tab-bio": "Bio",
+    "profile-tab-location": "Location",
+    "profile-tab-languages": "Languages",
+    "profile-tab-name-is-required": "Name is required",
+    "profile-tab-messengers-is-required": "At least one messenger is required",
+    "profile-tab-bio-is-required": "Bio is required",
+    "profile-tab-location-is-required": "Location is required",
+    "profile-tab-languages-is-required": "At least one spoken language is required",
+    "profile-tab-add-messenger": "Add messenger",
+    "profile-successfully-saved": "Profile successfully saved",
+    "profile-tab-avatar-successfull-uploaded": "Avatar successfully uploaded"
 }

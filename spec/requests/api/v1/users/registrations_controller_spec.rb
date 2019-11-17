@@ -32,14 +32,13 @@ describe Api::V1::Users::RegistrationsController, type: :request do
     end
 
     specify 'Email contains valid confirmation link' do
-      # TODO: rewrite with dynamic host
       make
       content = ActionMailer::Base.deliveries.first.body.encoded
       expect(content).to include("https://en.nv6.ru/confirm?confirmation_token=#{User.last.confirmation_token}")
     end
 
     context 'with russian subdomain' do
-      before { host! "ru.nv6.ru" }
+      before { host! 'ru.nv6.ru' }
 
       it 'contains link to russian subdomain' do
         make
@@ -55,7 +54,7 @@ describe Api::V1::Users::RegistrationsController, type: :request do
     let(:new_password) { Faker::Internet.password }
 
     specify "Response doesn't contain any unexpected data" do
-      xpatch '/api/v1/users'
+      xpatch '/api/v1/users', params: { user: { password: new_password } }
       expect(response).to have_http_status(:no_content)
       expect(response.body).to eq('')
     end
@@ -69,15 +68,23 @@ describe Api::V1::Users::RegistrationsController, type: :request do
         make
         expect(user.reload.valid_password?(new_password)).to be true
       end
+
+      context 'when user with oauth identity' do
+        let(:user) { create(:user, :with_identity) }
+
+        it "can't change password without email" do
+          make
+          expect(json_response_body).to eq('errors' => { 'email' => ["can't be blank"] })
+        end
+      end
     end
 
     describe 'Email' do
-
       def make
         xpatch '/api/v1/users', params: { user: { email: new_email } }
       end
 
-      context 'new email unequal to an old email' do
+      context 'when new email unequal to an old email' do
         let(:new_email) { Faker::Internet.email }
 
         specify do
@@ -97,7 +104,7 @@ describe Api::V1::Users::RegistrationsController, type: :request do
         end
 
         context 'with russian subdomain' do
-          before { host! "ru.nv6.ru" }
+          before { host! 'ru.nv6.ru' }
 
           it 'contains link to russian subdomain' do
             make
@@ -107,7 +114,7 @@ describe Api::V1::Users::RegistrationsController, type: :request do
         end
       end
 
-      context 'new email equal to an old email' do
+      context 'when new email equal to an old email' do
         let(:new_email) { old_email }
 
         it 'still can rerequest confirmation' do

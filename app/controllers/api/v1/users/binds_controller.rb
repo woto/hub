@@ -31,20 +31,22 @@ module Api
         # Pay attention that there is can be situations with orphan users
         # (from which identity was unbinded)
         def bind_identity
-          identity = Identity.find_by(uid: @oauth.uid,
-                                      provider: @oauth.provider)
-          user = current_user || identity&.user || User.new(oauthenticable: true)
-          if identity
-            identity.update!(user: user, auth: @oauth)
-          else
-            Identity.create!(
-              uid: @oauth.uid,
-              provider: @oauth.provider,
-              user: user,
-              auth: @oauth
-            )
+          User.transaction do
+            identity = Identity.find_by(uid: @oauth.uid,
+                                        provider: @oauth.provider)
+            user = current_user || identity&.user || User.new(oauthenticable: true)
+            if identity
+              identity.update!(user: user, auth: @oauth)
+            else
+              Identity.create!(
+                uid: @oauth.uid,
+                provider: @oauth.provider,
+                user: user,
+                auth: @oauth
+              )
+            end
+            user
           end
-          user
         end
       end
     end

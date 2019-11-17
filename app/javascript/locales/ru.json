@@ -101,5 +101,18 @@
     "edit-profile-title": "Редактирование профиля",
     "email-change-title": "Смена адреса e-mail",
     "password-change-title": "Смена пароля",
-    "social-account-links-title": "Привязка аккаунтов социальных сетей"
+    "social-account-links-title": "Привязка аккаунтов социальных сетей",
+    "profile-tab-name": "Имя",
+    "profile-tab-messengers": "Мессенджеры",
+    "profile-tab-bio": "О себе",
+    "profile-tab-location": "Местонахождение",
+    "profile-tab-languages": "Языки",
+    "profile-tab-name-is-required": "Имя обязательно для заполнения",
+    "profile-tab-messengers-is-required": "Укажите хотя бы один мессенджер",
+    "profile-tab-bio-is-required": "Поле о себе обязательно для заполнения",
+    "profile-tab-location-is-required": "Местонахождение обязательно для заполнения",
+    "profile-tab-languages-is-required": "Укажите хотя бы один язык, на котором говорите",
+    "profile-tab-add-messenger": "Добавить мессенджер",
+    "profile-successfully-saved": "Профиль успешно сохранён",
+    "profile-tab-avatar-successfull-uploaded": "Аватар успешно загружен"
 }

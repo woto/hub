@@ -1,18 +1,25 @@
 # frozen_string_literal: true
 
-class UserSerializer < ActiveModel::Serializer
-  attributes :email, :role
-  has_many :identities
+class UserSerializer
+  include FastJsonapi::ObjectSerializer
+  attributes :role
+  # has_one :profile, serializer: UserProfileSerializer
+  # has_many :identities, serializer: UserIdentitiesSerializer
 
-  def email
+  attribute :identities do |object|
+    object.identities.map do |identity|
+      {
+        provider: identity.provider,
+        uid: identity.uid
+      }
+    end
+  end
+
+  attribute :email do |object|
     {
       main_address: object.email,
       unconfirmed_address: object.unconfirmed_email,
-      is_confirmed: !object.confirmed_at.nil?
+      is_confirmed: object.confirmed_at.present?
     }
-  end
-
-  class IdentitySerializer < ActiveModel::Serializer
-    attributes :provider, :uid
   end
 end

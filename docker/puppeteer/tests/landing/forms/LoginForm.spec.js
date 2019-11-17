@@ -28,6 +28,7 @@ describe('LoginForm', function () {
   });
 
   // TODO: this test should be rewritten
+  // don't like idea with login-form-oauth-test
   it('Successfully login with google', async () => {
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
     await this.page.goto('https://ru.nv6.ru/login', { waitUntil: 'networkidle0' });

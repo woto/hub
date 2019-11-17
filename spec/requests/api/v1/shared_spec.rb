@@ -6,17 +6,17 @@ describe 'shared.rb', type: :request do
   include_context 'with shared authentication'
 
   it do
-    xpost '/api/v1/profile'
+    xget '/api/v1/users'
     expect(response).to have_http_status(:ok)
   end
 
   it do
-    xpost '/api/v1/profile', headers: { 'some': 'header' }
+    xget '/api/v1/users', headers: { 'some': 'header' }
     expect(response).to have_http_status(:ok)
   end
 
   it do
-    xpost '/api/v1/profile', params: { 'some': 'param' }
+    xget '/api/v1/users', params: { 'some': 'param' }
     expect(response).to have_http_status(:ok)
   end
 end

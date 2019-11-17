@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import PrivateLayout from '../../../layouts/PrivateLayout'
-import WhereAmI from './WhereAmI';
-import { AuthConsumer } from '../../../shared/AuthContext';
-
-
 import {
   Form,
   Select,
@@ -23,12 +18,16 @@ import {
   Col,
   Input,
   Alert,
-  message
+  message,
+  PageHeader,
+  Typography,
 } from 'antd';
 
 const { Option } = Select;
+const { Text } = Typography;
 
-class _Profile extends React.Component {
+
+class _Password extends React.Component {
   state = {
     confirmDirty: false,
   };
@@ -52,7 +51,15 @@ class _Profile extends React.Component {
             });
           })
           .catch((error) => {
-            console.log(error);
+            message.error(intl.formatMessage({ id: 'unable-to-proceed' }));
+            message.error(`E-mail ${error.response.data.errors.email}`);
+
+            this.props.form.setFields({
+              password: {
+                value: values.password,
+                errors: [new Error(error.response.data.errors.password)],
+              },
+            });
           });
       }
     });
@@ -89,13 +96,18 @@ class _Profile extends React.Component {
     };
 
     return (
-      <PrivateLayout whereAmI={<WhereAmI />}>
 
-        <Alert style={{ marginBottom: "2rem" }} message={intl.formatMessage({ id: 'alert-settings-password' })} type="info" />
+      <>
+        <PageHeader
+          title={intl.formatMessage({ id: 'password-change-title' })}
+        />
 
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
 
-          <Form.Item label="Password" hasFeedback>
+          <Form.Item
+            label={<FormattedMessage id="password" />}
+            hasFeedback
+          >
             {getFieldDecorator('password', {
               rules: [
                 {
@@ -106,10 +118,13 @@ class _Profile extends React.Component {
                   validator: this.validateToNextPassword,
                 },
               ],
-            })(<Input.Password />)}
+            })(<Input.Password jid="password-tab-password" />)}
           </Form.Item>
 
-          <Form.Item label="Confirm Password" hasFeedback>
+          <Form.Item
+            label={<FormattedMessage id="password-confirmation" />}
+            hasFeedback
+          >
             {getFieldDecorator('confirm', {
               rules: [
                 {
@@ -120,19 +135,23 @@ class _Profile extends React.Component {
                   validator: this.compareToFirstPassword,
                 },
               ],
-            })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+            })(<Input.Password jid="password-tab-confirm" onBlur={this.handleConfirmBlur} />)}
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Button type="primary" htmlType="submit">
+            <Button jid="password-tab-button" type="primary" htmlType="submit">
               Submit
           </Button>
           </Form.Item>
         </Form>
-      </PrivateLayout>
+
+        <Text type="secondary">
+          <FormattedMessage id='alert-settings-password' />
+        </Text>
+      </>
     );
   }
 }
 
-const Profile = injectIntl(Form.create({ name: 'validate_other' })(_Profile));
-export default Profile;
+const Password = injectIntl(Form.create({ name: 'change_password' })(_Password));
+export default Password;

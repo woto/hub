@@ -22,7 +22,7 @@ describe('App', function () {
 
     let counter = 0;
     this.page.on('request', async (request) => {
-      if (await request.url() === 'https://nv6.ru/api/v1/profile') {
+      if (await request.url() === 'https://nv6.ru/api/v1/users') {
         if (await request.headers().referer === 'https://nv6.ru/register') {
           // console.log(await request.headers());
           expect(await request.headers()).to.have.own.property('authorization');
