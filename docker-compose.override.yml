@@ -9,3 +9,7 @@ services:
   webpacker:
     volumes:
       - ".:/usr/src/app"
+
+  puppeteer:
+    volumes:
+      - "./docker/puppeteer:/puppeteer"
