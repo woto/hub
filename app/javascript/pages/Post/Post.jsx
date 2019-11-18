@@ -23,16 +23,16 @@ class _Post extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-  //   this.props.form.validateFields((err, values) => {
-  //     if (!err) {
-  //       this.setState({
-  //         post: {
-  //           url: values.url,
-  //           body: window.editor.getData()
-  //         }
-  //       });
-  //     }
-  //   });
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.setState({
+          post: {
+            url: values.url,
+            body: window.editor.getData()
+          }
+        });
+      }
+    });
   };
 
   componentDidMount() {
@@ -163,7 +163,7 @@ class _Post extends React.Component {
             </Col>
           </Row>
 
-          {/* <Form.Item>
+          <Form.Item>
             <Button
               htmlType="submit"
               type="primary"
@@ -171,7 +171,7 @@ class _Post extends React.Component {
             >
               Submit
             </Button>
-          </Form.Item> */}
+          </Form.Item>
 
         </Form>
 
