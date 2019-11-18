@@ -55,7 +55,11 @@ Rails.application.routes.draw do
       resources :feeds, only: %i[index] do
         resources :offers, only: %i[index]
       end
-      resources :posts
+      resources :posts do
+        member do
+          post 'images'
+        end
+      end
       resources :offers, only: %i[index]
       resource :users, only: %i[show]
       resource :profile, only: %i[show update]

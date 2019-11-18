@@ -8,4 +8,5 @@ class User < ApplicationRecord
   include Authorizationable
   has_one :profile, dependent: :destroy
   has_one_attached :avatar
+  has_many :posts
 end

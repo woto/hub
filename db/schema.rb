@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_192518) do
     t.text "location"
     t.jsonb "messengers"
     t.jsonb "languages"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"

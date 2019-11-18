@@ -15,27 +15,27 @@ const columns = [
   },
   {
     title: 'Title',
-    dataIndex: 'title',
+    dataIndex: 'attributes.title',
     width: '20%',
   },
   {
     title: 'Url',
-    dataIndex: 'url',
+    dataIndex: 'attributes.url',
     width: '20%',
   },
   {
     title: 'Status',
-    dataIndex: 'status_state',
+    dataIndex: 'attributes.status_state',
     width: '10%'
   },
   {
     title: 'Created At',
-    dataIndex: 'created_at',
+    dataIndex: 'attributes.created_at',
     width: '20%'
   },
   {
     title: 'Updated At',
-    dataIndex: 'updated_at',
+    dataIndex: 'attributes.updated_at',
     width: '20%'
   },
   {
@@ -96,10 +96,10 @@ class Offers extends React.Component {
     }).then(response => {
       // console.log(response);
       const pagination = { ...this.state.pagination };
-      pagination.total = response.data.totalCount;
+      pagination.total = response.data.meta.totalCount;
       this.setState({
         loading: false,
-        data: response.data.items,
+        data: response.data.data,
         pagination,
       });
     });
@@ -117,7 +117,7 @@ class Offers extends React.Component {
 
         <Table
           columns={columns}
-          rowKey={record => record._id}
+          rowKey={record => record.id}
           dataSource={this.state.data}
           pagination={this.state.pagination}
           loading={this.state.loading}

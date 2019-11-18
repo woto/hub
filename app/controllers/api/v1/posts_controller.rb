@@ -6,17 +6,40 @@ module Api
       before_action :doorkeeper_authorize!
 
       def index
-        render json: { items: Post.order(created_at: :desc), totalCount: Post.count }
+        render json: PostSerializer.new(
+          Post.order(created_at: :desc),
+          meta: { totalCount: Post.count }
+        ).serialized_json
       end
 
       def create
-        Post.create!(post_params.merge(user: User.first))
+        post = Post.create!(post_params.merge(user: current_user))
+        render json: PostSerializer.new(post)
+      end
+
+      def update
+        post = current_user.posts.find(params[:id])
+        post.update(post_params)
+        render json: PostSerializer.new(post)
+      end
+
+      def show
+        post = current_user.posts.find(params[:id])
+        render json: PostSerializer.new(post)
+      end
+
+      def images
+        post = current_user.posts.find(params[:id])
+        image = post.images.attach(params[:upload])
+        render json: {
+          url: rails_blob_path(image.first, disposition: 'attachment')
+        }
       end
 
       private
 
       def post_params
-        params.require(:post).permit(:url, :body)
+        params.fetch(:post, {}).permit(:url, :body)
       end
     end
   end

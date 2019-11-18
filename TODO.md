@@ -29,6 +29,7 @@
 
 # v1.1
 
+* [ ] Rename url to offerUrl and avatarUrl
 * [ ] Add pagination to server side rendered offers page
 * [ ] Filtering in feeds list.
 * [ ] Restricted pages which not linkable for unauthenticated users can be opened by entering url in address bar.
