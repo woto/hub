@@ -17,7 +17,7 @@ describe('axios', function() {
     await this.page.waitForSelector('[jid="login-button"]');
     await this.page.click('[jid="login-button"]');
     await this.page.waitForSelector('[jid="login-form"]');
-    await this.page.screenshot({ path: '/screenshots/app.png' });
+    await this.page.screenshot({ path: '/puppeteer/screenshots/app.png' });
   });
 
 //  it('Adds X-CSRF-Token to headers if it present on a page in meta', async () => {

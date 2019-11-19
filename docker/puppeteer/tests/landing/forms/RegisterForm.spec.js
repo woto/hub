@@ -33,15 +33,18 @@ describe('RegisterForm', function () {
 
     const password = '123123123';
     const email = 'user@example.com';
+
     await this.page.type('input[jid="register-form-email"]', email, { delay: 20 });
     await this.page.type('input[jid="register-form-password"]', password, { delay: 20 });
     await this.page.type('input[jid="register-form-password-confirmation"]', password, { delay: 20 });
+    console.log('1');
     await Promise.all([
       this.page.waitForNavigation(),
       this.page.click('[jid="register-form-submit"]'),
     ]);
-
+    console.log('2');
     expect(await this.page.url()).to.equal('https://en.nv6.ru/dashboard');
+    console.log('3');
     await this.page.waitFor("//header//span[contains(text(), 'Profile')]");
   });
 });

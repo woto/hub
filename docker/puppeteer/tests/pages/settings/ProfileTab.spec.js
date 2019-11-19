@@ -25,7 +25,7 @@ describe('ProfileTab', function () {
     await this.page.waitFor('#profile-tab-avatar');
 
     const input = await this.page.$('#profile-tab-avatar');
-    await input.uploadFile('/fixtures/avatar.png');
+    await input.uploadFile('/puppeteer/fixtures/avatar.png');
     await this.page.waitFor("//span[contains(text(), 'Аватар успешно загружен')]");
   });
 

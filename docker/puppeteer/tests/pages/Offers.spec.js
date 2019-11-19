@@ -51,7 +51,7 @@ describe('Offers', function () {
 
     // Closing modal returns to previous page
     console.log('4');
-    await this.page.screenshot({ path: '/screenshots/app4.png' });
+    await this.page.screenshot({ path: '/puppeteer/screenshots/app4.png' });
     await Promise.all([
       this.page.waitForNavigation(),
       this.page.click('[aria-label="Close"]'),
