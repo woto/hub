@@ -23,5 +23,3 @@ build:
     - docker-compose -f docker-compose.yml run --rm puppeteer
   tags:
     - docker
-
-deploy:
