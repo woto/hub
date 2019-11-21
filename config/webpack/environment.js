@@ -1,5 +1,18 @@
 const { environment, config } = require('@rails/webpacker');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
+
+const dotenvFiles = [
+  `.env.${process.env.HUB_ENV}`,
+  '.env',
+];
+
+dotenvFiles.forEach((dotenvFile) => {
+  dotenv.config({ path: dotenvFile, silent: true });
+});
+
+environment.plugins.prepend('Environment', new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(process.env))));
 
 environment.loaders.append('less-loader',
   {
