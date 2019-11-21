@@ -13,7 +13,7 @@ function withPopup(Component) {
           url = `/proxy/${data}`;
         })
     } else {
-      url = `https://nv6.ru/users/auth/${url}`;
+      url = `https://${process.env.DOMAIN_NAME}/users/auth/${url}`;
     }
 
     const popup = window.open(url, title,

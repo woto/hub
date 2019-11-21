@@ -28,7 +28,7 @@ import TextArea from 'antd/lib/input/TextArea';
 
 const { Option } = Select;
 
-import languages from '../../shared/languages.json';
+import languages from '../../shared/languages';
 
 class _ChangeProfile extends React.Component {
 

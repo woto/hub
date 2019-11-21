@@ -43,7 +43,7 @@ class _AuthProvider extends React.Component {
   }
 
   writeAccessToken(accessToken) {
-    return Cookies.set('access_token', accessToken, { domain: 'nv6.ru', secure: true });
+    return Cookies.set('access_token', accessToken, { domain: process.env.DOMAIN_NAME, secure: true });
   }
 
   checkUser() {
@@ -67,7 +67,7 @@ class _AuthProvider extends React.Component {
   logout() {
     // TODO: to write tests
     const { intl, history } = this.props;
-    Cookies.remove('access_token', { domain: 'nv6.ru', secure: true });
+    Cookies.remove('access_token', { domain: process.env.DOMAIN_NAME, secure: true });
     history.push('/')
     this.setState({
       isAuthorized: false,

@@ -35,7 +35,7 @@ class PrivateLayout extends React.Component {
               {this.props.children}
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>nv6.ru © 2019 ❤ Ruby on Rails</Footer>
+          <Footer style={{ textAlign: 'center' }}> {process.env.DOMAIN_NAME} © 2019 ❤ Ruby on Rails</Footer>
         </Layout>
       </Layout>
     );

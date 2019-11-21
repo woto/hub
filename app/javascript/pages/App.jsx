@@ -7,9 +7,9 @@ import Cookies from 'js-cookie';
 
 import axios from '../shared/axios';
 
-import locales_ru from '../locales/ru.json';
-import locales_en from '../locales/en.json';
-import locales_zh from '../locales/zh.json';
+import locales_ru from '../locales/ru';
+import locales_en from '../locales/en';
+import locales_zh from '../locales/zh';
 
 import Landing from '../landing';
 

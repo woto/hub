@@ -3,7 +3,7 @@ import TweenOne from 'rc-tween-one';
 import { Menu, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import languages from '../shared/languages.json';
+import languages from '../shared/languages';
 import axios from './../shared/axios'
 import { AuthContext } from '../shared/AuthContext';
 import LanguageSwitchItem from '../shared/LanguageSwitchItem';

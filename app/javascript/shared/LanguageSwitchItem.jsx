@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Menu, Icon } from 'antd';
 
-import languages from './languages.json';
+import languages from './languages';
 const { SubMenu } = Menu;
 
 const LanguageSwitchItem = ({ ...props }) => {
