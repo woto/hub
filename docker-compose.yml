@@ -6,10 +6,10 @@ services:
       hub:
         aliases:
           - traefik
-          - nv6.ru
-          - en.nv6.ru
-          - ru.nv6.ru
-          - zh.nv6.ru
+          - ${DOMAIN_NAME}
+          - en.${DOMAIN_NAME}
+          - ru.${DOMAIN_NAME}
+          - zh.${DOMAIN_NAME}
     image: "traefik:v2.0"
     ports:
       - "80:80"
@@ -41,7 +41,7 @@ services:
 
       - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.routers.api.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.api.rule=Host(`traefik.nv6.ru`)"
+      - "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_NAME}`)"
 
       # https://docs.traefik.io/operations/dashboard/
       - "traefik.http.routers.api.service=api@internal"
@@ -73,7 +73,7 @@ services:
 
   #     - "traefik.http.routers.jaeger.entrypoints=websecure"
   #     - "traefik.http.routers.jaeger.tls.certresolver=myhttpchallenge"
-  #     - "traefik.http.routers.jaeger.rule=Host(`jaeger.nv6.ru`)"
+  #     - "traefik.http.routers.jaeger.rule=Host(`jaeger.${DOMAIN_NAME}`)"
 
 
   # # Mock
@@ -93,7 +93,7 @@ services:
 
   #     - "traefik.http.routers.sentry.entrypoints=websecure"
   #     - "traefik.http.routers.sentry.tls.certresolver=myhttpchallenge"
-  #     - "traefik.http.routers.sentry.rule=Host(`sentry.nv6.ru`)"
+  #     - "traefik.http.routers.sentry.rule=Host(`sentry.${DOMAIN_NAME}`)"
 
   # grafana:
   #   networks:
@@ -106,7 +106,7 @@ services:
 
   #     - "traefik.http.routers.grafana.entrypoints=websecure"
   #     - "traefik.http.routers.grafana.tls.certresolver=myhttpchallenge"
-  #     - "traefik.http.routers.grafana.rule=Host(`grafana.nv6.ru`)"
+  #     - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN_NAME}`)"
 
   prometheus:
     networks:
@@ -121,7 +121,7 @@ services:
 
       - "traefik.http.routers.prometheus.entrypoints=websecure"
       - "traefik.http.routers.prometheus.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.nv6.ru`)"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMAIN_NAME}`)"
 
   # ELASTICSEARCH
   elastic:
@@ -138,7 +138,7 @@ services:
 
       - "traefik.http.routers.elastic.entrypoints=websecure"
       - "traefik.http.routers.elastic.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.elastic.rule=Host(`elastic.nv6.ru`)"
+      - "traefik.http.routers.elastic.rule=Host(`elastic.${DOMAIN_NAME}`)"
 
       - "traefik.http.routers.elastic.middlewares=auth-elastic"
       - "traefik.http.middlewares.auth-elastic.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
@@ -160,7 +160,7 @@ services:
 
       - "traefik.http.routers.kibana.entrypoints=websecure"
       - "traefik.http.routers.kibana.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.kibana.rule=Host(`kibana.nv6.ru`)"
+      - "traefik.http.routers.kibana.rule=Host(`kibana.${DOMAIN_NAME}`)"
 
       - "traefik.http.routers.kibana.middlewares=auth-kibana"
       - "traefik.http.middlewares.auth-kibana.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
@@ -197,19 +197,19 @@ services:
     environment:
       - BASE_URL=/
       - URLS=[{"name":"swagger", "url":"/project/swagger.json"}]
-      - OAUTH2_REDIRECT_URL=https://nv6.ru/oauth2-redirect.html
+      - OAUTH2_REDIRECT_URL=https://${DOMAIN_NAME}/oauth2-redirect.html
     volumes:
       - ./docker/swagger:/usr/share/nginx/html/project
     labels:
       - "traefik.enable=true"
 
-      # TODO: this settings also as an envirnment settings were changed from https://nv6.ru/swagger
-      # to https://swagger.nv6.ru I think environment settings may be even simplified
+      # TODO: this settings also as an envirnment settings were changed from https://${DOMAIN_NAME}/swagger
+      # to https://swagger.${DOMAIN_NAME} I think environment settings may be even simplified
       # consider this later
 
       - "traefik.http.routers.swagger.entrypoints=websecure"
       - "traefik.http.routers.swagger.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.swagger.rule=Host(`swagger.nv6.ru`)"
+      - "traefik.http.routers.swagger.rule=Host(`swagger.${DOMAIN_NAME}`)"
       - "traefik.http.services.swagger.loadbalancer.server.port=8080"
 
   # MAIN APPLICATION
@@ -236,22 +236,21 @@ services:
     labels:
       - "traefik.enable=true"
 
-      - "traefik.http.routers.nv6.entrypoints=websecure"
-      - "traefik.http.routers.nv6.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.nv6.rule=Host(`nv6.ru`)"
+      - "traefik.http.routers.main_domain.entrypoints=websecure"
+      - "traefik.http.routers.main_domain.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.main_domain.rule=Host(`${DOMAIN_NAME}`)"
 
       - "traefik.http.routers.ru.entrypoints=websecure"
       - "traefik.http.routers.ru.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.ru.rule=Host(`ru.nv6.ru`)"
+      - "traefik.http.routers.ru.rule=Host(`ru.${DOMAIN_NAME}`)"
 
       - "traefik.http.routers.en.entrypoints=websecure"
       - "traefik.http.routers.en.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.en.rule=Host(`en.nv6.ru`)"
+      - "traefik.http.routers.en.rule=Host(`en.${DOMAIN_NAME}`)"
 
       - "traefik.http.routers.zh.entrypoints=websecure"
       - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.zh.rule=Host(`zh.nv6.ru`)"
-
+      - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
 
   # ASSETS FOR APPLICATION
   webpacker:
@@ -271,7 +270,7 @@ services:
 
       - "traefik.http.routers.webpacker.entrypoints=websecure"
       - "traefik.http.routers.webpacker.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.webpacker.rule=Host(`webpacker.nv6.ru`)"
+      - "traefik.http.routers.webpacker.rule=Host(`webpacker.${DOMAIN_NAME}`)"
 
   # E2E tests
   puppeteer:
@@ -305,7 +304,7 @@ services:
 
       - "traefik.http.routers.netdata.entrypoints=websecure"
       - "traefik.http.routers.netdata.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.netdata.rule=Host(`netdata.nv6.ru`)"
+      - "traefik.http.routers.netdata.rule=Host(`netdata.${DOMAIN_NAME}`)"
 
       - "traefik.http.routers.netdata.middlewares=auth-netdata"
       - "traefik.http.middlewares.auth-netdata.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
@@ -381,7 +380,7 @@ services:
 
       - "traefik.http.routers.mailcatcher.entrypoints=websecure"
       - "traefik.http.routers.mailcatcher.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.mailcatcher.rule=Host(`mailcatcher.nv6.ru`)"
+      - "traefik.http.routers.mailcatcher.rule=Host(`mailcatcher.${DOMAIN_NAME}`)"
       - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
 
 networks:
