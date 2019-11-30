@@ -30,6 +30,8 @@ services:
       # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
       - --metrics.prometheus.entryPoint=metrics
+      - --accesslog=true
+
 
     labels:
       - "traefik.enable=true"
