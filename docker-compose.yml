@@ -183,26 +183,6 @@ services:
       - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
 
-  # ASSETS FOR APPLICATION
-  webpacker:
-    networks:
-      hub:
-        aliases:
-          - webpacker
-    env_file:
-      - .env
-      - .env.${HUB_ENV}
-    image: rails
-    command: bin/webpack-dev-server
-    expose:
-      - 3035
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.webpacker.entrypoints=websecure"
-      - "traefik.http.routers.webpacker.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.webpacker.rule=Host(`webpacker.${DOMAIN_NAME}`)"
-
   # E2E tests
   puppeteer:
     networks:
