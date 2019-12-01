@@ -54,77 +54,6 @@ services:
       - "./docker/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  # jaeger:
-  #   networks:
-  #     hub:
-  #       aliases:
-  #         - jaeger
-  #   image: jaegertracing/all-in-one:1.14
-  #   ports:
-  #     - "5775:5775/udp"
-  #     - "6831:6831/udp"
-  #     - "6832:6832/udp"
-  #     - "5778:5778"
-  #     - "16686:16686"
-  #     - "14268:14268"
-  #     - "9411:9411"
-  #   environment:
-  #     - COLLECTOR_ZIPKIN_HTTP_PORT=9411
-  #   labels:
-  #     - "traefik.enable=true"
-
-  #     - "traefik.http.routers.jaeger.entrypoints=websecure"
-  #     - "traefik.http.routers.jaeger.tls.certresolver=myhttpchallenge"
-  #     - "traefik.http.routers.jaeger.rule=Host(`jaeger.${DOMAIN_NAME}`)"
-
-
-  # # Mock
-  # sentry:
-  #   networks:
-  #     hub:
-  #       aliases:
-  #         - sentry
-  #   build:
-  #     context: ./docker/alpine
-  #     dockerfile: Dockerfile
-  #   # command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
-  #   stdin_open: true
-  #   tty: true
-  #   labels:
-  #     - "traefik.enable=true"
-
-  #     - "traefik.http.routers.sentry.entrypoints=websecure"
-  #     - "traefik.http.routers.sentry.tls.certresolver=myhttpchallenge"
-  #     - "traefik.http.routers.sentry.rule=Host(`sentry.${DOMAIN_NAME}`)"
-
-  # grafana:
-  #   networks:
-  #     hub:
-  #       aliases:
-  #         - grafana
-  #   image: grafana/grafana
-  #   labels:
-  #     - "traefik.enable=true"
-
-  #     - "traefik.http.routers.grafana.entrypoints=websecure"
-  #     - "traefik.http.routers.grafana.tls.certresolver=myhttpchallenge"
-  #     - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN_NAME}`)"
-
-  prometheus:
-    networks:
-      hub:
-        aliases:
-          - prometheus
-    image: prom/prometheus
-    volumes:
-        - ./docker/prometheus:/etc/prometheus
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.prometheus.entrypoints=websecure"
-      - "traefik.http.routers.prometheus.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMAIN_NAME}`)"
-
   # ELASTICSEARCH
   elastic:
     networks:
@@ -286,31 +215,6 @@ services:
     ports:
       - "9229:9229"
 
-  # MONITORING
-  netdata:
-    networks:
-      hub:
-        aliases:
-          - netdata
-    image: netdata/netdata
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.netdata.entrypoints=websecure"
-      - "traefik.http.routers.netdata.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.netdata.rule=Host(`netdata.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.netdata.middlewares=auth-netdata"
-      - "traefik.http.middlewares.auth-netdata.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
-
   # MAIN DATABASE
   postgres:
     networks:
@@ -350,26 +254,6 @@ services:
         aliases:
           - redis_oauth
     image: redis
-
-  # FOR DEBUGGING
-  # to get into docker-compose network and for example
-  # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
-  # domain name passes from .env* files
-
-  alpine:
-    build:
-      context: ./docker/alpine
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-      - .env.${HUB_ENV}
-    networks:
-      hub:
-        aliases:
-          - alpine
-    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
-    stdin_open: true
-    tty: true
 
   mailcatcher:
     image: schickling/mailcatcher

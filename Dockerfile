@@ -31,3 +31,8 @@ RUN yarn install
 
 # Copy the application into the container
 ADD . $APP_PATH
+
+RUN if [ "$RAILS_ENV" = "production" ] ; \
+  then \
+    bundle exec rake assets:precompile; \
+  fi

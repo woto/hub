@@ -97,7 +97,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :user_name => ENV['SMTP_USERNAME'],
     :password => ENV['SMTP_PASSWORD'],
-    :domain => 'nv6.ru',
+    :domain => ENV['DOMAIN_NAME'],
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,

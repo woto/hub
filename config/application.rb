@@ -31,14 +31,17 @@ module Hub
 
     config.oauth_providers = %w[facebook github google_oauth2 instagram
                                 twitter].freeze
-    config.action_mailer.default_url_options = { host: 'nv6.ru', protocol: 'https' }
+    config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], protocol: 'https' }
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
     config.debug_exception_response_format = :api
 
-    config.action_cable.allowed_request_origins = ['https://nv6.ru', %r{https://.*\.nv6.ru}]
+    config.action_cable.allowed_request_origins = [
+      "https://#{ENV['DOMAIN_NAME']}",
+      %r{https://.*\.#{Regexp.quote(ENV['DOMAIN_NAME'])}}
+    ]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

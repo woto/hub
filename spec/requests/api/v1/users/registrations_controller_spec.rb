@@ -34,16 +34,16 @@ describe Api::V1::Users::RegistrationsController, type: :request do
     specify 'Email contains valid confirmation link' do
       make
       content = ActionMailer::Base.deliveries.first.body.encoded
-      expect(content).to include("https://en.nv6.ru/confirm?confirmation_token=#{User.last.confirmation_token}")
+      expect(content).to include("https://en.#{ENV['DOMAIN_NAME']}/confirm?confirmation_token=#{User.last.confirmation_token}")
     end
 
     context 'with russian subdomain' do
-      before { host! 'ru.nv6.ru' }
+      before { host! "ru.#{ENV['DOMAIN_NAME']}" }
 
       it 'contains link to russian subdomain' do
         make
         content = ActionMailer::Base.deliveries.first.body.encoded
-        expect(content).to include("https://ru.nv6.ru/confirm?confirmation_token=#{User.last.confirmation_token}")
+        expect(content).to include("https://ru.#{ENV['DOMAIN_NAME']}/confirm?confirmation_token=#{User.last.confirmation_token}")
       end
     end
   end
@@ -104,12 +104,12 @@ describe Api::V1::Users::RegistrationsController, type: :request do
         end
 
         context 'with russian subdomain' do
-          before { host! 'ru.nv6.ru' }
+          before { host! "ru.#{ENV['DOMAIN_NAME']}" }
 
           it 'contains link to russian subdomain' do
             make
             content = ActionMailer::Base.deliveries.last.body.encoded
-            expect(content).to include("https://ru.nv6.ru/confirm?confirmation_token=#{user.reload.confirmation_token}")
+            expect(content).to include("https://ru.#{ENV['DOMAIN_NAME']}/confirm?confirmation_token=#{user.reload.confirmation_token}")
           end
         end
       end
@@ -120,7 +120,7 @@ describe Api::V1::Users::RegistrationsController, type: :request do
         it 'still can rerequest confirmation' do
           make
           content = ActionMailer::Base.deliveries.last.body.encoded
-          expect(content).to include("https://en.nv6.ru/confirm?confirmation_token=#{user.reload.confirmation_token}")
+          expect(content).to include("https://en.#{ENV['DOMAIN_NAME']}/confirm?confirmation_token=#{user.reload.confirmation_token}")
         end
 
         it 'sends only one email' do
