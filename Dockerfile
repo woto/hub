@@ -20,8 +20,8 @@ ADD Gemfile $APP_PATH
 ADD Gemfile.lock $APP_PATH
 # ADD vendor/bundle $APP_PATH/vendor/bundle
 
-# FIXME:
-RUN bundle install --path ./vendor/bundle --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
+RUN gem install bundler
+RUN bundle install --jobs `expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1` --retry 3
 
 ADD package.json $APP_PATH
 ADD yarn.lock $APP_PATH
