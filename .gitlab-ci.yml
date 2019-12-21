@@ -16,7 +16,7 @@ build:
   stage: build
   script:
     - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
-    - docker-compose build
+    - docker-compose -f docker-compose.yml -f docker-compose.production.yml -f docker-compose.engineer.yml build
   tags:
     - docker
 
