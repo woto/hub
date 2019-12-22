@@ -65,22 +65,30 @@ describe('Offers', function () {
 
   it('Redirect to first page when new value in "Search input" submitted')
 
-  it('Authorized users redirects to "New post page" when clicking on "Write a post"', async () => {
+  it.only('Authorized users redirects to "New post page" when clicking on "Write a post"', async () => {
+    console.log('1');
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    console.log('2');
     await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
 
+    console.log('3');
     await this.page.goto('https://nv6.ru/login', { waitUntil: 'networkidle0' });
     //// await this.page.waitFor(1000);
 
+    console.log('4');
     await shared.login.call(this, 'user@example.com', '123123');
 
+    console.log('5');
     await this.page.goto('https://nv6.ru/offers?page=1&q=twenty');
+    console.log('6');
     await this.page.waitFor('[jid="write-a-post"]');
 
+    console.log('7');
     await Promise.all([
       this.page.waitForNavigation(), // The promise resolves after navigation has finished
       this.page.click('[jid="write-a-post"]'), // Clicking the link will indirectly cause a navigation
     ]);
+    console.log('8');
     expect(await this.page.url()).include.string('https://nv6.ru/posts/new?url=http');
   });
 

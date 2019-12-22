@@ -15,14 +15,15 @@ before_script:
 build:
   stage: build
   script:
-    - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
-    - docker-compose build
+    - echo 'foo'
   tags:
     - docker
 
 test:
   stage: test
   script:
+    - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
+    - docker-compose -f docker-compose.yml -f docker-compose.production.yml -f docker-compose.engineer.yml build
     - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:load
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
