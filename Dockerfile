@@ -1,5 +1,10 @@
 FROM ruby:2.5.7-alpine
 
+ARG DOMAIN_NAME
+ARG RAILS_ENV
+RUN echo $RAILS_ENV
+RUN echo $DOMAIN_NAME
+
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
                                 linux-headers \
@@ -31,6 +36,8 @@ RUN yarn install
 
 # Copy the application into the container
 ADD . $APP_PATH
+
+RUN echo $RAILS_ENV
 
 RUN if [ "$RAILS_ENV" = "production" ] ; \
   then \

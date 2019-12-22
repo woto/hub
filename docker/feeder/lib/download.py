@@ -1,4 +1,4 @@
-import pymongo, mongo, pdb, json, requests, re, sys, signal, pprint, uuid, progressbar, traceback
+import pymongo, mongo, pdb, json, requests, re, sys, signal, pprint, uuid, progressbar, traceback, os
 from slugify import slugify
 from pymongo import ReturnDocument
 from datetime import datetime, timedelta
@@ -33,7 +33,7 @@ class Import:
     PRINT_PROGRESS_EVERY_N_ROWS_COUNTER = 100
     ELASTIC = 'http://elastic:9200'
     IMPORT_EVERY_N_OFFER = 1
-    TOTAL_IMPORTING_OFFERS = 500
+    TOTAL_IMPORTING_OFFERS = 500000
 
     def __init__(self, index):
 
@@ -196,7 +196,7 @@ class Import:
                 self.rows.append(self.row)
 
                 if(len(self.rows) == self.BULK_AMOUNT):
-                    self.bulk_save(self.index + "_" + index_postfix)
+                    self.bulk_save(self.index + "." + os.environ['RAILS_ENV'] + "." + index_postfix)
 
             self.in_tag = False
         elif self.in_tag:
@@ -206,7 +206,7 @@ class Import:
         # запись self.rows
         if tag in ('categories', 'offers'):
             self.progress(tag)
-            self.bulk_save(self.index + "_" + index_postfix)
+            self.bulk_save(self.index + "." + os.environ['RAILS_ENV'] + "." + index_postfix)
             print(f"Imported: {self.rows_counter} {tag}")
 
         # Обнуляем счетчик при закрытии </categories> или </offers>
@@ -335,7 +335,7 @@ while True:
     m = re.search('(?<=feed_id=)\d+', feed_url)
     print(f"Requesting {feed_url}")
     r = requests.get(feed_url, stream=True)
-    feed_name = f"{adv_name}-{adv_id}-{m.group(0)}.yml"
+    feed_name = f"{adv_name}-{adv_id}-{m.group(0)}"
     target = Import(feed_name)
     parser = XMLParser(target=target)
 
