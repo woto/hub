@@ -15,6 +15,7 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+
 import ReactDOM from 'react-dom';
 import React from 'react';
 import App from '../pages/App';

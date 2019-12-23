@@ -2,6 +2,11 @@ version: "3.7"
 
 services:
 
+  # ELASTICSEARCH
+  elastic:
+    environment:
+      - "ES_JAVA_OPTS=-Xmx32g -Xms32g"
+
   # jaeger:
   #   networks:
   #     hub:
@@ -85,8 +90,7 @@ services:
           - sentry
     image: sentry
     env_file:
-      - .env
-      - .env.${HUB_ENV}
+      - .env.production
     labels:
       - "traefik.enable=true"
 
@@ -99,8 +103,7 @@ services:
       hub:
     image: sentry
     env_file:
-      - .env
-      - .env.${HUB_ENV}
+      - .env.production
     command:
       run cron
 
@@ -109,8 +112,7 @@ services:
       hub:
     image: sentry
     env_file:
-      - .env
-      - .env.${HUB_ENV}
+      - .env.production
     command:
       run worker
 
@@ -122,8 +124,7 @@ services:
           - postgres_sentry
     image: postgres
     env_file:
-      - .env
-      - .env.${HUB_ENV}
+      - .env.production
     volumes:
       - "postgres_sentry:/var/lib/postgresql/data"
 

@@ -65,7 +65,7 @@ describe('Offers', function () {
 
   it('Redirect to first page when new value in "Search input" submitted')
 
-  it.only('Authorized users redirects to "New post page" when clicking on "Write a post"', async () => {
+  it('Authorized users redirects to "New post page" when clicking on "Write a post"', async () => {
     console.log('1');
     await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
     console.log('2');

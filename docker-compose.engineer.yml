@@ -12,7 +12,6 @@ services:
       context: ./docker/alpine
       dockerfile: Dockerfile
     env_file:
-      - .env
       - .env.${HUB_ENV}
     networks:
       hub:

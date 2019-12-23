@@ -6,14 +6,9 @@ services:
     volumes:
       - ".:/usr/src/app"
 
-  webpacker:
-    volumes:
-      - ".:/usr/src/app"
-
   puppeteer:
     volumes:
       - "./docker/puppeteer:/puppeteer"
-
 
   # ASSETS FOR APPLICATION
   webpacker:
@@ -22,12 +17,13 @@ services:
         aliases:
           - webpacker
     env_file:
-      - .env
       - .env.${HUB_ENV}
     image: rails
     command: bin/webpack-dev-server
     expose:
       - 3035
+    volumes:
+      - ".:/usr/src/app"
     labels:
       - "traefik.enable=true"
 

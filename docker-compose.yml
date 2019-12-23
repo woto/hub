@@ -64,7 +64,6 @@ services:
     image: elasticsearch:7.4.0
     environment:
       - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xmx32g -Xms32g"
     labels:
       - "traefik.enable=true"
 
@@ -117,7 +116,6 @@ services:
       context: ./docker/feeder
       dockerfile: Dockerfile
     env_file:
-      - .env
       - .env.${HUB_ENV}
     volumes:
       - feeder:/app/feeds
@@ -154,7 +152,6 @@ services:
         aliases:
           - rails
     env_file:
-      - .env
       - .env.${HUB_ENV}
     build:
       context: .
@@ -210,7 +207,6 @@ services:
         aliases:
           - postgres
     env_file:
-      - .env
       - .env.${HUB_ENV}
     image: postgres
     volumes:
