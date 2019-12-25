@@ -1,9 +1,4 @@
-FROM ruby:2.5.7-alpine
-
-ARG DOMAIN_NAME
-ARG RAILS_ENV
-RUN echo $RAILS_ENV
-RUN echo $DOMAIN_NAME
+FROM ruby:2.5.7-alpine as development
 
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
@@ -37,9 +32,12 @@ RUN yarn install
 # Copy the application into the container
 ADD . $APP_PATH
 
+ARG RAILS_ENV
+ARG DOMAIN_NAME
+ARG SECRET_KEY_BASE
 RUN echo $RAILS_ENV
+RUN echo $DOMAIN_NAME
+RUN echo $SECRET_KEY_BASE
 
-RUN if [ "$RAILS_ENV" = "production" ] ; \
-  then \
-    bundle exec rake assets:precompile; \
-  fi
+FROM development as production
+RUN bundle exec rake assets:precompile

@@ -17,7 +17,7 @@ services:
         aliases:
           - webpacker
     env_file:
-      - .env.${HUB_ENV}
+      - .env
     image: rails
     command: bin/webpack-dev-server
     expose:

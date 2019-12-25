@@ -116,7 +116,7 @@ services:
       context: ./docker/feeder
       dockerfile: Dockerfile
     env_file:
-      - .env.${HUB_ENV}
+      - .env
     volumes:
       - feeder:/app/feeds
 
@@ -152,12 +152,15 @@ services:
         aliases:
           - rails
     env_file:
-      - .env.${HUB_ENV}
+      - .env
     build:
       context: .
       args:
-        - RAILS_ENV
+        - RAILS_ENV=${HUB_ENV}
+        - NODE_ENV=${HUB_ENV}
         - DOMAIN_NAME
+        - SECRET_KEY_BASE
+      target: development
     image: rails
     command:
       [
@@ -207,7 +210,7 @@ services:
         aliases:
           - postgres
     env_file:
-      - .env.${HUB_ENV}
+      - .env
     image: postgres
     volumes:
       - "postgres:/var/lib/postgresql/data"

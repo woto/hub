@@ -37,9 +37,9 @@ class _Form extends React.Component {
             this.redirectToDashboard();
           })
           .catch((error) => {
-            const message = _.get(error, ['response', 'data', 'error_description']);
-            if (_.isString(message)) {
-              message.error(message);
+            const msg = _.get(error, ['response', 'data', 'error_description']);
+            if (_.isString(msg)) {
+              message.error(msg);
             } else {
               message.error(intl.formatMessage({ id: 'unexpected-error-try-again-later' }));
             }

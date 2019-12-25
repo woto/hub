@@ -2,6 +2,10 @@ version: "3.7"
 
 services:
 
+  rails:
+    build:
+      target: production
+
   # ELASTICSEARCH
   elastic:
     environment:
@@ -90,7 +94,7 @@ services:
           - sentry
     image: sentry
     env_file:
-      - .env.production
+      - .env
     labels:
       - "traefik.enable=true"
 
@@ -103,7 +107,7 @@ services:
       hub:
     image: sentry
     env_file:
-      - .env.production
+      - .env
     command:
       run cron
 
@@ -112,7 +116,7 @@ services:
       hub:
     image: sentry
     env_file:
-      - .env.production
+      - .env
     command:
       run worker
 
@@ -124,7 +128,7 @@ services:
           - postgres_sentry
     image: postgres
     env_file:
-      - .env.production
+      - .env
     volumes:
       - "postgres_sentry:/var/lib/postgresql/data"
 
