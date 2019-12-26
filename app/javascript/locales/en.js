@@ -67,7 +67,7 @@ export default {
   "restore-form-button": "Restore password",
   "banner5-title": `Project ${process.env.DOMAIN_NAME}`,
   "banner5-explain": "Content platform",
-  "banner5-content": "Earn money on reviews of products",
+  "banner5-content": "Earn money on products reviews",
   "banner5-button": "Register",
   "feature7-title-h1": "Latest articles",
   "feature7-title-content": "Written by community",

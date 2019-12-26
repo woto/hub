@@ -94,7 +94,7 @@ services:
           - sentry
     image: sentry
     env_file:
-      - .env
+      - .env.${HUB_ENV}
     labels:
       - "traefik.enable=true"
 
@@ -107,7 +107,7 @@ services:
       hub:
     image: sentry
     env_file:
-      - .env
+      - .env.${HUB_ENV}
     command:
       run cron
 
@@ -116,7 +116,7 @@ services:
       hub:
     image: sentry
     env_file:
-      - .env
+      - .env.${HUB_ENV}
     command:
       run worker
 
@@ -128,7 +128,7 @@ services:
           - postgres_sentry
     image: postgres
     env_file:
-      - .env
+      - .env.${HUB_ENV}
     volumes:
       - "postgres_sentry:/var/lib/postgresql/data"
 

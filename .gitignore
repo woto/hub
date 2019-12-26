@@ -4,6 +4,10 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore bundler config.
+/.bundle
+/vendor/bundle
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -14,6 +18,7 @@
 /storage/*
 !/storage/.keep
 
+/node_modules
 /yarn-error.log
 
 /public/assets
@@ -21,9 +26,6 @@
 
 /public/packs
 /public/packs-test
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
 coverage
 
 # TODO: not good to store SSL certificates in open repo
@@ -37,5 +39,3 @@ coverage
 /docker/feeder/feeds
 __pycache__/
 *.py[cod]
-
-.env
