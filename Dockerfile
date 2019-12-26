@@ -25,6 +25,8 @@ ADD package.json $APP_PATH
 ADD yarn.lock $APP_PATH
 RUN yarn install --modules-folder=/node_modules
 
+ADD . $APP_PATH
+
 ARG RAILS_ENV
 ARG NODE_ENV
 ARG DOMAIN_NAME
@@ -34,9 +36,17 @@ RUN echo $NODE_ENV
 RUN echo $DOMAIN_NAME
 RUN echo $SECRET_KEY_BASE
 
-ADD . $APP_PATH
-
 FROM development as production
+
+ARG RAILS_ENV
+ARG NODE_ENV
+ARG DOMAIN_NAME
+ARG SECRET_KEY_BASE
+RUN echo $RAILS_ENV
+RUN echo $NODE_ENV
+RUN echo $DOMAIN_NAME
+RUN echo $SECRET_KEY_BASE
+
 RUN bundle exec rake assets:precompile
 
 # VOLUME $APP_PATH/node_modules
