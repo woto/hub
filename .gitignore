@@ -4,10 +4,6 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
-/.bundle
-/vendor/bundle
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -18,18 +14,13 @@
 /storage/*
 !/storage/.keep
 
-/node_modules
 /yarn-error.log
 
 /public/assets
 .byebug_history
 
-# Ignore master key for decrypting credentials and more.
-/config/master.key
-
 /public/packs
 /public/packs-test
-/node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
@@ -46,3 +37,5 @@ coverage
 /docker/feeder/feeds
 __pycache__/
 *.py[cod]
+
+.env
