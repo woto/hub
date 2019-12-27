@@ -54,7 +54,6 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Router>
         <IntlProvider locale={this.state.localeProp} key={this.state.localeProp} messages={locales[this.state.localeProp]}>
           <AuthProvider>
             <Route path="/login" component={LoginForm} />
@@ -100,7 +99,6 @@ export default class App extends React.Component {
             <Route exact path={['/', '/login', '/register', '/confirm', '/confirmation', '/restore', '/reset']} component={Landing} />
           </AuthProvider>
         </IntlProvider>
-      </Router>
     );
   }
 }

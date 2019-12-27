@@ -18,14 +18,18 @@
 
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from '../pages/App';
+import { withTracker } from '../shared/withTracker';
 import '../stylesheets/global';
 
 require('channels');
 
 document.addEventListener('DOMContentLoaded', (event) => {
   ReactDOM.render(
-    <App />,
+    <Router>
+      <Route component={withTracker(App, { /* additional attributes */ })} />
+    </Router>,
     document.getElementById('root'),
   );
 });
