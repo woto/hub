@@ -60,6 +60,7 @@ Rails.application.routes.draw do
           post 'images'
         end
       end
+      resources :articles, only: %i[index show]
       resources :offers, only: %i[index]
       resource :users, only: %i[show]
       resource :profile, only: %i[show update]
