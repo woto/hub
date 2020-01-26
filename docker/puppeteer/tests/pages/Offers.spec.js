@@ -158,7 +158,11 @@ describe('Offers', function () {
     // them and remember to check later
     const unexpectedRequests = [];
     function logRequest(interceptedRequest) {
-      unexpectedRequests.push(interceptedRequest.url());
+      const url = interceptedRequest.url();
+      if (url.startsWith('https://nv6.ru/')) {
+        unexpectedRequests.push(url);
+        console.log(url);
+      }
     }
     this.page.on('request', logRequest);
 
