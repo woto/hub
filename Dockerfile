@@ -15,7 +15,10 @@ RUN apk add --no-cache --update build-base \
                                 yarn \
                                 tzdata \
                                 less \
-                                python2
+                                python2 \
+                                graphviz \
+                                ttf-freefont
+
 
 ENV APP_PATH /usr/src/app
 WORKDIR $APP_PATH

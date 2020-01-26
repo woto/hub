@@ -83,6 +83,9 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'aasm'
+gem 'faraday'
+gem 'faraday-detailed_logger'
+gem 'faraday_curl'
 gem 'fast_jsonapi'
 gem 'kaminari'
 gem 'kramdown'
@@ -90,6 +93,7 @@ gem 'nokogiri'
 gem 'numbers_and_words'
 gem 'paper_trail'
 gem 'rack-attack'
+gem 'rails-erd'
 gem 'rails-i18n'
 gem 'redis'
 gem 'request_store'

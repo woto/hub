@@ -109,6 +109,14 @@ error Found 1 errors.
 
 Sometimes when forgotten that all work being done in container, accidentaly commands like 'yarn install' or 'bundle install' may be issued on a host system then i highly recommend to remove './node_modules' or './vendor/bundle' and reinstall them with `docker-compose run --rm rails yarn install` or `docker-compose run --rm rails bundle install` and then recreate container `docker-compose restart webpacker` or `docker-compose restart rails`
 
+## Database Schema
+
+To generate database schema use following snippet:
+
+```ruby
+  require 'rails_erd/diagram/graphviz';
+  RailsERD::Diagram::Graphviz.create
+```
 
 ## TODO
 
