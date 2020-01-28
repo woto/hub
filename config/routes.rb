@@ -49,6 +49,12 @@ Rails.application.routes.draw do
     end
   end
 
+  def articles
+    get 'articles' => 'articles#index'
+    get 'articles/:date/:title' => 'articles#show'
+  end
+
+  articles
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get 'environment', to: 'environment#index'
@@ -60,7 +66,8 @@ Rails.application.routes.draw do
           post 'images'
         end
       end
-      resources :articles, only: %i[index show]
+
+      articles
       resources :offers, only: %i[index]
       resource :users, only: %i[show]
       resource :profile, only: %i[show update]

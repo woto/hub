@@ -1,17 +1,17 @@
 class Article
-  ARTICLES_PATH = Rails.root.join('docs/articles/*')
+  ARTICLES_PATH = Rails.root.join('docs/articles')
 
   class << self
-    def page(page)
-      article_dirs = Dir[ARTICLES_PATH]
+    def find(article_dir)
+      article_path = "#{ARTICLES_PATH}/#{article_dir}"
+      objectify_article(article_path)
+    end
 
-      articles = article_dirs.map do |article_dir|
-        OpenStruct.new(
-          id: nil,
-          created_at: Date.parse(article_dir.split('/').last.split('_').first),
-          preview: markdownify_file(article_dir, 'preview.md'),
-          content: markdownify_file(article_dir, 'content.md')
-        )
+    def page(page)
+      article_paths = Dir["#{ARTICLES_PATH}/*"]
+
+      articles = article_paths.map do |article_path|
+        objectify_article(article_path)
       end
       articles.sort_by!(&:created_at)
       articles.reverse!
@@ -20,11 +20,20 @@ class Article
         per = per.to_i
         articles_with_count = self[((page.to_i.nonzero? || 1) - 1) * per, per]
         articles_with_count.define_singleton_method(:total_count) do
-          article_dirs.count
+          article_paths.count
         end
         articles_with_count
       end
       articles
+    end
+
+    def objectify_article(article_dir)
+      OpenStruct.new(
+        id: nil,
+        created_at: Date.parse(article_dir.split('/').last.split('_').first),
+        preview: markdownify_file(article_dir, 'preview.md'),
+        content: markdownify_file(article_dir, 'content.md')
+      )
     end
 
     def markdownify_file(dir, file_name)
