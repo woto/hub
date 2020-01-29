@@ -13,14 +13,14 @@ describe('Translations', function() {
   shared.preparePuppeteer.call(this);
 
   it('Expects project title in russian', async () => {
-    await this.page.goto('https://ru.nv6.ru');
+    await this.page.goto(shared.url('ru'));
     await this.page.waitForSelector('[jid="project-title"]');
     const text = await this.page.$eval('[jid="project-title"]', el => el.textContent);
     expect(text).to.equal('Проект nv6.ru');
   });
 
   it('Expects project title in english', async () => {
-    await this.page.goto('https://en.nv6.ru');
+    await this.page.goto(shared.url('en'));
     await this.page.waitForSelector('[jid="project-title"]');
     const text = await this.page.$eval('[jid="project-title"]', el => el.textContent);
     expect(text).to.equal('Project nv6.ru');

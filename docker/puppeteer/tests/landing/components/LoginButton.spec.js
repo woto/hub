@@ -14,14 +14,15 @@ describe('LoginButton', function () {
   shared.preparePuppeteer.call(this);
 
   it('Unauthenticated user gets "Modal Login" after clicking on "Login Button"', async () => {
-    await this.page.goto('https://en.nv6.ru', { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('en'), { waitUntil: 'networkidle0' });
 
     await Promise.all([
       this.page.waitForNavigation(), // The promise resolves after navigation has finished
       this.page.click('[jid="login-button"]'),
     ]);
 
-    expect(await this.page.url()).to.equal('https://en.nv6.ru/login');
+    expect(await this.page.url()).to.equal(shared.url('en', 'login'));
+
     await this.page.waitFor('.ant-modal');
     const result = await this.page.evaluate(() => {
       return window.history.length;
@@ -30,10 +31,10 @@ describe('LoginButton', function () {
   });
 
   it('Authenticated user redirects to "Dashboard page" after clicking on "Login Button"', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
 
-    await this.page.goto('https://ru.nv6.ru', { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('ru'), { waitUntil: 'networkidle0' });
 
     await Promise.all([
       this.page.waitForNavigation(),
@@ -42,7 +43,7 @@ describe('LoginButton', function () {
 
     await shared.login.call(this, 'user@example.com', '123123');
 
-    expect(await this.page.url()).to.equal('https://ru.nv6.ru/dashboard');
+    expect(await this.page.url()).to.equal(shared.url('ru', 'dashboard'));
 
     const result = await this.page.evaluate(() => {
       return window.history.length;

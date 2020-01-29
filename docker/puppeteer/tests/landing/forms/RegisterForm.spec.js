@@ -13,9 +13,9 @@ describe('RegisterForm', function () {
   shared.preparePuppeteer.call(this);
 
   it('Prevent registration displaing server side Devise validation errors', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
-    await this.page.goto('https://ru.nv6.ru/register', { waitUntil: 'networkidle0' });
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
+    await this.page.goto(shared.url('ru', 'register'), { waitUntil: 'networkidle0' });
 
     await this.page.type('input[jid="register-form-email"]', 'user@example.com', { delay: 20 });
     await this.page.type('input[jid="register-form-password"]', '123', { delay: 20 });
@@ -27,9 +27,9 @@ describe('RegisterForm', function () {
   });
 
   it('Successfully registers', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
 
-    await this.page.goto('https://en.nv6.ru/register', { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('en', 'register'), { waitUntil: 'networkidle0' });
 
     const password = '123123123';
     const email = 'user@example.com';
@@ -43,7 +43,7 @@ describe('RegisterForm', function () {
       this.page.click('[jid="register-form-submit"]'),
     ]);
     console.log('2');
-    expect(await this.page.url()).to.equal('https://en.nv6.ru/dashboard');
+    expect(await this.page.url()).to.equal(shared.url('en', 'dashboard'));
     console.log('3');
     await this.page.waitFor("//header//span[contains(text(), 'Profile')]");
   });

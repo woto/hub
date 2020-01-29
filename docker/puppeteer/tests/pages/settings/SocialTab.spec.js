@@ -16,15 +16,15 @@ describe('SocialTab', function () {
   // TODO: this test should be rewritten
   // don't like idea with login-form-oauth-test
   it('Takes away "unbind button" when unbinding social account', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await this.page.goto('https://ru.nv6.ru/login', { waitUntil: 'networkidle0' });
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await this.page.goto(shared.url('ru', 'login'), { waitUntil: 'networkidle0' });
 
     await Promise.all([
       this.page.waitForNavigation(),
       this.page.click('[jid="login-form-oauth-test"]'),
     ]);
 
-    this.page.goto('https://ru.nv6.ru/settings/social');
+    this.page.goto(shared.url('ru', 'settings/social'));
     await this.page.waitFor('[jid="social-tab-google_oauth2-unbind"]');
   });
 });

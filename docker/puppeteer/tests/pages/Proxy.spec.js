@@ -14,12 +14,13 @@ describe('Proxy', function () {
   shared.preparePuppeteer.call(this);
 
   it('Writes cookie', async () => {
-    const key = await axios.get('https://nv6.ru/api/v1/staff/seeder/redis/get_ready_for_proxy')
-    await this.page.goto(`https://nv6.ru/`);
+    const key = await axios.get(shared.url('', 'api/v1/staff/seeder/redis/get_ready_for_proxy'))
+    await this.page.goto(shared.url());
 
+    const preeval = shared.url('', `proxy/${key.data}`)
     const [popup] = await Promise.all([
       new Promise(resolve => this.page.once('popup', resolve)),
-      this.page.evaluate((k) => { window.open(`https://nv6.ru/proxy/${k}`); }, key.data),
+      this.page.evaluate((k) => { window.open(k); }, preeval),
     ]);
 
     let i = 0;

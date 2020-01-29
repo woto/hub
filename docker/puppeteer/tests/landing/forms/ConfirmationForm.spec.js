@@ -13,8 +13,8 @@ describe('ConfirmationForm', function () {
   shared.preparePuppeteer.call(this);
 
   it('Reports that such e-mail address was not found', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await this.page.goto('https://nv6.ru/confirmation', { waitUntil: 'networkidle0' });
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await this.page.goto(shared.url('', 'confirmation'), { waitUntil: 'networkidle0' });
 
     await this.page.type('input[jid="confirmation-form-email"]', 'unexisted_user@example.com', { delay: 20 });
     this.page.click('[jid="confirmation-form-button"]');
@@ -24,9 +24,9 @@ describe('ConfirmationForm', function () {
   });
 
   it('Reports that such e-mail already confirmed', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
-    await this.page.goto('https://nv6.ru/confirmation', { waitUntil: 'networkidle0' });
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
+    await this.page.goto(shared.url('', 'confirmation'), { waitUntil: 'networkidle0' });
 
     await this.page.type('input[jid="confirmation-form-email"]', 'user@example.com', { delay: 20 });
     this.page.click('[jid="confirmation-form-button"]');
@@ -36,9 +36,9 @@ describe('ConfirmationForm', function () {
   });
 
   it('Asks to check e-mail', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_unconfirmed_user');
-    await this.page.goto('https://nv6.ru/confirmation', { waitUntil: 'networkidle0' });
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_unconfirmed_user'));
+    await this.page.goto(shared.url('', 'confirmation'), { waitUntil: 'networkidle0' });
 
     await this.page.type('input[jid="confirmation-form-email"]', 'user@example.com', { delay: 20 });
     this.page.click('[jid="confirmation-form-button"]');

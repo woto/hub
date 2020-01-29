@@ -1,6 +1,8 @@
 /* eslint-disable mocha/no-mocha-arrows */
 const puppeteer = require('puppeteer');
 
+require('dotenv').config()
+
 exports.login = async function login(username, password) {
   await this.page.waitFor('[jid="login-form-username"]');
 
@@ -11,6 +13,17 @@ exports.login = async function login(username, password) {
     this.page.click('[jid="login-form-login-button"]'),
   ]);
 };
+
+exports.url = function(subdomain= '', path = '') {
+  if(subdomain) {
+    subdomain = `${subdomain}.`;
+  }
+  return new URL(path, `${process.env.SCHEMA}://${subdomain}nv6.ru:${process.env.RAILS_PORT}`).toString();
+}
+
+exports.path = function(path) {
+  return `${process.env.PUPPETEER_PATH}${path}`;
+}
 
 exports.preparePuppeteer = function () {
 
@@ -34,6 +47,7 @@ exports.preparePuppeteer = function () {
 
   beforeEach(async () => {
     this.page = await this.browser.newPage();
+    // TODO: not sure if this works
     this.page.deleteCookie({ name: 'access_token', domain: '.nv6.ru' })
   });
 

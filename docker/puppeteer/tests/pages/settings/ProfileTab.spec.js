@@ -15,28 +15,28 @@ describe('ProfileTab', function () {
   shared.preparePuppeteer.call(this);
 
   it('Uploads avatar', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
 
-    await this.page.goto('https://nv6.ru/login');
+    await this.page.goto(shared.url('', 'login'));
     await shared.login.call(this, 'user@example.com', '123123');
 
-    this.page.goto('https://ru.nv6.ru/settings/profile');
+    this.page.goto(shared.url('ru', 'settings/profile'));
     await this.page.waitFor('#profile-tab-avatar');
 
     const input = await this.page.$('#profile-tab-avatar');
-    await input.uploadFile('/puppeteer/fixtures/avatar.png');
+    await input.uploadFile(shared.path('fixtures/avatar.png'));
     await this.page.waitFor("//span[contains(text(), 'Аватар успешно загружен')]");
   });
 
   it('Saves profile', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
 
-    await this.page.goto('https://nv6.ru/login');
+    await this.page.goto(shared.url('', 'login'));
     await shared.login.call(this, 'user@example.com', '123123');
 
-    this.page.goto('https://en.nv6.ru/settings/profile');
+    this.page.goto(shared.url('en', 'settings/profile'));
     await this.page.waitFor('[jid="profile-tab-name"]');
 
     await this.page.type('[jid="profile-tab-name"]', 'name', { delay: 20 });

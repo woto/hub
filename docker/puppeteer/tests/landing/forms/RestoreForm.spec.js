@@ -13,10 +13,10 @@ describe('RestoreForm', function () {
   shared.preparePuppeteer.call(this);
 
   it('Display success message about password restoration', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
 
-    await this.page.goto('https://en.nv6.ru/restore', { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('en', 'restore'), { waitUntil: 'networkidle0' });
     const email = 'user@example.com';
 
     await this.page.waitFor('[jid="restore-form-email"]');
@@ -27,9 +27,9 @@ describe('RestoreForm', function () {
   });
 
   it("Displays error message about password restoration", async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
 
-    await this.page.goto('https://en.nv6.ru/restore', { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('en', 'restore'), { waitUntil: 'networkidle0' });
     const email = 'unexisted-user@example.com';
 
     await this.page.waitFor('[jid="restore-form-email"]');

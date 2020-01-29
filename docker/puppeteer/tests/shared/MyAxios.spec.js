@@ -13,15 +13,15 @@ describe('axios', function() {
   shared.preparePuppeteer.call(this);
 
   it('renders', async () => {
-    await this.page.goto('https://nv6.ru');
+    await this.page.goto(shared.url());
     await this.page.waitForSelector('[jid="login-button"]');
     await this.page.click('[jid="login-button"]');
     await this.page.waitForSelector('[jid="login-form"]');
-    await this.page.screenshot({ path: '/puppeteer/screenshots/app.png' });
+    await this.page.screenshot({ path: shared.path('screenshots/app.png') });
   });
 
 //  it('Adds X-CSRF-Token to headers if it present on a page in meta', async () => {
-//    await this.page.goto('https://nv6.ru/login');
+//    await this.page.goto('~nv6.ru/login');
 //
 //    const val2 = await this.page.evaluate(async () => window.axios.defaults.headers.common['X-CSRF-Token']);
 //
@@ -38,14 +38,14 @@ describe('axios', function() {
 //  });
 
 //  it('Adds access_token to headers if it present in cookies', async () => {
-//    await this.page.goto('https://nv6.ru');
+//    await this.page.goto('~nv6.ru');
 //
 //    const val1 = 'N_snPFmP_XF9R9TWOXiVvWY5PcfmZOWQ7dLUagwVzwg';
 //    await this.page.evaluate(async (val) => {
 //      window.MyAuth.write(val);
 //    }, val1);
 //
-//    await this.page.goto('https://nv6.ru');
+//    await this.page.goto('~nv6.ru');
 //
 //    // this.page.on('console', msg => console.log('LOG:', msg.text()));
 //    // await this.page.evaluate(() => console.log(`url is ${location.href}`));

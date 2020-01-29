@@ -13,11 +13,11 @@ describe('RestoreForm', function () {
   shared.preparePuppeteer.call(this);
 
   it('Changes password and redirects to "Dashboard page"', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
-    const resetPasswordToken = await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/send_reset_password_instructions');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
+    const resetPasswordToken = await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/send_reset_password_instructions'));
 
-    await this.page.goto(`https://nv6.ru/reset?reset_password_token=${resetPasswordToken.data}`, { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('', `reset?reset_password_token=${resetPasswordToken.data}`), { waitUntil: 'networkidle0' });
     await this.page.waitFor('[jid="reset-form-password"]');
 
     const password = '12345678';
@@ -27,17 +27,17 @@ describe('RestoreForm', function () {
       this.page.waitForNavigation(),
       this.page.click('[jid="reset-form-button"]'),
     ]);
-    expect(await this.page.url()).to.equal('https://nv6.ru/dashboard');
+    expect(await this.page.url()).to.equal(shared.url('', 'dashboard'));
     await this.page.waitFor("//span[contains(text(), 'Password successfully changed')]");
     await this.page.waitFor("//header//span[contains(text(), 'user@example.com')]");
   });
 
   it('Asks to request new reset password link if reset_password_token is invalid', async () => {
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
 
     const resetPasswordToken = 'wrong_reset_password_token';
-    await this.page.goto(`https://nv6.ru/reset?reset_password_token=${resetPasswordToken}`, { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('', `reset?reset_password_token=${resetPasswordToken}`), { waitUntil: 'networkidle0' });
     await this.page.waitFor('[jid="reset-form-password"]');
 
     const password = '12345678';
@@ -46,6 +46,6 @@ describe('RestoreForm', function () {
     await this.page.click('[jid="reset-form-button"]');
 
     await this.page.waitFor("//span[contains(text(), 'Request password reset link on e-mail again')]");
-    expect(await this.page.url()).to.equal(`https://nv6.ru/reset?reset_password_token=${resetPasswordToken}`);
+    expect(await this.page.url()).to.equal(shared.url('', `reset?reset_password_token=${resetPasswordToken}`));
   });
 });

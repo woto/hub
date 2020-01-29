@@ -14,13 +14,13 @@ describe('Offers', function () {
   shared.preparePuppeteer.call(this);
 
   it('Returns table of 10th rows', async () => {
-    await this.page.goto('https://nv6.ru/offers');
+    await this.page.goto(shared.url('', 'offers'));
     this.page.waitFor('.ant-table-row');
     expect((await this.page.$$('.ant-table-row')).length).to.equal(10);
   });
 
   it('Unauthorized users get "Login modal" offer when clicking on "Write a post"', async () => {
-    const initialUrl = 'https://nv6.ru/offers?page=2&q=zero';
+    const initialUrl = shared.url('', 'offers?page=2&q=zero');
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
     // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -31,7 +31,7 @@ describe('Offers', function () {
     const unexpectedRequests = [];
     function logRequest(interceptedRequest) {
       const url = interceptedRequest.url();
-      if (url.startsWith('https://nv6.ru/')) {
+      if (url.startsWith(shared.url())) {
         unexpectedRequests.push(url);
         console.log(url);
       }
@@ -47,11 +47,11 @@ describe('Offers', function () {
 
     await this.page.waitFor('.ant-modal');
     console.log('3');
-    expect(await this.page.url()).to.equal('https://nv6.ru/offers/login?page=2&q=zero');
+    expect(await this.page.url()).to.equal(shared.url('', 'offers/login?page=2&q=zero'));
 
     // Closing modal returns to previous page
     console.log('4');
-    await this.page.screenshot({ path: '/puppeteer/screenshots/app4.png' });
+    await this.page.screenshot({ path: shared.path('screenshots/app4.png') });
     await Promise.all([
       this.page.waitForNavigation(),
       this.page.click('[aria-label="Close"]'),
@@ -67,19 +67,19 @@ describe('Offers', function () {
 
   it('Authorized users redirects to "New post page" when clicking on "Write a post"', async () => {
     console.log('1');
-    await axios.get('https://nv6.ru/api/v1/staff/cropper/postgres/crop');
+    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
     console.log('2');
-    await axios.get('https://nv6.ru/api/v1/staff/seeder/postgres/create_user');
+    await axios.get(shared.url('', 'api/v1/staff/seeder/postgres/create_user'));
 
     console.log('3');
-    await this.page.goto('https://nv6.ru/login', { waitUntil: 'networkidle0' });
+    await this.page.goto(shared.url('', 'login'), { waitUntil: 'networkidle0' });
     //// await this.page.waitFor(1000);
 
     console.log('4');
     await shared.login.call(this, 'user@example.com', '123123');
 
     console.log('5');
-    await this.page.goto('https://nv6.ru/offers?page=1&q=twenty');
+    await this.page.goto(shared.url('', 'offers?page=1&q=twenty'));
     console.log('6');
     await this.page.waitFor('[jid="write-a-post"]');
 
@@ -89,18 +89,18 @@ describe('Offers', function () {
       this.page.click('[jid="write-a-post"]'), // Clicking the link will indirectly cause a navigation
     ]);
     console.log('8');
-    expect(await this.page.url()).include.string('https://nv6.ru/posts/new?url=http');
+    expect(await this.page.url()).include.string(shared.url('', 'posts/new?url=http'));
   });
 
   it('Resets (url, search, pagination) to defaults when clicking on "Offers" in left menu', async () => {
-    const initialUrl = 'https://nv6.ru/offers?page=1&q=ten';
+    const initialUrl = shared.url('', 'offers?page=1&q=ten');
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
     // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     expect((await this.page.$$('.ant-table-row')).length).to.equal(1);
     await this.page.click('[jid="left-menu-offers"]');
-    expect(await this.page.url()).to.equal('https://nv6.ru/offers');
+    expect(await this.page.url()).to.equal(shared.url('', 'offers'));
     await this.page.waitFor("//td[contains(text(), '[zero]')]");
 
     // Initial list of 10th offers
@@ -115,7 +115,7 @@ describe('Offers', function () {
   });
 
   it('Redirects to correct page when back button pressed in browser from "Login form"', async () => {
-    const initialUrl = 'https://nv6.ru/offers?page=2&q=zero';
+    const initialUrl = shared.url('', 'offers?page=2&q=zero');
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
     // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -126,7 +126,7 @@ describe('Offers', function () {
     const unexpectedRequests = [];
     function logRequest(interceptedRequest) {
       const url = interceptedRequest.url();
-      if (url.startsWith('https://nv6.ru/')) {
+      if (url.startsWith(shared.url())) {
         unexpectedRequests.push(url);
         console.log(url);
       }
@@ -135,7 +135,7 @@ describe('Offers', function () {
 
     await this.page.click('[jid="write-a-post"]');
     await this.page.waitFor('.ant-modal');
-    expect(await this.page.url()).to.equal('https://nv6.ru/offers/login?page=2&q=zero');
+    expect(await this.page.url()).to.equal(shared.url('', 'offers/login?page=2&q=zero'));
 
     // Comes back correctly
     await this.page.goBack();
@@ -146,7 +146,7 @@ describe('Offers', function () {
   });
 
   it('Returns user to correct page without web requests when initially were opened "Offers page" with opened "Login modal" window', async () => {
-    const initialUrl = 'https://nv6.ru/feeds/zero_my_index_name/offers/login?page=1&q=one'
+    const initialUrl = shared.url('', 'feeds/zero_my_index_name/offers/login?page=1&q=one');
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
     // await this.page.waitFor(1000);
     // await this.page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -159,7 +159,7 @@ describe('Offers', function () {
     const unexpectedRequests = [];
     function logRequest(interceptedRequest) {
       const url = interceptedRequest.url();
-      if (url.startsWith('https://nv6.ru/')) {
+      if (url.startsWith(shared.url())) {
         unexpectedRequests.push(url);
         console.log(url);
       }
@@ -174,14 +174,14 @@ describe('Offers', function () {
     expect(unexpectedRequests).to.be.empty;
 
     // Checks route same but without login modal
-    expect(await this.page.url()).to.equal('https://nv6.ru/feeds/zero_my_index_name/offers?page=1&q=one');
+    expect(await this.page.url()).to.equal(shared.url('', 'feeds/zero_my_index_name/offers?page=1&q=one'));
 
     // Clean up
     this.page.removeListener('request', logRequest);
   });
 
   it('Pagination works correctly', async () => {
-    const initialUrl = 'https://nv6.ru/feeds/zero_my_index_name/offers?q=my_offer_name'
+    const initialUrl = shared.url('', 'feeds/zero_my_index_name/offers?q=my_offer_name')
     await this.page.goto(initialUrl, { waitUntil: 'networkidle0' });
 
     await this.page.waitFor("//td[contains(text(), 'one_my_offer_name')]");
@@ -200,7 +200,7 @@ describe('Offers', function () {
 
     // Make sure we are on second page
     await this.page.waitFor("//td[contains(text(), 'eleven_my_offer_name')]");
-    expect(await this.page.url()).to.equal('https://nv6.ru/feeds/zero_my_index_name/offers?q=my_offer_name&page=2');
+    expect(await this.page.url()).to.equal(shared.url('', 'feeds/zero_my_index_name/offers?q=my_offer_name&page=2'));
     // [element] = await this.page.$x("//td[contains(text(), 'eleven_my_offer_name')]");
     // text = await (await element.getProperty('textContent')).jsonValue();
     // expect(text).to.have.string('eleven_my_offer_name');
