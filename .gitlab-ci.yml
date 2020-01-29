@@ -12,12 +12,12 @@ before_script:
   - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
   - pip install docker-compose
 
-build:
-  stage: build
-  script:
-    - echo 'foo'
-  tags:
-    - docker
+#build:
+#  stage: build
+#  script:
+#    - echo 'foo'
+#  tags:
+#    - docker
 
 test:
   stage: test
