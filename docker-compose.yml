@@ -200,6 +200,8 @@ services:
       dockerfile: ./docker/puppeteer/Dockerfile
     ports:
       - "9229:9229"
+    env_file:
+      - .env
 
   # MAIN DATABASE
   postgres:
