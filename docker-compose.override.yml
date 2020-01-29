@@ -2,13 +2,10 @@ version: "3.7"
 
 services:
 
-  rails:
-    volumes:
-      - ".:/usr/src/app"
+  postgres:
+    ports:
+      - ${POSTGRES_PORT}:5432
 
-  puppeteer:
-    volumes:
-      - "./docker/puppeteer:/puppeteer"
   redis_cable:
     ports:
       - ${REDIS_CABLE_PORT}:6379
@@ -21,3 +18,12 @@ services:
     ports:
       - ${REDIS_OAUTH_PORT}:6379
 
+  elastic:
+    ports:
+      - ${ELASTIC_REST_PORT}:9200
+      - ${ELASTIC_CLUSTER_PORT}:9300
+
+  mailcatcher:
+    ports:
+      - ${MAILCATCHER_WEB_PORT}:1080
+      - ${MAILCATCHER_SMTP_PORT}:1025

@@ -22,7 +22,6 @@ RUN apk add --no-cache --update build-base \
 
 ENV APP_PATH /usr/src/app
 WORKDIR $APP_PATH
-ENV BUNDLE_PATH=$APP_PATH/vendor/bundle
 
 ADD Gemfile $APP_PATH
 ADD Gemfile.lock $APP_PATH

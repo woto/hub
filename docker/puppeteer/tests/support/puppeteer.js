@@ -18,7 +18,7 @@ exports.url = function(subdomain= '', path = '') {
   if(subdomain) {
     subdomain = `${subdomain}.`;
   }
-  return new URL(path, `${process.env.SCHEMA}://${subdomain}nv6.ru:${process.env.RAILS_PORT}`).toString();
+  return new URL(path, `${process.env.RAILS_SCHEMA}://${subdomain}nv6.ru:${process.env.RAILS_PORT}`).toString();
 }
 
 exports.path = function(path) {

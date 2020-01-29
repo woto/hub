@@ -1,7 +1,8 @@
 # TODO: move into env variable because of separation of different
 # environments were made based on index names
 default: &default
-  url: 'http://elastic:9200'
+  host: <%= ENV['ELASTIC_HOST'] %>
+  port: <%= ENV['ELASTIC_REST_PORT'] %>
   log: false
 
 development:
