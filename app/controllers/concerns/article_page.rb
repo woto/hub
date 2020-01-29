@@ -1,10 +1,10 @@
 module ArticlePage
   extend ActiveSupport::Concern
 
-  included do
-    MAX_PER = 100
-    DEFAULT_PER = 20
+  MAX_PER = 100
+  DEFAULT_PER = 20
 
+  included do
     def per
       params[:per].yield_self do |p|
         break DEFAULT_PER if p.nil?
