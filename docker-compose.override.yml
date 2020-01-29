@@ -10,28 +10,4 @@ services:
     volumes:
       - "./docker/puppeteer:/puppeteer"
 
-  # ASSETS FOR APPLICATION
-  webpacker:
-    networks:
-      hub:
-        aliases:
-          - webpacker
-    env_file:
-      - .env.${HUB_ENV}
-    environment:
-        - RAILS_ENV=${HUB_ENV}
-        - NODE_ENV=${HUB_ENV}
-        - DOMAIN_NAME
-        - SECRET_KEY_BASE
-    image: rails
-    command: bin/webpack-dev-server
-    expose:
-      - 3035
-    volumes:
-      - ".:/usr/src/app"
-    labels:
-      - "traefik.enable=true"
 
-      - "traefik.http.routers.webpacker.entrypoints=websecure"
-      - "traefik.http.routers.webpacker.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.webpacker.rule=Host(`webpacker.${DOMAIN_NAME}`)"
