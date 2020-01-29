@@ -9,5 +9,15 @@ services:
   puppeteer:
     volumes:
       - "./docker/puppeteer:/puppeteer"
+  redis_cable:
+    ports:
+      - ${REDIS_CABLE_PORT}:6379
 
+  redis_cache:
+    ports:
+      - ${REDIS_CACHE_PORT}:6379
+
+  redis_oauth:
+    ports:
+      - ${REDIS_OAUTH_PORT}:6379
 

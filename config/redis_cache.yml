@@ -1,5 +1,6 @@
 default: &default
-  host: 'redis_cache'
+  host: <%= ENV['REDIS_CACHE_HOST'] %>
+  host: <%= ENV['REDIS_CACHE_HOST'] %>
 
 development:
   <<: *default

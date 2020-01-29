@@ -22,6 +22,7 @@ build:
 test:
   stage: test
   script:
+    - mv $CI_PROJECT_DIR/.env.gitlab $CI_PROJECT_DIR/.env
     - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build
     - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic

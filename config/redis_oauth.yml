@@ -1,5 +1,6 @@
 default: &default
-  host: 'redis_oauth'
+  host: <%= ENV['REDIS_OAUTH_HOST'] %>
+  port: <%= ENV['REDIS_OAUTH_PORT'] %>
 
 development:
   <<: *default
