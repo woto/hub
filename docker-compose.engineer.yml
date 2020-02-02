@@ -17,6 +17,7 @@ services:
       context: ./docker/alpine
       dockerfile: Dockerfile
       cache_from:
+        - registry.gitlab.com/woto/hub/alpine
         - registry.gitlab.com/woto/hub/alpine:${version:-latest}
     image: registry.gitlab.com/woto/hub/alpine:${version:-latest}
     command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."

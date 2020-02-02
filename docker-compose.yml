@@ -114,6 +114,7 @@ services:
       context: ./docker/feeder
       dockerfile: Dockerfile
       cache_from:
+        - registry.gitlab.com/woto/hub/feeder
         - registry.gitlab.com/woto/hub/feeder:${version:-latest}
     image: registry.gitlab.com/woto/hub/feeder:${version:-latest}
     volumes:
@@ -202,6 +203,7 @@ services:
       context: .
       dockerfile: ./docker/puppeteer/Dockerfile
       cache_from:
+        - registry.gitlab.com/woto/hub/puppeteer
         - registry.gitlab.com/woto/hub/puppeteer:${version:-latest}
     image: registry.gitlab.com/woto/hub/puppeteer:${version:-latest}
     ports:
@@ -218,6 +220,7 @@ services:
       context: ./docker/postgres
       dockerfile: Dockerfile
       cache_from:
+        - registry.gitlab.com/woto/hub/postgres
         - registry.gitlab.com/woto/hub/postgres:${version:-latest}
     image: registry.gitlab.com/woto/hub/postgres:${version:-latest}
     volumes:
