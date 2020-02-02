@@ -16,10 +16,10 @@ before_script:
 build:
   stage: build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml push
     - export version=$CI_COMMIT_SHORT_SHA
-    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml push
   tags:
     - docker
