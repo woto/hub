@@ -1,4 +1,4 @@
 /.git
-/node_modules
-/vendor/bundle
-/tmp
+/.env
+/.env.gitlab
+/.env.production

@@ -6,7 +6,6 @@ services:
     build:
       target: production
 
-  # ELASTICSEARCH
   elastic:
     environment:
       - "ES_JAVA_OPTS=-Xmx32g -Xms32g"
@@ -62,7 +61,6 @@ services:
       - "traefik.http.routers.prometheus.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMAIN_NAME}`)"
 
-  # MONITORING
   netdata:
     networks:
       hub:
@@ -88,13 +86,13 @@ services:
       - "traefik.http.middlewares.auth-netdata.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
 
   sentry:
+    env_file:
+      - .env
     networks:
       hub:
         aliases:
           - sentry
     image: sentry
-    env_file:
-      - .env.${HUB_ENV}
     labels:
       - "traefik.enable=true"
 
@@ -103,36 +101,34 @@ services:
       - "traefik.http.routers.sentry.rule=Host(`sentry.${DOMAIN_NAME}`)"
 
   sentry_cron:
+    env_file:
+      - .env
     networks:
       hub:
     image: sentry
-    env_file:
-      - .env.${HUB_ENV}
     command:
       run cron
 
   sentry_worker:
+    env_file:
+      - .env
     networks:
       hub:
     image: sentry
-    env_file:
-      - .env.${HUB_ENV}
     command:
       run worker
 
-  # SENTRY DATABASE
   postgres_sentry:
+    env_file:
+      - .env
     networks:
       hub:
         aliases:
           - postgres_sentry
     image: postgres
-    env_file:
-      - .env.${HUB_ENV}
     volumes:
       - "postgres_sentry:/var/lib/postgresql/data"
 
-  # FOR SENTRY
   redis_sentry:
     networks:
       hub:

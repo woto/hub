@@ -1,34 +1,40 @@
-image: docker:latest
-
-variables:
-  HUB_ENV: "test"
+image: docker/compose:latest
 
 services:
   - docker:dind
 
+stages:
+  - build
+  - test
+
 before_script:
-  - docker info
-  - apk add py-pip
-  - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
-  - pip install docker-compose
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - mv $CI_PROJECT_DIR/.env.gitlab $CI_PROJECT_DIR/.env
+  - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
+  - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml pull
 
-#build:
-#  stage: build
-#  script:
-#    - echo 'foo'
-#  tags:
-#    - docker
+build:
+  stage: build
+  script:
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml push
+  tags:
+    - docker
 
-test:
+rspec tests:
   stage: test
   script:
-    - mv $CI_PROJECT_DIR/.env.gitlab $CI_PROJECT_DIR/.env
-    - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
-    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build
-    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
-    - docker-compose -f docker-compose.yml run --rm rails ./bin/setup
-    - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:load
+    - docker-compose -f docker-compose.yml up --build -d traefik postgres redis_oauth redis_cable redis_cache elastic
+    - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:prepare
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
+  tags:
+    - docker
+
+puppeteer tests:
+  stage: test
+  script:
+    - docker-compose -f docker-compose.yml up --build -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
+    - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:setup
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME/api/v1/staff/seeder/elastic/pagination"
     - docker-compose -f docker-compose.yml run --rm puppeteer

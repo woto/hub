@@ -2,23 +2,23 @@ version: "3.7"
 
 services:
 
-  # FOR DEBUGGING
-  # to get into docker-compose network and for example
+  # To get into docker-compose network and for example
   # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
   # domain name passes from .env* files
 
   alpine:
-    build:
-      context: ./docker/alpine
-      dockerfile: Dockerfile
     env_file:
       - .env
-    environment:
-        - DOMAIN_NAME
     networks:
       hub:
         aliases:
           - alpine
+    build:
+      context: ./docker/alpine
+      dockerfile: Dockerfile
+      cache_from:
+        - registry.gitlab.com/woto/hub/alpine
+    image: registry.gitlab.com/woto/hub/alpine
     command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
     stdin_open: true
     tty: true
