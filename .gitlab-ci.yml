@@ -18,12 +18,16 @@ build:
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build --parallel
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml push
+    - export version=$CI_COMMIT_SHORT_SHA
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml push
   tags:
     - docker
 
 rubocop:
   stage: test
   script:
+    - export version=$CI_COMMIT_SHORT_SHA
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rubocop
   tags:
     - docker
@@ -31,7 +35,8 @@ rubocop:
 rspec:
   stage: test
   script:
-    - docker-compose -f docker-compose.yml up --build -d traefik postgres redis_oauth redis_cable redis_cache elastic
+    - export version=$CI_COMMIT_SHORT_SHA
+    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache elastic
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:prepare
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
   tags:
@@ -40,7 +45,8 @@ rspec:
 puppeteer:
   stage: test
   script:
-    - docker-compose -f docker-compose.yml up --build -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
+    - export version=$CI_COMMIT_SHORT_SHA
+    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:setup
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME/api/v1/staff/seeder/elastic/pagination"
