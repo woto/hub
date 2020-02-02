@@ -11,5 +11,4 @@ class ArticlesController < ApplicationController
     @article = Article.find("#{params[:date]}_#{params[:title]}")
     render 'show'
   end
-
 end

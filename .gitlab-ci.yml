@@ -21,7 +21,14 @@ build:
   tags:
     - docker
 
-rspec tests:
+rubocop:
+  stage: test
+  script:
+    - docker-compose -f docker-compose.yml run --rm rails bundle exec rubocop
+  tags:
+    - docker
+
+rspec:
   stage: test
   script:
     - docker-compose -f docker-compose.yml up --build -d traefik postgres redis_oauth redis_cable redis_cache elastic
@@ -30,7 +37,7 @@ rspec tests:
   tags:
     - docker
 
-puppeteer tests:
+puppeteer:
   stage: test
   script:
     - docker-compose -f docker-compose.yml up --build -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
