@@ -11,11 +11,11 @@ before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - mv $CI_PROJECT_DIR/.env.gitlab $CI_PROJECT_DIR/.env
   - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
-  - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml pull
 
 build:
   stage: build
   script:
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml pull
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml build
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml push
     - export version=$CI_COMMIT_SHORT_SHA
@@ -28,6 +28,7 @@ rubocop:
   stage: test
   script:
     - export version=$CI_COMMIT_SHORT_SHA
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml pull
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rubocop
   tags:
     - docker
@@ -36,6 +37,7 @@ rspec:
   stage: test
   script:
     - export version=$CI_COMMIT_SHORT_SHA
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml pull
     - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache elastic
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:prepare
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
