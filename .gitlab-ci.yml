@@ -48,6 +48,7 @@ puppeteer:
   stage: test
   script:
     - export version=$CI_COMMIT_SHORT_SHA
+    - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml pull
     - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
     - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:setup
     - docker-compose -f docker-compose.yml -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
