@@ -9,10 +9,10 @@ stages:
   - deploy
 
 variables:
-  CI_REGISTRY_USER: "user"
-  CI_REGISTRY_PASSWORD: "password"
-  CI_REGISTRY: "registry.nv6.ru:5000"
   GIT_SUBMODULE_STRATEGY: recursive
+  CI_REGISTRY_USER: user
+  CI_REGISTRY_PASSWORD: password
+  CI_REGISTRY: registry.nv6.ru:5000
 
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -22,12 +22,12 @@ before_script:
 build:
   stage: build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml build # --parallel
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml push
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml build # --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml push
     - export version=$CI_COMMIT_SHORT_SHA
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml build # --parallel
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml push
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml build # --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml push
   tags:
     - docker
 
@@ -36,8 +36,8 @@ rubocop:
   allow_failure: true
   script:
     - export version=$CI_COMMIT_SHORT_SHA
-    - docker-compose -f docker-compose.yml pull
-    - docker-compose -f docker-compose.yml run --rm rails bundle exec rubocop
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rubocop
   tags:
     - docker
 
@@ -46,10 +46,10 @@ rspec:
   allow_failure: true
   script:
     - export version=$CI_COMMIT_SHORT_SHA
-    - docker-compose -f docker-compose.yml pull
-    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache elastic
-    - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:test:prepare
-    - docker-compose -f docker-compose.yml run --rm rails bundle exec rspec
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml up -d traefik postgres redis_oauth redis_cable redis_cache elastic
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rake db:test:prepare
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rspec
   tags:
     - docker
 
@@ -58,9 +58,9 @@ puppeteer:
   allow_failure: true
   script:
     - export version=$CI_COMMIT_SHORT_SHA
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
-    - docker-compose -f docker-compose.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
-    - docker-compose -f docker-compose.yml run --rm rails bundle exec rake db:setup
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rake db:setup
     - docker-compose -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
     - docker-compose -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME/api/v1/staff/seeder/elastic/pagination"
     - docker-compose -f docker-compose.gitlab.yml run --rm puppeteer
@@ -80,17 +80,17 @@ deploy to production:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml build
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml push
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml build
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml push
 
     - cp .env.production .env
     - export version=production
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml -f docker-compose.production.yml build # --parallel
-    - docker-compose -f docker-compose.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml -f docker-compose.production.yml push
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml -f docker-compose.production.yml build # --parallel
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml -f docker-compose.production.yml push
 
     - export DOCKER_HOST="ssh://root@nv6.ru"
-    - docker-compose -f docker-compose.yml -f docker-compose.production.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.production.yml up --force-recreate -d
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.production.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.production.yml up --force-recreate -d
   tags:
     - docker

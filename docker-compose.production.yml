@@ -2,10 +2,6 @@ version: "3.7"
 
 services:
 
-  rails:
-    build:
-      target: production
-
   elastic:
     environment:
       - "ES_JAVA_OPTS=-Xmx32g -Xms32g"
