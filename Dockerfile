@@ -1,11 +1,5 @@
 FROM ruby:2.5.7-alpine as development
 
-ARG RAILS_ENV
-ARG NODE_ENV
-ARG DOMAIN_NAME
-ARG SECRET_KEY_BASE
-RUN echo $RAILS_ENV $NODE_ENV $DOMAIN_NAME $SECRET_KEY_BASE
-
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
                                 linux-headers \

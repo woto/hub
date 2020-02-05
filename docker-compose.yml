@@ -114,9 +114,10 @@ services:
       context: ./docker/feeder
       dockerfile: Dockerfile
       cache_from:
-        - registry.gitlab.com/woto/hub/feeder
-        - registry.gitlab.com/woto/hub/feeder:${version:-latest}
-    image: registry.gitlab.com/woto/hub/feeder:${version:-latest}
+        - ${CI_REGISTRY}/woto/hub/feeder
+        - ${CI_REGISTRY}/woto/hub/feeder:latest
+        - ${CI_REGISTRY}/woto/hub/feeder:${version}
+    image: ${CI_REGISTRY}/woto/hub/feeder:${version:-latest}
     volumes:
       - feeder:/app/feeds
 
@@ -160,9 +161,10 @@ services:
         - SECRET_KEY_BASE
       target: development
       cache_from:
-        - registry.gitlab.com/woto/hub/rails
-        - registry.gitlab.com/woto/hub/rails:${version:-latest}
-    image: registry.gitlab.com/woto/hub/rails:${version:-latest}
+        - ${CI_REGISTRY}/woto/hub/rails
+        - ${CI_REGISTRY}/woto/hub/rails:latest
+        - ${CI_REGISTRY}/woto/hub/rails:${version}
+    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
     command:
       [
         "sh",
@@ -192,23 +194,6 @@ services:
       - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
 
-  puppeteer:
-    env_file:
-      - .env
-    networks:
-      hub:
-        aliases:
-          - puppeteer
-    build:
-      context: .
-      dockerfile: ./docker/puppeteer/Dockerfile
-      cache_from:
-        - registry.gitlab.com/woto/hub/puppeteer
-        - registry.gitlab.com/woto/hub/puppeteer:${version:-latest}
-    image: registry.gitlab.com/woto/hub/puppeteer:${version:-latest}
-    ports:
-      - "9229:9229"
-
   postgres:
     env_file:
       - .env
@@ -220,9 +205,10 @@ services:
       context: ./docker/postgres
       dockerfile: Dockerfile
       cache_from:
-        - registry.gitlab.com/woto/hub/postgres
-        - registry.gitlab.com/woto/hub/postgres:${version:-latest}
-    image: registry.gitlab.com/woto/hub/postgres:${version:-latest}
+        - ${CI_REGISTRY}/woto/hub/postgres
+        - ${CI_REGISTRY}/woto/hub/postgres:latest
+        - ${CI_REGISTRY}/woto/hub/postgres:${version}
+    image: ${CI_REGISTRY}/woto/hub/postgres:${version:-latest}
     volumes:
       - "postgres:/var/lib/postgresql/data"
 
