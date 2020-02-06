@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  extend Staff
   use_doorkeeper
 
   devise_scope :user do

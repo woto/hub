@@ -65,8 +65,6 @@ export default class App extends React.Component {
             <Route path="/reset" component={ResetForm} />
             <Route path="/proxy/:id" component={Proxy} />
 
-            {/* TODO: do with this something :) */}
-
             <Route exact path={assembleAuthRoutes('/dashboard')} component={Dashboard} />
             <Route exact path={assembleAuthRoutes('/articles')} component={Articles} />
             <Route exact path={assembleAuthRoutes('/feeds')} component={Feeds} />

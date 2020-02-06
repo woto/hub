@@ -13,16 +13,15 @@ class _Articles extends React.Component {
   columns = [
     {
       title: <FormattedMessage id="article-title" />,
-      key: 'attributes.preview',
-      dataIndex: 'attributes.preview',
-      // render: index => <Link to={`/articles/${index}/articles`}>{index}</Link>,
+      key: 'attributes.id',
+      dataIndex: 'attributes',
+      render: attributes =>
+        <div>
+          <div dangerouslySetInnerHTML={{__html: attributes.preview}} />
+          <br />
+          <Link to={`/articles/${attributes.created_at}/${attributes.title}`}>Далее</Link>
+        </div>,
       width: '80%',
-    },
-    {
-      title: <FormattedMessage id="articles-count" />,
-      key: 'count',
-      dataIndex: 'count',
-      width: '20%',
     },
   ];
 
@@ -91,6 +90,7 @@ class _Articles extends React.Component {
     return (
       <PrivateLayout whereAmI={<WhereAmI />}>
         <Table
+          showHeader={false}
           columns={this.columns}
           rowKey={record => Math.random()}
           dataSource={this.state.items}

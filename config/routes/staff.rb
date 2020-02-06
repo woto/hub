@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
-
     namespace :v1 do
-
       namespace :staff do
-
         namespace :cropper do
-
           namespace 'elastic' do
             get 'crop'
           end
@@ -14,11 +10,9 @@ Rails.application.routes.draw do
           namespace 'postgres' do
             get 'crop'
           end
-
         end
 
         namespace 'seeder' do
-
           namespace 'elastic' do
             get 'pagination'
           end
@@ -35,7 +29,6 @@ Rails.application.routes.draw do
           namespace 'redis' do
             get 'get_ready_for_proxy'
           end
-
         end
       end
     end
