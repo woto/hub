@@ -23,7 +23,7 @@ describe Api::V1::ArticlesController, type: :request do
     end
 
     it 'returns correct totalCount' do
-      expect(json_response_body).to match(
+      expect(json_response_body).to include(
         'data' => be_an_instance_of(Array),
         'meta' => { 'totalCount' => a_value == 3 }
       )
@@ -74,7 +74,7 @@ describe Api::V1::ArticlesController, type: :request do
 
     it 'gets article' do
       expect(json_response_body['data']).to match(
-        'id' => nil,
+        'id' => '2020-01-26/another-good-news',
         'type' => 'article',
         'attributes' => serialized_article
       )
@@ -86,6 +86,8 @@ describe Api::V1::ArticlesController, type: :request do
   def serialized_article
     { 'content' => a_value == "<h1 id=\"content\">Content</h1>\n",
       'preview' => a_value == "<h1 id=\"preview\">Preview</h1>\n",
-      'created_at' => '2020-01-26' }
+      'created_at' => '2020-01-26',
+      'title' => 'another-good-news'
+    }
   end
 end

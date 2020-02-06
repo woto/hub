@@ -30,7 +30,7 @@ class Article
     def objectify_article(article_dir)
       date, title = article_dir.split('/').last.split('_')
       OpenStruct.new(
-        id: "#{title}/#{date}",
+        id: "#{date}/#{title}",
         title: title,
         created_at: Date.parse(date),
         preview: markdownify_file(article_dir, 'preview.md'),
