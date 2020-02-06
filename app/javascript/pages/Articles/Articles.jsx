@@ -79,7 +79,6 @@ class _Articles extends React.Component {
         per: this.state.perPage
       }
     }).then(response => {
-      debugger
       this.setState({
         totalPages: response.data.meta.totalCount,
         loading: false,

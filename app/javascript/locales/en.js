@@ -46,6 +46,7 @@ export default {
   "feeds": "Feeds",
   "offers": "Offers",
   "posts": "Posts",
+  "articles": "News",
   "profile": "Profile",
   "settings": "Settings",
   "social-networks": "Social networks",

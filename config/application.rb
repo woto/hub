@@ -13,6 +13,8 @@ module Hub
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    config.paths['config/routes.rb'] = Dir[Rails.root.join('config/routes/*.rb')]
+
     config.redis_cache = config_for(:redis_cache)
     config.redis_oauth = config_for(:redis_oauth)
     config.elastic = config_for(:elastic)

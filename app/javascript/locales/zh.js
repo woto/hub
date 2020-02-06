@@ -46,6 +46,7 @@ export default {
   "feeds": "提要",
   "offers": "优惠",
   "posts": "帖子",
+  "articles": "最新消息",
   "profile": "轮廓",
   "settings": "设定值",
   "social-networks": "社交网络",

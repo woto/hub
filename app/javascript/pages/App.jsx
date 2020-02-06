@@ -68,34 +68,10 @@ export default class App extends React.Component {
             {/* TODO: do with this something :) */}
 
             <Route exact path={assembleAuthRoutes('/dashboard')} component={Dashboard} />
-            <Route exact path={['/dashboard/login']} component={LoginForm} />
-            <Route exact path={['/dashboard/register']} component={RegisterForm} />
-            <Route exact path={['/dashboard/restore']} component={RestoreForm} />
-            <Route exact path={['/dashboard/confirmation']} component={ConfirmationForm} />
-
             <Route exact path={assembleAuthRoutes('/articles')} component={Articles} />
-            <Route exact path={['/feeds/login']} component={LoginForm} />
-            <Route exact path={['/feeds/register']} component={RegisterForm} />
-            <Route exact path={['/feeds/restore']} component={RestoreForm} />
-            <Route exact path={['/feeds/confirmation']} component={ConfirmationForm} />
-
             <Route exact path={assembleAuthRoutes('/feeds')} component={Feeds} />
-            <Route exact path={['/feeds/login']} component={LoginForm} />
-            <Route exact path={['/feeds/register']} component={RegisterForm} />
-            <Route exact path={['/feeds/restore']} component={RestoreForm} />
-            <Route exact path={['/feeds/confirmation']} component={ConfirmationForm} />
-
             <Route exact path={assembleAuthRoutes('/feeds/:id/offers')} component={Offers} />
-            <Route exact path={['/feeds/:id/offers/login']} component={LoginForm} />
-            <Route exact path={['/feeds/:id/offers/register']} component={RegisterForm} />
-            <Route exact path={['/feeds/:id/offers/restore']} component={RestoreForm} />
-            <Route exact path={['/feeds/:id/offers/confirmation']} component={ConfirmationForm} />
-
             <Route exact path={assembleAuthRoutes('/offers')} component={Offers} />
-            <Route path={['/offers/login']} component={LoginForm} />
-            <Route path={['/offers/register']} component={RegisterForm} />
-            <Route path={['/offers/restore']} component={RestoreForm} />
-            <Route path={['/offers/confirmation']} component={ConfirmationForm} />
 
             <Route exact path="/posts" component={Posts} />
             <Route exact path="/posts/new" component={Post} />
@@ -104,6 +80,12 @@ export default class App extends React.Component {
             <Route path="/settings" component={Settings} />
 
             <Route exact path={['/', '/login', '/register', '/confirm', '/confirmation', '/restore', '/reset']} component={Landing} />
+
+            <Route path={['*:any/login']} component={LoginForm} />
+            <Route path={['*:any/register']} component={RegisterForm} />
+            <Route path={['*:any/restore']} component={RestoreForm} />
+            <Route path={['*:any/confirmation']} component={ConfirmationForm} />
+
           </AuthProvider>
         </IntlProvider>
     );

@@ -46,6 +46,7 @@ export default {
   "feeds": "Фиды",
   "offers": "Офферы",
   "posts": "Статьи",
+  "articles": "Новости",
   "profile": "Профиль",
   "settings": "Настройки",
   "social-networks": "Социальные сети",
