@@ -21,6 +21,12 @@ services:
         - ${CI_REGISTRY}/woto/hub/rails:latest
         - ${CI_REGISTRY}/woto/hub/rails:${version}
     image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
+    command:
+      [
+        "sh",
+        "-c",
+        "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid",
+      ]
     stdin_open: true
     tty: true
     expose:

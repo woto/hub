@@ -27,7 +27,6 @@ ADD yarn.lock $APP_PATH
 RUN yarn install
 
 ADD . $APP_PATH
-CMD ["sh", "-c", "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid"]
 
 FROM development as production
 ARG RAILS_ENV
