@@ -87,7 +87,6 @@ describe Api::V1::ArticlesController, type: :request do
     { 'content' => a_value == "<h1 id=\"content\">Content</h1>\n",
       'preview' => a_value == "<h1 id=\"preview\">Preview</h1>\n",
       'created_at' => '2020-01-26',
-      'title' => 'another-good-news'
-    }
+      'title' => 'another-good-news' }
   end
 end
