@@ -27,6 +27,9 @@ const LeftMenuWithRouter = withRouter((props) => {
   if (location.pathname.startsWith('/settings')) {
     selectedKeys = ['4'];
   }
+  if (location.pathname.startsWith('/articles')) {
+    selectedKeys = ['5'];
+  }
   return (
     <Menu theme="dark" defaultSelectedKeys={selectedKeys} mode="inline">
 
@@ -58,6 +61,13 @@ const LeftMenuWithRouter = withRouter((props) => {
         <Link jid="left-menu-posts" to="/posts">
           <Icon type="edit" />
           <span><FormattedMessage id="posts" /></span>
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item key="5">
+        <Link jid="left-menu-feeds" to="/articles">
+          <Icon type="read" />
+          <span><FormattedMessage id="articles" /></span>
         </Link>
       </Menu.Item>
 

@@ -15,6 +15,7 @@ import Landing from '../landing';
 
 import Proxy from './Proxy';
 import Feeds from './Feeds';
+import Articles from './Articles';
 import Offers from './Offers';
 import Posts from './Posts';
 import Post from './Post';
@@ -71,6 +72,12 @@ export default class App extends React.Component {
             <Route exact path={['/dashboard/register']} component={RegisterForm} />
             <Route exact path={['/dashboard/restore']} component={RestoreForm} />
             <Route exact path={['/dashboard/confirmation']} component={ConfirmationForm} />
+
+            <Route exact path={assembleAuthRoutes('/articles')} component={Articles} />
+            <Route exact path={['/feeds/login']} component={LoginForm} />
+            <Route exact path={['/feeds/register']} component={RegisterForm} />
+            <Route exact path={['/feeds/restore']} component={RestoreForm} />
+            <Route exact path={['/feeds/confirmation']} component={ConfirmationForm} />
 
             <Route exact path={assembleAuthRoutes('/feeds')} component={Feeds} />
             <Route exact path={['/feeds/login']} component={LoginForm} />
