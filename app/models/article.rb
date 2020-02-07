@@ -1,3 +1,17 @@
+class CustomRender < Redcarpet::Render::HTML
+  def header(title, level)
+    "<h#{level} class='ant-typography'> #{title}</h1>"
+  end
+
+  def doc_header
+    "<div class='ant-typography'>"
+  end
+
+  def doc_footer
+    "</div>"
+  end
+end
+
 class Article
   ARTICLES_PATH = Rails.root.join('docs/articles')
 
@@ -39,7 +53,10 @@ class Article
     end
 
     def markdownify_file(dir, file_name)
-      Kramdown::Document.new(File.read(File.join(dir, file_name))).to_html
+      render_options = {}
+      renderer = CustomRender.new(render_options)
+      markdown = Redcarpet::Markdown.new(renderer)
+      markdown.render(File.read(File.join(dir, file_name)))
     end
   end
 end
