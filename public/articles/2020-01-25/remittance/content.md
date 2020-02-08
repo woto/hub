@@ -17,6 +17,7 @@ Take note that I didn't use them yet so if you have an experience of using them 
 
 ![Western Union](images/western_union.png)
 
+- [Use experience](/articles/2020-02-08/western-union-use-experience)
 - [Условия оказания услуг](https://www.westernunion.ru/ru/ru/legal/terms-conditions.html)
 
 ### Paysend
