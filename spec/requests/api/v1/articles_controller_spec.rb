@@ -84,10 +84,10 @@ describe Api::V1::ArticlesController, type: :request do
   private
 
   def serialized_article
-    { 'content' => a_value == "<div class='ant-typography'><h1 class='ant-typography'>Content</h1></div>",
-      'preview' => a_value == "<div class='ant-typography'><h1 class='ant-typography'>Preview</h1></div>",
+    { 'content' => a_value == "<div class='ant-typography'><h2 class='ant-typography'>Content</h1></div>",
+      'preview' => a_value == "<div class='ant-typography'><h2 class='ant-typography'>Preview</h1></div>",
       'meta' => {
-        'date' => '2020-01-24',
+        'date' => '2020-01-26',
         'title' => 'Another Good News'
       } }
   end
