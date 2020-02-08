@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Pagination, Table } from 'antd';
+import { Pagination, Table, Typography } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link, withRouter } from "react-router-dom";
 import { useHistory } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import axios from 'axios';
+const { Text, Title } = Typography;
 
 import PrivateLayout from '../../layouts/PrivateLayout';
 import WhereAmI from './WhereAmI'
@@ -13,13 +14,13 @@ class _Articles extends React.Component {
   columns = [
     {
       title: <FormattedMessage id="article-title" />,
-      key: 'attributes.id',
-      dataIndex: 'attributes',
-      render: attributes =>
+      key: 'id',
+      render: item =>
         <div>
-          <div dangerouslySetInnerHTML={{__html: attributes.preview}} />
+          <Title level={4}>{item.attributes.meta.title}</Title>
+          <div dangerouslySetInnerHTML={{__html: item.attributes.preview}} />
           <br />
-          <Link to={`/articles/${attributes.created_at}/${attributes.title}`}>Далее</Link>
+          <Link to={`/articles/${item.id}`}>Далее</Link>
         </div>,
       width: '80%',
     },

@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find("#{params[:date]}_#{params[:title]}")
+    @article = Article.find("#{params[:date]}/#{params[:title]}")
     render 'show'
   end
 end

@@ -15,7 +15,7 @@ module Api
       end
 
       def show
-        article = Article.find("#{params[:date]}_#{params[:title]}")
+        article = Article.find("#{params[:date]}/#{params[:title]}")
         render json: ArticleSerializer.new(article)
       end
     end

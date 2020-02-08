@@ -16,6 +16,7 @@ import Landing from '../landing';
 import Proxy from './Proxy';
 import Feeds from './Feeds';
 import Articles from './Articles';
+import Article from './Article';
 import Offers from './Offers';
 import Posts from './Posts';
 import Post from './Post';
@@ -67,6 +68,7 @@ export default class App extends React.Component {
 
             <Route exact path={assembleAuthRoutes('/dashboard')} component={Dashboard} />
             <Route exact path={assembleAuthRoutes('/articles')} component={Articles} />
+            <Route exact path={assembleAuthRoutes('/articles/:date/:title')} component={Article} />
             <Route exact path={assembleAuthRoutes('/feeds')} component={Feeds} />
             <Route exact path={assembleAuthRoutes('/feeds/:id/offers')} component={Offers} />
             <Route exact path={assembleAuthRoutes('/offers')} component={Offers} />

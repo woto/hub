@@ -2,5 +2,5 @@
 
 class ArticleSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :created_at, :preview, :content, :title
+  attributes :preview, :content, :meta
 end

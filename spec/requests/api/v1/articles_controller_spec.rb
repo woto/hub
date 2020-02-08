@@ -84,9 +84,11 @@ describe Api::V1::ArticlesController, type: :request do
   private
 
   def serialized_article
-    { 'content' => a_value == "<h1 id=\"content\">Content</h1>\n",
-      'preview' => a_value == "<h1 id=\"preview\">Preview</h1>\n",
-      'created_at' => '2020-01-26',
-      'title' => 'another-good-news' }
+    { 'content' => a_value == "<div class='ant-typography'><h1 class='ant-typography'>Content</h1></div>",
+      'preview' => a_value == "<div class='ant-typography'><h1 class='ant-typography'>Preview</h1></div>",
+      'meta' => {
+        'date' => '2020-01-24',
+        'title' => 'Another Good News'
+      } }
   end
 end

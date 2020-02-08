@@ -1,3 +1,5 @@
 <% @articles.each do |article| %>
+  <%== article.meta["date"] %>
+  <h1><%== article.meta["title"] %></h1>
   <%== article.preview %>
 <% end %>
