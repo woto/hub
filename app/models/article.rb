@@ -13,7 +13,7 @@ class Article
       articles = article_paths.map do |article_path|
         Parser.new(article_path).parse
       end
-      articles.sort_by! { |a| a[:meta][:date] }
+      articles.sort_by! { |a| a[:id].split('/').first }
       articles.reverse!
 
       articles.define_singleton_method(:per) do |per|
