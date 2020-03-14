@@ -27,8 +27,6 @@ services:
         "-c",
         "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid",
       ]
-    stdin_open: true
-    tty: true
     expose:
       - 3000
     labels:
@@ -49,3 +47,17 @@ services:
       - "traefik.http.routers.zh.entrypoints=websecure"
       - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
+
+  sidekiq:
+    env_file:
+      - .env
+    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
+    command:
+      [
+        "bundle",
+        "exec",
+        "sidekiq"
+      ]
+
+networks:
+  hub:

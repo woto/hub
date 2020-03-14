@@ -1,5 +1,5 @@
 class RobotMailbox < ApplicationMailbox
   def process
-    GreetingMailer.hit_back(user: mail.from)
+    GreetingMailer.with(user: mail.from).hit_back.deliver_later
   end
 end
