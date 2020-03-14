@@ -29,3 +29,15 @@ check_interval = 0
     volumes = ["/cache"]
     shm_size = 0
 ```
+
+`ssh-keygen -t rsa -b 4096`
+Copy content of `~/.ssh/id_rsa` to `$SSH_PRIVATE_KEY` in Gitlab Settings -> Ci / CD -> Variables
+Add content of `~/.ssh/id_rsa.pub` to `~/.ssh/authorized_keys` on the server
+Copy content of `ssh-keyscan -H nv6.ru` to `$SSH_KNOWN_HOSTS` in Gitlab Settins
+
+/etc/ssh/ssd_config
+```
+AllowTcpForwarding yes
+GatewayPorts yes
+MaxSessions 100
+```
