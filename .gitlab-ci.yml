@@ -10,11 +10,12 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  CI_REGISTRY_USER: user
-  CI_REGISTRY_PASSWORD: password
+  CI_REGISTRY_USER: oganer@gmail.com
+  CI_REGISTRY_PASSWORD: qweQWE123!@#
   CI_REGISTRY: registry.nv6.ru:5000
 
 before_script:
+  - echo docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - mv $CI_PROJECT_DIR/.env.gitlab $CI_PROJECT_DIR/.env
   - chmod 600 $CI_PROJECT_DIR/docker/traefik/letsencrypt/acme.json
