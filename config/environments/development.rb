@@ -74,4 +74,6 @@ Rails.application.configure do
     address: ENV['MAILCATCHER_HOST'],
     port: ENV['MAILCATCHER_SMTP_PORT'],
   }
+
+  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 end

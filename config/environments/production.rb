@@ -121,4 +121,6 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   }
+
+  config.action_mailbox.ingress = :sendgrid
 end

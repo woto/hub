@@ -51,7 +51,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
-  gem 'rspec-rails'
+  gem 'rspec-rails', github: 'rspec/rspec-rails', tag: 'v4.0.0.rc1'
   gem 'rswag'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
