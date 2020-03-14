@@ -20,3 +20,5 @@ docker run -d \
   -e REGISTRY_HTTP_TLS_KEY=/certs/registry.nv6.ru.key \
   registry:2
 ```
+
+certificates extracts from acme.json
