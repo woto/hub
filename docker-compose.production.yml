@@ -2,6 +2,10 @@ version: "3.7"
 
 services:
 
+  traefik:
+    volumes:
+      - "traefik_cert:/letsencrypt"
+
   elastic:
     environment:
       - "ES_JAVA_OPTS=-Xmx32g -Xms32g"
@@ -135,3 +139,4 @@ services:
 volumes:
   postgres_sentry:
   rails_storage:
+  traefik_cert:
