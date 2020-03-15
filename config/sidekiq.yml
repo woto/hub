@@ -1,0 +1,8 @@
+---
+:concurrency: 5
+production:
+  :concurrency: 20
+:queues:
+  - active_storage_analysis
+  - action_mailbox_routing
+  - mailers

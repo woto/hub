@@ -18,6 +18,10 @@ services:
     ports:
       - ${REDIS_OAUTH_PORT}:6379
 
+  redis_sidekiq:
+    ports:
+      - ${REDIS_SIDEKIQ_PORT}:6379
+
   elastic:
     ports:
       - ${ELASTIC_REST_PORT}:9200

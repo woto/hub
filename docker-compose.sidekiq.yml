@@ -4,12 +4,18 @@ services:
   sidekiq:
     env_file:
       - .env
+    networks:
+      hub:
+        aliases:
+          - sidekiq
     image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
     command:
       [
         "bundle",
         "exec",
-        "sidekiq"
+        "sidekiq",
+        "-C",
+        "config/sidekiq"
       ]
 
 networks:

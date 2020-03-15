@@ -187,6 +187,13 @@ services:
           - redis_oauth
     image: redis
 
+  redis_sidekiq:
+    networks:
+      hub:
+        aliases:
+          - redis_sidekiq
+    image: redis
+
   mailcatcher:
     image: schickling/mailcatcher
     networks:
