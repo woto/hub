@@ -134,3 +134,4 @@ services:
 
 volumes:
   postgres_sentry:
+  rails_storage:

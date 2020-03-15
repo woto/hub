@@ -17,6 +17,11 @@ services:
         "-C",
         "config/sidekiq.yml"
       ]
+    volumes:
+      - "rails_storage:/usr/src/app/storage"
 
 networks:
   hub:
+
+volumes:
+  rails_storage:
