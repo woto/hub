@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+
+  sidekiq:
+    env_file:
+      - .env
+    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
+    command:
+      [
+        "bundle",
+        "exec",
+        "sidekiq"
+      ]
+
+networks:
+  hub:

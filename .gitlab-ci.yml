@@ -90,7 +90,7 @@ deploy to production:
     - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml -f docker-compose.production.yml push
 
     - export DOCKER_HOST="ssh://root@nv6.ru"
-    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.production.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.production.yml up --force-recreate -d
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.production.yml -f docker-compose.sidekiq.yml pull
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.production.yml -f docker-compose.sidekiq.yml up --force-recreate -d
   tags:
     - docker

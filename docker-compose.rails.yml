@@ -48,16 +48,5 @@ services:
       - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
       - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
 
-  sidekiq:
-    env_file:
-      - .env
-    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
-    command:
-      [
-        "bundle",
-        "exec",
-        "sidekiq"
-      ]
-
 networks:
   hub:
