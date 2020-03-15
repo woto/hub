@@ -15,7 +15,7 @@ services:
         "exec",
         "sidekiq",
         "-C",
-        "config/sidekiq"
+        "config/sidekiq.yml"
       ]
 
 networks:
