@@ -9,7 +9,7 @@ development:
       # Provides the hosts the default client can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - <%= ENV['MONGO_HOST'] %>:<%= ENV['MONGO_PORT'] %>
+        - <%= ENV.fetch('MONGO_HOST') { 'localhost'} %>:<%= ENV.fetch('MONGO_PORT') { 27017 } %>
       options:
         # Note that all options listed below are Ruby driver client options (the mongo gem).
         # Please refer to the driver documentation of the version of the mongo gem you are using
