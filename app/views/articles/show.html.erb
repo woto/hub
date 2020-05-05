@@ -1,3 +1,27 @@
-<%== @article.meta["date"] %>
-<h1><%== @article.meta["title"] %></h1>
-<%== @article.content %>
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('home'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('articles'), articles_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%= link_to @article.meta['title'], article_path(date: @article.date, title: @article.title) %>
+  </li>
+<% end %>
+
+<% content_for :title do %>
+  <%== @article.meta["title"] %>
+<% end %>
+
+<div class="col-lg-12">
+  <div class="card card-lg">
+    <div class="card-body">
+      <p class="float-right text-muted news-date"><%== l @article.meta["date"] %></p>
+      <div class="news-content">
+        <%== @article.content %>
+      </div>
+      <%= link_to t('back_to_news'), articles_path %>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,4 @@
 default: &default
-  <<: *default
   adapter: redis
   host: <%= ENV['REDIS_CABLE_HOST'] %>
   port: <%= ENV['REDIS_CABLE_PORT'] %>

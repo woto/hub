@@ -13,9 +13,6 @@ Rails.application.routes.draw do
         end
       end
 
-      get 'articles' => 'articles#index'
-      get 'articles/:date/:title' => 'articles#show'
-
       resources :offers, only: %i[index]
       resource :users, only: %i[show]
       resource :profile, only: %i[show update]

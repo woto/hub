@@ -1,0 +1,64 @@
+default: &default
+  languages:
+    -
+      language: 'English'
+      english_name: 'English'
+      disabled: false
+      domain: 'en'
+    -
+      language: '中文'
+      english_name: 'Chinese'
+      disabled: false
+      domain: 'zh-CN'
+    -
+      language: '日本語'
+      english_name: 'Japanese'
+      disabled: true
+      domain: 'ja'
+    -
+      language: 'Español'
+      english_name: 'Spanish'
+      disabled: true
+      domain: 'es'
+    -
+      language: 'Deutsch'
+      english_name: 'German'
+      disabled: true
+      domain: 'de'
+    -
+      language: 'Français'
+      english_name: 'French'
+      disabled: true
+      domain: 'fr'
+    -
+      language: '한국어'
+      english_name: 'Korean'
+      disabled: true
+      domain: 'ko'
+    -
+      language: 'Português'
+      english_name: 'Portuguese'
+      disabled: true
+      domain: 'pt'
+    -
+      language: 'Italiano'
+      english_name: 'Italian'
+      disabled: true
+      domain: 'it'
+    -
+      language: 'Русский'
+      english_name: 'Russian'
+      disabled: false
+      domain: 'ru'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

@@ -24,7 +24,6 @@ Rails.application.routes.draw do
 
   get 'reset', to: 'home#index', as: 'reset_password'
   get 'proxy/:token', to: 'home#index', as: 'user_proxy'
-  get 'dashboard', to: 'home#index'
   get 'confirm', to: 'home#index', as: 'confirm_password'
 
   scope '/settings' do
@@ -40,8 +39,12 @@ Rails.application.routes.draw do
     resources :offers, controller: 'offers', action: 'index', only: %i[index]
   end
 
-  get 'articles' => 'articles#index'
-  get 'articles/:date/:title' => 'articles#show'
+  scope "(:locale)" do
+    get 'dashboard', to: 'home#index'
+    get 'articles' => 'articles#index'
+    get 'articles/:date/:title' => 'articles#show', as: 'article'
+  end
+
 
   get '*path', to: 'home#index', constraints: lambda { |request|
     request.params[:path]

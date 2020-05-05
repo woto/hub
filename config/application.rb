@@ -19,6 +19,7 @@ module Hub
     config.redis_oauth = config_for(:redis_oauth)
     config.redis_sidekiq = config_for(:redis_sidekiq)
     config.elastic = config_for(:elastic)
+    config.global = config_for(:global)
 
     config.oauth_providers = %w[facebook github google_oauth2 instagram
                                 twitter].freeze

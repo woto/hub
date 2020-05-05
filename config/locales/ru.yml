@@ -1,4 +1,8 @@
 ru:
+  home: Главная
+  articles: Новости
+  back_to_news: Назад к новостям
+  continue_reading: Продолжить чтение
   activerecord:
     errors:
       models:
