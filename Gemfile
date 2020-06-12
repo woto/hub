@@ -102,6 +102,7 @@ gem 'request_store'
 gem 'rpush'
 gem 'sidekiq'
 gem 'typhoeus'
+gem 'simple_form'
 
 # Elasticsearch family
 # gem 'elasticsearch'

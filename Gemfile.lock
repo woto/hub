@@ -468,6 +468,9 @@ GEM
       redis (>= 4.1.0)
     sidekiq-prometheus-exporter (0.1.13)
       sidekiq (>= 3.3.1)
+    simple_form (5.0.2)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     simplecov (0.18.5)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -493,7 +496,6 @@ GEM
       thread_safe (~> 0.1)
     unicode-display_width (1.6.1)
     uniform_notifier (1.13.0)
-    vcr (5.1.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (4.0.1)
@@ -592,12 +594,12 @@ DEPENDENCIES
   sentry-raven
   sidekiq
   sidekiq-prometheus-exporter (~> 0.1)
+  simple_form
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
   typhoeus
   tzinfo-data
-  vcr
   web-console (>= 3.3.0)
   webdrivers
   webmock
