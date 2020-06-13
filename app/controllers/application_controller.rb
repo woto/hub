@@ -2,6 +2,8 @@
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
+  respond_to :html, :json
+
   around_action :switch_locale
   before_action :authenticate_user!
 
