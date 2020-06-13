@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'restricted in production' do |path|
-  it 'Is not intended to run in production' do
+  xit 'Is not intended to run in production' do
     string_inquirer = ActiveSupport::StringInquirer.new('production')
     allow(Rails).to receive(:env).and_return(string_inquirer)
     get path

@@ -21,7 +21,6 @@ https://mailcatcher.nv6.ru
 https://elastic.nv6.ru  
 https://kibana.nv6.ru  
 https://netdata.nv6.ru  
-https://swagger.nv6.ru  
 https://mailcatcher.nv6.ru  
 https://webpacker.nv6.ru  
 https://prometheus.nv6.ru  

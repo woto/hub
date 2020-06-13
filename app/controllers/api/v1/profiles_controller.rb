@@ -3,7 +3,7 @@
 module Api
   module V1
     class ProfilesController < BaseController
-      before_action :doorkeeper_authorize!
+      # TODO:
 
       def show
         if current_user.profile

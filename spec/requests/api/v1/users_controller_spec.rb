@@ -11,7 +11,7 @@ describe Api::V1::UsersController, type: :request do
       get '/api/v1/users', params: { access_token: token.token }
     end
 
-    it do
+    xit do
       make
       expect(response).to have_http_status(:ok)
     end
@@ -25,7 +25,7 @@ describe Api::V1::UsersController, type: :request do
       get '/api/v1/users', headers: headers
     end
 
-    it 'authenticates with headers' do
+    xit 'authenticates with headers' do
       make
       expect(response).to have_http_status(:ok)
     end

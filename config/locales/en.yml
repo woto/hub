@@ -34,20 +34,14 @@ en:
   articles: News
   continue_reading: Continue reading
 
-  activerecord:
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              already_confirmed: "E-mail was already confirmed, please try signing in"
-              not_found: "Entered e-mail was not found"
-              taken: 'Entered e-mail already taken by another user'
-            confirmation_token:
-              invalid: "Confirmation link is invalid"
-  doorkeeper:
-    errors:
-      messages:
-        wrong_password: "Wrong password. Please use recovery password form"
-        email_unconfirmed: "You email unconfirmed. Please rerequest confirmation link"
-        not_registered: "Entered e-mail doesn't registered"
+#  activerecord:
+#    errors:
+#      models:
+#        user:
+#          attributes:
+#            email:
+#              already_confirmed: "E-mail was already confirmed, please try signing in"
+#              not_found: "Entered e-mail was not found"
+#              taken: 'Entered e-mail already taken by another user'
+#            confirmation_token:
+#              invalid: "Confirmation link is invalid"

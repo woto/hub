@@ -117,7 +117,6 @@ gem 'elasticsearch-ruby'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-security'
-gem 'doorkeeper'
 
 # Authentication
 gem 'omniauth'

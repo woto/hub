@@ -3,8 +3,6 @@
 module Api
   module V1
     class PostsController < BaseController
-      before_action :doorkeeper_authorize!
-
       def index
         render json: PostSerializer.new(
           Post.order(created_at: :desc),

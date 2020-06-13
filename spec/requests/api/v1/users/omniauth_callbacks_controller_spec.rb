@@ -35,7 +35,7 @@ describe Users::OmniauthCallbacksController, type: :request do
                                     'info' => { 'name' => 'Example User' })
       end
 
-      it 'redirects to react bind page' do
+      xit 'redirects to react bind page' do
         expect(response).to redirect_to(user_proxy_path(token: key))
       end
     end

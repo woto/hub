@@ -7,8 +7,6 @@ module Api
 
     # Processes requests from profile tab page
     class AvatarsController < BaseController
-      before_action :doorkeeper_authorize!
-
       def show
         if current_user.avatar.attached?
           render json: AvatarSerializer.new(current_user.avatar)

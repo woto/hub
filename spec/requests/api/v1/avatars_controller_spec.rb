@@ -12,17 +12,17 @@ describe Api::V1::AvatarsController, type: :request do
   end
 
   context 'when user without avatar' do
-    specify do
+    xspecify do
       make
       expect(response).to have_http_status(:no_content)
     end
 
-    specify do
+    xspecify do
       make
       expect(response.body).to eq('')
     end
 
-    it 'uploads an avatar' do
+    xit 'uploads an avatar' do
       make
       expect(user.avatar).to be_attached
     end
@@ -31,7 +31,7 @@ describe Api::V1::AvatarsController, type: :request do
   context 'when user with avatar' do
     let(:user) { create(:user, :with_avatar) }
 
-    specify do
+    xspecify do
       xget '/api/v1/avatar'
       expect(json_response_body['data']['attributes']).to match(
         'url' => an_instance_of(String),

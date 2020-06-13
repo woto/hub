@@ -123,30 +123,6 @@ services:
     volumes:
       - feeder:/app/feeds
 
-  swagger:
-    networks:
-      hub:
-        aliases:
-          - swagger
-    image: swaggerapi/swagger-ui:v3.23.11
-    environment:
-      - BASE_URL=/
-      - URLS=[{"name":"swagger", "url":"/project/swagger.json"}]
-      - OAUTH2_REDIRECT_URL=https://${DOMAIN_NAME}/oauth2-redirect.html
-    volumes:
-      - ./docker/swagger:/usr/share/nginx/html/project
-    labels:
-      - "traefik.enable=true"
-
-      # TODO: this settings also as an envirnment settings were changed from https://${DOMAIN_NAME}/swagger
-      # to https://swagger.${DOMAIN_NAME} I think environment settings may be even simplified
-      # consider this later
-
-      - "traefik.http.routers.swagger.entrypoints=websecure"
-      - "traefik.http.routers.swagger.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.swagger.rule=Host(`swagger.${DOMAIN_NAME}`)"
-      - "traefik.http.services.swagger.loadbalancer.server.port=8080"
-
   postgres:
     env_file:
       - .env

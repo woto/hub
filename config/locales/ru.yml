@@ -3,20 +3,14 @@ ru:
   articles: Новости
   back_to_news: Назад к новостям
   continue_reading: Продолжить чтение
-  activerecord:
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
-              not_found: "Указанный e-mail не найден"
-              taken: 'Указанный e-mail уже указан другим пользователем'
-            confirmation_token:
-              invalid: "Ссылка для подтверждения неверна"
-  doorkeeper:
-    errors:
-      messages:
-        wrong_password: "Неверный пароль. Используйте форму восстановления пароля"
-        email_unconfirmed: "Ваш e-mail не подтверждён. Пожалуйста запросите письмо с ссылкой для подтверждения"
-        not_registered: "Введённый e-mail не зарегистрирован в системе"
+#  activerecord:
+#    errors:
+#      models:
+#        user:
+#          attributes:
+#            email:
+#              already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
+#              not_found: "Указанный e-mail не найден"
+#              taken: 'Указанный e-mail уже указан другим пользователем'
+#            confirmation_token:
+#              invalid: "Ссылка для подтверждения неверна"

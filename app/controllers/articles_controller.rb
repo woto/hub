@@ -3,6 +3,7 @@
 class ArticlesController < ApplicationController
   include ArticlePage
   layout 'backend'
+  skip_before_action :authenticate_user!
 
   def index
     # TODO: Refactor. We should parse only those articles which will be shown

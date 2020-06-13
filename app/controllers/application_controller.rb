@@ -2,8 +2,8 @@
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
-  protect_from_forgery unless: -> { request.format.json? }
   around_action :switch_locale
+  before_action :authenticate_user!
 
   private
 
