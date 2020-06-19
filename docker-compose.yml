@@ -102,8 +102,6 @@ services:
     image: mongo:4.2.3
     volumes:
       - mongo:/data/db
-    ports:
-      - 27017:27017
 
   feeder:
     env_file:
