@@ -118,5 +118,4 @@ export default {
   "profile-tab-languages-is-required": "请指出您使用的至少一种语言",
   "profile-tab-add-messenger": "添加即时通讯工具",
   "profile-successfully-saved": "个人资料已成功保存",
-  "profile-tab-avatar-successfull-uploaded": "图片上传成功"
 }

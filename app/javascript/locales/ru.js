@@ -118,5 +118,4 @@ export default {
   "profile-tab-languages-is-required": "Укажите хотя бы один язык, на котором говорите",
   "profile-tab-add-messenger": "Добавить мессенджер",
   "profile-successfully-saved": "Профиль успешно сохранён",
-  "profile-tab-avatar-successfull-uploaded": "Аватар успешно загружен"
 }

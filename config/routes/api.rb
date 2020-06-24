@@ -19,7 +19,6 @@ Rails.application.routes.draw do
       resources :offers, only: %i[index]
       resource :users, only: %i[show]
       resource :profile, only: %i[show update]
-      resource :avatar, only: %i[show update]
 
       namespace :users do
         resources :binds, only: [:update]

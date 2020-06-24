@@ -118,5 +118,4 @@ export default {
   "profile-tab-languages-is-required": "At least one spoken language is required",
   "profile-tab-add-messenger": "Add messenger",
   "profile-successfully-saved": "Profile successfully saved",
-  "profile-tab-avatar-successfull-uploaded": "Avatar successfully uploaded",
 };

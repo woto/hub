@@ -28,11 +28,5 @@ FactoryBot.define do
         create(:profile, user: user)
       end
     end
-
-    trait(:with_avatar) do
-      after(:create) do |user|
-        user.avatar.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'avatar.png')), filename: 'avatar.png')
-      end
-    end
   end
 end

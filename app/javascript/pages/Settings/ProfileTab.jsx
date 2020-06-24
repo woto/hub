@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import axios from 'axios';
 import { AuthContext } from '../../shared/AuthContext';
-import ProfileTabAvatar from './ProfileTabAvatar';
 import ProfileTabMessengers from './ProfileTabMessengers';
 import {
   Form,
@@ -199,11 +198,6 @@ class _ChangeProfile extends React.Component {
               </Form.Item>
 
             </Form>
-          </Col>
-          <Col span={7}>
-            <Form.Item {...formItemLayoutWithOutLabel}>
-              <ProfileTabAvatar context={context}> </ProfileTabAvatar>
-            </Form.Item>
           </Col>
         </Row>
       </>

@@ -7,6 +7,5 @@ class User < ApplicationRecord
   include Authenticatable
   include Authorizationable
   has_one :profile, dependent: :destroy
-  has_one_attached :avatar
   has_many :posts
 end
