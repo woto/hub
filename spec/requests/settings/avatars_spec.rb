@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Settings::AvatarsController, type: :request do
-  subject(:request) do
+  subject(:make) do
     put '/settings/avatar', params: {
       file: fixture_file_upload('files/avatar.png')
     }
@@ -19,17 +19,17 @@ describe Settings::AvatarsController, type: :request do
 
     context 'when user without avatar' do
       specify do
-        request
+        make
         expect(response).to have_http_status(:no_content)
       end
 
       specify do
-        request
+        make
         expect(response.body).to eq('')
       end
 
       it 'uploads an avatar' do
-        request
+        make
         expect(user.avatar).to be_attached
       end
     end
