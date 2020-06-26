@@ -67,6 +67,11 @@ describe Users::OmniauthCallbacksController, type: :request do
   let(:facebook_oauth) { Faker::Omniauth.facebook }
   let(:provider) { 'facebook' }
 
+  it "redirects to appropriate provider url when requesting /users/auth/facebook" do
+    get "/users/auth/#{provider}"
+    expect(response).to redirect_to("http://www.example.com/users/auth/#{provider}/callback")
+  end
+
   context 'when identity is new' do
     include_examples "it doesn't confirm user email"
     include_examples 'it creates new user'
@@ -88,11 +93,5 @@ describe Users::OmniauthCallbacksController, type: :request do
     include_examples "it doesn't create new user"
     include_examples "it doesn't create new identity"
     include_examples 'it updates identity auth attribute'
-  end
-
-
-  it "redirects to appropriate provider url when requesting /users/auth/facebook" do
-    get "/users/auth/#{provider}"
-    expect(response).to redirect_to("http://www.example.com/users/auth/#{provider}/callback")
   end
 end
