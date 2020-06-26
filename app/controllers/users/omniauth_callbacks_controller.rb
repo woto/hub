@@ -6,6 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def callback
     Rails.logger.info(request.env['omniauth.auth'])
     oauth = OauthStruct.new(request.env['omniauth.auth'])
+    user = nil
     ActiveRecord::Base.transaction do
       idn = Identity.where(provider: oauth.provider, uid: oauth.uid).first_or_initialize
       user = if idn.persisted?

@@ -84,10 +84,10 @@ describe Users::OmniauthCallbacksController, type: :request do
       create(:identity, uid: facebook_oauth[:uid], provider: facebook_oauth[:provider], user: user)
     end
 
-    # include_examples "it doesn't confirm user email"
+    include_examples "it doesn't confirm user email"
     include_examples "it doesn't create new user"
-    # include_examples "it doesn't create new identity"
-    # include_examples 'it updates identity auth attribute'
+    include_examples "it doesn't create new identity"
+    include_examples 'it updates identity auth attribute'
   end
 
 
