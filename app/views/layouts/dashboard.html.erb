@@ -86,8 +86,6 @@
               current_page:
                   params['controller'] == 'settings/passwords' ||
                       params['controller'] == 'settings/emails' ||
-                      params['controller'] == 'settings/phones' ||
-                      params['controller'] == 'settings/socials' ||
                       params['controller'] == 'settings/profiles',
               icon: render(Icons::SettingsComponent.new()),
               disabled: !user_signed_in?
