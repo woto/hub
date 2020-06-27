@@ -65,6 +65,17 @@ ActiveRecord::Schema.define(version: 2020_06_27_074153) do
     t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.text "title"
+    t.text "body"
+    t.text "url"
+    t.text "status_state"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string "name"
     t.text "bio"
@@ -106,5 +117,6 @@ ActiveRecord::Schema.define(version: 2020_06_27_074153) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "identities", "users"
+  add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
 end
