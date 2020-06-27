@@ -18,8 +18,8 @@ require("channels")
 
 import "controllers";
 
-//import 'jquery';
-import 'jquery-slim';
+import 'jquery';
+//import 'jquery-slim';
 import 'popper.js';
 import 'bootstrap';
 
