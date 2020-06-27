@@ -76,7 +76,7 @@ jobs:
       run: bin/rails db:create db:schema:load
 
     - name: Run tests
-      run: bundle exec rspec ./spec/system/dashboard_spec.rb
+      run: bundle exec rspec
 
     - uses: actions/upload-artifact@v2
       if: failure()
