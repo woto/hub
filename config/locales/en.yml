@@ -33,6 +33,10 @@ en:
   home: Home
   articles: News
   continue_reading: Continue reading
+  settings:
+    profiles:
+      edit:
+        update: Update
 
 #  activerecord:
 #    errors:
