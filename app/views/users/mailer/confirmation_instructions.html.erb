@@ -1,5 +1,0 @@
-<p><%= t('greeting', scope: ['devise', 'mailer', 'confirmation_instructions'], recipient: @email) %></p>
-
-<p><%= t('instruction', scope: ['devise', 'mailer', 'confirmation_instructions']) %></p>
-
-<p><%= link_to t('action', scope: ['devise', 'mailer', 'confirmation_instructions']), confirm_password_url(confirmation_token: @token, subdomain: I18n.locale) %></p>

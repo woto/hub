@@ -1,0 +1,58 @@
+<% scope = ['devise', 'registrations', 'edit'] %>
+
+<% content_for :title do %>
+  <%= t("settings.title") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('home'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('edit email'), articles_path %>
+  </li>
+<% end %>
+
+<div class="card card-md">
+
+  <div class="card-body">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+        <%= render NavComponent.new %>
+      </div>
+
+      <div class="col-lg-5">
+
+        <%= render InpageTitleComponent.new(
+            title: t("title", resource: 'email', scope: scope)
+        ) %>
+
+        <%= simple_form_for(resource, as: resource_name, url: settings_email_path, html: { method: :put }) do |f| %>
+
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :email, required: true, autofocus: true, wrapper_html: { class: 'mb-3' } %>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p><%= t("currently_waiting_confirmation_for_email", email: resource.unconfirmed_email, scope: scope) %></p>
+            <% end %>
+          </div>
+
+          <div class="form-footer">
+            <%= f.button :submit, t("update", scope: scope), class: 'btn btn-primary' %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<h3><%= t("cancel_my_account", scope: scope) %></h3>
+
+<p><%= t(".unhappy", scope: scope) %> <%= link_to t(".cancel_my_account"), registration_path(resource_name), data: { confirm: t(".are_you_sure") }, method: :delete %></p>
