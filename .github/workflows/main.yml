@@ -71,6 +71,6 @@ jobs:
         yarn install --pure-lockfile
 
     - name: Setup DB
-      run: bin/rails db:create schema:load
+      run: bin/rails db:create db:schema:load
     - name: Run tests
       run: bundle exec rake
