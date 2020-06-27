@@ -2,20 +2,25 @@
   "name": "hub",
   "private": true,
   "dependencies": {
-    "@rails/ujs": "^6.0.2-2",
-    "turbolinks": "^5.2.0",
-    "@rails/activestorage": "^6.0.2-2",
     "@rails/actioncable": "^6.0.0",
+    "@rails/actiontext": "^6.0.2-2",
+    "@rails/activestorage": "^6.0.2-2",
+    "@rails/ujs": "^6.0.2-2",
     "@rails/webpacker": "4.2.2",
     "bootstrap": "4.3.1",
+    "dropzone": "^5.7.1",
     "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "popper": "^1.0.1",
+    "selectize": "^0.12.6",
     "stimulus": "^1.1.1",
-    "tabler": "^1.0.0-alpha.7"
+    "tabler": "^1.0.0-alpha.7",
+    "trix": "^1.0.0",
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
+    "eslint-config-airbnb": "^18.2.0",
     "webpack-dev-server": "^3.10.1"
   }
 }
