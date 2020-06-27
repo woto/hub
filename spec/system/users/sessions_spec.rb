@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Users::SessionsController, type: :system do
+  before do
+    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+  end
+
   let(:user) { create(:user) }
 
   it 'signs in successfully' do
