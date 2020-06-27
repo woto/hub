@@ -79,14 +79,14 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: tmp1
-        path: ./tmp
+        name: rails_logs
+        path: ./logs
 
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: tmp2
-        path: ./hub
+        name: failed_screenshots
+        path: ./tmp/screenshots
 
 #    - uses: actions/upload-artifact@v2
 #      if: failure()
