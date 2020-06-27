@@ -35,6 +35,12 @@ end
 RSpec.configure do |config|
   config.include Helpers
 
+  config.include SystemHelpers, type: :system
+
+  # Warden
+  config.include Warden::Test::Helpers
+
+  # Devise
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
 
