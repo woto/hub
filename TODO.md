@@ -43,18 +43,18 @@
 * [ ] To test + refactor 5959146e775140d2b385c49c91cc39f69ac8624f
 * [ ] User has unconfirmed e-mail address in `users.email`. User has misspelled changing e-mail address which stores in `users.unconfirmed_email`. User logs out. Confirmation period finished. Now confirmation link can be sent only on misspelled e-mail address.
 
-# v1.2
+# v2.0
 
 Authentication
 
 * [ ] Registration
-    * Form with login / password http://joxi.ru/Q2K1y8GTwQoqkr
-    * Email notification http://joxi.ru/52aBO3EcbXae5A
+    * Form with login / password
+    * Email notification
     * Autologin after registration
 * [ ] Login
-    * Form http://joxi.ru/823vJDEtDYb3Lm
+    * Form
 * [ ] Reset password
-    * Form http://joxi.ru/LmGnlkGHJGzpKr
-    * Email http://joxi.ru/YmE3OXGTJYoj6A
-    * Handler for reset link https://en.nv6.ru/reset?reset_password_token=i2wG77EatEZWfqSprin5
-    * New password form http://joxi.ru/E2pp0GXTaD6812
+    * Form
+    * Email
+    * Handler for reset link
+    * New password form

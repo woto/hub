@@ -99,8 +99,8 @@ gem 'redis'
 gem 'request_store'
 gem 'rpush'
 gem 'sidekiq'
-gem 'typhoeus'
 gem 'simple_form'
+gem 'typhoeus'
 gem 'view_component'
 
 # Elasticsearch family
@@ -112,18 +112,18 @@ gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-ruby'
 
-# Authorization
+# Authentication
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-security'
-
-# Authentication
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
 gem 'omniauth-twitter'
+
+# Authorization
 gem 'pundit'
 
 # Application monitoring
@@ -137,3 +137,4 @@ gem 'sidekiq-prometheus-exporter', '~> 0.1'
 gem 'dry-struct'
 gem 'dry-transaction'
 gem 'dry-validation'
+gem 'dry-monads'

@@ -28,10 +28,6 @@
 /public/packs-test
 coverage
 
-# TODO: not good to store SSL certificates in open repo
-# /docker/traefik/letsencrypt/acme.json
-/docker/puppeteer/screenshots
-
 # Gitlab runner directory
 /builds
 
