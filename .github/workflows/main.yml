@@ -72,5 +72,11 @@ jobs:
 
     - name: Setup DB
       run: bin/rails db:create db:schema:load
+
     - name: Run tests
       run: bundle exec rake
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: ./hub/tmp/screenshots
