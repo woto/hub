@@ -14,10 +14,6 @@ services:
     ports:
       - ${REDIS_CACHE_PORT}:6379
 
-  redis_oauth:
-    ports:
-      - ${REDIS_OAUTH_PORT}:6379
-
   redis_sidekiq:
     ports:
       - ${REDIS_SIDEKIQ_PORT}:6379

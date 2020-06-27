@@ -23,13 +23,11 @@ services:
       - --entrypoints.metrics.address=:8082
       - --providers.docker=true
       - --api.dashboard=true
-      - --metrics.prometheus=true
       # --log.level=DEBUG
       - --certificatesResolvers.myhttpchallenge.acme.email=oganer@gmail.com
       - --certificatesResolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json
       # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
-      - --metrics.prometheus.entryPoint=metrics
       - --accesslog=true
 
 
@@ -51,8 +49,76 @@ services:
       - "traefik.http.middlewares.auth-traefik.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
 
     volumes:
-      - "./docker/traefik/letsencrypt:/letsencrypt"
+      - "traefik_cert:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  rails:
+    env_file:
+      - .env
+    networks:
+      hub:
+        aliases:
+          - rails
+    build:
+      context: .
+      args:
+        - RAILS_ENV=${HUB_ENV}
+        - NODE_ENV=${HUB_ENV}
+        - DOMAIN_NAME
+        - SECRET_KEY_BASE
+      target: ${RAILS_IMAGE_TARGET}
+      cache_from:
+        - ${CI_REGISTRY}/woto/hub/rails
+        - ${CI_REGISTRY}/woto/hub/rails:latest
+        - ${CI_REGISTRY}/woto/hub/rails:${version}
+    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
+    command:
+      [
+        "sh",
+        "-c",
+        "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid",
+      ]
+    volumes:
+      - "rails_storage:/usr/src/app/storage"
+    expose:
+      - 3000
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.main_domain.entrypoints=websecure"
+      - "traefik.http.routers.main_domain.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.main_domain.rule=Host(`${DOMAIN_NAME}`)"
+
+      - "traefik.http.routers.ru.entrypoints=websecure"
+      - "traefik.http.routers.ru.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.ru.rule=Host(`ru.${DOMAIN_NAME}`)"
+
+      - "traefik.http.routers.en.entrypoints=websecure"
+      - "traefik.http.routers.en.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.en.rule=Host(`en.${DOMAIN_NAME}`)"
+
+      - "traefik.http.routers.zh.entrypoints=websecure"
+      - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
+
+  sidekiq:
+    env_file:
+      - .env
+    networks:
+      hub:
+        aliases:
+          - sidekiq
+    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
+    command:
+      [
+        "bundle",
+        "exec",
+        "sidekiq",
+        "-C",
+        "config/sidekiq.yml"
+      ]
+    volumes:
+      - "rails_storage:/usr/src/app/storage"
 
   elastic:
     networks:
@@ -63,6 +129,7 @@ services:
     image: elasticsearch:7.4.0
     environment:
       - discovery.type=single-node
+      # "ES_JAVA_OPTS=-Xmx32g -Xms32g"
     labels:
       - "traefik.enable=true"
 
@@ -158,13 +225,6 @@ services:
           - redis_cache
     image: redis
 
-  redis_oauth:
-    networks:
-      hub:
-        aliases:
-          - redis_oauth
-    image: redis
-
   redis_sidekiq:
     networks:
       hub:
@@ -186,6 +246,29 @@ services:
       - "traefik.http.routers.mailcatcher.rule=Host(`mailcatcher.${DOMAIN_NAME}`)"
       - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
 
+  # To get into docker-compose network and for example
+  # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
+  # domain name passes from .env* files
+
+  alpine:
+    env_file:
+      - .env
+    networks:
+      hub:
+        aliases:
+          - alpine
+    build:
+      context: ./docker/alpine
+      dockerfile: Dockerfile
+      cache_from:
+        - ${CI_REGISTRY}/woto/hub/alpine
+        - ${CI_REGISTRY}/woto/hub/alpine:latest
+        - ${CI_REGISTRY}/woto/hub/alpine:${version}
+    image: ${CI_REGISTRY}/woto/hub/alpine:${version:-latest}
+    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
+    stdin_open: true
+    tty: true
+
 networks:
   hub:
 
@@ -194,3 +277,5 @@ volumes:
   mongo:
   elastic:
   feeder:
+  rails_storage:
+  traefik_cert:

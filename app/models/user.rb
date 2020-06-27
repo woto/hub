@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
-  # If oauthenticable is true then
-  # password and email don't validates
-  attr_accessor :oauthenticable
-  include Authenticatable
-  include Authorizationable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :confirmable, :lockable, :timeoutable, :trackable
+
   has_one :profile, dependent: :destroy
-  has_one_attached :avatar
   has_many :posts
+  has_many :identities, dependent: :destroy
+  has_one_attached :avatar
 end
