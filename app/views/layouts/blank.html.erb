@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title><%= content_for :title %></title>
+  <meta name="robots" content="noindex,nofollow,noarchive"/>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= javascript_pack_tag 'application', data: { turbolinks_track: 'reload' } %>
+  <%= stylesheet_pack_tag 'application', data: { turbolinks_track: 'reload' } %>
+
+</head>
+<%= content_for(:body) %>
+</html>
