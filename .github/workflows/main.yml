@@ -8,6 +8,8 @@ on:
 
 jobs:
   test:
+    env:
+      RAILS_ENV: test
 
     runs-on: ubuntu-latest
 
@@ -79,7 +81,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: rails_logs
+        name: rspec_logs
         path: ./log
 
     - uses: actions/upload-artifact@v2
@@ -87,9 +89,3 @@ jobs:
       with:
         name: failed_screenshots
         path: ./tmp/screenshots
-
-#    - uses: actions/upload-artifact@v2
-#      if: failure()
-#      with:
-#        name: rspec_logs
-#        path: ./hub/logs
