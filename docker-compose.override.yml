@@ -6,17 +6,9 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
 
-  redis_cable:
+  redis:
     ports:
-      - ${REDIS_CABLE_PORT}:6379
-
-  redis_cache:
-    ports:
-      - ${REDIS_CACHE_PORT}:6379
-
-  redis_sidekiq:
-    ports:
-      - ${REDIS_SIDEKIQ_PORT}:6379
+      - ${REDIS_PORT}:6379
 
   elastic:
     ports:

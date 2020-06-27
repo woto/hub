@@ -14,8 +14,7 @@ module Hub
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    config.redis_cache = config_for(:redis_cache)
-    config.redis_sidekiq = config_for(:redis_sidekiq)
+    config.redis = config_for(:redis)
     config.elastic = config_for(:elastic)
     config.global = config_for(:global)
 
