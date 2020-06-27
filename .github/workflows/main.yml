@@ -79,8 +79,14 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: failed_screenshots
-        path: ./
+        name: tmp1
+        path: ./tmp
+
+    - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: tmp2
+        path: ./hub
 
 #    - uses: actions/upload-artifact@v2
 #      if: failure()
