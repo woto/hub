@@ -77,11 +77,13 @@ jobs:
       run: bundle exec rake
 
     - uses: actions/upload-artifact@v2
+      if: failure()
       with:
         name: failed_screenshots
         path: ./hub/tmp/screenshots
 
     - uses: actions/upload-artifact@v2
+      if: failure()
       with:
         name: rspec_logs
         path: ./hub/logs
