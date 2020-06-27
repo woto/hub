@@ -14,7 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                idn.user
              else
                # we are creating new user or finding them by identity email
-               User.where(email: oauth.info[:email]).first_or_create!
+               User.where(email: oauth.info[:email]).first_or_create!(password: Devise.friendly_token[0, 20])
              end
 
       # if identity is old and user is old and gotten from identity

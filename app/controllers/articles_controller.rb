@@ -2,7 +2,7 @@
 
 class ArticlesController < ApplicationController
   include ArticlePage
-  layout 'backend'
+  layout 'dashboard'
   skip_before_action :authenticate_user!
 
   def index

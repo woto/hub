@@ -18,12 +18,28 @@ require("channels")
 
 import "controllers";
 
+//import 'jquery';
 import 'jquery-slim';
 import 'popper.js';
 import 'bootstrap';
 
-import 'tabler/dist/css/tabler';
-import 'tabler/dist/css/demo';
-import 'tabler/dist/js/tabler.min.js';
+import 'tabler/js/tabler.js';
 
-// @import "~bootstrap/scss/bootstrap";
+import '../stylesheets/application.scss';
+import '../plugins/selectize/selectize.js'
+import '../plugins/dropzone/dropzone.js'
+
+// document.addEventListener("turbolinks:load", function() {
+//
+//     $(".dropdown-menu a").click(function(e){
+//         e.preventDefault();
+//         $(".btn:first-child").text($(this).text());
+//         $(".btn:first-child").val($(this).text());
+//
+//     });
+//
+// });
+
+
+require("trix")
+require("@rails/actiontext")
