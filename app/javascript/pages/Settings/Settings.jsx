@@ -26,7 +26,6 @@ import WhereAmI from './WhereAmI';
 import ProfileTab from './ProfileTab';
 import EmailTab from './EmailTab';
 import PasswordTab from './PasswordTab';
-import SocialTab from './SocialTab';
 
 
 const { TabPane } = Tabs;
@@ -77,9 +76,6 @@ class _Profile extends React.Component {
           </TabPane>
           <TabPane tab={intl.formatMessage({ id: 'change-password' })} key="password">
             <PasswordTab></PasswordTab>
-          </TabPane>
-          <TabPane tab={intl.formatMessage({ id: 'social-networks' })} key="social">
-            <SocialTab></SocialTab>
           </TabPane>
 
         </Tabs>

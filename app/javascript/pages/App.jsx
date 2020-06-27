@@ -13,7 +13,6 @@ import locales_zh from '../locales/zh';
 
 import Landing from '../landing';
 
-import Proxy from './Proxy';
 import Feeds from './Feeds';
 import Articles from './Articles';
 import Article from './Article';
@@ -64,7 +63,6 @@ export default class App extends React.Component {
             <Route path="/confirmation" component={ConfirmationForm} />
             <Route path="/restore" component={RestoreForm} />
             <Route path="/reset" component={ResetForm} />
-            <Route path="/proxy/:id" component={Proxy} />
 
             <Route exact path={assembleAuthRoutes('/dashboard')} component={Dashboard} />
             <Route exact path={assembleAuthRoutes('/articles')} component={Articles} />

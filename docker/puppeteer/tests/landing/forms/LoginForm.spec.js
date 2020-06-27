@@ -27,19 +27,6 @@ describe('LoginForm', function () {
     await this.page.waitFor("//header//span[contains(text(), 'user@example.com')]");
   });
 
-  // TODO: this test should be rewritten
-  // don't like idea with login-form-oauth-test
-  it('Successfully login with google', async () => {
-    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
-    await this.page.goto(shared.url('ru', 'login'), { waitUntil: 'networkidle0' });
-
-    await Promise.all([
-      this.page.waitForNavigation(),
-      this.page.click('[jid="login-form-oauth-test"]'),
-    ]);
-    expect(await this.page.url()).to.equal(shared.url('ru', 'dashboard'));
-  });
-
   it('Respects "Remember me checkbox"');
 
   it('Displays error message if login or password are wrong', async () => {

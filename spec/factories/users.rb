@@ -10,19 +10,6 @@ FactoryBot.define do
       confirmed_at { nil }
     end
 
-    trait(:with_identity) do
-      unconfirmed
-      email { nil }
-      password { nil }
-      oauthenticable { true }
-
-      identities do
-        auth = Faker::Omniauth.google
-        build_list :identity, 1, auth: auth, provider: auth[:provider],
-                                 uid: auth[:uid]
-      end
-    end
-
     trait(:with_profile) do
       after(:create) do |user|
         create(:profile, user: user)

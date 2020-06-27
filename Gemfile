@@ -117,14 +117,6 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'devise-security'
 gem 'doorkeeper'
-
-# Authentication
-gem 'omniauth'
-gem 'omniauth-facebook'
-gem 'omniauth-github'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-instagram'
-gem 'omniauth-twitter'
 gem 'pundit'
 
 # Application monitoring

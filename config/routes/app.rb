@@ -3,12 +3,6 @@
 Rails.application.routes.draw do
   use_doorkeeper
 
-  devise_scope :user do
-    Rails.configuration.oauth_providers.each do |provider|
-      get "/users/auth/#{provider}/callback" => 'users/omniauth_callbacks#callback', defaults: { provider: provider }
-    end
-  end
-
   # devise sessions controller is replaced by doorkeeper /oauth/token
   # which allow to use oauth2 password flow authentication
   devise_for :users, defaults: { format: :json }, path: 'api/v1/users',
@@ -23,7 +17,6 @@ Rails.application.routes.draw do
   get 'users/password/edit', to: 'home#index', as: 'edit_password'
 
   get 'reset', to: 'home#index', as: 'reset_password'
-  get 'proxy/:token', to: 'home#index', as: 'user_proxy'
   get 'dashboard', to: 'home#index'
   get 'confirm', to: 'home#index', as: 'confirm_password'
 

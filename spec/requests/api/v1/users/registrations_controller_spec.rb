@@ -68,15 +68,6 @@ describe Api::V1::Users::RegistrationsController, type: :request do
         make
         expect(user.reload.valid_password?(new_password)).to be true
       end
-
-      context 'when user with oauth identity' do
-        let(:user) { create(:user, :with_identity) }
-
-        it "can't change password without email" do
-          make
-          expect(json_response_body).to eq('errors' => { 'email' => ["can't be blank"] })
-        end
-      end
     end
 
     describe 'Email' do

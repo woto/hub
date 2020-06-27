@@ -26,9 +26,6 @@ Rails.application.routes.draw do
             get 'send_confirmation_instructions'
           end
 
-          namespace 'redis' do
-            get 'get_ready_for_proxy'
-          end
         end
       end
     end

@@ -42,21 +42,4 @@ describe('PasswordTab', function () {
     this.page.click('[jid="password-tab-button"]');
     await this.page.waitFor("//span[contains(text(), 'Пароль успешно изменён')]");
   });
-
-  it('Rejects changing password if email is blank', async () => {
-    await axios.get(shared.url('', 'api/v1/staff/cropper/postgres/crop'));
-    await this.page.goto(shared.url('ru', 'login'), { waitUntil: 'networkidle0' });
-
-    await Promise.all([
-      this.page.waitForNavigation(),
-      this.page.click('[jid="login-form-oauth-test"]'),
-    ]);
-
-    await this.page.goto(shared.url('ru', 'settings/password'));
-    await this.page.waitFor('[jid="password-tab-password"]');
-    await this.page.type('input[jid="password-tab-password"]', '321321', { delay: 20 });
-    await this.page.type('input[jid="password-tab-confirm"]', '321321', { delay: 20 });
-    this.page.click('[jid="password-tab-button"]');
-    await this.page.waitFor("//span[contains(text(), 'Невозможно продолжить')]");
-  });
 });

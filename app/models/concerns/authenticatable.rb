@@ -19,17 +19,7 @@ module Authenticatable
              foreign_key: :resource_owner_id,
              dependent: :delete_all # or :destroy if you need callbacks
 
-    has_many :identities
-
     protected
-
-    def password_required?
-      super && !oauthenticable
-    end
-
-    def email_required?
-      super && !oauthenticable
-    end
 
     def send_email_changed_notification
       unless email_before_last_save.nil?

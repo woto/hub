@@ -16,7 +16,6 @@ import axios from '../../shared/axios';
 import { replaceLastPathName } from '../../shared/helpers'
 import { AuthContext } from '../../shared/AuthContext';
 import ModalWrapper from '../components/ModalWrapper';
-import withPopup from '../../shared/withPopup';
 
 class _Form extends React.Component {
 
@@ -116,30 +115,6 @@ class _Form extends React.Component {
                 </Form.Item>
               </Form>
             </Col>
-            <Col span={12} >
-
-              <FacebookLoginButton size="36px" iconSize="18px" onClick={() => this.popupWindow('facebook', 'Facebook', 900, 700)} >
-                <span jid="login-form-facebook">Facebook</span>
-              </FacebookLoginButton>
-
-              <GoogleLoginButton size="36px" iconSize="18px" onClick={() => this.popupWindow('google_oauth2', 'Google', 800, 600)}>
-                <span jid="login-form-google_oauth2">Google</span>
-              </GoogleLoginButton>
-
-              {/* <GithubLoginButton size="36px" iconSize="18px" onClick={() => this.popupWindow('github', 'Github', 600, 900)}>
-                Github
-              </GithubLoginButton> */}
-
-              <TwitterLoginButton size="36px" iconSize="18px" onClick={() => this.popupWindow('twitter', 'Twitter', 600, 500)}>
-                <span jid="login-form-twitter">Twitter</span>
-              </TwitterLoginButton>
-
-              <InstagramLoginButton size="36px" iconSize="18px" onClick={() => this.popupWindow('instagram', 'Instagram', 700, 700)}>
-                <span jid="login-form-instagram">Instagram</span>
-              </InstagramLoginButton>
-
-              <span onClick={() => this.popupWindow('oauth-test', 'Oauth Test', 1, 1)} jid="login-form-oauth-test">.</span>
-            </Col>
           </Row>
 
           <p style={{ paddingTop: "0.1rem" }}>
@@ -167,7 +142,6 @@ class _Form extends React.Component {
 }
 
 _Form.contextType = AuthContext;
-_Form = withPopup(_Form);
 _Form = injectIntl(_Form);
 const LoginForm = Form.create({ name: 'login_form' })(_Form);
 export default LoginForm;
