@@ -1,0 +1,26 @@
+<% li_css = 'nav-item dropdown' %>
+<% li_css << ' active' if @current_page %>
+
+<li class="<%= li_css %>">
+
+  <% aria_expanded = @current_page ? 'true' : 'false' %>
+  <% a_class = 'nav-link dropdown-toggle' %>
+  <% a_class << ' disabled' if @disabled %>
+
+  <a class="<%= a_class %>" href="#navbar-layout" data-toggle="dropdown" role="button" aria-expanded="<%= aria_expanded %>">
+    <span class="nav-link-icon d-md-none d-lg-inline-block">
+      <%= @icon %>
+    </span>
+    <span class="nav-link-title">
+      <%= @title %>
+    </span>
+  </a>
+
+  <% dropdown_menu_css = 'dropdown-menu' %>
+  <% dropdown_menu_css << ' show' if @current_page %>
+
+  <ul class="<%= dropdown_menu_css %>">
+    <%= items %>
+  </ul>
+
+</li>

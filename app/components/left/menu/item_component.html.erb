@@ -1,0 +1,13 @@
+<% css_class = 'nav-item' %>
+<% css_class << ' active' if @current_page %>
+
+<li class="<%= css_class %>">
+  <%= link_to(@path, class: 'nav-link') do %>
+    <span class="nav-link-icon d-md-none d-lg-inline-block">
+      <%= @icon %>
+    </span>
+    <span class="nav-link-title">
+      <%= @title %>
+    </span>
+  <% end %>
+</li>

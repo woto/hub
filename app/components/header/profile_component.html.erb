@@ -1,0 +1,5 @@
+<% if helpers.user_signed_in? %>
+  <%= render Header::Profile::AuthenticatedComponent.new %>
+<% else %>
+  <%= render Header::Profile::UnauthenticatedComponent.new %>
+<% end %>

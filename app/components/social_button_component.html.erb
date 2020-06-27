@@ -1,0 +1,4 @@
+<%= link_to @path, class: @link_class do %>
+  <%= render Icons.const_get("#{@type.camelcase}Component").new %>
+  <%= @title %>
+<% end %>

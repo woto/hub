@@ -1,0 +1,9 @@
+<% css_class = 'dropdown-item' %>
+<% css_class << ' active' if @current_page %>
+<% css_class << ' disabled' if @disabled %>
+
+<li>
+  <%= link_to @path, class: css_class do %>
+    <%= @title %>
+  <% end %>
+</li>
