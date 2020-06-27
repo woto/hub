@@ -68,13 +68,7 @@ jobs:
           ${{ runner.os }}-yarn-
     - name: Install packages
       run: |
-        yarn install
-
-    - name: Install
-      uses: ianwalter/puppeteer@3.0.0
-      with:
-        args: yarn
-
+        yarn install --pure-lockfile
 
     - name: Setup DB
       run: bin/rails db:create db:schema:load
