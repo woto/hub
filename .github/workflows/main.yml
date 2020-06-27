@@ -80,7 +80,7 @@ jobs:
       if: failure()
       with:
         name: rails_logs
-        path: ./logs
+        path: ./log
 
     - uses: actions/upload-artifact@v2
       if: failure()
