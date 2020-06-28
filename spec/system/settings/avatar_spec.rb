@@ -2,10 +2,6 @@ require 'rails_helper'
 
 describe Settings::AvatarsController, type: :system do
   before do
-    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
-  end
-
-  before do
     login_as(user, scope: :user)
     visit '/settings/profile'
   end
