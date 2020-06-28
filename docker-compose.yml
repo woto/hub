@@ -1,171 +1,31 @@
 version: "3.7"
 services:
 
-  traefik:
-    networks:
-      hub:
-        aliases:
-          - traefik
-          - ${DOMAIN_NAME}
-          - en.${DOMAIN_NAME}
-          - ru.${DOMAIN_NAME}
-          - zh.${DOMAIN_NAME}
-    image: "traefik:v2.0"
-    ports:
-      - "80:80"
-      - "443:443"
-    expose:
-      - 8082
-    command:
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.metrics.address=:8082
-      - --providers.docker=true
-      - --api.dashboard=true
-      # --log.level=DEBUG
-      - --certificatesResolvers.myhttpchallenge.acme.email=oganer@gmail.com
-      - --certificatesResolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json
-      # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
-      - --accesslog=true
-
-
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-
-      - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_NAME}`)"
-
-      # https://docs.traefik.io/operations/dashboard/
-      - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.middlewares=auth-traefik"
-      - "traefik.http.middlewares.auth-traefik.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
-
-    volumes:
-      - "traefik_cert:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-  rails:
-    env_file:
-      - .env
-    networks:
-      hub:
-        aliases:
-          - rails
-    build:
-      context: .
-      args:
-        - RAILS_ENV=${HUB_ENV}
-        - NODE_ENV=${HUB_ENV}
-        - DOMAIN_NAME
-        - SECRET_KEY_BASE
-      target: ${RAILS_IMAGE_TARGET}
-      cache_from:
-        - ${CI_REGISTRY}/woto/hub/rails
-        - ${CI_REGISTRY}/woto/hub/rails:latest
-        - ${CI_REGISTRY}/woto/hub/rails:${version}
-    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
-    command:
-      [
-        "sh",
-        "-c",
-        "rm -f /tmp/server.pid && bin/rails s -b '0.0.0.0' --pid /tmp/server.pid",
-      ]
-    volumes:
-      - "rails_storage:/usr/src/app/storage"
-    expose:
-      - 3000
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.main_domain.entrypoints=websecure"
-      - "traefik.http.routers.main_domain.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.main_domain.rule=Host(`${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.ru.entrypoints=websecure"
-      - "traefik.http.routers.ru.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.ru.rule=Host(`ru.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.en.entrypoints=websecure"
-      - "traefik.http.routers.en.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.en.rule=Host(`en.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.zh.entrypoints=websecure"
-      - "traefik.http.routers.zh.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.zh.rule=Host(`zh.${DOMAIN_NAME}`)"
-
-  sidekiq:
-    env_file:
-      - .env
-    networks:
-      hub:
-        aliases:
-          - sidekiq
-    image: ${CI_REGISTRY}/woto/hub/rails:${version:-latest}
-    command:
-      [
-        "bundle",
-        "exec",
-        "sidekiq",
-        "-C",
-        "config/sidekiq.yml"
-      ]
-    volumes:
-      - "rails_storage:/usr/src/app/storage"
-
   elastic:
-    networks:
-      hub:
-        aliases:
-          - elastic
-          - elasticsearch
+    env_file:
+      - .env
     image: elasticsearch:7.4.0
+    ports:
+      - ${ELASTIC_REST_PORT}:9200
+      - ${ELASTIC_CLUSTER_PORT}:9300
     environment:
       - discovery.type=single-node
-      # "ES_JAVA_OPTS=-Xmx32g -Xms32g"
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.elastic.entrypoints=websecure"
-      - "traefik.http.routers.elastic.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.elastic.rule=Host(`elastic.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.elastic.middlewares=auth-elastic"
-      - "traefik.http.middlewares.auth-elastic.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
 
     volumes:
       - elastic:/usr/share/elasticsearch/data
 
   kibana:
-    networks:
-      hub:
-        aliases:
-          - kibana
+    env_file:
+      - .env
     image: kibana:7.4.0
+    ports:
+      - ${KIBANA_PORT}:5601
     # environment:
     #   - ELASTICSEARCH_URL=http://cpa-elastic:9200
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.kibana.entrypoints=websecure"
-      - "traefik.http.routers.kibana.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.kibana.rule=Host(`kibana.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.kibana.middlewares=auth-kibana"
-      - "traefik.http.middlewares.auth-kibana.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
 
   mongo:
-    networks:
-      hub:
-        aliases:
-          - mongo
+    env_file:
+      - .env
     image: mongo:4.2.3
     volumes:
       - mongo:/data/db
@@ -175,59 +35,37 @@ services:
   feeder:
     env_file:
       - .env
-    networks:
-      hub:
-        aliases:
-          - feeder
     build:
       context: ./docker/feeder
       dockerfile: Dockerfile
-      cache_from:
-        - ${CI_REGISTRY}/woto/hub/feeder
-        - ${CI_REGISTRY}/woto/hub/feeder:latest
-        - ${CI_REGISTRY}/woto/hub/feeder:${version}
-    image: ${CI_REGISTRY}/woto/hub/feeder:${version:-latest}
     volumes:
       - feeder:/app/feeds
 
   postgres:
     env_file:
       - .env
-    networks:
-      hub:
-        aliases:
-          - postgres
     build:
       context: ./docker/postgres
       dockerfile: Dockerfile
-      cache_from:
-        - ${CI_REGISTRY}/woto/hub/postgres
-        - ${CI_REGISTRY}/woto/hub/postgres:latest
-        - ${CI_REGISTRY}/woto/hub/postgres:${version}
-    image: ${CI_REGISTRY}/woto/hub/postgres:${version:-latest}
+    ports:
+      - ${POSTGRES_PORT}:5432
     volumes:
       - "postgres:/var/lib/postgresql/data"
 
   redis:
-    networks:
-      hub:
-        aliases:
-          - redis
+    env_file:
+      - .env
     image: redis
+    ports:
+      - ${REDIS_PORT}:6379
 
   mailcatcher:
+    env_file:
+      - .env
     image: schickling/mailcatcher
-    networks:
-      hub:
-        aliases:
-          - mailcatcher
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.mailcatcher.entrypoints=websecure"
-      - "traefik.http.routers.mailcatcher.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.mailcatcher.rule=Host(`mailcatcher.${DOMAIN_NAME}`)"
-      - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
+    ports:
+      - ${MAILCATCHER_WEB_PORT}:1080
+      - ${MAILCATCHER_SMTP_PORT}:1025
 
   # To get into docker-compose network and for example
   # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
@@ -236,18 +74,9 @@ services:
   alpine:
     env_file:
       - .env
-    networks:
-      hub:
-        aliases:
-          - alpine
     build:
       context: ./docker/alpine
       dockerfile: Dockerfile
-      cache_from:
-        - ${CI_REGISTRY}/woto/hub/alpine
-        - ${CI_REGISTRY}/woto/hub/alpine:latest
-        - ${CI_REGISTRY}/woto/hub/alpine:${version}
-    image: ${CI_REGISTRY}/woto/hub/alpine:${version:-latest}
     command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
     stdin_open: true
     tty: true
