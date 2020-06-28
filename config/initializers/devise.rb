@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+#
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -286,7 +286,7 @@ Devise.setup do |config|
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  #
+  # TODO: check this feature
   ActiveSupport.on_load(:devise_failure_app) do
     include Turbolinks::Controller
   end

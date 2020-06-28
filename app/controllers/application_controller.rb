@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+#
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base

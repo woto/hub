@@ -11,7 +11,7 @@ describe RobotMailbox, type: :mailbox do
   end
 
   specify do
-    expect{subject}.to have_enqueued_job(ActionMailer::MailDeliveryJob).with do |**args|
+    expect { subject }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with do |**args|
       expect(args[:params][:email]).to eq(["from-address@example.com"])
     end
   end

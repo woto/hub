@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+#
 
 # https://thoughtbot.com/blog/action-mailer-and-active-job-sitting-in-a-tree
 RSpec.configure do |config|
