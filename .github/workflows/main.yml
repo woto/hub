@@ -37,7 +37,7 @@ jobs:
       elastic:
         ports: ['9200:9200', '9300:9300']
         env:
-          'discovery.type': 'single-node'
+          discovery.type: single-node
         image: elasticsearch:7.4.0
 
     steps:
@@ -83,6 +83,9 @@ jobs:
 
     - name: Run tests
       run: bundle exec rspec
+      env:
+        CAPYBARA_BROWSER: headless_chrome
+        CAPYBARA_DRIVER: selenium
 
     - uses: actions/upload-artifact@v2
       if: failure()
