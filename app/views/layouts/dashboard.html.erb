@@ -75,14 +75,49 @@
         <ul class="navbar-nav pt-lg-3">
 
           <%= render Left::Menu::ItemComponent.new(
-              title: 'Новости',
+              title: t('left_menu.dashboard'),
+              path: { controller: '/dashboard', action: 'index' },
+              current_page: current_page?(controller: '/dashboard'),
+              icon: render(Icons::DashboardComponent.new())
+          ) %>
+
+          <%= render Left::Menu::ItemComponent.new(
+              title: t('left_menu.feeds'),
+              path: { controller: '/feeds', action: 'index' },
+              current_page: current_page?(controller: '/feeds'),
+              icon: render(Icons::FeedComponent.new())
+          ) %>
+
+          <%= render Left::Menu::ItemComponent.new(
+              title: t('left_menu.offers'),
+              path: { controller: '/offers', action: 'index' },
+              current_page: current_page?(controller: '/offers'),
+              icon: render(Icons::OfferComponent.new())
+          ) %>
+
+          <%= render Left::Menu::ItemComponent.new(
+              title: t('left_menu.posts'),
+              path: { controller: '/posts', action: 'index' },
+              current_page: current_page?(controller: '/posts'),
+              icon: render(Icons::PencilComponent.new())
+          ) %>
+
+          <%= render Left::Menu::ItemComponent.new(
+              title: t('left_menu.promotions'),
+              path: { controller: '/promotions', action: 'index' },
+              current_page: current_page?(controller: '/promotions'),
+              icon: render(Icons::PromotionComponent.new())
+          ) %>
+
+          <%= render Left::Menu::ItemComponent.new(
+              title: t('left_menu.news'),
               path: { controller: '/articles', action: 'index' },
               current_page: current_page?(controller: '/articles'),
               icon: render(Icons::NewsComponent.new())
           ) %>
 
           <%= render Left::Menu::DropdownComponent.new(
-              title: t('links.settings'),
+              title: t('left_menu.settings'),
               current_page:
                   params['controller'] == 'settings/passwords' ||
                       params['controller'] == 'settings/emails' ||
@@ -94,21 +129,21 @@
             <% component.with(:items) do %>
 
               <%= render Left::Menu::Dropdown::ItemComponent.new(
-                  title: t('profile'),
+                  title: t('left_menu.profile'),
                   path: edit_settings_profile_path,
                   current_page: params['controller'] == 'settings/profiles',
                   disabled: !user_signed_in?
               ) %>
 
               <%= render Left::Menu::Dropdown::ItemComponent.new(
-                  title: t('password'),
+                  title: t('left_menu.password'),
                   path: edit_settings_password_path,
                   current_page: params['controller'] == 'settings/passwords',
                   disabled: !user_signed_in?
               ) %>
 
               <%= render Left::Menu::Dropdown::ItemComponent.new(
-                  title: t('email'),
+                  title: t('left_menu.email'),
                   path: edit_settings_email_path,
                   current_page: params['controller'] == 'settings/emails',
                   disabled: !user_signed_in?

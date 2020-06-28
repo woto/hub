@@ -1,10 +1,80 @@
-<% @result[:offers].each do |product| %>
-    <% source = product["_source"] %>
-    <div jid="offer">
-        <h1 jid="name"><%= source['name'] %></h3>
-        <img jid="picture" src="<%= source['picture']&.first || '' %>" height="300px" />
-        <p jid="description"><%= source['description'] %></p>
-        <p jid="price"><%= source['price'] %> <%= source['currencyId'] %></p>
-        <p jid="url"><%= link_to 'Перейти в магазин', source['url'] %></p>
-    </div>
+<% content_for :title do %>
+  <%= t("titles.feeds") %>
 <% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.offers'), offers_path %>
+  </li>
+<% end %>
+
+<div class="card">
+  <div class="table-responsive mt-2">
+    <table class="table card-table table-vcenter text-nowrap datatable">
+      <thead>
+      <tr>
+        <th>Offer</th>
+        <th>Price</th>
+        <th>Picture</th>
+        <th>Feed</th>
+        <th>Dump</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @offers.each do |row| %>
+        <tr>
+          <td>
+            <%= row['_source']['name'] %>
+          </td>
+          <td>
+            <%= row['_source']['price'] %>
+            <%= row['_source']['currencyId'] %>
+          </td>
+          <td>
+            <% row['_source']['picture'].each do |picture| %>
+              <%= image_tag picture %>
+            <% end %>
+          </td>
+          <td>
+            <%= row['_index'] %>
+          </td>
+          <td>
+            <%= debug row %>
+          </td>
+          <td>
+            write a post
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer d-flex align-items-center">
+    <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+    <ul class="pagination m-0 ml-auto">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><polyline points="15 6 9 12 15 18"></polyline></svg>
+          prev
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">4</a></li>
+      <li class="page-item"><a class="page-link" href="#">5</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">
+          next <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Main class for Elastic Search
 class Elastic
   # Name picker for index
@@ -54,7 +52,7 @@ class Elastic
       result = client.count(search_request)
       count = result['count']
 
-      { offers: offers, count: count }
+      [offers, count]
     end
 
     def search_request

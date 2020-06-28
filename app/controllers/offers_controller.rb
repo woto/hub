@@ -1,7 +1,8 @@
-# frozen_string_literal: true
-
 class OffersController < ApplicationController
+  layout 'dashboard'
+  skip_before_action :authenticate_user!
+
   def index
-    @result = Elastic.call(params)
+    @offers, @total_count = Elastic.call(params)
   end
 end
