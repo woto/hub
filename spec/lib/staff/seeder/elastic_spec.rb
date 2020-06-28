@@ -1,17 +1,13 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-describe Api::V1::Staff::Seeder::ElasticController, type: :request do
+describe Staff::Seeder::Elastic do
 
-  include_examples "restricted in production", "/api/v1/staff/seeder/elastic/pagination"
-
-  xit 'Fills elastic for pagination tests' do
+  it 'Fills elastic for pagination tests' do
     elastic_client.indices.delete index: ::Elastic::IndexName.all_offers
-    get '/api/v1/staff/seeder/elastic/pagination'
+    Staff::Seeder::Elastic.pagination
     indices = elastic_client.cat.indices(
-      format: 'json',
-      index: Elastic::IndexName.all_offers
+        format: 'json',
+        index: Elastic::IndexName.all_offers
     )
     expect(indices.length).to eq(21)
     my_index, others_indicies = indices.partition do |index|
