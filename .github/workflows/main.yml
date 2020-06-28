@@ -34,6 +34,12 @@ jobs:
         ports: ['6379:6379']
         options: --entrypoint redis-server
 
+      elastic:
+        ports: ['9200:9200', '9300:9300']
+        env:
+          discovery.type=single-node
+        image: elasticsearch:7.4.0
+
     steps:
 
     - uses: actions/checkout@v2
