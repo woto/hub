@@ -13,7 +13,7 @@
     <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
 
     <%= link_to 'Dashboard', dashboard_url %>
-    <%= content_for :content %>
+    <%= yield %>
 
     <%= content_for :postfix_inline_css %>
     <%= content_for :postfix_inline_js %>

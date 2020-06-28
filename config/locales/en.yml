@@ -30,7 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  home: Home
+  homepage: Home
   articles: News
   continue_reading: Continue reading
   settings:

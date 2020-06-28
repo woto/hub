@@ -77,7 +77,7 @@ Rails.application.configure do
 
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
-  if ENV['SSL_DEBUG'].present?
+  if ENV.fetch('SSL_DEBUG') == 'true'
     config.force_ssl = true
   end
 end

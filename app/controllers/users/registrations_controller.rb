@@ -1,5 +1,3 @@
-#
-
 class Users::RegistrationsController < Devise::RegistrationsController
   layout 'centered'
 

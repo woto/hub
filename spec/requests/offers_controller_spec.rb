@@ -6,6 +6,11 @@ describe OffersController do
     Staff::Seeder::Elastic.pagination
   end
 
+  xit 'Is simply works :)' do
+    get '/feeds/zero_my_index_name/offers?page=1&q=one_my_offer_name'
+    assert_select 'h1[jid="name"]', count: 1, text: '[one] [my_offer_name] one_my_offer_name'
+  end
+
   context 'without feed' do
     it 'Searches by name' do
       get '/offers?q=one_my_offer_name'

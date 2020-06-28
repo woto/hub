@@ -1,5 +1,5 @@
 ru:
-  home: Главная
+  homepage: Главная
   articles: Новости
   back_to_news: Назад к новостям
   continue_reading: Продолжить чтение
@@ -7,6 +7,18 @@ ru:
     profiles:
       edit:
         update: Обновить
+
+  left_menu:
+    dashboard: Дашборд
+    feeds: Фиды
+    offers: Офферы
+    posts: Посты
+    promotions: Продвижение
+    news: Новости
+    settings: Настройки
+    profile: Профиль
+    password: Пароль
+    email: Почта
 #  activerecord:
 #    errors:
 #      models:

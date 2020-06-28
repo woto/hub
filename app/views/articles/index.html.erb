@@ -1,14 +1,17 @@
-<% content_for :breadcrumbs do %>
-  <li class="breadcrumb-item">
-    <%= link_to t('home'), dashboard_path %>
-  </li>
-  <li class="breadcrumb-item active">
-    <%=link_to t('articles'), articles_path %>
-  </li>
+<% content_for :title do %>
+  <%= t("titles.news") %>
 <% end %>
 
-<% content_for :title do %>
-  <%= t('articles') %>
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.news'), articles_path %>
+  </li>
 <% end %>
 
 <div class="col-lg-9">

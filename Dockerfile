@@ -1,4 +1,4 @@
-FROM ruby:2.5.7-alpine as development
+FROM ruby:2.5.7-alpine
 
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
@@ -28,7 +28,6 @@ RUN yarn install
 
 ADD . $APP_PATH
 
-FROM development as production
 ARG RAILS_ENV
 ARG NODE_ENV
 ARG DOMAIN_NAME

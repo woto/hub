@@ -1,15 +1,18 @@
 <% scope = ['devise', 'registrations', 'edit'] %>
 
 <% content_for :title do %>
-  <%= t("settings.title") %>
+  <%= t("titles.settings") %>
 <% end %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
-    <%= link_to t('home'), dashboard_path %>
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
   </li>
   <li class="breadcrumb-item active">
-    <%=link_to t('edit email'), articles_path %>
+    <%=link_to t('breadcrumbs.email'), edit_settings_email_path %>
   </li>
 <% end %>
 

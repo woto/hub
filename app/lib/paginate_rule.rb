@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class PaginateRule
   def self.call(params)
     page = ((params[:page]&.to_i || 1))

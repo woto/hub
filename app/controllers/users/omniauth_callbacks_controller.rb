@@ -1,5 +1,3 @@
-#
-
 require 'open-uri'
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
