@@ -105,7 +105,9 @@
             <label class="string required" for="resource_name_location">Avatar</label>
 
             <div id="avatar-clickable">
-              <%= form_tag settings_avatar_path, class: 'dropzone', id: "avatar-dropzone" do %>
+              <%= form_tag settings_avatar_path,
+                           class: 'dropzone d-flex align-items-center justify-content-center h-100 p-2',
+                           id: "avatar-dropzone" do %>
                 <div class="dz-message">
                   <% if current_user.avatar.attached? %>
                     <%= image_tag current_user.avatar  %>
