@@ -9,7 +9,6 @@ Rails.application.routes.draw do
         end
 
         namespace 'seeder' do
-
           namespace 'postgres' do
             get 'create_user'
             get 'create_another_user'
@@ -18,7 +17,6 @@ Rails.application.routes.draw do
             get 'send_reset_password_instructions'
             get 'send_confirmation_instructions'
           end
-
         end
       end
     end
