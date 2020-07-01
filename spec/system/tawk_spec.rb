@@ -11,9 +11,9 @@ RSpec.describe "Tawk" do
       allow(ENV).to receive(:[]).with("TAWK_ENABLED").and_return("true")
     end
 
-    it "shows widget " do
-      visit "/dashboard"
-      expect(page).to have_css('iframe[title="chat widget"]')
+    it "shows tawk widget" do
+      get '/dashboard'
+      expect(response.body).to match('Tawk_API')
     end
   end
 
@@ -22,9 +22,9 @@ RSpec.describe "Tawk" do
       allow(ENV).to receive(:[]).with("TAWK_ENABLED").and_return("false")
     end
 
-    it "does not show widget " do
-      visit "/dashboard"
-      expect(page).not_to have_css('iframe[title="chat widget"]')
+    it 'does not show tawk widget' do
+      get '/dashboard'
+      expect(response.body).not_to match('Tawk_API')
     end
   end
 end
