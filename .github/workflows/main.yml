@@ -83,9 +83,6 @@ jobs:
 
     - name: Run tests
       run: bundle exec rspec
-      env:
-        CAPYBARA_BROWSER: headless_chrome
-        CAPYBARA_DRIVER: selenium
 
     - uses: actions/upload-artifact@v2
       if: failure()
