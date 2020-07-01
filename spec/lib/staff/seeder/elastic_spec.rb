@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 describe Staff::Seeder::Elastic do
-
   it 'Fills elastic for pagination tests' do
     elastic_client.indices.delete index: ::Elastic::IndexName.all_offers
-    Staff::Seeder::Elastic.pagination
+    described_class.pagination
     indices = elastic_client.cat.indices(
-        format: 'json',
-        index: Elastic::IndexName.all_offers
+      format: 'json',
+      index: Elastic::IndexName.all_offers
     )
     expect(indices.length).to eq(21)
     my_index, others_indicies = indices.partition do |index|
