@@ -3,19 +3,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :staff do
         namespace :cropper do
-          namespace 'elastic' do
-            get 'crop'
-          end
-
           namespace 'postgres' do
             get 'crop'
           end
         end
 
         namespace 'seeder' do
-          namespace 'elastic' do
-            get 'pagination'
-          end
 
           namespace 'postgres' do
             get 'create_user'

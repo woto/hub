@@ -103,15 +103,6 @@ gem 'rpush'
 gem 'sidekiq'
 gem 'typhoeus'
 
-# Elasticsearch family
-# gem 'elasticsearch'
-# gem 'elasticsearch-transport'
-# gem 'elasticsearch-api'
-# gem 'elasticsearch-model'
-gem 'elasticsearch-persistence'
-gem 'elasticsearch-rails'
-gem 'elasticsearch-ruby'
-
 # Authorization
 gem 'devise'
 gem 'devise-i18n'

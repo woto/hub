@@ -6,10 +6,6 @@ services:
     volumes:
       - "traefik_cert:/letsencrypt"
 
-  elastic:
-    environment:
-      - "ES_JAVA_OPTS=-Xmx32g -Xms32g"
-
   # jaeger:
   #   networks:
   #     hub:

@@ -54,46 +54,6 @@ services:
       - "./docker/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  elastic:
-    networks:
-      hub:
-        aliases:
-          - elastic
-          - elasticsearch
-    image: elasticsearch:7.4.0
-    environment:
-      - discovery.type=single-node
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.elastic.entrypoints=websecure"
-      - "traefik.http.routers.elastic.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.elastic.rule=Host(`elastic.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.elastic.middlewares=auth-elastic"
-      - "traefik.http.middlewares.auth-elastic.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
-
-    volumes:
-      - elastic:/usr/share/elasticsearch/data
-
-  kibana:
-    networks:
-      hub:
-        aliases:
-          - kibana
-    image: kibana:7.4.0
-    # environment:
-    #   - ELASTICSEARCH_URL=http://cpa-elastic:9200
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.kibana.entrypoints=websecure"
-      - "traefik.http.routers.kibana.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.kibana.rule=Host(`kibana.${DOMAIN_NAME}`)"
-
-      - "traefik.http.routers.kibana.middlewares=auth-kibana"
-      - "traefik.http.middlewares.auth-kibana.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
-
   mongo:
     networks:
       hub:
@@ -214,5 +174,4 @@ networks:
 volumes:
   postgres:
   mongo:
-  elastic:
   feeder:

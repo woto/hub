@@ -47,7 +47,7 @@ rspec:
   script:
     - export version=$CI_COMMIT_SHORT_SHA
     - docker-compose -f docker-compose.yml -f docker-compose.rails.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml up -d traefik postgres redis_oauth redis_cable redis_cache elastic
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml up -d traefik postgres redis_oauth redis_cable redis_cache
     - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rake db:test:prepare
     - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rspec
   tags:
@@ -59,10 +59,9 @@ puppeteer:
   script:
     - export version=$CI_COMMIT_SHORT_SHA
     - docker-compose -f docker-compose.yml -f docker-compose.rails.yml -f docker-compose.gitlab.yml -f docker-compose.engineer.yml pull
-    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails elastic
+    - docker-compose -f docker-compose.yml -f docker-compose.rails.yml up -d traefik postgres redis_oauth redis_cable redis_cache rails
     - docker-compose -f docker-compose.yml -f docker-compose.rails.yml run --rm rails bundle exec rake db:setup
     - docker-compose -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
-    - docker-compose -f docker-compose.engineer.yml run --rm alpine sh -c "curl https://\$DOMAIN_NAME/api/v1/staff/seeder/elastic/pagination"
     - docker-compose -f docker-compose.gitlab.yml run --rm puppeteer
   tags:
     - docker
