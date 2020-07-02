@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_scope :user do
     Rails.configuration.oauth_providers.each do |provider|

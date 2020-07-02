@@ -1,4 +1,4 @@
-#
+# frozen_string_literal: true
 
 Rails.application.configure do
   config.web_console.whitelisted_ips = %w[0.0.0.0/0 ::/0]
@@ -72,12 +72,10 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV['MAILCATCHER_HOST'],
-    port: ENV['MAILCATCHER_SMTP_PORT'],
+    port: ENV['MAILCATCHER_SMTP_PORT']
   }
 
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
-  if ENV.fetch('SSL_DEBUG') == 'true'
-    config.force_ssl = true
-  end
+  config.force_ssl = true if ENV.fetch('SSL_DEBUG') == 'true'
 end

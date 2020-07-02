@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers
 class CreateIdentities < ActiveRecord::Migration[5.2]
   def change

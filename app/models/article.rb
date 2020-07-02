@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Article
   ARTICLES_PATH = Rails.root.join('public/articles')
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Settings::AvatarsController < ApplicationController
   layout 'dashboard'
 

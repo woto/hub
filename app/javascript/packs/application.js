@@ -4,7 +4,7 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-require("turbolinks").start()
+// require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("trix")
@@ -27,8 +27,8 @@ import 'bootstrap';
 import 'tabler/js/tabler.js';
 
 import '../stylesheets/application.scss';
-import '../plugins/selectize/selectize.js'
-import '../plugins/dropzone/dropzone.js'
+import '../plugins/selectize_languages'
+import '../plugins/dropzone_avatar'
 
 // document.addEventListener("turbolinks:load", function() {
 //

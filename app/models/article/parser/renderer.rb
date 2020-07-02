@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Article
   class Parser
     class Renderer < Redcarpet::Render::HTML

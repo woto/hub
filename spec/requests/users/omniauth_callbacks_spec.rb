@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Users::OmniauthCallbacksController, type: :request do
-
   RSpec.shared_examples "it doesn't create new identity" do
     specify do
       expect { make }.not_to change(Identity, :count)
@@ -51,28 +52,29 @@ describe Users::OmniauthCallbacksController, type: :request do
   end
 
   def make
-    get "/users/auth/facebook/callback"
+    get '/users/auth/facebook/callback'
   end
 
   context 'when unsuccessful' do
-    before(:each) do
+    before do
       OmniAuth.config.mock_auth[:facebook] = :invalid_credentials
     end
 
     it 'redirects back on login page' do
       make
-      expect(response).to redirect_to("http://www.example.com/en/auth/login")
+      expect(response).to redirect_to('http://www.example.com/en/auth/login')
     end
   end
 
   context 'when successful' do
-    before(:each) do
+    before do
       OmniAuth.config.mock_auth[:facebook] = facebook_oauth
     end
 
     let(:facebook_oauth) { Faker::Omniauth.facebook }
     let(:provider) { 'facebook' }
-    it "redirects to appropriate provider url when requesting /users/auth/facebook" do
+
+    it 'redirects to appropriate provider url when requesting /users/auth/facebook' do
       get "/users/auth/#{provider}"
       expect(response).to redirect_to("http://www.example.com/users/auth/#{provider}/callback")
     end

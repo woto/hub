@@ -2,6 +2,7 @@
   "name": "hub",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@rails/actioncable": "^6.0.0",
     "@rails/actiontext": "^6.0.2-2",
     "@rails/activestorage": "^6.0.2-2",
@@ -15,8 +16,7 @@
     "selectize": "^0.12.6",
     "stimulus": "^1.1.1",
     "tabler": "^1.0.0-alpha.7",
-    "trix": "^1.0.0",
-    "turbolinks": "^5.2.0"
+    "trix": "^1.2.3"
   },
   "devDependencies": {
     "eslint": "^6.3.0",

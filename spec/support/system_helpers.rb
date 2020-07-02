@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SystemHelpers
   # TODO: it's a dirty way to check if user is authenticated
   def expect_authenticated

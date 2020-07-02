@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LocalesConstraint
   def matches?(request)
     case request.params['locale']

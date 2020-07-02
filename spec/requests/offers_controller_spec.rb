@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe OffersController do
@@ -80,6 +82,5 @@ describe OffersController do
       expect(assigns[:total_count]).to eq(21)
       expect(assigns[:offers].length).to eq(1)
     end
-
   end
 end

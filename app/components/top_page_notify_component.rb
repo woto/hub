@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TopPageNotifyComponent < ViewComponent::Base
   def initialize(message:, alert_type:)
     # TODO: limit types

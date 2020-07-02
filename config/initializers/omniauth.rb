@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Rails.application.config.middleware.use OmniAuth::Builder do
 #   provider :developer unless Rails.env.production?
 #   provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
@@ -11,7 +13,6 @@
 OmniAuth.config.path_prefix = '/users/auth'
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-
   # https://developer.twitter.com/en/apps
   # provider :twitter, ENV['TWITTER_ID'], ENV['TWITTER_SECRET'], callback_path: '/users/auth/twitter/callback'
 
@@ -28,7 +29,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'], callback_path: '/users/auth/google_oauth2/callback'
 
   on_failure do |env|
-    env["devise.mapping"] = Devise.mappings[:user]
+    env['devise.mapping'] = Devise.mappings[:user]
     Users::OmniauthCallbacksController.action(:failure).call(env)
   end
 end

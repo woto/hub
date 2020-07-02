@@ -69,7 +69,7 @@ module Staff
               currencyId: %w[RUR EUR USD].sample,
               url: Faker::Internet.url,
               picture: rand(5).times.map do
-                "https://#{ENV['DOMAIN_NAME']}/dummy.jpeg"
+                '/dummy.jpeg'
               end
             )
           )

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Main class for Elastic Search
 class Elastic
   # Name picker for index

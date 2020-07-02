@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Settings::AvatarsController, type: :request do
@@ -7,16 +9,15 @@ describe Settings::AvatarsController, type: :request do
     }
   end
 
-  let(:user) {
+  let(:user) do
     FactoryBot.create(:user)
-  }
+  end
 
   before do
     sign_in user
   end
 
   context 'when authenticated' do
-
     context 'when user without avatar' do
       specify do
         make

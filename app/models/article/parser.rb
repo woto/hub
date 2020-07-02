@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Article
   class Parser
     def initialize(article_path)

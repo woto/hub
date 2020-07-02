@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SocialButtonComponent < ViewComponent::Base
   def initialize(link_class:, type:, title:, path:)
     @link_class = link_class

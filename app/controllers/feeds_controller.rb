@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FeedsController < ApplicationController
   layout 'dashboard'
   skip_before_action :authenticate_user!
@@ -8,6 +10,7 @@ class FeedsController < ApplicationController
       format: 'json',
       index: Elastic::IndexName.all_offers
     )
+
     indices.map! do |index|
       {
         index: Elastic::IndexName.offers_crop(index['index']),
@@ -15,12 +18,14 @@ class FeedsController < ApplicationController
         uuid: index['uuid']
       }
     end
+
     if params[:q].present?
       indices.select! do |index|
         index[:index].downcase.include? params[:q].downcase
       end
       indices.compact!
     end
+
     page, per = PaginateRule.call(params)
     @total_count = indices.count
     @feeds = Kaminari
