@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Nav::ItemComponent < ViewComponent::Base
+class ProfileList::ItemComponent < ViewComponent::Base
   def initialize(title:, path:, current_page:)
     @title = title
     @path = path

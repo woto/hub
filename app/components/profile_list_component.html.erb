@@ -1,22 +1,20 @@
-<ul class="nav flex-column">
-
-  <%= render Nav::ItemComponent.new(
+<div class="list-group list-group-transparent mb-3 mr-xl-5 mr-lg-1 mr-md-3">
+  <%= render ProfileList::ItemComponent.new(
       title: t('profile'),
       path: edit_settings_profile_path,
       current_page: params['controller'] == 'settings/profiles'
   )
   %>
 
-  <%= render Nav::ItemComponent.new(
+  <%= render ProfileList::ItemComponent.new(
       title: t('password'),
       path: edit_settings_password_path,
       current_page: params['controller'] == 'settings/passwords',
-  ) %>
+      ) %>
 
-  <%= render Nav::ItemComponent.new(
+  <%= render ProfileList::ItemComponent.new(
       title: t('email'),
       path: edit_settings_email_path,
       current_page: params['controller'] == 'settings/emails',
-  ) %>
-
-</ul>
+      ) %>
+</div>

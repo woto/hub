@@ -22,11 +22,11 @@
 
     <div class="row">
 
-      <div class="col-lg-3">
-        <%= render NavComponent.new %>
+      <div class="col-md-3">
+        <%= render ProfileListComponent.new %>
       </div>
 
-      <div class="col-lg-9">
+      <div class="col-md-9 col-xl-8">
 
         <%= render InpageTitleComponent.new(
             title: t("profile edit")
@@ -34,7 +34,27 @@
 
         <div class="row">
 
-          <div class="col-lg-7">
+          <div class="col col-12 col-sm-4 order-sm-last mb-3 d-flex justify-content-center">
+
+            <div>
+              <label class="string required" for="resource_name_location">Avatar</label>
+              <div id="avatar-clickable">
+                <%= form_tag settings_avatar_path,
+                             class: 'dropzone d-flex align-items-center justify-content-center h-100 p-2',
+                             id: "avatar-dropzone" do %>
+                  <div class="dz-message">
+                    <% if current_user.avatar.attached? %>
+                      <%= image_tag current_user.avatar  %>
+                    <% else %>
+                      Drop image here or click to upload
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-sm-8">
 
             <%= simple_form_for(current_user.profile || current_user.build_profile, as: 'resource_name', url: settings_profile_path, html: {method: :put}) do |f| %>
 
@@ -76,19 +96,14 @@
                   </div>
                 </div>
 
-                <div class="mb-3">
-                  <label class="string required" for="resource_name_location">Location
-                    <abbr title="required">*</abbr></label>
-                  <select name="tags-advanced" id="select-tags-advanced" class="form-select" multiple>
-                    <option value="HTML">HTML</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="CSS">CSS</option>
-                    <option value="jQuery">jQuery</option>
-                    <option value="Bootstrap">Bootstrap</option>
-                    <option value="Ruby" selected>Ruby</option>
-                    <option value="Python" selected>Python</option>
-                  </select>
-                </div>
+                <%= f.input :languages,
+                            required: true,
+                            input_html: {class: 'selectize-languages', multiple: true},
+                            wrapper_html: {class: 'mb-3'},
+                            as: :select,
+                            collection: [['English', 'english'], ['Русский', 'russian']]
+
+                %>
 
                 <div class="form-footer">
                   <%= f.button :submit, t(".update", scope: scope), class: 'btn btn-primary' %>
@@ -97,34 +112,6 @@
               </div>
 
             <% end %>
-
-          </div>
-
-          <div class="offset-lg-1 col">
-
-            <label class="string required" for="resource_name_location">Avatar</label>
-
-            <div id="avatar-clickable">
-              <%= form_tag settings_avatar_path,
-                           class: 'dropzone d-flex align-items-center justify-content-center h-100 p-2',
-                           id: "avatar-dropzone" do %>
-                <div class="dz-message">
-                  <% if current_user.avatar.attached? %>
-                    <%= image_tag current_user.avatar  %>
-                  <% else %>
-                    Drop image here or click to upload
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-
-            <template id="avatar-template">
-              <div class="dz-preview">
-                <div class="dz-details">
-                  <img data-dz-thumbnail>
-                </div>
-              </div>
-            </template>
 
           </div>
 

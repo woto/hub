@@ -1,8 +1,0 @@
-<% nav_link_class = 'nav-link' %>
-<% nav_link_class << ' active' if @current_page %>
-
-<li class="nav-item">
-  <%= link_to(@path, class: nav_link_class) do %>
-    <%= @title %>
-  <% end %>
-</li>
