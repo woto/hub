@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Left::Menu::ItemComponent < ViewComponent::Base
   def initialize(path:, current_page:, title:, icon:)
     @path = path

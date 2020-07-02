@@ -1,4 +1,4 @@
-#
+# frozen_string_literal: true
 
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
@@ -63,9 +63,9 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'annotate'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'annotate'
 end
 
 group :test do
@@ -74,8 +74,8 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
   gem 'launchy'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -136,10 +136,9 @@ gem 'sidekiq-prometheus-exporter', '~> 0.1'
 
 # Dry family
 gem 'dry-struct'
-gem 'dry-transaction'
-gem 'dry-validation'
+# gem 'dry-transaction'
 gem 'dry-monads'
+gem 'dry-validation'
 
-gem "mini_magick", "~> 4.10"
-
-gem "image_processing", "~> 1.11"
+gem 'image_processing', '~> 1.11'
+gem 'mini_magick', '~> 4.10'

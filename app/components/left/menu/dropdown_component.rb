@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Left::Menu::DropdownComponent < ViewComponent::Base
   with_content_areas :items
   def initialize(title:, current_page:, icon:, disabled:)
