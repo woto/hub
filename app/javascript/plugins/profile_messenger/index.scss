@@ -1,0 +1,27 @@
+.input-group-messenger {
+  .input-group-text {
+    border-left: none;
+    border-bottom-right-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+  }
+
+  .messenger-invalid-feedback {
+    display: block;
+    @extend .invalid-feedback;
+  }
+
+  .input-group > :not(:first-child):not(.dropdown-menu) {
+    margin-left: initial;
+  }
+
+  &.input-group-messenger-invalid {
+
+    .input-group-flat:focus-within {
+      box-shadow: 0 0 0 0.2rem rgba(205, 32, 31, 0.25) !important;
+    }
+
+    .form-control, .input-group-text, button {
+      border-color: #cd201f !important;
+    }
+  }
+}

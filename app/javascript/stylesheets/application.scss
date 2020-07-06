@@ -1,4 +1,7 @@
 @import 'tabler/scss/tabler';
-@import '../plugins/dropzone_avatar/index.scss';
-@import '../plugins/selectize_languages/index.scss';
+@import 'tabler/scss/tabler-buttons';
+@import '../plugins/dropzone_avatar';
+@import '../plugins/selectize_languages';
 @import '../plugins/actiontext/actiontext';
+@import '../plugins/profile_messenger';
+@import '../plugins/bootstrap_overrides';

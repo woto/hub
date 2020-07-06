@@ -21,11 +21,13 @@ FactoryBot.define do
     location { Faker::Address.full_address }
     messengers do
       [
-        { name: 'whatsapp', number: Faker::PhoneNumber.phone_number_with_country_code },
-        { name: 'telegram', number: Faker::PhoneNumber.phone_number_with_country_code }
+        # TODO: Rails.application.config.global[:messengers].map { |msn| msn[:long] }
+        { type: 'whatsapp', value: Faker::PhoneNumber.phone_number_with_country_code },
+        { type: 'telegram', value: Faker::PhoneNumber.phone_number_with_country_code }
       ]
     end
-    languages { %w[russian english spanish french].sample(rand(1..4)) }
+    # TODO:
+    languages { %w[Russian English Spanish French].sample(rand(1..4)) }
     user
   end
 end

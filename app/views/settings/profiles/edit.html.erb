@@ -34,7 +34,7 @@
 
         <div class="row">
 
-          <div class="col col-12 col-sm-4 order-sm-last mb-3 d-flex justify-content-center">
+          <div class="col col-12 col-sm-3 col-md-4 order-sm-last mb-3 d-flex justify-content-center">
 
             <div>
               <label class="string required" for="resource_name_location">Avatar</label>
@@ -54,61 +54,47 @@
             </div>
           </div>
 
-          <div class="col col-sm-8">
+          <div class="col col-sm-9 col-md-8">
 
-            <%= simple_form_for(current_user.profile || current_user.build_profile, as: 'resource_name', url: settings_profile_path, html: {method: :put}) do |f| %>
+            <%= simple_form_for @profile_form, url: settings_profile_path, html: {method: :put}, local: true do |f| %>
 
               <%= f.error_notification %>
 
-              <div class="form-inputs">
+              <%= f.input :name,
+                          required: true,
+                          input_html: {autocomplete: "name"},
+                          wrapper_html: {class: 'mb-3'},
+                          autofocus: true
+              %>
 
-                <%= f.input :name,
-                            required: true,
-                            input_html: {autocomplete: "name"},
-                            wrapper_html: {class: 'mb-3'} %>
+              <%= f.input :bio,
+                          required: true,
+                          input_html: {rows: 4},
+                          wrapper_html: {class: 'mb-3'},
+                          as: :text
+              %>
 
-                <%= f.input :bio,
-                            required: true,
-                            input_html: {rows: 4},
-                            wrapper_html: {class: 'mb-3'} %>
+              <%= f.input :location,
+                          required: true,
+                          input_html: {autocomplete: "location"},
+                          wrapper_html: {class: 'mb-3'} %>
 
-                <%= f.input :location,
-                            required: true,
-                            input_html: {autocomplete: "location"},
-                            wrapper_html: {class: 'mb-3'} %>
+              <%= f.input :messengers,
+                          as: 'profile/messengers_collection',
+                          wrapper_html: {class: 'mb-3'}
+              %>
 
-                <div class="mb-3">
-                  <label class="string required" for="resource_name_location">Location
-                    <abbr title="required">*</abbr></label>
-                  <div class="input-group">
-                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Action
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">
-                        Action
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </div>
-                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
-                  </div>
-                </div>
+              <%= f.input :languages,
+                          required: true,
+                          input_html: {class: 'selectize-languages', multiple: true},
+                          wrapper_html: {class: 'mb-3'},
+                          as: :select,
+                          collection: Rails.application.config.global[:languages].map { |lng| [lng[:language], lng[:english_name]] }
 
-                <%= f.input :languages,
-                            required: true,
-                            input_html: {class: 'selectize-languages', multiple: true},
-                            wrapper_html: {class: 'mb-3'},
-                            as: :select,
-                            collection: [['English', 'english'], ['Русский', 'russian']]
+              %>
 
-                %>
-
-                <div class="form-footer">
-                  <%= f.button :submit, t(".update", scope: scope), class: 'btn btn-primary' %>
-                </div>
-
+              <div class="form-footer">
+                <%= f.button :submit, t(".update", scope: scope), class: 'btn btn-primary' %>
               </div>
 
             <% end %>

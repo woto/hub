@@ -1,0 +1,24 @@
+<div data-controller="messengers">
+
+  <template data-target="messengers.newMessengerTemplate">
+    <%= builder.fields_for :messengers,
+                           ProfileForm::Messenger.new({type: Rails.application.config.global[:blank_messenger][:long]}),
+                           child_index: 'TEMPLATE' do |f| %>
+      <%= render 'inputs/profiles/messenger', f: f %>
+    <% end %>
+  </template>
+
+  <%= builder.fields_for :messengers do |f| %>
+    <%= render 'inputs/profiles/messenger', f: f %>
+  <% end %>
+
+  <div data-target="messengers.newMessengerPlaceholder"></div>
+
+  <%= builder.error :messengers %>
+
+  <button class="btn btn-sm btn-outline-success" type="button" data-action="messengers#addMessenger">
+    <%= render Icons::PlusComponent.new %>
+    <%= t('Add messenger') %>
+  </button>
+
+</div>

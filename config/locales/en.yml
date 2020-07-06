@@ -37,6 +37,15 @@ en:
     profiles:
       edit:
         update: Update
+      update:
+        saved: Profile successfully saved
+
+
+  activerecord:
+    errors:
+      messages:
+        select_messenger_type: can't be blank
+        select_language: can't be blank
 
 #  activerecord:
 #    errors:

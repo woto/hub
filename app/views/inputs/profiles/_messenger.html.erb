@@ -1,0 +1,37 @@
+<% valid = f.object.errors.empty? ? "input-group-messenger-valid" : "input-group-messenger-invalid" %>
+<%= content_tag(:div,
+                id: Tags::Base.new(f.object_name, 'messenger', self).send(:tag_id),
+                class: "input-group-messenger #{valid} mb-3",
+                'data-controller' => 'messenger') do
+%>
+
+  <div class="input-group input-group-flat">
+    <button data-target="messenger.messengerLabel" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= f.object.type %>
+    </button>
+
+    <%= f.hidden_field :type, data: { target: "messenger.messengerType" } %>
+
+    <div class="dropdown-menu">
+      <% ([Rails.application.config.global[:blank_messenger][:long]] + Rails.application.config.global[:messengers].map { |msn| msn[:long] }).each do |messenger| %>
+        <%= link_to '#', class: "dropdown-item", data: {action: 'click->messenger#selectMessengerType' } do %>
+          <%= messenger %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= f.text_field :value, class: 'form-control' %>
+
+    <span class="input-group-text">
+      <a href="#" class="link-danger" data-action="messenger#removeMessenger">
+        <%= render Icons::XComponent.new %>
+      </a>
+    </span>
+
+  </div>
+
+  <div class="messenger-invalid-feedback">
+    <%= f.full_error :type %>
+    <%= f.full_error :value %>
+  </div>
+<% end %>

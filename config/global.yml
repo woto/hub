@@ -1,4 +1,34 @@
 default: &default
+  blank_messenger:
+    short: select ...
+    long: Select ...
+
+  messengers:
+    -
+      short: whatsapp
+      long: WhatsApp
+    -
+      short: viber
+      long: Viber
+    -
+      short: wechat
+      long: WeChat
+    -
+      short: qq_mobile
+      long: QQ Mobile
+    -
+      short: telegram
+      long: Telegram
+    -
+      short: skype
+      long: Skype
+    -
+      short: email
+      long: E-mail
+    -
+      short: mobile_phone
+      long: Mobile Phone
+
   languages:
     -
       language: 'English'

@@ -19,6 +19,7 @@ ru:
     profile: Профиль
     password: Пароль
     email: Почта
+
 #  activerecord:
 #    errors:
 #      models:
