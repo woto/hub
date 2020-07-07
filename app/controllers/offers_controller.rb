@@ -7,7 +7,7 @@ class OffersController < ApplicationController
   def index
     client = Elasticsearch::Client.new Rails.application.config.elastic
 
-    page, per = PaginateRule.call(params)
+    page, per = PaginateRule.call(params, 10)
     request = search_request.merge(
       from: (page - 1) * per,
       size: per

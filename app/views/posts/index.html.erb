@@ -1,0 +1,47 @@
+<% content_for :title do %>
+  <%= t("titles.posts") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.posts'), posts_path %>
+  </li>
+<% end %>
+
+<div class="card pb-4">
+  <div class="table-responsive">
+    <table class="table card-table table-vcenter text-nowrap datatable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status state</th>
+          <th>User</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @posts.each do |post| %>
+          <tr>
+            <td><%= post.title %></td>
+            <td><%= post.status_state %></td>
+            <td><%= post.user_id %></td>
+            <td><%= link_to 'Show', post %></td>
+            <td><%= link_to 'Edit', edit_post_path(post) %></td>
+            <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+
+<%= link_to 'New Post', new_post_path, class: 'btn btn-primary' %>

@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     get 'articles' => 'articles#index'
     get 'articles/:date/:title' => 'articles#show', as: 'article'
 
+    resources :youtube
+
     root to: 'homepage#index'
   end
 end

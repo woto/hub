@@ -26,7 +26,7 @@ class FeedsController < ApplicationController
       indices.compact!
     end
 
-    page, per = PaginateRule.call(params)
+    page, per = PaginateRule.call(params, 10)
     @total_count = indices.count
     @feeds = Kaminari
              .paginate_array(indices, total_count: @total_count)

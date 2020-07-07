@@ -1,0 +1,43 @@
+<% content_for :title do %>
+  <%= t("titles.posts") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_post'), post_path(@post) %>
+  </li>
+<% end %>
+<div class="card pb-4">
+
+  <div class="card-body">
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Status state:</strong>
+  <%= @post.status_state %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user_id %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>

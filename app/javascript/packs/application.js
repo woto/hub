@@ -30,17 +30,4 @@ import '../stylesheets/application.scss';
 import '../plugins/selectize_languages'
 import '../plugins/dropzone_avatar'
 
-// document.addEventListener("turbolinks:load", function() {
-//
-//     $(".dropdown-menu a").click(function(e){
-//         e.preventDefault();
-//         $(".btn:first-child").text($(this).text());
-//         $(".btn:first-child").val($(this).text());
-//
-//     });
-//
-// });
-
-
-require("trix")
-require("@rails/actiontext")
+import "youtube"
