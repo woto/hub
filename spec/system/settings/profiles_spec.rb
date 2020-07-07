@@ -38,7 +38,7 @@ describe Settings::ProfilesController, type: :system do
         'name' => name,
         'bio' => bio,
         'location' => location,
-        'messengers' => [{'type' => 'WhatsApp', 'value' => phone}],
+        'messengers' => [{ 'type' => 'WhatsApp', 'value' => phone }],
         'languages' => ['', 'English', 'Russian']
       )
     end
@@ -54,13 +54,13 @@ describe Settings::ProfilesController, type: :system do
       within find('#profile_form_messengers_attributes_0_messenger') do
         type = user.profile.messengers[0]['type']
         expect(page).to have_button(text: type)
-        expect(page).to have_field "profile_form[messengers_attributes][0][type]", type: :hidden, with: type
+        expect(page).to have_field 'profile_form[messengers_attributes][0][type]', type: :hidden, with: type
         expect(page).to have_field('profile_form[messengers_attributes][0][value]', with: user.profile.messengers[0]['value'])
       end
       within find('#profile_form_messengers_attributes_1_messenger') do
         type = user.profile.messengers[1]['type']
         expect(page).to have_button(text: type)
-        expect(page).to have_field "profile_form[messengers_attributes][1][type]", type: :hidden, with: type
+        expect(page).to have_field 'profile_form[messengers_attributes][1][type]', type: :hidden, with: type
         expect(page).to have_field('profile_form[messengers_attributes][1][value]', with: user.profile.messengers[1]['value'])
       end
       languages_as_is = user.profile.languages.map do |eng|
@@ -69,7 +69,6 @@ describe Settings::ProfilesController, type: :system do
         end[:language]
       end
       expect(page).to have_select('profile_form[languages][]', visible: false, selected: languages_as_is)
-
     end
   end
 
