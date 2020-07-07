@@ -36,38 +36,4 @@ class Elastic
       end
     end
   end
-
-  class << self
-    def call(params)
-      @params = params
-      client = Elasticsearch::Client.new Rails.application.config.elastic
-
-      page, per = PaginateRule.call(@params)
-      request = search_request.merge(
-        from: (page - 1) * per,
-        size: per
-      )
-
-      result = client.search(request)
-      offers = result['hits']['hits']
-
-      result = client.count(search_request)
-      count = result['count']
-
-      [offers, count]
-    end
-
-    def search_request
-      {
-        index: ::Elastic::IndexName.offers(@params[:feed_id] || '*'),
-        body: {
-          query: {
-            query_string: {
-              query: @params[:q].presence || '*'
-            }
-          }
-        }
-      }
-    end
-  end
 end
