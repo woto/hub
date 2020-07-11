@@ -196,6 +196,8 @@ GEM
       faraday (>= 0.8, < 2)
     faraday_curl (0.0.2)
       faraday (>= 0.9.0)
+    faraday_middleware (1.0.0)
+      faraday (~> 1.0)
     fast_jsonapi (1.5)
       activesupport (>= 4.2)
     ffi (1.12.2)
@@ -533,6 +535,7 @@ DEPENDENCIES
   faraday
   faraday-detailed_logger
   faraday_curl
+  faraday_middleware
   fast_jsonapi
   image_processing (~> 1.11)
   interactor

@@ -83,6 +83,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'aasm'
 gem 'faraday'
+gem 'faraday_middleware'
 gem 'faraday-detailed_logger'
 gem 'faraday_curl'
 gem 'fast_jsonapi'
