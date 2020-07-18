@@ -25,8 +25,12 @@ Rails.application.routes.draw do
                  confirmations: 'users/confirmations',
                  passwords: 'users/passwords',
                  unlocks: 'users/unlocks'
-               }
+               },
+               sign_out_via: [*::Devise.sign_out_via, ActiveAdmin.application.logout_link_method].uniq
 
+    ActiveAdmin.routes(self)
+
+    resources :advertisers
     resources :feeds, only: %i[index] do
       resources :offers, only: %i[index]
     end

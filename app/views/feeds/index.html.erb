@@ -20,19 +20,35 @@
 
       <thead>
         <tr>
+          <th>Id</th>
+          <th>Advertiser</th>
           <th>Feed</th>
-          <th>Offers</th>
+          <th>Offers count</th>
+          <th>Categories count</th>
+          <th>Succeeded at</th>
         </tr>
       </thead>
 
       <tbody>
-        <% @feeds.each do |row| %>
+        <% @feeds.each do |feed| %>
         <tr>
           <td>
-            <%= link_to row[:index], feed_offers_path(row[:index]) %>
+            <%= feed.id %>
           </td>
           <td>
-            <%= row[:count] %>
+            <%= link_to feed.advertiser.name, advertiser_path(feed.advertiser.slug) %>
+          </td>
+          <td>
+            <%= link_to feed.name, feed_offers_path(feed.slug) %>
+          </td>
+          <td>
+            <%= feed.offers_count %>
+          </td>
+          <td>
+            <%= feed.categories_count %>
+          </td>
+          <td>
+            <%= l feed.last_succeeded_at, format: :short %>
           </td>
         </tr>
         <% end %>

@@ -81,29 +81,42 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'aasm'
+# XML processing
+gem 'nokogiri'
+# gem "ox", "~> 2.13"
+
+# Faraday
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'faraday-detailed_logger'
 gem 'faraday_curl'
-gem 'fast_jsonapi'
+
+gem 'aasm'
 gem 'interactor'
 gem 'kaminari'
-gem 'mongoid'
-gem 'nokogiri'
 gem 'numbers_and_words'
-gem 'paper_trail'
+# gem 'paper_trail'
 gem 'rack-attack'
 gem 'rails-erd'
 gem 'rails-i18n'
-gem 'redcarpet'
+# gem 'redcarpet'
 gem 'redis'
-gem 'request_store'
-gem 'rpush'
+# gem 'request_store'
+# gem 'rpush'
 gem 'sidekiq'
 gem 'simple_form'
-gem 'typhoeus'
+# gem 'typhoeus'
 gem 'view_component'
+# gem 'piperator'
+
+gem 'ancestry'
+# gem 'awesome_nested_set'
+# gem 'closure_tree'
+
+# Administration
+gem 'activeadmin'
+# gem 'administrate'
+# gem 'rails_admin'
 
 # Elasticsearch family
 # gem 'elasticsearch'

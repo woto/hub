@@ -74,6 +74,13 @@
                           as: :text
               %>
 
+              <%= f.input :time_zone,
+                          required: true,
+                          input_html: {rows: 4},
+                          wrapper_html: {class: 'mb-3'},
+                          as: :time_zone
+              %>
+
               <%= f.input :location,
                           required: true,
                           input_html: {autocomplete: "location"},

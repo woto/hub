@@ -33,7 +33,7 @@ class ProfileForm
     }
   end
 
-  attr_accessor :name, :bio, :location, :languages, :messengers
+  attr_accessor :name, :bio, :location, :languages, :messengers, :time_zone
 
   # attribute :name, :string
   # attribute :bio, :string
@@ -50,6 +50,7 @@ class ProfileForm
     minimum: 2,
     message: ->(_, __) { I18n.t('select_language', scope: %i[activerecord errors messages]) }
   }
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.name }}
 
   # validates inclusion
   validate do
@@ -83,7 +84,8 @@ class ProfileForm
       'bio' => nil,
       'location' => nil,
       'messengers' => nil,
-      'languages' => nil
+      'languages' => nil,
+      'time_zone' => nil
     }
   end
 end

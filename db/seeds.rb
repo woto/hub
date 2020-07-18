@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-User.create!(
-  email: 'oganer@gmail.com',
-  password: 'qweQWE123!@#',
-  role: 'admin'
-)
+if Rails.env.development?
+  User.create!(email: 'admin@example.com',
+               password: 'password',
+               password_confirmation: 'password',
+               role: 'admin')
+end

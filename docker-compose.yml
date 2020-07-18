@@ -23,15 +23,6 @@ services:
     environment:
       - ELASTICSEARCH_HOSTS=http://elastic:9200
 
-  mongo:
-    env_file:
-      - .env
-    image: mongo:4.2.3
-    volumes:
-      - mongo:/data/db
-    ports:
-      - 27017:27017
-
   feeder:
     env_file:
       - .env
@@ -81,13 +72,8 @@ services:
     stdin_open: true
     tty: true
 
-networks:
-  hub:
-
 volumes:
   postgres:
-  mongo:
   elastic:
   feeder:
   rails_storage:
-  traefik_cert:

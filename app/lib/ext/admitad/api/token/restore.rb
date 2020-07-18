@@ -7,12 +7,13 @@ module Ext
     module Api
       module Token
         class Restore
-          include Interactor
+          include ApplicationInteractor
 
           def call
+            Rails.logger.debug("Ext::Admitad::Api::Token::Restore")
             token = Rails.cache.read(TOKEN_KEY)
-            Rails.logger.debug(token)
-            context.fail!(message: "Admitad cached token not found") if token.nil?
+            context.fail! unless token
+            Rails.logger.debug("Found token #{token}")
 
             context.token = token
           end

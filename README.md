@@ -23,10 +23,6 @@ https://kibana.nv6.ru
 https://mailcatcher.nv6.ru  
 https://webpacker.nv6.ru  
 
-**Anywere your encountered entering login / password try:**  
-username: oganer@gmail.com  
-password: qweQWE123!@#
-
 ### Useful commands
 
 ```shell

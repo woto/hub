@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   respond_to :html, :json
 
   around_action :switch_locale
+  around_action :set_time_zone
   # before_action :detect_device_format
   before_action :authenticate_user!
 
@@ -12,6 +13,8 @@ class ApplicationController < ActionController::Base
 
   # Locale switching copied from official Rails Guides without any modifications
   # This makes me happy :)
+
+  # Locale
 
   def switch_locale(&action)
     locale = extract_locale_from_subdomain || I18n.default_locale
@@ -25,6 +28,12 @@ class ApplicationController < ActionController::Base
 
   def default_url_options
     { locale: I18n.locale }
+  end
+
+  # Time zone
+
+  def set_time_zone
+    Time.use_zone(current_user&.profile&.time_zone) { yield }
   end
 
   # def detect_device_format
