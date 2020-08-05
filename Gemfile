@@ -87,9 +87,9 @@ gem 'nokogiri'
 
 # Faraday
 gem 'faraday'
-gem 'faraday_middleware'
 gem 'faraday-detailed_logger'
 gem 'faraday_curl'
+gem 'faraday_middleware'
 
 gem 'aasm'
 gem 'interactor'
@@ -99,7 +99,7 @@ gem 'numbers_and_words'
 gem 'rack-attack'
 gem 'rails-erd'
 gem 'rails-i18n'
-# gem 'redcarpet'
+gem 'redcarpet'
 gem 'redis'
 # gem 'request_store'
 # gem 'rpush'
@@ -108,6 +108,11 @@ gem 'simple_form'
 # gem 'typhoeus'
 gem 'view_component'
 # gem 'piperator'
+gem 'ransack'
+
+# language detect
+# gem 'whatlanguage'
+gem 'cld'
 
 gem 'ancestry'
 # gem 'awesome_nested_set'
@@ -119,13 +124,14 @@ gem 'activeadmin'
 # gem 'rails_admin'
 
 # Elasticsearch family
-# gem 'elasticsearch'
-# gem 'elasticsearch-transport'
-# gem 'elasticsearch-api'
-# gem 'elasticsearch-model'
+gem 'elasticsearch'
+gem 'elasticsearch-api'
+gem 'elasticsearch-dsl'
+gem 'elasticsearch-model'
 gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-ruby'
+gem 'elasticsearch-transport'
 
 # Authentication
 gem 'devise'
