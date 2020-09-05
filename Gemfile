@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.7'
+ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0'
@@ -34,7 +34,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
 
 group :development, :test, :staging do
-  gem 'dotenv-rails'
   gem 'faker'
 end
 
@@ -43,6 +42,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
 
+  # gem 'aruba'
   gem 'action-cable-testing'
   gem 'awesome_print'
   gem 'bullet'
@@ -81,6 +81,15 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+# Application monitoring
+gem 'newrelic_rpm'
+gem 'prometheus-client'
+gem 'prometheus_exporter'
+gem 'sentry-raven'
+gem 'sidekiq-prometheus-exporter', '~> 0.1'
+
+gem 'dotenv-rails'
+
 # XML processing
 gem 'nokogiri'
 # gem "ox", "~> 2.13"
@@ -101,7 +110,6 @@ gem 'rails-erd'
 gem 'rails-i18n'
 gem 'redcarpet'
 gem 'redis'
-# gem 'request_store'
 # gem 'rpush'
 gem 'sidekiq'
 gem 'simple_form'
@@ -119,7 +127,7 @@ gem 'ancestry'
 # gem 'closure_tree'
 
 # Administration
-gem 'activeadmin'
+# gem 'activeadmin'
 # gem 'administrate'
 # gem 'rails_admin'
 
@@ -146,13 +154,6 @@ gem 'omniauth-twitter'
 
 # Authorization
 gem 'pundit'
-
-# Application monitoring
-gem 'newrelic_rpm'
-gem 'prometheus-client'
-gem 'prometheus_exporter'
-gem 'sentry-raven'
-gem 'sidekiq-prometheus-exporter', '~> 0.1'
 
 # Dry family
 gem 'dry-struct'
