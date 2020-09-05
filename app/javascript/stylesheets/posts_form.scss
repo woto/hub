@@ -1,5 +1,21 @@
 @import "trix/dist/trix";
 
+trix-editor {
+  min-height: 320px !important;
+  font-size: 1rem !important;
+}
+
+trix-toolbar {
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  background-color: white;
+  margin-bottom: 5px;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-top: 1rem;
+}
+
 .trix-content {
 
   .attachment-gallery {

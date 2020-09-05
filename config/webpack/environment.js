@@ -1,5 +1,4 @@
 const { environment } = require('@rails/webpacker')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const webpack = require('webpack')
 
@@ -8,11 +7,14 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
     jQuery: 'jquery',
     Popper: ['popper.js', 'default'],
     bootstrap: ['bootstrap']
+    // $: 'jquery',
+    // jQuery: 'jquery',
+    // jquery: 'jquery',
+    // 'window.Tether': 'tether',
+    // Popper: ['popper.js', 'default'],
+    // ActionCable: 'actioncable'
 }))
 
-environment.plugins.append(
-  'BundleAnalyzer',
-  new BundleAnalyzerPlugin()
-)
+environment.splitChunks();
 
 module.exports = environment;

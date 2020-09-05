@@ -1,7 +1,13 @@
+$assets-base: '../images/tabler/flags';
+
+@import 'flatpickr/dist/flatpickr.css';
 @import 'tabler/scss/tabler';
 @import 'tabler/scss/tabler-buttons';
-@import '../plugins/dropzone_avatar';
-@import '../plugins/selectize_languages';
-@import '../plugins/actiontext/actiontext';
-@import '../plugins/profile_messenger';
-@import '../plugins/bootstrap_overrides';
+@import 'tabler/scss/tabler-flags';
+@import 'dropzone_avatar';
+@import 'selectize_languages';
+@import 'posts_form';
+@import 'profile_messenger';
+@import 'bootstrap_overrides';
+@import 'development';
+@import 'elastic';
