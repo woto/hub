@@ -8,6 +8,8 @@ class CreateProfiles < ActiveRecord::Migration[5.2]
       t.string :location
       t.jsonb :messengers
       t.jsonb :languages
+      t.string :time_zone
+      t.jsonb :displayed_columns
       t.references :user, foreign_key: true, null: false
 
       t.timestamps

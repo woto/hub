@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_18_125123) do
+ActiveRecord::Schema.define(version: 2020_08_12_182539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,20 +32,6 @@ ActiveRecord::Schema.define(version: 2020_07_18_125123) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
-  end
-
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -70,14 +56,78 @@ ActiveRecord::Schema.define(version: 2020_07_18_125123) do
   end
 
   create_table "advertisers", force: :cascade do |t|
-    t.integer "network", null: false
-    t.string "ext_id", null: false
+    t.string "type"
+    t.string "ext_id"
     t.string "name"
-    t.jsonb "data"
-    t.datetime "last_synced_at"
+    t.text "data"
+    t.datetime "synced_at"
+    t.integer "gdeslon_id"
+    t.string "gdeslon_name"
+    t.text "gdeslon_short_description"
+    t.text "gdeslon_description"
+    t.string "gdeslon_url"
+    t.string "gdeslon_conditions"
+    t.boolean "gdeslon_is_green"
+    t.string "gdeslon_gs_commission_mark"
+    t.string "gdeslon_country"
+    t.string "gdeslon_kind"
+    t.jsonb "gdeslon_categories"
+    t.string "gdeslon_logo_file_name"
+    t.string "gdeslon_affiliate_link"
+    t.jsonb "gdeslon_traffic_types"
+    t.jsonb "gdeslon_tariffs"
+    t.integer "admitad_id"
+    t.string "admitad_name"
+    t.string "admitad_site_url"
+    t.text "admitad_description"
+    t.text "admitad_raw_description"
+    t.string "admitad_currency"
+    t.float "admitad_rating"
+    t.float "admitad_ecpc"
+    t.float "admitad_epc"
+    t.float "admitad_cr"
+    t.jsonb "admitad_actions"
+    t.jsonb "admitad_regions"
+    t.jsonb "admitad_categories"
+    t.string "admitad_status"
+    t.string "admitad_image"
+    t.float "admitad_ecpc_trend"
+    t.float "admitad_epc_trend"
+    t.string "admitad_cr_trend"
+    t.boolean "admitad_exclusive"
+    t.datetime "admitad_activation_date"
+    t.datetime "admitad_modified_date"
+    t.boolean "admitad_denynewwms"
+    t.integer "admitad_goto_cookie_lifetime"
+    t.boolean "admitad_retag"
+    t.boolean "admitad_show_products_links"
+    t.string "admitad_landing_code"
+    t.string "admitad_landing_title"
+    t.boolean "admitad_geotargeting"
+    t.string "admitad_max_hold_time"
+    t.jsonb "admitad_traffics"
+    t.integer "admitad_avg_hold_time"
+    t.integer "admitad_avg_money_transfer_time"
+    t.boolean "admitad_allow_deeplink"
+    t.boolean "admitad_coupon_iframe_denied"
+    t.string "admitad_action_testing_limit"
+    t.string "admitad_mobile_device_type"
+    t.string "admitad_mobile_os"
+    t.string "admitad_mobile_os_type"
+    t.jsonb "admitad_action_countries"
+    t.boolean "admitad_allow_actions_all_countries"
+    t.string "admitad_connection_status"
+    t.string "admitad_gotolink"
+    t.string "admitad_products_xml_link"
+    t.string "admitad_products_csv_link"
+    t.boolean "admitad_moderation"
+    t.jsonb "admitad_feeds_info"
+    t.jsonb "admitad_actions_detail"
+    t.string "admitad_actions_limit"
+    t.string "admitad_actions_limit_24"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["network", "ext_id"], name: "index_advertisers_on_network_and_ext_id", unique: true
+    t.index ["type", "ext_id"], name: "index_advertisers_on_type_and_ext_id", unique: true
   end
 
   create_table "feed_categories", force: :cascade do |t|
@@ -85,36 +135,112 @@ ActiveRecord::Schema.define(version: 2020_07_18_125123) do
     t.string "ext_parent_id"
     t.string "name"
     t.jsonb "data"
-    t.uuid "last_attempt_uuid", null: false
+    t.uuid "attempt_uuid", null: false
     t.boolean "parent_not_found"
     t.bigint "feed_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
     t.index ["ancestry"], name: "index_feed_categories_on_ancestry"
     t.index ["feed_id", "ext_id"], name: "index_feed_categories_on_feed_id_and_ext_id", unique: true
     t.index ["feed_id"], name: "index_feed_categories_on_feed_id"
   end
 
-  create_table "feeds", force: :cascade do |t|
-    t.bigint "advertiser_id", null: false
-    t.string "ext_id", null: false
-    t.string "name"
-    t.string "url", null: false
-    t.integer "locked_by_pid", default: 0, null: false
-    t.text "last_error"
-    t.uuid "last_attempt_uuid"
-    t.datetime "processing_started_at"
-    t.datetime "processing_finished_at"
-    t.jsonb "data"
-    t.datetime "last_synced_at", null: false
+  create_table "feed_logs", force: :cascade do |t|
+    t.bigint "feed_id", null: false
+    t.bigint "feed_id_before"
+    t.bigint "feed_id_after"
+    t.datetime "feed_advertiser_updated_at_before"
+    t.datetime "feed_advertiser_updated_at_after"
+    t.uuid "feed_attempt_uuid_before"
+    t.uuid "feed_attempt_uuid_after"
+    t.integer "feed_categories_count_before"
+    t.integer "feed_categories_count_after"
+    t.jsonb "feed_data_before"
+    t.jsonb "feed_data_after"
+    t.string "feed_error_class_before"
+    t.string "feed_error_class_after"
+    t.text "feed_error_text_before"
+    t.text "feed_error_text_after"
+    t.string "feed_index_name_before"
+    t.string "feed_index_name_after"
+    t.string "feed_language_before"
+    t.string "feed_language_after"
+    t.integer "feed_locked_by_pid_before"
+    t.integer "feed_locked_by_pid_after"
+    t.string "feed_name_before"
+    t.string "feed_name_after"
+    t.datetime "feed_network_updated_at_before"
+    t.datetime "feed_network_updated_at_after"
+    t.integer "feed_offers_count_before"
+    t.integer "feed_offers_count_after"
+    t.datetime "feed_processing_finished_at_before"
+    t.datetime "feed_processing_finished_at_after"
+    t.datetime "feed_processing_started_at_before"
+    t.datetime "feed_processing_started_at_after"
+    t.datetime "feed_succeeded_at_before"
+    t.datetime "feed_succeeded_at_after"
+    t.datetime "feed_synced_at_before"
+    t.datetime "feed_synced_at_after"
+    t.string "feed_url_before"
+    t.string "feed_url_after"
+    t.string "feed_operation_before"
+    t.string "feed_operation_after"
+    t.datetime "feed_created_at_before"
+    t.datetime "feed_created_at_after"
+    t.datetime "feed_updated_at_before"
+    t.datetime "feed_updated_at_after"
+    t.bigint "feed_advertiser_id_before"
+    t.bigint "feed_advertiser_id_after"
+    t.string "feed_ext_id_before"
+    t.string "feed_ext_id_after"
+    t.string "feed_priority_before"
+    t.string "feed_priority_after"
+    t.string "feed_downloaded_file_type_before"
+    t.string "feed_downloaded_file_type_after"
+    t.string "feed_xml_file_path_before"
+    t.string "feed_xml_file_path_after"
+    t.boolean "feed_is_active_before"
+    t.boolean "feed_is_active_after"
+    t.bigint "feed_downloaded_file_size_before"
+    t.bigint "feed_downloaded_file_size_after"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "feed_advertiser_name_before"
+    t.string "feed_advertiser_name_after"
+    t.index ["feed_id"], name: "index_feed_logs_on_feed_id"
+  end
+
+  create_table "feeds", force: :cascade do |t|
+    t.bigint "advertiser_id", null: false
+    t.string "operation", null: false
+    t.string "ext_id"
+    t.string "name", null: false
+    t.string "url", null: false
+    t.string "error_class"
+    t.text "error_text"
+    t.integer "locked_by_pid", default: 0, null: false
+    t.string "language"
+    t.string "index_name"
+    t.uuid "attempt_uuid"
+    t.jsonb "data"
+    t.datetime "processing_started_at"
+    t.datetime "processing_finished_at"
+    t.datetime "synced_at"
+    t.datetime "succeeded_at"
     t.datetime "network_updated_at"
     t.datetime "advertiser_updated_at"
-    t.datetime "last_succeeded_at"
     t.integer "offers_count"
     t.integer "categories_count"
+    t.integer "priority", default: 0, null: false
+    t.string "xml_file_path"
+    t.string "downloaded_file_type"
+    t.boolean "is_active", default: true
+    t.bigint "downloaded_file_size"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "advertiser_name"
     t.index ["advertiser_id"], name: "index_feeds_on_advertiser_id"
   end
 
@@ -143,10 +269,11 @@ ActiveRecord::Schema.define(version: 2020_07_18_125123) do
     t.string "location"
     t.jsonb "messengers"
     t.jsonb "languages"
+    t.string "time_zone"
+    t.jsonb "displayed_columns"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "time_zone"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
@@ -179,6 +306,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_125123) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "feed_categories", "feeds"
+  add_foreign_key "feed_logs", "feeds"
   add_foreign_key "feeds", "advertisers"
   add_foreign_key "identities", "users"
   add_foreign_key "posts", "users"
