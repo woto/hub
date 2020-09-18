@@ -24,8 +24,14 @@
   end
 
   RSpec.configure do |config|
-    config.before(:each, type: :system, browser: neme) do
+    config.before(:each, type: :system, browser: name) do
       driven_by name
     end
+  end
+end
+
+RSpec.configure do |config|
+  config.before(:each, type: :system) do
+    driven_by :desktop
   end
 end
