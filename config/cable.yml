@@ -13,12 +13,7 @@ test:
   db: 1
   channel_prefix: hub_test
 
-staging:
-  <<: *default
-  db: 2
-  channel_prefix: hub_staging
-
 production:
   <<: *default
-  db: 3
+  db: 2
   channel_prefix: hub_production

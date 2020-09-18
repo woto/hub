@@ -1,0 +1,12 @@
+ru:
+  simple_form:
+    labels:
+      advertiser_filter_form:
+        displayed_columns: Отображаемые столбцы
+      feed_filter_form:
+        displayed_columns: Отображаемые столбцы
+    hints:
+      advertiser_filter_form:
+        displayed_columns: 'Порядок добавления столбцов влияет на отображение'
+      feed_filter_form:
+        displayed_columns: 'Порядок добавления столбцов влияет на отображение'

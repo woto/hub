@@ -1,6 +1,18 @@
 # frozen_string_literal: true
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  # mount Yabeda::Prometheus::Exporter => "/metrics"
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  namespace :filters do
+    resources :dates
+  end
+  resources :template1s
+  resources :template2s
   devise_scope :user do
     Rails.configuration.oauth_providers.each do |provider|
       get "/users/auth/#{provider}/callback" => 'users/omniauth_callbacks#callback', defaults: { provider: provider }
@@ -25,16 +37,36 @@ Rails.application.routes.draw do
                  confirmations: 'users/confirmations',
                  passwords: 'users/passwords',
                  unlocks: 'users/unlocks'
-               },
-               sign_out_via: [*::Devise.sign_out_via, ActiveAdmin.application.logout_link_method].uniq
+               }
+    # sign_out_via: [*::Devise.sign_out_via, ActiveAdmin.application.logout_link_method].uniq
 
-    ActiveAdmin.routes(self)
+    # scope ':model' do
+    #   resources 'displayed_columns'
+    # end
 
+    # resources :advertiser_filter_forms
+    # resources :feed_filter_forms
+
+    namespace :table do
+      resources :columns
+    end
+
+    resources :autocompletes
     resources :advertisers
-    resources :feeds, only: %i[index] do
-      resources :offers, only: %i[index]
+
+    resources :feeds do
+      member do
+        get :count
+        get :logs
+        patch :prioritize
+      end
+      resources :offers, only: %i[index] do
+        get :categories, on: :collection
+      end
     end
     resources :offers, only: %i[index]
+    resource :embed, only: :show
+
     resources :posts
     resources :promotions
 

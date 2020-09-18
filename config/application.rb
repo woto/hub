@@ -1,12 +1,33 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
+require 'rails'
 
-require 'rails/all'
+%w[
+  active_record/railtie
+  active_storage/engine
+  action_controller/railtie
+  action_view/railtie
+  action_mailer/railtie
+  active_job/railtie
+  action_cable/engine
+  action_mailbox/engine
+  action_text/engine
+  rails/test_unit/railtie
+].each do |railtie|
+  require railtie
+rescue LoadError
+end
+
+require 'prometheus/middleware/collector'
+require 'prometheus/middleware/exporter'
+require 'prometheus/client/data_stores/direct_file_store'
+
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
 require 'view_component/engine'
 
 module Hub
@@ -16,6 +37,7 @@ module Hub
 
     config.redis = config_for(:redis)
     config.elastic = config_for(:elastic)
+    config.prometheus = config_for(:prometheus)
     config.global = config_for(:global)
 
     config.oauth_providers = %w[facebook google_oauth2].freeze
@@ -35,5 +57,10 @@ module Hub
     # config.to_prepare do
     #   ActionText::ContentHelper.allowed_tags << "iframe"
     # end
+
+    # yabeda
+    Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFileStore.new(dir: 'tmp/prometheus')
+    # config.middleware.use Prometheus::Middleware::Collector
+    # config.middleware.use Prometheus::Middleware::Exporter
   end
 end

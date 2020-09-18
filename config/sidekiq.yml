@@ -6,3 +6,8 @@ production:
   - active_storage_analysis
   - action_mailbox_routing
   - mailers
+
+:schedule:
+  prometheus:
+    cron: '0 * * * * *'   # Runs once per minute
+    class: PrometheusJob

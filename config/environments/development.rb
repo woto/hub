@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+require 'rack/reverse_proxy'
 
 Rails.application.configure do
-  config.web_console.whitelisted_ips = %w[0.0.0.0/0 ::/0]
+  config.web_console.allowed_ips = %w[0.0.0.0/0 ::/0]
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -21,7 +22,11 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    config.cache_store = :redis_cache_store
+    config.cache_store = :redis_cache_store, {
+      url: Rails.application.config.redis.yield_self do |redis|
+             "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
+           end
+    }
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
@@ -52,14 +57,6 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
-
-  # Suppress logger output for asset requests.
-  config.assets.quiet = true
-
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
@@ -77,5 +74,12 @@ Rails.application.configure do
 
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
-  config.force_ssl = true if ENV.fetch('SSL_DEBUG') == 'true'
+  config.force_ssl = true if ActiveModel::Type::Boolean.new.cast(ENV.fetch('SSL_DEBUG'))
+
+  config.middleware.insert(0, Rack::ReverseProxy) do
+    reverse_proxy_options preserve_host: true
+    reverse_proxy '/thumbnail', 'http://localhost:9700/'
+  end
+
+  config.active_job.queue_adapter = :sidekiq
 end

@@ -44,3 +44,6 @@ if ENV.fetch('SSL_DEBUG') == 'true'
            key: '/etc/letsencrypt/live/nv6.ru/privkey.pem',
            cert: '/etc/letsencrypt/live/nv6.ru/fullchain.pem'
 end
+
+activate_control_app
+plugin :yabeda

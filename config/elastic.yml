@@ -3,15 +3,13 @@
 default: &default
   host: <%= ENV['ELASTIC_HOST'] %>
   port: <%= ENV['ELASTIC_REST_PORT'] %>
-  log: false
+  log: <%= ENV['ELASTIC_LOG'] %>
+  trace: <%= ENV['ELASTIC_TRACE'] %>
 
 development:
   <<: *default
 
 test:
-  <<: *default
-
-staging:
   <<: *default
 
 production:
