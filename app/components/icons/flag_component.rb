@@ -3,10 +3,10 @@
 class Icons::FlagComponent < ViewComponent::Base
   def initialize(language:)
     @language = language
-    @code = case language.downcase
+    @code = case language.to_s.downcase
             when 'russian'
               'ru'
-            when 'ENGLISH'
+            when 'english'
               'us'
             when 'spanish'
               'es'
@@ -48,6 +48,8 @@ class Icons::FlagComponent < ViewComponent::Base
               'dk'
             when 'finnish'
               'fi'
+            when '', 'unknown'
+              ''
             else
               raise "Language error '#{language}'"
     end
