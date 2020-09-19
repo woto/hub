@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
 
   def switch_locale(&action)
     locale = extract_locale_from_subdomain || I18n.default_locale
-    session[:locale] = locale.to_s
+    locale = locale.to_s
+    session[:locale] = locale
     I18n.with_locale(locale, &action)
   end
 

@@ -14,8 +14,8 @@ class ArticlesController < ApplicationController
     articles.sort_by!(&:date)
     articles.reverse!
 
-    page, per = PaginationRules::(params)
-    @articles = Kaminari.paginate_array(articles).page(page).per(per)
+    @pr = PaginationRules.new(request)
+    @articles = Kaminari.paginate_array(articles).page(@pr.page).per(@pr.per)
   end
 
   def show

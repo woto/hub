@@ -87,5 +87,18 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
       page.select '20', from: 'capybara-perselect'
       expect(page).to have_css(".table_advertiser", count: 11)
     end
+
+    it 'preselects select option with corresponding per value', browser: :desktop do
+      visit "/#{plural}?per=5"
+      page.has_select?('capybara-perselect', selected: '5')
+      visit "/#{plural}?per=20"
+      page.has_select?('capybara-perselect', selected: '20')
+    end
+
+    it 'shows correct entries info', browser: :desktop do
+      visit "/#{plural}?per=5&page=2"
+      expect(page).to have_text('6 - 10 of 11')
+    end
+
   end
 end
