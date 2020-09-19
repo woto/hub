@@ -1,13 +1,13 @@
 <div class="nav-item dropdown">
-  <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown" id="authenticated">
-
+  <%= link_to '#', class: "#{@capybara_browser} capybara-authenticated nav-link d-flex lh-1 text-reset p-0",
+                   data: { toggle: 'dropdown' } do %>
     <%= render AvatarComponent.new(avatar: helpers.current_user.avatar) %>
 
     <div class="d-none d-xl-block pl-2">
       <div><%= helpers.current_user.profile&.name %></div>
       <div class="mt-1 small text-muted">#<%= helpers.current_user.id %></div>
     </div>
-  </a>
+  <% end %>
 
   <div class="dropdown-menu dropdown-menu-right">
     <%= render Header::Profile::Authenticated::SettingsComponent.new %>

@@ -1,5 +1,5 @@
 <% if helpers.user_signed_in? %>
-  <%= render Header::Profile::AuthenticatedComponent.new %>
+  <%= render Header::Profile::AuthenticatedComponent.new(capybara_browser: @capybara_browser) %>
 <% else %>
-  <%= render Header::Profile::UnauthenticatedComponent.new %>
+  <%= render Header::Profile::UnauthenticatedComponent.new(capybara_browser: @capybara_browser) %>
 <% end %>

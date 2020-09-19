@@ -1,0 +1,19 @@
+<header class="navbar navbar-expand-md navbar-light d-none d-lg-flex">
+  <div class="container-xl">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%= render 'desktop_header_wrapper' do %>
+      <%= render 'search_bar', btn_class: 'btn-secondary btn-outline capybara-desktop-header-search' %>
+    <% end %>
+
+    <div class="navbar-nav d-flex ml-auto">
+      <div class="nav-item dropdown d-none d-md-flex mr-3">
+        <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-desktop') %>
+      </div>
+      <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-desktop') %>
+    </div>
+
+  </div>
+</header>
