@@ -11,5 +11,9 @@ module ApplicationInteractor
     def fail!(code:, message:)
       context.fail!(code: code, message: message)
     end
+
+    before do
+      Rails.logger.info("Starting interactor #{self.class.name}")
+    end
   end
 end
