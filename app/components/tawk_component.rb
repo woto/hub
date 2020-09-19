@@ -2,6 +2,6 @@
 
 class TawkComponent < ViewComponent::Base
   def render?
-    ENV['TAWK_ENABLED'] == 'true'
+    ActiveModel::Type::Boolean.new.cast(ENV['TAWK_ENABLED'])
   end
 end

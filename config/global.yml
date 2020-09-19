@@ -68,7 +68,7 @@ default: &default
     -
       language: 'Português'
       english_name: 'Portuguese'
-      disabled: true
+      disabled: false
       domain: 'pt'
     -
       language: 'Italiano'

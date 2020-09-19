@@ -124,4 +124,4 @@ https://weblate.org/ru/hosting/
 https://webtranslateit.com/en  
 https://www.langapi.co/pricing  
 https://www.oneskyapp.com/pricing/  
-https://crowdin.com/pricing#annual  
+https://crowdin.com/pricing#annual
