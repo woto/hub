@@ -2,13 +2,19 @@
 <% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 1 %>
 <% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 2 %>
 <% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 3 %>
+<% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 4 %>
+
+<% link_class = "page-link" %>
+<% li_style = "max-width: 55px;" %>
+<% li_class = "page-item mx-1 flex-fill" %>
+<% li_id = "pagination_#{page.number}" %>
 
 <% if page.current? %>
-  <li class="page-item flex-fill active">
-    <%= content_tag :a, page, data: { remote: remote }, rel: page.rel, class: "page-link" %>
-  </li>
+  <%= tag.li id: li_id, class: "#{li_class} active", style: li_style do %>
+    <%= content_tag :a, page, data: { remote: remote }, rel: page.rel, class: link_class %>
+  <% end %>
 <% else %>
-  <li class="page-item flex-fill <%= css_class %>">
-    <%= link_to page, url, remote: remote, rel: page.rel, class: "page-link" %>
-  </li>
+  <%= tag.li id: li_id, class: "#{li_class} #{css_class}", style: li_style do %>
+    <%= link_to page, url, remote: remote, rel: page.rel, class: link_class %>
+  <% end %>
 <% end %>
