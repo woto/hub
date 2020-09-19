@@ -89,29 +89,9 @@ describe PaginationRules do
       end
     end
 
-    context 'when per is more than max_per' do
-      let(:per) { 1000 }
-      it { is_expected.to eq([page, max_per]) }
-    end
-
     context 'when per is ordinary' do
       let(:per) { 30 }
       it { is_expected.to eq([page, 30]) }
-    end
-
-    context 'when per is a character' do
-      let(:per) { 'a' }
-      it { is_expected.to eq([page, session_per]) }
-    end
-
-    context 'when per is less than 1' do
-      let(:per) { -1 }
-      it { is_expected.to eq([page, session_per]) }
-    end
-
-    context 'when per is not included in per_variants' do
-      let(:per) { 1234 }
-      it { is_expected.to eq([page, session_per]) }
     end
 
     context 'per parameter have to be stored in session' do
@@ -121,6 +101,28 @@ describe PaginationRules do
         expect(Session::Tables::(request).per).to eq(per)
       end
       it { expect(session_per).to_not eq(per)}
+    end
+
+    context 'when per is invalid' do
+      context 'when per is more than max_per' do
+        let(:per) { 1000 }
+        it { is_expected.to eq([page, max_per]) }
+      end
+
+      context 'when per is a character' do
+        let(:per) { 'a' }
+        it { is_expected.to eq([page, default_per]) }
+      end
+
+      context 'when per is less than 1' do
+        let(:per) { -1 }
+        it { is_expected.to eq([page, default_per]) }
+      end
+
+      context 'when per is not included in per_variants' do
+        let(:per) { 23 }
+        it { is_expected.to eq([page, default_per]) }
+      end
     end
   end
 end
