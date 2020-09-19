@@ -80,5 +80,12 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
       visit "/#{plural}?per=5"
       expect(page).to have_css('.pagination')
     end
+
+    it 'changes per page items', browser: :desktop do
+      visit "/#{plural}?per=5"
+      expect(page).to have_css(".table_advertiser", count: 5)
+      page.select '20', from: 'capybara-perselect'
+      expect(page).to have_css(".table_advertiser", count: 11)
+    end
   end
 end
