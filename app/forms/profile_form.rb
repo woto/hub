@@ -29,7 +29,7 @@ class ProfileForm
 
     validates :type, inclusion: {
       in: Rails.application.config.global[:messengers].map { |msn| msn[:long] },
-      message: ->(_, __) { I18n.t('select_messenger_type', scope: %i[activerecord errors messages]) }
+      message: ->(_, __) { I18n.t('activerecord.errors.messages.select_messenger_type') }
     }
   end
 
@@ -50,7 +50,7 @@ class ProfileForm
     minimum: 2,
     message: ->(_, __) { I18n.t('select_language', scope: %i[activerecord errors messages]) }
   }
-  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.name }}
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
 
   # validates inclusion
   validate do

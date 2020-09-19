@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Settings::PasswordsController < Users::RegistrationsController
-  layout 'dashboard'
+  layout 'backoffice'
 
   private
 

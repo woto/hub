@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  layout 'dashboard'
+  layout 'backoffice'
   skip_before_action :authenticate_user!
 
   def index
@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
     articles.sort_by!(&:date)
     articles.reverse!
 
-    page, per = PaginateRule.call(params, 10)
+    page, per = PaginationRules::(params)
     @articles = Kaminari.paginate_array(articles).page(page).per(per)
   end
 

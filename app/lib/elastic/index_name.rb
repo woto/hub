@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
-# Main class for Elastic Search
-class Elastic
-  # Name picker for index
-  module IndexName
+module Elastic
+  class IndexName
     class << self
-      def all_categories
-        picker('*', 'categories')
-      end
 
       def all_offers
         picker('*', 'offers')
@@ -15,10 +10,6 @@ class Elastic
 
       def offers(name)
         picker(name, 'offers')
-      end
-
-      def categories(name)
-        picker(name, 'categories')
       end
 
       def offers_crop(name)
