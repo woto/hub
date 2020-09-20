@@ -23,7 +23,6 @@ require 'prometheus/middleware/collector'
 require 'prometheus/middleware/exporter'
 require 'prometheus/client/data_stores/direct_file_store'
 
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -62,5 +61,18 @@ module Hub
     Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFileStore.new(dir: 'tmp/prometheus')
     # config.middleware.use Prometheus::Middleware::Collector
     # config.middleware.use Prometheus::Middleware::Exporter
+
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+
+    config.cache_store = :redis_cache_store, {
+      url: Rails.application.config.redis.yield_self do |redis|
+        "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
+      end
+    }
+
+    config.public_file_server.headers = {
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+    }
   end
 end
