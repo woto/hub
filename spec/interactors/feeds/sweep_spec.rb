@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Feeds::Sweep do
+describe Feeds::Sweep do
   let(:pid1) { 100 }
   let(:pid2) { pid1 + 100 }
   let(:pid3) { pid2 + 100 }

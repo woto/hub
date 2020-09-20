@@ -3,8 +3,9 @@
 [
   { name: :mobile, resolution: [375, 812] },
   { name: :desktop, resolution: [1280, 1024] }
-].each do
-  _1 in { name:, resolution: }
+].each do |item|
+  name = item[:name]
+  resolution = item[:resolution]
   Capybara.register_driver name do |app|
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_option('prefs', 'intl.accept_languages' => 'en-US')
@@ -27,5 +28,11 @@
     config.before(:each, type: :system, browser: name) do
       driven_by name
     end
+  end
+end
+
+RSpec.configure do |config|
+  config.before(:each, type: :system, browser: :rack) do
+    driven_by :rack_test
   end
 end
