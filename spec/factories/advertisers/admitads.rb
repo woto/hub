@@ -82,9 +82,6 @@
 #  index_advertisers_on_type_and_ext_id  (type,ext_id) UNIQUE
 #
 FactoryBot.define do
-  factory :advertiser do
-    name { Faker::Company.name }
-    type { Advertiser::DESCENDANTS.sample }
-    ext_id { Faker::Alphanumeric.alphanumeric }
+  factory :advertisers_admitad, class: 'Advertisers::Admitad' do
   end
 end
