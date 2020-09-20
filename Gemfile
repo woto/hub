@@ -32,6 +32,7 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'fantaskspec'
   gem 'webmock'
   # gem 'aruba'
   # gem 'awesome_print'
