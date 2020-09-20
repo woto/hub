@@ -10,6 +10,6 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def speak
-    ActionCable.server.broadcast('room', 'key' => 'value')
+    ActionCable.server.broadcast('room', {'key' => 'value'})
   end
 end
