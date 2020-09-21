@@ -17,20 +17,11 @@ services:
   kibana:
     env_file:
       - .env
-    image: kibana:7.4.0
+    image: kibana:7.8.1
     ports:
       - ${KIBANA_PORT}:5601
     environment:
       - ELASTICSEARCH_HOSTS=http://elastic:9200
-
-  feeder:
-    env_file:
-      - .env
-    build:
-      context: ./docker/feeder
-      dockerfile: Dockerfile
-    volumes:
-      - feeder:/app/feeds
 
   postgres:
     env_file:
@@ -72,8 +63,41 @@ services:
     stdin_open: true
     tty: true
 
+  imaginary:
+    image: h2non/imaginary:latest
+    # optionally mount a volume as local image source
+    volumes:
+      - imaginary:/mnt/data
+    environment:
+      PORT: 9000
+    command: -enable-url-source -mount /mnt/data
+    ports:
+      - ${IMAGINARY_PORT}:9000
+
+  prometheus:
+    image: prom/prometheus:v2.16.0
+    volumes:
+      - ./docker/prometheus:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - ${PROMETHEUS_PORT}:9090
+
+  grafana:
+    image: grafana/grafana:7.1.5
+    ports:
+      - ${GRAFANA_PORT}:3000
+
+  pushgateway:
+    image: prom/pushgateway
+    ports:
+      - ${PUSHGATEWAY_PORT}:9091
+
+
 volumes:
   postgres:
   elastic:
   feeder:
   rails_storage:
+  imaginary:

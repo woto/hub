@@ -63,29 +63,4 @@ describe ArticlesController, type: :request do
       assert_select '.news-date', html: '2020-01-26'
     end
   end
-
-  # TODO: it should behave as paginate_rule PaginateRule
-  #
-  # describe ArticlePage, type: :request do
-  #
-  #   context 'when per greater than "MAX_PER"' do
-  #     subject { get '/articles?per=10' }
-  #
-  #     xit 'returns "MAX_PER" count articles' do
-  #       stub_const('ArticlePage::MAX_PER', 2)
-  #       subject
-  #       assert_select 'h2', count: 2
-  #     end
-  #   end
-  #
-  #   context 'when per param empty' do
-  #     subject { get '/articles' }
-  #
-  #     xit 'returns "DEFAULT_PER" count articles' do
-  #       stub_const('ArticlePage::DEFAULT_PER', 2)
-  #       subject
-  #       assert_select 'h2', count: 2
-  #     end
-  #   end
-  # end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Settings::ProfilesController, type: :system do
+describe Settings::ProfilesController, type: :system, browser: :desktop do
   let(:name) { Faker::Name.name }
   let(:bio) { Faker::Lorem.paragraph }
   let(:location) { Faker::Address.full_address }

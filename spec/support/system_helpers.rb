@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 module SystemHelpers
-  # TODO: it's a dirty way to check if user is authenticated
   def expect_authenticated
-    expect(page).to have_selector('#authenticated div', text: "##{user.id}")
+    expect(page).to have_selector('.capybara-authenticated')
+  end
+
+  def expect_unauthenticated
+    expect(page).to have_selector('.capybara-unauthenticated')
   end
 
   def expect_dashboard
-    expect(page).to have_current_path('/en/dashboard')
+    expect(page).to have_current_path('/en-US/dashboard')
   end
 end

@@ -3,17 +3,16 @@
     <div class="d-flex align-items-center">
 
       <%# entries info %>
-      <div class="text-muted text-h5 text-nowrap mr-3">
+      <div class="capybara-entries-info text-muted text-h5 text-nowrap mr-3">
         <%= page_entries_info rows, entry_name: '' %>
       </div>
 
       <%# per_page select %>
       <% items = options_for_select(@pr.per_variants, @pr.per) %>
-      <%= select_tag :per, items, class: 'form-select', data: {
-          controller: 'table-per',
-          action: 'change->table-per#visit'
-      } %>
-
+      <%= select_tag :per, items, id: 'capybara-perselect', class: 'form-select',
+                     data: {
+                         controller: 'table-per',
+                         action: 'change->table-per#visit'} %>
     </div>
   </div>
 </div>

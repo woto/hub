@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Settings::AvatarsController, type: :system do
+describe Settings::AvatarsController, type: :system, browser: :desktop do
   before do
     login_as(user, scope: :user)
     visit '/settings/profile'
@@ -11,7 +11,7 @@ describe Settings::AvatarsController, type: :system do
   RSpec.shared_examples 'uploadable avatar' do |avatar_name|
     it 'uploads avatar' do
       page.attach_file(Rails.root.join('spec/fixtures/files', avatar_name)) do
-        page.find('#avatar-clickable').click
+        find('#avatar-clickable').click
       end
 
       within('#avatar-clickable') do

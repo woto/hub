@@ -1,4 +1,6 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Icons::FlagComponent, type: :component do
   it 'renders icon with flag' do

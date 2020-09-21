@@ -14,5 +14,6 @@ ru:
           one: "<b>1&nbsp;-&nbsp;%{count}</b> из <b>%{count}</b>"
           other: "<b>1&nbsp;-&nbsp;%{count}</b> из <b>%{count}</b>"
           few: "<b>1&nbsp;-&nbsp;%{count}</b> из <b>%{count}</b>"
+          many: "<b>1&nbsp;-&nbsp;%{count}</b> из <b>%{count}</b>"
       more_pages:
         display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> из <b>%{total}</b>"

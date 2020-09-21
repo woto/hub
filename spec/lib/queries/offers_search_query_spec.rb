@@ -24,7 +24,7 @@ describe OffersSearchQuery do
       specify do
         expect(subject).to include(
           body: include(
-            aggs: include(
+            aggregations: include(
               feeds: {
                 terms: {
                   field: '_index',
@@ -56,8 +56,8 @@ describe OffersSearchQuery do
             },
             {
               highlight: {
-                fields: [{ "description.#": {} }, { "name.#": {} }],
-                tags_schema: 'styled'
+                fields: { "description.#": {}, "name.#": {} },
+                tags_schema: :styled
               }
             }
           )
@@ -108,22 +108,24 @@ describe OffersSearchQuery do
     specify do
       expect(subject).to include(
         body: include(
-          sort: {
-            indexed_at: { order: 'desc' }
-          }
+          sort: [
+            { indexed_at: { order: :desc } }
+          ]
         )
       )
     end
   end
 
   context 'with context.category_id' do
+    let(:feed) { create(:feed) }
+
     context 'when context.category_id was not passed' do
-      let(:args) { { level: 0 } }
+      let(:args) { { feed_id: feed.id } }
 
       specify do
         expect(subject).to include(
           body: include(
-            aggs: include(
+            aggregations: include(
               categories: {
                 terms: {
                   field: 'category_level_0',
@@ -137,17 +139,17 @@ describe OffersSearchQuery do
     end
 
     context 'when context.category_id was passed' do
-      let(:parent) { create(:feed_category) }
-      let(:category) { create(:feed_category, parent: parent) }
+      let(:parent) { create(:feed_category, feed: feed) }
+      let(:category) { create(:feed_category, parent: parent, feed: feed) }
       let(:level) { category.ancestry_depth }
 
       context 'regardless of context.only' do
-        let(:args) { { category_id: category.id, level: level } }
+        let(:args) { { feed_id: feed.id, category_id: category.id } }
 
         specify do
           expect(subject).to include(
             body: include(
-              aggs: include(
+              aggregations: include(
                 categories: {
                   terms: {
                     field: "category_level_#{level + 1}",
@@ -168,7 +170,7 @@ describe OffersSearchQuery do
       end
 
       context 'without context.only' do
-        let(:args) { { category_id: category.id, level: level } }
+        let(:args) { { category_id: category.id } }
 
         specify do
           expect(subject).to include(
@@ -186,7 +188,7 @@ describe OffersSearchQuery do
       end
 
       context 'with context.only' do
-        let(:args) { { category_id: category.id, only: '1', level: level } }
+        let(:args) { { category_id: category.id, only: '1' } }
 
         specify do
           expect(subject).to include(

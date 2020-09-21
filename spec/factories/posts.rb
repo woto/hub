@@ -21,8 +21,8 @@
 #
 FactoryBot.define do
   factory :post do
-    title { 'MyString' }
+    title { Faker::GreekPhilosophers.quote }
     status_state { 'draft' }
-    user { nil }
+    user
   end
 end

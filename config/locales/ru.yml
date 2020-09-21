@@ -7,6 +7,7 @@ ru:
   close: Закрыть
   see_also: Смотрите также
   columns: Колонки
+  displaying: Отображается
 
   buttons:
     advertiser: Рекламодатель
@@ -35,7 +36,8 @@ ru:
     offers: Товары из всех прайс листов
     settings: Настройки
     feeds: Прайс листы
-    advertisers: Рекламодатель
+    advertisers: Рекламодатели
+    posts: Статьи
 
   breadcrumbs:
     email: Почта
