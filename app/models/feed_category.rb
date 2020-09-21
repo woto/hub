@@ -1,18 +1,21 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: feed_categories
 #
-#  id                :bigint           not null, primary key
-#  ancestry          :string
-#  data              :jsonb
-#  last_attempt_uuid :uuid             not null
-#  name              :string
-#  parent_not_found  :boolean
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  ext_id            :string           not null
-#  ext_parent_id     :string
-#  feed_id           :bigint           not null
+#  id               :bigint           not null, primary key
+#  ancestry         :string
+#  ancestry_depth   :integer          default(0)
+#  attempt_uuid     :uuid             not null
+#  data             :jsonb
+#  name             :string
+#  parent_not_found :boolean
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  ext_id           :string           not null
+#  ext_parent_id    :string
+#  feed_id          :bigint           not null
 #
 # Indexes
 #
@@ -25,6 +28,14 @@
 #  fk_rails_...  (feed_id => feeds.id)
 #
 class FeedCategory < ApplicationRecord
-  has_ancestry
+  has_ancestry cache_depth: true
   belongs_to :feed
+
+  validate :same_feed, if: -> { parent_id }
+
+  private
+
+  def same_feed
+    errors.add(:base, 'Must belongs to same feed') if feed_id != parent.feed_id
+  end
 end

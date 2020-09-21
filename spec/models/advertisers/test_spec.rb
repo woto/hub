@@ -81,21 +81,8 @@
 #
 #  index_advertisers_on_type_and_ext_id  (type,ext_id) UNIQUE
 #
-class Advertiser < ApplicationRecord
-  DESCENDANTS = ['Advertisers::Admitad', 'Advertisers::Gdeslon', 'Advertisers::Test'].freeze
+require 'rails_helper'
 
-  include Elasticable
-  index_name "#{Rails.env}.advertisers"
-
-  has_many :feeds
-
-  validates :name, presence: true
-
-  def as_indexed_json(_options = {})
-    as_json(methods: :type)
-  end
-
-  def slug
-    [id, ActiveSupport::Inflector.transliterate(name, locale: :ru).parameterize].join('-')
-  end
+RSpec.describe Advertisers::Test, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

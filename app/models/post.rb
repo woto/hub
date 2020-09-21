@@ -20,6 +20,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Post < ApplicationRecord
+  include Elasticable
+  index_name "#{Rails.env}.posts"
   include AASM
 
   belongs_to :user
@@ -31,4 +33,9 @@ class Post < ApplicationRecord
   aasm(:status, column: :status_state) do
     state :draft, initial: true
   end
+
+  def as_indexed_json(_options = {})
+    as_json(methods: :body)
+  end
+
 end

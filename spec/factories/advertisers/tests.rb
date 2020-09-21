@@ -82,6 +82,7 @@
 #  index_advertisers_on_type_and_ext_id  (type,ext_id) UNIQUE
 #
 FactoryBot.define do
-  factory :advertisers_test, class: 'Advertisers::Test' do
+  factory :advertisers_test, class: 'Advertisers::Test', parent: :advertiser do
+    type { 'Advertisers::Test' }
   end
 end
