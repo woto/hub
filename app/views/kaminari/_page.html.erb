@@ -1,20 +1,17 @@
-<% css_class = 'd-none d-xl-inline-block' if ((current_page.number - page.number).abs - 4).abs == 0 %>
-<% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 1 %>
-<% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 2 %>
-<% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 3 %>
-<% css_class = 'd-none d-md-inline-block' if ((current_page.number - page.number).abs - 4).abs == 4 %>
+<% if current_page.number != page.number %>
+  <% hide = 'd-none d-sm-inline-block' %>
+<% end %>
 
-<% link_class = "page-link" %>
-<% li_style = "max-width: 55px;" %>
-<% li_class = "page-item mx-1 flex-fill" %>
+<% link_class = "pagination-link" %>
+<% li_class = "pagination-list-item" %>
 <% li_id = "pagination_#{page.number}" %>
 
 <% if page.current? %>
-  <%= tag.li id: li_id, class: "#{li_class} active", style: li_style do %>
+  <%= tag.li id: li_id, class: "#{li_class} active" do %>
     <%= content_tag :a, page, data: { remote: remote }, rel: page.rel, class: link_class %>
   <% end %>
 <% else %>
-  <%= tag.li id: li_id, class: "#{li_class} #{css_class}", style: li_style do %>
+  <%= tag.li id: li_id, class: "#{li_class} #{hide}" do %>
     <%= link_to page, url, remote: remote, rel: page.rel, class: link_class %>
   <% end %>
 <% end %>

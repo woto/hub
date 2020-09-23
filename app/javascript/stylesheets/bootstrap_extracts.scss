@@ -1,0 +1,27 @@
+.left_feed_category {
+  @extend .flex-fill;
+  @extend .list-group-item;
+  @extend .list-group-item-action;
+  @extend .d-flex;
+  @extend .align-items-center;
+}
+
+.left_feed {
+  @extend .flex-fill;
+  @extend .list-group-item;
+  @extend .list-group-item-action;
+  @extend .d-flex;
+  @extend .align-items-center;
+}
+
+.pagination-list-item {
+  @extend .page-item;
+  @extend .mx-1;
+  @extend .flex-fill;
+  max-width: 55px;
+}
+
+.pagination-link {
+  @extend .page-link;
+  max-width: 55px;
+}
