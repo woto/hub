@@ -31,6 +31,8 @@ ru:
     profiles:
       edit:
         update: Обновить
+      update:
+        saved: Профиль успешно сохранен
 
   titles:
     offers: Товары из всех прайс листов
