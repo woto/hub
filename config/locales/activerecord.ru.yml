@@ -1,0 +1,29 @@
+#  activerecord:
+#    errors:
+#      models:
+#        user:
+#          attributes:
+#            email:
+#              already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
+#              not_found: "Указанный e-mail не найден"
+#              taken: 'Указанный e-mail уже указан другим пользователем'
+#            confirmation_token:
+#              invalid: "Ссылка для подтверждения неверна"
+
+
+ru:
+  activerecord:
+    errors:
+      messages:
+        select_language: должен быть выбран
+        select_messenger_type: должен быть выбран
+
+  errors:
+    attributes:
+      name: asdf
+    models:
+      user: Customer
+    attributes:
+      user:
+        login: "Handle"
+      # will translate User attribute "login" as "Handle"
