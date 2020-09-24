@@ -10,7 +10,7 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
 
   before do
     login_as(user, scope: :user)
-    visit '/settings/profile'
+    visit 'ru/settings/profile'
   end
 
   context 'when user does not have a profile' do
@@ -20,6 +20,7 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
       fill_in 'profile_form[name]', with: name
       fill_in 'profile_form[bio]', with: bio
       fill_in 'profile_form[location]', with: location
+      select "American Samoa", :from => "profile_form_time_zone"
       within find('#profile_form_messengers_attributes_0_messenger') do
         find('button').click
         find('a', text: 'WhatsApp').click
@@ -31,9 +32,9 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
         find('div.option', text: 'Русский').click
       end
       find('footer').click
-      click_button('Update')
+      click_button('Обновить')
 
-      expect(page).to have_text('Profile successfully saved')
+      expect(page).to have_text('Профиль успешно сохранен')
       expect(user.reload.profile.attributes).to include(
         'name' => name,
         'bio' => bio,
@@ -76,13 +77,14 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
     let(:user) { create(:user) }
 
     it 'shows form errors' do
-      click_button('Update')
-      expect(page).to have_text("Name can't be blank")
-      expect(page).to have_text("Bio can't be blank")
-      expect(page).to have_text("Location can't be blank")
-      expect(page).to have_text("Type can't be blank")
-      expect(page).to have_text("Value can't be blank")
-      expect(page).to have_text("Languages can't be blank")
+      click_button('Обновить')
+      expect(page).to have_text("Name не может быть пустым")
+      expect(page).to have_text("Bio не может быть пустым")
+      expect(page).to have_text("Time zone имеет непредусмотренное значение")
+      expect(page).to have_text("Location не может быть пустым")
+      expect(page).to have_text("Type должен быть выбран")
+      expect(page).to have_text("Value не может быть пустым")
+      expect(page).to have_text("Languages должен быть выбран")
     end
   end
 end
