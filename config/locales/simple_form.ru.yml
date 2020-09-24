@@ -5,6 +5,13 @@ ru:
         displayed_columns: Отображаемые столбцы
       feed_filter_form:
         displayed_columns: Отображаемые столбцы
+      profile_form:
+        name: Имя
+        bio: О себе
+        time_zone: Часовой пояс
+        location: Местонахождение
+        messengers: Мессенджеры
+        languages: Владеемые языки
     hints:
       advertiser_filter_form:
         displayed_columns: 'Порядок добавления столбцов влияет на отображение'

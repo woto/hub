@@ -192,15 +192,3 @@ ru:
         offers_count: Количество товаров в прайс листе
         categories_count: Количество категорий в прайс листе
         language: Основной язык названий и описаний товаров
-
-#  activerecord:
-#    errors:
-#      models:
-#        user:
-#          attributes:
-#            email:
-#              already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
-#              not_found: "Указанный e-mail не найден"
-#              taken: 'Указанный e-mail уже указан другим пользователем'
-#            confirmation_token:
-#              invalid: "Ссылка для подтверждения неверна"

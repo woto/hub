@@ -29,11 +29,13 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'standard'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'fantaskspec'
   gem 'webmock'
+  gem 'test-prof'
   # gem 'aruba'
   # gem 'awesome_print'
 end
@@ -152,7 +154,3 @@ gem 'rails-controller-testing'
 gem 'numbers_and_words'
 gem 'action-cable-testing'
 gem 'rack-cors'
-gem 'rack-reverse-proxy'
-
-# Image proxy
-# gem 'rack-proxy'

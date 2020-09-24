@@ -14,8 +14,6 @@
   </li>
 <% end %>
 
-<% scope = [''] %>
-
 <div class="card card-md">
 
   <div class="card-body">
@@ -63,8 +61,7 @@
               <%= f.input :name,
                           required: true,
                           input_html: {autocomplete: "name"},
-                          wrapper_html: {class: 'mb-3'},
-                          autofocus: true
+                          wrapper_html: {class: 'mb-3'}
               %>
 
               <%= f.input :bio,
@@ -76,8 +73,8 @@
 
               <%= f.input :time_zone,
                           required: true,
-                          input_html: {rows: 4},
                           wrapper_html: {class: 'mb-3'},
+                          input_html: {class: "form-select"},
                           as: :time_zone
               %>
 

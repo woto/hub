@@ -67,7 +67,7 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
-    ast (2.4.0)
+    ast (2.4.1)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.6)
@@ -200,7 +200,6 @@ GEM
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
     interactor (3.1.2)
-    jaro_winkler (1.5.4)
     json (2.3.1)
     jwt (2.2.1)
     kaminari (1.2.1)
@@ -276,9 +275,9 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     orm_adapter (0.5.0)
-    parallel (1.19.1)
-    parser (2.7.0.4)
-      ast (~> 2.4.0)
+    parallel (1.19.2)
+    parser (2.7.1.4)
+      ast (~> 2.4.1)
     pg (1.2.2)
     prometheus-client (2.1.0)
     pry (0.13.1)
@@ -298,9 +297,6 @@ GEM
       rack (>= 2.0.0)
     rack-proxy (0.6.5)
       rack
-    rack-reverse-proxy (0.12.0)
-      rack (>= 1.0.0)
-      rack-proxy (~> 0.6, >= 0.6.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.3.3)
@@ -377,14 +373,17 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
-    rubocop (0.80.1)
-      jaro_winkler (~> 1.5.1)
+    rubocop (0.91.1)
       parallel (~> 1.10)
-      parser (>= 2.7.0.1)
+      parser (>= 2.7.1.1)
       rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.7)
       rexml
+      rubocop-ast (>= 0.4.0, < 1.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-ast (0.4.2)
+      parser (>= 2.7.1.4)
     rubocop-performance (1.5.2)
       rubocop (>= 0.71.0)
     rubocop-rails (2.4.2)
@@ -436,6 +435,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    standard (0.0.36)
+      rubocop (>= 0.63)
+    test-prof (0.12.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     thrift (0.11.0.0)
@@ -444,7 +446,7 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
-    unicode-display_width (1.6.1)
+    unicode-display_width (1.7.0)
     uniform_notifier (1.13.0)
     view_component (2.12.0)
       activesupport (>= 5.0.0, < 7.0)
@@ -545,7 +547,6 @@ DEPENDENCIES
   puma (~> 4)
   pundit
   rack-cors
-  rack-reverse-proxy
   rails (~> 6.0)
   rails-controller-testing
   rails-erd
@@ -566,6 +567,8 @@ DEPENDENCIES
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
+  standard
+  test-prof
   tzinfo-data
   view_component
   web-console (>= 3.3.0)

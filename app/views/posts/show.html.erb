@@ -13,6 +13,7 @@
     <%=link_to t('breadcrumbs.show_post'), post_path(@post) %>
   </li>
 <% end %>
+
 <div class="card pb-4">
 
   <div class="card-body">
@@ -39,5 +40,7 @@
   </div>
 </div>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<div class="col">
+  <%= link_to 'Back', posts_path, class: "btn btn-white" %>
+  <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-primary" %>
+</div>

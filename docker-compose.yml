@@ -63,16 +63,11 @@ services:
     stdin_open: true
     tty: true
 
-  imaginary:
-    image: h2non/imaginary:latest
-    # optionally mount a volume as local image source
-    volumes:
-      - imaginary:/mnt/data
-    environment:
-      PORT: 9000
-    command: -enable-url-source -mount /mnt/data
+  imageproxy:
+    image: willnorris/imageproxy
+    command: -addr 0.0.0.0:8080
     ports:
-      - ${IMAGINARY_PORT}:9000
+      - ${IMAGEPROXY_PORT}:8080
 
   prometheus:
     image: prom/prometheus:v2.16.0
@@ -100,4 +95,4 @@ volumes:
   elastic:
   feeder:
   rails_storage:
-  imaginary:
+  imageproxy:

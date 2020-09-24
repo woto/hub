@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'rack/reverse_proxy'
 
 Rails.application.configure do
   config.web_console.allowed_ips = %w[0.0.0.0/0 ::/0]
@@ -55,11 +54,6 @@ Rails.application.configure do
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   config.force_ssl = true if ActiveModel::Type::Boolean.new.cast(ENV.fetch('SSL_DEBUG'))
-
-  config.middleware.insert(0, Rack::ReverseProxy) do
-    reverse_proxy_options preserve_host: true
-    reverse_proxy '/thumbnail', 'http://localhost:9700/'
-  end
 
   config.active_job.queue_adapter = :sidekiq
 end
