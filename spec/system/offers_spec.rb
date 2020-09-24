@@ -3,26 +3,43 @@
 require 'rails_helper'
 
 RSpec.describe 'Offers', browser: :desktop do
-  context 'with 2 feeds for 1 advertiser' do
+
+  context 'with many feeds' do
     let!(:advertiser) { create(:advertisers_admitad) }
     let!(:feed1) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-simplified.xml')) }
     let!(:feed2) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-custom.xml')) }
 
     before do
+      20.times do |i|
+        feed = create(:feed, :with_attempt_uuid, name: "feed #{i}", advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-custom.xml'))
+        Feeds::Parse.call(feed: feed)
+      end
       Feeds::Parse.call(feed: feed1)
       Feeds::Parse.call(feed: feed2)
       elastic_client.indices.refresh
     end
 
-    it 'runs big test', :aggregate_failures do
+    it 'works', :aggregate_failures do
       when_search_in_root
       breadcrumbs_inside_feed_root
       breadcrumbs_inside_category
+      left_feeds_for_more_than_20_feeds
+    end
+
+    def left_feeds_for_more_than_20_feeds
+      visit offers_path(q: 'Мороженица', locale: 'ru')
+      expect(page).to have_css('.left_feed', count: 20, text: '1')
+      expect(page).to have_text('Прайс листы')
+      expect(page).to have_text('СМОТРИТЕ ТАКЖЕ')
+      expect(page).to have_text('2 more...')
+
+      find(".left_feed", match: :first).click
+      expect(page).to have_css('.item_offer', count: 1)
     end
 
     def when_search_in_root
-      visit offers_path(q: 'Мороженица')
-      expect(page).to have_css('.item_offer', count: 2)
+      visit offers_path(q: 'Мороженица', locale: 'ru')
+      expect(page).to have_css('.item_offer', count: 12)
     end
 
     def breadcrumbs_inside_feed_root
@@ -60,7 +77,7 @@ RSpec.describe 'Offers', browser: :desktop do
     end
   end
 
-  context 'with petshop' do
+  context 'with many offers' do
     let!(:advertiser) { create(:advertisers_admitad) }
     let!(:feed) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/776-petshop+678-taganrog.xml')) }
 
@@ -69,7 +86,7 @@ RSpec.describe 'Offers', browser: :desktop do
       elastic_client.indices.refresh
     end
 
-    it 'runs big test', :aggregate_failures do
+    it 'works', :aggregate_failures do
       when_search_in_root
       when_search_in_feed_root
       when_search_in_category_with_nested_categories_and_products_in_this_one
