@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe PaginationRules do
   subject do
-    described_class.call(request, default_per, max_per, per_variants)
+    described_class.new(request, default_per, max_per, per_variants)
   end
 
   before do
@@ -48,28 +48,33 @@ describe PaginationRules do
     'tests'
   end
 
-  it { is_expected.to eq([page, per]) }
+  it { expect(subject.page).to eq(page) }
+  it { expect(subject.per).to eq(per) }
 
   describe 'page' do
 
     context 'when page is blank' do
       let(:page) { nil }
-      it { is_expected.to eq([1, per]) }
+      it { expect(subject.page).to eq(1) }
+      it { expect(subject.per).to eq(per) }
     end
 
     context 'when page is less than 1' do
       let(:page) { -1 }
-      it { is_expected.to eq([1, per]) }
+      it { expect(subject.page).to eq(1) }
+      it { expect(subject.per).to eq(per) }
     end
 
     context 'when page is ordinary value' do
       let(:page) { 100 }
-      it { is_expected.to eq([100, per]) }
+      it { expect(subject.page).to eq(100) }
+      it { expect(subject.per).to eq(per) }
     end
 
     context 'when page is a character' do
       let(:page) { 'a' }
-      it { is_expected.to eq([1, per]) }
+      it { expect(subject.page).to eq(1) }
+      it { expect(subject.per).to eq(per) }
     end
   end
 
@@ -80,18 +85,21 @@ describe PaginationRules do
 
       context 'when session is empty' do
         let (:session_per) { nil }
-        it { is_expected.to eq([5, default_per]) }
+        it { expect(subject.page).to eq(5) }
+        it { expect(subject.per).to eq(default_per) }
       end
 
       context 'when session per is outdated value' do
         let(:session_per) { 37 }
-        it { is_expected.to eq([page, default_per]) }
+        it { expect(subject.page).to eq(page) }
+        it { expect(subject.per).to eq(default_per) }
       end
     end
 
     context 'when per is ordinary' do
       let(:per) { 30 }
-      it { is_expected.to eq([page, 30]) }
+      it { expect(subject.page).to eq(page) }
+      it { expect(subject.per).to eq(30) }
     end
 
     context 'per parameter have to be stored in session' do
@@ -106,22 +114,26 @@ describe PaginationRules do
     context 'when per is invalid' do
       context 'when per is more than max_per' do
         let(:per) { 1000 }
-        it { is_expected.to eq([page, max_per]) }
+        it { expect(subject.page).to eq(page) }
+        it { expect(subject.per).to eq(max_per) }
       end
 
       context 'when per is a character' do
         let(:per) { 'a' }
-        it { is_expected.to eq([page, default_per]) }
+        it { expect(subject.page).to eq(page) }
+        it { expect(subject.per).to eq(default_per) }
       end
 
       context 'when per is less than 1' do
         let(:per) { -1 }
-        it { is_expected.to eq([page, default_per]) }
+        it { expect(subject.page).to eq(page) }
+        it { expect(subject.per).to eq(default_per) }
       end
 
       context 'when per is not included in per_variants' do
         let(:per) { 23 }
-        it { is_expected.to eq([page, default_per]) }
+        it { expect(subject.page).to eq(page) }
+        it { expect(subject.per).to eq(default_per) }
       end
     end
   end
