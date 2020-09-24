@@ -25,3 +25,20 @@
   @extend .page-link;
   max-width: 55px;
 }
+
+.pagination {
+  a:hover {
+      background-color: rgba(53, 64, 82, 0.024);
+  }
+}
+
+.dropdown-multiple-feeds {
+  @extend .btn;
+  @extend .btn-link;
+  @extend .dropdown-toggle;
+  padding: 0;
+  font-weight: normal;
+  &.active {
+    color: #a8aeb7;
+  }
+}
