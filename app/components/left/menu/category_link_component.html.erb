@@ -1,0 +1,6 @@
+<%= link_to feed_offers_path(@path), id: @dom_id, class: @dom_class do %>
+  <%= @category.name %>
+  <small class="text-muted ml-auto">
+    <%= @doc_count %>
+  </small>
+<% end %>
