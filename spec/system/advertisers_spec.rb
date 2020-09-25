@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Advertisers', type: :system do
+RSpec.describe 'Advertisers page' do
   it_behaves_like 'shared_table', Advertiser
 end

@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Posts', type: :system do
+RSpec.describe 'Posts page' do
   it_behaves_like 'shared_table', Post, true
 end

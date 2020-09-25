@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Feeds', type: :system do
+RSpec.describe 'Feeds page' do
   it_behaves_like 'shared_table', Feed
 end
