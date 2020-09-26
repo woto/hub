@@ -26,6 +26,46 @@ RSpec.describe 'Offers', browser: :desktop do
       left_feeds_for_more_than_20_feeds
     end
 
+    def search_control
+      search_control_in_root
+      search_control_in_feed
+      search_control_in_category
+    end
+
+    def search_control_in_root
+      visit offers_path(locale: 'ru')
+      within('section.page') do
+        fill_in 'Введите текст для поиска...', with: q1
+        click_button 'search-button'
+        expect(page).to have_current_path(offers_path(q: q1, locale: 'ru', only_path: true), url: false)
+      end
+    end
+
+    def search_control_in_feed
+      visit feed_offers_path(feed_id: feed1.slug_with_advertiser, q: q1, locale: 'ru')
+      within('section.page') do
+        # fill_in 'Введите текст для поиска...', with: q2
+        click_button 'search-button'
+        # expect(page).to have_current_path(offers_path(q: q2, locale: 'ru', only_path: true), url: false)
+        expect(page).to have_button('search-everywhere')
+        expect(page).to have_button('search-feed')
+        expect(page).not_to have_button('search-category')
+      end
+    end
+
+    def search_control_in_category
+      visit feed_offers_path(feed_id: feed1.slug_with_advertiser, category_id: small_household_appliances.id,
+                             q: q1, locale: 'ru')
+      within('section.page') do
+        # fill_in 'Введите текст для поиска...', with: q2
+        click_button 'search-button'
+        # expect(page).to have_current_path(offers_path(q: q2, locale: 'ru', only_path: true), url: false)
+        expect(page).to have_button('search-everywhere')
+        expect(page).to have_button('search-feed')
+        expect(page).to have_button('search-category')
+      end
+    end
+
     def left_feeds_for_more_than_20_feeds
       visit offers_path(q: 'Мороженица', locale: 'ru')
       expect(page).to have_css('.left_feed', count: 20, text: '1')

@@ -1,0 +1,35 @@
+<% if params[:feed_id].present? %>
+
+  <%= button_tag data: { target: 'search-offers.searchButton', toggle: 'dropdown', test_id: 'search-button' },
+                 id: nil,
+                 class: "btn #{btn_class} dropdown-toggle",
+                 aria: { label: 'Button' } do %>
+    <%= render Icons::SearchComponent.new %>
+  <% end %>
+
+  <div class="dropdown-menu dropdown-menu-right">
+    <% if params[:category_id] %>
+      <%= button_tag t('.search_inside_category'),
+                     data: { action: 'search-offers#searchInsideCategory', test_id: 'search-category' },
+                     id: nil,
+                     class: 'dropdown-item' %>
+    <% end %>
+    <%= button_tag t('.search_inside_feed'),
+                   data: { action: 'search-offers#searchInsideFeed', test_id: 'search-feed' },
+                   id: nil,
+                   class: 'dropdown-item' %>
+    <%= button_tag t('.search_everywhere'),
+                   data: { action: 'search-offers#searchEverywhere', test_id: 'search-everywhere' },
+                   id: nil,
+                   class: 'dropdown-item' %>
+  </div>
+
+<% else %>
+
+  <%= button_tag data: { target: 'search-offers.searchButton', action: 'search-offers#searchEverywhere', test_id: 'search-button' },
+                 id: nil,
+                 class: "btn #{btn_class} btn-icon",
+                 aria: { label: 'Button' } do %>
+    <%= render Icons::SearchComponent.new %>
+  <% end %>
+<% end %>

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Capybara.test_id = 'data-test-id'
+
 [
   { name: :mobile, resolution: [375, 812] },
   { name: :desktop, resolution: [1280, 1024] }

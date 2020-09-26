@@ -37,7 +37,13 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
   end
 
   context "when #{plural} are present" do
-    let(:objects) { flag ? create_list(singular, 11, user: user) : create_list(singular, 11) }
+    let(:objects) do
+      if flag
+        create_list(singular, 11, user: user)
+      else
+        create_list(singular, 11)
+      end
+    end
 
     before do
       objects
@@ -52,6 +58,7 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
     it 'respects page param and visits second page', browser: :desktop do
       visit "/#{plural}?per=5"
       expect(page).to have_css(".table_#{singular}", count: 5)
+
       find('#pagination_3 a').click
       expect(page).to have_css(".table_#{singular}", count: 1)
     end
@@ -84,6 +91,7 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
     it 'changes per page items', browser: :desktop do
       visit "/#{plural}?per=5"
       expect(page).to have_css(".table_#{singular}", count: 5)
+
       page.select '20', from: 'capybara-perselect'
       expect(page).to have_css(".table_#{singular}", count: 11)
     end
@@ -91,6 +99,7 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
     it 'preselects select option with corresponding per value', browser: :desktop do
       visit "/#{plural}?per=5"
       page.has_select?('capybara-perselect', selected: '5')
+
       visit "/#{plural}?per=20"
       page.has_select?('capybara-perselect', selected: '20')
     end
@@ -100,5 +109,36 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
       expect(page).to have_text('6 - 10 of 11')
     end
 
+    context 'with search bar' do
+      options = [
+        { browser: :desktop, selector: '.content' },
+        { browser: :mobile, selector: 'aside' }
+      ]
+
+      options.each do |opts|
+        it "searches by clicking on search button '#{opts[:browser]}'", browser: opts[:browser] do
+          visit "/ru/#{plural}"
+          within(opts[:selector]) do
+            fill_in 'Введите текст для поиска...', with: objects.last.id
+            click_button 'search-button'
+            has_correct_search_path(plural: plural, q: objects.last.id)
+          end
+        end
+
+        it "searches by pressing Enter on keyboard '#{opts[:browser]}'", browser: opts[:browser] do
+          visit "/ru/#{plural}"
+          within(opts[:selector]) do
+            fill_in 'Введите текст для поиска...', with: objects.last.id
+            find('.search-text').send_keys :enter
+            has_correct_search_path(plural: plural, q: objects.last.id)
+          end
+        end
+      end
+
+      def has_correct_search_path(plural:, q:)
+        expect(page).to have_current_path(url_for(controller: plural, action: :index, q: q,
+                                                  locale: 'ru', only_path: true), url: false)
+      end
+    end
   end
 end
