@@ -2,12 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Offers', browser: :desktop do
+RSpec.describe 'Offers page', browser: :desktop do
 
   context 'with many feeds' do
     let!(:advertiser) { create(:advertisers_admitad) }
     let!(:feed1) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-simplified.xml')) }
     let!(:feed2) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-custom.xml')) }
+    let(:q1) { 'Вафельница' }
+    let(:q2) { 'Мороженица' }
+    let(:small_household_appliances) { feed1.feed_categories.find_by(ext_id: '10') }
 
     before do
       20.times do |i|
@@ -24,6 +27,7 @@ RSpec.describe 'Offers', browser: :desktop do
       breadcrumbs_inside_feed_root
       breadcrumbs_inside_category
       left_feeds_for_more_than_20_feeds
+      search_control
     end
 
     def search_control
@@ -88,8 +92,8 @@ RSpec.describe 'Offers', browser: :desktop do
     end
 
     def breadcrumbs_inside_category
-      cat = feed1.feed_categories.find_by(ext_id: '10')
-      visit feed_offers_path(feed_id: feed1.slug_with_advertiser, q: 'Мороженица', category_id: cat.id, locale: 'ru')
+      visit feed_offers_path(feed_id: feed1.slug_with_advertiser, q: 'Мороженица',
+                             category_id: small_household_appliances.id, locale: 'ru')
 
       within('.breadcrumb') do
         br = page.find('.breadcrumb-item', text: 'Главная')
