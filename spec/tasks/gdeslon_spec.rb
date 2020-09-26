@@ -3,5 +3,8 @@
 require 'rails_helper'
 
 describe "hub:gdeslon:sync" do
-  pending
+  it 'calls interactor task' do
+    expect(Networks::Gdeslon::Sync).to receive(:call)
+    subject.execute
+  end
 end
