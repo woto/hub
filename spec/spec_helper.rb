@@ -24,9 +24,6 @@ require 'webmock/rspec'
 
 RSpec.configure do |config|
 
-  # # https://relishapp.com/rspec/rspec-core/v/3-9/docs/filtering/inclusion-filters
-  # config.filter_run_including :focus => true
-
   # TODO: mock
   WebMock.disable_net_connect!(allow_localhost: true,
                                allow: %w[chromedriver.storage.googleapis.com placehold.it])
