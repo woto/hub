@@ -1,0 +1,578 @@
+<?xml version="1.0"?>
+<shops>
+  <shop>
+    <id><![CDATA[9408]]></id>
+    <name><![CDATA[svyaznoy.ru]]></name>
+    <short-description><![CDATA[Интернет-магазин цифровой техники и электроники]]></short-description>
+    <description><![CDATA[**Интернет-магазин «Связной»** является одним из крупнейших игроков в онлайн-ритейле с оборотом в 15,4 млрд руб. на 2016 год!
+«Связной» был основан в июле 2002 года, и на данный момент его посещают более 400 000 пользователей ежедневно. Интернет-магазин является лидером по продажам мобильной электроники, особенно смартфонов, планшетов и аксессуаров для них. Более 30% клиентов возвращаются за покупками более одного раза, что говорит о надежности и лояльности к бренду.
+
+**Также напоминаем, что можно:**
+
+- увеличить сумму своего ежемесячного заработка до 30%!
+- приветствуются различные виды трафика*;
+- возможны персональные условия для крупных вебмастеров!**
+- предоставляются персональные промокоды;
+- affiliate-менеджеры всегда готовы помочь партнерам. Предоставлять нужную информацию, статистику, фиды, баннеры.
+ 
+*Есть исключения – контекст на бренд, мотивированный, adult- и toolbar-трафик.*
+
+Персональные условия гарантируют индивидуальный подход и персональную работу с менеджером.
+
+**Что мы предлагаем покупателям:**
+
+- широкий ассортимент мобильной техники, более 10 тысяч наименований;
+- качественный контент (описания, обзоры) для выбора нужного устройства;
+- обсуждение товара с другими покупателями, а также возможность получить ответ эксперта;
+- регулярные скидки и интересные акции, в том числе выгодные кредитные предложения;
+- удобный формат заказа. Товар можно заказать через сайт или посмотреть наличие и зарезервировать в удобном для себя розничном магазине, также воспользоваться бесплатной курьерской доставкой при покупке от 2000 руб.;
+- удобная география – более 2800 магазинов по всей стране.
+
+**За нас лучше расскажут цифры:**
+
+- Средняя конверсия в заказ – 1,5 %;
+- Средняя конверсия в оплаченный заказ - 0,46%;
+- Высокий средний чек – 10 550 руб.;
+- Количество активных вебмастеров больше 2 500;
+- Средний заработок вебмастера составляет 100 000 руб. в месяц;
+- Комиссия за выполненные заказы от 1% до 10%.
+- Ежемесячно сайт посещают более 6 млн. человек;
+- Более 50% посетителей совершают покупки в первый день;
+
+**Описание ЦА:**
+
+*Пол:*
+
+- мужчины – 60%
+- женщины 40%
+
+*Возраст:*
+
+- 25-34 - 46%
+- 35-44 - 20%
+- 18-24 - 19%
+- 45-54 - 10%
+- 55-64 - 4%
+- 65+ - 1%
+
+*Интересы покупателей:*
+
+- любители техники
+- любители кино
+- любители телевидения
+- активные пользователи мобильных устройств
+- покупатели / шопоголики
+- любители домашнего декора
+- любители туризма
+- активные пользователи социальных медиа
+- автолюбители
+ 
+**[ПОДРОБНОЕ ОПИСАНИЕ ТАРИФОВ](https://blog.gdeslon.ru/wp-content/uploads/2020/06/Связной-категории-и-ставки-июнь20.xlsx)**
+
+[Топ товары по категориям](https://docs.google.com/spreadsheets/d/161KKReBqHdQswYSXThqkQePNQ4bNd6cwsyrKzMKpLw4/edit#gid=615931262)
+
+Список  акций и скидок магазина вы можете увидеть [здесь](https://www.svyaznoy.ru/special-offers/discount)
+
+Необходимо убрать из объявлений названия брендов **Ramili, Switel, iBaby, Samsung** в категории видеоняни. Товары данных брендов оплате не подлежат - по требованию поставщиков.
+**Купонные и кэшбэк площадки просим прописать данные условия для юзеров.**
+
+**Запрещено создание брендированых групп в соц. сетях!**
+
+[Список Минус слов для контекстной рекламы.](https://blog.gdeslon.ru/wp-content/uploads/2020/06/Минус-слова_СВЯЗНОЙ-от-04.06.20.xls)
+Брендбук доступен по [ссылке](https://drive.google.com/file/d/19HD-xxrhXOEVLeDtdNFhiHckcM0Tp5Lb/view?usp=sharing)
+[Список городов с доставкой/самовывозом.](https://blog.gdeslon.ru/wp-content/uploads/2018/05/Goroda_s_dostavkoi.xlsx)
+[Товары из фокус-группы.](https://blog.gdeslon.ru/wp-content/uploads/2018/05/fokusy_aprel.xlsx)
+[Фиды по регионам](https://blog.gdeslon.ru/wp-content/uploads/2019/02/Связной-Фиды-050219.xlsx)]]></description>
+    <url><![CDATA[https://svyaznoy.ru/]]></url>
+    <conditions><![CDATA[**[ПОДРОБНОЕ ОПИСАНИЕ ТАРИФОВ](https://blog.gdeslon.ru/wp-content/uploads/2020/06/Связной-категории-и-ставки-июнь20.xlsx)**
+
+**С 01 июня 2020 года - оптовые заказы оплачиваться не будут.**
+Что считается оптовым заказом?
+• Больше 20 заказов в календарный месяц от одного уникального идентификатора (от одного пользователя).
+• Сумма всех заказов одного уникального идентификатора в месяц больше или равна 300 000 руб., при этом заказов больше или равно 5.
+• Количество товаров одной категории стоимостью выше 20 000 рублей каждый  больше 4 позиций в одном заказе
+• Количество товаров в заказе больше 100 позиций.
+
+С 15 января 2020 кешбэк-сервисы, программы лояльности и купонный трафик - запрещены!
+С 9 января 2020 вознаграждение за заказы, оплаченные банковскими картами Тинькофф с активированным кэшбэком в мобильном приложении для интернет-магазина "Связной", выплачиваться не будет.]]></conditions>
+    <is-green><![CDATA[false]]></is-green>
+    <gs-commission-mark><![CDATA[0.5%-10%]]></gs-commission-mark>
+    <country>ru</country>
+    <kind><![CDATA[Юридическое лицо]]></kind>
+    <categories>
+      <category>
+        <id>3</id>
+        <name><![CDATA[Телефоны и электроника]]></name>
+      </category>
+      <category>
+        <id>9</id>
+        <name><![CDATA[Электронные гипермаркеты]]></name>
+      </category>
+    </categories>
+    <logo-file-name>https://cdn.gdeslon.ru/uploads/users/9408/logos/big.png?1528184497</logo-file-name>
+    <affiliate-link>https://sf.gdeslon.ru/cf/ed248f4498?mid=9408</affiliate-link>
+    <traffic-types>
+      <traffic-type>
+        <name><![CDATA[Контекстная реклама]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Контекстная реклама на бренд]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Cashback]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Clickunder/Popunder]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Doorway]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Баннерная реклама]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Тизерная реклама]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Мотивированный трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Группы в соцсетях]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Ретаргетинг]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Брокерский трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Таргетированная реклама в соцсетях]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Приложения в соцсетях]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Скидочные и купонные агрегаторы]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Использование промокодов]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Видеоконтент (youtube, rutube, vimeo)]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Toolbar]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Popup-формат]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Email-рассылка]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Мобильный трафик]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Adult трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Витрины]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Партнерские магазины]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Мультитрафик]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[СМС-трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+    </traffic-types>
+    <tariffs>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x443;&#x43C;&#x43D;&#x44B;&#x445; &#x447;&#x430;&#x441;&#x43E;&#x432;" category_id="10064" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B;" category_id="10118" is_percent="true">1.5</tariff-category>
+      <tariff-category name="&#x420;&#x435;&#x43C;&#x435;&#x448;&#x43A;&#x438;" category_id="10127" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430;" category_id="10130" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x435;&#x43B;&#x444;&#x438;-&#x43F;&#x430;&#x43B;&#x43A;&#x438;" category_id="10613" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41F;&#x43E;&#x440;&#x442;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x43A;&#x43E;&#x43B;&#x43E;&#x43D;&#x43A;&#x438;" category_id="10616" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x418;&#x43D;&#x442;&#x435;&#x440;&#x44C;&#x435;&#x440; &#x438; &#x43F;&#x440;&#x43E;&#x447;&#x435;&#x435;" category_id="10673" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x424;&#x435;&#x43D;&#x44B;" category_id="10676" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x427;&#x430;&#x439;&#x43D;&#x438;&#x43A;&#x438; &#x438; &#x442;&#x435;&#x440;&#x43C;&#x43E;&#x43F;&#x43E;&#x442;&#x44B;" category_id="10679" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x423;&#x442;&#x44E;&#x433;&#x438;" category_id="10682" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41F;&#x44B;&#x43B;&#x435;&#x441;&#x43E;&#x441;&#x44B;" category_id="10691" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x411;&#x43B;&#x435;&#x43D;&#x434;&#x435;&#x440;&#x44B; &#x438; &#x43C;&#x438;&#x43A;&#x441;&#x435;&#x440;&#x44B;" category_id="10763" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x412;&#x430;&#x440;&#x43E;&#x447;&#x43D;&#x44B;&#x435; &#x43F;&#x430;&#x43D;&#x435;&#x43B;&#x438;" category_id="10838" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x412;&#x441;&#x442;&#x440;&#x430;&#x438;&#x432;&#x430;&#x435;&#x43C;&#x44B;&#x435; &#x432;&#x44B;&#x442;&#x44F;&#x436;&#x43A;&#x438;" category_id="10847" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x41F;&#x440;&#x43E;&#x447;&#x438;&#x435; &#x438;&#x437;&#x43C;&#x435;&#x440;&#x438;&#x442;&#x435;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x438;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x44B;" category_id="10853" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x421;&#x442;&#x430;&#x431;&#x438;&#x43B;&#x438;&#x437;&#x430;&#x442;&#x43E;&#x440;&#x44B; &#x43D;&#x430;&#x43F;&#x440;&#x44F;&#x436;&#x435;&#x43D;&#x438;&#x44F;" category_id="10859" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x421;&#x430;&#x434;&#x43E;&#x432;&#x44B;&#x439; &#x438;&#x43D;&#x432;&#x435;&#x43D;&#x442;&#x430;&#x440;&#x44C;" category_id="10868" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41F;&#x435;&#x440;&#x444;&#x43E;&#x440;&#x430;&#x442;&#x43E;&#x440;&#x44B; &#x438; &#x43E;&#x442;&#x431;&#x43E;&#x439;&#x43D;&#x44B;&#x435; &#x43C;&#x43E;&#x43B;&#x43E;&#x442;&#x43A;&#x438;" category_id="10871" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x428;&#x43B;&#x438;&#x444;&#x43E;&#x432;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;" category_id="10877" is_percent="true">1.0</tariff-category>
+      <tariff-category name="&#x41E;&#x431;&#x43E;&#x433;&#x440;&#x435;&#x432;&#x430;&#x442;&#x435;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x43F;&#x440;&#x438;&#x431;&#x43E;&#x440;&#x44B;" category_id="10880" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41D;&#x430;&#x441;&#x43E;&#x441;&#x44B;" category_id="10883" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x444;&#x435;&#x432;&#x430;&#x440;&#x43A;&#x438; &#x438; &#x43A;&#x43E;&#x444;&#x435;&#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;" category_id="10886" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x422;&#x440;&#x438;&#x43C;&#x43C;&#x435;&#x440;&#x44B;" category_id="10892" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x426;&#x435;&#x43F;&#x43D;&#x44B;&#x435; &#x43F;&#x438;&#x43B;&#x44B;" category_id="10895" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41C;&#x430;&#x441;&#x441;&#x430;&#x436;&#x435;&#x440;&#x44B;" category_id="10898" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x420;&#x443;&#x447;&#x43D;&#x44B;&#x435; &#x438;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x44B;" category_id="10901" is_percent="true">1.0</tariff-category>
+      <tariff-category name="&#x412;&#x435;&#x441;&#x44B;" category_id="10910" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41C;&#x430;&#x43D;&#x438;&#x43A;&#x44E;&#x440;&#x43D;&#x44B;&#x435; &#x43D;&#x430;&#x431;&#x43E;&#x440;&#x44B;" category_id="10913" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41C;&#x443;&#x43B;&#x44C;&#x442;&#x438;&#x432;&#x430;&#x440;&#x43A;&#x438; &#x438; &#x440;&#x438;&#x441;&#x43E;&#x432;&#x430;&#x440;&#x43A;&#x438;" category_id="10916" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41C;&#x438;&#x43A;&#x440;&#x43E;&#x432;&#x43E;&#x43B;&#x43D;&#x43E;&#x432;&#x44B;&#x435; &#x43F;&#x435;&#x447;&#x438;" category_id="10922" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x414;&#x438;&#x441;&#x43A;&#x43E;&#x432;&#x44B;&#x435; &#x438; &#x43B;&#x435;&#x43D;&#x442;&#x43E;&#x447;&#x43D;&#x44B;&#x435; &#x43F;&#x438;&#x43B;&#x44B;" category_id="10925" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x413;&#x438;&#x440;&#x43E;&#x441;&#x43A;&#x443;&#x442;&#x435;&#x440;&#x44B;" category_id="10931" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x420;&#x430;&#x434;&#x438;&#x43E;- &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43D;&#x44F;&#x43D;&#x438;" category_id="10940" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x412;&#x43D;&#x443;&#x442;&#x440;&#x435;&#x43D;&#x43D;&#x438;&#x435; HDD &#x438; SSD" category_id="11333" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x43C;&#x43F;&#x43B;&#x435;&#x43A;&#x442;&#x443;&#x44E;&#x449;&#x438;&#x435;" category_id="11336" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x412;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x440;&#x442;&#x44B;" category_id="11339" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41E;&#x43F;&#x435;&#x440;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x430;&#x44F; &#x43F;&#x430;&#x43C;&#x44F;&#x442;&#x44C;" category_id="11342" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x417;&#x432;&#x443;&#x43A;&#x43E;&#x432;&#x44B;&#x435; &#x43A;&#x430;&#x440;&#x442;&#x44B;" category_id="11348" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x423;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430; &#x43E;&#x445;&#x43B;&#x430;&#x436;&#x434;&#x435;&#x43D;&#x438;&#x44F;" category_id="11351" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41C;&#x430;&#x442;&#x435;&#x440;&#x438;&#x43D;&#x441;&#x43A;&#x438;&#x435; &#x43F;&#x43B;&#x430;&#x442;&#x44B;" category_id="11357" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41F;&#x440;&#x43E;&#x446;&#x435;&#x441;&#x441;&#x43E;&#x440;&#x44B;" category_id="11360" is_percent="true">2.93</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x440;&#x43F;&#x443;&#x441;&#x430;" category_id="11363" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x411;&#x43B;&#x43E;&#x43A;&#x438; &#x43F;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x44F;" category_id="11366" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x43A;&#x43E;&#x444;&#x435;&#x43C;&#x430;&#x448;&#x438;&#x43D;" category_id="11528" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x417;&#x443;&#x431;&#x43D;&#x44B;&#x435; &#x449;&#x435;&#x442;&#x43A;&#x438;" category_id="11531" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x437;&#x443;&#x431;&#x43D;&#x44B;&#x445; &#x449;&#x435;&#x442;&#x43E;&#x43A;" category_id="11534" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x411;&#x440;&#x438;&#x442;&#x432;&#x44B;, &#x44D;&#x43F;&#x438;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B;" category_id="11537" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x431;&#x440;&#x438;&#x442;&#x432; &#x438; &#x44D;&#x43F;&#x438;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x43E;&#x432;" category_id="11540" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x422;&#x43E;&#x441;&#x442;&#x435;&#x440;&#x44B;" category_id="11606" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x43F;&#x44B;&#x43B;&#x435;&#x441;&#x43E;&#x441;&#x43E;&#x432;" category_id="11609" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x412;&#x44B;&#x43F;&#x440;&#x44F;&#x43C;&#x438;&#x442;&#x435;&#x43B;&#x438; &#x438; &#x449;&#x438;&#x43F;&#x446;&#x44B;" category_id="11618" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x421;&#x43E;&#x43A;&#x43E;&#x432;&#x44B;&#x436;&#x438;&#x43C;&#x430;&#x43B;&#x43A;&#x438;" category_id="11621" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41A;&#x443;&#x445;&#x43E;&#x43D;&#x43D;&#x44B;&#x435; &#x432;&#x435;&#x441;&#x44B;" category_id="11981" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43B;&#x438;&#x43C;&#x430;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;" category_id="11987" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x414;&#x440;&#x443;&#x433;&#x430;&#x44F; &#x43A;&#x443;&#x445;&#x43E;&#x43D;&#x43D;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;" category_id="11990" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41F;&#x440;&#x43E;&#x447;&#x438;&#x435; &#x44D;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x438;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x44B;" category_id="12191" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x43A;&#x440;&#x435;&#x441;&#x43B;&#x430;" category_id="12953" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x414;&#x435;&#x442;&#x441;&#x43A;&#x438;&#x435; &#x43A;&#x440;&#x435;&#x441;&#x43B;&#x430;" category_id="13193" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41F;&#x440;&#x43E;&#x447;&#x430;&#x44F; &#x43C;&#x435;&#x43B;&#x43A;&#x430;&#x44F; &#x431;&#x44B;&#x442;&#x43E;&#x432;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;" category_id="13361" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x43C;&#x43F;&#x430;&#x43A;&#x442;&#x43D;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x44B;" category_id="1481" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x420;&#x430;&#x434;&#x438;&#x43E;&#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x44B;" category_id="1495" is_percent="true">3.0</tariff-category>
+      <tariff-category name="Bluetooth-&#x433;&#x430;&#x440;&#x43D;&#x438;&#x442;&#x443;&#x440;&#x44B;" category_id="1515" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x418;&#x43D;&#x433;&#x430;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B;" category_id="15410" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x422;&#x435;&#x440;&#x43C;&#x43E;&#x43C;&#x435;&#x442;&#x440;&#x44B;" category_id="15413" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x442;&#x435;&#x442;&#x43E;&#x441;&#x43A;&#x43E;&#x43F;&#x44B;" category_id="15419" is_percent="true">1.5</tariff-category>
+      <tariff-category name="&#x413;&#x440;&#x435;&#x43B;&#x43A;&#x438;" category_id="15422" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41D;&#x430;&#x443;&#x448;&#x43D;&#x438;&#x43A;&#x438;" category_id="1558" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41C;&#x438;&#x43A;&#x440;&#x43E;&#x444;&#x43E;&#x43D;&#x44B;" category_id="1559" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x426;&#x438;&#x444;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x440;&#x430;&#x43C;&#x43A;&#x438;" category_id="1565" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41E;&#x431;&#x44A;&#x435;&#x43A;&#x442;&#x438;&#x432;&#x44B; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;" category_id="1567" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x425;&#x43E;&#x43B;&#x43E;&#x434;&#x438;&#x43B;&#x44C;&#x43D;&#x438;&#x43A;&#x438; &#x438; &#x43C;&#x43E;&#x440;&#x43E;&#x437;&#x438;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x43A;&#x430;&#x43C;&#x435;&#x440;&#x44B;" category_id="16751" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x421;&#x442;&#x438;&#x440;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x438; &#x441;&#x443;&#x448;&#x438;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;" category_id="16754" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x41F;&#x43B;&#x438;&#x442;&#x44B;" category_id="16757" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x41F;&#x43E;&#x441;&#x443;&#x434;&#x43E;&#x43C;&#x43E;&#x435;&#x447;&#x43D;&#x44B;&#x435; &#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;" category_id="16766" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x412;&#x441;&#x442;&#x440;&#x430;&#x438;&#x432;&#x430;&#x435;&#x43C;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;" category_id="16769" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x428;&#x432;&#x435;&#x439;&#x43D;&#x44B;&#x435; &#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;" category_id="16772" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x41A;&#x443;&#x43A;&#x43E;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x434;&#x43E;&#x43C;&#x438;&#x43A;&#x438;" category_id="16787" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41C;&#x443;&#x43B;&#x44C;&#x442;&#x438;&#x43C;&#x435;&#x434;&#x438;&#x430; &#x43F;&#x43B;&#x435;&#x435;&#x440;&#x44B;" category_id="1728" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x420;&#x430;&#x446;&#x438;&#x438;" category_id="1731" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x417;&#x435;&#x440;&#x43A;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x44B;" category_id="1732" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x428;&#x442;&#x430;&#x442;&#x438;&#x432;&#x44B;, &#x43A;&#x440;&#x435;&#x43F;&#x43B;&#x435;&#x43D;&#x438;&#x44F;, &#x440;&#x435;&#x43C;&#x43D;&#x438; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;" category_id="1733" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E;- &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;" category_id="1734" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x438;" category_id="1738" is_percent="true">1.6</tariff-category>
+      <tariff-category name="&#x41F;&#x43E;&#x433;&#x43E;&#x434;&#x43D;&#x44B;&#x435; &#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438;" category_id="1751" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41B;&#x430;&#x43C;&#x43F;&#x44B;" category_id="17696" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x414;&#x432;&#x43E;&#x440;&#x43D;&#x438;&#x43A;&#x438;" category_id="17699" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41F;&#x43E;&#x441;&#x443;&#x434;&#x430;" category_id="17786" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x411;&#x430;&#x433;&#x430;&#x436;&#x43D;&#x438;&#x43A;&#x438;, &#x411;&#x43E;&#x43A;&#x441;&#x44B;, &#x41A;&#x440;&#x435;&#x43F;&#x43B;&#x435;&#x43D;&#x438;&#x44F;" category_id="17981" is_percent="true">10.0</tariff-category>
+      <tariff-category name="GPS-&#x43D;&#x430;&#x432;&#x438;&#x433;&#x430;&#x442;&#x43E;&#x440;&#x44B;" category_id="1813" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x443;&#x43C;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x43D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x43E;&#x432;" category_id="1817" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x43C;&#x43F;&#x44C;&#x44E;&#x442;&#x435;&#x440;&#x43D;&#x44B;&#x435; &#x430;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;" category_id="1818" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41F;&#x43E;&#x440;&#x442;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x437;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430;" category_id="1825" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x43A;&#x443;&#x43C;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;" category_id="1827" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x438; &#x441;&#x443;&#x43C;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;" category_id="1833" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x410;&#x432;&#x442;&#x43E;&#x430;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;" category_id="1836" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x414;&#x435;&#x440;&#x436;&#x430;&#x442;&#x435;&#x43B;&#x438;" category_id="1838" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41A;&#x440;&#x443;&#x43F;&#x43D;&#x43E; &#x431;&#x44B;&#x442;&#x43E;&#x432;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;" category_id="19601" is_percent="true">0.38</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x438; &#x441;&#x443;&#x43C;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;" category_id="198" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41C;&#x43E;&#x431;&#x438;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x44B;" category_id="224" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x421;&#x43C;&#x430;&#x440;&#x442;&#x444;&#x43E;&#x43D;&#x44B;" category_id="225" is_percent="true">2.0</tariff-category>
+      <tariff-category name="&#x412;&#x43D;&#x435;&#x448;&#x43D;&#x438;&#x435; HDD &#x438; SSD" category_id="230" is_percent="true">10.0</tariff-category>
+      <tariff-category name="USB &#x444;&#x43B;&#x435;&#x448;&#x43A;&#x438;" category_id="231" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x414;&#x43E;&#x43A; &#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;" category_id="2704" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x42D;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x44B;&#x435; &#x43A;&#x43D;&#x438;&#x433;&#x438;" category_id="2721" is_percent="true">8.0</tariff-category>
+      <tariff-category name="&#x414;&#x438;&#x43A;&#x442;&#x43E;&#x444;&#x43E;&#x43D;&#x44B;" category_id="2986" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x430;&#x440;&#x434;&#x440;&#x438;&#x434;&#x435;&#x440;&#x44B;" category_id="3092" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43B;&#x430;&#x432;&#x438;&#x430;&#x442;&#x443;&#x440;&#x44B;" category_id="3096" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x421;&#x435;&#x442;&#x435;&#x432;&#x44B;&#x435; &#x438; web-&#x43A;&#x430;&#x43C;&#x435;&#x440;&#x44B;" category_id="3097" is_percent="true">10.0</tariff-category>
+      <tariff-category name="USB-&#x43A;&#x43E;&#x43D;&#x446;&#x435;&#x43D;&#x442;&#x440;&#x430;&#x442;&#x43E;&#x440;&#x44B;" category_id="3098" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41F;&#x440;&#x43E;&#x435;&#x43A;&#x442;&#x43E;&#x440;&#x44B;" category_id="4427" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x440;&#x43E;&#x43D;&#x448;&#x442;&#x435;&#x439;&#x43D;&#x44B;" category_id="4435" is_percent="true">1.5</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x443;&#x441;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438;&#x435; &#x441;&#x438;&#x441;&#x442;&#x435;&#x43C;&#x44B;" category_id="4436" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;" category_id="4439" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x449;&#x438;&#x442;&#x43D;&#x44B;&#x435; &#x43F;&#x43B;&#x435;&#x43D;&#x43A;&#x438; &#x438; &#x441;&#x442;&#x435;&#x43A;&#x43B;&#x430; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;" category_id="4454" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41C;&#x430;&#x433;&#x43D;&#x438;&#x442;&#x43E;&#x43B;&#x44B;" category_id="5106" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x43A;&#x443;&#x43C;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B; &#x438; &#x434;&#x440;&#x443;&#x433;&#x43E;&#x435;" category_id="5797" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430; &#x434;&#x43B;&#x44F; &#x43D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x43E;&#x432;" category_id="6514" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x43A;&#x443;&#x43C;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;" category_id="6524" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41F;&#x43E;&#x434;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x43F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x43E;&#x432; &#x438; &#x43D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x43E;&#x432;" category_id="6659" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x421;&#x435;&#x442;&#x435;&#x432;&#x44B;&#x435; &#x444;&#x438;&#x43B;&#x44C;&#x442;&#x440;&#x44B;, &#x440;&#x430;&#x437;&#x432;&#x435;&#x442;&#x432;&#x438;&#x442;&#x435;&#x43B;&#x438;" category_id="6667" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x424;&#x43E;&#x442;&#x43E;&#x432;&#x441;&#x43F;&#x44B;&#x448;&#x43A;&#x438; &#x438; &#x441;&#x432;&#x435;&#x442;" category_id="6689" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x421;&#x432;&#x435;&#x442;&#x43E;&#x444;&#x438;&#x43B;&#x44C;&#x442;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x43E;&#x432;" category_id="6690" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x420;&#x43E;&#x443;&#x442;&#x435;&#x440;&#x44B;" category_id="7017" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x43C;&#x43F;&#x430;&#x43A;&#x442;&#x43D;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x44B; &#x441;&#x43E; &#x441;&#x43C;&#x435;&#x43D;&#x43D;&#x43E;&#x439; &#x43E;&#x43F;&#x442;&#x438;&#x43A;&#x43E;&#x439;" category_id="7019" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x422;&#x435;&#x43B;&#x435;&#x432;&#x438;&#x437;&#x43E;&#x440;&#x44B;" category_id="7032" is_percent="true">1.49</tariff-category>
+      <tariff-category name="&#x41E;&#x43F;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438;&#x435; &#x43F;&#x440;&#x438;&#x432;&#x43E;&#x434;&#x44B; &#x434;&#x43B;&#x44F; &#x43D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x43E;&#x432;" category_id="7044" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x43C;&#x43F;&#x44C;&#x44E;&#x442;&#x435;&#x440;&#x43D;&#x44B;&#x435; &#x43C;&#x44B;&#x448;&#x438;" category_id="7045" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x44B;" category_id="7063" is_percent="true">2.6</tariff-category>
+      <tariff-category name="&#x421;&#x438;&#x441;&#x442;&#x435;&#x43C;&#x43D;&#x44B;&#x435; &#x431;&#x43B;&#x43E;&#x43A;&#x438;" category_id="7067" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430; &#x434;&#x43B;&#x44F; &#x430;&#x43A;&#x43A;&#x443;&#x43C;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x43E;&#x432;" category_id="7103" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41C;&#x43E;&#x43D;&#x438;&#x442;&#x43E;&#x440;&#x44B;" category_id="7152" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41E;&#x441;&#x432;&#x435;&#x442;&#x438;&#x442;&#x435;&#x43B;&#x44C;&#x43D;&#x43E;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x43E;&#x431;&#x43E;&#x440;&#x443;&#x434;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x435;" category_id="7181" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x421;&#x442;&#x438;&#x43B;&#x443;&#x441;&#x44B;" category_id="7187" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41C;&#x435;&#x434;&#x438;&#x430;&#x43F;&#x43B;&#x435;&#x435;&#x440;&#x44B;" category_id="7245" is_percent="true">3.0</tariff-category>
+      <tariff-category name="FM-&#x442;&#x440;&#x430;&#x43D;&#x441;&#x43C;&#x438;&#x442;&#x442;&#x435;&#x440;&#x44B;" category_id="7246" is_percent="true">1.5</tariff-category>
+      <tariff-category name="&#x41F;&#x443;&#x43B;&#x44C;&#x442;&#x44B; &#x438; &#x43C;&#x438;&#x43A;&#x440;&#x43E;&#x444;&#x43E;&#x43D;&#x44B;" category_id="7247" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x418;&#x433;&#x440;&#x443;&#x448;&#x43A;&#x438; &#x438; &#x43A;&#x43E;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43A;&#x442;&#x43E;&#x440;&#x44B;" category_id="7257" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41C;&#x424;&#x423;, &#x43F;&#x440;&#x438;&#x43D;&#x442;&#x435;&#x440;&#x44B;, &#x441;&#x43A;&#x430;&#x43D;&#x435;&#x440;&#x44B;" category_id="7307" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41C;&#x43E;&#x43D;&#x43E;&#x431;&#x43B;&#x43E;&#x43A;&#x438;" category_id="7308" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x434;&#x43B;&#x44F; &#x44D;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x44B;&#x445; &#x43A;&#x43D;&#x438;&#x433;" category_id="7334" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x420;&#x430;&#x434;&#x430;&#x440;-&#x434;&#x435;&#x442;&#x435;&#x43A;&#x442;&#x43E;&#x440;&#x44B;" category_id="7342" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x432;&#x440;&#x438;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x43C;&#x44B;&#x448;&#x438;" category_id="7358" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x411;&#x438;&#x43D;&#x43E;&#x43A;&#x43B;&#x438;, &#x442;&#x435;&#x43B;&#x435;&#x441;&#x43A;&#x43E;&#x43F;&#x44B;, &#x43C;&#x438;&#x43A;&#x440;&#x43E;&#x441;&#x43A;&#x43E;&#x43F;&#x44B;" category_id="7366" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x440;&#x435;&#x434;&#x441;&#x442;&#x432;&#x430; &#x434;&#x43B;&#x44F; &#x443;&#x445;&#x43E;&#x434;&#x430; &#x437;&#x430; &#x43E;&#x43F;&#x442;&#x438;&#x43A;&#x43E;&#x439;" category_id="7368" is_percent="true">5.0</tariff-category>
+      <tariff-category name="&#x421;&#x440;&#x435;&#x434;&#x441;&#x442;&#x432;&#x430; &#x434;&#x43B;&#x44F; &#x443;&#x445;&#x43E;&#x434;&#x430; &#x437;&#x430; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x43E;&#x439;" category_id="7369" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41D;&#x430;&#x441;&#x430;&#x434;&#x43A;&#x438; &#x438; &#x43A;&#x440;&#x44B;&#x448;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;" category_id="7399" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x434;&#x43B;&#x44F; &#x43F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x43E;&#x432;" category_id="7400" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41C;&#x424;&#x423;" category_id="7439" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41F;&#x440;&#x438;&#x43D;&#x442;&#x435;&#x440;&#x44B;" category_id="7440" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x43A;&#x430;&#x43D;&#x435;&#x440;&#x44B;" category_id="7441" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x412;&#x438;&#x434;&#x435;&#x43E;&#x440;&#x435;&#x433;&#x438;&#x441;&#x442;&#x440;&#x430;&#x442;&#x43E;&#x440;&#x44B;" category_id="7704" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x43A;&#x443;&#x43C;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x43D;&#x44B;&#x435; &#x431;&#x430;&#x442;&#x430;&#x440;&#x435;&#x438;" category_id="7715" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x422;&#x43E;&#x43D;&#x435;&#x440;&#x44B;, &#x43A;&#x430;&#x440;&#x442;&#x440;&#x438;&#x434;&#x436;&#x438;" category_id="7728" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x430;&#x440;&#x442;&#x44B; &#x43F;&#x430;&#x43C;&#x44F;&#x442;&#x438;" category_id="7761" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x430;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;" category_id="7791" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x413;&#x440;&#x430;&#x444;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438;&#x435; &#x43F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x44B;" category_id="7833" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430; &#x434;&#x43B;&#x44F; iPhone" category_id="7868" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x418;&#x411;&#x41F;" category_id="7921" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x438; &#x440;&#x435;&#x43C;&#x435;&#x448;&#x43A;&#x438;" category_id="7923" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x411;&#x443;&#x43C;&#x430;&#x433;&#x430;" category_id="7929" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x432;&#x441;&#x43F;&#x44B;&#x448;&#x435;&#x43A;" category_id="8002" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x411;&#x435;&#x437;&#x43E;&#x43F;&#x430;&#x441;&#x43D;&#x43E;&#x441;&#x442;&#x44C; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43D;&#x430;&#x431;&#x43B;&#x44E;&#x434;&#x435;&#x43D;&#x438;&#x435;" category_id="8049" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x413;&#x430;&#x440;&#x43D;&#x438;&#x442;&#x443;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;" category_id="8080" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x410;&#x432;&#x442;&#x43E;&#x43C;&#x430;&#x433;&#x43D;&#x438;&#x442;&#x43E;&#x43B;&#x44B;" category_id="8085" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B;" category_id="8089" is_percent="true">8.0</tariff-category>
+      <tariff-category name="&#x428;&#x430;&#x433;&#x43E;&#x43C;&#x435;&#x440;&#x44B;" category_id="8099" is_percent="true">8.0</tariff-category>
+      <tariff-category name="&#x422;&#x43E;&#x43D;&#x43E;&#x43C;&#x435;&#x442;&#x440;&#x44B;" category_id="8103" is_percent="true">8.0</tariff-category>
+      <tariff-category name="&#x413;&#x430;&#x440;&#x43D;&#x438;&#x442;&#x443;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x41F;&#x41A;" category_id="8111" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x41A;&#x430;&#x431;&#x435;&#x43B;&#x438;, &#x43F;&#x435;&#x440;&#x435;&#x445;&#x43E;&#x434;&#x43D;&#x438;&#x43A;&#x438;, &#x430;&#x434;&#x430;&#x43F;&#x442;&#x435;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;" category_id="8113" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x449;&#x438;&#x442;&#x43D;&#x44B;&#x435; &#x43F;&#x43B;&#x435;&#x43D;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x43F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x43E;&#x432;" category_id="8125" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x449;&#x438;&#x442;&#x43D;&#x44B;&#x435; &#x43F;&#x43B;&#x435;&#x43D;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x43E;&#x432;" category_id="8127" is_percent="true">5.0</tariff-category>
+      <tariff-category name="&#x410;&#x432;&#x442;&#x43E;&#x430;&#x43A;&#x443;&#x441;&#x442;&#x438;&#x43A;&#x430;" category_id="8253" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x449;&#x438;&#x442;&#x43D;&#x44B;&#x435; &#x43F;&#x43B;&#x435;&#x43D;&#x43A;&#x438;" category_id="8275" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x417;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430;" category_id="8277" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x410;&#x432;&#x442;&#x43E;&#x43C;&#x43E;&#x431;&#x438;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x437;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430;" category_id="8279" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x421;&#x435;&#x442;&#x435;&#x432;&#x44B;&#x435; &#x437;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430;" category_id="8281" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x438; &#x441;&#x443;&#x43C;&#x43A;&#x438;" category_id="8287" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x414;&#x43E;&#x43A; &#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438;" category_id="8291" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x42D;&#x43B;&#x435;&#x43C;&#x435;&#x43D;&#x442;&#x44B; &#x43F;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x44F;" category_id="8293" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x414;&#x43E;&#x43A; &#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438; &#x434;&#x43B;&#x44F; &#x43F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x43E;&#x432;" category_id="8295" is_percent="true">10.0</tariff-category>
+      <tariff-category name="&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x43C;&#x430;&#x43D;&#x438;&#x43F;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B;" category_id="8621" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x423;&#x43C;&#x43D;&#x44B;&#x435; &#x447;&#x430;&#x441;&#x44B;" category_id="8936" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x43F;&#x43E;&#x440;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x447;&#x430;&#x441;&#x44B;" category_id="8942" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x421;&#x43F;&#x43E;&#x440;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x431;&#x440;&#x430;&#x441;&#x43B;&#x435;&#x442;&#x44B;" category_id="8945" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x430;" category_id="8948" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x433;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B;" category_id="8951" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41C;&#x443;&#x437;&#x44B;&#x43A;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x433;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B;" category_id="8954" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B; &#x434;&#x43B;&#x44F; &#x434;&#x43E;&#x43C;&#x430;" category_id="8960" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B; &#x434;&#x43B;&#x44F; &#x437;&#x434;&#x43E;&#x440;&#x43E;&#x432;&#x44C;&#x44F;" category_id="8972" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x42D;&#x43A;&#x448;&#x43D;-&#x43A;&#x430;&#x43C;&#x435;&#x440;&#x44B;" category_id="8975" is_percent="true">3.0</tariff-category>
+      <tariff-category name="GPS &#x43C;&#x430;&#x44F;&#x43A;&#x438;" category_id="8990" is_percent="true">1.5</tariff-category>
+      <tariff-category name="&#x41D;&#x430;&#x441;&#x442;&#x43E;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x434;&#x435;&#x440;&#x436;&#x430;&#x442;&#x435;&#x43B;&#x438;" category_id="9053" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x43F;&#x440;&#x438;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438;" category_id="9209" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x41A;&#x43E;&#x43C;&#x43F;&#x44C;&#x44E;&#x442;&#x435;&#x440;&#x43D;&#x430;&#x44F; &#x430;&#x43A;&#x443;&#x441;&#x442;&#x438;&#x43A;&#x430;" category_id="9218" is_percent="true">3.0</tariff-category>
+      <tariff-category name="GSM/CDMA/LTE &#x43C;&#x43E;&#x434;&#x435;&#x43C;&#x44B;" category_id="9221" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x423;&#x43C;&#x43D;&#x44B;&#x439; &#x434;&#x43E;&#x43C;" category_id="9305" is_percent="true">3.0</tariff-category>
+      <tariff-category name="&#x410;&#x43D;&#x442;&#x435;&#x43D;&#x43D;&#x44B;, &#x443;&#x441;&#x438;&#x43B;&#x438;&#x442;&#x435;&#x43B;&#x438;, &#x430;&#x434;&#x430;&#x43F;&#x442;&#x435;&#x440;&#x44B;" category_id="9398" is_percent="true">1.5</tariff-category>
+      <tariff-category name="&#x412;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;&#x44B;" category_id="982" is_percent="true">3.0</tariff-category>
+      <tariff category_name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x443;&#x43C;&#x43D;&#x44B;&#x445; &#x447;&#x430;&#x441;&#x43E;&#x432;;&#x421;&#x435;&#x43B;&#x444;&#x438;-&#x43F;&#x430;&#x43B;&#x43A;&#x438;;&#x413;&#x438;&#x440;&#x43E;&#x441;&#x43A;&#x443;&#x442;&#x435;&#x440;&#x44B;;&#x420;&#x430;&#x434;&#x438;&#x43E;- &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43D;&#x44F;&#x43D;&#x438;;&#x412;&#x43D;&#x443;&#x442;&#x440;&#x435;&#x43D;&#x43D;&#x438;&#x435; HDD &#x438; SSD;&#x41A;&#x43E;&#x43C;&#x43F;&#x43B;&#x435;&#x43A;&#x442;&#x443;&#x44E;&#x449;&#x438;&#x435;;&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x43A;&#x440;&#x435;&#x441;&#x43B;&#x430;;&#x41A;&#x43E;&#x43C;&#x43F;&#x430;&#x43A;&#x442;&#x43D;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x44B;;&#x420;&#x430;&#x434;&#x438;&#x43E;&#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x44B;;&#x418;&#x43D;&#x433;&#x430;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B;;&#x422;&#x435;&#x440;&#x43C;&#x43E;&#x43C;&#x435;&#x442;&#x440;&#x44B;;&#x413;&#x440;&#x435;&#x43B;&#x43A;&#x438;;&#x426;&#x438;&#x444;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x440;&#x430;&#x43C;&#x43A;&#x438;;&#x41A;&#x443;&#x43A;&#x43E;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x434;&#x43E;&#x43C;&#x438;&#x43A;&#x438;;&#x41C;&#x443;&#x43B;&#x44C;&#x442;&#x438;&#x43C;&#x435;&#x434;&#x438;&#x430; &#x43F;&#x43B;&#x435;&#x435;&#x440;&#x44B;;&#x420;&#x430;&#x446;&#x438;&#x438;;&#x417;&#x435;&#x440;&#x43A;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x44B;;&#x41F;&#x43E;&#x433;&#x43E;&#x434;&#x43D;&#x44B;&#x435; &#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438;;GPS-&#x43D;&#x430;&#x432;&#x438;&#x433;&#x430;&#x442;&#x43E;&#x440;&#x44B;;&#x414;&#x438;&#x43A;&#x442;&#x43E;&#x444;&#x43E;&#x43D;&#x44B;;&#x41F;&#x440;&#x43E;&#x435;&#x43A;&#x442;&#x43E;&#x440;&#x44B;;&#x410;&#x43A;&#x443;&#x441;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438;&#x435; &#x441;&#x438;&#x441;&#x442;&#x435;&#x43C;&#x44B;;&#x41C;&#x430;&#x433;&#x43D;&#x438;&#x442;&#x43E;&#x43B;&#x44B;;&#x420;&#x43E;&#x443;&#x442;&#x435;&#x440;&#x44B;;&#x41A;&#x43E;&#x43C;&#x43F;&#x430;&#x43A;&#x442;&#x43D;&#x44B;&#x435; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x44B; &#x441;&#x43E; &#x441;&#x43C;&#x435;&#x43D;&#x43D;&#x43E;&#x439; &#x43E;&#x43F;&#x442;&#x438;&#x43A;&#x43E;&#x439;;&#x421;&#x438;&#x441;&#x442;&#x435;&#x43C;&#x43D;&#x44B;&#x435; &#x431;&#x43B;&#x43E;&#x43A;&#x438;;&#x41C;&#x43E;&#x43D;&#x438;&#x442;&#x43E;&#x440;&#x44B;;&#x41C;&#x435;&#x434;&#x438;&#x430;&#x43F;&#x43B;&#x435;&#x435;&#x440;&#x44B;;&#x418;&#x433;&#x440;&#x443;&#x448;&#x43A;&#x438; &#x438; &#x43A;&#x43E;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43A;&#x442;&#x43E;&#x440;&#x44B;;&#x41C;&#x424;&#x423;, &#x43F;&#x440;&#x438;&#x43D;&#x442;&#x435;&#x440;&#x44B;, &#x441;&#x43A;&#x430;&#x43D;&#x435;&#x440;&#x44B;;&#x41C;&#x43E;&#x43D;&#x43E;&#x431;&#x43B;&#x43E;&#x43A;&#x438;;&#x420;&#x430;&#x434;&#x430;&#x440;-&#x434;&#x435;&#x442;&#x435;&#x43A;&#x442;&#x43E;&#x440;&#x44B;;&#x411;&#x438;&#x43D;&#x43E;&#x43A;&#x43B;&#x438;, &#x442;&#x435;&#x43B;&#x435;&#x441;&#x43A;&#x43E;&#x43F;&#x44B;, &#x43C;&#x438;&#x43A;&#x440;&#x43E;&#x441;&#x43A;&#x43E;&#x43F;&#x44B;;&#x412;&#x438;&#x434;&#x435;&#x43E;&#x440;&#x435;&#x433;&#x438;&#x441;&#x442;&#x440;&#x430;&#x442;&#x43E;&#x440;&#x44B;;&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x430;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;;&#x418;&#x411;&#x41F;;&#x411;&#x435;&#x437;&#x43E;&#x43F;&#x430;&#x441;&#x43D;&#x43E;&#x441;&#x442;&#x44C; &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43D;&#x430;&#x431;&#x43B;&#x44E;&#x434;&#x435;&#x43D;&#x438;&#x435;;&#x410;&#x432;&#x442;&#x43E;&#x43C;&#x430;&#x433;&#x43D;&#x438;&#x442;&#x43E;&#x43B;&#x44B;;&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x43C;&#x430;&#x43D;&#x438;&#x43F;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B;;&#x423;&#x43C;&#x43D;&#x44B;&#x435; &#x447;&#x430;&#x441;&#x44B;;&#x421;&#x43F;&#x43E;&#x440;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x447;&#x430;&#x441;&#x44B;;&#x421;&#x43F;&#x43E;&#x440;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x431;&#x440;&#x430;&#x441;&#x43B;&#x435;&#x442;&#x44B;;&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x430;;&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x433;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B;;&#x41C;&#x443;&#x437;&#x44B;&#x43A;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x433;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B;;&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B; &#x434;&#x43B;&#x44F; &#x434;&#x43E;&#x43C;&#x430;;&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B; &#x434;&#x43B;&#x44F; &#x437;&#x434;&#x43E;&#x440;&#x43E;&#x432;&#x44C;&#x44F;;&#x42D;&#x43A;&#x448;&#x43D;-&#x43A;&#x430;&#x43C;&#x435;&#x440;&#x44B;;&#x41D;&#x430;&#x441;&#x442;&#x43E;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x434;&#x435;&#x440;&#x436;&#x430;&#x442;&#x435;&#x43B;&#x438;;&#x418;&#x433;&#x440;&#x43E;&#x432;&#x44B;&#x435; &#x43F;&#x440;&#x438;&#x441;&#x442;&#x430;&#x432;&#x43A;&#x438;;&#x41A;&#x43E;&#x43C;&#x43F;&#x44C;&#x44E;&#x442;&#x435;&#x440;&#x43D;&#x430;&#x44F; &#x430;&#x43A;&#x443;&#x441;&#x442;&#x438;&#x43A;&#x430;;GSM/CDMA/LTE &#x43C;&#x43E;&#x434;&#x435;&#x43C;&#x44B;;&#x423;&#x43C;&#x43D;&#x44B;&#x439; &#x434;&#x43E;&#x43C;;&#x412;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;&#x44B;" is_percent="true" rate_type="percent" id="a1ef549c242182914ae82b846d124c14">3.0</tariff>
+      <tariff category_name="&#x427;&#x435;&#x445;&#x43B;&#x44B;;&#x421;&#x442;&#x435;&#x442;&#x43E;&#x441;&#x43A;&#x43E;&#x43F;&#x44B;;&#x41A;&#x440;&#x43E;&#x43D;&#x448;&#x442;&#x435;&#x439;&#x43D;&#x44B;;FM-&#x442;&#x440;&#x430;&#x43D;&#x441;&#x43C;&#x438;&#x442;&#x442;&#x435;&#x440;&#x44B;;GPS &#x43C;&#x430;&#x44F;&#x43A;&#x438;;&#x410;&#x43D;&#x442;&#x435;&#x43D;&#x43D;&#x44B;, &#x443;&#x441;&#x438;&#x43B;&#x438;&#x442;&#x435;&#x43B;&#x438;, &#x430;&#x434;&#x430;&#x43F;&#x442;&#x435;&#x440;&#x44B;" is_percent="true" rate_type="percent" id="9f474962c6f8cd0744a1dbea205d35be">1.5</tariff>
+      <tariff category_name="&#x41F;&#x43E;&#x440;&#x442;&#x430;&#x442;&#x438;&#x432;&#x43D;&#x44B;&#x435; &#x43A;&#x43E;&#x43B;&#x43E;&#x43D;&#x43A;&#x438;;&#x418;&#x43D;&#x442;&#x435;&#x440;&#x44C;&#x435;&#x440; &#x438; &#x43F;&#x440;&#x43E;&#x447;&#x435;&#x435;;&#x424;&#x435;&#x43D;&#x44B;;&#x427;&#x430;&#x439;&#x43D;&#x438;&#x43A;&#x438; &#x438; &#x442;&#x435;&#x440;&#x43C;&#x43E;&#x43F;&#x43E;&#x442;&#x44B;;&#x423;&#x442;&#x44E;&#x433;&#x438;;&#x41F;&#x44B;&#x43B;&#x435;&#x441;&#x43E;&#x441;&#x44B;;&#x411;&#x43B;&#x435;&#x43D;&#x434;&#x435;&#x440;&#x44B; &#x438; &#x43C;&#x438;&#x43A;&#x441;&#x435;&#x440;&#x44B;;&#x41F;&#x440;&#x43E;&#x447;&#x438;&#x435; &#x438;&#x437;&#x43C;&#x435;&#x440;&#x438;&#x442;&#x435;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x438;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x44B;;&#x421;&#x442;&#x430;&#x431;&#x438;&#x43B;&#x438;&#x437;&#x430;&#x442;&#x43E;&#x440;&#x44B; &#x43D;&#x430;&#x43F;&#x440;&#x44F;&#x436;&#x435;&#x43D;&#x438;&#x44F;;&#x421;&#x430;&#x434;&#x43E;&#x432;&#x44B;&#x439; &#x438;&#x43D;&#x432;&#x435;&#x43D;&#x442;&#x430;&#x440;&#x44C;;&#x41F;&#x435;&#x440;&#x444;&#x43E;&#x440;&#x430;&#x442;&#x43E;&#x440;&#x44B; &#x438; &#x43E;&#x442;&#x431;&#x43E;&#x439;&#x43D;&#x44B;&#x435; &#x43C;&#x43E;&#x43B;&#x43E;&#x442;&#x43A;&#x438;;&#x41E;&#x431;&#x43E;&#x433;&#x440;&#x435;&#x432;&#x430;&#x442;&#x435;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x43F;&#x440;&#x438;&#x431;&#x43E;&#x440;&#x44B;;&#x41D;&#x430;&#x441;&#x43E;&#x441;&#x44B;;&#x41A;&#x43E;&#x444;&#x435;&#x432;&#x430;&#x440;&#x43A;&#x438; &#x438; &#x43A;&#x43E;&#x444;&#x435;&#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;;&#x422;&#x440;&#x438;&#x43C;&#x43C;&#x435;&#x440;&#x44B;;&#x426;&#x435;&#x43F;&#x43D;&#x44B;&#x435; &#x43F;&#x438;&#x43B;&#x44B;;&#x41C;&#x430;&#x441;&#x441;&#x430;&#x436;&#x435;&#x440;&#x44B;;&#x412;&#x435;&#x441;&#x44B;;&#x41C;&#x430;&#x43D;&#x438;&#x43A;&#x44E;&#x440;&#x43D;&#x44B;&#x435; &#x43D;&#x430;&#x431;&#x43E;&#x440;&#x44B;;&#x41C;&#x443;&#x43B;&#x44C;&#x442;&#x438;&#x432;&#x430;&#x440;&#x43A;&#x438; &#x438; &#x440;&#x438;&#x441;&#x43E;&#x432;&#x430;&#x440;&#x43A;&#x438;;&#x41C;&#x438;&#x43A;&#x440;&#x43E;&#x432;&#x43E;&#x43B;&#x43D;&#x43E;&#x432;&#x44B;&#x435; &#x43F;&#x435;&#x447;&#x438;;&#x414;&#x438;&#x441;&#x43A;&#x43E;&#x432;&#x44B;&#x435; &#x438; &#x43B;&#x435;&#x43D;&#x442;&#x43E;&#x447;&#x43D;&#x44B;&#x435; &#x43F;&#x438;&#x43B;&#x44B;;&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x43A;&#x43E;&#x444;&#x435;&#x43C;&#x430;&#x448;&#x438;&#x43D;;&#x417;&#x443;&#x431;&#x43D;&#x44B;&#x435; &#x449;&#x435;&#x442;&#x43A;&#x438;;&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x437;&#x443;&#x431;&#x43D;&#x44B;&#x445; &#x449;&#x435;&#x442;&#x43E;&#x43A;;&#x411;&#x440;&#x438;&#x442;&#x432;&#x44B;, &#x44D;&#x43F;&#x438;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B;;&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x431;&#x440;&#x438;&#x442;&#x432; &#x438; &#x44D;&#x43F;&#x438;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x43E;&#x432;;&#x422;&#x43E;&#x441;&#x442;&#x435;&#x440;&#x44B;;&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x43F;&#x44B;&#x43B;&#x435;&#x441;&#x43E;&#x441;&#x43E;&#x432;;&#x412;&#x44B;&#x43F;&#x440;&#x44F;&#x43C;&#x438;&#x442;&#x435;&#x43B;&#x438; &#x438; &#x449;&#x438;&#x43F;&#x446;&#x44B;;&#x421;&#x43E;&#x43A;&#x43E;&#x432;&#x44B;&#x436;&#x438;&#x43C;&#x430;&#x43B;&#x43A;&#x438;;&#x41A;&#x443;&#x445;&#x43E;&#x43D;&#x43D;&#x44B;&#x435; &#x432;&#x435;&#x441;&#x44B;;&#x41A;&#x43B;&#x438;&#x43C;&#x430;&#x442;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;;&#x414;&#x440;&#x443;&#x433;&#x430;&#x44F; &#x43A;&#x443;&#x445;&#x43E;&#x43D;&#x43D;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;;&#x41F;&#x440;&#x43E;&#x447;&#x438;&#x435; &#x44D;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x438;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x44B;;&#x41F;&#x440;&#x43E;&#x447;&#x430;&#x44F; &#x43C;&#x435;&#x43B;&#x43A;&#x430;&#x44F; &#x431;&#x44B;&#x442;&#x43E;&#x432;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;;&#x428;&#x432;&#x435;&#x439;&#x43D;&#x44B;&#x435; &#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;;&#x41C;&#x43E;&#x431;&#x438;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x44B;;&#x421;&#x43C;&#x430;&#x440;&#x442;&#x444;&#x43E;&#x43D;&#x44B;" is_percent="true" rate_type="percent" id="1128ff350d01eae244d9e3da4ae59227">2.0</tariff>
+      <tariff category_name="&#x41A;&#x440;&#x443;&#x43F;&#x43D;&#x43E; &#x431;&#x44B;&#x442;&#x43E;&#x432;&#x430;&#x44F; &#x442;&#x435;&#x445;&#x43D;&#x438;&#x43A;&#x430;" is_percent="true" rate_type="percent" id="9c7f67f173b2d0c90dee0f69ed089a58">0.38</tariff>
+      <tariff category_name="&#x428;&#x43B;&#x438;&#x444;&#x43E;&#x432;&#x430;&#x43B;&#x44C;&#x43D;&#x44B;&#x435; &#x43C;&#x430;&#x448;&#x438;&#x43D;&#x44B;;&#x420;&#x443;&#x447;&#x43D;&#x44B;&#x435; &#x438;&#x43D;&#x441;&#x442;&#x440;&#x443;&#x43C;&#x435;&#x43D;&#x442;&#x44B;" is_percent="true" rate_type="percent" id="b811449e17cd00755c94c6897e4d89e7">1.0</tariff>
+      <tariff category_name="&#x41F;&#x440;&#x43E;&#x446;&#x435;&#x441;&#x441;&#x43E;&#x440;&#x44B;" is_percent="true" rate_type="percent" id="50a55eed49cff14bd24cfbcaf74b953d">2.93</tariff>
+      <tariff category_name="&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E;- &#x438; &#x432;&#x438;&#x434;&#x435;&#x43E;&#x43A;&#x430;&#x43C;&#x435;&#x440;;&#x421;&#x443;&#x43C;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x43D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x43E;&#x432;;&#x41A;&#x43E;&#x43C;&#x43F;&#x44C;&#x44E;&#x442;&#x435;&#x440;&#x43D;&#x44B;&#x435; &#x430;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;;&#x410;&#x432;&#x442;&#x43E;&#x430;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;;&#x412;&#x43D;&#x435;&#x448;&#x43D;&#x438;&#x435; HDD &#x438; SSD;USB &#x444;&#x43B;&#x435;&#x448;&#x43A;&#x438;;&#x41A;&#x430;&#x440;&#x434;&#x440;&#x438;&#x434;&#x435;&#x440;&#x44B;;&#x410;&#x43A;&#x441;&#x435;&#x441;&#x441;&#x443;&#x430;&#x440;&#x44B;;&#x410;&#x43A;&#x43A;&#x443;&#x43C;&#x443;&#x43B;&#x44F;&#x442;&#x43E;&#x440;&#x44B; &#x438; &#x434;&#x440;&#x443;&#x433;&#x43E;&#x435;;&#x421;&#x442;&#x438;&#x43B;&#x443;&#x441;&#x44B;;&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x434;&#x43B;&#x44F; &#x44D;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x44B;&#x445; &#x43A;&#x43D;&#x438;&#x433;;&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x434;&#x43B;&#x44F; &#x43F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x43E;&#x432;;&#x41A;&#x430;&#x440;&#x442;&#x44B; &#x43F;&#x430;&#x43C;&#x44F;&#x442;&#x438;;&#x41A;&#x430;&#x431;&#x435;&#x43B;&#x438;, &#x43F;&#x435;&#x440;&#x435;&#x445;&#x43E;&#x434;&#x43D;&#x438;&#x43A;&#x438;, &#x430;&#x434;&#x430;&#x43F;&#x442;&#x435;&#x440;&#x44B; &#x434;&#x43B;&#x44F; &#x442;&#x435;&#x43B;&#x435;&#x444;&#x43E;&#x43D;&#x43E;&#x432;;&#x410;&#x432;&#x442;&#x43E;&#x430;&#x43A;&#x443;&#x441;&#x442;&#x438;&#x43A;&#x430;;&#x417;&#x430;&#x449;&#x438;&#x442;&#x43D;&#x44B;&#x435; &#x43F;&#x43B;&#x435;&#x43D;&#x43A;&#x438;;&#x417;&#x430;&#x440;&#x44F;&#x434;&#x43D;&#x44B;&#x435; &#x443;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x441;&#x442;&#x432;&#x430;;&#x427;&#x435;&#x445;&#x43B;&#x44B; &#x438; &#x441;&#x443;&#x43C;&#x43A;&#x438;;&#x414;&#x43E;&#x43A; &#x441;&#x442;&#x430;&#x43D;&#x446;&#x438;&#x438;;&#x42D;&#x43B;&#x435;&#x43C;&#x435;&#x43D;&#x442;&#x44B; &#x43F;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x44F;" is_percent="true" rate_type="percent" id="9a74bf5a1ec70343da2afd8ca9df44bf">10.0</tariff>
+      <tariff category_name="&#x41D;&#x43E;&#x443;&#x442;&#x431;&#x443;&#x43A;&#x438;" is_percent="true" rate_type="percent" id="4494cbcc093931272f9bef0db146b1d0">1.6</tariff>
+      <tariff category_name="&#x42D;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x44B;&#x435; &#x43A;&#x43D;&#x438;&#x433;&#x438;;&#x413;&#x430;&#x434;&#x436;&#x435;&#x442;&#x44B;;&#x428;&#x430;&#x433;&#x43E;&#x43C;&#x435;&#x440;&#x44B;;&#x422;&#x43E;&#x43D;&#x43E;&#x43C;&#x435;&#x442;&#x440;&#x44B;" is_percent="true" rate_type="percent" id="3f94c2291a4060daa678c4598eefcd0b">8.0</tariff>
+      <tariff category_name="&#x422;&#x435;&#x43B;&#x435;&#x432;&#x438;&#x437;&#x43E;&#x440;&#x44B;" is_percent="true" rate_type="percent" id="da70e6514f86e90b3f8dff6efd8e811b">1.49</tariff>
+      <tariff category_name="&#x41F;&#x43B;&#x430;&#x43D;&#x448;&#x435;&#x442;&#x44B;" is_percent="true" rate_type="percent" id="e004f78ed6265e8d252f2e0cc3988b75">2.6</tariff>
+      <tariff category_name="&#x421;&#x440;&#x435;&#x434;&#x441;&#x442;&#x432;&#x430; &#x434;&#x43B;&#x44F; &#x443;&#x445;&#x43E;&#x434;&#x430; &#x437;&#x430; &#x43E;&#x43F;&#x442;&#x438;&#x43A;&#x43E;&#x439;;&#x417;&#x430;&#x449;&#x438;&#x442;&#x43D;&#x44B;&#x435; &#x43F;&#x43B;&#x435;&#x43D;&#x43A;&#x438; &#x434;&#x43B;&#x44F; &#x444;&#x43E;&#x442;&#x43E;&#x430;&#x43F;&#x43F;&#x430;&#x440;&#x430;&#x442;&#x43E;&#x432;" is_percent="true" rate_type="percent" id="c4b5d2c53603ed2795c9044dbda32ce1">5.0</tariff>
+    </tariffs>
+  </shop>
+  <shop>
+    <id><![CDATA[11751]]></id>
+    <name><![CDATA[aviasales.ru]]></name>
+    <short-description><![CDATA[Поиск дешевых авиабилетов (aviasales)]]></short-description>
+    <description><![CDATA[Aviasales.ru – проверенный помощник в поиске авиабилетов, первый и единственный в Рунете метапоиск дешевых авиабилетов. Мы ищем авиабилеты в 728 авиакомпаниях, 15 авиакассах и 5 системах. Никаких сборов или наценок – на aviasales.ru лишь максимально низкие тарифы от надежных агентств, а где покупать – решать вам. 
+
+Премущества Aviasales.ru:
+
+-  инновационный нанопоиск авиабилетов найдет для вас не только самый лучший вариант на конкретные даты, но и предложит другие даты, когда стоимость перелета может быть ещё ниже. Выбирайте самые "дешёвые даты" в специальном разделе сайта Цены на авиабилеты
+
+- на сайте собрана самая большая база спецпредложений авиакомпаний летающих по России и из России за рубеж. Редакция имеет прямые контакты со многими авиакомпаниями и получает информацию об акциях порой раньше, чем она публикуется на сайте самой авиакомпании.
+
+В статистике Где Слон партнеры видят оплаченные заказы.
+Среднее время оплаты заказов = 30 мин, одно из максимальных - до 3х дней.
+Максимальное (редко) = 1 месяц
+
+Информация для наиболее эффективных настроек таргетинга:
+
+ГЕО/ ТОП регионов по продажам:
+30% Москва
+10% Санкт-Петербург
+остальные
+
+Целевая аудитория:
+ 25-35 лет
+55% Женщины
+45% Мужчины]]></description>
+    <url><![CDATA[http://aviasales.ru/]]></url>
+    <conditions><![CDATA[Вознаграждение вебмастера рассчитывается по модели revenue share и составляет 53,85% от дохода aviasales.ru
+
+Вебмастера, работающие с кэшбек трафиком, могут указать, что вознаграждение будет до 1.7% от стоимости билета. Но обязательно прописать, что Aviasales платиn % от прибыли с авиабилета, которую они получают от авиакомпаний и агентств.]]></conditions>
+    <is-green><![CDATA[false]]></is-green>
+    <gs-commission-mark><![CDATA[53,85%]]></gs-commission-mark>
+    <country>ru</country>
+    <kind><![CDATA[Индивидуальный предприниматель]]></kind>
+    <categories>
+      <category>
+        <id>31</id>
+        <name><![CDATA[Туризм]]></name>
+      </category>
+    </categories>
+    <logo-file-name>https://cdn.gdeslon.ru/uploads/users/11751/logos/big.png?1324448383</logo-file-name>
+    <affiliate-link>https://sf.gdeslon.ru/cf/ed248f4498?mid=11751</affiliate-link>
+    <traffic-types>
+      <traffic-type>
+        <name><![CDATA[Контекстная реклама]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Контекстная реклама на бренд]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Cashback]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Clickunder/Popunder]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Doorway]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Баннерная реклама]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Тизерная реклама]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Мотивированный трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Группы в соцсетях]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Ретаргетинг]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Брокерский трафик]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Таргетированная реклама в соцсетях]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Приложения в соцсетях]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Скидочные и купонные агрегаторы]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Использование промокодов]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Видеоконтент (youtube, rutube, vimeo)]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Toolbar]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Popup-формат]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Email-рассылка]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Мобильный трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Adult трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Витрины]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Партнерские магазины]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[Мультитрафик]]></name>
+        <allowed>yes</allowed>
+      </traffic-type>
+      <traffic-type>
+        <name><![CDATA[СМС-трафик]]></name>
+        <allowed>no</allowed>
+      </traffic-type>
+    </traffic-types>
+    <tariffs>
+      <tariff id="71" title="&#x41E;&#x43F;&#x43B;&#x430;&#x447;&#x435;&#x43D;&#x43D;&#x44B;&#x439; &#x437;&#x430;&#x43A;&#x430;&#x437;" rate_type="percent" traffic_categories="">53.85</tariff>
+    </tariffs>
+  </shop>
+</shops>

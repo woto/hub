@@ -84,7 +84,7 @@
 class Advertisers::Admitad < Advertiser
 
   index_name "#{Rails.env}.advertisers"
-
+  include Advertisers::AdmitadAttributesMapper
   #     ext_id: advertiser['id'],
   #     data: advertiser,
   #     synced_at: Time.current
