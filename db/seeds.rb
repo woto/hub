@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+
 if Rails.env.development?
-  User.create!(email: 'admin@example.com',
-               password: 'password',
-               password_confirmation: 'password',
-               role: 'admin')
+  user = User.create!(email: 'admin@example.com',
+                      password: 'password',
+                      password_confirmation: 'password',
+                      role: 'admin')
+
+  Post.create!(title: 'Заголовок', body:'<p>Статья</p>', user: user)
 
   advertiser = Advertiser.create!(name: 'Рекламодатель 1')
 
