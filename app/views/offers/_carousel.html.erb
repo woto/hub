@@ -1,0 +1,42 @@
+<% pictures = row['_source']['picture'] || row['_source']['image'] %>
+
+<div id="carousel-controls-<%= offer_idx %>" class="carousel slide" data-interval="false" data-ride="carousel">
+
+  <div class="carousel-inner d-flex">
+    <% if pictures && pictures.size > 0 %>
+      <% pictures.each_with_index do |picture, idx| %>
+        <div class="carousel-item <%= 'active' if idx == 0 %>">
+          <div style="min-height: 200px" class="d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-indigo position-absolute" style="z-index: 10" role="status"></div>
+            <%= image_tag "//192.168.1.2.nip.io:8080/x380/#{picture['#']}",
+                          onerror: "this.src='#{asset_pack_path('media/images/static/image-not-found.png')}'",
+                          style: 'z-index: 20; max-height: 380px',
+                          alt: 'TODO', data: { 'holder-rendered' => 'true'} %>
+          </div>
+
+        </div>
+      <% end %>
+    <% else %>
+      <div class="carousel-item active">
+        <div style="min-height: 200px" class="d-flex align-items-center justify-content-center">
+          <%= image_tag asset_pack_path('media/images/static/image-not-found.png'),
+                        style: 'z-index: 20; max-height: 380px'
+          %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if pictures && pictures.size > 1 %>
+    <a class="carousel-control-prev" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-slide="prev">
+      <span class="carousel-control-outline carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="carousel-control-next" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-slide="next">
+      <span class="carousel-control-outline carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  <% end %>
+
+</div>
