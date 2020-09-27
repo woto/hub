@@ -1,5 +1,5 @@
 require 'rails_helper'
 
 RSpec.describe Feeds::Process do
-  pending
+  skip 'TODO! highly important'
 end
