@@ -12,7 +12,9 @@
       <%= select_tag :per, items, id: 'capybara-perselect', class: 'form-select',
                      data: {
                          controller: 'table-per',
-                         action: 'change->table-per#visit'} %>
+                         action: 'change->table-per#visit',
+                         table_per_select_value: @pr.per
+                     } %>
     </div>
   </div>
 </div>
