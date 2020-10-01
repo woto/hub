@@ -1,8 +1,11 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-    connect() {
-        this.element.value = this.data.get('select-value');
+    initialize() {
+        const that = this;
+        setTimeout(() => {
+            that.element.value = that.data.get('select-value')
+        }, 0);
     }
 
     visit(event) {
