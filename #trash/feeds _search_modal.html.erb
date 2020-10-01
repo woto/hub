@@ -1,0 +1,42 @@
+<%= tag.div id: 'capybara-table-search-feeds',
+            data: {
+                controller: 'table-search-feeds focusable-input',
+                table_search_offers_everywhere_url: feeds_url
+
+
+            },
+            class: 'modal modal-blur fade',
+            tabindex: '-1', role: 'dialog', aria: { hidden: "true" } do
+%>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <%= t('.search_title') %>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <%= render Icons::XComponent.new %>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <%= text_field_tag :q, params[:q],
+                           data: {
+                               target: 'table-search-feeds.searchText focusable-input.searchText',
+                               action: 'keydown->table-search-feeds#clickSearchButton'
+                           },
+                           class: "form-control form-control-rounded mb-2",
+                           placeholder: t(".search_placeholder")
+        %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white mr-auto" data-dismiss="modal">
+          <%= t('close') %>
+        </button>
+        <%= render 'search_button', color: 'btn-primary' %>
+      </div>
+
+    </div>
+  </div>
+<% end %>
