@@ -4,10 +4,14 @@ Rails.logger = Logger.new(STDOUT)
 
 namespace :hub do
   namespace :elastic do
-    desc "Cleans all indexes"
-    task truncate: :environment do
-      client = Elasticsearch::Client.new Rails.application.config.elastic
-      client.indices.delete index: ::Elastic::IndexName.wildcard
+    desc "Deletes all indexes"
+    task delete_all: :environment do
+      Elastic::DeleteAll.call
+    end
+
+    desc "Deletes all offers indexes"
+    task delete_offers: :environment do
+      Elastic::DeleteOffers.call
     end
   end
 end
