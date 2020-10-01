@@ -64,4 +64,19 @@ export default class extends Controller {
             error: function(data) { alert(data) }
         })
     }
+
+    //   # def categories
+    //   #   @categories = Rails.cache.fetch("#{params[:feed_id]} #{params[:category_ids]} 1", expires_in: 10.minutes) do
+    //   #     Rails.logger.debug('Categories cache missed')
+    //   #     scope = FeedCategory.where(feed_id: params[:feed_id])
+    //   #     scope = scope.where(id: params[:category_ids]) if params[:category_ids]
+    //   #     scope.select('id, name, ancestry_depth as level, ancestry').order(:name).arrange_serializable.to_json
+    //   #   end
+    //   #
+    //   #   respond_to do |format|
+    //   #     format.json do
+    //   #       render json: @categories
+    //   #     end
+    //   #   end
+    //   # end
 }
