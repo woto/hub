@@ -42,3 +42,16 @@
     color: #a8aeb7;
   }
 }
+
+.btn-outline {
+  border: 1px solid rgba(110, 117, 130, 0.2)
+}
+
+aside {
+  .search-text {
+    color: rgba(255, 255, 255, 0.72);
+    &:focus {
+      color: white;
+    }
+  }
+}
