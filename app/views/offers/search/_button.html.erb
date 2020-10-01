@@ -4,7 +4,7 @@
                  id: nil,
                  class: "btn #{btn_class} dropdown-toggle",
                  aria: { label: 'Button' } do %>
-    <%= render Icons::SearchComponent.new %>
+    <%== GlobalHelper.icons['search'] %>
   <% end %>
 
   <div class="dropdown-menu dropdown-menu-right">
