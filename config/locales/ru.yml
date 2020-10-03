@@ -9,6 +9,8 @@ ru:
   columns: Колонки
   displaying: Отображается
 
+
+
   buttons:
     advertiser: Рекламодатель
     feed: Прайс лист
@@ -59,6 +61,7 @@ ru:
     posts: Посты
     promotions: Продвижение
     news: Новости
+    users: Пользователи
     settings: Настройки
     profile: Профиль
     password: Пароль
@@ -72,21 +75,24 @@ ru:
       logout: Выход
       settings: Настройки
 
-  feeds:
-    search_bar:
-      search_placeholder: Введите текст для поиска прайс листа...
+  search:
+    bar:
+      search_placeholder: Введите текст для поиска...
+
+  template:
+    search:
+      bar:
+        search_placeholder: Введите текст для поиска...
 
   offers:
-    search_bar:
-      search_placeholder: Введите текст для поиска товара...
-    search_button:
-      search_inside_category: В этой категории
-      search_inside_feed: В этом прайс листе
-      search_everywhere: Во всех прайс листах
+    search:
+      button:
+        search_inside_category: В этой категории
+        search_inside_feed: В этом прайс листе
+        search_everywhere: Во всех прайс листах
 
-  advertisers:
-    search_bar:
-      search_placeholder: Введите текст для поиска рекламодателей...
+      bar:
+        search_placeholder: Введите текст для поиска...
 
   table:
     title:
