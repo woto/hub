@@ -4,15 +4,37 @@ services:
   elastic:
     env_file:
       - .env
-    image: elasticsearch:7.4.0
+    image: elasticsearch:7.9.2
     ports:
       - ${ELASTIC_REST_PORT}:9200
       - ${ELASTIC_CLUSTER_PORT}:9300
     environment:
       - discovery.type=single-node
-
     volumes:
       - elastic:/usr/share/elasticsearch/data
+
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=192.168.1.10
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - network.bind_host=0.0.0.0
+      - network.publish_host=192.168.1.2
+      - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
 
   kibana:
     env_file:
@@ -91,6 +113,8 @@ services:
 
 
 volumes:
+  data01:
+    driver: local
   postgres:
   elastic:
   feeder:
