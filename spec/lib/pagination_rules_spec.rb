@@ -16,7 +16,6 @@ describe PaginationRules do
       r.params[:per] = per
       r.params[:page] = page
       r.params[:controller] = model
-      Session::Tables::(r, model).per = session_per
     end
   end
 
@@ -38,10 +37,6 @@ describe PaginationRules do
 
   let(:max_per) do
     50
-  end
-
-  let(:session_per) do
-    5
   end
 
   let(:model) do
@@ -84,31 +79,16 @@ describe PaginationRules do
       let(:per) { nil }
 
       context 'when session is empty' do
-        let (:session_per) { nil }
         it { expect(subject.page).to eq(5) }
         it { expect(subject.per).to eq(default_per) }
       end
 
-      context 'when session per is outdated value' do
-        let(:session_per) { 37 }
-        it { expect(subject.page).to eq(page) }
-        it { expect(subject.per).to eq(default_per) }
-      end
     end
 
     context 'when per is ordinary' do
       let(:per) { 30 }
       it { expect(subject.page).to eq(page) }
       it { expect(subject.per).to eq(30) }
-    end
-
-    context 'per parameter have to be stored in session' do
-      let(:per) { 10 }
-      it do
-        subject
-        expect(Session::Tables::(request).per).to eq(per)
-      end
-      it { expect(session_per).to_not eq(per)}
     end
 
     context 'when per is invalid' do

@@ -16,9 +16,8 @@ class PaginationRules
     @page = 1 if @page < 1
 
     # Range: (per|default_per|DEFAULT_PER..max_per)
-    @per = request.params[:per]&.to_i || Session::Tables::(request).per || default_per
+    @per = request.params[:per]&.to_i || default_per
     @per = max_per if @per > max_per
     @per = @default_per unless @per_variants.include?(@per)
-    Session::Tables::(request).per = @per
   end
 end
