@@ -6,7 +6,7 @@ RSpec.describe 'Posts', type: :request do
   describe 'GET /posts' do
     it 'works! (now write some real specs)' do
       get posts_path
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:found)
     end
   end
 end
