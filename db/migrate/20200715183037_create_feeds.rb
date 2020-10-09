@@ -14,13 +14,13 @@ class CreateFeeds < ActiveRecord::Migration[6.0]
       t.string :language
       t.string :index_name
       t.uuid :attempt_uuid
-      t.jsonb :data
+      t.text :data
       t.datetime :processing_started_at
       t.datetime :processing_finished_at
       t.datetime :synced_at
       t.datetime :succeeded_at
       t.datetime :network_updated_at
-      t.datetime :advertiser_updated_at
+      t.datetime :advertiser_updated_at # TODO! fuck admitad field overlaps wit advertisers.updated_at
       t.integer :offers_count
       t.integer :categories_count
       t.integer :priority, null: false, default: 0
