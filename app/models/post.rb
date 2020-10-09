@@ -35,7 +35,15 @@ class Post < ApplicationRecord
   end
 
   def as_indexed_json(_options = {})
-    as_json(methods: :body)
+    {
+      id: id,
+      status_state: status_state,
+      title: title,
+      created_at: created_at,
+      updated_at: updated_at,
+      user_id: user_id,
+      body: body.body
+    }
   end
 
 end

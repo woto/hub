@@ -56,9 +56,11 @@ class Feed < ApplicationRecord
   validates :name, presence: true
   validates :operation, presence: true
 
-  # def as_indexed_json(_options = {})
-  #   as_json(include: :advertiser)
-  # end
+  def as_indexed_json(_options = {})
+    adv = advertiser.as_json(methods: :type)
+    adv.transform_keys! { |k| "advertiser_#{k}" }
+    as_json.merge(adv)
+  end
 
 
   def file

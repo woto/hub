@@ -91,8 +91,10 @@ class Advertiser < ApplicationRecord
 
   validates :name, presence: true
 
-  def as_indexed_json(_options = {})
-    as_json(methods: :type)
+  after_commit do
+    # TODO: what is the correct way?
+    id = self.id
+    Feed.import query: -> { where(advertiser: id) }
   end
 
   def slug

@@ -2,12 +2,24 @@
 
 
 if Rails.env.development?
+  User.setup_index(Columns::UserForm)
+  User.__elasticsearch__.create_index!
+  User.__elasticsearch__.refresh_index!
+
+  Feed.setup_index(Columns::FeedForm)
+  Feed.__elasticsearch__.create_index!
+  Feed.__elasticsearch__.refresh_index!
+
+  Post.setup_index(Columns::PostForm)
+  Post.__elasticsearch__.create_index!
+  Post.__elasticsearch__.refresh_index!
+
   user = User.create!(email: 'admin@example.com',
                       password: 'password',
                       password_confirmation: 'password',
                       role: 'admin')
 
-  Post.create!(title: 'Заголовок', body:'<p>Статья</p>', user: user)
+  Post.create!(title: 'Заголовок', body: '<p>Статья</p>', user: user)
 
   advertiser = Advertiser.create!(name: 'Рекламодатель 1')
 

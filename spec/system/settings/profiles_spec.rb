@@ -81,7 +81,6 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
       expect(page).to have_text("Name не может быть пустым")
       expect(page).to have_text("Bio не может быть пустым")
       expect(page).to have_text("Time zone имеет непредусмотренное значение")
-      expect(page).to have_text("Location не может быть пустым")
       expect(page).to have_text("Type должен быть выбран")
       expect(page).to have_text("Value не может быть пустым")
       expect(page).to have_text("Languages должен быть выбран")
