@@ -1,6 +1,6 @@
-<div data-controller="messengers">
+<%= tag.div data: { controller: "profile-messengers"} do %>
 
-  <template data-target="messengers.newMessengerTemplate">
+  <template data-target="profile-messengers.newMessengerTemplate">
     <%= builder.fields_for :messengers,
                            ProfileForm::Messenger.new({type: Rails.application.config.global[:blank_messenger][:long]}),
                            child_index: 'TEMPLATE' do |f| %>
@@ -12,13 +12,13 @@
     <%= render 'inputs/profiles/messenger', f: f %>
   <% end %>
 
-  <div data-target="messengers.newMessengerPlaceholder"></div>
+  <div data-target="profile-messengers.newMessengerPlaceholder"></div>
 
   <%= builder.error :messengers %>
 
-  <button class="btn btn-sm btn-success" type="button" data-action="messengers#addMessenger">
-    <%= render Icons::PlusComponent.new %>
-    <%= t('Add messenger') %>
+  <button class="btn btn-sm btn-success" type="button" data-action="profile-messengers#addMessenger">
+    <%== GlobalHelper.icons['plus'] %>
+    <%= t('add_messenger') %>
   </button>
 
-</div>
+<% end %>

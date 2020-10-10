@@ -2,6 +2,8 @@
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
+  impersonates :user
+
   respond_to :html, :json
 
   include Pundit

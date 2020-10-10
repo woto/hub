@@ -7,8 +7,6 @@
 #  id                                 :bigint           not null, primary key
 #  feed_advertiser_id_after           :bigint
 #  feed_advertiser_id_before          :bigint
-#  feed_advertiser_name_after         :string
-#  feed_advertiser_name_before        :string
 #  feed_advertiser_updated_at_after   :datetime
 #  feed_advertiser_updated_at_before  :datetime
 #  feed_attempt_uuid_after            :uuid

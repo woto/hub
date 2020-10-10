@@ -7,10 +7,9 @@ ru:
   close: Закрыть
   see_also: Смотрите также
   columns: Колонки
+  save: Сохранить
   displaying: Отображается
   are_you_sure: Уверены, что хотите удалить?
-
-
 
   buttons:
     advertiser: Рекламодатель
@@ -24,6 +23,7 @@ ru:
     new_advertiser: Создать рекламодателя
     new_feed: Создать прайс
     update_displayed_columns: Обновить
+    save: Сохранить
 
   omni-buttons:
     search: 'Поиск'
@@ -55,6 +55,7 @@ ru:
     advertisers: Рекламодатели
 
   left_menu:
+    workspaces: Рабочие области
     advertisers: Рекламодатели
     dashboard: Дашборд
     feeds: Прайс листы
@@ -81,9 +82,9 @@ ru:
       search_placeholder: Введите текст для поиска...
 
   template:
-    search:
-      bar:
-        search_placeholder: Введите текст для поиска...
+    workspace:
+      form:
+        workspaces_hint: Дайте имя новой рабочей области. После сохранения новая рабочая область будет доступна для выбора в меню слева или вверху, если вы посещаете сайт с мобильного устройства.
 
   offers:
     search:
@@ -94,108 +95,3 @@ ru:
 
       bar:
         search_placeholder: Введите текст для поиска...
-
-  table:
-    title:
-      advertiser:
-        id: ID
-        type: Тип реклам-ля
-        ext_id: Внешний ID
-        synced_at: Синхронизирован в
-        debug: Служ. данные
-        name: Назв. рекл.
-        created_at: Дата созд.
-        updated_at: Дата измен.
-        admitad_id: ID А
-        admitad_name: Название А
-        admitad_image: Логотип А
-        admitad_status: Статус партн. прогр. А
-        admitad_connection_status: Статус сотр-ва А
-        admitad_rating: Рейтинг А
-        admitad_description: Описание А
-        admitad_raw_description: Описание html А
-        admitad_site_url: Адрес сайта А
-        admitad_currency: Валюта А
-        admitad_regions: Регионы площадок А
-        admitad_categories: Категории А
-        admitad_actions: Тарифы А
-        admitad_actions_detail: Тарифы детализ. А
-        admitad_cr: Средн. конв. А
-        admitad_cr_trend: Тренд средн. конв. А
-        admitad_ecpc: Средний eCPC А
-        admitad_ecpc_trend: Тренд средн. eCPC А
-        admitad_epc: Показ-ль EPC А
-        admitad_epc_trend: Тренд EPC А
-        admitad_geotargeting: Оплата от страны А
-        admitad_coupon_iframe_denied: Запрет купон. траф. А
-        admitad_activation_date: Дата запуска А
-        admitad_modified_date: Дата измен. А
-        admitad_avg_hold_time: Факт. средн. холд А
-        admitad_avg_money_transfer_time: Средн. время опл. А
-        admitad_gotolink: Ссылка по-умолчанию А
-        admitad_goto_cookie_lifetime: Время жизни postclick А
-        admitad_traffics: Разреш. трафик А
-        admitad_moderation: Необх. модерации
-        admitad_show_products_links: Показ. прайсы. А
-        admitad_products_xml_link: Cсылкa на товары xml
-        admitad_products_csv_link: Cсылкa на товары csv
-        admitad_feeds_info: Товарн. фиды А
-        admitad_allow_deeplink: Deeplink доступен А
-        admitad_action_countries: Страны опл. дейсвий А
-        admitad_allow_actions_all_counties: Работа из всех стран А
-        admitad_action_testing_limit: Лимит моб. трафика А
-        admitad_mobile_os_type: Мобильная ОС А
-        admitad_mobile_os: Версия моб. ОС А
-        admitad_mobile_device_type: Тип моб. устр-ва А
-        admitad_actions_limit: Лимит работы ссылки А
-        admitad_actions_limit_24: Лимит работы в сутки А
-      feed:
-        data: Сырые данные
-        id: ID
-        advertiser_updated_at: Обновл. у рекл.
-        network_updated_at: Обновл. в партн. сети
-        locked_by_pid: Заблок. процессом
-        attempt_uuid: Идент. задачи
-        synced_at: Настр. обновл. в
-        name: Назв. прайса
-        priority: Приоритет
-        processing_finished_at: Обраб. завершена в
-        processing_started_at: Обраб. начата в
-        advertiser_name: Назв. рекл.
-        started_at: Начато в
-        finished_at: Завершено в
-        succeeded_at: Успешно в
-        offers_count: Товаров
-        categories_count: Кол-во категорий
-        language: Язык
-        advertiser: Рекламодатель
-        feed: Прайс лист
-        created_at: Создан в
-        updated_at: Изменен в
-        is_active: Активен
-        downloaded_file_type: Тип файла
-        downloaded_file_size: Разм. файла
-        xml_file_path: Расп. файла
-        advertiser_id: ID рекламодателя
-        ext_id: Внешн. идент-ор
-        index_name: Назв. индекса
-        error_class: Тип ошибки
-        error_text: Текст ошибки
-        url: Адрес прайса
-        operation: Операция
-    tooltip:
-      advertiser_filter_form:
-        admitad_id: Идентификатор партнерской программы. Адмитад
-        admitad_cr: Показатель средней конверсии. Адмитад
-        admitad_cr_trend: Изменение показателя средней конверсии. Адмитад
-        admitad_show_products_links: Разрершено показывать ссылки для выгрузки товаров (true, false). Адмитад
-        admitad_status: Статус партнерской программы. Адмитад
-        admitad_connection_status: Статус сотрудничества с площадкой (‘active, ‘pending’, ‘declined’). Адмитад
-        debug: Служебные данные. Предназначены для разработчиков
-      feed_filter_form:
-        started_at: Время начала обработки прайс листа
-        finished_at: Время завершения. Успешного или неуспешного
-        succeeded_at: Время успешного завершения обработки
-        offers_count: Количество товаров в прайс листе
-        categories_count: Количество категорий в прайс листе
-        language: Основной язык названий и описаний товаров

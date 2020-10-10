@@ -4,15 +4,15 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <%= render 'desktop_header_wrapper' do %>
-      <%= render 'search_bar', btn_class: 'btn-secondary btn-outline capybara-desktop-header-search' %>
-    <% end %>
+    <%= render 'search/desktop_wrapper' do %>
+      <%= render 'search/bar', btn_class: 'btn-secondary btn-outline capybara-desktop-header-search' %>
+    <% end rescue nil %>
 
     <div class="navbar-nav d-flex ml-auto">
       <div class="nav-item dropdown d-none d-md-flex mr-3">
         <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-desktop') %>
       </div>
-      <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-desktop') %>
+      <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-desktop', current_user: current_user, true_user: true_user) %>
     </div>
 
   </div>

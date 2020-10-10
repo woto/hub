@@ -5,7 +5,6 @@
 # Table name: feeds
 #
 #  id                     :bigint           not null, primary key
-#  advertiser_name        :string
 #  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer

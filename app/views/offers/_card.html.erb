@@ -13,19 +13,18 @@
           <small class="mb-3 text-muted"><%= row['_index'] %></small>
         <% end %>
 
-        <% advertiser = @all_offers_advertisers.find { |advertiser| advertiser.id == row['_index'].split('+').first.to_i} %>
-        <% feed = @all_offers_feeds.find { |feed| feed.id == row['_index'].split('+').second.to_i} %>
+        <% advertiser = @all_offers_advertisers.find { |advertiser| advertiser.id == row['_source']['advertiser_id']} %>
+        <% feed = @all_offers_feeds.find { |feed| feed.id == row['_routing'].to_i} %>
 
-        <% unless params[:feed_id] %>
-          <%= link_to request.params.merge(feed_id: Elastic::IndexName.offers_crop(row['_index'])), type: 'button', class: 'overflow-auto w-100 btn btn-ghost-secondary justify-content-start mb-2' do %>
-            <%= advertiser.name %>
-            <%= feed.name %>
-          <% end %>
-      <% end %>
+        <%= link_to request.params.merge(feed_id: feed.slug_with_advertiser), type: 'button',
+                    class: 'overflow-auto w-100 btn btn-ghost-secondary justify-content-start mb-2 text-left' do %>
+          <%= advertiser.name %>
+          <%= feed.name %>
+        <% end %>
 
         <% row['_source']['feed_category_ids'] != -1 && row['_source']['feed_category_ids'].each do |feed_category_id| %>
           <% cat = @all_categories.find { |cat| cat.id == feed_category_id } %>
-          <%= link_to feed_offers_path(feed_id: feed.slug_with_advertiser,category_id: cat.id, q: params[:q]), class: 'overflow-auto w-100 btn btn-ghost-secondary text-left justify-content-start mb-2' do %>
+          <%= link_to feed_offers_path(feed_id: feed.slug_with_advertiser, category_id: cat.id, q: params[:q]), class: 'overflow-auto w-100 btn btn-ghost-secondary text-left justify-content-start mb-2' do %>
             <%= cat.name %>
           <% end %>
         <% end %>
@@ -47,7 +46,7 @@
 
       <% if !false %>
       <div class="mt-auto">
-        <% if policy(:feed).debug? %>
+        <% if policy(:feed).new? %>
           <%= tag.button class: 'btn mb-1 btn-warning', data: {
               controller: 'modal-static-opener',
               action: 'modal-static-opener#open',

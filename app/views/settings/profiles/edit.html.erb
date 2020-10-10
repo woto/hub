@@ -36,19 +36,19 @@
 
             <div>
               <label class="string required" for="resource_name_location">Avatar</label>
-              <div id="avatar-clickable">
+              <%= tag.div data: {controller: 'profile-avatar'}, id: "avatar-clickable" do %>
                 <%= form_tag settings_avatar_path,
                              class: 'dropzone d-flex align-items-center justify-content-center h-100 p-2',
-                             id: "avatar-dropzone" do %>
+                             data: {target: 'profile-avatar.dropzoneComponent'} do %>
                   <div class="dz-message">
                     <% if current_user.avatar.attached? %>
-                      <%= image_tag current_user.avatar  %>
+                      <%= image_tag current_user.avatar.variant(resize_to_limit: [200, 200])  %>
                     <% else %>
-                      Drop image here or click to upload
+                      <%= t('drop_image_here_or_click') %>
                     <% end %>
                   </div>
                 <% end %>
-              </div>
+              <% end %>
             </div>
           </div>
 
@@ -78,11 +78,6 @@
                           as: :time_zone
               %>
 
-              <%= f.input :location,
-                          required: true,
-                          input_html: {autocomplete: "location"},
-                          wrapper_html: {class: 'mb-3'} %>
-
               <%= f.input :messengers,
                           as: 'profile/messengers_collection',
                           wrapper_html: {class: 'mb-3'}
@@ -90,7 +85,7 @@
 
               <%= f.input :languages,
                           required: true,
-                          input_html: {class: 'selectize-languages', multiple: true},
+                          input_html: {data: {controller: 'profile-language'}, multiple: true},
                           wrapper_html: {class: 'mb-3'},
                           as: :select,
                           collection: Rails.application.config.global[:languages].map { |lng| [lng[:language], lng[:english_name]] }
@@ -98,7 +93,7 @@
               %>
 
               <div class="form-footer">
-                <%= f.button :submit, t(".update", scope: scope), class: 'btn btn-primary' %>
+                <%= f.button :submit, t(".update"), class: 'btn btn-primary' %>
               </div>
 
             <% end %>

@@ -1,4 +1,4 @@
-<% feed_category = @all_categories.find { |cat| cat.id == params[:category_id].to_i} %>
+<% feed_category = @all_categories.find { |cat| cat.id == params[:category_id].to_i} || FeedCategory.find(params[:category_id]) %>
 <% path = feed_category.path %>
 <% path.each do |el| %>
   <% css_class = 'active' if el.id == feed_category.id %>

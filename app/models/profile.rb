@@ -4,17 +4,15 @@
 #
 # Table name: profiles
 #
-#  id                :bigint           not null, primary key
-#  bio               :text
-#  displayed_columns :jsonb
-#  languages         :jsonb
-#  location          :string
-#  messengers        :jsonb
-#  name              :string
-#  time_zone         :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  user_id           :bigint           not null
+#  id         :bigint           not null, primary key
+#  bio        :text
+#  languages  :jsonb
+#  messengers :jsonb
+#  name       :string
+#  time_zone  :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :bigint           not null
 #
 # Indexes
 #

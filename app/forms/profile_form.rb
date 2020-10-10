@@ -33,22 +33,20 @@ class ProfileForm
     }
   end
 
-  attr_accessor :name, :bio, :location, :languages, :messengers, :time_zone
+  attr_accessor :name, :bio, :languages, :messengers, :time_zone
 
   # attribute :name, :string
   # attribute :bio, :string
-  # attribute :location, :string
 
   # attr_accessor :languages
   # attr_accessor :messengers
 
   validates :name, presence: true
   validates :bio, presence: true
-  validates :location, presence: true
-  validates :messengers, length: { minimum: 1 }
+  validates :messengers, length: { minimum: 1, message: -> (_, __) {I18n.t('activerecord.errors.messages.select_messengers')} }
   validates :languages, length: {
     minimum: 2,
-    message: ->(_, __) { I18n.t('select_language', scope: %i[activerecord errors messages]) }
+    message: ->(_, __) { I18n.t('activerecord.errors.messages.select_language') }
   }
   validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
 
@@ -82,7 +80,6 @@ class ProfileForm
     {
       'name' => nil,
       'bio' => nil,
-      'location' => nil,
       'messengers' => nil,
       'languages' => nil,
       'time_zone' => nil

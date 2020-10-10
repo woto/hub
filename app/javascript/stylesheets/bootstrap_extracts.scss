@@ -1,17 +1,16 @@
-.left_feed_category {
+.left_feed_category, .left_feed, .left_workspace {
   @extend .flex-fill;
   @extend .list-group-item;
   @extend .list-group-item-action;
   @extend .d-flex;
   @extend .align-items-center;
-}
+  a {
+    color: #c6cace;
+  }
 
-.left_feed {
-  @extend .flex-fill;
-  @extend .list-group-item;
-  @extend .list-group-item-action;
-  @extend .d-flex;
-  @extend .align-items-center;
+  *:hover {
+    color: white !important;
+  }
 }
 
 .pagination-list-item {

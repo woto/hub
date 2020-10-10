@@ -6,7 +6,7 @@ class CreateAdvertisers < ActiveRecord::Migration[6.0]
       t.string :type
       t.string :ext_id
       t.string :name
-      t.text :data
+      t.jsonb :data
       t.datetime :synced_at
 
       t.integer :gdeslon_id

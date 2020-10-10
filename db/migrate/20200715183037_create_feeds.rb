@@ -14,7 +14,7 @@ class CreateFeeds < ActiveRecord::Migration[6.0]
       t.string :language
       t.string :index_name
       t.uuid :attempt_uuid
-      t.text :data
+      t.jsonb :data
       t.datetime :processing_started_at
       t.datetime :processing_finished_at
       t.datetime :synced_at

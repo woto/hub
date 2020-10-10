@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe OffersSearchQuery, focus: true do
+describe OffersSearchQuery do
   subject { described_class.call(args).object }
 
   context 'with context.feed_id' do

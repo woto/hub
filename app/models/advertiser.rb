@@ -53,7 +53,7 @@
 #  admitad_site_url                    :string
 #  admitad_status                      :string
 #  admitad_traffics                    :jsonb
-#  data                                :text
+#  data                                :jsonb
 #  gdeslon_affiliate_link              :string
 #  gdeslon_categories                  :jsonb
 #  gdeslon_conditions                  :string
@@ -83,9 +83,6 @@
 #
 class Advertiser < ApplicationRecord
   DESCENDANTS = ['Advertisers::Admitad', 'Advertisers::Gdeslon', 'Advertisers::Test'].freeze
-
-  include Elasticable
-  index_name "#{Rails.env}.advertisers"
 
   has_many :feeds
 

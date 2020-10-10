@@ -1,6 +1,10 @@
 ru:
   simple_form:
     labels:
+      columns_form:
+        displayed_columns: Отображаемые столбцы
+      workspace_form:
+        name: Имя рабочей области
       advertiser_filter_form:
         displayed_columns: Отображаемые столбцы
       feed_filter_form:
@@ -9,11 +13,10 @@ ru:
         name: Имя
         bio: О себе
         time_zone: Часовой пояс
-        location: Местонахождение
         messengers: Мессенджеры
         languages: Владеемые языки
     hints:
       advertiser_filter_form:
-        displayed_columns: 'Порядок добавления столбцов влияет на отображение'
+        displayed_columns: Порядок добавления столбцов влияет на отображение
       feed_filter_form:
-        displayed_columns: 'Порядок добавления столбцов влияет на отображение'
+        displayed_columns: Порядок добавления столбцов влияет на отображение

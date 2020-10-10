@@ -5,7 +5,6 @@
 # Table name: feeds
 #
 #  id                     :bigint           not null, primary key
-#  advertiser_name        :string
 #  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
@@ -90,6 +89,6 @@ class Feed < ApplicationRecord
 
   def set_cached_fields
     # TODO: Don't know how to do it better (feed_log now has empty cached fields)
-    update_columns(index_name: slug_with_advertiser, advertiser_name: advertiser.name)
+    update_columns(index_name: slug_with_advertiser)
   end
 end

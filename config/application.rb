@@ -19,9 +19,9 @@ require 'rails'
 rescue LoadError
 end
 
-require 'prometheus/middleware/collector'
-require 'prometheus/middleware/exporter'
-require 'prometheus/client/data_stores/direct_file_store'
+# require 'prometheus/middleware/collector'
+# require 'prometheus/middleware/exporter'
+# require 'prometheus/client/data_stores/direct_file_store'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -58,7 +58,7 @@ module Hub
     # end
 
     # yabeda
-    Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFileStore.new(dir: 'tmp/prometheus')
+    # Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFileStore.new(dir: 'tmp/prometheus')
     # config.middleware.use Prometheus::Middleware::Collector
     # config.middleware.use Prometheus::Middleware::Exporter
 

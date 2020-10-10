@@ -34,6 +34,9 @@
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 class User < ApplicationRecord
+  include Elasticable
+  index_name "#{Rails.env}.users"
+
   enum role: { user: 0, manager: 1, admin: 2 }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -42,6 +45,7 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :posts
   has_many :identities, dependent: :destroy
+  has_many :workspaces
   has_one_attached :avatar
 
   def as_indexed_json(options={})

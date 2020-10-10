@@ -8,12 +8,13 @@
       </div>
 
       <%# per_page select %>
-      <% items = options_for_select(@pr.per_variants, @pr.per) %>
+      <% items = options_for_select(@pagination_rule.per_variants, params[:per]) %>
       <%= select_tag :per, items, id: 'capybara-perselect', class: 'form-select',
+                     onload: "select.options[i].selected",
                      data: {
                          controller: 'table-per',
                          action: 'change->table-per#visit',
-                         table_per_select_value: @pr.per
+                         table_per_select_value: params[:per]
                      } %>
     </div>
   </div>

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
+  ALLOWED_PARAMS = [:per, :page]
+  REQUIRED_PARAMS = [:per]
+
   layout 'backoffice'
+  include Workspaceable
   skip_before_action :authenticate_user!
 
   def index
@@ -14,11 +18,30 @@ class ArticlesController < ApplicationController
     articles.sort_by!(&:date)
     articles.reverse!
 
-    @pr = PaginationRules.new(request)
-    @articles = Kaminari.paginate_array(articles).page(@pr.page).per(@pr.per)
+    @articles = Kaminari.paginate_array(articles).page(@pagination_rule.page).per(@pagination_rule.per)
   end
 
   def show
     @article = Article.find("#{params[:date]}/#{params[:title]}")
+  end
+
+  private
+
+  def set_settings
+    @settings = { singular: :article,
+                  plural: :articles,
+                  model_class: Article
+                  # form_class: Columns::ArticleForm
+    }
+
+    def set_pagination_rule
+      @pagination_rule = PaginationRules.new(request)
+    end
+
+    def redirect_with_defaults
+      redirect_to url_for(**workspace_params,
+                          per: @pagination_rule.per)
+    end
+
   end
 end

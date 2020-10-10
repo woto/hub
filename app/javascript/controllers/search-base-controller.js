@@ -6,6 +6,7 @@ export default class extends Controller {
     clickSearchButton(event) {
         if (event.keyCode == 13) {
             event.preventDefault();
+            this.searchButtonTarget.focus();
             this.searchButtonTarget.click();
         }
     }

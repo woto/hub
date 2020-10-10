@@ -1,0 +1,29 @@
+<div class="row flex-grow-1 flex-lg-grow-0 mb-1">
+
+  <% if @feeds_with_found_offers.size > 0 %>
+    <div class="subheader mt-lg-3"><%= t('left_menu.feeds') %></div>
+  <% end %>
+
+  <% @feeds_with_found_offers.in_groups(2) do |feeds| %>
+    <div class="col-12 col-sm-6 col-md-6 col-lg-12">
+      <div class="list-group list-group-transparent mb-0">
+        <% feeds.each do |(feed, doc_count)| %>
+          <% if feed %>
+            <%= link_to feed_offers_path(feed.slug_with_advertiser, q: params[:q]),
+                        id: dom_id(feed, 'left'), class: dom_class(feed, 'left') do %>
+              <%= "#{feed.advertiser.name} #{feed.name}" %>
+              <small class="text-muted ml-auto"><%= doc_count %></small>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @sum_other_doc_count > 0 %>
+    <div class="hr-text my-3"><%= t('see_also') %></div>
+    <div class="col mb-2">
+      <%= @sum_other_doc_count %> more...
+    </div>
+  <% end %>
+</div>

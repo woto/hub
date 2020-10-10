@@ -1,0 +1,20 @@
+<% if policy(:post).new? %>
+  <td>
+
+    <div class="dropdown">
+
+      <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" data-boundary="window">
+        <%= t('buttons.debug') %>
+      </button>
+
+      <div class="dropdown-menu">
+
+        <%= link_to t('buttons.show'), row, class: 'dropdown-item' %>
+        <%= link_to t('buttons.edit'), edit_post_path(row), class: 'dropdown-item' %>
+        <%= link_to t('buttons.delete'), row, method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item' %>
+
+      </div>
+    </div>
+
+  </td>
+<% end %>

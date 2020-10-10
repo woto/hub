@@ -1,12 +1,27 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  layout 'dashboard'
+  ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, :cols]
+  REQUIRED_PARAMS = [:per, :cols]
+
+  include Workspaceable
+  layout 'backoffice'
   before_action :set_post, only: %i[show edit update destroy]
+  before_action { prepend_view_path Rails.root + 'app' + 'views/template' }
+  before_action { prepend_view_path Rails.root + 'app' + 'views/table' }
 
   # GET /posts
   def index
-    @posts = Post.all
+    @posts = Post.__elasticsearch__.search(
+      params[:q].presence || '*',
+      _source: Columns::PostForm.parsed_columns_for(request),
+      sort: "#{params[:sort]}:#{params[:order]}"
+    ).page(@pagination_rule.page).per(@pagination_rule.per)
+
+    render 'empty_page' and return if @posts.empty?
+
+    @columns_form = Columns::PostForm.new(displayed_columns: Columns::PostForm.parsed_columns_for(request))
+    render 'index', locals: { rows: @posts }
   end
 
   # GET /posts/1
@@ -57,5 +72,23 @@ class PostsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def post_params
     params.require(:post).permit(:title, :status_state, :body)
+  end
+
+
+  def set_settings
+    @settings = { singular: :post,
+                  plural: :posts,
+                  model_class: Post,
+                  form_class: Columns::PostForm }
+  end
+
+  def set_pagination_rule
+    @pagination_rule = PaginationRules.new(request)
+  end
+
+  def redirect_with_defaults
+    redirect_to url_for(**workspace_params,
+                        cols: @settings[:form_class].default_stringified_columns_for(request),
+                        per: @pagination_rule.per)
   end
 end

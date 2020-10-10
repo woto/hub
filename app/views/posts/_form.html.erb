@@ -1,30 +1,46 @@
-<%= simple_form_for(@post) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<%= content_tag :div, data: { controller: 'posts-form',
+                              action:
+                                  'beforeunload@window->posts-form#AskConfirmationOnBeforeunload
+                                   trix-initialize@document->posts-form#addToolbarButtonOnTrixInitialize
+                                   trix-action-invoke@document->posts-form#openModalOnTrixActionInvoke
+                                   trix-change@document->posts-form#markAsDirtyOnTrixChange
+                                   load@window->posts-form#openModalOnPageLoad
+'
+} do
+%>
 
-  <div class="card pb-4">
-    <div class="card-body">
-      <div class="form-inputs">
+  <%= simple_form_for(@post) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-        <%= f.input :title,
-                    wrapper_html: {class: 'mb-3'} %>
+    <div class="card pb-4">
+      <div class="card-body">
+        <div class="form-inputs">
 
-        <%= f.input :status_state,
-                    as: :radio_buttons,
-                    collection: [['Draft', 'draft'], ['Pending', 'pending'], ['Published', 'published']],
-                    wrapper: :vertical_collection_inline,
-                    wrapper_html: {class: 'mb-3'} %>
+          <%= f.input :title,
+                      wrapper_html: {class: 'mb-3'} %>
 
-        <div class="trix-content">
-          <%= f.input :body, as: :rich_text_area %>
+          <%= f.input :status_state,
+                      as: :radio_buttons,
+                      collection: [['Draft', 'draft'], ['Ready', 'ready']],
+                      wrapper: :vertical_collection_inline,
+                      wrapper_html: {class: 'mb-3'} %>
+
+          <div class="trix-content">
+            <%= f.input :body,
+                        as: :rich_text_area,
+                        input_html: { data: { target: 'posts-form.editor' } } %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, class: 'btn btn-primary' %>
-  </div>
+    <div class="form-actions">
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
+
+  <% end %>
+
+  <%= render 'modal' %>
 
 <% end %>
-

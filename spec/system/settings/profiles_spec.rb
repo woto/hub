@@ -5,7 +5,6 @@ require 'rails_helper'
 describe Settings::ProfilesController, type: :system, browser: :desktop do
   let(:name) { Faker::Name.name }
   let(:bio) { Faker::Lorem.paragraph }
-  let(:location) { Faker::Address.full_address }
   let(:phone) { Faker::PhoneNumber.cell_phone_with_country_code }
 
   before do
@@ -19,7 +18,6 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
     it 'creates new profile' do
       fill_in 'profile_form[name]', with: name
       fill_in 'profile_form[bio]', with: bio
-      fill_in 'profile_form[location]', with: location
       select "American Samoa", :from => "profile_form_time_zone"
       within find('#profile_form_messengers_attributes_0_messenger') do
         find('button').click
@@ -38,7 +36,6 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
       expect(user.reload.profile.attributes).to include(
         'name' => name,
         'bio' => bio,
-        'location' => location,
         'messengers' => [{ 'type' => 'WhatsApp', 'value' => phone }],
         'languages' => ['', 'English', 'Russian']
       )
@@ -51,7 +48,6 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
     it 'shows filled form' do
       expect(page).to have_field('profile_form[name]', with: user.profile.name)
       expect(page).to have_field('profile_form[bio]', with: user.profile.bio)
-      expect(page).to have_field('profile_form[location]', with: user.profile.location)
       within find('#profile_form_messengers_attributes_0_messenger') do
         type = user.profile.messengers[0]['type']
         expect(page).to have_button(text: type)

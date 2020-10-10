@@ -14,6 +14,7 @@ require 'rspec/rails'
 require 'view_component/test_helpers'
 require 'devise'
 require "fantaskspec"
+require "test_prof/recipes/rspec/let_it_be"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

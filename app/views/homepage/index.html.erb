@@ -5,13 +5,3 @@
     }
   </style>
 <% end %>
-
-<% if params[:id] %>
-  <% FeedCategory.where(feed_id: params[:id]).order("name").arrange.each do |parent, children| %>
-    <% tree_item(parent, children) %>
-  <% end %>
-<% else %>
-  <% Feed.joins(:feed_categories, :advertiser).select('advertisers.name as advname, feeds.advertiser_id, feeds.name, feeds.id, count(*) as cnt').group('feeds.id, advertisers.name').each do |feed| %>
-    <div> <%= link_to "#{feed.advname} - #{feed.name} - #{feed.cnt}", root_path(id: feed.id) %> </div>
-  <% end %>
-<% end %>

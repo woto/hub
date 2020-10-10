@@ -41,7 +41,7 @@ RSpec.describe 'Offers page', browser: :desktop do
       within('section.page') do
         fill_in 'Введите текст для поиска...', with: q1
         click_button 'search-button'
-        expect(page).to have_current_path(offers_path(q: q1, locale: 'ru', only_path: true), url: false)
+        expect(page).to have_current_path(offers_path(q: q1, locale: 'ru', only_path: true, per: 12), url: false)
       end
     end
 

@@ -49,10 +49,15 @@ Rails.application.routes.draw do
 
     namespace :table do
       resources :columns
+      resources :workspaces
     end
 
     resources :autocompletes
     resources :advertisers
+    resources :users do
+      post :impersonate, on: :member
+      post :stop_impersonating, on: :collection
+    end
 
     resources :feeds do
       member do
@@ -60,9 +65,7 @@ Rails.application.routes.draw do
         get :logs
         patch :prioritize
       end
-      resources :offers, only: %i[index] do
-        get :categories, on: :collection
-      end
+      resources :offers, only: %i[index]
     end
     resources :offers, only: %i[index]
     resource :embed, only: :show
@@ -85,8 +88,6 @@ Rails.application.routes.draw do
 
     get 'articles' => 'articles#index'
     get 'articles/:date/:title' => 'articles#show', as: 'article'
-
-    resources :youtube
 
     root to: 'homepage#index'
   end

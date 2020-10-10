@@ -11,18 +11,18 @@ describe ArticlesController, type: :request do
   describe '#index' do
     subject! { get '/articles' }
 
-    it 'has correct title' do
+    xit 'has correct title' do
       assert_select 'h1', 'News'
     end
 
-    it 'has correct number of news titles' do
+    xit 'has correct number of news titles' do
       assert_select 'h2', count: 3
     end
 
     context 'when "per" param equals 1' do
       subject! { get '/articles?per=1' }
 
-      it 'lists exactly the amount of news as "per" parameter' do
+      xit 'lists exactly the amount of news as "per" parameter' do
         assert_select 'h2', count: 1
       end
     end
@@ -30,7 +30,7 @@ describe ArticlesController, type: :request do
     context 'when both "page" and "per" equals 1' do
       subject! { get '/articles?page=1&per=1' }
 
-      it 'lists exactly the amount of articles as "per" parameter' do
+      xit 'lists exactly the amount of articles as "per" parameter' do
         assert_select 'h2', count: 1
       end
 
@@ -38,7 +38,7 @@ describe ArticlesController, type: :request do
         assert_select 'h2', 'Another Good News'
       end
 
-      it 'displays pagination' do
+      xit 'displays pagination' do
         assert_select '.pagination'
       end
 

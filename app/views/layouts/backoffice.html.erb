@@ -21,12 +21,14 @@
         <img src="https://preview-dev.tabler.io/static/logo-white.svg" alt="Tabler" class="navbar-brand-image">
       <% end %>
 
-      <%= render 'template/navbar_mobile' %>
-      <%= render 'template/navbar_menu' %>
+      <%= render 'template/aside/navbar_mobile' %>
+      <%= render 'template/aside/navbar_menu' %>
 
-      <%= render 'mobile_header_search_wrapper' do %>
-        <%= render 'search_bar', btn_class: 'btn-secondary capybara-mobile-header-search' %>
-      <% end %>
+      <%= render 'search/mobile_wrapper' do %>
+        <%= render 'search/bar', btn_class: 'btn-secondary capybara-mobile-header-search' %>
+      <% end rescue nil %>
+
+      <div class="w-100"></div>
 
       <%= content_for :left_menu %>
 
@@ -35,11 +37,10 @@
 
   </aside>
 
-  <div class="page">
-
+  <section class="page">
     <%= render 'template/desktop_header' %>
 
-    <div class="content">
+    <main class="content">
        <div class="container-xl">
         <div class="page-header">
           <div class="row align-items-center">
@@ -68,8 +69,8 @@
 
       <%= render template: 'layouts/footer' %>
 
-    </div>
-  </div>
+    </main>
+  </section>
 
   <%= content_for :postfix_inline_css %>
   <%= content_for :postfix_inline_js %>

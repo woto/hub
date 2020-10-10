@@ -9,7 +9,6 @@ class Settings::ProfilesController < ApplicationController
       @profile_form = ProfileForm.new(
         name: profile.name,
         bio: profile.bio,
-        location: profile.location,
         time_zone: profile.time_zone,
         messengers: profile.messengers.map { |messenger| ProfileForm::Messenger.new(messenger) },
         languages: profile.languages
@@ -38,6 +37,6 @@ class Settings::ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile_form).permit(:name, :bio, :location, :time_zone, languages: [], messengers_attributes: %i[type value])
+    params.require(:profile_form).permit(:name, :bio, :time_zone, languages: [], messengers_attributes: %i[type value])
   end
 end

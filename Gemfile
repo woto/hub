@@ -41,6 +41,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'meta_request'
   gem 'annotate'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
@@ -135,6 +136,7 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
 gem 'omniauth-twitter'
+gem 'pretender'
 
 # Authorization
 gem 'pundit'

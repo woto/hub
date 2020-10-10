@@ -1,10 +1,9 @@
 class Left::Menu::CategoryLinkComponent < ViewComponent::Base
-  def initialize(category:, doc_count:, q:)
+  def initialize(category:, doc_count:, request:)
     if category
       @category = category
       @doc_count = doc_count
-      @path = {}.tap do |h|
-        h[:q] = q
+      @path = request.params.slice(*GlobalHelper.workspace_params).tap do |h|
         h[:category_id] = category.id
         h[:only] = '1' if category.try(:only)
       end

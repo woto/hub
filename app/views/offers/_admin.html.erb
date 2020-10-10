@@ -1,0 +1,43 @@
+<% if policy(:feed).new? %>
+  <% if @advertiser %>
+    <%= tag.button class: 'mb-4 btn btn-warning', data: {
+        controller: 'modal-static-opener',
+        action: 'modal-static-opener#open',
+        modal_static_opener_json: @advertiser } do %>
+      <%= t('buttons.advertiser') %>
+    <% end %>
+  <% end %>
+
+  <% if @feed %>
+    <%= tag.button class: 'mb-4 btn btn-warning', data: {
+        controller: 'modal-static-opener',
+        action: 'modal-static-opener#open',
+        modal_static_opener_json: @feed } do %>
+      <%= t('buttons.feed') %>
+    <% end %>
+  <% end %>
+
+  <% if @feed %>
+    <%= tag.button class: 'mb-4 btn btn-warning', data: {
+        controller: 'modal-dynamic-opener',
+        action: 'modal-dynamic-opener#open',
+        modal_dynamic_opener_url: logs_feed_path(@feed) } do %>
+      <%= t('feed_logs', scope: ['buttons']) %>
+    <% end %>
+  <% end %>
+
+  <% if @feed %>
+    <%= tag.button class: 'mb-4 btn btn-warning', data: {
+        controller: 'modal-dynamic-opener',
+        action: 'modal-dynamic-opener#open',
+        modal_dynamic_opener_url: count_feed_path(@feed.slug_with_advertiser) } do %>
+      <%= t('buttons.offers_count') %>
+    <% end %>
+  <% end %>
+
+  <% if @feed %>
+    <%= link_to t('buttons.prioritize'), prioritize_feed_path(@feed),
+                class: 'mb-4 btn btn-warning', method: :patch %>
+  <% end %>
+
+<% end %>

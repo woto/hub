@@ -31,7 +31,9 @@ class Feeds::Process
       Feeds::Download.call(context)
       Files::StoreFileType.call(context)
       Files::StoreXmlFilePath.call(context)
-      # Elastic::CreateIndex.call(context)
+      unless Elastic::IndexExists.call(context).object
+        Elastic::CreateIndex.call(context)
+      end
       # Elastic::DeleteIndex.call(context)
       Feeds::Parse.call(context)
     rescue GracefulExitError => e

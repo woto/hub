@@ -53,7 +53,7 @@
 #  admitad_site_url                    :string
 #  admitad_status                      :string
 #  admitad_traffics                    :jsonb
-#  data                                :text
+#  data                                :jsonb
 #  gdeslon_affiliate_link              :string
 #  gdeslon_categories                  :jsonb
 #  gdeslon_conditions                  :string

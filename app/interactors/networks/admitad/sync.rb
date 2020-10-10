@@ -46,7 +46,7 @@ class Networks::Admitad::Sync
       adv.each do |k, v|
         advertiser.public_send("_#{k}=", v)
       end
-      advertiser.data = adv.to_s
+      advertiser.data = adv
       advertiser.synced_at = Time.current
       advertiser.save!
       yield(advertiser, adv['feeds_info'])
@@ -55,10 +55,12 @@ class Networks::Admitad::Sync
 
   def create_or_update_feed(advertiser, feeds_info)
     feeds_info.each do |feed_info|
+      feed_id = feed_info['xml_link'].match(/(?<=feed_id=)\d+/)[0]
       feed = Feed
              .lock
-             .where(advertiser: advertiser, ext_id: feed_id(feed_info))
+             .where(advertiser: advertiser, ext_id: feed_id)
              .first_or_initialize
+      Rails.logger.debug feed_attributes(feed_info)
       feed.update!(feed_attributes(feed_info))
     end
   end
@@ -73,9 +75,5 @@ class Networks::Admitad::Sync
       data: feed_info,
       synced_at: Time.current
     }
-  end
-
-  def feed_id(feed_info)
-    feed_info['xml_link'].match(/(?<=feed_id=)\d+/)[0]
   end
 end
