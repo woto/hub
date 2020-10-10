@@ -8,7 +8,7 @@
         <div class="carousel-item <%= 'active' if idx == 0 %>">
           <div style="min-height: 200px" class="d-flex align-items-center justify-content-center">
             <div class="spinner-border text-indigo position-absolute" style="z-index: 10" role="status"></div>
-            <%= image_tag "//192.168.1.2.nip.io:8080/x380/#{picture['#']}",
+            <%= image_tag "",
                           onerror: "this.src='#{asset_pack_path('media/images/static/image-not-found.png')}'",
                           style: 'z-index: 20; max-height: 380px',
                           alt: 'TODO', data: { 'holder-rendered' => 'true'} %>
