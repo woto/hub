@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Feeds page' do
-
   context 'when feed is present' do
     it "shows row", browser: :desktop do
       feed = create(:feed)
@@ -17,6 +16,19 @@ RSpec.describe 'Feeds page' do
     it 'shows blank page', browser: :desktop do
       visit "/feeds"
       expect(page).to have_text('No results found')
+    end
+  end
+
+  it_behaves_like 'shared_table' do
+    let(:objects) { create_list(singular, 11) }
+    let(:plural) { 'feeds' }
+    let(:singular) { 'feed' }
+    let(:user) { create(:user) }
+
+    before do
+      objects
+      Feed.__elasticsearch__.refresh_index!
+      login_as(user, scope: :user)
     end
   end
 
