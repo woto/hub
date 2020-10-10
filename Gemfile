@@ -60,13 +60,11 @@ end
 # Application monitoring
 gem 'newrelic_rpm'
 gem 'sentry-raven'
-# gem 'prometheus-client'
+gem 'prometheus-client'
 gem 'yabeda-rails'
 gem 'yabeda-prometheus'
 gem 'yabeda-sidekiq'
 gem 'yabeda-puma-plugin'
-# gem 'prometheus_exporter'
-# gem 'sidekiq-prometheus-exporter', '~> 0.1'
 
 # XML processing
 gem 'nokogiri'
