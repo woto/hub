@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Offers page', browser: :desktop do
+RSpec.describe 'Offers page' do
 
   context 'with many feeds' do
     let!(:advertiser) { create(:advertisers_admitad) }
@@ -22,8 +22,8 @@ RSpec.describe 'Offers page', browser: :desktop do
       elastic_client.indices.refresh
     end
 
-    it 'works', :aggregate_failures do
-      when_search_in_root
+    it 'works', :aggregate_failures, browser: :desktop do
+      when_search_in_root_1
       breadcrumbs_inside_feed_root
       breadcrumbs_inside_category
       left_feeds_for_more_than_20_feeds
@@ -34,6 +34,12 @@ RSpec.describe 'Offers page', browser: :desktop do
       search_control_in_root
       search_control_in_feed
       search_control_in_category
+    end
+
+
+    def when_search_in_root_1
+      visit offers_path(q: 'Мороженица', locale: 'ru')
+      expect(page).to have_css('.item_offer', count: 12)
     end
 
     def search_control_in_root
@@ -81,11 +87,6 @@ RSpec.describe 'Offers page', browser: :desktop do
       expect(page).to have_css('.item_offer', count: 1)
     end
 
-    def when_search_in_root
-      visit offers_path(q: 'Мороженица', locale: 'ru')
-      expect(page).to have_css('.item_offer', count: 12)
-    end
-
     def breadcrumbs_inside_feed_root
       visit feed_offers_path(feed_id: feed1.slug_with_advertiser, q: 'Мороженица')
       expect(page).to have_css('.breadcrumb-item.active', text: "#{advertiser.name} - #{feed1.name}")
@@ -130,8 +131,8 @@ RSpec.describe 'Offers page', browser: :desktop do
       elastic_client.indices.refresh
     end
 
-    it 'works', :aggregate_failures do
-      when_search_in_root
+    it 'works', :aggregate_failures, browser: :desktop do
+      when_search_in_root_2
       when_search_in_feed_root
       when_search_in_category_with_nested_categories_and_products_in_this_one
       when_there_is_more_than_twenty_categories
@@ -139,7 +140,7 @@ RSpec.describe 'Offers page', browser: :desktop do
       breadcrumbs_inside_category
     end
 
-    def when_search_in_root
+    def when_search_in_root_2
       visit offers_path(q: 'корм для хомяков')
       # TODO
     end
