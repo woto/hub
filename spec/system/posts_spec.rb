@@ -35,4 +35,13 @@ RSpec.describe 'Posts page' do
       login_as(user, scope: :user)
     end
   end
+
+  it_behaves_like 'shared_workspace' do
+    let(:plural) { 'posts' }
+    let(:user) { create(:user) }
+    before do
+      create(:post)
+      Post.__elasticsearch__.refresh_index!
+    end
+  end
 end

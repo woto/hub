@@ -25,4 +25,12 @@ RSpec.describe 'Users page' do
       login_as(user, scope: :user)
     end
   end
+
+  it_behaves_like 'shared_workspace' do
+    let(:plural) { 'users' }
+    let(:user) { create(:user, role: 'admin') }
+    before do
+      User.__elasticsearch__.refresh_index!
+    end
+  end
 end

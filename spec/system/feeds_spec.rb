@@ -43,4 +43,13 @@ RSpec.describe 'Feeds page' do
       end
     end
   end
+
+  it_behaves_like 'shared_workspace' do
+    let(:plural) { 'feeds' }
+    let(:user) { create(:user) }
+    before do
+      create(:feed)
+      Feed.__elasticsearch__.refresh_index!
+    end
+  end
 end
