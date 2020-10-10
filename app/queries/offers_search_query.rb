@@ -23,7 +23,7 @@ class OffersSearchQuery
       if context.feed_id.blank?
         aggregation :feeds do
           terms do
-            field '_index'
+            field 'feed_id'
             size 20
           end
         end
@@ -53,6 +53,12 @@ class OffersSearchQuery
             end
           end
 
+          if context.feed_id.present?
+            filter do
+              term 'feed_id' => context.feed_id.split('+').second.to_i
+            end
+          end
+
           if context.q.present?
             must do
               query_string do
@@ -75,9 +81,10 @@ class OffersSearchQuery
       end
     end
 
-    context.object = {
-      body: definition.to_hash.deep_symbolize_keys,
-      index: ::Elastic::IndexName.offers(context.feed_id.presence || '*')
-    }
+    context.object = {}.tap do |h|
+      h[:body] = definition.to_hash.deep_symbolize_keys
+      h[:index] = ::Elastic::IndexName.offers
+      h[:routing] = context.feed_id.split('+').second.to_i if context.feed_id.present?
+    end
   end
 end
