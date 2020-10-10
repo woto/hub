@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-Rails.logger = Logger.new(STDOUT)
-
 namespace :hub do
   namespace :elastic do
     desc "Deletes all indexes"

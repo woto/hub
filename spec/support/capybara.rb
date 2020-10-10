@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Capybara.test_id = 'data-test-id'
+# Capybara.server = :puma, { Silent: true }
+# ActiveSupport.on_load(:action_dispatch_system_test_case) do
+#   ActionDispatch::SystemTesting::Server.silence_puma = true
+# end
 
 [
   { name: :mobile, resolution: [375, 812] },
@@ -8,6 +12,7 @@ Capybara.test_id = 'data-test-id'
 ].each do |item|
   name = item[:name]
   resolution = item[:resolution]
+  # Capybara.server = :puma, { Silent: true }
   Capybara.register_driver name do |app|
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_option('prefs', 'intl.accept_languages' => 'en-US')

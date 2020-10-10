@@ -161,7 +161,7 @@ GEM
       elasticsearch (~> 7)
       elasticsearch-model (= 7.1.0)
       hashie
-    elasticsearch-rails (7.1.0)
+    elasticsearch-rails (7.1.1)
     elasticsearch-ruby (0.0.4)
       activesupport (>= 3.0.0)
       thrift

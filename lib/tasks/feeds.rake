@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-Rails.logger = Logger.new(STDOUT)
-
 namespace :hub do
   namespace :feeds do
     desc "Set feed's language by quering elastic"

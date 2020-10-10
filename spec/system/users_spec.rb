@@ -14,10 +14,10 @@ RSpec.describe 'Users page' do
   end
 
   it_behaves_like 'shared_table' do
-    let(:objects) { create_list(singular, 11) }
+    let(:objects) { create_list(singular, 10) }
     let(:plural) { 'users' }
     let(:singular) { 'user' }
-    let(:user) { create(:user, role: 'admin') }
+    let!(:user) { create(:user, role: 'admin') }
 
     before do
       objects
@@ -28,7 +28,7 @@ RSpec.describe 'Users page' do
 
   it_behaves_like 'shared_workspace' do
     let(:plural) { 'users' }
-    let(:user) { create(:user, role: 'admin') }
+    let!(:user) { create(:user, role: 'admin') }
     before do
       User.__elasticsearch__.refresh_index!
     end

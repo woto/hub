@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'open-uri'
-
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def callback
     Rails.logger.info(request.env['omniauth.auth'])
@@ -75,7 +73,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def establish_avatar(oauth, user)
     return if user.avatar.attached?
 
-    downloaded_image = open(oauth.info[:image])
+    downloaded_image = URI.open(oauth.info[:image])
     user.avatar.attach(io: downloaded_image, filename: 'avatar.jpg')
   end
 end
