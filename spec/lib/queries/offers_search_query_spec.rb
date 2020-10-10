@@ -1,17 +1,34 @@
 # frozen_string_literal: true
-#
 
 require 'rails_helper'
 
-describe OffersSearchQuery do
+describe OffersSearchQuery, focus: true do
   subject { described_class.call(args).object }
 
   context 'with context.feed_id' do
     context 'when context.feed_id was passed' do
-      let(:args) { { feed_id: 'feed_id' } }
+      let(:args) { { feed_id: '1-offer_id+2-feed_id' } }
 
       specify do
         expect(subject).to include(index: 'test.offers')
+      end
+
+      specify do
+        expect(subject).to include(routing: 2)
+      end
+
+      specify do
+        expect(subject).to include(
+          body: include(
+            query: {
+              bool: {
+                filter: include(
+                  term: { "feed_id": 2 }
+                )
+              }
+            }
+          )
+        )
       end
     end
 
@@ -20,6 +37,10 @@ describe OffersSearchQuery do
 
       specify do
         expect(subject).to include(index: 'test.offers')
+      end
+
+      specify do
+        expect(subject).not_to include(:routing)
       end
 
       specify do
@@ -104,7 +125,7 @@ describe OffersSearchQuery do
   pending 'page'
   pending 'size'
 
-  context 'when context.context_id and context.category_id and context.q are blank' do
+  context 'when context.feed_id and context.category_id and context.q are blank' do
     let(:args) {}
 
     specify do
