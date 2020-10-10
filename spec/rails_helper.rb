@@ -40,6 +40,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+
   # # Aruba https://relishapp.com/cucumber/aruba
   # config.include Aruba::Api
 
