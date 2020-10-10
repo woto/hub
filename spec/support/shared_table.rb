@@ -3,38 +3,6 @@
 require 'rails_helper'
 
 RSpec.shared_examples 'shared_table' do |class_name, flag|
-  singular = class_name.name.underscore
-  plural = singular.pluralize
-
-  before do
-    login_as(user, scope: :user) if flag
-  end
-
-  let(:user) do
-    create(:user) if flag
-  end
-
-  context "when #{singular} is present" do
-    let(:object) { flag ? create(singular, user: user) : create(singular) }
-
-    before do
-      object
-      class_name.__elasticsearch__.refresh_index!
-    end
-
-    it "shows #{singular}", browser: :desktop do
-      visit "/#{plural}"
-      expect(page).to have_css("#table_#{singular}_#{object.id}")
-    end
-  end
-
-  context "when #{plural} are absent" do
-    it 'shows blank page', browser: :desktop do
-      class_name.__elasticsearch__.create_index!
-      visit "/#{plural}"
-      expect(page).to have_text('No results found')
-    end
-  end
 
   context "when #{plural} are present" do
     let(:objects) do
@@ -98,10 +66,10 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
 
     it 'preselects select option with corresponding per value', browser: :desktop do
       visit "/#{plural}?per=5"
-      page.has_select?('capybara-perselect', selected: '5')
+      expect(page).to have_select('capybara-perselect', selected: '5')
 
       visit "/#{plural}?per=20"
-      page.has_select?('capybara-perselect', selected: '20')
+      expect(page).to have_select('capybara-perselect', selected: '20')
     end
 
     it 'shows correct entries info', browser: :desktop do
@@ -136,8 +104,11 @@ RSpec.shared_examples 'shared_table' do |class_name, flag|
       end
 
       def has_correct_search_path(plural:, q:)
-        expect(page).to have_current_path(url_for(controller: plural, action: :index, q: q,
-                                                  locale: 'ru', only_path: true), url: false)
+        expect(page).to have_current_path(
+          url_for(controller: plural, action: :index, locale: 'ru', only_path: true),
+          url: false, ignore_query: true
+        )
+        expect(::Addressable::URI.parse(current_url).query_values).to include('q' => q.to_s)
       end
     end
   end
