@@ -33,15 +33,15 @@ class ArticlesController < ApplicationController
                   model_class: Article
                   # form_class: Columns::ArticleForm
     }
-
-    def set_pagination_rule
-      @pagination_rule = PaginationRules.new(request)
-    end
-
-    def redirect_with_defaults
-      redirect_to url_for(**workspace_params,
-                          per: @pagination_rule.per)
-    end
-
   end
+
+  def set_pagination_rule
+    @pagination_rule = PaginationRules.new(request)
+  end
+
+  def redirect_with_defaults
+    redirect_to url_for(**workspace_params,
+                        per: @pagination_rule.per)
+  end
+
 end
