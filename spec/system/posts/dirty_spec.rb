@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Trix `dirty` feature' do
+RSpec.describe 'Trix `dirty` feature', browser: :desktop do
   let!(:user) { create(:user) }
   let!(:post) { create(:post, user: user) }
 
