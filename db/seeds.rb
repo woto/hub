@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 if Rails.env.development?
   User.setup_index(Columns::UserForm)
   User.__elasticsearch__.create_index!

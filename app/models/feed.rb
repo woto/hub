@@ -46,8 +46,8 @@ class Feed < ApplicationRecord
   index_name "#{Rails.env}.feeds"
 
   belongs_to :advertiser
-  has_many :feed_categories
-  has_many :feed_logs
+  has_many :feed_categories, dependent: :destroy
+  has_many :feed_logs, dependent: :destroy
   after_save :set_cached_fields
   after_save :log_changes
 

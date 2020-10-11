@@ -53,6 +53,10 @@ export default class extends Controller {
         }
     }
 
+    sendForm(event) {
+        this.isDirty = false;
+    }
+
     markAsDirtyOnTrixChange(event) {
         this.isDirty = true;
     }

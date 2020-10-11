@@ -24,5 +24,6 @@ FactoryBot.define do
     title { Faker::GreekPhilosophers.quote }
     status_state { 'draft' }
     user
+    body { Faker::Books::Dune.quote }
   end
 end
