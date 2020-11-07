@@ -43,6 +43,7 @@
 #
 class Feed < ApplicationRecord
   include Elasticable
+  # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.feeds"
 
   belongs_to :advertiser

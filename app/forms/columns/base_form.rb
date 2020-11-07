@@ -11,6 +11,7 @@ class Columns::BaseForm
       string: { type: :text, sort: '.keyword' },
       integer: { type: :long, sort: '' },
       double: { type: :double, sort: '' },
+      decimal: { type: :double, sort: '' },
       float: { type: :float, sort: '' },
       uuid: { type: :text, sort: '.keyword' },
       text: { type: :text, sort: nil },
@@ -30,10 +31,10 @@ class Columns::BaseForm
     def elastic_column(key)
       column = self::all_columns.find { |col| col[:key] == key }
       pg = column[:pg]
-      raise "Column `#{column[:key]}` not found in Postgres table" if pg.nil?
+      raise "Column `#{column[:key]}` not found in #{self}.all_columns" if pg.nil?
 
       pg_type = column[:as] || pg.type
-      PG2ES[pg_type] || raise("Unable to find mapping for `#{key}`")
+      PG2ES[pg_type] || raise("Unable to find mapping for `#{key}` with column type `#{pg_type}`")
     end
 
     def stringified_columns_for(request)

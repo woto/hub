@@ -5,6 +5,7 @@ ru:
         displayed_columns: Отображаемые столбцы
       workspace_form:
         name: Имя рабочей области
+        is_default: По-умолчанию
       advertiser_filter_form:
         displayed_columns: Отображаемые столбцы
       feed_filter_form:
@@ -15,8 +16,15 @@ ru:
         time_zone: Часовой пояс
         messengers: Мессенджеры
         languages: Владеемые языки
+      post:
+        status: Статус
+        title: Заголовок
+        language: Язык
+        post_category: Категория
     hints:
       advertiser_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       feed_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
+      post:
+        status: Не забудьте поставить статус "На модерацию", когда завершите статью.

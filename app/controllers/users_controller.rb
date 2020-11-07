@@ -11,11 +11,14 @@ class UsersController < ApplicationController
   before_action { prepend_view_path Rails.root + 'app' + 'views/table' }
 
   def index
-    @users = User.__elasticsearch__.search(
+    users = User.__elasticsearch__.search(
         params[:q].presence || '*',
         _source: Columns::UserForm.parsed_columns_for(request),
         sort: "#{params[:sort]}:#{params[:order]}"
     ).page(@pagination_rule.page).per(@pagination_rule.per)
+
+    favorites = Contexts::Favorites.new(current_user, users)
+    @users = UserDecorator.decorate_collection(users, context: { favorites: favorites })
 
     render 'empty_page' and return if @users.empty?
 
@@ -46,13 +49,11 @@ class UsersController < ApplicationController
                   form_class: Columns::UserForm }
   end
 
-  def set_pagination_rule
-    @pagination_rule = PaginationRules.new(request)
-  end
-
-  def redirect_with_defaults
-    redirect_to url_for(**workspace_params,
-                        cols: @settings[:form_class].default_stringified_columns_for(request),
-                        per: @pagination_rule.per)
+  def system_default_workspace
+    url_for(**workspace_params,
+            cols: @settings[:form_class].default_stringified_columns_for(request),
+            per: @pagination_rule.per,
+            sort: :id,
+            order: :desc)
   end
 end

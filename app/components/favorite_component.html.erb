@@ -1,0 +1,88 @@
+<%= tag.div class: 'dropdown', data: {
+      controller: 'favorite',
+      favorite_ext_id: @ext_id,
+      favorite_kind: @kind,
+      favorite_is_favorite: @is_favorite,
+      favorite_starred_class: @starred_class,
+      favorite_unstarred_class: @unstarred_class,
+      favorite_starred_icon: GlobalHelper.icons['starred'],
+      favorite_unstarred_icon: GlobalHelper.icons['star'],
+      action: 'favorite-item:updateStarData->favorite#updateStarData favorite-item:updateList->favorite#updateList'
+} do %>
+
+  <% if false %>
+  <%= button_tag type: 'button',
+                 class: "btn btn-white btn-icon",
+                 data: {
+                     toggle: 'dropdown',
+                     boundary: 'window',
+                     target: 'favorite.dropdownButton',
+                 } do %>
+  <% end %>
+  <% end %>
+
+  <% if true %>
+  <% if @is_favorite %>
+    <%= button_tag type: 'button',
+                   class: "btn btn-white btn-icon #{@starred_class}",
+                   data: {
+                       toggle: 'dropdown',
+                       boundary: 'window',
+                       target: 'favorite.dropdownButton',
+                  } do %>
+      <%== GlobalHelper.icons['starred'] %>
+    <% end %>
+  <% else %>
+    <%= button_tag type: 'button',
+                   class: "btn btn-white btn-icon #{@unstarred_class}",
+                   data: {
+                       toggle: 'dropdown',
+                       boundary: 'window',
+                       target: 'favorite.dropdownButton',
+                   } do %>
+      <%== GlobalHelper.icons['star'] %>
+    <% end %>
+  <% end %>
+  <% end %>
+
+  <%= tag.div class: 'dropdown-menu',
+              style: 'padding-bottom: 0',
+              data: {
+                  target: 'favorite.dropdownMenu'
+              } do %>
+
+    <form>
+      <div class="mx-3">
+        <h6 class="dropdown-header p-0 py-2 d-flex">
+          <%= t(@kind, scope: ['favorites', 'titles']) %>
+          <span class="ml-auto">
+            <%= link_to favorites_path do %>
+              <%== GlobalHelper.icons['settings'] %>
+            <% end %>
+          </span>
+        </h6>
+      </div>
+      <%= tag.div data: { target: 'favorite.itemsList' } %>
+    </form>
+
+    <%= tag.div class: 'mx-3 text-red small',
+                data: {
+                    target: 'favorite.errorPlaceholder' } %>
+
+    <div class="input-group mt-2">
+      <%= text_field_tag nil, nil, id: nil, type: 'text', class: 'form-control favorite--text-field',
+                         placeholder: t('favorites.placeholder'),
+                         data: { target: 'favorite.newItemName',
+                                 action: 'keydown->favorite#clickCreateFavorite' } %>
+      <%= button_tag nil, id: nil, type: 'button', class: 'btn btn-white btn-icon favorite--button',
+                     aria: { haspopup: "true", expanded: "false" },
+                     data: {
+                         target: 'favorite.createButton',
+                         action: 'favorite#createFavorite'
+                     } do %>
+        <%== GlobalHelper.icons['corner-down-left'] %>
+      <% end %>
+    </div>
+
+  <% end %>
+<% end %>

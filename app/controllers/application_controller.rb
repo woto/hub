@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   around_action :set_time_zone
   before_action :detect_device_format
   before_action :authenticate_user!
+  before_action :set_current_user
 
   private
 
@@ -60,5 +61,9 @@ class ApplicationController < ActionController::Base
     when /Windows Phone/i
       request.variant = :phone
     end
+  end
+
+  def set_current_user
+    Current.user = current_user
   end
 end

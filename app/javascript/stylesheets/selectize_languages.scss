@@ -1,21 +1,5 @@
-@import 'selectize/dist/css/selectize.legacy.css';
+@import 'selectize/dist/css/selectize.css';
 
-.selectize-control.multi {
-  .selectize-input [data-value] {
-    background-image: linear-gradient(-180deg, rgba(53, 64, 82, 0), rgba(53, 64, 82, 0.04) 100%);
-    background-color: #ffffff;
-
-    &.active {
-      //background-image: linear-gradient(-180deg, rgba(53, 64, 82, 0), rgba(53, 64, 82, 0.04) 100%);
-      //background-color: black;
-      background-image: linear-gradient(-180deg, rgba(53, 64, 82, 0), rgba(53, 64, 82, 0.04) 100%);
-      //color: #354052;
-      background-color: #ececec;
-      border-color: rgba(87, 92, 102, 0.2);
-    }
-  }
-
-  .selectize-input > div {
-    border: 1px solid rgba(110, 117, 130, 0.2);
-  }
+.selectize-dropdown {
+  z-index: 50
 }

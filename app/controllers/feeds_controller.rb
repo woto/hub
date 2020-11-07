@@ -45,11 +45,14 @@ class FeedsController < ApplicationController
   end
 
   def index
-    @feeds = Feed.__elasticsearch__.search(
+    feeds = Feed.__elasticsearch__.search(
       params[:q].presence || '*',
-      _source: Columns::FeedForm.parsed_columns_for(request),
+      _source: Columns::FeedForm.parsed_columns_for(request) + ['advertiser_id', 'index_name'],
       sort: "#{params[:sort]}:#{params[:order]}"
     ).page(@pagination_rule.page).per(@pagination_rule.per)
+
+    favorites = Contexts::Favorites.new(current_user, feeds)
+    @feeds = OfferDecorator.decorate_collection(feeds, context: { favorites: favorites })
 
     render 'empty_page' and return if @feeds.empty?
 
@@ -78,13 +81,11 @@ class FeedsController < ApplicationController
                   form_class: Columns::FeedForm }
   end
 
-  def set_pagination_rule
-    @pagination_rule = PaginationRules.new(request)
-  end
-
-  def redirect_with_defaults
-    redirect_to url_for(**workspace_params,
-                        cols: @settings[:form_class].default_stringified_columns_for(request),
-                        per: @pagination_rule.per)
+  def system_default_workspace
+    url_for(**workspace_params,
+            cols: @settings[:form_class].default_stringified_columns_for(request),
+            per: @pagination_rule.per,
+            sort: :id,
+            order: :desc)
   end
 end

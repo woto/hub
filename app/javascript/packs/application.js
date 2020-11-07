@@ -18,6 +18,6 @@ import 'jquery';
 //import 'jquery-slim';
 import 'popper.js';
 import 'bootstrap/js/src';
-import 'tabler/js/tabler.js';
+// import 'tabler/js/tabler.js';
 
 import '../stylesheets/application.scss';

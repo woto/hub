@@ -20,8 +20,6 @@ rescue LoadError
 end
 
 # require 'prometheus/middleware/collector'
-# require 'prometheus/middleware/exporter'
-# require 'prometheus/client/data_stores/direct_file_store'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -57,10 +55,7 @@ module Hub
     #   ActionText::ContentHelper.allowed_tags << "iframe"
     # end
 
-    # yabeda
-    # Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFileStore.new(dir: 'tmp/prometheus')
     # config.middleware.use Prometheus::Middleware::Collector
-    # config.middleware.use Prometheus::Middleware::Exporter
 
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true

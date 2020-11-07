@@ -1,0 +1,8 @@
+ru:
+  favorites:
+    titles:
+      offers: Избранные товары
+      feeds: Избранные прайсы
+      users: Избранные пользователи
+      posts: Избранные посты
+    placeholder: Введите название...

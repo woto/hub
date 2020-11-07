@@ -46,4 +46,4 @@ if ENV.fetch('SSL_DEBUG') == 'true'
 end
 
 activate_control_app
-plugin :yabeda
+plugin :yabeda_prometheus

@@ -39,10 +39,13 @@ class OffersController < ApplicationController
 
     # hits['hits'] = hits['hits'].map { |h| h['inner_hits']['top5']['hits']['hits']}.flatten
 
-    @offers = Kaminari
+    offers = Kaminari
               .paginate_array(hits['hits'], total_count: hits['total']['value'])
               .page(@pagination_rule.page)
               .per(@pagination_rule.per)
+
+    favorites = Contexts::Favorites.new(current_user, offers)
+    @offers = OfferDecorator.decorate_collection(offers, context: { favorites: favorites })
 
     category_ids = hits['hits'].map { |h| h['_source']['feed_category_ids'] }.flatten
     @all_categories = FeedCategory.where(id: category_ids).to_a
@@ -84,8 +87,10 @@ class OffersController < ApplicationController
     @pagination_rule = PaginationRules.new(request, 12, 30, [2, 3, 4, 6, 8, 9, 10, 12, 21, 30, 33, 42])
   end
 
-  def redirect_with_defaults
-    redirect_to url_for(**workspace_params,
-                        per: @pagination_rule.per)
+  def system_default_workspace
+    url_for(**workspace_params,
+            per: @pagination_rule.per,
+            sort: :id,
+            order: :desc)
   end
 end

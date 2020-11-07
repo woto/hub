@@ -3,7 +3,7 @@
 class Feeds::Parse
   include ApplicationInteractor
 
-  BULK_THRESHOLD = 1000
+  BULK_THRESHOLD = 1_000
   OFFERS_LIMIT = 5_000
 
   def call

@@ -5,7 +5,9 @@ module Elasticable
 
   included do
     include Elasticsearch::Model
-    include Elasticsearch::Model::Callbacks
+    # include Elasticsearch::Model::Callbacks
+    after_commit lambda { __elasticsearch__.index_document  },  on: [:create, :update]
+    after_commit lambda { __elasticsearch__.delete_document },  on: :destroy
   end
 
   class_methods do

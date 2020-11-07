@@ -9,6 +9,11 @@ module Elastic
         "*#{Rails.env}.*"
       end
 
+      def crop_environment(index_name)
+        index_name.delete_prefix("#{Rails.env}.")
+      end
+
+
       def all_offers
         picker('*', 'offers')
       end

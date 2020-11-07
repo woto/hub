@@ -12,6 +12,15 @@ import { Application } from "stimulus"
 import StimulusControllerResolver from 'stimulus-controller-resolver'
 const application = Application.start()
 
+import FavoriteController from './favorite-controller';
+import FavoriteItemController from './favorite-item-controller';
+// import TimeagoController from './timeago-controller';
+
+// Preloads controllers
+application.register('favorite-controller', FavoriteController)
+application.register('favorite-item-controller', FavoriteItemController)
+// application.register('timeago-controller', TimeagoController)
+
 StimulusControllerResolver.install(application, async controllerName => (
     (await import(`./${controllerName}-controller.js`)).default
 ))

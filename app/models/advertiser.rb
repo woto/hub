@@ -91,10 +91,14 @@ class Advertiser < ApplicationRecord
   after_commit do
     # TODO: what is the correct way?
     id = self.id
-    Feed.import query: -> { where(advertiser: id) }
+    Feed.__elasticsearch__.import query: -> { where(advertiser: id) }
   end
 
   def slug
     [id, ActiveSupport::Inflector.transliterate(name, locale: :ru).parameterize].join('-')
+  end
+
+  def to_label
+    name
   end
 end

@@ -27,6 +27,7 @@ class Settings::ProfilesController < ApplicationController
       ActiveRecord::Base.transaction do
         profile = (current_user.profile || current_user.build_profile).lock!
         profile.update!(@profile_form.serializable_hash(include: ['messengers']))
+        current_user.touch
       end
       redirect_to edit_settings_profile_path, notice: t('.saved')
     else

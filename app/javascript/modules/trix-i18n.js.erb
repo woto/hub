@@ -1,0 +1,37 @@
+<%
+  locales = {}
+  Rails.configuration.global[:languages].each do |language|
+      locales[language[:domain]] = {
+        attachFiles: I18n.t(:attachFiles, scope: 'trix', :locale => language[:domain]),
+        bold: I18n.t(:bold, scope: 'trix', :locale => language[:domain]),
+        bullets: I18n.t(:bullets, scope: 'trix', :locale => language[:domain]),
+        byte: I18n.t(:byte, scope: 'trix', :locale => language[:domain]),
+        bytes: I18n.t(:bytes, scope: 'trix', :locale => language[:domain]),
+        captionPlaceholder: I18n.t(:captionPlaceholder, scope: 'trix', :locale => language[:domain]),
+        code: I18n.t(:code, scope: 'trix', :locale => language[:domain]),
+        heading1: I18n.t(:heading1, scope: 'trix', :locale => language[:domain]),
+        indent: I18n.t(:indent, scope: 'trix', :locale => language[:domain]),
+        italic: I18n.t(:italic, scope: 'trix', :locale => language[:domain]),
+        link: I18n.t(:link, scope: 'trix', :locale => language[:domain]),
+        numbers: I18n.t(:numbers, scope: 'trix', :locale => language[:domain]),
+        outdent: I18n.t(:outdent, scope: 'trix', :locale => language[:domain]),
+        quote: I18n.t(:quote, scope: 'trix', :locale => language[:domain]),
+        redo: I18n.t(:redo, scope: 'trix', :locale => language[:domain]),
+        remove: I18n.t(:remove, scope: 'trix', :locale => language[:domain]),
+        strike: I18n.t(:strike, scope: 'trix', :locale => language[:domain]),
+        undo: I18n.t(:undo, scope: 'trix', :locale => language[:domain]),
+        unlink: I18n.t(:unlink, scope: 'trix', :locale => language[:domain]),
+        url: I18n.t(:url, scope: 'trix', :locale => language[:domain]),
+        urlPlaceholder: I18n.t(:urlPlaceholder, scope: 'trix', :locale => language[:domain]),
+        GB: I18n.t(:GB, scope: 'trix', :locale => language[:domain]),
+        KB: I18n.t(:KB, scope: 'trix', :locale => language[:domain]),
+        MB: I18n.t(:MB, scope: 'trix', :locale => language[:domain]),
+        PB: I18n.t(:PB, scope: 'trix', :locale => language[:domain]),
+        TB: I18n.t(:TB, scope: 'trix', :locale => language[:domain]),
+        embedWidget: I18n.t(:embedWidget, scope: 'trix', :locale => language[:domain])
+      }
+  end
+%>
+
+console.log(<%= locales.to_json %>);
+export default <%= locales.to_json %>;

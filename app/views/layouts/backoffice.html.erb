@@ -4,7 +4,15 @@
 
 <% content_for(:body) do %>
 
-  <body class="antialiased">
+  <body class="antialiased" data-controller="global"
+        data-action="favorite-item:showToast->global#showToast
+                     favorite:showToast->global#showToast
+                     modal-embed:showToast->global#showToast">
+
+  <div class="position-absolute" style="z-index: 30;">
+    <div data-target="global.toastPlaceholder" class="position-fixed" style="top: 0; right: 0;">
+    </div>
+  </div>
 
   <%= content_for :prefix_inline_css %>
   <%= content_for :prefix_inline_js %>
@@ -41,14 +49,11 @@
     <%= render 'template/desktop_header' %>
 
     <main class="content">
-       <div class="container-xl">
+      <div class="container-xl">
+
         <div class="page-header">
           <div class="row align-items-center">
-
-            <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
-            <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
-
-            <div class="col-auto">
+            <div class="col-12">
               <h1 class="page-title">
                 <%= content_for :title %>
               </h1>
@@ -58,6 +63,13 @@
               </ol>
 
             </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
+            <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
           </div>
         </div>
 
@@ -76,7 +88,7 @@
   <%= content_for :postfix_inline_js %>
   <%= content_for :before_body_close %>
 
-    <div data-controller="modal-singleton"></div>
+  <div data-controller="modal-singleton"></div>
   </body>
 <% end %>
 

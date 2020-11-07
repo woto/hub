@@ -9,6 +9,7 @@ Sidekiq::Web.set :sessions, false
 
 Sidekiq.configure_server do |config|
   config.redis = Rails.configuration.redis
+  Yabeda::Prometheus::Exporter.start_metrics_server!
 end
 
 Sidekiq.configure_client do |config|

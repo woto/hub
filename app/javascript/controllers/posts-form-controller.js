@@ -1,12 +1,18 @@
-import {Controller} from "stimulus"
-import Rails from "@rails/ujs";
 import Trix from "trix";
+import {Controller} from "stimulus"
+import { ApplicationController } from 'stimulus-use'
+
+import Rails from "@rails/ujs";
+import translations from "../modules/trix-i18n.js.erb"
 import "@rails/actiontext";
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
-export default class extends Controller {
-    static targets = ['editor', 'offerPlaceholder', 'offerUrl', 'embedType']
+const translation = translations[document.documentElement.lang];
+// Trix.config.lang = translation;
+
+export default class extends ApplicationController {
+    static targets = ['editor', 'modalEmbed']
 
     connect() {
         if (this.editorTarget.initialized) {
@@ -14,42 +20,10 @@ export default class extends Controller {
         }
     }
 
-    embedTypeChange(event) {
-        this.requestOffer()
-    }
-
-    offerUrlChange(event) {
-        this.requestOffer();
-    }
-
-    requestOffer() {
-        let offerUrl = this.offerUrlTarget.value;
-        let embedType = this.embedTypeTargets.find(el => el.checked).value;
-
-        Rails.ajax({
-            url: '/embed',
-            data: new URLSearchParams({ url: encodeURIComponent(offerUrl), type: embedType } ).toString(),
-            type: 'get',
-            error: function (response) {
-                console.error(response)
-            },
-            success: (json) => {
-                // let embedding = new Trix.Attachment(json);
-                // this.editorTarget.editor.insertAttachment(embedding);
-                // this.editorTarget.focus();
-                console.log(json.content);
-                this.offerPlaceholderTarget.innerHTML = json.content;
-            }
-        })
-    }
-
     openModalOnPageLoad(event) {
         let searchParams = new URLSearchParams(window.location.search);
-        if (searchParams.has('url')) {
-            let offerUrl = searchParams.get('url');
-            this.offerUrlTarget.value = offerUrl;
-            this.offerUrlTarget.dispatchEvent(new Event('change'))
-            this._openModal();
+        if (searchParams.has('embed')) {
+            $(this.modalEmbedTarget).modal('show')
         }
     }
 
@@ -67,7 +41,7 @@ export default class extends Controller {
 
     openModalOnTrixActionInvoke(event) {
         if (event.actionName === "x-modal") {
-            this._openModal();
+            $(this.modalEmbedTarget).modal('show')
         }
     }
 
@@ -77,14 +51,12 @@ export default class extends Controller {
         }
     }
 
-    _openModal() {
-        $('#modal-report').modal('toggle');
-    }
-
     _initializeEditor(reference) {
+        this._localize_hack(reference);
+
         if (!this.data.has('buttonAdded')) {
             const buttonHTML = `
-                <button type="button" class="trix-button" data-trix-action="x-modal">Embed offer</button>
+                <button type="button" class="trix-button" data-trix-action="x-modal">${translation['embedWidget']}</button>
             `
             reference.toolbarElement
                 .querySelector(".trix-button-group--file-tools")
@@ -94,4 +66,64 @@ export default class extends Controller {
         }
     }
 
+    embedOfferIntoEditor(event) {
+        let extId = event.currentTarget.dataset['extId'];
+        let that = this;
+        $.ajax({
+            url: '/offer_embeds',
+            data: {
+                ext_id: extId
+            },
+            type: 'post',
+            error: (jqXHR, textStatus, errorThrown) => {
+                that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
+            },
+            success: (data, textStatus, jqXHR) => {
+                // var attachment = new Trix.Attachment({ content: '<span class="mention">@trix</span>' })
+                // this.editorTarget.editor.insertAttachment(attachment)
+
+                let embedding = new Trix.Attachment(data);
+                this.editorTarget.editor.insertLineBreak();
+                this.editorTarget.editor.insertAttachment(embedding);
+                this.editorTarget.editor.insertLineBreak();
+                $(this.modalEmbedTarget).modal('hide')
+                this.editorTarget.focus();
+            }
+        })
+    }
+
+    // TODO: don't know why https://github.com/basecamp/trix/wiki/I18n doesn't work
+    _localize_hack(reference) {
+        let langMapping = {};
+
+        let ref = Trix.config.lang;
+
+        for (let key in ref) {
+            let value = ref[key];
+            let selector = "button[title='" + value + "'], input[value='" + value + "'], input[placeholder='" + value + "']";
+            let element = reference.toolbarElement.querySelector(selector)
+            if (element) {
+                langMapping[key] = element;
+            }
+        }
+
+        for (let key in langMapping) {
+            let element = langMapping[key];
+            let value = translation[key];
+            if (element.hasAttribute("title")) {
+                element.setAttribute("title", value);
+            }
+            if (element.hasAttribute("value")) {
+                element.setAttribute("value", value);
+            }
+            if (element.hasAttribute("placeholder")) {
+                element.setAttribute("placeholder", value);
+            }
+            if (element.textContent) {
+                element.textContent = value;
+            }
+        }
+
+        langMapping = null;
+    }
 }

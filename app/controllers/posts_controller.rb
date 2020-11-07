@@ -12,11 +12,14 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.__elasticsearch__.search(
+    posts = Post.__elasticsearch__.search(
       params[:q].presence || '*',
       _source: Columns::PostForm.parsed_columns_for(request),
       sort: "#{params[:sort]}:#{params[:order]}"
     ).page(@pagination_rule.page).per(@pagination_rule.per)
+
+    favorites = Contexts::Favorites.new(current_user, posts)
+    @posts = PostDecorator.decorate_collection(posts, context: { favorites: favorites })
 
     render 'empty_page' and return if @posts.empty?
 
@@ -29,7 +32,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @post = Post.new(status: :draft)
   end
 
   # GET /posts/1/edit
@@ -37,22 +40,27 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-    @post.user = current_user
-
-    if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
-    else
-      render :new
+    GlobalHelper.retryable do
+      @post = Post.new(post_params)
+      @post.user = current_user
+      authorize(@post)
+      if @post.save
+        redirect_to @post, notice: 'Post was successfully created.'
+      else
+        render :new
+      end
     end
   end
 
   # PATCH/PUT /posts/1
   def update
-    if @post.update(post_params)
-      redirect_to @post, notice: 'Post was successfully updated.'
-    else
-      render :edit
+    GlobalHelper.retryable do
+      authorize(@post)
+      if @post.update(post_params)
+        redirect_to @post, notice: 'Post was successfully updated.'
+      else
+        render :edit
+      end
     end
   end
 
@@ -71,7 +79,7 @@ class PostsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def post_params
-    params.require(:post).permit(:title, :status_state, :body)
+    params.require(:post).permit(:title, :status, :body, :language, :post_category_id)
   end
 
 
@@ -82,13 +90,11 @@ class PostsController < ApplicationController
                   form_class: Columns::PostForm }
   end
 
-  def set_pagination_rule
-    @pagination_rule = PaginationRules.new(request)
-  end
-
-  def redirect_with_defaults
-    redirect_to url_for(**workspace_params,
-                        cols: @settings[:form_class].default_stringified_columns_for(request),
-                        per: @pagination_rule.per)
+  def system_default_workspace
+    url_for(**workspace_params,
+            cols: @settings[:form_class].default_stringified_columns_for(request),
+            per: @pagination_rule.per,
+            sort: :id,
+            order: :desc)
   end
 end

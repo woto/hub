@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  controller :string
+#  is_default :boolean          default(FALSE), not null
 #  name       :string
 #  path       :string
 #  created_at :datetime         not null

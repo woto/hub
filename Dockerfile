@@ -1,4 +1,4 @@
-FROM ruby:2.7.1-alpine
+FROM ruby:2.7.2-alpine
 
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
@@ -14,7 +14,7 @@ RUN apk add --no-cache --update build-base \
                                 ttf-freefont
 
 
-ENV APP_PATH /usr/src/app
+ENV APP_PATH /app
 WORKDIR $APP_PATH
 
 ADD Gemfile $APP_PATH
@@ -30,8 +30,6 @@ ADD . $APP_PATH
 
 ARG RAILS_ENV
 ARG NODE_ENV
-ARG DOMAIN_NAME
 ARG SECRET_KEY_BASE
-RUN echo $RAILS_ENV $NODE_ENV $DOMAIN_NAME $SECRET_KEY_BASE
-
+RUN echo $RAILS_ENV $NODE_ENV $SECRET_KEY_BASE
 RUN bundle exec rake assets:precompile

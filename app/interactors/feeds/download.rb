@@ -27,6 +27,7 @@ class Feeds::Download
         raise Feeds::Process::FeedDisabledError, e
       rescue  Errno::ETIMEDOUT => e
         debugger
+        p 1
         raise Feeds::Process::FeedDisabledError, e
       rescue Net::ReadTimeout => e
         raise Feeds::Process::TimeoutError, e

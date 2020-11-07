@@ -35,13 +35,11 @@ class ArticlesController < ApplicationController
     }
   end
 
-  def set_pagination_rule
-    @pagination_rule = PaginationRules.new(request)
-  end
-
-  def redirect_with_defaults
-    redirect_to url_for(**workspace_params,
-                        per: @pagination_rule.per)
+  def system_default_workspace
+    url_for(**workspace_params,
+            per: @pagination_rule.per,
+            sort: :id,
+            order: :desc)
   end
 
 end

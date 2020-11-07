@@ -3,12 +3,51 @@
 class GlobalHelper
   class << self
 
+    def isolated(&block)
+      ActiveRecord::Base.transaction(isolation: :serializable) do
+        yield
+      rescue ActiveRecord::Rollback, Rollback => e
+        raise Rollback, e
+      end
+    end
+
+    def retryable(&block)
+      attempts = 0
+      begin
+        isolated(&block)
+      rescue Rollback => e
+        Rails.logger.warn('Retrying transaction')
+        Rails.logger.warn(e)
+        attempts += 1
+        retry if attempts < 4
+        raise
+      end
+    end
+
     def hashify(child)
       child.to_h.transform_keys { |k| "@#{k}" }.merge('#' => child.text)
     end
 
     def workspace_params
       [:q, :per, :page, :sort, :order, :cols]
+    end
+
+    def picture_address(picture)
+      Rails.env.test? ? '' : "//192.168.1.2.nip.io:8080/x380/#{picture[Feeds::Offers::HASH_BANG_KEY]}"
+    end
+
+    def get_offer(ext_id)
+       client = Elasticsearch::Client.new Rails.application.config.elastic
+       result = client.get({ index: ::Elastic::IndexName.offers, id: ext_id })
+
+       {
+           url: result['_source']['url'].first[Feeds::Offers::HASH_BANG_KEY],
+           name: result['_source']['name'].first[Feeds::Offers::HASH_BANG_KEY],
+           picture: picture_address(result['_source']['picture'].first),
+           description: ApplicationController.helpers.truncate(
+               result['_source']['description'].first[Feeds::Offers::HASH_BANG_KEY], length: 100
+           )
+       }
     end
 
     def icons
@@ -430,6 +469,7 @@ class GlobalHelper
           'square' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>',
           'stack' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><polyline points="12 4 4 8 12 12 20 8 12 4"></polyline><polyline points="4 12 12 16 20 12"></polyline><polyline points="4 16 12 20 20 16"></polyline></svg>',
           'star' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z"></path></svg>',
+          'starred' => '<svg class="icon icon-md" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-star fa-w-18 fa-2x"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path></svg>',
           'sticker' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M20 12l-2 .5a6 6 0 0 1 -6.5 -6.5l.5 -2l8 8"></path><path d="M20 12a8 8 0 1 1 -8 -8"></path></svg>',
           'strikethrough' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><line x1="5" y1="12" x2="19" y2="12"></line><path d="M16 6.5a4 2 0 0 0 -4 -1.5h-1a3.5 3.5 0 0 0 0 7"></path><path d="M16.5 16a3.5 3.5 0 0 1 -3.5 3h-1.5a4 2 0 0 1 -4 -1.5"></path></svg>',
           'subscript' => '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M5 7l8 10m-8 0l8 -10"></path><path d="M21 20h-4l3.5 -4a1.73 1.73 0 0 0 -3.5 -2"></path></svg>',

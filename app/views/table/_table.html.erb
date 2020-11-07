@@ -23,27 +23,42 @@
         <table class="table card-table table-vcenter text-nowrap datatable table-striped">
           <thead>
             <tr>
+              <% if params[:controller] != 'favorites' %>
+                <th>
+                </th>
+              <% end %>
               <% @settings[:form_class].parsed_columns_for(request).each do |col_name| %>
                 <%= render TableComponent::HeaderComponent.new col_name: col_name,
                                                                settings: @settings
                 %>
               <% end %>
               <% if policy(@settings[:model_class]).new? %>
-                <th></th>
+                <th>
+                </th>
               <% end %>
             </tr>
           </thead>
           <tbody>
-            <% rows.each do |row| %>
+          <% rows.each do |row| %>
               <%= tag.tr id: "table_#{@settings[:singular]}_#{row['_id']}", class: "table_#{@settings[:singular]}" do %>
+                <% if params[:controller] != 'favorites' %>
+                  <td>
+                    <%= render FavoriteComponent.new(is_favorite: row.is_favorite, ext_id: row['_id'], kind: @settings[:plural], starred_class: 'text-lime', unstarred_class: 'text-secondary') %>
+                  </td>
+                <% end %>
                 <% @settings[:form_class].parsed_columns_for(request).each do |col_name| %>
                   <td>
                     <%# TODO! add decorators %>
-                    <%= row['_source'][col_name] %>
+                    <%= row.public_send(col_name) %>
                     <%#= public_send("_#{col_name}", row[col_name]) %>
                   </td>
                 <% end %>
-                <%= render 'debug', row: row rescue nil %>
+                <% if policy(@settings[:model_class]).new? %>
+                  <td>
+                    <%= render 'controls', row: row %>
+                    <%= render 'debug', row: row %>
+                  </td>
+                <% end %>
               <% end %>
             <% end %>
           </tbody>

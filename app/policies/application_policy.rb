@@ -27,8 +27,6 @@ class ApplicationPolicy
   end
 
   def new?
-    return true if user && user.admin?
-
     create?
   end
 
@@ -39,8 +37,6 @@ class ApplicationPolicy
   end
 
   def edit?
-    return true if user && user.admin?
-
     update?
   end
 

@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
+ruby '2.7.2'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg', '>= 0.18', '< 2.0'
@@ -11,7 +11,7 @@ gem 'puma', '~> 4'
 gem 'rails', '~> 6.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker', '~> 4.0'
-# gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.7'
 
 group :development, :test do
   # Debug
@@ -36,6 +36,7 @@ group :development, :test do
   gem 'fantaskspec'
   gem 'webmock'
   gem 'test-prof'
+  # gem 'isolator'
   # gem 'aruba'
   # gem 'awesome_print'
 end
@@ -60,7 +61,6 @@ end
 # Application monitoring
 gem 'newrelic_rpm'
 gem 'sentry-raven'
-gem 'prometheus-client'
 gem 'yabeda-rails'
 gem 'yabeda-prometheus'
 gem 'yabeda-sidekiq'
@@ -76,19 +76,27 @@ gem 'faraday_middleware'
 # gem 'faraday-detailed_logger'
 # gem 'faraday_curl'
 
-gem 'aasm'
+# gem 'aasm'
+gem 'draper'
 gem 'dotenv-rails'
 gem 'interactor'
 gem 'rails-erd'
 gem 'rails-i18n'
 gem 'redis'
-gem 'redis-session-store'
+# gem 'redis-session-store'
+gem 'money'
+gem 'russian_central_bank'
+gem 'eu_central_bank'
+# gem 'rails_event_store'
+gem 'after_commit_everywhere'
 # gem 'paper_trail'
 # gem 'rack-attack'
 # gem 'rpush'
 # gem 'typhoeus'
 # gem 'piperator'
 # gem 'ransack'
+gem 'i18n-debug'
+gem 'spreadsheet'
 
 # Sidekiq
 gem 'sidekiq'
@@ -143,7 +151,7 @@ gem 'pundit'
 gem 'dry-struct'
 # gem 'dry-transaction'
 # gem 'dry-monads'
-# gem 'dry-validation'
+gem 'dry-validation'
 
 # Image processing
 gem 'image_processing', '~> 1.11'

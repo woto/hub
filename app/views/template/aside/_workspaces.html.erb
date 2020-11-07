@@ -11,7 +11,10 @@
           <% if workspace %>
             <%= tag.span id: dom_id(workspace, 'left'), class: dom_class(workspace, 'left') do %>
               <%= link_to workspace.path do %>
-                <%= workspace.name %>
+                <span>
+                  <%= workspace.name %>
+                  <%== GlobalHelper.icons['starred'] if workspace.is_default %>
+                </span>
               <% end %>
               <%= link_to table_workspace_path(workspace,
                                                model: params[:controller],

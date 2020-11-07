@@ -35,6 +35,7 @@
 #
 class User < ApplicationRecord
   include Elasticable
+  # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.users"
 
   enum role: { user: 0, manager: 1, admin: 2 }
@@ -43,10 +44,14 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
   has_one :profile, dependent: :destroy
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :identities, dependent: :destroy
   has_many :workspaces
   has_one_attached :avatar
+  has_many :accounts, as: :subject
+
+  before_create :set_default_role
+  after_create :create_accounts
 
   def as_indexed_json(options={})
     {
@@ -81,4 +86,25 @@ class User < ApplicationRecord
       profile_updated_at: profile&.updated_at
     }
   end
+
+  def to_label
+    email
+  end
+
+  def set_default_role
+    self.role ||= 'user'
+  end
+
+  def create_accounts
+    Account.create!(
+      subject: self, name: "##{id}_user_pending", code: 'pending', currency: :rub, kind: :passive
+    )
+    Account.create!(
+      subject: self, name: "##{id}_user_accrued", code: 'accrued', currency: :rub, kind: :passive
+    )
+    Account.create!(
+      subject: self, name: "##{id}_user_payed", code: 'payed', currency: :rub, kind: :passive
+    )
+  end
+
 end

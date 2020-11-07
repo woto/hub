@@ -1,9 +1,9 @@
 module Workspaceable
   extend ActiveSupport::Concern
+  include Paginatable
 
   included do
     before_action :set_settings, only: :index
-    before_action :set_pagination_rule
     before_action :check_defaults, only: :index
     before_action :set_workspaces, only: :index
     before_action :set_workspace_form, only: :index
@@ -12,7 +12,12 @@ module Workspaceable
 
     def check_defaults
       if workspace_params.values_at(*self.class::REQUIRED_PARAMS).any? { _1.nil? }
-        redirect_with_defaults
+        user_default_workspace = Workspace.find_by(controller: @settings[:plural], is_default: true)
+        if user_default_workspace
+          redirect_to user_default_workspace.path
+        else
+          redirect_to system_default_workspace
+        end
       end
     end
 

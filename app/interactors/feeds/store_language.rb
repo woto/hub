@@ -36,6 +36,7 @@ class Feeds::StoreLanguage
         end
       rescue StandardError => e
         debugger
+        p 1
       end
     end
   end

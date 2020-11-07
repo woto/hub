@@ -2,7 +2,10 @@
 <% css_class << ' active' if @current_page %>
 
 <li class="<%= css_class %>">
-  <%= link_to(@path, class: 'nav-link') do %>
+
+  <% a_class = ' disabled' if @disabled %>
+
+  <%= link_to(@path, class: "nav-link #{a_class}") do %>
     <span class="nav-link-icon d-md-none d-lg-inline-block">
       <%== @icon %>
     </span>

@@ -1,6 +1,39 @@
 version: "3.7"
 services:
 
+#  rails:
+#    env_file:
+#      - .env
+#    build:
+#      context: .
+#      args:
+#        - RAILS_ENV=${HUB_ENV}
+#        - NODE_ENV=${HUB_ENV}
+#        - SECRET_KEY_BASE
+#    image: app
+#    command:
+#      [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+#    volumes:
+#      - "rails_storage:/app/storage"
+#    expose:
+#      - 9394
+#    ports:
+#      - 19395:9394
+#      - ${RAILS_PORT}:3000
+#
+#  sidekiq:
+#    env_file:
+#      - .env
+#    image: app
+#    command:
+#      [ "bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml" ]
+#    volumes:
+#      - "rails_storage:/app/storage"
+#    expose:
+#      - 9394
+#    ports:
+#      - 19394:9394
+
   elastic:
     env_file:
       - .env
@@ -10,8 +43,8 @@ services:
       - ${ELASTIC_CLUSTER_PORT}:9300
     environment:
       - discovery.type=single-node
-    volumes:
-      - elastic:/usr/share/elasticsearch/data
+    # volumes:
+    #   - elastic:/usr/share/elasticsearch/data
 
 #  es01:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
@@ -53,8 +86,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - ${POSTGRES_PORT}:5432
-    volumes:
-      - "postgres:/var/lib/postgresql/data"
+    # volumes:
+    #   - "postgres:/var/lib/postgresql/data"
 
   redis:
     env_file:
@@ -75,15 +108,15 @@ services:
   # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
   # domain name passes from .env* files
 
-  alpine:
-    env_file:
-      - .env
-    build:
-      context: ./docker/alpine
-      dockerfile: Dockerfile
-    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
-    stdin_open: true
-    tty: true
+#  alpine:
+#    env_file:
+#      - .env
+#    build:
+#      context: ./docker/alpine
+#      dockerfile: Dockerfile
+#    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
+#    stdin_open: true
+#    tty: true
 
   imageproxy:
     image: willnorris/imageproxy
@@ -91,32 +124,35 @@ services:
     ports:
       - ${IMAGEPROXY_PORT}:8080
 
-  prometheus:
-    image: prom/prometheus:v2.16.0
-    volumes:
-      - ./docker/prometheus:/etc/prometheus/
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-    ports:
-      - ${PROMETHEUS_PORT}:9090
-
-  grafana:
-    image: grafana/grafana:7.1.5
-    ports:
-      - ${GRAFANA_PORT}:3000
-
-  pushgateway:
-    image: prom/pushgateway
-    ports:
-      - ${PUSHGATEWAY_PORT}:9091
-
-
-volumes:
-#  data01:
-#    driver: local
-  postgres:
-  elastic:
-  feeder:
-  rails_storage:
-  imageproxy:
+#  prometheus:
+#    image: prom/prometheus:v2.16.0
+#    volumes:
+#      - ./docker/prometheus:/etc/prometheus/
+#    command:
+#      - "--config.file=/etc/prometheus/prometheus.yml"
+#      - "--storage.tsdb.path=/prometheus"
+#    ports:
+#      - ${PROMETHEUS_PORT}:9090
+#
+#  alertmanager:
+#    image: prom/alertmanager:v0.12.0
+#    ports:
+#      - 9093:9093
+#    volumes:
+#      - ./docker/alertmanager/:/etc/alertmanager/
+#    restart: always
+#    command:
+#      - '-config.file=/etc/alertmanager/config.yml'
+#      - '-storage.path=/alertmanager'
+#    deploy:
+#      mode: global
+#
+#  grafana:
+#    image: grafana/grafana:7.1.5
+#    ports:
+#      - ${GRAFANA_PORT}:3000
+#
+#  pushgateway:
+#    image: prom/pushgateway
+#    ports:
+#      - ${PUSHGATEWAY_PORT}:9091

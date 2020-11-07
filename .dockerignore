@@ -1,4 +1,14 @@
-/.git
+/data/
+
+
 /.env
-/.env.gitlab
+/.env.test
 /.env.production
+/.git
+/node_modules
+/tmp
+/log
+/public/packs
+/public/packs-test
+/public/assets
+

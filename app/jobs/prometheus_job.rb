@@ -22,8 +22,7 @@ class PrometheusJob < ApplicationJob
     docstring = 'Время успешной обработки n минут тому назад'
     metric = pusher.metric(:feeds_succeeded, :gauge,
                            docstring: docstring,
-                           labels: [:minutes],
-                           store_settings: { aggregation: :most_recent })
+                           labels: [:minutes])
     bucket_args = [3, 4, 6]
     fields = iterate_buckets(*bucket_args).map do |(startm, endm), bname|
       <<~SQL.squish
@@ -46,15 +45,13 @@ class PrometheusJob < ApplicationJob
     docstring = 'Количество индексов прайсов в Elasticsearch'
     metric = pusher.metric(:feeds, :gauge,
                            docstring: docstring,
-                           labels: [:service],
-                           store_settings: { aggregation: :most_recent })
+                           labels: [:service])
     metric.set(indices.size, labels: { service: 'elastic' })
 
     docstring = 'Количество товаров в Elasticsearch'
     metric = pusher.metric(:offers, :gauge,
                            labels: [:index],
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     indices.each do |index|
       metric.set(index['docs.count'].to_i, labels: { index: index['index'] })
     end
@@ -62,15 +59,13 @@ class PrometheusJob < ApplicationJob
     docstring = 'Количество прайсов в Postgres'
     metric = pusher.metric(:feeds, :gauge,
                            docstring: docstring,
-                           labels: [:service],
-                           store_settings: { aggregation: :most_recent })
+                           labels: [:service])
     metric.set(Feed.count, labels: { service: 'postgres' })
 
     docstring = 'Статусы операций прайсов'
     metric = pusher.metric(:feeds_operations, :gauge,
                            labels: [:operation],
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     Feed.group(:operation).count.each do |operation, count|
       metric.set(count, labels: { operation: operation })
     end
@@ -78,29 +73,25 @@ class PrometheusJob < ApplicationJob
     docstring = 'Группировки ошибок прайсов'
     metric = pusher.metric(:feeds_error_classes, :gauge,
                            labels: [:error_class],
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     Feed.group(:error_class).count.each do |error_class, count|
       metric.set(count, labels: { error_class: error_class })
     end
 
     docstring = 'Количество рекламодателей в Postgres'
     metric = pusher.metric(:advertisers, :gauge,
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     metric.set(Advertiser.count)
 
     docstring = 'Количество категорий в Postgres'
     metric = pusher.metric(:feed_categories, :gauge,
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     metric.set(FeedCategory.count)
 
     docstring = 'Категории по уровню вложенности'
     metric = pusher.metric(:feed_categories_depths, :gauge,
                            labels: [:depth],
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     FeedCategory.group(:ancestry_depth).count.each do |depth, count|
       metric.set(count, labels: { depth: depth })
     end
@@ -109,13 +100,12 @@ class PrometheusJob < ApplicationJob
     docstring = 'Категории по уровню вложенности'
     metric = pusher.metric(:feed_categories_parent_not_found, :gauge,
                            labels: [:feed_id],
-                           docstring: docstring,
-                           store_settings: { aggregation: :most_recent })
+                           docstring: docstring)
     FeedCategory.where(parent_not_found: nil).group(:feed_id).order('count_all DESC')
                 .limit(10).count.each do |feed_id, count|
       metric.set(count, labels: { feed_id: feed_id })
     end
 
-    pusher.push
+    # pusher.push
   end
 end

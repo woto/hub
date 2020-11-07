@@ -3,11 +3,8 @@
                                   'beforeunload@window->posts-form#AskConfirmationOnBeforeunload
                                    trix-initialize@document->posts-form#addToolbarButtonOnTrixInitialize
                                    trix-action-invoke@document->posts-form#openModalOnTrixActionInvoke
-                                   trix-change@document->posts-form#markAsDirtyOnTrixChange
-                                   load@window->posts-form#openModalOnPageLoad
-'
-} do
-%>
+                                   trix-document-change@document->posts-form#markAsDirtyOnTrixChange
+                                   load@window->posts-form#openModalOnPageLoad' } do %>
 
   <%= simple_form_for(@post) do |f| %>
     <%= f.error_notification %>
@@ -18,24 +15,79 @@
         <div class="form-inputs">
 
           <%= f.input :title,
-                      wrapper_html: {class: 'mb-3'} %>
+                      wrapper_html: {class: 'mb-3 col-xl-8'},
+                      label_html: { :class => "mb-2" } %>
 
-          <%= f.input :status_state,
+          <%= f.input :language, as: :select,
+                      wrapper_html: {class: 'mb-3 col-xl-8'},
+                      label_html: { :class => "mb-2" },
+                      collection: Rails.configuration.global[:languages].map { |lng| [lng[:language], lng[:english_name]] },
+                      input_html: { data: { controller: 'posts-language' }}
+          %>
+
+          <%= f.association :post_category, as: :select,
+                      input_html: { data: { controller: 'posts-category' }},
+                      wrapper_html: {class: 'mb-3 col-xl-8'},
+                      label_html: { :class => "mb-2" },
+                      collection: PostCategory.where(id: f.object.post_category_id).map {
+                        [_1[:title], _1[:id], data: { data: {title: _1.title, path: _1.path.pluck(:title).join(' > ')} }]
+                      },
+                      selected: f.object.post_category_id
+          %>
+
+          <%= f.input :status,
                       as: :radio_buttons,
-                      collection: [['Draft', 'draft'], ['Ready', 'ready']],
-                      wrapper: :vertical_collection_inline,
-                      wrapper_html: {class: 'mb-3'} %>
+                      collection: [
+                          ([t('.statuses.draft'), 'draft'] if PostStatusesPolicy.new(current_user, @post).to_draft?),
+                          ([t('.statuses.pending'), 'pending'] if PostStatusesPolicy.new(current_user, @post).to_pending?),
+                      ].compact,
+              wrapper: :vertical_collection_inline,
+                      wrapper_html: {class: 'mb-3 col-xl-8'}
+          %>
 
           <div class="trix-content">
             <%= f.input :body,
                         as: :rich_text_area,
-                        input_html: { data: { target: 'posts-form.editor' } } %>
+                        input_html: { data: { target: 'posts-form.editor' } },
+                        label: false,
+                        placeholder: t('.placeholder'),
+                        wrapper_html: { class: 'col-xl-10' }
+            %>
           </div>
+
         </div>
       </div>
     </div>
 
+    <% if PostStatusesPolicy.new(current_user, @post).to_accrued? ||
+        PostStatusesPolicy.new(current_user, @post).to_rejected? ||
+        PostStatusesPolicy.new(current_user, @post).to_canceled?
+    %>
+      <div class="card my-3 col-lg-5">
+        <div class="card-status-left bg-warning"></div>
+        <div class="card-body">
+          <h3 class="card-title">
+            <%= t('.moderation_status') %>
+          </h3>
+          <%= f.input :status,
+                      as: :radio_buttons,
+                      collection: [
+                          ([t('.statuses.accrued'), 'accrued'] if PostStatusesPolicy.new(current_user, @post).to_accrued?),
+                          ([t('.statuses.rejected'), 'rejected'] if PostStatusesPolicy.new(current_user, @post).to_rejected?),
+                          ([t('.statuses.canceled'), 'canceled'] if PostStatusesPolicy.new(current_user, @post).to_canceled?)
+                      ].compact,
+                      label: false,
+                      include_hidden: false,
+                      wrapper: :vertical_boolean,
+                      hint: t('.moderation_parting_words')
+          %>
+        </div>
+      </div>
+    <% end %>
+
     <div class="form-actions">
+      <%= link_to 'Back', posts_path, class: "btn btn-white" %>
+
       <%= f.button :submit, class: 'btn btn-primary', data:{
           action: 'posts-form#sendForm'
       } %>
@@ -43,6 +95,6 @@
 
   <% end %>
 
-  <%= render 'modal' %>
+  <%= render 'modal_embed' %>
 
 <% end %>

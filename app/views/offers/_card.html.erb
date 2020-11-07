@@ -1,6 +1,10 @@
 <%= tag.div class: "item_offer col-xs-12 col-md-6 col-lg-4" do %>
   <div class="card d-flex flex-column">
 
+    <div class="ribbon bg-gray-lt ribbon-top ribbon-left p-1" style="z-index:100; display: table; white-space: nowrap">
+      <%= render FavoriteComponent.new(is_favorite: row.is_favorite, ext_id: row['_id'], kind: 'offers', starred_class: 'text-lime', unstarred_class: 'text-gray') %>
+    </div>
+
     <a href="#" class="d-block">
       <%= render 'carousel', row: row, offer_idx: row_counter %>
     </a>
@@ -8,15 +12,13 @@
     <%= render 'card_header', row: row %>
 
     <div class="card-body d-flex flex-column lh-sm">
+
       <div class="mb-2">
-        <% if false %>
-          <small class="mb-3 text-muted"><%= row['_index'] %></small>
-        <% end %>
 
         <% advertiser = @all_offers_advertisers.find { |advertiser| advertiser.id == row['_source']['advertiser_id']} %>
         <% feed = @all_offers_feeds.find { |feed| feed.id == row['_routing'].to_i} %>
 
-        <%= link_to request.params.merge(feed_id: feed.slug_with_advertiser), type: 'button',
+        <%= link_to request.params.merge(feed_id: feed.slug_with_advertiser),
                     class: 'overflow-auto w-100 btn btn-ghost-secondary justify-content-start mb-2 text-left' do %>
           <%= advertiser.name %>
           <%= feed.name %>
@@ -44,20 +46,21 @@
 
       </div>
 
-      <% if !false %>
       <div class="mt-auto">
+        <%= link_to t('buttons.write_post'), write_favorites_path(ext_id: row['_id']), method: :post, class: 'btn btn-primary d-block mt-3' %>
         <% if policy(:feed).new? %>
-          <%= tag.button class: 'btn mb-1 btn-warning', data: {
-              controller: 'modal-static-opener',
-              action: 'modal-static-opener#open',
-              modal_static_opener_json: row } do %>
-            <%= t('offer', scope: ['buttons']) %>
+          <% if false %>
+            <%= tag.button class: 'btn mb-1 btn-warning', data: {
+                controller: 'modal-static-opener',
+                action: 'modal-static-opener#open',
+                modal_static_opener_json: row } do %>
+              <%= t('offer', scope: ['buttons']) %>
+            <% end %>
           <% end %>
         <% end %>
-        <%= link_to t('buttons.write_post'), new_post_path(url: row['_source']['url'].first['#']), class: 'btn btn-success mb-1' %>
       </div>
-      <% end %>
 
     </div>
+
   </div>
 <% end %>

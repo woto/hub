@@ -1,4 +1,6 @@
 ru:
+  attributes:
+      name: Название
   homepage: Главная
   articles: Новости
   back_to_news: Назад к новостям
@@ -10,25 +12,44 @@ ru:
   save: Сохранить
   displaying: Отображается
   are_you_sure: Уверены, что хотите удалить?
+  default: По-умолчанию
+  all: Все
+  cancel: Отмена
 
-  buttons:
-    advertiser: Рекламодатель
-    feed: Прайс лист
-    offer: Товар
-    feed_logs: История прайс листа
-    write_post: Написать обзор
-    debug: Служ. данные
-    offers_count: Количество товаров
-    prioritize: Приоритизировать
-    new_advertiser: Создать рекламодателя
-    new_feed: Создать прайс
-    update_displayed_columns: Обновить
-    save: Сохранить
+  inputs:
+    profiles:
+      messengers_collection:
+        add_messenger: Добавить мессенджер
 
-  omni-buttons:
-    search: 'Поиск'
-    filter: 'Фильтр'
-    view: 'Вид'
+  posts:
+    modal_embed:
+      embed_offer: Вставка виджета
+      select: Списки избранного
+    form:
+      statuses:
+        draft: Черновик
+        pending: На модерацию
+        accrued: Принять статью
+        rejected: Запросить доработку
+        canceled: Отменить выплату
+      placeholder: Начните писать свой текст тут...
+      moderation_status: Статус модерирования
+      moderation_parting_words: 'Не переключайте бездумно статус. Переключение статуса влечёт отправку нотификации пользователю и созданию финансовой транзакции.'
+    show:
+      language: Язык
+      badge:
+        status: Статус
+        statuses:
+          draft: Черновик
+          pending: Ожидает модерации
+          accrued: Модерация пройдена
+          rejected: Требуется доработка
+          canceled: Выплата отменена
+
+#  omni-buttons:
+#    search: 'Поиск'
+#    filter: 'Фильтр'
+#    view: 'Вид'
 
   settings:
     profiles:
@@ -36,39 +57,6 @@ ru:
         update: Обновить
       update:
         saved: Профиль успешно сохранен
-
-  titles:
-    offers: Товары из всех прайс листов
-    settings: Настройки
-    feeds: Прайс листы
-    advertisers: Рекламодатели
-    posts: Статьи
-
-  breadcrumbs:
-    email: Почта
-    homepage: Главная
-    dashboard: Личн. кабинет
-    offers: Все товары
-    feeds: Прайс листы
-    profile: Профиль
-    new_advertiser: Создание рекламодателя
-    advertisers: Рекламодатели
-
-  left_menu:
-    workspaces: Рабочие области
-    advertisers: Рекламодатели
-    dashboard: Дашборд
-    feeds: Прайс листы
-    offers: Товары
-    posts: Посты
-    promotions: Продвижение
-    news: Новости
-    users: Пользователи
-    settings: Настройки
-    profile: Профиль
-    password: Пароль
-    email: Почта
-    categories: Категории
 
   header:
     language: Язык

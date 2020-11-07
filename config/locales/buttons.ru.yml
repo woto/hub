@@ -1,0 +1,19 @@
+ru:
+  buttons:
+    advertiser: Рекламодатель
+    feed: Прайс лист
+    offer: Товар
+    feed_logs: История прайс листа
+    write_post: Написать обзор
+    debug: Служ. данные
+    offers_count: Количество товаров
+    prioritize: Приоритизировать
+    new_advertiser: Создать рекламодателя
+    new_feed: Создать прайс
+    update_displayed_columns: Обновить
+    save: Сохранить
+    show: Просмотреть
+    edit: Редактировать
+    delete: Удалить
+    controls: Управление
+    new_post: Новая статья
