@@ -5,6 +5,7 @@
 # Table name: posts
 #
 #  id               :bigint           not null, primary key
+#  extra_options    :jsonb
 #  language         :string
 #  price            :integer          default(0), not null
 #  status           :integer          not null
@@ -72,7 +73,7 @@ class Post < ApplicationRecord
     # removes new lines and text like [200x200.jpg]
     self.price = body.body.to_plain_text
                      .delete("\n")
-                     .gsub(/\[\d+x\d+\.\w+{,5}\]/, '')
+                     .gsub(/\[\d+x\d+\.\w{,5}\]/, '')
                      .size
   end
 

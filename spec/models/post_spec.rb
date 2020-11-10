@@ -5,6 +5,7 @@
 # Table name: posts
 #
 #  id               :bigint           not null, primary key
+#  extra_options    :jsonb
 #  language         :string
 #  price            :integer          default(0), not null
 #  status           :integer          not null

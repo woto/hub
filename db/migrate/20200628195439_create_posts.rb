@@ -7,6 +7,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.integer :status, null: false
       t.references :user, null: false, foreign_key: true
       t.integer :price, null: false, default: 0
+      t.jsonb :extra_options
 
       t.timestamps
     end

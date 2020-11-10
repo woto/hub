@@ -6,7 +6,13 @@
                                    trix-document-change@document->posts-form#markAsDirtyOnTrixChange
                                    load@window->posts-form#openModalOnPageLoad' } do %>
 
-  <%= simple_form_for(@post) do |f| %>
+  <%= simple_form_for(@post,
+                      wrapper_mappings: {
+                          check_boxes:    :vertical_collection,
+                          radio_buttons:  :vertical_collection,
+                          file:           :custom_file,
+                          boolean:        :custom_boolean_switch
+                      }) do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -28,7 +34,7 @@
           <%= f.association :post_category, as: :select,
                       input_html: { data: { controller: 'posts-category' }},
                       wrapper_html: {class: 'mb-3 col-xl-8'},
-                      label_html: { :class => "mb-2" },
+                      label_html: { class: "mb-2" },
                       collection: PostCategory.where(id: f.object.post_category_id).map {
                         [_1[:title], _1[:id], data: { data: {title: _1.title, path: _1.path.pluck(:title).join(' > ')} }]
                       },
@@ -41,11 +47,24 @@
                           ([t('.statuses.draft'), 'draft'] if PostStatusesPolicy.new(current_user, @post).to_draft?),
                           ([t('.statuses.pending'), 'pending'] if PostStatusesPolicy.new(current_user, @post).to_pending?),
                       ].compact,
-              wrapper: :vertical_collection_inline,
+                      wrapper: :vertical_collection_inline,
                       wrapper_html: {class: 'mb-3 col-xl-8'}
           %>
 
-          <div class="trix-content">
+          <% Rails.configuration.global[:post_extra_options].each do |option_title, option_settings| %>
+            <%= f.simple_fields_for :extra_options do |extra| %>
+              <%= extra.input option_title.to_sym,
+                              as: option_settings[:type],
+                              checked: f.object.extra_options&.dig(option_title.to_s),
+                              item_wrapper_class: 'mt-0',
+                              item_label_class: 'ml-2',
+                              wrapper_html: {class: 'mb-3 col-xl-8'},
+                              collection: option_settings[:values].pluck(:title).map { |a| [t(a), a]}
+              %>
+            <% end %>
+          <% end %>
+
+          <div class="trix-content mb-3">
             <%= f.input :body,
                         as: :rich_text_area,
                         input_html: { data: { target: 'posts-form.editor' } },
@@ -54,7 +73,6 @@
                         wrapper_html: { class: 'col-xl-10' }
             %>
           </div>
-
         </div>
       </div>
     </div>
@@ -63,7 +81,7 @@
         PostStatusesPolicy.new(current_user, @post).to_rejected? ||
         PostStatusesPolicy.new(current_user, @post).to_canceled?
     %>
-      <div class="card my-3 col-lg-5">
+      <div class="card my-3 col-lg-6">
         <div class="card-status-left bg-warning"></div>
         <div class="card-body">
           <h3 class="card-title">

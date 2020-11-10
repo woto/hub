@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_221637) do
     t.integer "status", null: false
     t.bigint "user_id", null: false
     t.integer "price", default: 0, null: false
+    t.jsonb "extra_options"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "language"
