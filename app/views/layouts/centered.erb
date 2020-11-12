@@ -1,0 +1,25 @@
+<% content_for :prefix_inline_js do %>
+  <%= render TawkComponent.new %>
+<% end %>
+
+<% content_for :body do %>
+
+  <body class="antialiased border-top-wide border-primary d-flex flex-column" data-controller="global">
+
+    <%= content_for :prefix_inline_css %>
+    <%= content_for :prefix_inline_js %>
+
+    <div class="flex-fill d-flex flex-column justify-content-center">
+      <div class="container-tight py-6">
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= content_for :postfix_inline_css %>
+    <%= content_for :postfix_inline_js %>
+
+  </body>
+
+<% end %>
+
+<%= render template: 'layouts/blank' %>

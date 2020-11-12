@@ -1,5 +1,38 @@
-<% @articles.each do |article| %>
-  <%== article.meta["date"] %>
-  <h1><%== article.meta["title"] %></h1>
-  <%== article.preview %>
+<% content_for :title do %>
+  <%= t("titles.news") %>
 <% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.news'), articles_path %>
+  </li>
+<% end %>
+
+<div class="col-lg-9">
+  <div class="card card-lg">
+    <div class="card-body">
+
+      <% @articles.each do |article| %>
+        <div class="d-flex mb-3">
+          <h2><%== article.meta["title"] %></h2>
+          <span class="ml-auto text-muted"><%== l article.meta["date"] %></span>
+        </div>
+        <div class="news-preview">
+          <%== article.preview %>
+        </div>
+        <%= link_to t(:continue_reading), article_path(date: article.date, title: article.title) %>
+        <% unless @articles.last == article %>
+          <hr>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= paginate @articles %>

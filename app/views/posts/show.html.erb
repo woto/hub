@@ -1,0 +1,65 @@
+<% content_for :title do %>
+  <%= t("titles.posts") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.posts'), posts_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_post'), post_path(@post) %>
+  </li>
+<% end %>
+
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <div class="card card-lg">
+
+        <div class="card-body">
+
+          <div class="d-flex flex-wrap-reverse flex-row justify-content-between bg-white">
+
+            <h5>
+              <ol class="breadcrumb breadcrumb-alternate mb-1" aria-label="breadcrumbs">
+                <% @post.post_category.path.each do |slice| %>
+                  <li class="breadcrumb-item">
+                    <%= slice.title %>
+                  </li>
+                <% end %>
+              </ol>
+            </h5>
+
+            <div>
+              <%= render Decorators::Post::StatusComponent.new(status: @post.status) %>
+            </div>
+
+          </div>
+
+          <div class="d-flex flex-row justify-content-between bg-white">
+            <trix-editor>
+              <div class="mb-4">
+                <h1><%= @post.title %></h1>
+              </div>
+              <div style="font-size: 1rem !important;">
+                <%= @post.body %>
+              </div>
+            </trix-editor>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <%= link_to 'Back', posts_path, class: "btn btn-white" %>
+    <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-primary" %>
+  </div>
+</div>

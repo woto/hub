@@ -1,0 +1,3 @@
+<% unless ['UNKNOWN', 'Unknown'].include? @language %>
+  <%= tag.span class: "flag flag-country-#{@code}", data: {language: @language} %>
+<% end %>

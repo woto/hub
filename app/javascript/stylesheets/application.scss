@@ -1,0 +1,15 @@
+$assets-base: '../images/tabler/flags';
+
+@import 'flatpickr/dist/flatpickr.css';
+@import 'tabler/scss/tabler';
+@import 'tabler/scss/tabler-buttons';
+@import 'tabler/scss/tabler-flags';
+@import 'dropzone_avatar';
+@import 'favorite';
+@import 'selectize_languages';
+@import 'posts_form';
+@import 'profile_messenger';
+@import 'bootstrap_overrides';
+@import 'development';
+@import 'elastic';
+@import 'bootstrap_extracts';

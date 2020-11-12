@@ -1,34 +1,35 @@
 global:
-  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  # How frequently to scrape targets
+  scrape_interval: 5s
+  # How frequently to evaluate rules
+  evaluation_interval: 5s
 
-  # Attach these labels to any time series or alerts when communicating with
-  # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-    monitor: 'codelab-monitor'
+# Rules and alerts are read from the specified file(s)
+rule_files:
+  - rules.yml
 
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
+# Alerting specifies settings related to the Alertmanager
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            # Alertmanager's default port is 9093
+            - alertmanager:9093
+
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-
-    # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
-
+  - job_name: "prometheus"
     static_configs:
-      - targets: ['prometheus:9090']
+      - targets: ["prometheus:9090"]
 
-  - job_name: 'traefik'
+  - job_name: "rails"
     static_configs:
-      - targets: ['traefik:8082']
+      - targets: ["rails:9394"]
 
-
-  - job_name: 'netdata'
-
-    metrics_path: /api/v1/allmetrics
-    params:
-      format: [ prometheus ]
-
+  - job_name: "sidekiq"
     static_configs:
-      - targets: ['netdata:19999']
+      - targets: ["sidekiq:9394"]
 
+  - job_name: "pushgateway"
+    honor_labels: true
+    static_configs:
+      - targets: ["pushgateway:9091"]

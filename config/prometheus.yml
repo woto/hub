@@ -1,0 +1,11 @@
+common: &default_settings
+  pushgateway_address: <%= "http://#{ENV.fetch('PUSHGATEWAY_HOST')}:#{ENV.fetch('PUSHGATEWAY_PORT')}" %>
+
+development:
+  <<: *default_settings
+
+test:
+  <<: *default_settings
+
+production:
+  <<: *default_settings

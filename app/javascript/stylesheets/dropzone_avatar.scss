@@ -1,0 +1,33 @@
+#avatar-clickable {
+
+  cursor: pointer;
+  width: 122px;
+  height: 122px;
+  background-color: #fafafa;
+  @extend .border;
+  @extend .rounded;
+  border-style: dashed !important;
+
+  img {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .dz-started {
+    .dz-message {
+      display: none;
+    }
+  }
+
+  .dz-processing {
+    opacity: 0.3;
+  }
+
+  .dz-success {
+    opacity: 1;
+  }
+
+  .dz-error {
+    opacity: 0;
+  }
+}

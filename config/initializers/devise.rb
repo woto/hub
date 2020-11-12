@@ -8,17 +8,17 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '7906780f2b8b3121b54edf44e49352422eb5e93984df6fc1369834b97c1524935e00c72d3f7be6b91392a39fbe195853fd0d93151afcde1462552c51a6a5929f'
+  # config.secret_key = 'f108ab3069f33285f2534462f4b93b4c15ad2895341d3070b0174fba3e210d7c6b57e08be30c05d13cd2a49c402b42c799d88aa3edb9117e831869d6170320fa'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  config.parent_controller = 'Api::V1::BaseController'
+  config.parent_controller = 'ApplicationController'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = "no-reply@#{ENV['DOMAIN_NAME']}"
+  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -70,7 +70,7 @@ Devise.setup do |config|
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-  config.http_authenticatable = true
+  # config.http_authenticatable = false
 
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -114,7 +114,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'bb2178ed5322ba74eb62f541a400d112d698952f9a8f19b953fe81236443c211689db3835d5a7c662a9a5341cd10f8c8ed0dc36f3e47baef92b2d2ddf39743d9'
+  # config.pepper = 'bd37e85e707f0266e437e70f5fcdeb420d5e52305ac6017e72a26c4e5a24d5c6eff3d6449463169b9d000c391dc34ab921a22be3e90caa0633c37ac40cdf3fc0'
 
   # Send a notification to the original email when the user's email is changed.
   config.send_email_changed_notification = true
@@ -139,7 +139,6 @@ Devise.setup do |config|
   # their account can't be confirmed with the token any more.
   # Default is nil, meaning there is no restriction on how long a user can take
   # before confirming their account.
-  # TODO: add test on this
   config.confirm_within = 3.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
@@ -287,7 +286,7 @@ Devise.setup do |config|
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  #
+  # TODO: check this feature
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end

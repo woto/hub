@@ -1,37 +1,22 @@
-const { environment, config } = require('@rails/webpacker');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const dotenv = require('dotenv');
-const webpack = require('webpack');
+const { environment } = require('@rails/webpacker')
+const erb = require('./loaders/erb')
 
-const dotenvFiles = [
-  `.env.${process.env.HUB_ENV}`,
-  '.env',
-];
+const webpack = require('webpack')
 
-dotenvFiles.forEach((dotenvFile) => {
-  dotenv.config({ path: dotenvFile, silent: true });
-});
+environment.plugins.append('Provide', new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    Popper: ['popper.js', 'default'],
+    bootstrap: ['bootstrap']
+    // $: 'jquery',
+    // jQuery: 'jquery',
+    // jquery: 'jquery',
+    // 'window.Tether': 'tether',
+    // Popper: ['popper.js', 'default'],
+    // ActionCable: 'actioncable'
+}))
 
-environment.plugins.prepend('Environment', new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(process.env))));
+environment.splitChunks();
 
-environment.loaders.append('less-loader',
-  {
-    test: /\.less$/,
-    use: [{
-      loader: config.extract_css ? MiniCssExtractPlugin.loader : 'style-loader',
-    },
-    {
-      loader: 'css-loader',
-      options: {
-        sourceMap: true,
-      },
-    }, {
-      loader: 'less-loader',
-      options: {
-        javascriptEnabled: true,
-        sourceMap: true,
-      },
-    }],
-  });
-
+environment.loaders.prepend('erb', erb)
 module.exports = environment;

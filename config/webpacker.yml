@@ -34,7 +34,7 @@ default: &default
     - .woff2
 
   extensions:
-    - .jsx
+    - .erb
     - .mjs
     - .js
     - .sass
@@ -43,12 +43,12 @@ default: &default
     - .module.sass
     - .module.scss
     - .module.css
-    - .less
     - .png
     - .svg
     - .gif
     - .jpeg
     - .jpg
+    - .coffee
 
 development:
   <<: *default
@@ -60,11 +60,9 @@ development:
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false
-    # host: webpacker
     host: localhost
-    port: 3036
-    # public: webpacker.nv6.ru
-    public: localhost:3036
+    port: 3035
+    public: localhost:3035
     hmr: false
     # Inline should be set to true if using HMR
     inline: true

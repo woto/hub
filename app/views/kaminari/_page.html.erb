@@ -1,0 +1,17 @@
+<% if current_page.number != page.number %>
+  <% hide = 'd-none d-sm-inline-block' %>
+<% end %>
+
+<% link_class = "pagination-link" %>
+<% li_class = "pagination-list-item" %>
+<% li_id = "pagination_#{page.number}" %>
+
+<% if page.current? %>
+  <%= tag.li id: li_id, class: "#{li_class} active" do %>
+    <%= content_tag :a, page, data: { remote: remote }, rel: page.rel, class: link_class %>
+  <% end %>
+<% else %>
+  <%= tag.li id: li_id, class: "#{li_class} #{hide}" do %>
+    <%= link_to page, url, remote: remote, rel: page.rel, class: link_class %>
+  <% end %>
+<% end %>

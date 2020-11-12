@@ -1,18 +1,85 @@
 ru:
-  activerecord:
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              already_confirmed: "E-mail уже подтвержден, используйте форму для входа на сайт"
-              not_found: "Указанный e-mail не найден"
-              taken: 'Указанный e-mail уже указан другим пользователем'
-            confirmation_token:
-              invalid: "Ссылка для подтверждения неверна"
-  doorkeeper:
-    errors:
-      messages:
-        wrong_password: "Неверный пароль. Используйте форму восстановления пароля"
-        email_unconfirmed: "Ваш e-mail не подтверждён. Пожалуйста запросите письмо с ссылкой для подтверждения"
-        not_registered: "Введённый e-mail не зарегистрирован в системе"
+  attributes:
+      name: Название
+  homepage: Главная
+  articles: Новости
+  back_to_news: Назад к новостям
+  continue_reading: Продолжить чтение
+  search: Искать
+  close: Закрыть
+  see_also: Смотрите также
+  columns: Колонки
+  save: Сохранить
+  displaying: Отображается
+  are_you_sure: Уверены, что хотите удалить?
+  default: По-умолчанию
+  all: Все
+  cancel: Отмена
+
+  inputs:
+    profiles:
+      messengers_collection:
+        add_messenger: Добавить мессенджер
+
+  posts:
+    modal_embed:
+      embed_offer: Вставка виджета
+      select: Списки избранного
+    form:
+      statuses:
+        draft: Черновик
+        pending: На модерацию
+        accrued: Принять статью
+        rejected: Запросить доработку
+        canceled: Отменить выплату
+      placeholder: Начните писать свой текст тут...
+      moderation_status: Статус модерирования
+      moderation_parting_words: 'Не переключайте бездумно статус. Переключение статуса влечёт отправку нотификации пользователю и созданию финансовой транзакции.'
+    show:
+      language: Язык
+      badge:
+        status: Статус
+        statuses:
+          draft: Черновик
+          pending: Ожидает модерации
+          accrued: Модерация пройдена
+          rejected: Требуется доработка
+          canceled: Выплата отменена
+
+#  omni-buttons:
+#    search: 'Поиск'
+#    filter: 'Фильтр'
+#    view: 'Вид'
+
+  settings:
+    profiles:
+      edit:
+        update: Обновить
+      update:
+        saved: Профиль успешно сохранен
+
+  header:
+    language: Язык
+    menu:
+      login: Вход
+      logout: Выход
+      settings: Настройки
+
+  search:
+    bar:
+      search_placeholder: Введите текст для поиска...
+
+  template:
+    workspace:
+      form:
+        workspaces_hint: Дайте имя новой рабочей области. После сохранения новая рабочая область будет доступна для выбора в меню слева или вверху, если вы посещаете сайт с мобильного устройства.
+
+  offers:
+    search:
+      button:
+        search_inside_category: В этой категории
+        search_inside_feed: В этом прайс листе
+        search_everywhere: Во всех прайс листах
+
+      bar:
+        search_placeholder: Введите текст для поиска...

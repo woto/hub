@@ -1,0 +1,8 @@
+<% feed_category = @all_categories.find { |cat| cat.id == params[:category_id].to_i} || FeedCategory.find(params[:category_id]) %>
+<% path = feed_category.path %>
+<% path.each do |el| %>
+  <% css_class = 'active' if el.id == feed_category.id %>
+  <%= tag.li class: "breadcrumb-item #{css_class}" do  %>
+    <%= link_to el.name, feed_offers_path(q: params[:q], category_id: el.id), class: css_class %>
+  <% end %>
+<% end %>

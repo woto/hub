@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe RobotMailbox, type: :mailbox do
-  subject(:receive) do
+  subject do
     receive_inbound_email_from_mail(
       from: 'from-address@example.com',
       to: 'robot@nv6.ru',
@@ -11,8 +13,8 @@ describe RobotMailbox, type: :mailbox do
   end
 
   specify do
-    expect { receive }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with do |**args|
-      expect(args[:params][:email]).to eq(["from-address@example.com"])
+    expect { subject }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with do |**args|
+      expect(args[:params][:email]).to eq(['from-address@example.com'])
     end
   end
 end

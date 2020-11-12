@@ -1,0 +1,3 @@
+<% if policy(:feed).new? %>
+  <%= link_to t("buttons.new_feed"), new_feed_path, class: 'btn btn-success mb-4' %>
+<% end %>

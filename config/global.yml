@@ -1,0 +1,110 @@
+default: &default
+  cost_per_character_rub: 0.03
+  post_extra_options:
+    some_radio:
+      type: radio_buttons
+      values:
+        - title: rewrite
+          rate: 1
+        - title: copywrite
+          rate: 1.03
+    some_checkbox:
+      type: check_boxes
+      values:
+        - title: 1
+          rate: 1
+        - title: 2
+          rate: 1.01
+        - title: 3
+          rate: 1.02
+
+  blank_messenger:
+    short: select ...
+    long: Select ...
+
+  messengers:
+    -
+      short: whatsapp
+      long: WhatsApp
+    -
+      short: viber
+      long: Viber
+    -
+      short: wechat
+      long: WeChat
+    -
+      short: qq_mobile
+      long: QQ Mobile
+    -
+      short: telegram
+      long: Telegram
+    -
+      short: skype
+      long: Skype
+    -
+      short: email
+      long: E-mail
+    -
+      short: mobile_phone
+      long: Mobile Phone
+
+  languages:
+    -
+      language: 'English'
+      english_name: 'English'
+      disabled: false
+      domain: 'en'
+    -
+      language: '中文'
+      english_name: 'Chinese'
+      disabled: false
+      domain: 'zh-CN'
+    -
+      language: '日本語'
+      english_name: 'Japanese'
+      disabled: true
+      domain: 'ja'
+    -
+      language: 'Español'
+      english_name: 'Spanish'
+      disabled: true
+      domain: 'es'
+    -
+      language: 'Deutsch'
+      english_name: 'German'
+      disabled: true
+      domain: 'de'
+    -
+      language: 'Français'
+      english_name: 'French'
+      disabled: true
+      domain: 'fr'
+    -
+      language: '한국어'
+      english_name: 'Korean'
+      disabled: true
+      domain: 'ko'
+    -
+      language: 'Português'
+      english_name: 'Portuguese'
+      disabled: false
+      domain: 'pt'
+    -
+      language: 'Italiano'
+      english_name: 'Italian'
+      disabled: true
+      domain: 'it'
+    -
+      language: 'Русский'
+      english_name: 'Russian'
+      disabled: false
+      domain: 'ru'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

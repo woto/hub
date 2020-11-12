@@ -1,177 +1,158 @@
 version: "3.7"
 services:
 
-  traefik:
-    networks:
-      hub:
-        aliases:
-          - traefik
-          - ${DOMAIN_NAME}
-          - en.${DOMAIN_NAME}
-          - ru.${DOMAIN_NAME}
-          - zh.${DOMAIN_NAME}
-    image: "traefik:v2.0"
-    ports:
-      - "80:80"
-      - "443:443"
-    expose:
-      - 8082
-    command:
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.metrics.address=:8082
-      - --providers.docker=true
-      - --api.dashboard=true
-      - --metrics.prometheus=true
-      # --log.level=DEBUG
-      - --certificatesResolvers.myhttpchallenge.acme.email=oganer@gmail.com
-      - --certificatesResolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json
-      # --certificatesResolvers.myhttpchallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesResolvers.myhttpchallenge.acme.httpChallenge.entryPoint=web
-      - --metrics.prometheus.entryPoint=metrics
-      - --accesslog=true
+#  rails:
+#    env_file:
+#      - .env
+#    build:
+#      context: .
+#      args:
+#        - RAILS_ENV=${HUB_ENV}
+#        - NODE_ENV=${HUB_ENV}
+#        - SECRET_KEY_BASE
+#    image: app
+#    command:
+#      [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+#    volumes:
+#      - "rails_storage:/app/storage"
+#    expose:
+#      - 9394
+#    ports:
+#      - 19395:9394
+#      - ${RAILS_PORT}:3000
+#
+#  sidekiq:
+#    env_file:
+#      - .env
+#    image: app
+#    command:
+#      [ "bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml" ]
+#    volumes:
+#      - "rails_storage:/app/storage"
+#    expose:
+#      - 9394
+#    ports:
+#      - 19394:9394
 
-
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-
-      - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_NAME}`)"
-
-      # https://docs.traefik.io/operations/dashboard/
-      - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.middlewares=auth-traefik"
-      - "traefik.http.middlewares.auth-traefik.basicauth.users=oganer@gmail.com:$$apr1$$xm986s37$$uVHHKvvc03tLzThUZMshQ0"
-
-    volumes:
-      - "./docker/traefik/letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-  mongo:
-    networks:
-      hub:
-        aliases:
-          - mongo
-    image: mongo:4.2.3
-    volumes:
-      - mongo:/data/db
-
-  feeder:
+  elastic:
     env_file:
       - .env
-    networks:
-      hub:
-        aliases:
-          - feeder
-    build:
-      context: ./docker/feeder
-      dockerfile: Dockerfile
-      cache_from:
-        - ${CI_REGISTRY}/woto/hub/feeder
-        - ${CI_REGISTRY}/woto/hub/feeder:latest
-        - ${CI_REGISTRY}/woto/hub/feeder:${version}
-    image: ${CI_REGISTRY}/woto/hub/feeder:${version:-latest}
-    volumes:
-      - feeder:/app/feeds
-
-  swagger:
-    networks:
-      hub:
-        aliases:
-          - swagger
-    image: swaggerapi/swagger-ui:v3.23.11
+    image: elasticsearch:7.9.2
+    ports:
+      - ${ELASTIC_REST_PORT}:9200
+      - ${ELASTIC_CLUSTER_PORT}:9300
     environment:
-      - BASE_URL=/
-      - URLS=[{"name":"swagger", "url":"/project/swagger.json"}]
-      - OAUTH2_REDIRECT_URL=https://${DOMAIN_NAME}/oauth2-redirect.html
-    volumes:
-      - ./docker/swagger:/usr/share/nginx/html/project
-    labels:
-      - "traefik.enable=true"
+      - discovery.type=single-node
+    # volumes:
+    #   - elastic:/usr/share/elasticsearch/data
 
-      # TODO: this settings also as an envirnment settings were changed from https://${DOMAIN_NAME}/swagger
-      # to https://swagger.${DOMAIN_NAME} I think environment settings may be even simplified
-      # consider this later
+#  es01:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+#    container_name: es01
+#    environment:
+#      - node.name=es01
+#      - cluster.name=es-docker-cluster
+#      - discovery.seed_hosts=192.168.1.10
+#      - cluster.initial_master_nodes=es01,es02
+#      - bootstrap.memory_lock=true
+#      - network.host=0.0.0.0
+#      - network.bind_host=0.0.0.0
+#      - network.publish_host=192.168.1.2
+#      - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - data01:/usr/share/elasticsearch/data
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
 
-      - "traefik.http.routers.swagger.entrypoints=websecure"
-      - "traefik.http.routers.swagger.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.swagger.rule=Host(`swagger.${DOMAIN_NAME}`)"
-      - "traefik.http.services.swagger.loadbalancer.server.port=8080"
+  kibana:
+    env_file:
+      - .env
+    image: kibana:7.9.2
+    ports:
+      - ${KIBANA_PORT}:5601
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
 
   postgres:
     env_file:
       - .env
-    networks:
-      hub:
-        aliases:
-          - postgres
     build:
       context: ./docker/postgres
       dockerfile: Dockerfile
-      cache_from:
-        - ${CI_REGISTRY}/woto/hub/postgres
-        - ${CI_REGISTRY}/woto/hub/postgres:latest
-        - ${CI_REGISTRY}/woto/hub/postgres:${version}
-    image: ${CI_REGISTRY}/woto/hub/postgres:${version:-latest}
-    volumes:
-      - "postgres:/var/lib/postgresql/data"
+    ports:
+      - ${POSTGRES_PORT}:5432
+    # volumes:
+    #   - "postgres:/var/lib/postgresql/data"
 
-  redis_cable:
-    networks:
-      hub:
-        aliases:
-          - redis_cable
+  redis:
+    env_file:
+      - .env
     image: redis
-
-  # This service may live separated per Rails application.
-  # Data stored in this service should be considered as "don't be worried if it's lost"
-  # because it could be retrivable from persist storages (postgres for example)
-  redis_cache:
-    networks:
-      hub:
-        aliases:
-          - redis_cache
-    image: redis
-
-  redis_oauth:
-    networks:
-      hub:
-        aliases:
-          - redis_oauth
-    image: redis
-
-  redis_sidekiq:
-    networks:
-      hub:
-        aliases:
-          - redis_sidekiq
-    image: redis
+    ports:
+      - ${REDIS_PORT}:6379
 
   mailcatcher:
+    env_file:
+      - .env
     image: schickling/mailcatcher
-    networks:
-      hub:
-        aliases:
-          - mailcatcher
-    labels:
-      - "traefik.enable=true"
+    ports:
+      - ${MAILCATCHER_WEB_PORT}:1080
+      - ${MAILCATCHER_SMTP_PORT}:1025
 
-      - "traefik.http.routers.mailcatcher.entrypoints=websecure"
-      - "traefik.http.routers.mailcatcher.tls.certresolver=myhttpchallenge"
-      - "traefik.http.routers.mailcatcher.rule=Host(`mailcatcher.${DOMAIN_NAME}`)"
-      - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
+  # To get into docker-compose network and for example
+  # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
+  # domain name passes from .env* files
 
-networks:
-  hub:
+#  alpine:
+#    env_file:
+#      - .env
+#    build:
+#      context: ./docker/alpine
+#      dockerfile: Dockerfile
+#    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
+#    stdin_open: true
+#    tty: true
 
-volumes:
-  postgres:
-  mongo:
-  feeder:
+  imageproxy:
+    image: willnorris/imageproxy
+    command: -addr 0.0.0.0:8080
+    ports:
+      - ${IMAGEPROXY_PORT}:8080
+
+#  prometheus:
+#    image: prom/prometheus:v2.16.0
+#    volumes:
+#      - ./docker/prometheus:/etc/prometheus/
+#    command:
+#      - "--config.file=/etc/prometheus/prometheus.yml"
+#      - "--storage.tsdb.path=/prometheus"
+#    ports:
+#      - ${PROMETHEUS_PORT}:9090
+#
+#  alertmanager:
+#    image: prom/alertmanager:v0.12.0
+#    ports:
+#      - 9093:9093
+#    volumes:
+#      - ./docker/alertmanager/:/etc/alertmanager/
+#    restart: always
+#    command:
+#      - '-config.file=/etc/alertmanager/config.yml'
+#      - '-storage.path=/alertmanager'
+#    deploy:
+#      mode: global
+#
+#  grafana:
+#    image: grafana/grafana:7.1.5
+#    ports:
+#      - ${GRAFANA_PORT}:3000
+#
+#  pushgateway:
+#    image: prom/pushgateway
+#    ports:
+#      - ${PUSHGATEWAY_PORT}:9091

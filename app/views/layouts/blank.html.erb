@@ -1,0 +1,19 @@
+<!doctype html>
+<%= tag.html lang: I18n.locale.downcase do %>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title><%= content_for :title %></title>
+  <meta name="robots" content="noindex,nofollow,noarchive"/>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_packs_with_chunks_tag 'application' %>
+</head>
+
+<%= content_for(:body) %>
+
+<%= javascript_packs_with_chunks_tag 'application' %>
+
+<% end %>

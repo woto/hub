@@ -1,0 +1,24 @@
+<div class="row flex-grow-1 flex-lg-grow-0 mb-1">
+
+  <% if @left_menu_categories.size > 0 %>
+    <div class="subheader mt-lg-3"><%= t('left_menu.categories') %></div>
+  <% end %>
+
+  <% @left_menu_categories.in_groups(2) do |categories_group| %>
+    <div class="col-12 col-sm-6 col-md-6 col-lg-12">
+      <div class="list-group list-group-transparent mb-0">
+        <% categories_group.each do |(category, doc_count)| %>
+          <%= render Left::Menu::CategoryLinkComponent.new(category: category, doc_count: doc_count, request: request) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @sum_other_doc_count > 0 %>
+    <div class="hr-text my-3"><%= t('see_also') %></div>
+    <div class="col mb-2">
+      <%= @sum_other_doc_count %> more...
+    </div>
+  <% end %>
+
+</div>

@@ -42,3 +42,19 @@
 * [ ] To test + refactor d4ff25ab504818eb4e932df4e92fbe7b289dcdf9
 * [ ] To test + refactor 5959146e775140d2b385c49c91cc39f69ac8624f
 * [ ] User has unconfirmed e-mail address in `users.email`. User has misspelled changing e-mail address which stores in `users.unconfirmed_email`. User logs out. Confirmation period finished. Now confirmation link can be sent only on misspelled e-mail address.
+
+# v2.0
+
+Authentication
+
+* [ ] Registration
+    * Form with login / password
+    * Email notification
+    * Autologin after registration
+* [ ] Login
+    * Form
+* [ ] Reset password
+    * Form
+    * Email
+    * Handler for reset link
+    * New password form

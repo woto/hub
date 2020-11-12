@@ -1,0 +1,14 @@
+<div class="dropdown">
+
+  <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" data-boundary="window">
+    <%= t('buttons.controls') %>
+  </button>
+
+  <div class="dropdown-menu">
+
+    <%= link_to t('buttons.show'), favorite_path(row['_id']), class: 'dropdown-item' %>
+    <%= link_to t('buttons.edit'), edit_favorite_path(row['_id']), class: 'dropdown-item' %>
+    <%= link_to t('buttons.delete'), favorite_path(row['_id']), method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item' %>
+
+  </div>
+</div>

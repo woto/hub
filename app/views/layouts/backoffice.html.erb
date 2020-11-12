@@ -1,0 +1,95 @@
+<% content_for :prefix_inline_js do %>
+  <%= render TawkComponent.new %>
+<% end %>
+
+<% content_for(:body) do %>
+
+  <body class="antialiased" data-controller="global"
+        data-action="favorite-item:showToast->global#showToast
+                     favorite:showToast->global#showToast
+                     modal-embed:showToast->global#showToast">
+
+  <div class="position-absolute" style="z-index: 30;">
+    <div data-target="global.toastPlaceholder" class="position-fixed" style="top: 0; right: 0;">
+    </div>
+  </div>
+
+  <%= content_for :prefix_inline_css %>
+  <%= content_for :prefix_inline_js %>
+
+  <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
+
+    <div class="container">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <%= link_to root_path, class: 'navbar-brand navbar-brand-autodark ml-3 ml-lg-0' do %>
+        <img src="https://preview-dev.tabler.io/static/logo-white.svg" alt="Tabler" class="navbar-brand-image">
+      <% end %>
+
+      <%= render 'template/aside/navbar_mobile' %>
+      <%= render 'template/aside/navbar_menu' %>
+
+      <%= render 'search/mobile_wrapper' do %>
+        <%= render 'search/bar', btn_class: 'btn-secondary capybara-mobile-header-search' %>
+      <% end rescue nil %>
+
+      <div class="w-100"></div>
+
+      <%= content_for :left_menu %>
+
+      <%= render 'fake_filters' %>
+    </div>
+
+  </aside>
+
+  <section class="page">
+    <%= render 'template/desktop_header' %>
+
+    <main class="content">
+      <div class="container-xl">
+
+        <div class="page-header">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <h1 class="page-title">
+                <%= content_for :title %>
+              </h1>
+
+              <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
+                <%= content_for :breadcrumbs %>
+              </ol>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
+            <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
+          </div>
+        </div>
+
+        <div class="row">
+          <%= yield %>
+        </div>
+
+      </div>
+
+      <%= render template: 'layouts/footer' %>
+
+    </main>
+  </section>
+
+  <%= content_for :postfix_inline_css %>
+  <%= content_for :postfix_inline_js %>
+  <%= content_for :before_body_close %>
+
+  <div data-controller="modal-singleton"></div>
+  </body>
+<% end %>
+
+<%= render template: 'layouts/blank' %>

@@ -1,5 +1,0 @@
-FROM buildkite/puppeteer:latest
-RUN  npm i mocha chai axios dotenv
-ENV  PATH="${PATH}:/node_modules/.bin"
-COPY /docker/puppeteer /puppeteer
-CMD  ["wait-for-it.sh", "nv6.ru:443", "--", "mocha", "--inspect=0.0.0.0", "--recursive", "/puppeteer/tests"]

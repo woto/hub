@@ -1,0 +1,20 @@
+<% content_for :title do %>
+  <%= t("titles.posts") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.posts'), posts_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.edit_post'), edit_post_path(@post) %>
+  </li>
+<% end %>
+
+<%= render 'form', post: @post %>

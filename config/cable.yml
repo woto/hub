@@ -1,8 +1,7 @@
 default: &default
-  <<: *default
   adapter: redis
-  host: <%= ENV['REDIS_CABLE_HOST'] %>
-  port: <%= ENV['REDIS_CABLE_PORT'] %>
+  host: <%= ENV['REDIS_HOST'] %>
+  port: <%= ENV['REDIS_PORT'] %>
 
 development:
   <<: *default
@@ -14,12 +13,7 @@ test:
   db: 1
   channel_prefix: hub_test
 
-staging:
-  <<: *default
-  db: 2
-  channel_prefix: hub_staging
-
 production:
   <<: *default
-  db: 3
+  db: 2
   channel_prefix: hub_production

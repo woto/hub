@@ -1,0 +1,74 @@
+<% content_for :title do %>
+  <%= t(@settings[:plural], scope: ['titles']) %>
+<% end %>
+
+<%= render 'breadcrumbs' %>
+
+<div class="col-12">
+  <%= render 'admin' rescue nil %>
+  <%# render 'filters', klass: FeedFilterForm, model: Feed %>
+
+  <% if params[:dcf] %>
+    <%= render 'table/columns/form', form_class: form_class, model_class: model_class  %>
+  <% end %>
+
+  <% if params[:dwf] %>
+    <%= render 'template/workspace/form', form_class: form_class, model_class: model_class  %>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <%= render 'table/header', rows: rows, model_class: model_class %>
+      <div class="table-responsive">
+        <table class="table card-table table-vcenter text-nowrap datatable table-striped">
+          <thead>
+            <tr>
+              <% if params[:controller] != 'favorites' %>
+                <th>
+                </th>
+              <% end %>
+              <% @settings[:form_class].parsed_columns_for(request).each do |col_name| %>
+                <%= render TableComponent::HeaderComponent.new col_name: col_name,
+                                                               settings: @settings
+                %>
+              <% end %>
+              <% if policy(@settings[:model_class]).new? %>
+                <th>
+                </th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+          <% rows.each do |row| %>
+              <%= tag.tr id: "table_#{@settings[:singular]}_#{row['_id']}", class: "table_#{@settings[:singular]}" do %>
+                <% if params[:controller] != 'favorites' %>
+                  <td>
+                    <%= render FavoriteComponent.new(is_favorite: row.is_favorite, ext_id: row['_id'], kind: @settings[:plural], starred_class: 'text-lime', unstarred_class: 'text-secondary') %>
+                  </td>
+                <% end %>
+                <% @settings[:form_class].parsed_columns_for(request).each do |col_name| %>
+                  <td>
+                    <%# TODO! add decorators %>
+                    <%= row.public_send(col_name) %>
+                    <%#= public_send("_#{col_name}", row[col_name]) %>
+                  </td>
+                <% end %>
+                <% if policy(@settings[:model_class]).new? %>
+                  <td>
+                    <%= render 'controls', row: row %>
+                    <%= render 'debug', row: row %>
+                  </td>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <%= render 'table/footer', rows: rows %>
+  </div>
+</div>
+
+<% content_for :left_menu do %>
+  <%= render 'template/aside/workspaces' %>
+<% end %>

@@ -1,0 +1,33 @@
+<% content_for :title do %>
+  <% if @feed %>
+    <%= "#{@advertiser.name} - #{@feed.name}" %>
+  <% else %>
+    <%= t("titles.offers") %>
+  <% end %>
+<% end %>
+
+<%= render 'breadcrumbs' %>
+
+<div class="col-12">
+  <%= render 'admin' %>
+  <div class="mb-3">
+    <%= render 'template/items_summary', rows: @offers %>
+  </div>
+  <div class="row row-deck">
+    <%= render partial: 'card', collection: @offers, as: :row %>
+  </div>
+  <%= paginate @offers %>
+  <%= render 'advice' %>
+</div>
+
+<% if params[:feed_id] %>
+  <% content_for :left_menu do %>
+    <%= render 'offers/aside/categories' %>
+  <% end %>
+<% else %>
+  <% if params[:q] %>
+    <% content_for :left_menu do %>
+      <%= render 'offers/aside/feeds' %>
+    <% end %>
+  <% end %>
+<% end %>

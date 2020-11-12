@@ -1,0 +1,51 @@
+.page-link:hover {
+  background-color: #f1f3f8;
+}
+
+.was-validated .form-control:invalid, .form-control.is-invalid {
+  background-image: initial;
+}
+
+.breadcrumb-item.active a {
+  pointer-events: initial !important;
+}
+
+.alert a {
+  vertical-align: initial !important;
+}
+
+.page-item.active {
+  .page-link {
+    color: white !important;
+  }
+}
+
+.page-link {
+  @extend .text-primary;
+}
+
+.table thead th, .markdown > table thead th {
+  text-transform: initial;
+}
+
+aside {
+  .dropdown-item.active, .dropdown-item:active {
+    color: white !important;
+  }
+}
+
+.carousel-control-outline {
+  filter: drop-shadow(1px 1px 0px #111) drop-shadow(-1px 1px 0px #111) drop-shadow(1px -1px 0px #111) drop-shadow(-1px -1px 0px #111);
+}
+
+.ribbon {
+  text-transform: unset !important;
+}
+
+.dropdown-header {
+  pointer-events: auto !important;
+}
+
+.form-text {
+  display: block;
+}

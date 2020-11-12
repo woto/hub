@@ -1,0 +1,14 @@
+
+    <div class="dropdown">
+
+      <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" data-boundary="window">
+        <%= t('buttons.debug') %>
+      </button>
+
+      <div class="dropdown-menu">
+
+        <%= link_to t('buttons.impersonate'), impersonate_user_path(id: row['_source']['id']), method: :post, class: 'dropdown-item' %>
+
+      </div>
+    </div>
+

@@ -1,16 +1,19 @@
+# frozen_string_literal: true
+
 class Article
   class Parser
     def initialize(article_path)
       @article_path = article_path
-      @id = @article_path.split('/').last(2).join('/')
+      @date, @title = @article_path.split('/').last(2)
     end
 
     def parse
       OpenStruct.new(
-        id: @id,
         preview: markdownify('preview.md'),
         content: markdownify('content.md'),
-        meta: meta
+        meta: meta,
+        date: @date,
+        title: @title
       )
     end
 
@@ -24,7 +27,7 @@ class Article
 
     def markdownify(file_name)
       file_content = read_file(file_name)
-      render_options = { images_path: "/articles/#{@id}" }
+      render_options = { images_path: "/articles/#{@date}/#{@title}" }
       renderer = Renderer.new(render_options)
       markdown = Redcarpet::Markdown.new(renderer)
       markdown.render(file_content)

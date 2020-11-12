@@ -20,18 +20,8 @@ https://traefik.nv6.ru
 https://mailcatcher.nv6.ru  
 https://elastic.nv6.ru  
 https://kibana.nv6.ru  
-https://netdata.nv6.ru  
-https://swagger.nv6.ru  
 https://mailcatcher.nv6.ru  
 https://webpacker.nv6.ru  
-https://prometheus.nv6.ru  
-https://grafana.nv6.ru  
-https://sentry.nv6.ru  
-https://jaeger.nv6.ru  
-
-**Anywere your encountered entering login / password try:**  
-username: oganer@gmail.com  
-password: qweQWE123!@#  
 
 ### Useful commands
 
@@ -48,7 +38,6 @@ docker exec -i -t hub_postgres_1 psql -U hub -d postgres
 
 ```shell
 docker-compose run -l "traefik.enable=false" --rm rails rspec
-docker-compose run -l "traefik.enable=false" --rm puppeteer
 ```
 
 ### Reverse ssh tunnel
@@ -135,4 +124,4 @@ https://weblate.org/ru/hosting/
 https://webtranslateit.com/en  
 https://www.langapi.co/pricing  
 https://www.oneskyapp.com/pricing/  
-https://crowdin.com/pricing#annual  
+https://crowdin.com/pricing#annual

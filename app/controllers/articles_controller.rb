@@ -1,14 +1,45 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  include ArticlePage
+  ALLOWED_PARAMS = [:per, :page]
+  REQUIRED_PARAMS = [:per]
+
+  layout 'backoffice'
+  include Workspaceable
+  skip_before_action :authenticate_user!
 
   def index
-    @articles = Article.page(params[:page]).per(per)
+    # TODO: Refactor. We should parse only those articles which will be shown
+    article_paths = Dir["#{Article::ARTICLES_PATH}/*/*"]
+
+    articles = article_paths.map do |article_path|
+      Article::Parser.new(article_path).parse
+    end
+    articles.sort_by!(&:date)
+    articles.reverse!
+
+    @articles = Kaminari.paginate_array(articles).page(@pagination_rule.page).per(@pagination_rule.per)
   end
 
   def show
     @article = Article.find("#{params[:date]}/#{params[:title]}")
-    render 'show'
   end
+
+  private
+
+  def set_settings
+    @settings = { singular: :article,
+                  plural: :articles,
+                  model_class: Article
+                  # form_class: Columns::ArticleForm
+    }
+  end
+
+  def system_default_workspace
+    url_for(**workspace_params,
+            per: @pagination_rule.per,
+            sort: :id,
+            order: :desc)
+  end
+
 end
