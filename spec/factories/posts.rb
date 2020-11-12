@@ -31,5 +31,7 @@ FactoryBot.define do
     status { 'draft' }
     user
     body { Faker::Books::Dune.quote }
+    language { "Russian" }
+    post_category
   end
 end

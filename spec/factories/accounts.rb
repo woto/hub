@@ -19,10 +19,15 @@
 #
 FactoryBot.define do
   factory :account do
-    name { "MyString" }
-    type { 1 }
-    amount { 1 }
-    subject { nil }
-    currency { 1 }
+    name { Faker::Lorem.word }
+    currency { :rub }
+    code { :pending }
+    kind { :active }
+    trait :for_account_group do
+      association :subject, factory: :account_group
+    end
+    trait :for_user do
+      association :subject, factory: :user
+    end
   end
 end

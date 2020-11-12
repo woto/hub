@@ -8,6 +8,5 @@
 #
 FactoryBot.define do
   factory :account_group do
-    name { "MyString" }
   end
 end

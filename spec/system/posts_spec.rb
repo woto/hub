@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Posts page' do
+
+  before :all do
+    account_group = create(:account_group)
+    create(:account, subject: account_group, name: 'hub_pending', code: 'pending', currency: :rub, kind: :active)
+  end
+
   context 'when post is present' do
     it "shows row", browser: :desktop do
       user = create(:user)
