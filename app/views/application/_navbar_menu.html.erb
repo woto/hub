@@ -1,0 +1,169 @@
+<div class="collapse navbar-collapse flex-grow-0" id="navbar-menu">
+
+  <ul class="navbar-nav py-lg-2">
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.dashboard'),
+        path: { controller: '/dashboard', action: 'index' },
+        current_page: current_page?({controller: '/dashboard'}),
+        icon: GlobalHelper.icons['layout-grid'],
+        disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.feeds'),
+        path: { controller: '/tables/feeds', action: 'index' },
+        current_page: current_page?({controller: '/tables/feeds'}),
+        icon: GlobalHelper.icons['file-invoice'],
+        disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.offers'),
+        path: { controller: '/tables/offers', action: 'index', feed_id: nil },
+        current_page: current_page?({controller: '/tables/offers'}),
+        icon: GlobalHelper.icons['shopping-cart'],
+        disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.posts'),
+        path: { controller: '/tables/posts', action: 'index' },
+        current_page: current_page?({controller: '/tables/posts'}),
+        icon: GlobalHelper.icons['pencil'],
+        disabled: !user_signed_in?
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.post_categories'),
+        path: { controller: '/tables/post_categories', action: 'index' },
+        current_page: current_page?({controller: '/tables/post_categories'}),
+        icon: GlobalHelper.icons['sitemap'],
+        disabled: !user_signed_in?
+    ) %>
+
+    <% if policy(:user).index? %>
+      <%= render Left::Menu::ItemComponent.new(
+          title: t('left_menu.users'),
+          path: { controller: '/tables/users', action: 'index' },
+          current_page: current_page?({controller: '/tables/users'}),
+          icon: GlobalHelper.icons['user'],
+          disabled: false
+      ) %>
+    <% end %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.favorites'),
+        path: { controller: '/tables/favorites', action: 'index' },
+        current_page: current_page?({controller: '/tables/favorites'}),
+        icon: GlobalHelper.icons['star'],
+        disabled: !user_signed_in?
+    ) %>
+
+    <%# render Left::Menu::ItemComponent.new(
+        title: t('left_menu.promotions'),
+        path: { controller: '/promotions', action: 'index' },
+        current_page: current_page?({controller: '/promotions'}),
+        icon: GlobalHelper.icons['ad'],
+        disabled: false
+    ) %>
+
+    <%= render Left::Menu::DropdownComponent.new(
+        title: t('left_menu.finances'),
+        current_page: params['controller'].in?(%w[tables/transactions tables/accounts tables/checks]),
+        icon: GlobalHelper.icons['wallet'],
+        disabled: !user_signed_in?
+    ) do |component| %>
+
+      <% component.with(:items) do %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.transactions'),
+            path: { controller: '/tables/transactions', action: 'index' },
+            current_page: current_page?({controller: '/tables/transactions'}),
+            disabled: false
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.accounts'),
+            path: { controller: '/tables/accounts', action: 'index' },
+            current_page: current_page?({controller: '/tables/accounts'}),
+            disabled: false
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.checks'),
+            path: { controller: '/tables/checks', action: 'index' },
+            current_page: current_page?({controller: '/tables/checks'}),
+            disabled: false
+        ) %>
+
+      <% end %>
+    <% end %>
+
+
+    <%= render Left::Menu::DropdownComponent.new(
+        title: t('left_menu.settings'),
+        current_page: params['controller'].in?(%w[settings/passwords settings/emails settings/profiles settings/danger_zones]),
+        icon: GlobalHelper.icons['settings'],
+        disabled: !user_signed_in?
+    ) do |component| %>
+
+      <% component.with(:items) do %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.profile'),
+            path: edit_settings_profile_path,
+            current_page: params['controller'] == 'settings/profiles',
+            disabled: !user_signed_in?
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.password'),
+            path: edit_settings_password_path,
+            current_page: params['controller'] == 'settings/passwords',
+            disabled: !user_signed_in?
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.email'),
+            path: edit_settings_email_path,
+            current_page: params['controller'] == 'settings/emails',
+            disabled: !user_signed_in?
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+            title: t('left_menu.danger_zone'),
+            path: edit_settings_danger_zone_path,
+            current_page: params['controller'] == 'settings/danger_zones',
+            disabled: !user_signed_in?
+        ) %>
+      <% end %>
+    <% end %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.news'),
+        path: { controller: '/tables/news', action: 'index' },
+        current_page: current_page?({controller: '/tables/news'}),
+        icon: GlobalHelper.icons['news'],
+        disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.help'),
+        path: { controller: '/tables/help', action: 'index' },
+        current_page: current_page?({controller: '/tables/help'}),
+        icon: GlobalHelper.icons['help'],
+        disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+        title: 'Старые новости',
+        path: { controller: '/articles', action: 'index' },
+        current_page: current_page?({controller: '/articles'}),
+        icon: GlobalHelper.icons['news'],
+        disabled: false
+    ) %>
+
+  </ul>
+</div>

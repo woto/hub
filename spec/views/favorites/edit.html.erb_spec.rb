@@ -2,10 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "favorites/edit", type: :view do
   before(:each) do
-    @favorite = assign(:favorite, Favorite.create!(
-      user: nil,
-      name: "MyString"
-    ))
+    @favorite = assign(:favorite, create(:favorite))
   end
 
   it "renders the edit favorite form" do

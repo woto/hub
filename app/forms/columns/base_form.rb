@@ -31,7 +31,7 @@ class Columns::BaseForm
     def elastic_column(key)
       column = self::all_columns.find { |col| col[:key] == key }
       pg = column[:pg]
-      raise "Column `#{column[:key]}` not found in #{self}.all_columns" if pg.nil?
+      raise "`pg` key has invalid value in #{self}.all_columns for key `#{column[:key]}`" if pg.nil?
 
       pg_type = column[:as] || pg.type
       PG2ES[pg_type] || raise("Unable to find mapping for `#{key}` with column type `#{pg_type}`")
@@ -50,13 +50,17 @@ class Columns::BaseForm
       strings_to_ints(self::DEFAULTS).join('.')
     end
 
-    def parsed_columns_for(request)
-      ints = request.params[:cols].split('.').map { |el| el.to_i}
-      ints_to_strings(ints)
+    def parsed_columns_for(request, role)
+      ints = request.params[:cols]&.yield_self do |cols|
+        cols.split('.').map { |el| el.to_i }
+      end
+      ints_to_strings(ints, role)
     end
 
-    def ints_to_strings(ints)
-      all_columns.values_at(*ints).map { |el| el[:key] }
+    def ints_to_strings(ints, role)
+      all_columns.values_at(*ints)
+          .select { _1[:roles].include?(role) }
+          .map { _1[:key] }
     end
 
     def strings_to_ints(strings)

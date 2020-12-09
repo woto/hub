@@ -3,7 +3,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  get 'post_categories/index'
+  resources :template3s
+  # get 'post_categories/index'
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
   authenticate :user, ->(u) { u.admin? } do
@@ -45,33 +46,53 @@ Rails.application.routes.draw do
     # resources :advertiser_filter_forms
     # resources :feed_filter_forms
 
-    resources :categories, controller: 'post_categories', only: %i[index]
-    resources :offers, only: %i[index]
-    resources :accounts
-    resources :transactions
-    resources :posts
-    resources :promotions
-    resources :feeds do
-      member do
-        get :count
-        get :logs
-        patch :prioritize
-      end
+    namespace :ajax do
+      resources :categories, controller: 'post_categories', only: %i[index]
+      resources :tags, controller: 'post_tags', only: %i[index]
+    end
+
+    resources :advertisers
+    scope module: 'tables' do
+      resources :categories, controller: :post_categories
       resources :offers, only: %i[index]
-    end
-    resources :users do
-      post :impersonate, on: :member
-      post :stop_impersonating, on: :collection
-    end
-    resources :favorites do
-      collection do
-        get :list
-        get :refresh
-        post :write
-        get :items
-        get :select
+      resources :accounts
+      resources :transactions
+      resources :checks
+      resources :posts
+      resources :feeds do
+        member do
+          get :count
+          get :logs
+          patch :prioritize
+        end
+        resources :offers, only: %i[index]
+      end
+      resources :favorites do
+        collection do
+          get :list
+          get :refresh
+          post :write
+          get :items
+          get :select
+        end
+      end
+      resources :users do
+        post :impersonate, on: :member
+        post :stop_impersonating, on: :collection
+      end
+      resources :news do
+        collection do
+          get 'month/:month', action: :by_month
+          get 'tag/:tag', action: :by_tag, as: :by_tag
+        end
+      end
+      resources :help do
+        collection do
+          get 'tag/:tag', action: :by_tag, as: :by_tag
+        end
       end
     end
+    resources :promotions
     resources :offer_embeds, only: %i[create]
     namespace :table do
       resources :columns
@@ -85,6 +106,7 @@ Rails.application.routes.draw do
           resource 'email'
           resource 'password'
           resource 'avatar'
+          resource 'danger_zone'
         end
       end
     end

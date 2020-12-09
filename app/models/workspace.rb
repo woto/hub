@@ -25,7 +25,6 @@ class Workspace < ApplicationRecord
   belongs_to :user
 
   validates :name, presence: true
-  validates :controller, inclusion: %w[posts feeds users favorites]
 
   before_save do
     if is_default

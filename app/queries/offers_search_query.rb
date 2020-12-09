@@ -84,6 +84,8 @@ class OffersSearchQuery
     context.object = {}.tap do |h|
       h[:body] = definition.to_hash.deep_symbolize_keys
       h[:index] = ::Elastic::IndexName.offers
+      h[:from] = context.from
+      h[:size] = context.size
       h[:routing] = context.feed_id.split('+').second.to_i if context.feed_id.present?
     end
   end

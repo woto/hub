@@ -9,7 +9,8 @@ export default class extends Flatpickr {
         // sets your language (you can also set some global setting for all time pickers)
         this.config = {
             locale: Russian,
-            enableTime: true
+            enableTime: true,
+            position: "below"
         }
     }
 

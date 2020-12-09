@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Posts page' do
 
-  before :all do
+  before do
     account_group = create(:account_group)
     create(:account, subject: account_group, name: 'hub_pending', code: 'pending', currency: :rub, kind: :active)
   end

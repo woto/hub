@@ -1,0 +1,21 @@
+<div class="row align-items-center">
+  <div class="col-auto ms-auto d-print-none">
+    <div class="d-flex align-items-center">
+
+      <%# entries info %>
+      <div class="capybara-entries-info text-muted text-h5 text-nowrap me-3">
+        <%= page_entries_info rows, entry_name: '' %>
+      </div>
+
+      <%# per_page select %>
+      <% items = options_for_select(@pagination_rule.per_variants, params[:per]) %>
+      <%= select_tag :per, items, id: 'capybara-perselect', class: 'form-select',
+                     onload: "select.options[i].selected",
+                     data: {
+                         controller: 'table-per',
+                         action: 'change->table-per#visit',
+                         table_per_select_value: params[:per]
+                     } %>
+    </div>
+  </div>
+</div>

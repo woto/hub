@@ -1,0 +1,26 @@
+<div class="card-header position-relative">
+
+  <h3 class="card-title text-break" style="word-break: break-word">
+
+    <%= link_to row.url.first[Feeds::Offers::HASH_BANG_KEY] do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" /><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" /></svg>
+      <% highlighted_name = row.highlight && row.highlight["name.#{Feeds::Offers::HASH_BANG_KEY}"] %>
+      <% if highlighted_name.present? %>
+        <%== highlighted_name.join(' ') %>
+      <% else %>
+        <% if row.name.present? %>
+          <%= row.name.map { |item| item[Feeds::Offers::HASH_BANG_KEY]}.join %>
+        <% end %>
+      <% end %>
+
+      -
+
+      <% if row.price.is_a?(Array) && row.currencyId.is_a?(Array) %>
+        <% row.price.zip(row.currencyId).each do |item| %>
+          <%= item[0]['#'] %> <%= item[1]['#'] %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  </h3>
+</div>

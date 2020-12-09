@@ -3,11 +3,12 @@
 # Table name: accounts
 #
 #  id           :bigint           not null, primary key
-#  amount       :integer          default(0), not null
+#  amount       :decimal(, )      default(0.0), not null
 #  code         :integer          not null
+#  comment      :string           not null
 #  currency     :integer          not null
+#  identifier   :uuid
 #  kind         :integer          not null
-#  name         :string           not null
 #  subject_type :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -15,6 +16,7 @@
 #
 # Indexes
 #
+#  account_set_uniqueness                         (identifier,kind,currency,subject_id,subject_type) UNIQUE
 #  index_accounts_on_subject_type_and_subject_id  (subject_type,subject_id)
 #
 FactoryBot.define do

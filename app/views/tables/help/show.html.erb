@@ -1,0 +1,40 @@
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.news'), news_index_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%= link_to @news['content'][I18n.locale.to_s]['title'], news_path(id: @news['id']) %>
+  </li>
+<% end %>
+
+<% content_for :title do %>
+  <%== @news['content'][I18n.locale.to_s]['title'] %>
+<% end %>
+
+<div class="col-lg-12">
+  <div class="card card-lg">
+    <div class="card-body">
+      <p class="float-right text-muted news-date"><%== l Time.zone.parse(@news['date']).to_date %></p>
+      <div class="news-content">
+        <%==  @news['content'][I18n.locale.to_s]['content'] %>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <%= link_to t('back_to_news'), news_index_path %>
+
+        <div>
+          <% @news['content'][I18n.locale.to_s]['tags'].each do |tag| %>
+            <%= link_to tag, '#', class: 'badge badge-primary' %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

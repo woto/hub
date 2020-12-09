@@ -1,9 +1,12 @@
 $assets-base: '../images/tabler/flags';
 
+@import '~bootstrap/dist/css/bootstrap';
 @import 'flatpickr/dist/flatpickr.css';
-@import 'tabler/scss/tabler';
-@import 'tabler/scss/tabler-buttons';
-@import 'tabler/scss/tabler-flags';
+
+$enable-extra-colors: true;
+@import '@tabler/core/src/scss/tabler';
+//@import 'tabler/scss/tabler-buttons';
+//@import 'tabler/scss/tabler-flags';
 @import 'dropzone_avatar';
 @import 'favorite';
 @import 'selectize_languages';

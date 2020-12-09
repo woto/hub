@@ -10,6 +10,6 @@ class Contexts::Favorites
   end
 
   def find(needle)
-    @favorites_items.any? { |fi| fi.ext_id == needle['_id'] }
+    @favorites_items.any? { |fi| fi.ext_id == needle._id }
   end
 end

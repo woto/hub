@@ -56,4 +56,7 @@ Rails.application.configure do
   config.force_ssl = true if ActiveModel::Type::Boolean.new.cast(ENV.fetch('SSL_DEBUG'))
 
   config.active_job.queue_adapter = :sidekiq
+
+  # NOTE: specially changed to random time zone in order to not miss datetime conversions.
+  # config.time_zone = 'Eastern Time (US & Canada)'
 end

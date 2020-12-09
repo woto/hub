@@ -1,69 +1,151 @@
-<div class="col">
+<% render 'breadcrumbs' %>
+<% content_for :title do %>
+  <%= t("titles.dashboard") %>
+<% end %>
 
-<div class="row row-deck row-cards">
+<% if current_user %>
 
-  <div class="col-sm-6 col-lg-3">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div class="subheader">Sales</div>
-          <div class="ml-auto lh-1">
-            <div class="dropdown">
-              <a class="dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item active" href="#">Last 7 days</a>
-                <a class="dropdown-item" href="#">Last 30 days</a>
-                <a class="dropdown-item" href="#">Last 3 months</a>
+  <div class="row row-cards">
+    <% current_user.accounts.each do |account| %>
+      <div class="col-3">
+        <div class="card card-sm">
+          <div class="card-body d-flex align-items-center">
+          <span class="bg-green text-white avatar me-3"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="9" cy="19" r="2"></circle><circle cx="17" cy="19" r="2"></circle><path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2"></path></svg>
+          </span>
+            <div class="me-3">
+              <div class="font-weight-medium">
+                <%#= account.identifier %>
+                <%= account.code %>
+              </div>
+              <div class="text-muted">
+                <%= GlobalHelper.decorate_money(account.amount, account.currency, self) %>
               </div>
             </div>
           </div>
         </div>
-        <div class="h1 mb-3">75%</div>
-        <div class="d-flex mb-2">
-          <div>Conversion rate</div>
-          <div class="ml-auto">
-                      <span class="text-green d-inline-flex align-items-center lh-1">
-                        7% <svg xmlns="http://www.w3.org/2000/svg" class="icon ml-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="3 17 9 11 13 15 21 7" /><polyline points="14 7 21 7 21 14" /></svg>
-                      </span>
-          </div>
-        </div>
-        <div class="progress progress-sm">
-          <div class="progress-bar bg-blue" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-            <span class="visually-hidden sr-only">75% Complete</span>
-          </div>
-        </div>
       </div>
-    </div>
+    <% end %>
   </div>
-  <div class="col-sm-6 col-lg-3">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div class="subheader">Revenue</div>
-          <div class="ml-auto lh-1">
-            <div class="dropdown">
-              <a class="dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item active" href="#">Last 7 days</a>
-                <a class="dropdown-item" href="#">Last 30 days</a>
-                <a class="dropdown-item" href="#">Last 3 months</a>
+
+  <div class="row">
+
+    <div class="col">
+      <div class="row row-deck row-cards">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+
+
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="subheader">Sales</div>
+                <div class="ms-auto lh-1">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item active" href="#">Last 7 days</a>
+                      <a class="dropdown-item" href="#">Last 30 days</a>
+                      <a class="dropdown-item" href="#">Last 3 months</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="h1 mb-3">75%</div>
+              <div class="d-flex mb-2">
+                <div>Conversion rate</div>
+                <div class="ms-auto">
+                      <span class="text-green d-inline-flex align-items-center lh-1">
+                        7% <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="14 7 21 7 21 14"></polyline></svg>
+                      </span>
+                </div>
+              </div>
+              <div class="progress progress-sm">
+                <div class="progress-bar bg-blue" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                  <span class="visually-hidden">75% Complete</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-baseline">
-          <div class="h1 mb-0 mr-2">$4,300</div>
-          <div class="mr-auto">
-                      <span class="text-green d-inline-flex align-items-center lh-1">
-                        8% <svg xmlns="http://www.w3.org/2000/svg" class="icon ml-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="3 17 9 11 13 15 21 7" /><polyline points="14 7 21 7 21 14" /></svg>
-                      </span>
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="subheader">Revenue</div>
+                <div class="ms-auto lh-1">
+                  <div class="dropdown">
+                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last
+                      7 days</a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <a class="dropdown-item active" href="#">Last 7 days</a>
+                      <a class="dropdown-item" href="#">Last 30 days</a>
+                      <a class="dropdown-item" href="#">Last 3 months</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-items-baseline">
+                <div class="h1 mb-0 me-2">$4,300</div>
+                <div class="mr-auto">
+              <span class="text-green d-inline-flex align-items-center lh-1">
+                8% <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
+              </span>
+                </div>
+              </div>
+            </div>
+            <%= tag.div data: {
+                controller: 'chart',
+                chart_dates: @test['aggregations']['by_debit_id']['by_debit_code']['buckets'].find { |bucket| bucket['key'] == 'pending' }['by_created_at']['buckets'].map { |datetime| Time.zone.parse(datetime['key_as_string']).to_date },
+                chart_values: @test['aggregations']['by_debit_id']['by_debit_code']['buckets'].find { |bucket| bucket['key'] == 'pending' }['by_created_at']['buckets'].map { |bucket| bucket['by_debit_amount']['top'].first&.dig('metrics', 'debit_amount')&.round(2) }
+            },
+                        class: 'chart-sm' %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="card-header border-0">
+        <div class="card-title">Выплаты</div>
+      </div>
+      <div class="card">
+
+        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+          <li class="nav-item">
+            <a href="#tabs-home-72" class="nav-link active" data-bs-toggle="tab">В ожидании</a>
+          </li>
+          <li class="nav-item">
+            <a href="#tabs-profile-72" class="nav-link" data-bs-toggle="tab">Выплаченные</a>
+          </li>
+          <li class="nav-item ms-auto">
+            <a href="/" class="nav-link" title="Settings"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+          </li>
+        </ul>
+        <div class="card-body p-0">
+          <div class="tab-content">
+            <div class="tab-pane show active" id="tabs-home-72">
+              <%= render 'dashboard/checks/requested' %>
+            </div>
+            <div class="tab-pane" id="tabs-profile-72">
+              <%= render 'dashboard/checks/payed' %>
+            </div>
           </div>
         </div>
       </div>
-<!--      <div id="chart-revenue-bg" class="chart-sm"></div>-->
-      <%= tag.div data: { controller: 'chart' }, class: 'chart-sm' %>
+
+      <% if false %>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Ожидаемые запросы выплат</div>
+        </div>
+        <div class="table-responsive">
+
+        </div>
+      </div>
+      <% end %>
     </div>
   </div>
-
-</div>
-</div>
+<% end %>

@@ -10,6 +10,8 @@ dayjs.extend(relativeTime);
 // dayjs.extend(timezone);
 
 export default class extends Controller {
+    #sourceTimeStateToggler;
+
     connect() {
         // Settings.defaultZoneName = "America/Los_Angeles";
         // let time = DateTime.fromISO(this.element.innerHTML, {zone: "Europe/Paris"})
@@ -19,11 +21,22 @@ export default class extends Controller {
         let locale = document.documentElement.lang;
         import(`dayjs/locale/${locale}.js`).then(foo => {
             dayjs.locale('ru');
-            this.element.innerHTML = dayjs(this.element.innerHTML).fromNow()
+            this.element.innerHTML = dayjs(this.sourceTime).fromNow()
+            this.#sourceTimeStateToggler = true
         })
     }
 
-    showSourceTime() {
-        this.element.innerHTML = this.data.get('sourceTime');
+    get sourceTime() {
+        return this.data.get('sourceTime');
+    }
+
+    toggleSourceTime() {
+        if(this.#sourceTimeStateToggler) {
+            this.#sourceTimeStateToggler = false
+            this.element.innerHTML = this.sourceTime
+        } else {
+            this.#sourceTimeStateToggler = true
+            this.element.innerHTML = dayjs(this.sourceTime).fromNow()
+        }
     }
 }

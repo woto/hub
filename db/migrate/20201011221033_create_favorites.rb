@@ -5,6 +5,8 @@ class CreateFavorites < ActiveRecord::Migration[6.0]
       t.string :name
       t.integer :kind
       t.boolean :is_default, default: false
+      t.integer :favorites_items, default: 0, null: false
+      t.integer :favorites_items_count
 
       t.timestamps
     end

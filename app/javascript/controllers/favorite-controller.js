@@ -11,9 +11,9 @@ export default class extends ApplicationController {
         // debugger
         let that = this;
         this.renderStar();
-        $(this.element).on('show.bs.dropdown', function (event) {
+        this.element.addEventListener('show.bs.dropdown', function () {
             // $(that.dropdownMenuTarget).show();
-            that.itemsListTarget.innerHTML = '<div class="spinner-border ml-3" role="status"></div>';
+            that.itemsListTarget.innerHTML = '<div class="spinner-border ms-3" role="status"></div>';
             that.updateList();
         })
     }
@@ -45,10 +45,10 @@ export default class extends ApplicationController {
                                 data-favorite-item-name="${item.name}"
                                 data-favorite-item-kind="${that.element.dataset['favoriteKind']}"
                             >
-                              <input class="form-check-input m-0 mr-2" type="checkbox" ${is_checked}" 
+                              <input class="form-check-input m-0 me-2" type="checkbox" ${is_checked}" 
                               data-action="favorite-item#markCheckbox">
-                              <span class="mr-3">${item.name}</span>
-                              <span class="ml-auto" data-target="favorite-item.counterPlaceholder">
+                              <span class="me-3">${item.name}</span>
+                              <span class="ms-auto" data-target="favorite-item.counterPlaceholder">
                                 <span class="badge bg-primary">${item.count}</span>
                             </span>
                             </label>`

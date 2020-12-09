@@ -17,13 +17,13 @@ module PostStatuses
 
   included do
     def to_pending
-      unless PostStatusesPolicy.new(Current.user, self).to_pending?
-        raise Pundit::NotAuthorizedError, "User with role `#{Current.user.role}` not allowed to Post#to_pending?"
+      unless PostStatusesPolicy.new(Current.responsible, self).to_pending?
+        raise Pundit::NotAuthorizedError, "User with role `#{Current.responsible.role}` not allowed to Post#to_pending?"
       end
 
       case status_before_last_save
       when nil, 'draft', 'pending', 'rejected'
-        change_pending
+        change_pending('create_or_change_pending')
       else
         raise "wrong status transaction state: `#{status_previous_change}`"
       end
@@ -31,8 +31,8 @@ module PostStatuses
     alias_method :to_draft, :to_pending
 
     def to_accrued
-      unless PostStatusesPolicy.new(Current.user, self).to_accrued?
-        raise Pundit::NotAuthorizedError, "User with role `#{Current.user.role}` not allowed to Post#to_accrued?"
+      unless PostStatusesPolicy.new(Current.responsible, self).to_accrued?
+        raise Pundit::NotAuthorizedError, "User with role `#{Current.responsible.role}` not allowed to Post#to_accrued?"
       end
 
       case status_before_last_save
@@ -44,21 +44,21 @@ module PostStatuses
     end
 
     def to_rejected
-      unless PostStatusesPolicy.new(Current.user, self).to_rejected?
-        raise Pundit::NotAuthorizedError, "User with role `#{Current.user.role}` not allowed to Post#to_rejected?"
+      unless PostStatusesPolicy.new(Current.responsible, self).to_rejected?
+        raise Pundit::NotAuthorizedError, "User with role `#{Current.responsible.role}` not allowed to Post#to_rejected?"
       end
 
       case status_before_last_save
       when 'pending'
-        change_pending
+        change_pending('rejected_to_pending')
       else
         raise "wrong status transaction state: `#{status_previous_change}`"
       end
     end
 
     def to_canceled
-      unless PostStatusesPolicy.new(Current.user, self).to_canceled?
-        raise Pundit::NotAuthorizedError, "User with role `#{Current.user.role}` not allowed to Post#to_canceled?"
+      unless PostStatusesPolicy.new(Current.responsible, self).to_canceled?
+        raise Pundit::NotAuthorizedError, "User with role `#{Current.responsible.role}` not allowed to Post#to_canceled?"
       end
 
       case status_before_last_save
@@ -69,81 +69,93 @@ module PostStatuses
       end
     end
 
-    def change_pending
-      if price_before_last_save.to_i != 0
-        Accounting::Actions::PendingPost.call(
-          hub: Account.find_by!(name: 'hub_pending'),
-          user: user.accounts.find_by!(name: "##{user_id}_user_pending"),
+    def change_pending(kind)
+      group = TransactionGroup.create!(
+        kind: kind
+      )
+
+      if price_before_last_save.to_d != 0
+        Accounting::Actions::Post.call(
+          hub: Account.hub_pending_usd,
+          user: Account.for_user_pending_usd(user),
           amount: -price_before_last_save,
-          object: self
+          group: group,
+          obj: self
         )
       end
 
-      Accounting::Actions::PendingPost.call(
-        hub: Account.find_by!(name: 'hub_pending'),
-        user: user.accounts.find_by!(name: "##{user_id}_user_pending"),
+      Accounting::Actions::Post.call(
+        hub: Account.hub_pending_usd,
+        user: Account.for_user_pending_usd(user),
         amount: price,
-        object: self
+        group: group,
+        obj: self
       )
     end
 
     def change_accrued
-      Accounting::Actions::AccruedPost.call(
-        hub: Account.find_by!(name: 'hub_accrued'),
-        user: user.accounts.find_by!(name: "##{user_id}_user_accrued"),
-        amount: -price_before_last_save,
-        object: self
+      group = TransactionGroup.create!(
+        kind: __method__
       )
 
-      Accounting::Actions::AccruedPost.call(
-        hub: Account.find_by!(name: 'hub_accrued'),
-        user: user.accounts.find_by!(name: "##{user_id}_user_accrued"),
+      Accounting::Actions::Post.call(
+        hub: Account.hub_accrued_usd,
+        user: Account.for_user_accrued_usd(user),
+        amount: -price_before_last_save,
+        group: group,
+        obj: self
+      )
+
+      Accounting::Actions::Post.call(
+        hub: Account.hub_accrued_usd,
+        user: Account.for_user_accrued_usd(user),
         amount: price,
-        object: self
+        group: group,
+        obj: self
       )
     end
 
     def pending_to_accrued
       group = TransactionGroup.create!(
-        kind: 'pending_to_accrued',
-        object: self
+        kind: __method__
       )
 
-      Accounting::Actions::PendingPost.call(
-        hub: Account.find_by!(name: 'hub_pending'),
-        user: user.accounts.find_by!(name: "##{user_id}_user_pending"),
+      Accounting::Actions::Post.call(
+        hub: Account.hub_pending_usd,
+        user: Account.for_user_pending_usd(user),
         amount: -price_before_last_save,
-        group: group
+        group: group,
+        obj: self
       )
 
-      Accounting::Actions::AccruedPost.call(
-        hub: Account.find_by!(name: 'hub_accrued'),
-        user: user.accounts.find_by!(name: "##{user.id}_user_accrued"),
+      Accounting::Actions::Post.call(
+        hub: Account.hub_accrued_usd,
+        user: Account.for_user_accrued_usd(user),
         amount: price,
-        group: group
+        group: group,
+        obj: self
       )
     end
 
     def accrued_to_pending(kind)
       group = TransactionGroup.create!(
-        kind: kind,
-        object: self
+        kind: kind
       )
 
-      Accounting::Actions::AccruedPost.call(
-        hub: Account.find_by!(name: 'hub_accrued'),
-        user: user.accounts.find_by!(name: "##{user.id}_user_accrued"),
+      Accounting::Actions::Post.call(
+        hub: Account.hub_accrued_usd,
+        user: Account.for_user_accrued_usd(user),
         amount: -price_before_last_save,
-        object: self,
-        group: group
+        group: group,
+        obj: self
       )
 
-      Accounting::Actions::PendingPost.call(
-        hub: Account.find_by!(name: 'hub_pending'),
-        user: user.accounts.find_by!(name: "##{user_id}_user_pending"),
+      Accounting::Actions::Post.call(
+        hub: Account.hub_pending_usd,
+        user: Account.for_user_pending_usd(user),
         amount: price,
-        object: self,
-        group: group
+        group: group,
+        obj: self
       )
     end
   end

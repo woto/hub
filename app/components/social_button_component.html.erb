@@ -1,4 +1,4 @@
 <%= link_to @path, class: @link_class do %>
-  <%== GlobalHelper.icons[@type] %>
+  <%== GlobalHelper.icon("brand-#{@type}") %>
   <%= @title %>
 <% end %>

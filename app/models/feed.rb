@@ -52,9 +52,7 @@ class Feed < ApplicationRecord
   after_save :set_cached_fields
   after_save :log_changes
 
-  validates :url, presence: true
-  validates :name, presence: true
-  validates :operation, presence: true
+  validates :url, :name, :operation, presence: true
 
   def as_indexed_json(_options = {})
     adv = advertiser.as_json(methods: :type)

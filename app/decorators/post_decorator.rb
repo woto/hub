@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 class PostDecorator < ApplicationDecorator
-
   def status
-    h.render Decorators::Post::StatusComponent.new(status: object.status)
+    h.render Decorators::Post::StatusComponent.new(status: super)
   end
 
   def price
-    h.number_to_currency(object.price)
+    decorate_money(super, currency)
   end
 
   def title
-    h.link_to(h.truncate(object.title), h.post_path(object.id))
+    h.link_to(h.truncate(super), h.post_path(_id))
   end
 
   def body
-    h.truncate(h.strip_tags(object.body))
+    h.truncate(h.strip_tags(super))
   end
 end

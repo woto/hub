@@ -16,7 +16,7 @@ class Article
       # end
 
       def image(url, title, alt_text)
-        "<img src='#{@options[:images_path]}/#{url}' title='#{title}' alt='#{alt_text}'>"
+        "<img src='/#{@options[:images_path]}/#{url}' title='#{title}' alt='#{alt_text}'>"
       end
     end
   end

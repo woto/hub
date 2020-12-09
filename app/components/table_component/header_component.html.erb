@@ -20,13 +20,13 @@
                     sort: @sort,
                     order: params[:order] == 'desc' && sorted ? 'asc' : 'desc',
                     ),
-        class: "ml-2 btn btn-sm #{btn_color} btn-icon" do %>
+        class: "ms-2 btn btn-sm #{btn_color} btn-icon" do %>
       <% if params[:order] == 'desc' && sorted %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="18" y1="13" x2="12" y2="19"></line><line x1="6" y1="13" x2="12" y2="19"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="18" y1="13" x2="12" y2="19"></line><line x1="6" y1="13" x2="12" y2="19"></line></svg>
       <% elsif sorted %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="16" y1="9" x2="12" y2="5"></line><line x1="8" y1="9" x2="12" y2="5"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><line x1="12" y1="5" x2="12" y2="19"></line><line x1="16" y1="9" x2="12" y2="5"></line><line x1="8" y1="9" x2="12" y2="5"></line></svg>
       <% else %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M3 9l4-4l4 4m-4 -4v14"></path><path d="M21 15l-4 4l-4-4m4 4v-14"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path><path d="M3 9l4-4l4 4m-4 -4v14"></path><path d="M21 15l-4 4l-4-4m4 4v-14"></path></svg>
       <% end %>
     <% end %>
   <% end %>

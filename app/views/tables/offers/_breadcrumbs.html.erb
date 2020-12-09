@@ -1,0 +1,29 @@
+<% content_for :breadcrumbs do %>
+
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+
+  <% css_class = 'active' unless @feed %>
+  <li class="breadcrumb-item <%= css_class %>">
+    <%=link_to t('breadcrumbs.offers'), offers_path %>
+  </li>
+
+  <% if @feed %>
+    <% css_class = 'active' unless params[:category_id].present? %>
+    <li class="breadcrumb-item <%= css_class %>">
+      <% if @all_advertiser_feeds.count == 1 %>
+        <%= link_to "#{@feed.name} #{@advertiser.name}", feed_offers_path(@feed.slug_with_advertiser) %>
+      <% else %>
+        <%= render 'offers/breadcrumbs/feeds' %>
+      <% end %>
+    </li>
+  <% end %>
+
+  <%= render 'tables/offers/breadcrumbs/categories' if params[:category_id].present?  %>
+
+<% end %>

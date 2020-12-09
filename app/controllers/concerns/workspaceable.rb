@@ -22,7 +22,7 @@ module Workspaceable
     end
 
     def set_workspaces
-      @workspaces = policy_scope(Workspace.where(controller: @settings[:plural]))
+      @workspaces = policy_scope(Workspace.where(controller: "tables/#{@settings[:plural]}"))
     end
 
     def set_workspace_form

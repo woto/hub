@@ -5,7 +5,7 @@
 %>
 
   <div class="input-group input-group-flat">
-    <button data-target="profile-messenger.messengerLabel" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button data-target="profile-messenger.messengerLabel" type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <%= f.object.type %>
     </button>
 
@@ -23,7 +23,7 @@
 
     <span class="input-group-text">
       <a href="#" class="link-danger" data-action="profile-messenger#removeMessenger">
-        <%== GlobalHelper.icons['x'] %>
+        <%== GlobalHelper.icon('x') %>
       </a>
     </span>
 

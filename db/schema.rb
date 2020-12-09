@@ -10,26 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_221637) do
+ActiveRecord::Schema.define(version: 2020_11_23_201652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "account_groups", force: :cascade do |t|
+    t.string "identifier", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "accounts", force: :cascade do |t|
-    t.string "name", null: false
+    t.integer "code", null: false
+    t.uuid "identifier"
+    t.string "comment", null: false
     t.integer "kind", null: false
-    t.integer "amount", default: 0, null: false
+    t.decimal "amount", default: "0.0", null: false
     t.string "subject_type", null: false
     t.bigint "subject_id", null: false
     t.integer "currency", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "code", null: false
+    t.index ["identifier", "kind", "currency", "subject_id", "subject_type"], name: "account_set_uniqueness", unique: true
     t.index ["subject_type", "subject_id"], name: "index_accounts_on_subject_type_and_subject_id"
   end
 
@@ -148,15 +151,34 @@ ActiveRecord::Schema.define(version: 2020_11_04_221637) do
     t.index ["type", "ext_id"], name: "index_advertisers_on_type_and_ext_id", unique: true
   end
 
+  create_table "checks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "amount", null: false
+    t.integer "currency", null: false
+    t.boolean "is_payed", null: false
+    t.datetime "payed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_checks_on_user_id"
+  end
+
+  create_table "exchange_rates", force: :cascade do |t|
+    t.integer "currency", null: false
+    t.decimal "value", null: false
+    t.date "date", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
     t.integer "kind"
     t.boolean "is_default", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.integer "favorites_items", default: 0, null: false
     t.integer "favorites_items_count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
@@ -302,24 +324,33 @@ ActiveRecord::Schema.define(version: 2020_11_04_221637) do
   end
 
   create_table "post_categories", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
+    t.bigint "realm_id", null: false
+    t.integer "priority", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "ancestry"
     t.index ["ancestry"], name: "index_post_categories_on_ancestry"
+    t.index ["realm_id"], name: "index_post_categories_on_realm_id"
   end
 
   create_table "posts", force: :cascade do |t|
+    t.bigint "post_category_id", null: false
+    t.integer "currency", null: false
     t.string "title", null: false
     t.integer "status", null: false
     t.bigint "user_id", null: false
-    t.integer "price", default: 0, null: false
+    t.decimal "price", default: "0.0", null: false
+    t.text "comment"
     t.jsonb "extra_options"
+    t.bigint "realm_id", null: false
+    t.datetime "published_at", null: false
+    t.jsonb "tags", default: []
+    t.integer "priority", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "language"
-    t.bigint "post_category_id", null: false
     t.index ["post_category_id"], name: "index_posts_on_post_category_id"
+    t.index ["realm_id"], name: "index_posts_on_realm_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -335,27 +366,45 @@ ActiveRecord::Schema.define(version: 2020_11_04_221637) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "transaction_groups", force: :cascade do |t|
-    t.string "object_type"
-    t.bigint "object_id"
-    t.jsonb "object_hash"
+  create_table "realms", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "locale", null: false
+    t.string "code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "kind"
-    t.index ["object_type", "object_id"], name: "index_transaction_groups_on_object_type_and_object_id"
+  end
+
+  create_table "template3s", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "transaction_groups", force: :cascade do |t|
+    t.integer "kind", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "transactions", force: :cascade do |t|
     t.bigint "debit_id", null: false
-    t.integer "debit_amount", null: false
+    t.decimal "debit_amount", null: false
+    t.string "debit_label"
     t.bigint "credit_id", null: false
-    t.integer "credit_amount", null: false
-    t.integer "amount", null: false
+    t.decimal "credit_amount", null: false
+    t.string "credit_label"
+    t.decimal "amount", null: false
+    t.string "obj_type"
+    t.bigint "obj_id"
+    t.jsonb "obj_hash"
+    t.bigint "transaction_group_id", null: false
+    t.bigint "responsible_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "transaction_group_id", null: false
     t.index ["credit_id"], name: "index_transactions_on_credit_id"
     t.index ["debit_id"], name: "index_transactions_on_debit_id"
+    t.index ["obj_type", "obj_id"], name: "index_transactions_on_obj_type_and_obj_id"
+    t.index ["responsible_id"], name: "index_transactions_on_responsible_id"
     t.index ["transaction_group_id"], name: "index_transactions_on_transaction_group_id"
   end
 
@@ -391,13 +440,14 @@ ActiveRecord::Schema.define(version: 2020_11_04_221637) do
     t.string "controller"
     t.string "name"
     t.string "path"
+    t.boolean "is_default", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_default", default: false, null: false
     t.index ["user_id"], name: "index_workspaces_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "checks", "users"
   add_foreign_key "favorites", "users"
   add_foreign_key "favorites_items", "favorites"
   add_foreign_key "feed_categories", "feeds"
@@ -405,11 +455,14 @@ ActiveRecord::Schema.define(version: 2020_11_04_221637) do
   add_foreign_key "feeds", "advertisers"
   add_foreign_key "identities", "users"
   add_foreign_key "offer_embeds", "users"
+  add_foreign_key "post_categories", "realms"
   add_foreign_key "posts", "post_categories"
+  add_foreign_key "posts", "realms"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "transactions", "accounts", column: "credit_id"
   add_foreign_key "transactions", "accounts", column: "debit_id"
   add_foreign_key "transactions", "transaction_groups"
+  add_foreign_key "transactions", "users", column: "responsible_id"
   add_foreign_key "workspaces", "users"
 end

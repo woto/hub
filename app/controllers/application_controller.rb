@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   around_action :set_time_zone
   before_action :detect_device_format
   before_action :authenticate_user!
-  before_action :set_current_user
+  before_action :set_responsible
 
   private
 
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_current_user
-    Current.user = current_user
+  def set_responsible
+    Current.responsible = current_user
   end
 end

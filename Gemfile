@@ -24,7 +24,8 @@ group :development, :test do
   gem 'bundler-audit'
 
   # Testing
-  gem 'database_cleaner'
+  # https://github.com/DatabaseCleaner/database_cleaner-active_record/pull/39
+  gem 'database_cleaner-active_record', github: 'DatabaseCleaner/database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
@@ -96,6 +97,7 @@ gem 'after_commit_everywhere'
 # gem 'ransack'
 gem 'i18n-debug'
 gem 'spreadsheet'
+gem 'mobility', github: 'shioyama/mobility'
 
 # Sidekiq
 gem 'sidekiq'
@@ -112,7 +114,7 @@ gem 'view_component'
 gem 'cld'
 
 # Tree structure
-gem 'ancestry'
+gem 'ancestry', github: 'stefankroes/ancestry'
 # gem 'awesome_nested_set'
 # gem 'closure_tree'
 

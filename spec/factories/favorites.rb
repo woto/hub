@@ -22,7 +22,7 @@
 #
 FactoryBot.define do
   factory :favorite do
-    user { nil }
+    user
     name { "MyString" }
   end
 end

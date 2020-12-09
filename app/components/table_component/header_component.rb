@@ -10,7 +10,7 @@ module TableComponent
       @sort = "#{col_name}#{es[:sort]}" if es[:sort]
 
       @params = {
-        data: { toggle: 'tooltip' },
+        data: { 'bs-toggle': 'tooltip' },
         title: t(col_name, scope: [:table, :long, @settings[:singular]])
       }
     end

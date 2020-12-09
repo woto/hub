@@ -6,14 +6,19 @@ ru:
     feeds: Прайс листы
     offers: Товары
     posts: Статьи
+    post_categories: Категории
     promotions: Продвижение
     news: Новости
+    help: Справка
     users: Пользователи
     settings: Настройки
+    finances: Финансы
     profile: Профиль
+    danger_zone: Опасная зона
     password: Пароль
     email: Почта
     categories: Категории
     favorites: Избранное
     accounts: Счета
     transactions: Транзакции
+    checks: Запросы выплат

@@ -18,9 +18,46 @@ module Elastic
         picker('*', 'offers')
       end
 
+      def news
+        new_picker('news')
+      end
+
       def offers
         new_picker('offers')
       end
+
+      def post_categories
+        new_picker('post_categories')
+      end
+
+      def feeds
+        new_picker('feeds')
+      end
+
+      def posts
+        new_picker('posts')
+      end
+
+      def accounts
+        new_picker('accounts')
+      end
+
+      def checks
+        new_picker('checks')
+      end
+
+      def favorites
+        new_picker('favorites')
+      end
+
+      def transactions
+        new_picker('transactions')
+      end
+
+      def users
+        new_picker('users')
+      end
+
 
       def offers_crop(name)
         cropper(name, 'offers')

@@ -73,7 +73,7 @@ export default class extends ApplicationController {
               <div class="col-md-6">
                 <a class="card card-link" href="#" data-ext-id="${row.item.ext_id}" data-action="posts-form#embedOfferIntoEditor">
                   <div class="card-body">
-                    <div class="float-left mr-3">
+                    <div class="float-left me-3">
                       <span class="avatar avatar-lg rounded-0" style="background-image: url(${row.item.data.picture})"></span>
                     </div>
                     <div class="lh-sm">

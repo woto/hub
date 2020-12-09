@@ -123,7 +123,18 @@ export default class extends ApplicationController {
                 element.textContent = value;
             }
         }
-
         langMapping = null;
+    }
+
+    handlePostRealmIdChange(event) {
+        this.#setChildControllerRealmId('posts-category', event);
+        this.#setChildControllerRealmId('posts-tags', event);
+    }
+
+    #setChildControllerRealmId(controllerName, event) {
+        const childControllerElement = document.querySelector(`[data-controller='${controllerName}']`);
+        let childController = this.application.getControllerForElementAndIdentifier(childControllerElement, controllerName)
+        childController.data.set('realmId', event.detail.realmId);
+        childController.clearBecauseRealmIdChanged();
     }
 }

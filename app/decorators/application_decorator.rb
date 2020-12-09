@@ -11,27 +11,33 @@ class ApplicationDecorator < Draper::Decorator
     PaginatingConcern
   end
 
-  delegate_all
-
   def updated_at
-    decorate_datetime(__method__)
+    decorate_datetime(object['_source']['updated_at'])
   end
 
   def created_at
-    decorate_datetime(__method__)
+    decorate_datetime(object['_source']['created_at'])
   end
+
+  delegate_all
 
   private
 
-  def decorate_datetime(attribute_name)
-    return if object.public_send(attribute_name).blank?
+  def decorate_datetime(datetime)
+    GlobalHelper.decorate_datetime(datetime, h)
+  end
 
-    h.tag.span Time.zone.parse(object.public_send(attribute_name)).iso8601,
-               style: 'cursor: pointer',
-               data: {
-                   controller: 'timeago',
-                   timeago_source_time: Time.zone.parse(object.public_send(attribute_name)).iso8601,
-                   action: 'click->timeago#showSourceTime'
-               }
+  def decorate_money(amount, currency)
+    raise "currency can't be nil" if currency.nil?
+    GlobalHelper.decorate_money(amount, currency, h)
+  end
+
+  def method_missing(m, *args, &block)
+    method_name = m.to_s
+    if method_name.first == '_'
+      object[method_name]
+    else
+      object['_source'][method_name]
+    end
   end
 end

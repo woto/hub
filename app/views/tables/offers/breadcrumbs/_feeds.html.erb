@@ -1,0 +1,17 @@
+<div class="dropdown">
+  <% if params[:category_id].blank? %>
+    <% dropdown_multiple_feeds_active = 'active' %>
+  <% end %>
+  <%= tag.button type: 'button',
+                 class: "dropdown-multiple-feeds #{dropdown_multiple_feeds_active}",
+                 data: { 'bs-toggle': "dropdown" } do %>
+    <%= @advertiser.name %> - <%= @feed.name %>
+  <% end %>
+  <div class="dropdown-menu">
+    <%= link_to @feed.name, feed_offers_path(@feed.slug_with_advertiser), class: "dropdown-item" %>
+    <div class="dropdown-divider"></div>
+    <% @all_advertiser_feeds.to_a.each do |feed| %>
+      <%= link_to feed.name, feed_offers_path(feed.slug_with_advertiser), class: "dropdown-item #{ 'active' if @feed == feed }" %>
+    <% end %>
+  </div>
+</div>

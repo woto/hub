@@ -9,7 +9,7 @@ export default class extends ApplicationController {
     }
 
     markCheckbox(element) {
-        this.counterPlaceholderTarget.innerHTML = '<div class="ml-auto spinner-border spinner-border-sm" role="status"></div>'
+        this.counterPlaceholderTarget.innerHTML = '<div class="ms-auto spinner-border spinner-border-sm" role="status"></div>'
         let that = this;
         $.ajax({
             url: '/favorites',

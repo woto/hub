@@ -184,9 +184,8 @@ trix-editor [data-trix-mutable].attachment__caption-editor:focus::selection {
 trix-editor [data-trix-mutable].attachment.attachment--file {
   box-shadow: 0 0 0 2px highlight;
   border-color: transparent; }
-trix-editor [data-trix-mutable] .assa {
-  box-shadow: 0 0 0 2px highlight;
-}
+trix-editor [data-trix-mutable].attachment img {
+  box-shadow: 0 0 0 2px highlight; }
 trix-editor .attachment {
   position: relative; }
 trix-editor .attachment:hover {
@@ -301,6 +300,10 @@ trix-editor .attachment__metadata .attachment__size {
 @charset "UTF-8";
 .trix-content {
   line-height: 1.5; }
+//.trix-content * {
+//  box-sizing: border-box;
+//  margin: 0;
+//  padding: 0; }
 .trix-content h1 {
   font-size: 1.2em;
   line-height: 1.2; }
@@ -358,24 +361,40 @@ trix-editor .attachment__metadata .attachment__size {
   padding: 0.4em 1em;
   border: 1px solid #bbb;
   border-radius: 5px; }
-.trix-content .attachment-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  position: relative; }
-.trix-content .attachment-gallery .attachment {
-  flex: 1 0 33%;
-  padding: 0 0.5em;
-  max-width: 33%; }
-.trix-content .attachment-gallery.attachment-gallery--2 .attachment, .trix-content .attachment-gallery.attachment-gallery--4 .attachment {
-  flex-basis: 50%;
-  max-width: 50%; }
-
 
 trix-editor {
   min-height: 320px !important;
-  font-size: 1rem !important;
   padding: 1rem !important;
   margin-top: 5px !important;
+}
+
+.trix-content {
+  // TODO
+  font-size: 1rem !important;
+  line-height: 1.8rem !important;
+  //max-width: 600px !important;
+
+  & img {
+    flex: 1 0 300px;
+    margin: 10px 0;
+    padding: 5px;
+    //max-width: 300px;
+    //max-height: 300px;
+    //width: 300px;
+    @extend .rounded;
+    @extend .img-thumbnail;
+
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: contain;
+    //position: relative;
+    //top: 50%;
+    //transform: translateY(-50%);
+  }
+  figure {
+    margin-bottom: 1.3rem;
+    margin-top: 1.5rem;
+  }
 }
 
 trix-toolbar {
@@ -386,41 +405,4 @@ trix-toolbar {
   margin-left: 3px !important;
   margin-right: 3px !important;
   padding-top: 10px !important;
-}
-
-.trix-content {
-
-  .attachment-gallery {
-    > action-text-attachment,
-    > .attachment {
-      flex: 1 0 33%;
-      padding: 0 0.5em;
-      max-width: 33%;
-    }
-
-    &.attachment-gallery--2,
-    &.attachment-gallery--4 {
-      > action-text-attachment,
-      > .attachment {
-        flex-basis: 50%;
-        max-width: 50%;
-      }
-    }
-  }
-
-  action-text-attachment {
-    .attachment {
-      padding: 0 !important;
-      max-width: 100% !important;
-    }
-  }
-}
-
-trix-editor {
-  max-width: 600px !important;
-  border: 0 !important;
-  padding: 0 !important;
-  & img {
-    max-width: 300px !important;
-  }
 }

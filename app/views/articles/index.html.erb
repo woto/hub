@@ -21,7 +21,7 @@
       <% @articles.each do |article| %>
         <div class="d-flex mb-3">
           <h2><%== article.meta["title"] %></h2>
-          <span class="ml-auto text-muted"><%== l article.meta["date"] %></span>
+          <span class="ms-auto text-muted"><%== l article.meta["date"] %></span>
         </div>
         <div class="news-preview">
           <%== article.preview %>

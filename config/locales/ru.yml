@@ -15,6 +15,9 @@ ru:
   default: По-умолчанию
   all: Все
   cancel: Отмена
+  created_at: Дата создания
+  updated_at: Дата изменения
+  search_placeholder: Введите текст для поиска...
 
   inputs:
     profiles:
@@ -22,23 +25,32 @@ ru:
         add_messenger: Добавить мессенджер
 
   posts:
+    settings:
+      some_radio:
+        rewrite: Рерайт
+        copywrite: Копирайт
+      some_checkbox:
+        1: Тест 1
+        2: Тест 2
+        3: Тест 3
     modal_embed:
       embed_offer: Вставка виджета
       select: Списки избранного
     form:
+      post_price_settings: Настройки, влияющие на стоимость статьи
+      post_price_hint: Будьте объективны высталяя настройки. Они повышают стоимость вашей статьи. Модератор проверит их соответствие.
       statuses:
         draft: Черновик
         pending: На модерацию
         accrued: Принять статью
         rejected: Запросить доработку
         canceled: Отменить выплату
-      placeholder: Начните писать свой текст тут...
       moderation_status: Статус модерирования
       moderation_parting_words: 'Не переключайте бездумно статус. Переключение статуса влечёт отправку нотификации пользователю и созданию финансовой транзакции.'
     show:
-      language: Язык
+      language: Язык статьи
       badge:
-        status: Статус
+        status: Статус статьи
         statuses:
           draft: Черновик
           pending: Ожидает модерации
@@ -65,21 +77,15 @@ ru:
       logout: Выход
       settings: Настройки
 
-  search:
-    bar:
-      search_placeholder: Введите текст для поиска...
-
   template:
     workspace:
       form:
         workspaces_hint: Дайте имя новой рабочей области. После сохранения новая рабочая область будет доступна для выбора в меню слева или вверху, если вы посещаете сайт с мобильного устройства.
 
-  offers:
-    search:
-      button:
-        search_inside_category: В этой категории
-        search_inside_feed: В этом прайс листе
-        search_everywhere: Во всех прайс листах
-
-      bar:
-        search_placeholder: Введите текст для поиска...
+  tables:
+    offers:
+      search:
+        button:
+          search_inside_category: В этой категории
+          search_inside_feed: В этом прайс листе
+          search_everywhere: Во всех прайс листах

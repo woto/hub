@@ -4,4 +4,8 @@ class FavoritePolicy < ApplicationPolicy
       scope.where(favorites: { user: user })
     end
   end
+
+  def index?
+    true
+  end
 end

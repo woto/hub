@@ -4,7 +4,6 @@ class AdvertisersController < ApplicationController
   layout 'backoffice'
   before_action :set_advertiser, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!
-  before_action { prepend_view_path Rails.root + 'app' + 'views/template' }
 
   def new
     @advertiser = Advertiser.new

@@ -29,7 +29,7 @@ class Favorite < ApplicationRecord
 
   validates :name, presence: true
 
-  enum kind: [ :users, :offers, :feeds, :posts, :transactions, :accounts ]
+  enum kind: [:users, :offers, :feeds, :posts, :transactions, :accounts, :checks, :news, :post_categories]
 
   def as_indexed_json(_options = {})
     {

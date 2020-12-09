@@ -1,9 +1,13 @@
 import { Controller } from "stimulus"
+import { ApplicationController } from 'stimulus-use'
 import 'selectize/dist/js/selectize.min.js';
 
-export default class extends Controller {
+export default class extends ApplicationController {
+    #selectize;
+
     connect() {
-        $(this.element).selectize({
+        const that = this;
+        this.#selectize = $(this.element).selectize({
             valueField: 'id',
             labelField: 'title',
             searchField: 'title',
@@ -37,10 +41,14 @@ export default class extends Controller {
                 this.clearOptions();
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/categories/?q=' + encodeURIComponent(query),
+                    url: '/ajax/categories',
                     type: 'GET',
                     error: function() {
                         callback();
+                    },
+                    data: {
+                        q: query,
+                        realm_id: that.data.get('realmId')
                     },
                     success: function(res) {
                         console.log(res);
@@ -49,5 +57,10 @@ export default class extends Controller {
                 });
             }
         });
+    }
+
+    clearBecauseRealmIdChanged() {
+        this.#selectize[0].selectize.setValue();
+        this.#selectize[0].selectize.clearOptions(true);
     }
 }

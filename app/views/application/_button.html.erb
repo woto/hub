@@ -1,0 +1,6 @@
+<%= button_tag data: { target: 'search-base.searchButton', action: 'search-base#searchEverywhere', test_id: 'search-button' },
+               id: nil,
+               class: "btn #{btn_class} btn-icon",
+               aria: { label: 'Button' } do %>
+  <%== GlobalHelper.icon('search') %>
+<% end %>

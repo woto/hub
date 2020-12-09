@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Trix `dirty` feature', browser: :desktop do
+  before do
+    account_group = create(:account_group)
+    create(:account, subject: account_group, name: 'hub_pending', code: 'pending', currency: :rub, kind: :active)
+  end
   let!(:user) { create(:user) }
   let!(:post) { create(:post, user: user) }
 
@@ -63,7 +67,11 @@ RSpec.describe 'Trix `dirty` feature', browser: :desktop do
     end
 
     context 'when form submits' do
+      # self.use_transactional_tests = false
+
       it 'does not ask confirmation and saves post' do
+        expect(Post.count).to eq(1)
+        create(:post)
         visit '/ru/posts/new'
         fill_in_trix_editor('post_body', with: 'Some text')
         fill_in('post_title', with: 'Some title')

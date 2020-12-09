@@ -1,0 +1,2 @@
+class NewsDecorator < ApplicationDecorator
+end

@@ -85,6 +85,7 @@ class Advertiser < ApplicationRecord
   DESCENDANTS = ['Advertisers::Admitad', 'Advertisers::Gdeslon', 'Advertisers::Test'].freeze
 
   has_many :feeds, dependent: :destroy
+  has_many :accounts, as: :subject
 
   validates :name, presence: true
 

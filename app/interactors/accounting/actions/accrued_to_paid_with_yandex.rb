@@ -6,11 +6,11 @@ module Accounting
       params do
         required(:hub_accrued).value(type?: Account)
         required(:user_accrued).value(type?: Account)
-        required(:fund_payed).value(type?: Account)
+        required(:hub_payed).value(type?: Account)
         required(:yandex_payed).value(type?: Account)
         required(:yandex_commission).value(type?: Account)
-        required(:amount).value(type?: Integer).value(excluded_from?: [0])
-        optional(:group).maybe(type?: TransactionGroup)
+        required(:amount).value(type?: BigDecimal).value(excluded_from?: [0])
+        optional(:group).value(type?: TransactionGroup)
       end
     end
 
@@ -20,10 +20,6 @@ module Accounting
       before do
         contract = Contract.new.call(context.to_h)
         raise StandardError, contract.errors.to_h if contract.failure?
-        @group = context.group || TransactionGroup.create!(
-            kind: self.class.name.demodulize.underscore,
-            object: context.object
-        )
       end
 
       # Я сделал перевод пользователю через Яндекс деньги
@@ -32,21 +28,21 @@ module Accounting
         Accounting::CreateTransaction.call(
           credit: context.hub_accrued,
           debit: context.user_accrued,
-          group: @group,
+          group: context.group,
           amount: -context.amount
         )
 
         # Допустим комиссия Яндекса за перевод 5% от суммы перевода.
-        amount_with_commission = (context.amount * (1 + 0.05)).round
+        amount_with_commission = (context.amount * (1 + 0.05))
 
         # # Допустим комиссия Яндекса за перевод 5% к сумме перевода.
-        # amount_with_commission = (context.amount / (1 - 0.05)).round
+        # amount_with_commission = (context.amount / (1 - 0.05))
 
         # Новые счета
         Accounting::CreateTransaction.call(
-          credit: context.fund_payed,
+          credit: context.hub_payed,
           debit: context.yandex_payed,
-          group: @group,
+          group: context.group,
           amount: amount_with_commission
         )
 
@@ -54,7 +50,7 @@ module Accounting
         Accounting::CreateTransaction.call(
           credit: context.yandex_payed,
           debit: context.yandex_commission,
-          group: @group,
+          group: context.group,
           amount: amount_with_commission - context.amount
         )
 
@@ -62,7 +58,7 @@ module Accounting
         Accounting::CreateTransaction.call(
           credit: context.yandex_payed,
           debit: context.user_payed,
-          group: @group,
+          group: context.group,
           amount: context.amount
         )
       end

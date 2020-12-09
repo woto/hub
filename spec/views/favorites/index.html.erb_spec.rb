@@ -3,14 +3,8 @@ require 'rails_helper'
 RSpec.describe "favorites/index", type: :view do
   before(:each) do
     assign(:favorites, [
-      Favorite.create!(
-        user: nil,
-        name: "Name"
-      ),
-      Favorite.create!(
-        user: nil,
-        name: "Name"
-      )
+        create(:favorite),
+        create(:favorite)
     ])
   end
 

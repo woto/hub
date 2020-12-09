@@ -5,6 +5,7 @@ class CreateWorkspaces < ActiveRecord::Migration[6.0]
       t.string :controller
       t.string :name
       t.string :path
+      t.boolean :is_default, default: false, null: false
 
       t.timestamps
     end

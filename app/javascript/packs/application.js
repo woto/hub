@@ -16,8 +16,14 @@ const imagePath = (name) => images(name, true)
 import 'controllers';
 import 'jquery';
 //import 'jquery-slim';
-import 'popper.js';
-import 'bootstrap/js/src';
+
+// import 'popper.js';
+
+// import 'bootstrap/js/src';
+// import 'bootstrap/dist/js/bootstrap.min'
+// import 'bootstrap/dist/js/bootstrap.bundle'
+
 // import 'tabler/js/tabler.js';
+import '@tabler/core/dist/js/tabler';
 
 import '../stylesheets/application.scss';

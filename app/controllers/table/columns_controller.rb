@@ -8,7 +8,7 @@ class Table::ColumnsController < ApplicationController
     url_opts[:controller] = "/#{params[:model]}"
     ints = params[:columns_form][:displayed_columns]
     # seems not too secure
-    form_class = "Columns::#{params[:model].singularize.camelcase}Form".constantize
+    form_class = "Columns::#{params[:model].camelize.demodulize.singularize}Form".constantize
     url_opts[:cols] = form_class.strings_to_ints(ints).join('.')
     redirect_to url_for(url_opts)
   end

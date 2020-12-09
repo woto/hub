@@ -4,10 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'favorites/show', type: :view do
   before do
-    @favorite = assign(:favorite, Favorite.create!(
-                                    user: nil,
-                                    name: 'Name'
-                                  ))
+    @favorite = assign(:favorite, create(:favorite))
   end
 
   it 'renders attributes in <p>' do

@@ -38,6 +38,10 @@ aside {
   filter: drop-shadow(1px 1px 0px #111) drop-shadow(-1px 1px 0px #111) drop-shadow(1px -1px 0px #111) drop-shadow(-1px -1px 0px #111);
 }
 
+.carousel-indicators li {
+  filter: drop-shadow(1px 0px 0px #111) drop-shadow(0px 1px 0px #111) drop-shadow(0px -1px 0px #111) drop-shadow(-1px 0px 0px #111);
+}
+
 .ribbon {
   text-transform: unset !important;
 }
