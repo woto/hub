@@ -15,7 +15,7 @@ I18n.available_locales.each do |locale|
 
   categories = [payments, advertisers, maintenance, webmasters]
 
-  rand(1..2).times do
+  rand(20..40).times do
     tags = Faker::Lorem
            .sentences(number: rand(1..10))
            .map { |tag| tag.tr('.', '').split(' ') }
@@ -23,6 +23,8 @@ I18n.available_locales.each do |locale|
            .select(&:present?)
 
     user = users.sample
+
+    created_at = Faker::Date.between(from: 2.years.ago, to: 2.years.after)
 
     Current.set(responsible: user) do
       post = Post.create(
@@ -34,8 +36,10 @@ I18n.available_locales.each do |locale|
         status: :draft,
         post_category: categories.sample,
         currency: :usd,
-        published_at: Time.current,
-        tags: tags
+        tags: tags,
+        published_at: created_at + rand(30).days,
+        created_at: created_at,
+        updated_at: created_at
       )
 
       debugger unless post.persisted?

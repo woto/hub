@@ -3,17 +3,6 @@
   <%= t("titles.dashboard") %>
 <% end %>
 
-<% if false %>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap active" aria-current="page" href="#">Прайс листы</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Товары</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Статьи</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Категории</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Транзакции</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Счета</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Запросы выплат</a>
-  <a class="flex-sm-fill text-sm-center nav-link text-nowrap" href="#">Пользователи</a>
-<% end %>
-
 <div class="col">
 
 <div class="row">
@@ -24,6 +13,7 @@
 
     <%= render 'dashboard/widgets/payments' %>
   </div>
+
   <div class="col-md-6 mb-3">
     <%= render 'dashboard/widgets/favorites' %>
   </div>

@@ -5,7 +5,6 @@
 <%= render 'breadcrumbs' %>
 
 <div class="col-12">
-  <%= render 'admin' rescue nil %>
   <%# render 'filters', klass: FeedFilterForm, model: Feed %>
 
   <% if params[:dcf] %>
@@ -56,8 +55,7 @@
                 <% end %>
                 <% if policy(@settings[:model_class]).new? %>
                   <td>
-                    <%= render 'controls', row: row %>
-                    <%= render 'debug', row: row %>
+                    <%= render 'member_controls', row: row %>
                   </td>
                 <% end %>
               <% end %>

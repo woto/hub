@@ -1,8 +1,11 @@
 <div class="card-header page-header mb-0">
-  <div class="d-none d-md-block me-4">
-    <%= render 'bar', btn_class: 'btn-light btn-outline capybara-table-header-search' %>
-  </div>
-  <%= render 'columns_toggler' %>
-  <%= render 'workspace_toggler' %>
-  <%= render 'items_summary', rows: rows %>
+
+  <nav class="nav nav-pills flex-column flex-sm-row gap-3">
+    <%= render 'items_summary', rows: rows %>
+    <%= render 'collection_controls' %>
+    <div class="d-flex gap-3">
+      <%= render 'columns_toggler' %>
+      <%= render 'workspace_toggler' %>
+    </div>
+  </nav>
 </div>

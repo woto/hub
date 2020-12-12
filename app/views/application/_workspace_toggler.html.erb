@@ -1,4 +1,7 @@
-<%= link_to request.params.merge(dwf: params[:dwf] == '1' ? nil : '1'), class: 'btn btn-light btn-icon btn-outline flex-grow-0 me-3' do %>
+<% active_css_class = params[:dwf] == '1' ? 'active' : '' %>
+
+<%= link_to request.params.merge(dwf: params[:dwf] == '1' ? nil : '1'),
+            class: "flex-fill align-self-sm-center nav-link btn btn-white #{active_css_class}" do %>
   <%== GlobalHelper.icon('bookmark') %>
-  <%#= t('save') %>
+  <%= t('workspaces') %>
 <% end %>

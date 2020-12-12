@@ -1,0 +1,6 @@
+<% if policy(:feed).new? %>
+  <%= link_to new_feed_path, class: "align-self-sm-center nav-link btn btn-pink" do %>
+    <%#== GlobalHelper.icon('columns') %>
+    <%= t("buttons.new_feed") %>
+  <% end %>
+<% end %>

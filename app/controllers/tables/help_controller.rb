@@ -10,10 +10,11 @@ module Tables
     layout 'backoffice'
     skip_before_action :authenticate_user!
 
-    helper_method :by_tags_menu, :by_categories_menu
+    helper_method :by_categories_menu
 
     def index
-      get_index([], nil)
+      # TODO
+      # get_index([], nil)
     end
 
     def show
@@ -21,21 +22,6 @@ module Tables
     end
 
     private
-
-    def by_tags_menu
-      client = Elasticsearch::Client.new Rails.application.config.elastic
-      client.search(
-        index: Elastic::IndexName.posts,
-        body: {
-          "size": 0,
-          "aggs": {
-            "group_by_tag": {
-              "terms": { "field": 'tags.keyword' }
-            }
-          }
-        }
-      )
-    end
 
     def by_categories_menu
       client = Elasticsearch::Client.new Rails.application.config.elastic

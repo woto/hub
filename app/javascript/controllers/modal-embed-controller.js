@@ -28,7 +28,7 @@ export default class extends ApplicationController {
 
     _load_filter() {
         $.ajax({
-            url: '/favorites/select',
+            url: '/favorites/modal_select',
             type: 'get',
             error: (jqXHR, textStatus, errorThrown) => {
                 that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
@@ -50,7 +50,7 @@ export default class extends ApplicationController {
     _load_items(favorite_name, page) {
         let that = this;
         $.ajax({
-            url: '/favorites/items',
+            url: '/favorites/modal_items',
             type: 'get',
             data: {
                 favorite_name: favorite_name,

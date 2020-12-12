@@ -21,7 +21,8 @@
   <div class="card card-lg">
     <div class="card-body">
       <p class="float-right text-muted news-date"><%== l Time.zone.parse(@news['date']).to_date %></p>
-      <div class="news-content">
+
+      <div class="fs-6">
         <%==  @news['content'][I18n.locale.to_s]['content'] %>
       </div>
 

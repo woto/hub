@@ -1,49 +1,37 @@
 # frozen_string_literal: true
 
-class Tables::UsersController < ApplicationController
-  ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, :cols]
-  REQUIRED_PARAMS = [:per, :cols]
+# frozen_string_literal: true
 
-  include Workspaceable
-  include Tableable
-  layout 'backoffice'
-  before_action :set_user, only: %i[show edit update destroy impersonate]
+module Tables
+  class UsersController < ApplicationController
+    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
+    REQUIRED_PARAMS = %i[per cols].freeze
 
-  def index
-    get_index([], (current_user.id if current_user.role == 'user'))
-  end
+    include Workspaceable
+    include Tableable
+    layout 'backoffice'
 
-  def impersonate
-    impersonate_user(@user)
-    redirect_to root_path
-  end
+    def index
+      get_index([], (current_user.id if current_user.role == 'user'))
+    end
 
-  def stop_impersonating
-    stop_impersonating_user
-    redirect_to root_path
-  end
+    private
 
-  private
+    def set_settings
+      @settings = { singular: :user,
+                    plural: :users,
+                    model_class: User,
+                    form_class: Columns::UserForm,
+                    query_class: UsersSearchQuery,
+                    decorator_class: UserDecorator }
+    end
 
-  def set_user
-    @user = User.find(params[:id])
-  end
-
-  def set_settings
-    @settings = { singular: :user,
-                  plural: :users,
-                  model_class: User,
-                  form_class: Columns::UserForm,
-                  query_class: UsersSearchQuery,
-                  decorator_class: UserDecorator
-    }
-  end
-
-  def system_default_workspace
-    url_for(**workspace_params,
-            cols: @settings[:form_class].default_stringified_columns_for(request),
-            per: @pagination_rule.per,
-            sort: :id,
-            order: :desc)
+    def system_default_workspace
+      url_for(**workspace_params,
+              cols: @settings[:form_class].default_stringified_columns_for(request),
+              per: @pagination_rule.per,
+              sort: :id,
+              order: :desc)
+    end
   end
 end

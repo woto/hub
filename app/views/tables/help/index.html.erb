@@ -29,7 +29,7 @@
             <%= tag.div id: "category-#{index}", class: "accordion-collapse collapse", data: { 'bs-parent': "#help-accordion" } do %>
               <div class="accordion-body p-0">
                 <% by_categories_menu['hits']['hits'].select { |hit| hit['_source']['post_category_title'] == bucket['key'] }.each do |post| %>
-                  <a href="#" class="list-group-item list-group-item-action border-0">
+                  <a href="#" class="fs-6 list-group-item list-group-item-action border-0">
                     <%= post['_source']['title'] %>
                   </a>
                 <% end %>

@@ -19,17 +19,22 @@
     <div class="card-body">
 
       <% @articles.each do |article| %>
+
         <div class="d-flex mb-3">
           <h2><%== article.meta["title"] %></h2>
           <span class="ms-auto text-muted"><%== l article.meta["date"] %></span>
         </div>
-        <div class="news-preview">
+
+        <div class="fs-6">
           <%== article.preview %>
         </div>
+
         <%= link_to t(:continue_reading), article_path(date: article.date, title: article.title) %>
+
         <% unless @articles.last == article %>
           <hr>
         <% end %>
+
       <% end %>
     </div>
   </div>

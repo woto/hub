@@ -21,23 +21,30 @@
       <div class="card card-md">
         <div class="card-body">
           <% rows.each do |row| %>
+
             <div class="d-flex align-items-center mb-4">
+
               <h2>
+
                 <%= link_to news_path(id: row.id) do %>
                   <%== row.title %>
                 <% end %>
+
                 <% if policy(:news).edit? %>
                   <%= link_to edit_post_path(id: row.id), class: 'btn btn-icon btn-sm btn-pink ms-2 me-5' do %>
                     <%== GlobalHelper.icon('pencil') %>
                   <% end %>
                 <% end %>
+
               </h2>
+
               <span class="ms-auto text-muted">
                 <%= l Time.zone.parse(row.created_at).to_date %>
               </span>
 
             </div>
-            <div class="news-preview">
+
+            <div class="fs-6">
               <%== row.intro %>
             </div>
 
@@ -45,11 +52,13 @@
               <%= link_to t(:continue_reading), news_path(id: row.id), class: 'btn bg-azure-lt' %>
 
               <div class="d-flex justify-content-end flex-wrap gap-1 ms-sm-5">
+
                 <% row.tags.each do |item| %>
                   <% next if item.blank? %>
 
                   <%= link_to item, '#', class: 'badge badge-primary' %>
                 <% end %>
+
               </div>
             </div>
 
@@ -63,11 +72,11 @@
 
     <div class="col-md-4 col-lg-3">
 
-      <%= render 'by_months_menu' %>
+      <%= render Widgets::NewsByMonthComponent.new %>
 
       <div class="my-5"></div>
 
-      <%= render 'by_tags_menu' %>
+      <%= render Widgets::NewsByTagComponent.new %>
 
     </div>
   </div>

@@ -5,8 +5,7 @@ class FavoritesController < ApplicationController
   include Paginatable
   before_action :set_favorite, only: %i[show edit update destroy]
 
-  # TODO: rename to modal_select
-  def select
+  def modal_select
     @favorites = policy_scope(Favorite).order(:is_default).to_a
     @favorites.prepend(Favorite.new(name: all_favorite_name))
 
@@ -15,8 +14,7 @@ class FavoritesController < ApplicationController
     end
   end
 
-  # TODO: rename to dropdown
-  def list
+  def dropdown_list
     ext_id = ActiveRecord::Base.connection.quote(params['ext_id'])
     select = <<-SQL
       favorites.id, 
@@ -36,8 +34,7 @@ class FavoritesController < ApplicationController
     end
   end
 
-  # TODO: rename to modal_items
-  def items
+  def modal_items
     @favorites_items = policy_scope(FavoritesItem)
                        .where(favorites: { kind: 'offers' })
                        .joins(:favorite)
@@ -55,7 +52,7 @@ class FavoritesController < ApplicationController
     end
   end
 
-  def refresh
+  def update_star
     kind = favorite_params[:kind]
     ext_id = favorites_item_params[:ext_id]
     @exists = policy_scope(FavoritesItem)
@@ -104,8 +101,7 @@ class FavoritesController < ApplicationController
     end
   end
 
-  # TODO: rename to write_post
-  def write
+  def write_post
     favorite = policy_scope(Favorite).find_or_create_by!(is_default: true, kind: 'offers') do |f|
       f.name = t('default')
     end

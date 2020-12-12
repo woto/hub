@@ -36,10 +36,16 @@ if Rails.env.development?
   post = nil
 
   Current.set(responsible: user) do
-    post = Post.create!(realm: website, title: 'Заголовок', intro: Faker::Lorem.paragraphs(number: 10).join,
-                        body: Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 20), user: user,
-                        status: :draft, post_category: PostCategory.joins(:realm).merge(Realm.website).order('RANDOM()').first,
-                        currency: :usd, published_at: Time.current, tags: ['тест', 'тестовые тег'])
+    post = Post.create!(realm: website,
+                        title: Faker::Lorem.sentence(word_count: 2, random_words_to_add: 12),
+                        intro: Faker::Lorem.paragraph(sentence_count: 8, random_sentences_to_add: 30),
+                        body: Faker::Lorem.paragraph(sentence_count: 15, random_sentences_to_add: 50),
+                        user: user,
+                        status: :draft,
+                        post_category: PostCategory.joins(:realm).merge(Realm.website).order('RANDOM()').first,
+                        currency: :usd,
+                        published_at: Time.current,
+                        tags: ['тест', 'тестовые тег'])
     post.update!(status: :pending)
   end
 

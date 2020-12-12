@@ -23,7 +23,7 @@ export default class extends ApplicationController {
         // debugger
         let that = this;
         $.ajax({
-            url: '/favorites/list',
+            url: '/favorites/dropdown_list',
             type: 'get',
             dataType: 'json',
             data: {
@@ -88,7 +88,7 @@ export default class extends ApplicationController {
     updateStarData() {
         // debugger
         $.ajax({
-            url: `/favorites/refresh`,
+            url: `/favorites/update_star`,
             data: {
                 ext_id: this.data.get('extId'),
                 kind: this.data.get('kind')

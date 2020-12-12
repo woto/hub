@@ -19,7 +19,7 @@
       <% if @all_advertiser_feeds.count == 1 %>
         <%= link_to "#{@feed.name} #{@advertiser.name}", feed_offers_path(@feed.slug_with_advertiser) %>
       <% else %>
-        <%= render 'offers/breadcrumbs/feeds' %>
+        <%= render 'tables/offers/breadcrumbs/feeds' %>
       <% end %>
     </li>
   <% end %>

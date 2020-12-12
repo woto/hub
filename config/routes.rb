@@ -3,7 +3,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :template3s
   # get 'post_categories/index'
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
@@ -14,8 +13,7 @@ Rails.application.routes.draw do
   namespace :filters do
     resources :dates
   end
-  resources :template1s
-  resources :template2s
+
   devise_scope :user do
     Rails.configuration.oauth_providers.each do |provider|
       get "/users/auth/#{provider}/callback" => 'users/omniauth_callbacks#callback', defaults: { provider: provider }
@@ -41,69 +39,72 @@ Rails.application.routes.draw do
                  passwords: 'users/passwords',
                  unlocks: 'users/unlocks'
                }
+
+    scope module: 'tables' do
+      resources :accounts, only: [:index]
+      resources :checks, only: [:index]
+      resources :favorites, only: [:index]
+      resources :feeds, only: [:index] do
+        resources :offers, only: [:index]
+      end
+      resources :help, only: [:index]
+      resources :news, only: [:index]
+      resources :offers, only: [:index]
+      resources :post_categories, only: [:index]
+      resources :posts, only: [:index]
+      resources :transactions, only: [:index]
+      resources :users, only: [:index]
+    end
+
+    # TODO
+    resources :accounts
+    resources :advertisers
+    resources :news do
+      collection do
+        get 'month/:month', action: :by_month
+        get 'tag/:tag', action: :by_tag, as: :by_tag
+      end
+    end
+
+    resources :checks
+    resources :favorites do
+      collection do
+        get :dropdown_list
+        get :update_star
+        post :write_post
+        get :modal_items
+        get :modal_select
+      end
+    end
+    resources :users do
+      post :impersonate, on: :member
+      post :stop_impersonating, on: :collection
+    end
+
     # sign_out_via: [*::Devise.sign_out_via, ActiveAdmin.application.logout_link_method].uniq
 
     # resources :advertiser_filter_forms
     # resources :feed_filter_forms
 
-    namespace :ajax do
-      resources :categories, controller: 'post_categories', only: %i[index]
-      resources :tags, controller: 'post_tags', only: %i[index]
-    end
-
-    scope module: 'tables' do
-      get '/favorites', to: 'favorites#index'
-    end
-
-    resources :favorites do
-      collection do
-        get :list
-        get :refresh
-        post :write
-        get :items
-        get :select
+    resources :feeds do
+      member do
+        get :count
+        get :logs
+        patch :prioritize
       end
     end
 
-    resources :advertisers
-    scope module: 'tables' do
-      resources :post_categories
-      resources :offers, only: %i[index]
-      resources :accounts
-      resources :transactions
-      resources :checks
-      resources :posts
-      resources :feeds do
-        member do
-          get :count
-          get :logs
-          patch :prioritize
-        end
-        resources :offers, only: %i[index]
-      end
-      resources :users do
-        post :impersonate, on: :member
-        post :stop_impersonating, on: :collection
-      end
-      resources :news do
-        collection do
-          get 'month/:month', action: :by_month
-          get 'tag/:tag', action: :by_tag, as: :by_tag
-        end
-      end
-      resources :help do
-        collection do
-          get 'tag/:tag', action: :by_tag, as: :by_tag
-        end
-      end
-    end
+    resources :posts
+
     resources :promotions
     resources :offer_embeds, only: %i[create]
     namespace :table do
       resources :columns
       resources :workspaces
     end
+
     resources :autocompletes
+
     namespace 'settings' do
       devise_scope :user do
         scope path_names: { edit: '' } do
@@ -115,6 +116,12 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    namespace :ajax do
+      resources :categories, controller: 'post_categories', only: %i[index]
+      resources :tags, controller: 'post_tags', only: %i[index]
+    end
+
     get 'dashboard', to: 'dashboard#index'
     get 'articles' => 'articles#index'
     get 'articles/:date/:title' => 'articles#show', as: 'article'
