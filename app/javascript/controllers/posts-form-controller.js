@@ -8,6 +8,8 @@ import "@rails/actiontext";
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
+import * as bootstrap from 'bootstrap';
+
 const translation = translations[document.documentElement.lang];
 // Trix.config.lang = translation;
 
@@ -23,7 +25,7 @@ export default class extends ApplicationController {
     openModalOnPageLoad(event) {
         let searchParams = new URLSearchParams(window.location.search);
         if (searchParams.has('embed')) {
-            $(this.modalEmbedTarget).modal('show')
+            this.#getOrCreateModal.show();
         }
     }
 
@@ -41,7 +43,7 @@ export default class extends ApplicationController {
 
     openModalOnTrixActionInvoke(event) {
         if (event.actionName === "x-modal") {
-            $(this.modalEmbedTarget).modal('show')
+            this.#getOrCreateModal.show();
         }
     }
 
@@ -86,7 +88,7 @@ export default class extends ApplicationController {
                 this.editorTarget.editor.insertLineBreak();
                 this.editorTarget.editor.insertAttachment(embedding);
                 this.editorTarget.editor.insertLineBreak();
-                $(this.modalEmbedTarget).modal('hide')
+                this.#getOrCreateModal.hide();
                 this.editorTarget.focus();
             }
         })
@@ -136,5 +138,14 @@ export default class extends ApplicationController {
         let childController = this.application.getControllerForElementAndIdentifier(childControllerElement, controllerName)
         childController.data.set('realmId', event.detail.realmId);
         childController.clearBecauseRealmIdChanged();
+    }
+
+    get #getOrCreateModal() {
+        let modal = bootstrap.Modal.getInstance(this.modalEmbedTarget);
+        if (modal) {
+            return modal;
+        } else {
+            return new bootstrap.Modal(this.modalEmbedTarget);
+        }
     }
 }

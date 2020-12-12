@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="d-flex card-header justify-content-between">
+    <h3 class="card-title">Последние новости</h3>
+  </div>
+
+  <div class="card-body">
+    <%== news.first['_source']['intro'] %>
+  </div>
+
+
+  <div class="d-flex card-header justify-content-between">
+
+    <a class="p-1" href="#">
+      <%== GlobalHelper.icon('arrow-big-left') %>
+    </a>
+
+    <a class="float-end" href="#">
+      Подробнее...
+    </a>
+
+    <a class="link-dark p-1" href="#">
+      <%== GlobalHelper.icon('arrow-big-right') %>
+    </a>
+
+  </div>
+</div>

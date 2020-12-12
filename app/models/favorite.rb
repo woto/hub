@@ -6,7 +6,7 @@
 #  favorites_items       :integer          default(0), not null
 #  favorites_items_count :integer
 #  is_default            :boolean          default(FALSE)
-#  kind                  :integer
+#  kind                  :integer          not null
 #  name                  :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -28,6 +28,8 @@ class Favorite < ApplicationRecord
   has_many :favorites_items, dependent: :destroy
 
   validates :name, presence: true
+
+  validates :name, length: { maximum: 20 }
 
   enum kind: [:users, :offers, :feeds, :posts, :transactions, :accounts, :checks, :news, :post_categories]
 

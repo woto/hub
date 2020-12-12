@@ -51,9 +51,23 @@ Rails.application.routes.draw do
       resources :tags, controller: 'post_tags', only: %i[index]
     end
 
+    scope module: 'tables' do
+      get '/favorites', to: 'favorites#index'
+    end
+
+    resources :favorites do
+      collection do
+        get :list
+        get :refresh
+        post :write
+        get :items
+        get :select
+      end
+    end
+
     resources :advertisers
     scope module: 'tables' do
-      resources :categories, controller: :post_categories
+      resources :post_categories
       resources :offers, only: %i[index]
       resources :accounts
       resources :transactions
@@ -66,15 +80,6 @@ Rails.application.routes.draw do
           patch :prioritize
         end
         resources :offers, only: %i[index]
-      end
-      resources :favorites do
-        collection do
-          get :list
-          get :refresh
-          post :write
-          get :items
-          get :select
-        end
       end
       resources :users do
         post :impersonate, on: :member

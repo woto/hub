@@ -4,19 +4,11 @@ if Rails.env.development?
 
   GlobalHelper.create_elastic_indexes
 
-  help_realm = Realm.create!(title: 'Помощь', locale: 'ru', code: 'help')
-  news_realm = Realm.create!(title: 'Новости', locale: 'ru', code: 'news')
-
-  ['Начало работы', 'Общая информация', 'Площадки', 'Программы', 'Финансы', 'Инструменты',
-   'Статистика', 'Настройки', 'Aliexpress', 'Техподдержка', 'GDPR'].each do |pc|
-    PostCategory.create!(title: pc, realm: help_realm)
+  Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each do |seed|
+    load seed
   end
 
-  (10.days.ago.to_date..10.days.after.to_date).each do |day|
-    value = 0.00064683
-    sign = rand >= 0.5 ? 1 : -1
-    ExchangeRate.create!(date: day, currency: :usd, value: value + (sign * value / 100 * rand(1..1.10)))
-  end
+  website = Realm.create!(title: 'Яндекс Маркет', locale: 'ru', kind: 'website')
 
   user = User.create!(email: 'user@example.com',
                       password: 'password',
@@ -41,18 +33,13 @@ if Rails.env.development?
     )
   end
 
-  # pc = PostCategory.create!(realm: realm, title_i18n: { en: 'Test category', ru: 'Тестовая категория' })
-  pc = PostCategory.create!(realm: news_realm, title: 'Тестовая категория')
-  PostCategory.create!(realm: news_realm, title: 'Дочерняя категория', parent: pc)
-  PostCategory.create!(realm: help_realm, title: 'Категория в другом реалме')
-
   post = nil
 
   Current.set(responsible: user) do
-    post = Post.create!(realm: news_realm, title: 'Заголовок', intro: Faker::Lorem.paragraphs(number: 10).join,
-                        body: Faker::Lorem.paragraphs(number: 10).join, user: user,
-                        status: :draft, post_category: pc, currency: :usd, published_at: Time.current,
-                        tags: ['тест', 'тестовые тег'])
+    post = Post.create!(realm: website, title: 'Заголовок', intro: Faker::Lorem.paragraphs(number: 10).join,
+                        body: Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 20), user: user,
+                        status: :draft, post_category: PostCategory.joins(:realm).merge(Realm.website).order('RANDOM()').first,
+                        currency: :usd, published_at: Time.current, tags: ['тест', 'тестовые тег'])
     post.update!(status: :pending)
   end
 

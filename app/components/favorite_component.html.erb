@@ -14,29 +14,22 @@
                  class: "btn btn-white btn-icon #{@is_favorite ? @starred_class : @unstarred_class}",
                  data: {
                      'bs-toggle': 'dropdown',
-                     boundary: 'window',
-                     target: 'favorite.dropdownButton'
-                 } do %>
+                     target: 'favorite.dropdownButton',
+                   } do %>
     <%== GlobalHelper.icon('star', is_filled: @is_favorite) %>
   <% end %>
 
-  <%= tag.div class: 'dropdown-menu',
-              style: 'padding-bottom: 0',
+  <%= tag.div class: 'dropdown-menu dropdown-menu-end pb-0',
               data: {
                   target: 'favorite.dropdownMenu'
               } do %>
 
     <form>
-      <div class="mx-3">
-        <h6 class="dropdown-header p-0 py-2 d-flex">
-          <%= t(@kind, scope: ['favorites', 'titles']) %>
-          <span class="ms-auto">
-            <%= link_to favorites_path do %>
-              <%== GlobalHelper.icon('settings') %>
-            <% end %>
-          </span>
+      <%= link_to favorites_path do %>
+        <h6 class="dropdown-header py-2">
+            <%= t(@kind, scope: ['favorites', 'titles']) %>
         </h6>
-      </div>
+      <% end %>
       <%= tag.div data: { target: 'favorite.itemsList' } %>
     </form>
 
@@ -49,8 +42,7 @@
                          placeholder: t('favorites.placeholder'),
                          data: { target: 'favorite.newItemName',
                                  action: 'keydown->favorite#clickCreateFavorite' } %>
-      <%= button_tag nil, id: nil, type: 'button', class: 'btn btn-white btn-icon favorite--button',
-                     aria: { haspopup: "true", expanded: "false" },
+      <%= button_tag nil, id: nil, type: 'button', class: 'btn btn-teal btn-icon favorite--button',
                      data: {
                          target: 'favorite.createButton',
                          action: 'favorite#createFavorite'

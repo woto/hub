@@ -7,6 +7,8 @@ module Columns
     self.all_columns = [
       { key: 'id',                  pg: Post.columns_hash['id'], roles: ['user', 'manager', 'admin'] },
       { key: 'realm_id',            pg: Post.columns_hash['realm_id'], roles: ['user', 'manager', 'admin'] },
+      { key: 'realm_locale',        pg: Realm.columns_hash['locale'], roles: ['user', 'manager', 'admin'] },
+      { key: 'realm_kind',          pg: Realm.columns_hash['kind'], as: :string, roles: ['user', 'manager', 'admin'] },
       { key: 'status',              pg: Post.columns_hash['status'], as: :string, roles: ['user', 'manager', 'admin'] },
       { key: 'title',               pg: Post.columns_hash['title'], roles: ['user', 'manager', 'admin'] },
       # { key: 'post_category',       pg: Post.columns_hash['post_category_id'], as: :jsonb, roles: ['user', 'manager', 'admin'] },

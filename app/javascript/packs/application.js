@@ -22,8 +22,58 @@ import 'jquery';
 // import 'bootstrap/js/src';
 // import 'bootstrap/dist/js/bootstrap.min'
 // import 'bootstrap/dist/js/bootstrap.bundle'
+// import 'bootstrap/dist/js/bootstrap'
 
 // import 'tabler/js/tabler.js';
-import '@tabler/core/dist/js/tabler';
+// import '@tabler/core/dist/js/tabler';
 
 import '../stylesheets/application.scss';
+
+import * as bootstrap from 'bootstrap'
+
+(function() {
+    /**
+     */
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        let options = {
+            delay: {show: 50, hide: 50},
+            html: true,
+            placement: 'auto'
+        };
+        return new bootstrap.Tooltip(tooltipTriggerEl, options);
+    });
+
+    /**
+     */
+    let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.map(function (popoverTriggerEl) {
+        let options = {
+            delay: {show: 50, hide: 50},
+            html: true,
+            placement: 'auto'
+        };
+        return new bootstrap.Popover(popoverTriggerEl, options);
+    });
+
+    let dropdownTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="dropdown"]'));
+    dropdownTriggerList.map(function (dropdownTriggerEl) {
+        // debugger
+        return new bootstrap.Dropdown(dropdownTriggerEl, {
+            popperConfig: {
+                strategy: "fixed"
+            }
+        });
+    });
+
+
+    let switchesTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="switch-icon"]'));
+    switchesTriggerList.map(function (switchTriggerEl) {
+        switchTriggerEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            switchTriggerEl.classList.toggle('active');
+        });
+    });
+
+})();

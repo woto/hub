@@ -3,7 +3,7 @@
 # Table name: realms
 #
 #  id         :bigint           not null, primary key
-#  code       :string           not null
+#  kind       :integer          not null
 #  locale     :string           not null
 #  title      :string           not null
 #  created_at :datetime         not null

@@ -9,7 +9,7 @@ export default class extends ApplicationController {
 
     connect() {
         let that = this;
-        $(this.element).on('show.bs.modal', function (e) {
+        this.element.addEventListener('show.bs.modal', function (event) {
             that._load()
         })
     }
@@ -71,7 +71,7 @@ export default class extends ApplicationController {
         let template = items.map((row) => {
             return `
               <div class="col-md-6">
-                <a class="card card-link" href="#" data-ext-id="${row.item.ext_id}" data-action="posts-form#embedOfferIntoEditor">
+                <a class="card card-link mb-3" href="#" data-ext-id="${row.item.ext_id}" data-action="posts-form#embedOfferIntoEditor">
                   <div class="card-body">
                     <div class="float-left me-3">
                       <span class="avatar avatar-lg rounded-0" style="background-image: url(${row.item.data.picture})"></span>

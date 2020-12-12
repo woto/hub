@@ -41,10 +41,10 @@
               <%== row.intro %>
             </div>
 
-            <div class="d-flex justify-content-between mt-5">
+            <div class="d-flex justify-content-between mt-5 align-items-start">
               <%= link_to t(:continue_reading), news_path(id: row.id), class: 'btn bg-azure-lt' %>
 
-              <div>
+              <div class="d-flex justify-content-end flex-wrap gap-1 ms-sm-5">
                 <% row.tags.each do |item| %>
                   <% next if item.blank? %>
 

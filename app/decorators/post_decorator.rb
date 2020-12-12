@@ -2,7 +2,7 @@
 
 class PostDecorator < ApplicationDecorator
   def status
-    h.render Decorators::Post::StatusComponent.new(status: super)
+    h.render PostStatusComponent.new(status: super)
   end
 
   def price

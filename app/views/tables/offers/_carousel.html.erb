@@ -1,12 +1,11 @@
-<div id="carousel-controls-<%= offer_idx %>" class="carousel slide" data-interval="false" data-ride="carousel">
+<div id="carousel-controls-<%= offer_idx %>" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
   <ol class="carousel-indicators" style="z-index: 30">
     <% if row.pictures && row.pictures.size > 1 %>
       <% row.pictures.each_with_index do |picture, idx| %>
-        <li href="#carousel-controls-<%= offer_idx %>" data-slide-to="<%= idx %>" class="<%= 'active' if idx == 0 %>"></li>
+        <li data-bs-target="#carousel-controls-<%= offer_idx %>" data-bs-slide-to="<%= idx %>" class="<%= 'active' if idx == 0 %>"></li>
       <% end %>
     <% end %>
   </ol>
-
   <div class="carousel-inner d-flex">
     <% if row.pictures && row.pictures.size > 0 %>
       <% row.pictures.each_with_index do |picture, idx| %>
@@ -34,15 +33,13 @@
   </div>
 
   <% if row.pictures && row.pictures.size > 1 %>
-    <a class="carousel-control-prev" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-slide="prev">
+    <a class="carousel-control-prev" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-bs-slide="prev">
       <span class="carousel-control-outline carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
+      <span class="visually-hidden">Previous</span>
     </a>
-
-    <a class="carousel-control-next" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-slide="next">
+    <a class="carousel-control-next" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-bs-slide="next">
       <span class="carousel-control-outline carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
+      <span class="visually-hidden">Next</span>
     </a>
   <% end %>
-
 </div>

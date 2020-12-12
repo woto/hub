@@ -8,11 +8,9 @@ export default class extends Controller {
             <div class="toast me-3 mt-3">
               <div class="toast-header">
                 <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#007aff"></rect></svg>
-                <strong class="mr-auto">${event.detail.title}</strong>
+                <strong class="me-auto">${event.detail.title}</strong>
                 <small>11 mins ago</small>
-                <button type="button" class="ms-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
               </div>
               <div class="toast-body">
                 ${event.detail.body}
@@ -20,8 +18,7 @@ export default class extends Controller {
             </div>`
 
         this.toastPlaceholderTarget.insertAdjacentHTML('beforeend', toastTemplate);
-        let toast = this.toastPlaceholderTarget.lastChild;
-        $(toast).toast({ delay: 2000 });
-        $(toast).toast('show');
+        let toast = new bootstrap.Toast(this.toastPlaceholderTarget.lastChild, { delay: 2000, autohide: true })
+        toast.show();
     }
 }

@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_201652) do
   create_table "favorites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
-    t.integer "kind"
+    t.integer "kind", null: false
     t.boolean "is_default", default: false
     t.integer "favorites_items", default: 0, null: false
     t.integer "favorites_items_count"
@@ -369,7 +369,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_201652) do
   create_table "realms", force: :cascade do |t|
     t.string "title", null: false
     t.string "locale", null: false
-    t.string "code", null: false
+    t.integer "kind", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

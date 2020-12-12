@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GlobalHelper
+  FAVORITE_COLUMN = 'favorite'
+
   class << self
     def create_elastic_indexes
       User.setup_index(Columns::UserForm)

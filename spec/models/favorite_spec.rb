@@ -6,7 +6,7 @@
 #  favorites_items       :integer          default(0), not null
 #  favorites_items_count :integer
 #  is_default            :boolean          default(FALSE)
-#  kind                  :integer
+#  kind                  :integer          not null
 #  name                  :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

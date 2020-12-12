@@ -5,9 +5,11 @@ class DashboardController < ApplicationController
   layout 'backoffice'
   skip_before_action :authenticate_user!
 
+  helper_method :news
+
   def index
     if current_user
-      account_ids = current_user.accounts.pluck("id")
+      account_ids = current_user.accounts.pluck('id')
       client = Elasticsearch::Client.new Rails.application.config.elastic
       @test = client.search(
         index: ::Elastic::IndexName.transactions,
@@ -49,5 +51,21 @@ class DashboardController < ApplicationController
       )
       p 1
     end
+  end
+
+  def news
+    client = Elasticsearch::Client.new Rails.application.config.elastic
+    result = client.search(
+      Widgets::NewsSearchQuery.call(
+        code: 'help',
+        locale: I18n.locale,
+        sort: 'created_at',
+        order: 'desc',
+        from: 0,
+        size: 1
+      ).object
+    )
+
+    result['hits']['hits']
   end
 end

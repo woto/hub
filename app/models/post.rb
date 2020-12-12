@@ -49,13 +49,16 @@ class Post < ApplicationRecord
   validates :title, :status, :published_at, :tags, presence: true
 
   validates :tags, length: {
-      minimum: 2,
-      message: ->(_, __) { I18n.t('activerecord.errors.messages.select_language') }
+    minimum: 1
+    # message: ->(_, __) { I18n.t('activerecord.errors.messages.select_language') }
   }
 
   enum status: { draft: 0, pending: 1, accrued: 2, rejected: 3, canceled: 4 }
 
   validate do
+    next unless realm
+    next if realm.news? || realm.help?
+
     min = 100
     errors.add(:body, :too_short, count: min) if !body || !body.body || body.body.to_plain_text.length < min
     errors.add(:intro, :too_short, count: min) if !intro || !intro.body || intro.body.to_plain_text.length < min
@@ -65,12 +68,14 @@ class Post < ApplicationRecord
     self.currency = :usd
     # removes new lines and text like [200x200.jpg]
     self.price = body && body.body && body.body.to_plain_text
-                     .delete("\n")
-                     .gsub(/\[\d+x\d+\.\w{,5}\]/, '')
-                     .size * ExchangeRate.find_by(currency: currency, date: Date.current).value
+                                          .delete("\n")
+                                          .gsub(/\[\d+x\d+\.\w{,5}\]/, '')
+                                          .size * ExchangeRate.find_by(currency: currency, date: Date.current).value
   end
 
   after_save do
+    next if realm.news? || realm.help?
+
     case status
     when 'draft'
       to_draft
@@ -89,7 +94,8 @@ class Post < ApplicationRecord
     {
       id: id,
       realm_id: realm_id,
-      realm_code: realm.code,
+      realm_kind: realm.kind,
+      realm_locale: realm.locale,
       status: status,
       title: title,
       post_category_id: post_category_id,

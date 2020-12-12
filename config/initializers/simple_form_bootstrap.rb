@@ -21,7 +21,7 @@ SimpleForm.setup do |config|
   config.boolean_label_class = 'form-check-label'
 
   # How the label text should be generated altogether with the required text.
-  config.label_text = ->(label, required, _explicit_label) { "#{label} #{required}" }
+  config.label_text = lambda { |label, required, explicit_label| "#{label} #{required}" }
 
   # Define the way to render check boxes / radio buttons with labels.
   config.boolean_style = :inline
@@ -45,6 +45,7 @@ SimpleForm.setup do |config|
   config.input_field_error_class = 'is-invalid'
   config.input_field_valid_class = '_is-valid'
 
+
   # vertical forms
   #
   # vertical default_wrapper
@@ -56,7 +57,7 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'font-weight-bold'
+    b.use :label, class: 'form-label'
     b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: '_is-valid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
@@ -78,7 +79,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0 font-weight-bold' do |ba|
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
     b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: '_is-valid'
@@ -90,7 +91,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_collection_inline, item_wrapper_class: 'form-check form-check-inline', item_label_class: 'form-check-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0 font-weight-bold' do |ba|
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
     b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: '_is-valid'
@@ -105,7 +106,7 @@ SimpleForm.setup do |config|
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.use :input, class: 'form-control-file', error_class: 'is-invalid', valid_class: '_is-valid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
@@ -115,7 +116,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
       ba.use :input, class: 'form-control mx-1', error_class: 'is-invalid', valid_class: '_is-valid'
     end
@@ -129,11 +130,12 @@ SimpleForm.setup do |config|
     b.use :placeholder
     b.optional :readonly
     b.optional :step
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.use :input, class: 'form-control-range', error_class: 'is-invalid', valid_class: '_is-valid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
+
 
   # horizontal forms
   #
@@ -146,7 +148,7 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'col-sm-3 col-form-label font-weight-bold'
+    b.use :label, class: 'col-sm-3 col-form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: '_is-valid'
       ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
@@ -164,7 +166,7 @@ SimpleForm.setup do |config|
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |wr|
       wr.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
         bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: '_is-valid'
-        bb.use :label, class: 'form-check-label font-weight-bold'
+        bb.use :label, class: 'form-check-label'
         bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
         bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
       end
@@ -175,7 +177,7 @@ SimpleForm.setup do |config|
   config.wrappers :horizontal_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'col-sm-3 col-form-label pt-0 font-weight-bold'
+    b.use :label, class: 'col-sm-3 col-form-label pt-0'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: '_is-valid'
       ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
@@ -187,7 +189,7 @@ SimpleForm.setup do |config|
   config.wrappers :horizontal_collection_inline, item_wrapper_class: 'form-check form-check-inline', item_label_class: 'form-check-label', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'col-sm-3 col-form-label pt-0 font-weight-bold'
+    b.use :label, class: 'col-sm-3 col-form-label pt-0'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: '_is-valid'
       ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
@@ -202,7 +204,7 @@ SimpleForm.setup do |config|
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
-    b.use :label, class: 'col-sm-3 col-form-label font-weight-bold'
+    b.use :label, class: 'col-sm-3 col-form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.use :input, error_class: 'is-invalid', valid_class: '_is-valid'
       ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
@@ -214,7 +216,7 @@ SimpleForm.setup do |config|
   config.wrappers :horizontal_multi_select, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'col-sm-3 col-form-label font-weight-bold'
+    b.use :label, class: 'col-sm-3 col-form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |bb|
         bb.use :input, class: 'form-control mx-1', error_class: 'is-invalid', valid_class: '_is-valid'
@@ -230,13 +232,14 @@ SimpleForm.setup do |config|
     b.use :placeholder
     b.optional :readonly
     b.optional :step
-    b.use :label, class: 'col-sm-3 col-form-label font-weight-bold'
+    b.use :label, class: 'col-sm-3 col-form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.use :input, class: 'form-control-range', error_class: 'is-invalid', valid_class: '_is-valid'
       ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
       ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
     end
   end
+
 
   # inline forms
   #
@@ -249,7 +252,7 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'sr-only font-weight-bold'
+    b.use :label, class: 'sr-only'
 
     b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: '_is-valid'
     b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
@@ -261,10 +264,11 @@ SimpleForm.setup do |config|
     b.use :html5
     b.optional :readonly
     b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: '_is-valid'
-    b.use :label, class: 'form-check-label font-weight-bold'
+    b.use :label, class: 'form-check-label'
     b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
+
 
   # bootstrap custom forms
   #
@@ -274,7 +278,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.wrapper :form_check_wrapper, tag: 'div', class: 'custom-control custom-checkbox' do |bb|
       bb.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: '_is-valid'
-      bb.use :label, class: 'custom-control-label font-weight-bold'
+      bb.use :label, class: 'custom-control-label'
       bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
       bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
     end
@@ -286,7 +290,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.wrapper :form_check_wrapper, tag: 'div', class: 'custom-control custom-switch' do |bb|
       bb.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: '_is-valid'
-      bb.use :label, class: 'custom-control-label font-weight-bold'
+      bb.use :label, class: 'custom-control-label'
       bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
       bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
     end
@@ -296,7 +300,7 @@ SimpleForm.setup do |config|
   config.wrappers :custom_collection, item_wrapper_class: 'custom-control', item_label_class: 'custom-control-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0 font-weight-bold' do |ba|
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
     b.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: '_is-valid'
@@ -308,7 +312,7 @@ SimpleForm.setup do |config|
   config.wrappers :custom_collection_inline, item_wrapper_class: 'custom-control custom-control-inline', item_label_class: 'custom-control-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0 font-weight-bold' do |ba|
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
     b.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: '_is-valid'
@@ -323,7 +327,7 @@ SimpleForm.setup do |config|
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file' do |ba|
       ba.use :input, class: 'custom-file-input', error_class: 'is-invalid', valid_class: '_is-valid'
       ba.use :label, class: 'custom-file-label'
@@ -336,7 +340,7 @@ SimpleForm.setup do |config|
   config.wrappers :custom_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
       ba.use :input, class: 'custom-select mx-1', error_class: 'is-invalid', valid_class: '_is-valid'
     end
@@ -350,11 +354,12 @@ SimpleForm.setup do |config|
     b.use :placeholder
     b.optional :readonly
     b.optional :step
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.use :input, class: 'custom-range', error_class: 'is-invalid', valid_class: '_is-valid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
+
 
   # Input Group - custom component
   # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
@@ -376,6 +381,7 @@ SimpleForm.setup do |config|
   #   b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   # end
 
+
   # Floating Labels form
   #
   # floating labels default_wrapper
@@ -388,7 +394,7 @@ SimpleForm.setup do |config|
     b.optional :min_max
     b.optional :readonly
     b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: '_is-valid'
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
@@ -398,10 +404,11 @@ SimpleForm.setup do |config|
     b.use :html5
     b.optional :readonly
     b.use :input, class: 'custom-select', error_class: 'is-invalid', valid_class: '_is-valid'
-    b.use :label, class: 'font-weight-bold'
+    b.use :label
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
+
 
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :vertical_form
@@ -409,14 +416,14 @@ SimpleForm.setup do |config|
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
   config.wrapper_mappings = {
-    boolean: :vertical_boolean,
-    check_boxes: :vertical_collection,
-    date: :vertical_multi_select,
-    datetime: :vertical_multi_select,
-    file: :vertical_file,
+    boolean:       :vertical_boolean,
+    check_boxes:   :vertical_collection,
+    date:          :vertical_multi_select,
+    datetime:      :vertical_multi_select,
+    file:          :vertical_file,
     radio_buttons: :vertical_collection,
-    range: :vertical_range,
-    time: :vertical_multi_select
+    range:         :vertical_range,
+    time:          :vertical_multi_select
   }
 
   # enable custom form wrappers

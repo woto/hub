@@ -6,7 +6,7 @@
 
   <div class="card-body">
 
-    <h2 class="mb-5 text-center"><%= t(".sign_in") %></h2>
+    <h2 class="mb-4 text-center"><%= t(".sign_in") %></h2>
 
     <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'danger') %>
 
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-footer">
-      <%= f.button :button, t(".sign_in"), class: 'btn btn-primary btn-block', id: 'login' %>
+      <%= f.button :button, t(".sign_in"), class: 'btn btn-primary w-100', id: 'login' %>
     </div>
 
   </div>
@@ -32,22 +32,22 @@
   <div class="hr-text">or</div>
 
   <div class="card-body">
-
-    <div class="btn-list">
-      <%= render SocialButtonComponent.new(
-          type: 'google',
-          link_class: 'btn btn-white btn-block',
-          title: 'Login with Google',
-          path: '/users/auth/google_oauth2/'
-      ) %>
-
-      <%= render SocialButtonComponent.new(
-          type: 'facebook',
-          link_class: 'btn btn-white btn-block',
-          title: 'Login with Facebook',
-          path: '/users/auth/facebook/'
-          ) %>
-
+    <div class="row">
+      <div class="col d-sm-flex justify-content-around">
+        <%= render SocialButtonComponent.new(
+            type: 'google',
+            link_class: 'btn btn-white w-100',
+            title: 'Login with Google',
+            path: '/users/auth/google_oauth2/'
+        ) %>
+        &nbsp;
+        <%= render SocialButtonComponent.new(
+            type: 'facebook',
+            link_class: 'btn btn-white w-100',
+            title: 'Login with Facebook',
+            path: '/users/auth/facebook/'
+        ) %>
+      </div>
     </div>
   </div>
 

@@ -58,5 +58,7 @@ Rails.application.configure do
   config.active_job.queue_adapter = :sidekiq
 
   # NOTE: specially changed to random time zone in order to not miss datetime conversions.
-  # config.time_zone = 'Eastern Time (US & Canada)'
+  config.time_zone = 'Eastern Time (US & Canada)'
+
+  config.i18n.available_locales = [:en, :ru]
 end

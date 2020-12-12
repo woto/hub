@@ -16,18 +16,18 @@
 
 <div class="col">
   <div class="row">
-    <div class="offset-2 col-8">
+    <div class="offset-lg-2 col-lg-8">
 
       <div class="accordion mt-3 bg-white" id="help-accordion">
         <% by_categories_menu['aggregations']['group_by_post_category_title']['buckets'].each_with_index do |bucket, index| %>
           <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
+            <h2 class="accordion-header">
               <%= tag.button class: "accordion-button collapsed", type: "button", data: { 'bs-toggle': "collapse", 'bs-target': "#category-#{index}" } do %>
                 <%= bucket['key'] %>
               <% end %>
             </h2>
             <%= tag.div id: "category-#{index}", class: "accordion-collapse collapse", data: { 'bs-parent': "#help-accordion" } do %>
-              <div class="accordion-body">
+              <div class="accordion-body p-0">
                 <% by_categories_menu['hits']['hits'].select { |hit| hit['_source']['post_category_title'] == bucket['key'] }.each do |post| %>
                   <a href="#" class="list-group-item list-group-item-action border-0">
                     <%= post['_source']['title'] %>

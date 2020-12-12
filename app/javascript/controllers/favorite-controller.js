@@ -1,5 +1,6 @@
 import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
+import * as bootstrap from 'bootstrap';
 
 export default class extends ApplicationController {
     static targets = [ "newItemName", "createButton", "itemsList", "dropdownButton", "dropdownMenu", "errorPlaceholder"]
@@ -8,9 +9,9 @@ export default class extends ApplicationController {
     // // add on error handler
     connect() {
         console.log('favorite-controller connected');
-        // debugger
         let that = this;
         this.renderStar();
+
         this.element.addEventListener('show.bs.dropdown', function () {
             // $(that.dropdownMenuTarget).show();
             that.itemsListTarget.innerHTML = '<div class="spinner-border ms-3" role="status"></div>';

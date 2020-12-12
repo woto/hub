@@ -1,4 +1,4 @@
-class Decorators::Post::StatusComponent < ViewComponent::Base
+class PostStatusComponent < ViewComponent::Base
   def initialize(status:)
     @status = status
     @color = case status

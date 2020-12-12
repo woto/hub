@@ -1,13 +1,21 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-
-  def conditional_tag(name, condition, options=nil, &block)
+  def conditional_tag(name, condition, options = nil, &block)
     if condition
       content_tag name, capture(&block), options
     else
       capture(&block)
     end
+  end
+
+  def favorites_dropdown_items
+    @favorites_dropdown_items ||= begin
+         client = Elasticsearch::Client.new Rails.application.config.elastic
+         client.search(FavoritesSearchQuery.call(sort: 'name.keyword', order: 'asc', from: 0, size: 40).object)
+               .dig('hits', 'hits')
+               .map { _1['_source'] }
+       end
   end
 
   # def tree_item(parent, children)
