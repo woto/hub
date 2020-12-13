@@ -17,8 +17,6 @@
   <%= content_for :prefix_inline_css %>
   <%= content_for :prefix_inline_js %>
 
-  <% if true %>
-
   <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
 
     <div class="container">
@@ -43,12 +41,12 @@
 
   </aside>
 
-  <% end %>
-
   <section class="page">
+
     <%= render 'desktop_header' %>
 
     <main class="content">
+
       <div class="container-xl">
 
         <% if content_for?(:title) || content_for?(:breadcrumbs) %>

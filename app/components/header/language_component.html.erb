@@ -1,5 +1,8 @@
 <%= link_to '#', class: 'nav-link px-0', data: {'bs-toggle': 'dropdown'} do %>
-  <%== GlobalHelper.icon('world') %>&nbsp;<%# t('language', scope: [:header]) %>
+  <%== GlobalHelper.icon('world') %>&nbsp;
+  <% if @display_title %>
+    <%= t('.title') %>
+  <% end %>
 <% end %>
 
 <div class="dropdown-menu dropdown-menu-end">

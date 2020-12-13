@@ -16,7 +16,7 @@
       </div>
 
       <div class="nav-item dropdown me-3">
-        <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-desktop') %>
+        <%= render Header::LanguageComponent.new(display_title: false, capybara_browser: 'capybara-desktop') %>
       </div>
 
       <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-desktop', current_user: current_user, true_user: true_user) %>

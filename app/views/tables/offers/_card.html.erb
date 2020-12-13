@@ -47,7 +47,7 @@
       </div>
 
       <div class="mt-auto">
-        <%= link_to t('buttons.write_post'), write_post_favorites_path(ext_id: row._id), method: :post, class: 'btn btn-primary d-block mt-3' %>
+        <%= link_to t('buttons.write_post'), write_post_favorites_path(ext_id: row._id), method: :post, class: 'btn btn-pink d-block mt-3' %>
         <% if policy(:feed).new? %>
           <% if false %>
             <%= tag.button class: 'btn mb-1 btn-warning', data: {
