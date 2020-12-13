@@ -4,20 +4,79 @@
 
 <% content_for :body do %>
 
-  <body data-controller="global" data-controller="global">
+  <body class="d-flex h-100 text-white bg-dark" data-controller="global" data-controller="global">
 
-    <%= content_for :prefix_inline_css %>
-    <%= content_for :prefix_inline_js %>
+  <% content_for :prefix_inline_css do %>
+    <style>
+        body {
+            background: url(<%= asset_pack_path 'media/images/world_map.png' %>) no-repeat left !important;
+            text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+            box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+        }
 
-    <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
-    <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
+        .noshadow {
+            text-shadow: none;
+        }
 
-    <%= link_to 'Dashboard', dashboard_url %>
+        .nav-link {
+            color: white;
+        }
 
-    <%= yield %>
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+  <% end %>
 
-    <%= content_for :postfix_inline_css %>
-    <%= content_for :postfix_inline_js %>
+  <%= content_for :prefix_inline_css %>
+  <%= content_for :prefix_inline_js %>
+
+  <div class="container-lg d-flex w-100 h-100 p-3 mx-auto flex-column" style="max-width: 90em">
+
+    <div class="noshadow">
+      <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
+      <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
+    </div>
+
+
+    <header class="row mb-auto">
+      <div class="col-lg-5 col-6">
+        <img src="https://preview-dev.tabler.io/static/logo-white.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+      </div>
+      <div class="col-lg-7 col-6 d-flex">
+        <div class="ms-auto noshadow">
+          <%= render Header::LanguageComponent.new(display_title: true) %>
+        </div>
+      </div>
+    </header>
+
+    <main class="align-items-center row">
+
+      <div class="col-lg-5 mb-4">
+        <h1 class="fs-1 my-3"><%= t('.title') %></h1>
+        <p class="fs-5 mb-4"><%= t('.tagline') %></p>
+        <p class="lead">
+          <%= link_to t('.link'), offers_path, class: 'noshadow btn btn-lg btn-white fw-bold' %>
+        </p>
+      </div>
+
+
+      <div class="ps-lg-4 ps-xxl-5 col-lg-7 d-flex justify-content-center">
+        <div class="ratio ratio-16x9 border border-white border-4" style="max-width: 50em;">
+          <iframe src="https://www.youtube.com/embed/yrwe6NaRgGA" title="Explainer" allowfullscreen></iframe>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="mt-auto text-white-50 text-center">
+      <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by
+        <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+    </footer>
+  </div>
+
+  <%= content_for :postfix_inline_css %>
+  <%= content_for :postfix_inline_js %>
 
   </body>
 

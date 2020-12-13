@@ -23,11 +23,6 @@
           <div class="d-flex align-items-center mb-4">
             <h2>
               <%== @news.title %>
-              <% if policy(:news).edit? %>
-                <%= link_to edit_post_path(id: @news.id), class: 'btn btn-icon btn-sm btn-pink ms-2 me-5' do %>
-                  <%== GlobalHelper.icon('pencil') %>
-                <% end %>
-              <% end %>
             </h2>
 
             <span class="ms-auto text-muted news-date"><%== l @news.created_at.to_date %></span>
@@ -37,10 +32,18 @@
             <%==  @news.body %>
           </div>
 
-          <div class="d-flex justify-content-between mt-5 align-items-start">
-            <%= link_to t('back_to_news'), news_index_path, class: 'btn btn-pink' %>
+          <div class="d-flex mt-5 align-items-start flex-column flex-sm-row gap-4">
+            <%= link_to t('back_to_news'), news_index_path, class: 'order-2 order-sm-1 btn btn-pink' %>
 
-            <div class="d-flex justify-content-end flex-wrap gap-1 ms-sm-5">
+            <% if false %>
+            <% if policy(:news).edit? %>
+              <%= link_to edit_post_path(id: @news.id), class: 'btn btn-icon btn-sm btn-pink ms-2 me-5' do %>
+                <%== GlobalHelper.icon('pencil') %>
+              <% end %>
+            <% end %>
+            <% end %>
+
+            <div class="order-1 order-sm-2 d-flex justify-content-sm-end flex-wrap gap-1 ms-sm-auto">
               <% @news.tags.each do |item| %>
                 <% next if item.blank? %>
 
