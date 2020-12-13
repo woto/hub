@@ -103,12 +103,13 @@ class Post < ApplicationRecord
       tags: tags,
       created_at: created_at.utc,
       updated_at: updated_at.utc,
+      published_at: published_at.utc,
       user_id: user_id,
       intro: intro.to_s,
       body: body.to_s,
       price: price,
       currency: currency,
-      priority: priority
+      priority: priority,
     }
   end
 end

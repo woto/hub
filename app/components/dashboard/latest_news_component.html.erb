@@ -1,10 +1,11 @@
 <div class="card">
   <div class="d-flex card-header justify-content-between">
-    <h3 class="card-title">Последние новости</h3>
+    <h3 class="card-title"><%= t('.latest_news') %></h3>
+    <%= l Time.zone.parse(@news['published_at']), format: :short %>
   </div>
 
   <div class="card-body">
-    <%== news.first['_source']['intro'] %>
+    <%== @news['intro'] %>
   </div>
 
 
@@ -15,7 +16,7 @@
     </a>
 
     <a class="float-end" href="#">
-      Подробнее...
+      <%= t('.details') %>
     </a>
 
     <a class="link-dark p-1" href="#">

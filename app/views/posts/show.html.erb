@@ -71,11 +71,11 @@
 
       <div class="card card-lg mb-3">
         <div class="card-header">
-          <h3 class="card-title">Intro</h3>
+          <h3 class="card-title fs-5"> <%= t('intro', scope: ['simple_form', 'labels', 'post']) %> </h3>
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-12 offset-xl-2 col-xl-8">
+            <div class="col-lg-12 offset-xl-2 col-xl-8 fs-6 lh-lg">
               <%= @post.intro %>
             </div>
           </div>
@@ -84,11 +84,11 @@
 
       <div class="card card-lg mb-3">
         <div class="card-header">
-          <h3 class="card-title">Body</h3>
+          <h3 class="card-title fs-5"> <%= t('body', scope: ['simple_form', 'labels', 'post']) %> </h3>
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-12 offset-xl-2 col-xl-8">
+            <div class="col-lg-12 offset-xl-2 col-xl-8 fs-6 lh-lg">
               <%= @post.body %>
             </div>
           </div>

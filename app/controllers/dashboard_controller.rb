@@ -52,20 +52,4 @@ class DashboardController < ApplicationController
       p 1
     end
   end
-
-  def news
-    client = Elasticsearch::Client.new Rails.application.config.elastic
-    result = client.search(
-      Widgets::NewsSearchQuery.call(
-        code: 'help',
-        locale: I18n.locale,
-        sort: 'created_at',
-        order: 'desc',
-        from: 0,
-        size: 1
-      ).object
-    )
-
-    result['hits']['hits']
-  end
 end

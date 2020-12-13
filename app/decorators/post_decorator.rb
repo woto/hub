@@ -10,7 +10,13 @@ class PostDecorator < ApplicationDecorator
   end
 
   def title
-    h.link_to(h.truncate(super), h.post_path(_id))
+    truncated = h.truncate(super, length: 50)
+    tooltip_options = if truncated != super
+       { data: {"bs-toggle": "tooltip"}, title: super }
+    else
+      {}
+    end
+    h.link_to(truncated, h.post_path(_id), **tooltip_options)
   end
 
   def body
