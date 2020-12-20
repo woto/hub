@@ -132,6 +132,7 @@ gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-ruby'
 gem 'elasticsearch-transport'
+# gem 'elasticsearch-extensions'
 
 # Authentication
 gem 'devise'
