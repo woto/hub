@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Users::RegistrationsController, type: :request do
+describe Users::PasswordsController do
   pending
 end

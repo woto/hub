@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Users::SessionsController, type: :request do
+describe Users::ConfirmationsController do
   pending
 end

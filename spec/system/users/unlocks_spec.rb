@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Users::UnlocksController, type: :request do
+describe Users::UnlocksController do
   pending
 end

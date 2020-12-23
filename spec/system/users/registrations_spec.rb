@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe Users::SessionsController do
+describe Users::RegistrationsController do
   let(:user) { build(:user) }
 
-  it 'signs up successfully', browser: :desktop do
+  it 'signs up successfully' do
     visit '/auth/register/new'
     fill_in 'user_email', with: user.email
     fill_in 'user_password', with: user.password
