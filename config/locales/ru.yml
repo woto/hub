@@ -1,6 +1,16 @@
 ru:
+
+  frames:
+    news:
+      latest:
+        index:
+          latest_news: Новости
+          no_news_yet: Нет новостей
+          no_news_yet_in_your_language: Новости на вашем языке пока что отсутствуют
+          details: Подробнее...
+
   attributes:
-      name: Название
+    name: Название
   homepage: Главная
   articles: Новости
   back_to_news: Назад к новостям
@@ -8,6 +18,7 @@ ru:
   search: Искать
   close: Закрыть
   see_also: Смотрите также
+  see_more: 'Не отображается: %{count} шт.'
   columns: Колонки
   workspaces: Области
   save: Сохранить
@@ -72,7 +83,7 @@ ru:
 
   settings:
     profiles:
-      edit:
+      form:
         update: Обновить
       update:
         saved: Профиль успешно сохранен

@@ -1,6 +1,8 @@
 <%= content_tag :div, data: { controller: 'posts-form',
+                              posts_form_trix_translations: trix_translations,
                               action:
                                   'beforeunload@window->posts-form#AskConfirmationOnBeforeunload
+                                   turbo:before-visit@window->posts-form#AskConfirmationTurbo
                                    trix-initialize@document->posts-form#addToolbarButtonOnTrixInitialize
                                    trix-action-invoke@document->posts-form#openModalOnTrixActionInvoke
                                    trix-document-change@document->posts-form#markAsDirtyOnTrixChange
@@ -37,7 +39,10 @@
           %>
 
           <%= f.association :realm, as: :select,
-                      wrapper_html: {class: 'mb-3 col-xl-10'},
+                      wrapper_html: {
+                          test_id => 'realm',
+                          class: 'mb-3 col-xl-10',
+                      },
                       label_html: { :class => "mb-2" },
                       input_html: {
                           data: {

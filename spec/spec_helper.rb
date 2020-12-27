@@ -26,7 +26,7 @@ RSpec.configure do |config|
 
   # TODO: mock
   WebMock.disable_net_connect!(allow_localhost: true,
-                               allow: %w[chromedriver.storage.googleapis.com placehold.it])
+                               allow: %w[chromedriver.storage.googleapis.com])
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

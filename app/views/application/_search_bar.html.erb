@@ -1,6 +1,7 @@
 <%= tag.div class: "input-group",
             data: { controller: 'search-base',
-                    "search-base-everywhere-url": url_for(request.params.merge(only_path: false)) } do %>
+                    "search-base-everywhere-url": url_for(request.params.slice(*@preserved_search_params)
+                                                              .merge(action: :index, only_path: false)) } do %>
 
   <%= text_field_tag :q, params[:q],
                      id: nil,

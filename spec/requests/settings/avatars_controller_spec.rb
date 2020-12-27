@@ -5,7 +5,10 @@ require 'rails_helper'
 describe Settings::AvatarsController, type: :request do
   subject(:make) do
     put '/settings/avatar', params: {
-      file: fixture_file_upload('files/avatar.png')
+      # TODO: update rspec-rails gem and replace to fixture_file_upload
+      # https://github.com/rspec/rspec-rails/issues/2430
+      # file: fixture_file_upload('files/avatar.png')
+      file: Rack::Test::UploadedFile.new(file_fixture('avatar.png'))
     }
   end
 

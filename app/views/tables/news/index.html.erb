@@ -18,6 +18,10 @@
   <div class="row">
 
     <div class="col-md-8 col-lg-9">
+
+      <%= render 'items_summary', rows: rows %>
+      <div class="mb-3"></div>
+
       <% rows.each do |row| %>
         <div class="card card-md mb-3">
           <div class="card-body">
@@ -34,12 +38,12 @@
               </h2>
 
               <span class="ms-auto text-muted">
-                <%= l Time.zone.parse(row.created_at).to_date %>
+                <%= l Time.zone.parse(row.published_at).to_date %>
               </span>
 
             </div>
 
-            <div class="fs-6 lh-lg">
+            <div class="fs-6 lh-lg news-preview">
               <%== row.intro %>
             </div>
 
@@ -51,7 +55,7 @@
                 <% row.tags.each do |item| %>
                   <% next if item.blank? %>
 
-                  <%= link_to item, '#', class: 'badge badge-primary' %>
+                  <%= link_to item, by_tag_news_index_path(item), class: 'badge badge-primary' %>
                 <% end %>
 
               </div>
@@ -65,11 +69,11 @@
 
     <div class="col-md-4 col-lg-3">
 
-      <%= render Widgets::NewsByMonthComponent.new %>
+      <%= turbo_frame_tag 'news-by-month', src: frames_news_month_path(request.params.slice(*Tables::NewsController::ALLOWED_PARAMS).merge(month: params[:month])) %>
 
-      <div class="my-5"></div>
+      <div class="my-3"></div>
 
-      <%= render Widgets::NewsByTagComponent.new %>
+      <%= turbo_frame_tag 'news-by-tag', src: frames_news_tag_path(request.params.slice(*Tables::NewsController::ALLOWED_PARAMS).merge(tag: params[:tag])) %>
 
     </div>
   </div>

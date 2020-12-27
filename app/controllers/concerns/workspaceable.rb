@@ -1,18 +1,19 @@
 module Workspaceable
   extend ActiveSupport::Concern
   include Paginatable
+  include SearchBarable
 
   included do
-    before_action :set_settings, only: :index
-    before_action :check_defaults, only: :index
-    before_action :set_workspaces, only: :index
-    before_action :set_workspace_form, only: :index
+    before_action :set_settings
+    before_action :check_defaults
+    before_action :set_workspaces
+    before_action :set_workspace_form
 
     private
 
     def check_defaults
       if workspace_params.values_at(*self.class::REQUIRED_PARAMS).any? { _1.nil? }
-        user_default_workspace = Workspace.find_by(controller: @settings[:plural], is_default: true)
+        user_default_workspace = Workspace.find_by(controller: "tables/#{@settings[:plural]}", is_default: true)
         if user_default_workspace
           redirect_to user_default_workspace.path
         else

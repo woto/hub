@@ -1,5 +1,7 @@
 ru:
   simple_form:
+    error_notification:
+      default_message: Невозможно сохранить. Пожалуйста заполните поля
     labels:
       columns_form:
         displayed_columns: Отображаемые столбцы
@@ -26,6 +28,9 @@ ru:
         body: Статья
         realm: Сайт
     hints:
+      defaults:
+        published_at: Материал не будет опубликован, если дата публикации еще не наступила
+        tags: Используйте запятую в качестве разделителя тегов
       advertiser_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       feed_filter_form:

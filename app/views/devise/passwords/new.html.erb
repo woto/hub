@@ -1,7 +1,7 @@
 <%# content_for :content do %>
 
   <div class="text-center mb-4">
-    <img src="/static/logo.svg" height="36" alt="">
+    <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
   </div>
 
   <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'card card-md' }) do |f| %>

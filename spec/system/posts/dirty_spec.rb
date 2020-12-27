@@ -2,17 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Trix `dirty` feature', browser: :desktop do
-  before do
-    account_group = create(:account_group)
-    create(:account, subject: account_group, name: 'hub_pending', code: 'pending', currency: :rub, kind: :active)
-  end
+RSpec.describe 'Trix `dirty` feature' do
   let!(:user) { create(:user) }
   let!(:post) { create(:post, user: user) }
+  let!(:post_category) { create(:post_category) }
 
   before do
     login_as(user, scope: :user)
-    Post.__elasticsearch__.refresh_index!
   end
 
   def fill_in_trix_editor(id, with:)
@@ -67,12 +63,25 @@ RSpec.describe 'Trix `dirty` feature', browser: :desktop do
     end
 
     context 'when form submits' do
-      # self.use_transactional_tests = false
+      self.use_transactional_tests = false
 
       it 'does not ask confirmation and saves post' do
         expect(Post.count).to eq(1)
         create(:post)
         visit '/ru/posts/new'
+
+        within(".post_realm") do
+          find('.selectize-input').click
+          find('div.option', text: post_category.realm.title).click
+        end
+
+        within('.post_post_category') do
+          find('.selectize-input').click
+          fill_in 'post_post_category_id-selectized', with: "#{post_category.title[0..-2]}"
+          expect(page).to have_css('.has-options')
+          find('#post_post_category_id-selectized').send_keys(:return)
+        end
+
         fill_in_trix_editor('post_body', with: 'Some text')
         fill_in('post_title', with: 'Some title')
         expect do

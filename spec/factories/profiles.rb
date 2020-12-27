@@ -33,8 +33,7 @@ FactoryBot.define do
         { type: 'telegram', value: Faker::PhoneNumber.phone_number_with_country_code }
       ]
     end
-    # TODO:
-    languages { %w[Russian English Spanish French].sample(rand(1..4)) }
+    languages { I18n.available_locales.sample(rand(2)) }
     user
   end
 end

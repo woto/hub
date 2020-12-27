@@ -1,0 +1,17 @@
+<%= tag.div test_id => 'link-to-newer-news' do %>
+
+  <% page = params['page'].to_i %>
+
+  <% if page > 0 %>
+    <%= link_to frames_news_latest_path(page: page - 1),
+                test_id => 'newer-news',
+                class: 'p-1' do %>
+      <%== GlobalHelper.icon('chevron-right') %>
+    <% end %>
+  <% else %>
+    <%= tag.span test_id => 'newer-news',
+                 class: 'link-dark p-1' do %>
+      <%== GlobalHelper.icon('chevron-right') %>
+    <% end %>
+  <% end %>
+<% end %>

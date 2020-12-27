@@ -2,8 +2,8 @@
 
 module Tables
   class PostCategoriesController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
-    REQUIRED_PARAMS = %i[per cols].freeze
+    ALLOWED_PARAMS = %i[q per page sort order cols dwf dcf].freeze
+    REQUIRED_PARAMS = %i[per order sort cols].freeze
 
     include Workspaceable
     include Tableable
@@ -12,7 +12,7 @@ module Tables
 
     # GET /post_categories
     def index
-      get_index([], nil)
+      get_index([])
     end
 
     private
@@ -32,6 +32,10 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
+    end
+
+    def set_preserved_search_params
+      @preserved_search_params = %i[order per sort q dwf]
     end
   end
 end

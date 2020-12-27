@@ -31,7 +31,10 @@ class Settings::ProfilesController < ApplicationController
       end
       redirect_to edit_settings_profile_path, notice: t('.saved')
     else
-      render 'edit'
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@profile_form, partial: 'settings/profiles/form') }
+        format.html { render 'edit' }
+      end
     end
   end
 

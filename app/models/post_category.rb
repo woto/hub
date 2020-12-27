@@ -58,6 +58,9 @@ class PostCategory < ApplicationRecord
       # It makes wrong sql query with `WHERE ancestry = '...'` condition
       path: path.map(&:title),
       realm_id: realm_id,
+      realm_title: realm.title,
+      realm_locale: realm.locale,
+      realm_kind: realm.kind,
       leaf: children.none?,
       priority: priority
     }

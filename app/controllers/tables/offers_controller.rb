@@ -2,8 +2,8 @@
 
 module Tables
   class OffersController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols category_id].freeze
-    REQUIRED_PARAMS = [:per].freeze
+    ALLOWED_PARAMS = %i[q per page sort order cols category_id dwf dcf].freeze
+    REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
     layout 'backoffice'
@@ -96,6 +96,10 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
+    end
+
+    def set_preserved_search_params
+      # TODO: hmmmm
     end
   end
 end

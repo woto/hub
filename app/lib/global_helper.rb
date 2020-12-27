@@ -4,38 +4,44 @@ class GlobalHelper
   FAVORITE_COLUMN = 'favorite'
 
   class << self
+    def create_index(client, model)
+      client.indices.create(
+        index: model.index_name,
+        body: {
+          settings: model.settings.to_hash,
+          mappings: model.mappings.to_hash
+        }
+      )
+    end
+
     def create_elastic_indexes
+      client = Elasticsearch::Client.new Rails.application.config.elastic
+
       User.setup_index(Columns::UserForm)
-      User.__elasticsearch__.create_index!(force: true)
-      User.__elasticsearch__.refresh_index!
+      create_index(client, User)
 
       Feed.setup_index(Columns::FeedForm)
-      Feed.__elasticsearch__.create_index!
-      Feed.__elasticsearch__.refresh_index!
+      create_index(client, Feed)
 
       Post.setup_index(Columns::PostForm)
-      Post.__elasticsearch__.create_index!
-      Post.__elasticsearch__.refresh_index!
+      create_index(client, Post)
 
       PostCategory.setup_index(Columns::PostCategoryForm)
-      PostCategory.__elasticsearch__.create_index!
-      PostCategory.__elasticsearch__.refresh_index!
+      create_index(client, PostCategory)
 
       Favorite.setup_index(Columns::FavoriteForm)
-      Favorite.__elasticsearch__.create_index!
-      Favorite.__elasticsearch__.refresh_index!
+      create_index(client, Favorite)
 
       Account.setup_index(Columns::AccountForm)
-      Account.__elasticsearch__.create_index!
-      Account.__elasticsearch__.refresh_index!
+      create_index(client, Account)
 
       Transaction.setup_index(Columns::TransactionForm)
-      Transaction.__elasticsearch__.create_index!
-      Transaction.__elasticsearch__.refresh_index!
+      create_index(client, Transaction)
 
       Check.setup_index(Columns::CheckForm)
-      Check.__elasticsearch__.create_index!
-      Check.__elasticsearch__.refresh_index!
+      create_index(client, Check)
+
+      client.indices.refresh
     end
 
     def decorate_datetime(datetime, h)
@@ -93,7 +99,7 @@ class GlobalHelper
     end
 
     def picture_address(picture)
-      Rails.env.test? ? '' : "//192.168.43.10.nip.io:8080/x380/#{picture[Feeds::Offers::HASH_BANG_KEY]}"
+      Rails.env.test? ? '' : "//192.168.1.3.nip.io:8080/x380/#{picture[Feeds::Offers::HASH_BANG_KEY]}"
     end
 
     def get_offer(ext_id)
@@ -111,7 +117,7 @@ class GlobalHelper
     end
 
     def icon(name, is_filled: false, color: 'black')
-      filled_class = is_filled ? "icon-filled" : ''
+      filled_class = is_filled ? 'icon-filled' : ''
       color_class = color ? "text-#{color}" : ''
 
       {

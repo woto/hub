@@ -10,6 +10,6 @@ module SystemHelpers
   end
 
   def expect_dashboard
-    expect(page).to have_current_path('/en-US/dashboard')
+    expect(page).to have_current_path('/ru/dashboard')
   end
 end

@@ -1,0 +1,11 @@
+ru:
+  activemodel:
+    attributes:
+      profile_form:
+        name: Полное имя (ФИО)
+        languages: Язык
+        time_zone: Часовой пояс
+        bio: О себе
+      profile_form/messenger:
+        type: Тип мессенджера
+        value: Адрес мессенджера

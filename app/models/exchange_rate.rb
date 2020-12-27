@@ -12,5 +12,7 @@
 class ExchangeRate < ApplicationRecord
   enum currency: Rails.configuration.global[:currencies]
   validates :currency, :date, :value, presence: true
-  validates :date, uniqueness: true
+  validates :date, uniqueness: { scope: :currency }
+
+  has_many :posts
 end

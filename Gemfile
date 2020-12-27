@@ -12,6 +12,9 @@ gem 'rails', '~> 6.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker', '~> 4.0'
 gem 'jbuilder', '~> 2.7'
+# gem 'turbo-rails', github: 'hotwired/turbo-rails', branch: :main
+gem 'turbo-rails'
+# gem "stimulus-rails"
 
 group :development, :test do
   # Debug
@@ -20,7 +23,8 @@ group :development, :test do
   gem 'pry-byebug'
 
   # Audit
-  gem 'bullet'
+  # Bullet does not support active_record 6.1.0 yet
+  # gem 'bullet'
   gem 'bundler-audit'
 
   # Testing
@@ -43,7 +47,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'meta_request'
+  # Conflicts with rails 6.1
+  # gem 'meta_request'
   gem 'annotate'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'

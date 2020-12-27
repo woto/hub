@@ -15,7 +15,8 @@ Capybara.test_id = 'data-test-id'
   # Capybara.server = :puma, { Silent: true }
   Capybara.register_driver name do |app|
     options = Selenium::WebDriver::Chrome::Options.new
-    options.add_option('prefs', 'intl.accept_languages' => 'en-US')
+    options.add_option('prefs', 'intl.accept_languages' => 'ru')
+    options.add_argument("--lang=ru")
     if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
       options.headless!
     end
@@ -30,16 +31,20 @@ Capybara.test_id = 'data-test-id'
       driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*resolution)
     end
   end
-
-  RSpec.configure do |config|
-    config.before(:each, type: :system, browser: name) do
-      driven_by name
-    end
-  end
 end
 
+# RSpec.configure do |config|
+#   config.before(:each, type: :system, browser: :rack) do
+#     driven_by :rack_test
+#   end
+# end
+
 RSpec.configure do |config|
-  config.before(:each, type: :system, browser: :rack) do
-    driven_by :rack_test
+  config.before(:each, type: :system) do |opts|
+    if opts.metadata[:browser].to_s == 'mobile'
+      driven_by :mobile
+    else
+      driven_by :desktop
+    end
   end
 end

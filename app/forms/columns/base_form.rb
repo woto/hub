@@ -58,6 +58,8 @@ class Columns::BaseForm
     end
 
     def ints_to_strings(ints, role)
+      role = 'guest' if role.nil?
+
       all_columns.values_at(*ints)
           .select { _1[:roles].include?(role) }
           .map { _1[:key] }

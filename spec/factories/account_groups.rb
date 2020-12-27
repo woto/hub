@@ -9,5 +9,6 @@
 #
 FactoryBot.define do
   factory :account_group do
+    sequence(:identifier) { |n| "identifier #{n}" }
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Settings::AvatarsController, type: :system, browser: :desktop do
+describe Settings::AvatarsController do
   before do
     login_as(user, scope: :user)
     visit '/settings/profile'

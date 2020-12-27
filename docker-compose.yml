@@ -43,6 +43,7 @@ services:
       - ${ELASTIC_CLUSTER_PORT}:9300
     environment:
       - discovery.type=single-node
+      - path.repo=/tmp
     # volumes:
     #   - elastic:/usr/share/elasticsearch/data
 

@@ -14,8 +14,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_responsible
 
-  private
+  helper_method :path_for_switch_language
 
+  private
   # Locale switching copied from official Rails Guides without any modifications
   # This makes me happy :)
 
@@ -65,5 +66,9 @@ class ApplicationController < ActionController::Base
 
   def set_responsible
     Current.responsible = current_user
+  end
+
+  def path_for_switch_language(locale)
+    nil
   end
 end

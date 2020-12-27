@@ -5,8 +5,6 @@ class DashboardController < ApplicationController
   layout 'backoffice'
   skip_before_action :authenticate_user!
 
-  helper_method :news
-
   def index
     if current_user
       account_ids = current_user.accounts.pluck('id')

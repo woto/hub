@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.shared_examples 'shared_table' do |class_name|
 
-  it 'shows 1 item on 3rd page', browser: :desktop do
+  it 'shows 1 item on 3rd page' do
     visit "/#{plural}?page=3&per=5"
     expect(page).to have_css(".table_#{singular}", count: 1)
   end
 
-  it 'respects page param and visits second page', browser: :desktop do
+  it 'respects page param and visits second page' do
     visit "/#{plural}?per=5"
     expect(page).to have_css(".table_#{singular}", count: 5)
 
@@ -24,7 +24,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
     expect(page).to have_no_css('#pagination_3 a')
   end
 
-  it 'shows navigation links on desktop', browser: :desktop do
+  it 'shows navigation links on desktop' do
     visit "/#{plural}?per=5&page=2"
     expect(page).to have_css('#pagination_first')
     expect(page).to have_css('#pagination_previous')
@@ -32,17 +32,17 @@ RSpec.shared_examples 'shared_table' do |class_name|
     expect(page).to have_css('#pagination_last')
   end
 
-  it 'does not show pagination when items amount less than per', browser: :desktop do
+  it 'does not show pagination when items amount less than per' do
     "/#{plural}?per=100"
     expect(page).to have_no_css('.pagination')
   end
 
-  it 'shows pagination when items amount more than per', browser: :desktop do
+  it 'shows pagination when items amount more than per' do
     visit "/#{plural}?per=5"
     expect(page).to have_css('.pagination')
   end
 
-  it 'changes per page items', browser: :desktop do
+  it 'changes per page items' do
     visit "/#{plural}?per=5"
     expect(page).to have_css(".table_#{singular}", count: 5)
 
@@ -50,7 +50,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
     expect(page).to have_css(".table_#{singular}", count: 11)
   end
 
-  it 'preselects select option with corresponding per value', browser: :desktop do
+  it 'preselects select option with corresponding per value' do
     visit "/#{plural}?per=5"
     expect(page).to have_select('capybara-perselect', selected: '5')
 
@@ -58,14 +58,14 @@ RSpec.shared_examples 'shared_table' do |class_name|
     expect(page).to have_select('capybara-perselect', selected: '20')
   end
 
-  it 'shows correct entries info', browser: :desktop do
+  it 'shows correct entries info' do
     visit "/#{plural}?per=5&page=2"
-    expect(page).to have_text('6 - 10 of 11')
+    expect(page).to have_text('Displaying 6 - 10 of 11 in total')
   end
 
   context 'with search bar' do
     options = [
-      { browser: :desktop, selector: '.content' },
+      { browser: :desktop, selector: 'header' },
       { browser: :mobile, selector: 'aside' }
     ]
 

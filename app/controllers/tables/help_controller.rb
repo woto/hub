@@ -2,8 +2,8 @@
 
 module Tables
   class HelpController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order].freeze
-    REQUIRED_PARAMS = [:per].freeze
+    ALLOWED_PARAMS = %i[q per page sort order dwf dcf].freeze
+    REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
     include Tableable
@@ -52,6 +52,10 @@ module Tables
               per: @pagination_rule.per,
               sort: :priority,
               order: :desc)
+    end
+
+    def set_preserved_search_params
+      @preserved_search_params = %i[order per sort q dwf]
     end
   end
 end

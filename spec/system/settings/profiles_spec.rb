@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Settings::ProfilesController, type: :system, browser: :desktop do
+describe Settings::ProfilesController do
   let(:name) { Faker::Name.name }
   let(:bio) { Faker::Lorem.paragraph }
   let(:phone) { Faker::PhoneNumber.cell_phone_with_country_code }
@@ -37,7 +37,7 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
         'name' => name,
         'bio' => bio,
         'messengers' => [{ 'type' => 'WhatsApp', 'value' => phone }],
-        'languages' => ['', 'English', 'Russian']
+        'languages' => ['', 'en', 'ru']
       )
     end
   end
@@ -60,12 +60,12 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
         expect(page).to have_field 'profile_form[messengers_attributes][1][type]', type: :hidden, with: type
         expect(page).to have_field('profile_form[messengers_attributes][1][value]', with: user.profile.messengers[1]['value'])
       end
-      languages_as_is = user.profile.languages.map do |eng|
-        Rails.application.config.global[:languages].find do |language_structure|
-          language_structure[:english_name] == eng
-        end[:language]
+      in_their_own_language = Rails.application.config.global[:languages].select do |lng|
+        user.profile.languages.include?(lng[:english_name])
+      end.map do |lng|
+        lng[:language]
       end
-      expect(page).to have_select('profile_form[languages][]', visible: false, selected: languages_as_is)
+      expect(page).to have_select('profile_form[languages][]', visible: false, selected: in_their_own_language)
     end
   end
 
@@ -74,12 +74,12 @@ describe Settings::ProfilesController, type: :system, browser: :desktop do
 
     it 'shows form errors' do
       click_button('Обновить')
-      expect(page).to have_text("Name не может быть пустым")
-      expect(page).to have_text("Bio не может быть пустым")
-      expect(page).to have_text("Time zone имеет непредусмотренное значение")
-      expect(page).to have_text("Type должен быть выбран")
-      expect(page).to have_text("Value не может быть пустым")
-      expect(page).to have_text("Languages должен быть выбран")
+      expect(page).to have_text("Полное имя (ФИО) не может быть пустым")
+      expect(page).to have_text("О себе не может быть пустым")
+      expect(page).to have_text("Часовой пояс имеет непредусмотренное значение")
+      expect(page).to have_text("Тип мессенджера должен быть выбран")
+      expect(page).to have_text("Адрес мессенджера не может быть пустым")
+      expect(page).to have_text("Язык должен быть выбран")
     end
   end
 end

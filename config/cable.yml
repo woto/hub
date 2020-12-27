@@ -4,16 +4,11 @@ default: &default
   port: <%= ENV['REDIS_PORT'] %>
 
 development:
-  <<: *default
-  db: 0
-  channel_prefix: hub_development
+  adapter: async
 
 test:
-  <<: *default
-  db: 1
-  channel_prefix: hub_test
+  adapter: test
 
 production:
   <<: *default
-  db: 2
   channel_prefix: hub_production

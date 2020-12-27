@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Header' do
 
   context 'when user is not authenticated' do
-    it 'shows login link for desktop', browser: :desktop do
+    it 'shows login link for desktop' do
       visit '/ru/dashboard'
       expect(page).to have_css('.capybara-desktop.capybara-unauthenticated')
       expect(page).to have_no_css('.capybara-mobile.capybara-unauthenticated')
@@ -24,7 +24,7 @@ RSpec.describe 'Header' do
       login_as(user, scope: :user)
     end
 
-    it 'shows profile link for desktop', browser: :desktop do
+    it 'shows profile link for desktop' do
       visit '/ru/dashboard'
       expect(page).to have_css('.capybara-desktop.capybara-authenticated')
       expect(page).to have_no_css('.capybara-mobile.capybara-authenticated')

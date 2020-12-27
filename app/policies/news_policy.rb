@@ -4,4 +4,12 @@ class NewsPolicy < ApplicationPolicy
   def index?
     true
   end
+
+  def by_month?
+    true
+  end
+
+  def by_tag?
+    true
+  end
 end

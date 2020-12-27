@@ -29,5 +29,6 @@ FactoryBot.define do
     #   end
     # }
     title { Faker::Commerce.department(max: 2) }
+    realm
   end
 end

@@ -1,0 +1,43 @@
+<%= simple_form_for @profile_form, url: settings_profile_path, html: {method: :put}, local: true do |f| %>
+
+  <%= f.error_notification %>
+
+  <%= f.input :name,
+              required: true,
+              input_html: {autocomplete: "name"},
+              wrapper_html: {class: 'mb-3'}
+  %>
+
+  <%= f.input :bio,
+              required: true,
+              input_html: {rows: 4},
+              wrapper_html: {class: 'mb-3'},
+              as: :text
+  %>
+
+  <%= f.input :time_zone,
+              required: true,
+              wrapper_html: {class: 'mb-3'},
+              input_html: {class: "form-select"},
+              as: :time_zone
+  %>
+
+  <%= f.input :messengers,
+              as: 'profile/messengers_collection',
+              wrapper_html: {class: 'mb-3'}
+  %>
+
+  <%= f.input :languages,
+              required: true,
+              input_html: {data: {controller: 'profile-language'}, multiple: true},
+              wrapper_html: {class: 'mb-3'},
+              as: :select,
+              collection: Rails.application.config.global[:languages].map { |lng| [lng[:language], lng[:english_name]] }
+
+  %>
+
+  <div class="form-footer">
+    <%= f.button :submit, t(".update"), class: 'btn btn-primary' %>
+  </div>
+
+<% end %>

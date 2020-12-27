@@ -48,7 +48,14 @@ Rails.application.routes.draw do
         resources :offers, only: [:index]
       end
       resources :help, only: [:index]
-      resources :news, only: [:index]
+      # TODO?
+      # get 'articles/:date/:title' => 'articles#show', as: 'article'
+      resources :news, only: [:index] do
+        collection do
+          get 'month/:month', action: :by_month, as: :by_month
+          get 'tag/:tag', action: :by_tag, as: :by_tag
+        end
+      end
       resources :offers, only: [:index]
       resources :post_categories, only: [:index]
       resources :posts, only: [:index]
@@ -59,12 +66,8 @@ Rails.application.routes.draw do
     # TODO
     resources :accounts
     resources :advertisers
-    resources :news do
-      collection do
-        get 'month/:month', action: :by_month
-        get 'tag/:tag', action: :by_tag, as: :by_tag
-      end
-    end
+
+    resources :news
 
     resources :checks
     resources :favorites do
@@ -122,9 +125,15 @@ Rails.application.routes.draw do
       resources :tags, controller: 'post_tags', only: %i[index]
     end
 
+    namespace :frames do
+      namespace :news do
+        get 'month(/:month)', to: 'month#index', as: :month
+        get 'tag(/:tag)', to: 'tag#index', as: :tag
+        get 'latest', to: 'latest#index', as: :latest
+      end
+    end
+
     get 'dashboard', to: 'dashboard#index'
-    get 'articles' => 'articles#index'
-    get 'articles/:date/:title' => 'articles#show', as: 'article'
     root to: 'homepage#index'
   end
 end

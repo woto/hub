@@ -9,7 +9,7 @@
                             url: table_workspaces_path(model: params[:controller], **request.params.slice(*GlobalHelper.workspace_params)),
                             local: true,
                             html: {
-                              data: { test_id: 'workspace-form' }
+                              test_id => 'workspace-form'
                             } do |f| %>
           <%= f.input :name,
                       input_html: {

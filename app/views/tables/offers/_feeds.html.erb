@@ -23,7 +23,9 @@
   <% if @sum_other_doc_count > 0 %>
     <div class="hr-text my-3"><%= t('see_also') %></div>
     <div class="col mb-2">
-      <%= @sum_other_doc_count %> more...
+      <%= link_to "/404", class: 'text-muted', "data-turbo": 'false' do %>
+        <%= t('see_more', count: @sum_other_doc_count) %>
+      <% end %>
     </div>
   <% end %>
 </div>

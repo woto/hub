@@ -27,7 +27,7 @@ I18n.available_locales.each do |locale|
     created_at = Faker::Date.between(from: 2.years.ago, to: 2.years.after)
 
     Current.set(responsible: user) do
-      post = Post.create(
+      post = Post.create!(
         realm: news_realm,
         title: Faker::Lorem.sentence(word_count: 2, random_words_to_add: 12),
         intro: Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 10),
@@ -38,11 +38,9 @@ I18n.available_locales.each do |locale|
         currency: :usd,
         tags: tags,
         published_at: created_at + rand(30).days,
-        created_at: created_at,
+        created_at: ExchangeRate.order('RANDOM()').first.date, #.to_time, # + rand(86_400).seconds - 1.second,
         updated_at: created_at
       )
-
-      debugger unless post.persisted?
 
       post.update!(status: :pending)
     end

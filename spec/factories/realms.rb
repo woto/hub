@@ -11,6 +11,8 @@
 #
 FactoryBot.define do
   factory :realm do
-    title { Faker::App.unique.name }
+    sequence(:title) { |n| "Realm #{n}" }
+    locale { 'ru' }
+    kind { 'news' }
   end
 end

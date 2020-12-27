@@ -121,13 +121,5 @@
         disabled: false
     ) %>
 
-    <%= render Left::Menu::ItemComponent.new(
-        title: 'Старые новости',
-        path: { controller: '/articles', action: 'index' },
-        current_page: current_page?({controller: '/articles'}),
-        icon: GlobalHelper.icon('news'),
-        disabled: false
-    ) %>
-
   </ul>
 </div>

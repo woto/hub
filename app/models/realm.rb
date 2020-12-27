@@ -13,6 +13,9 @@ class Realm < ApplicationRecord
   validates :locale, :title, presence: true
   enum kind: [:news, :help, :website]
   has_many :post_categories
+  has_many :posts
+
+  validates :kind, presence: true
 
   def to_label
     "#{locale}: #{title}"

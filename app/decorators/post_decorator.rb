@@ -22,4 +22,8 @@ class PostDecorator < ApplicationDecorator
   def body
     h.truncate(h.strip_tags(super))
   end
+
+  def published_at
+    decorate_datetime(super)
+  end
 end

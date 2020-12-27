@@ -12,7 +12,7 @@ describe Users::RegistrationsController do
     fill_in 'user_password_confirmation', with: user.password
     click_button 'register'
     expect(page).to have_text('Welcome! You have signed up successfully.')
-    expect(page).to have_current_path('/en-US/dashboard')
+    expect(page).to have_current_path('/ru/dashboard')
     expect_dashboard
     expect_authenticated
   end

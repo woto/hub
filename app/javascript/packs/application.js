@@ -3,7 +3,12 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+// TODO: remove
 require("@rails/ujs").start()
+
+import { Turbo, cable } from "@hotwired/turbo-rails"
+Turbo.setProgressBarDelay(0)
+
 require("channels")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -31,7 +36,7 @@ import '../stylesheets/application.scss';
 
 import * as bootstrap from 'bootstrap'
 
-(function() {
+document.addEventListener("turbo:load", function() {
     /**
      */
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -75,5 +80,4 @@ import * as bootstrap from 'bootstrap'
             switchTriggerEl.classList.toggle('active');
         });
     });
-
-})();
+});

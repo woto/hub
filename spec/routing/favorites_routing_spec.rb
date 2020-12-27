@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Tables::FavoritesController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(get: "/favorites").to route_to("favorites#index")
+      expect(get: "/favorites").to route_to("tables/favorites#index")
     end
 
     it "routes to #new" do

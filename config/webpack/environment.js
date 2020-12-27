@@ -1,5 +1,4 @@
 const { environment } = require('@rails/webpacker')
-const erb = require('./loaders/erb')
 
 const webpack = require('webpack')
 
@@ -18,5 +17,4 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
 
 environment.splitChunks();
 
-environment.loaders.prepend('erb', erb)
 module.exports = environment;

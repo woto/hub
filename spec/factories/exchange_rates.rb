@@ -11,8 +11,8 @@
 #
 FactoryBot.define do
   factory :exchange_rate do
-    currency { 1 }
-    value { "9.99" }
-    date { "2020-11-14" }
+    currency { :usd }
+    value { 9.99 }
+    date { Date.current }
   end
 end

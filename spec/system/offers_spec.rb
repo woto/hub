@@ -22,7 +22,7 @@ RSpec.describe 'Offers page' do
       elastic_client.indices.refresh
     end
 
-    it 'works', :aggregate_failures, browser: :desktop do
+    it 'works', :aggregate_failures do
       when_search_in_root_1
       breadcrumbs_inside_feed_root
       breadcrumbs_inside_category
@@ -47,7 +47,7 @@ RSpec.describe 'Offers page' do
       within('section.page') do
         fill_in 'Введите текст для поиска...', with: q1
         click_button 'search-button'
-        expect(page).to have_current_path(offers_path(q: q1, locale: 'ru', only_path: true, per: 12, sort: 'id'), url: false)
+        expect(page).to have_current_path(offers_path(q: q1, locale: 'ru', only_path: true, per: 12, sort: 'id', order: :desc), url: false)
       end
     end
 
@@ -81,7 +81,7 @@ RSpec.describe 'Offers page' do
       expect(page).to have_css('.left_feed', count: 20, text: '1')
       expect(page).to have_text('Прайс листы')
       expect(page).to have_text('СМОТРИТЕ ТАКЖЕ')
-      expect(page).to have_text('2 more...')
+      expect(page).to have_link('Не отображается: 2 шт.', href: '/404')
 
       find(".left_feed", match: :first).click
       expect(page).to have_css('.item_offer', count: 1)
@@ -131,7 +131,7 @@ RSpec.describe 'Offers page' do
       elastic_client.indices.refresh
     end
 
-    it 'works', :aggregate_failures, browser: :desktop do
+    it 'works', :aggregate_failures do
       when_search_in_root_2
       when_search_in_feed_root
       when_search_in_category_with_nested_categories_and_products_in_this_one
@@ -164,8 +164,8 @@ RSpec.describe 'Offers page' do
       cat = feed.feed_categories.find_by(ext_id: '248298374')
       visit feed_offers_path(feed_id: feed.slug_with_advertiser, q: 'для кошек', category_id: cat.id)
       expect(page).to have_css('.left_feed_category', count: 20)
-      expect(page).to have_text('SEE ALSO')
-      expect(page).to have_text('2 more...')
+      expect(page).to have_text('СМОТРИТЕ ТАКЖЕ')
+      expect(page).to have_link('Не отображается: 2 шт.', href: '/404')
     end
 
     def left_categories_links_preserves_q

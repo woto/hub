@@ -3,14 +3,14 @@ import {Controller} from "stimulus"
 import { ApplicationController } from 'stimulus-use'
 
 import Rails from "@rails/ujs";
-import translations from "../modules/trix-i18n.js.erb"
+// import translations from "../modules/trix-i18n.js.erb"
 import "@rails/actiontext";
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
 import * as bootstrap from 'bootstrap';
 
-const translation = translations[document.documentElement.lang];
+// const translation = translations[document.documentElement.lang];
 // Trix.config.lang = translation;
 
 export default class extends ApplicationController {
@@ -53,12 +53,22 @@ export default class extends ApplicationController {
         }
     }
 
+    AskConfirmationTurbo(event) {
+        if(this.isDirty) {
+            if (confirm('TODO')) {
+                this.isDirty = false;
+            } else {
+                event.preventDefault();
+            }
+        }
+    }
+
     _initializeEditor(reference) {
         this._localize_hack(reference);
 
         if (!this.data.has('buttonAdded')) {
             const buttonHTML = `
-                <button type="button" class="trix-button" data-trix-action="x-modal">${translation['embedWidget']}</button>
+                <button type="button" class="trix-button" data-trix-action="x-modal">${this.trixTranslations('embedWidget')}</button>
             `
             reference.toolbarElement
                 .querySelector(".trix-button-group--file-tools")
@@ -111,7 +121,7 @@ export default class extends ApplicationController {
 
         for (let key in langMapping) {
             let element = langMapping[key];
-            let value = translation[key];
+            let value = this.trixTranslations(key);
             if (element.hasAttribute("title")) {
                 element.setAttribute("title", value);
             }
@@ -147,5 +157,9 @@ export default class extends ApplicationController {
         } else {
             return new bootstrap.Modal(this.modalEmbedTarget);
         }
+    }
+
+    trixTranslations(key) {
+        return JSON.parse(this.data.get('trix-translations'))[document.documentElement.lang][key];
     }
 }

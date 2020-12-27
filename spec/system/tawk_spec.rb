@@ -8,7 +8,7 @@ RSpec.describe 'Tawk' do
       stub_const('ENV', ENV.to_hash.merge('TAWK_ENABLED' => 'true'))
     end
 
-    it 'shows tawk widget', browser: :desktop do
+    it 'shows tawk widget' do
       get '/dashboard'
       expect(response.body).to match('Tawk_API')
     end
@@ -19,7 +19,7 @@ RSpec.describe 'Tawk' do
       stub_const('ENV', ENV.to_hash.merge('TAWK_ENABLED' => 'false'))
     end
 
-    it 'does not show tawk widget', browser: :desktop do
+    it 'does not show tawk widget' do
       get '/dashboard'
       expect(response.body).not_to match('Tawk_API')
     end

@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Settings::EmailsController, type: :system do
+describe Settings::EmailsController do
   pending
 end

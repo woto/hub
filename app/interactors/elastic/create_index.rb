@@ -10,6 +10,7 @@ module Elastic
       client.indices.create index: index_name, body: {
         "settings": {
           "index": {
+              # "refresh_interval": -1,
               "number_of_shards": 10,
               "number_of_replicas": 1
           }

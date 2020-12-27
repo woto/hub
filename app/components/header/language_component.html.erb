@@ -1,14 +1,18 @@
-<%= link_to '#', class: 'nav-link px-0', data: {'bs-toggle': 'dropdown'} do %>
+<%= link_to '#', helpers.test_class => 'language_component', class: 'nav-link px-0', data: {'bs-toggle': 'dropdown'} do %>
   <%== GlobalHelper.icon('world') %>&nbsp;
   <% if @display_title %>
     <%= t('.title') %>
   <% end %>
 <% end %>
 
-<div class="dropdown-menu dropdown-menu-end">
+<%= tag.div helpers.test_class => 'language_component', class: 'dropdown-menu dropdown-menu-end' do %>
   <% Rails.configuration.global[:languages].each do |language| %>
     <% css_class = 'dropdown-item' %>
     <% css_class << ' disabled' if language[:disabled] %>
-    <%= link_to language[:language], url_for(:locale => language[:domain], :overwrite_params=>{}), class: css_class %>
+    <%= link_to language[:language],
+                helpers.path_for_switch_language(:locale => language[:domain]) ||
+                    url_for(:locale => language[:domain]),
+                helpers.test_class => 'link',
+                class: css_class %>
   <% end %>
-</div>
+<% end %>

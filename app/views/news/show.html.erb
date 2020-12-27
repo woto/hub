@@ -1,3 +1,7 @@
+<% content_for :title do %>
+  <%= t("news", scope: ['titles']) %>
+<% end %>
+
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
     <%= link_to t('breadcrumbs.homepage'), root_path %>
@@ -17,7 +21,7 @@
   <div class="row">
 
     <div class="col-md-8 col-lg-9">
-      <div class="card card-md">
+      <div class="card card-md mb-3">
         <div class="card-body">
 
           <div class="d-flex align-items-center mb-4">
@@ -25,10 +29,10 @@
               <%== @news.title %>
             </h2>
 
-            <span class="ms-auto text-muted news-date"><%== l @news.created_at.to_date %></span>
+            <span class="ms-auto text-muted news-date"><%== l @news.published_at.to_date %></span>
           </div>
 
-          <div class="fs-6 lh-lg">
+          <div class="fs-6 lh-lg news-content">
             <%==  @news.body %>
           </div>
 
@@ -44,12 +48,15 @@
             <% end %>
 
             <div class="order-1 order-sm-2 d-flex justify-content-sm-end flex-wrap gap-1 ms-sm-auto">
+
               <% @news.tags.each do |item| %>
                 <% next if item.blank? %>
 
-                <%= link_to item, '#', class: 'badge badge-primary' %>
+                <%= link_to item, by_tag_news_index_path(item), class: 'badge badge-primary' %>
               <% end %>
+
             </div>
+
           </div>
 
         </div>
@@ -57,11 +64,11 @@
     </div>
     <div class="col-md-4 col-lg-3">
 
-      <%= render Widgets::NewsByMonthComponent.new %>
+      <%= turbo_frame_tag 'news-by-month', src: frames_news_month_path(request.params.slice(*Tables::NewsController::ALLOWED_PARAMS).merge(month: params[:month])) %>
 
-      <div class="my-5"></div>
+      <div class="my-3"></div>
 
-      <%= render Widgets::NewsByTagComponent.new %>
+      <%= turbo_frame_tag 'news-by-tag', src: frames_news_tag_path(request.params.slice(*Tables::NewsController::ALLOWED_PARAMS).merge(tag: params[:tag])) %>
 
     </div>
   </div>

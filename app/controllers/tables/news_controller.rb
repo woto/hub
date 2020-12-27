@@ -2,8 +2,8 @@
 
 module Tables
   class NewsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order].freeze
-    REQUIRED_PARAMS = [:per].freeze
+    ALLOWED_PARAMS = %i[q per page sort order dwf dcf].freeze
+    REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
     include Tableable
@@ -12,7 +12,15 @@ module Tables
 
     # GET /news
     def index
-      get_index([], nil)
+      get_index([])
+    end
+
+    def by_month
+      get_index([], month: Time.zone.parse("#{params[:month]}-01"))
+    end
+
+    def by_tag
+      get_index([], tag: params[:tag])
     end
 
     private
@@ -23,7 +31,8 @@ module Tables
                     model_class: News,
                     form_class: Columns::NewsForm,
                     query_class: NewsSearchQuery,
-                    decorator_class: NewsDecorator }
+                    decorator_class: NewsDecorator
+      }
     end
 
     def system_default_workspace
@@ -31,6 +40,14 @@ module Tables
               per: @pagination_rule.per,
               sort: :published_at,
               order: :desc)
+    end
+
+    def set_preserved_search_params
+      @preserved_search_params = %i[order per sort q dwf]
+    end
+
+    def path_for_switch_language(locale)
+      news_index_path(locale)
     end
   end
 end

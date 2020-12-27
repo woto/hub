@@ -3,7 +3,7 @@
 class PaginationRules
   MAX_PER = 100
   DEFAULT_PER = 20
-  PER_VARIANTS = [5, 10, DEFAULT_PER, 50, MAX_PER].freeze
+  PER_VARIANTS = [1, 5, 10, DEFAULT_PER, 50, MAX_PER].freeze
   attr_accessor :per, :page, :default_per, :max_per, :per_variants
 
   def initialize(request, default_per = DEFAULT_PER, max_per = MAX_PER, per_variants = PER_VARIANTS)
