@@ -33,8 +33,12 @@ class ApplicationController < ActionController::Base
     parsed_locale = request.subdomains.reject { |lng| lng == 'www' }.first
     parsed_locale ||= params[:locale]
     parsed_locale ||= session[:locale]
-    parsed_locale ||= request.headers['Accept-Language'].split(',').first
-    I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
+    parsed_locale ||= request.headers['Accept-Language'].split(',').first.then do |locale|
+      attempts = locale, locale.split('-').first
+      attempts.each do |attempt|
+        break attempt if I18n.available_locales.map(&:to_s).include?(attempt)
+      end
+    end
   rescue StandardError
     nil
   end
