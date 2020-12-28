@@ -15,8 +15,12 @@ Capybara.test_id = 'data-test-id'
   # Capybara.server = :puma, { Silent: true }
   Capybara.register_driver name do |app|
     options = Selenium::WebDriver::Chrome::Options.new
-    options.add_option('prefs', 'intl.accept_languages' => 'ru')
-    options.add_argument("--lang=ru")
+    # NOTE: Maybe github actions doesn't have russian locale in Chrome.
+    # So we can't set it in CI. But locally it works.
+    # More robust is to pass manually locale in params and get
+    # predictable results instead of relying on Chrome configuration.
+    # options.add_option('prefs', 'intl.accept_languages' => 'ru')
+    # options.add_argument("--lang=ru")
     if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
       options.headless!
     end
