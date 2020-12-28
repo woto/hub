@@ -37,7 +37,7 @@ services:
   elastic:
     env_file:
       - .env
-    image: elasticsearch:7.9.2
+    image: elasticsearch:7.10.1
     ports:
       - ${ELASTIC_REST_PORT}:9200
       - ${ELASTIC_CLUSTER_PORT}:9300

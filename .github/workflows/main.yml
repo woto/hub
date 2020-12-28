@@ -39,7 +39,7 @@ jobs:
         ports: ['9200:9200', '9300:9300']
         env:
           discovery.type: single-node
-        image: elasticsearch:7.4.0
+        image: elasticsearch:7.10.1
 
     steps:
 
