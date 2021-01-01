@@ -10,7 +10,7 @@ RSpec.describe 'Dashboard' do
     subject! { visit '/ru/dashboard' }
 
     describe 'language_component' do
-      it_behaves_like 'shared language_component' do
+      it_behaves_like 'shared_language_component' do
         let(:link) { dashboard_path(locale: 'en') }
       end
     end

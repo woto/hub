@@ -67,5 +67,5 @@ Rails.application.configure do
   # NOTE: specially changed to random time zone in order to not miss datetime conversions.
   config.time_zone = 'Eastern Time (US & Canada)'
 
-  config.i18n.available_locales = %w[en ru]
+  config.i18n.available_locales = %w[en en-US ru]
 end

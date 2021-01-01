@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples 'shared_workspace', focus: true do
+RSpec.shared_examples 'shared_workspace' do
 
   context 'when user is not authorized' do
     describe 'save workspace' do
@@ -60,7 +60,7 @@ RSpec.shared_examples 'shared_workspace', focus: true do
         end
       end
 
-      describe 'destroy', focus: true do
+      describe 'destroy' do
         context 'when clicks `x` at workspace link' do
           let!(:workspace) { create(:workspace, controller: "tables/#{plural}", user: user) }
 

@@ -26,6 +26,44 @@ default: &default
     short: select ...
     long: Select ...
 
+  locales:
+    -
+      locale: 'en-GB'
+      title: 'English GB'
+    -
+      locale: 'en-US'
+      title: 'English US'
+    -
+      locale: 'en'
+      title: 'English General'
+    -
+      locale: 'zh-CN'
+      title: '中文'
+    -
+      locale: 'ja'
+      title: '日本語'
+    -
+      locale: 'es'
+      title: 'Español'
+    -
+      locale: 'de'
+      title: 'Deutsch'
+    -
+      locale: 'fr'
+      title: 'Français'
+    -
+      locale: 'ko'
+      title: '한국어'
+    -
+      locale: 'pt'
+      title: 'Português'
+    -
+      locale: 'it'
+      title: 'Italiano'
+    -
+      locale: 'ru'
+      title: 'Русский'
+
   messengers:
     -
       short: whatsapp
@@ -51,59 +89,6 @@ default: &default
     -
       short: mobile_phone
       long: Mobile Phone
-
-  <%# Must be refactored ru, Russian, Русский. So many different names of same thing :E %>
-  languages:
-    -
-      language: 'English'
-      english_name: 'en'
-      disabled: false
-      domain: 'en'
-    -
-      language: '中文'
-      english_name: 'zh-CN'
-      disabled: false
-      domain: 'zh-CN'
-    -
-      language: '日本語'
-      english_name: 'ja'
-      disabled: true
-      domain: 'ja'
-    -
-      language: 'Español'
-      english_name: 'es'
-      disabled: true
-      domain: 'es'
-    -
-      language: 'Deutsch'
-      english_name: 'de'
-      disabled: true
-      domain: 'de'
-    -
-      language: 'Français'
-      english_name: 'fr'
-      disabled: true
-      domain: 'fr'
-    -
-      language: '한국어'
-      english_name: 'ko'
-      disabled: true
-      domain: 'ko'
-    -
-      language: 'Português'
-      english_name: 'pt'
-      disabled: false
-      domain: 'pt'
-    -
-      language: 'Italiano'
-      english_name: 'it'
-      disabled: true
-      domain: 'it'
-    -
-      language: 'Русский'
-      english_name: 'ru'
-      disabled: false
-      domain: 'ru'
 
 development:
   <<: *default

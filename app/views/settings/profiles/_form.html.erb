@@ -32,8 +32,7 @@
               input_html: {data: {controller: 'profile-language'}, multiple: true},
               wrapper_html: {class: 'mb-3'},
               as: :select,
-              collection: Rails.application.config.global[:languages].map { |lng| [lng[:language], lng[:english_name]] }
-
+              collection: I18n.available_locales.map { |item| [system_locale_to_human(item), item ] }
   %>
 
   <div class="form-footer">

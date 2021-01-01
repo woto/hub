@@ -8,7 +8,7 @@
 <%= tag.div helpers.test_class => 'language_component', class: 'dropdown-menu dropdown-menu-end' do %>
   <% I18n.available_locales.each do |locale| %>
     <% css_class = 'dropdown-item' %>
-    <%= link_to t(locale, scope: ['locales']),
+    <%= link_to helpers.system_locale_to_human(locale),
                 helpers.path_for_switch_language(:locale => locale) ||
                     url_for(:locale => locale),
                 helpers.test_class => 'link',

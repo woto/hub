@@ -10,6 +10,10 @@ module ApplicationHelper
     'data-test-class'
   end
 
+  def system_locale_to_human(locale)
+    Rails.application.config.global[:locales].find { |item| item[:locale] == locale.to_s }[:title]
+  end
+
   # TODO: find a better place
   def trix_translations
     locales = {}
