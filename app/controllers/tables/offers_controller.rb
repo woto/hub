@@ -2,7 +2,7 @@
 
 module Tables
   class OffersController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols category_id dwf dcf].freeze
+    ALLOWED_PARAMS = %i[q per page sort order cols category_id].freeze
     REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable

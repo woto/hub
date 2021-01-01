@@ -2,7 +2,7 @@
 
 module Tables
   class NewsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order dwf dcf].freeze
+    ALLOWED_PARAMS = %i[q per page sort order].freeze
     REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
@@ -43,7 +43,7 @@ module Tables
     end
 
     def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q dwf]
+      @preserved_search_params = %i[order per sort q]
     end
 
     def path_for_switch_language(locale)

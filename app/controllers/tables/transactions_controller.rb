@@ -2,7 +2,7 @@
 
 module Tables
   class TransactionsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols dwf dcf].freeze
+    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
     REQUIRED_PARAMS = %i[per order sort cols].freeze
 
     include Workspaceable
@@ -35,7 +35,7 @@ module Tables
     end
 
     def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q dwf]
+      @preserved_search_params = %i[order per sort q]
     end
   end
 end
