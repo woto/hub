@@ -3,11 +3,15 @@
 module Table
   class WorkspacesController < ApplicationController
     def create
-      workspace = policy_scope(Workspace).new(workspace_params)
-      if workspace.save
-        redirect_to path
+      @workspace_form = policy_scope(Workspace).new(workspace_params)
+      if @workspace_form.save
+        respond_to do |format|
+          format.turbo_stream { redirect_back fallback_location: root_path }
+        end
       else
-        redirect_back fallback_location: root_path
+        respond_to do |format|
+          format.turbo_stream
+        end
       end
     end
 

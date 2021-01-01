@@ -1,3 +1,4 @@
+<%= turbo_frame_tag 'workspace-form', target: "_top" do %>
 <div class="row row-deck mb-3">
   <div class="col-sm-10 col-md-9 col-lg-6">
     <div class="card">
@@ -6,11 +7,10 @@
         <%= simple_form_for @workspace_form,
                             as: :workspace_form,
                             method: :post,
-                            url: table_workspaces_path(model: params[:controller], **request.params.slice(*GlobalHelper.workspace_params)),
-                            local: true,
-                            html: {
-                              test_id => 'workspace-form'
-                            } do |f| %>
+                            url: table_workspaces_path(
+                                model: params[:model] || params[:controller],
+                                **request.params.slice(*GlobalHelper.workspace_params)),
+                            local: true do |f| %>
           <%= f.input :name,
                       input_html: {
                           class: 'mb-1'
@@ -33,3 +33,4 @@
     </div>
   </div>
 </div>
+<% end %>
