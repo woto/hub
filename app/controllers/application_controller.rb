@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 
   include Pundit
 
-  around_action :switch_locale
   around_action :set_time_zone
   before_action :detect_device_format
   before_action :authenticate_user!
@@ -16,41 +15,20 @@ class ApplicationController < ActionController::Base
 
   helper_method :path_for_switch_language
 
+  helper_method :url_for_search_everywhere
+
   private
-  # Locale switching copied from official Rails Guides without any modifications
-  # This makes me happy :)
-
-  # Locale
-
-  def switch_locale(&action)
-    locale = extract_locale_from_subdomain || I18n.default_locale
-    locale = locale.to_s
-    session[:locale] = locale
-    I18n.with_locale(locale, &action)
-  end
-
-  def extract_locale_from_subdomain
-    parsed_locale = request.subdomains.reject { |lng| lng == 'www' }.first
-    parsed_locale ||= params[:locale]
-    parsed_locale ||= session[:locale]
-    parsed_locale ||= request.headers['Accept-Language'].split(',').first.then do |locale|
-      attempts = locale, locale.split('-').first
-      attempts.each do |attempt|
-        break attempt if I18n.available_locales.map(&:to_s).include?(attempt)
-      end
-    end
-  rescue StandardError
-    nil
-  end
 
   def default_url_options
+    return {} if I18n.available_locales.map(&:to_s).include?(request.subdomains.first)
+
     { locale: I18n.locale }
   end
 
   # Time zone
 
-  def set_time_zone
-    Time.use_zone(current_user&.profile&.time_zone) { yield }
+  def set_time_zone(&block)
+    Time.use_zone(current_user&.profile&.time_zone, &block)
   end
 
   def detect_device_format
@@ -72,7 +50,11 @@ class ApplicationController < ActionController::Base
     Current.responsible = current_user
   end
 
-  def path_for_switch_language(locale)
+  def path_for_switch_language(_locale)
     nil
+  end
+
+  def url_for_search_everywhere
+    url_for(request.params.slice(:order, :per, :sort, :cols).merge(action: :index, only_path: false))
   end
 end
