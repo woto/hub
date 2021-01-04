@@ -58,7 +58,12 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
+  # gem 'capybara', '>= 2.15'
+  # this needed for order independent compare of query string
+  # TODO: check answer
+  # https://github.com/teamcapybara/capybara/issues/2432
+  # https://github.com/teamcapybara/capybara/compare/master...woto:order_independent_compare
+  gem 'capybara', github: 'woto/capybara', branch: 'order_independent_compare'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
