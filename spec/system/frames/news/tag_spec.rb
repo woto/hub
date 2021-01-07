@@ -26,24 +26,24 @@ describe Frames::News::TagController do
     context 'when time is in future' do
       it 'displays only news which matches the filter' do
         travel 2.minute do
-          visit '/en-US/frames/news/tag?order=order&per=per&sort=sort'
+          visit '/en-US/frames/news/tag'
 
           expect(page).to have_link(count: 3)
-          expect(page).to have_link('tag 1 1', href: '/en-US/news/tag/tag%201?order=order&per=per&sort=sort')
-          expect(page).to have_link('tag 2 2', href: '/en-US/news/tag/tag%202?order=order&per=per&sort=sort')
-          expect(page).to have_link('future', href: '/en-US/news/tag/future?order=order&per=per&sort=sort')
+          expect(page).to have_link('tag 1 1', href: '/en-US/news/tag/tag%201')
+          expect(page).to have_link('tag 2 2', href: '/en-US/news/tag/tag%202')
+          expect(page).to have_link('future', href: '/en-US/news/tag/future')
         end
       end
     end
 
-
-    it 'highlights the tag if it is passed' do
-      visit '/en-US/frames/news/tag?tag=tag%202&order=order&per=per&sort=sort'
-
-      expect(page).to have_css('.active', text: "tag 2\n2")
+    context 'when tag is passed in params' do
+      it 'highlights the tag' do
+        visit '/en-US/frames/news/tag?tag=tag%202&order=order&per=per&sort=sort'
+        expect(page).to have_css('.active', text: "tag 2\n2")
+      end
     end
 
-    context 'when requested another realm with another locale (ru locale)' do
+    context 'when requested realm with ru local' do
       it 'shows 1 link' do
         visit '/ru/frames/news/tag?order=order&per=per&sort=sort'
 
