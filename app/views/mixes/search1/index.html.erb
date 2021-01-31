@@ -1,0 +1,10 @@
+<% @results['aggregations']['advertisers']['buckets'].each do |advertiser| %>
+<h2 style="padding-top: 30px"><%= advertiser['key'] %></h2>
+  <% advertiser['top_offers']['hits']['hits'].each do |offer| %>
+    <% picture = offer['_source']['picture'] && offer['_source']['picture'].first['#'] %>
+    <%= image_tag(picture, style: 'max-width: 150px; max-height: 150px') if picture %>
+<!--    <div>-->
+<!--      <%#= offer.dig('_source', 'name', 0, '#') %> $ <%#= offer.dig('_source', 'description', 0, '#') %>-->
+<!--    </div>-->
+  <% end %>
+<% end %>
