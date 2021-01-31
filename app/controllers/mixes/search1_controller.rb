@@ -40,7 +40,7 @@ class Mixes::Search1Controller < ApplicationController
       "aggs": {
         "advertisers": {
           "terms": {
-            "field": "feed_category_name.keyword",
+            "field": "advertiser_name.keyword",
             "order": {
               "top_hit": "desc"
             },

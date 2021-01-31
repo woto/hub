@@ -40,6 +40,11 @@ Rails.application.routes.draw do
                  unlocks: 'users/unlocks'
                }
 
+    namespace 'mixes' do
+      resources 'search1'
+      resources 'search2'
+    end
+
     scope module: 'tables' do
       resources :accounts, only: [:index]
       resources :checks, only: [:index]
