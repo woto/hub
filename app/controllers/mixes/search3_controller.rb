@@ -1,4 +1,4 @@
-class Mixes::Search1Controller < ApplicationController
+class Mixes::Search3Controller < ApplicationController
   def index
 
     client = Elasticsearch::Client.new Rails.application.config.elastic
