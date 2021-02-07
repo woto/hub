@@ -1,12 +1,30 @@
-<% @results['aggregations']['advertisers']['buckets'].each do |advertiser| %>
-<h2 style="padding-top: 30px"><%= advertiser['key'] %></h2>
-  <% advertiser['top_offers']['hits']['hits'].each do |offer| %>
-    <% picture = offer['_source']['picture'] && offer['_source']['picture'].first['#'] %>
-    <%= image_tag(picture, style: 'max-width: 150px; max-height: 150px') if picture %>
-    <% if false %>
-      <div>
-        <%= offer.dig('_source', 'name', 0, '#') %> $ <%= offer.dig('_source', 'description', 0, '#') %>
-      </div>
-    <% end %>
+<%#= debug @results %>
+
+<% if true %>
+  <% @results['aggregations']['advertisers']['buckets'].each do |advertiser| %>
+    <div style="background-color: <%= Random.bytes(3).unpack1('H*') %>">
+      <h2 style="padding-top: 30px"><%= advertiser['key'] %></h2>
+
+      <% if true %>
+        <p>doc_count: <%= advertiser['doc_count'] %></p>
+        <p>top_hit: <%= advertiser['top_hit'] %></p>
+      <% end %>
+
+      <% advertiser['top_offers']['hits']['hits'].each do |offer|  %>
+        <% picture = offer['_source']['picture'] && offer['_source']['picture'].first['#'] %>
+        <% if true %>
+          <%= image_tag(picture, style: 'max-width: 250px; max-height: 250px') if picture %>
+        <% end %>
+
+        <% if false %>
+          <p><%= offer.dig('_score')  %></p>
+          <p>
+            <%= offer.dig('_source', 'name', 0, '#') %> $ <%= offer.dig('_source', 'description', 0, '#') %>
+          </p>
+        <% end %>
+      <% end %>
+
+    </div>
   <% end %>
+
 <% end %>

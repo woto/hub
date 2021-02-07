@@ -3,6 +3,8 @@ class Mixes::Search1Controller < ApplicationController
 
     client = Elasticsearch::Client.new Rails.application.config.elastic
 
+    tokens = Elastic::Tokenize.call(q: params[:q]).object
+
     # GET development.offers/_search
     body = {
       "size": 0,
@@ -26,12 +28,12 @@ class Mixes::Search1Controller < ApplicationController
                 "query": params[:q],
                 "fields": [
                   "name.#^3",
-                  "feed_category_name^1",
+                  "feed_category_name",
                   "description.#"
                 ],
                 "type": "most_fields",
                 "fuzziness": "AUTO",
-                "minimum_should_match": params[:q].split("\s").count
+                "minimum_should_match": tokens.count
               }
             }
           ]
@@ -44,7 +46,7 @@ class Mixes::Search1Controller < ApplicationController
             "order": {
               "top_hit": "desc"
             },
-            "size": 20
+            "size": 500
           },
           "aggs": {
             "top_offers": {

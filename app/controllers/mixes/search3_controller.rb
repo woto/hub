@@ -3,6 +3,8 @@ class Mixes::Search3Controller < ApplicationController
 
     client = Elasticsearch::Client.new Rails.application.config.elastic
 
+    tokens = Elastic::Tokenize.call(q: params[:q]).object
+
     # GET development.offers/_search
     body = {
       "size": 0,
@@ -10,15 +12,57 @@ class Mixes::Search3Controller < ApplicationController
         "bool": {
           "should": [
             {
-              "multi_match": {
-                "query": params[:q],
-                "fields": [
-                  "name.#^3",
-                  "feed_category_names",
-                  "description.#"
-                ]
+              "span_near": {
+                "clauses":
+                  tokens.map do |token|
+                    {
+                      "span_multi": {
+                        "match": {
+                          "fuzzy": {
+                            "name.#": {
+                              "fuzziness": 'auto',
+                              "value": token
+                            }
+                          }
+                        }
+                      }
+                    }
+                  end,
+                "slop": 10,
+                "in_order": 'false'
               }
-            }
+            },
+            {
+              "span_near": {
+                "clauses":
+                  tokens.map do |token|
+                    {
+                      "span_multi": {
+                        "match": {
+                          "fuzzy": {
+                            "description.#": {
+                              "fuzziness": 'auto',
+                              "value": token
+                            }
+                          }
+                        }
+                      }
+                    }
+                  end,
+                "slop": 10,
+                "in_order": 'false'
+              }
+            },
+          # {
+          #   "multi_match": {
+          #     "query": params[:q],
+          #     "fields": [
+          #       "name.#^3",
+          #       "feed_category_names",
+          #       "description.#"
+          #     ]
+          #   }
+          # }
           ],
           "must": [
             {
@@ -26,12 +70,12 @@ class Mixes::Search3Controller < ApplicationController
                 "query": params[:q],
                 "fields": [
                   "name.#^3",
-                  "feed_category_name^1",
+                  "feed_category_name",
                   "description.#"
                 ],
                 "type": "most_fields",
                 "fuzziness": "AUTO",
-                "minimum_should_match": params[:q].split("\s").count
+                "minimum_should_match": tokens.count
               }
             }
           ]
@@ -42,9 +86,9 @@ class Mixes::Search3Controller < ApplicationController
           "terms": {
             "field": "advertiser_name.keyword",
             "order": {
-              "top_hit": "desc"
+              "top_hit[99.0]": "desc"
             },
-            "size": 20
+            "size": 500
           },
           "aggs": {
             "top_offers": {
@@ -53,7 +97,7 @@ class Mixes::Search3Controller < ApplicationController
               }
             },
             "top_hit": {
-              "max": {
+              "percentiles": {
                 "script": {
                   "source": "_score"
                 }
