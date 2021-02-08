@@ -6,87 +6,125 @@ class OffersSearchQuery
 
   # Code fully covered by tests in spec/lib/queries/offers_search_query_spec.rb
   def call
-    level = if context.category_id.present?
-              FeedCategory.find(context.category_id).ancestry_depth
-            else
-              -1
+    search_tokens = Elastic::Tokenize.call(q: context.q).object
+    search_string = search_tokens.join(' ')
+
+    body = Jbuilder.encode do |json|
+      json.aggs do
+        json.vendors do
+          json.terms do
+            json.field 'vendor.#.keyword'
+            json.size 30
+          end
+        end
+      end
+
+      # TODO prices
+      #
+      # json.aggs do
+      #   json.max_price do
+      #     json.max do
+      #       json.field 'price.#.keyword'
+      #     end
+      #   end
+      # end
+      #
+      # json.aggs do
+      #   json.min_price do
+      #     json.min do
+      #       json.field 'price.#.keyword'
+      #     end
+      #   end
+      # end
+
+      json.aggs do
+        json.group do
+          json.terms do
+            json.field context.group_by
+            json.order do
+              json.set! 'sort.sum_of_squares', 'desc'
             end
-
-    definition = search do
-      highlight do
-        tags_schema :styled
-        fields %w[description.# name.#]
-      end
-
-      explain(true) if context.explain.present?
-
-      if context.feed_id.blank?
-        aggregation :feeds do
-          terms do
-            field 'feed_id'
-            size 20
+            json.size 1000
           end
-        end
-      else
-        aggregation :categories do
-          terms do
-            field "category_level_#{level + 1}"
-            size 20
-          end
-        end
-        if context.category_id.present?
-          aggregation :category do
-            filter term: { feed_category_id: context.category_id }
+          json.aggs do
+            json.offers do
+              json.top_hits do
+                json.size 6
+              end
+            end
+            json.sort do
+              json.extended_stats do
+                json.script do
+                  json.source '_score'
+                end
+              end
+            end
           end
         end
       end
 
-      query do
-        bool do
-          if context.category_id.present?
-            filter do
-              if context.only
-                term 'feed_category_id' => context.category_id
-              else
-                term "category_level_#{level}" => context.category_id
+      json.query do
+        json.bool do
+
+          if context.advertiser_id.present?
+            json.set! :filter do
+              json.array! ['fuck'] do
+                json.term do
+                  json.advertiser_id context.advertiser_id
+                end
+              end
+            end
+          elsif context.feed_id.present?
+            json.set! :filter do
+              json.array! ['fuck'] do
+                json.term do
+                  json.feed_id context.feed_id
+                end
+              end
+            end
+          elsif context.feed_category_id
+            json.set! :filter do
+              json.array! ['fuck'] do
+                json.term do
+                  # TODO
+                  # if context.only
+                  #   term Feeds::Offers::CATEGORY_ID_KEY => context.category_id
+                  json.set! "#{Feeds::Offers::CATEGORY_ID_KEY}_#{context.current_category_level}", context.feed_category_id
+                end
               end
             end
           end
 
-          if context.feed_id.present?
-            filter do
-              term 'feed_id' => context.feed_id.split('+').second.to_i
-            end
-          end
-
-          if context.q.present?
-            must do
-              query_string do
-                query context.q
+          json.set! :should do
+            json.array! ['fuck'] do
+              json.multi_match do
+                json.query search_string
+                json.fields %w[name.#^3 feed_category_name.# description.#]
               end
             end
-          else
-            filter do
-              match_all {}
+          end
+
+          json.set! :filter do
+            json.array! ['fuck'] do
+              json.multi_match do
+                json.query search_string
+                json.fields %w[name.# feed_category_name.# description.#]
+                json.fuzziness 'auto'
+                json.minimum_should_match search_tokens.count
+              end
             end
           end
-        end
-      end
 
-      # TODO. Optimize (cache? remove randomness?)
-      if context.feed_id.blank? && context.category_id.blank? && context.q.blank?
-        sort do
-          by Feeds::Offers::INDEXED_AT, order: :desc
         end
       end
     end
 
     context.object = {}.tap do |h|
-      h[:body] = definition.to_hash.deep_symbolize_keys
+      h[:body] = body
       h[:index] = ::Elastic::IndexName.offers
       h[:from] = context.from
-      h[:size] = context.size
-      h[:routing] = context.feed_id.split('+').second.to_i if context.feed_id.present?
+      h[:size] = 0
+      h[:routing] = context.feed_id if context.feed_id.present?
     end
   end
 end

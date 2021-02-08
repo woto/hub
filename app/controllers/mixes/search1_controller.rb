@@ -4,6 +4,7 @@ class Mixes::Search1Controller < ApplicationController
     client = Elasticsearch::Client.new Rails.application.config.elastic
 
     tokens = Elastic::Tokenize.call(q: params[:q]).object
+    search_string = tokens.join(' ')
 
     # GET development.offers/_search
     body = {
@@ -13,25 +14,22 @@ class Mixes::Search1Controller < ApplicationController
           "should": [
             {
               "multi_match": {
-                "query": params[:q],
+                "query": search_string,
                 "fields": [
                   "name.#^3",
-                  "feed_category_names",
                   "description.#"
                 ]
               }
             }
           ],
-          "must": [
+          "filter": [
             {
               "multi_match": {
-                "query": params[:q],
+                "query": search_string,
                 "fields": [
                   "name.#^3",
-                  "feed_category_name",
                   "description.#"
                 ],
-                "type": "most_fields",
                 "fuzziness": "AUTO",
                 "minimum_should_match": tokens.count
               }
@@ -44,7 +42,7 @@ class Mixes::Search1Controller < ApplicationController
           "terms": {
             "field": "advertiser_name.keyword",
             "order": {
-              "top_hit": "desc"
+              "top_hit.sum_of_squares": "desc"
             },
             "size": 500
           },
@@ -55,7 +53,7 @@ class Mixes::Search1Controller < ApplicationController
               }
             },
             "top_hit": {
-              "max": {
+              "extended_stats": {
                 "script": {
                   "source": "_score"
                 }

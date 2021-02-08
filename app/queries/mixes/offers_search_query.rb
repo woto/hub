@@ -37,32 +37,27 @@ class Mixes::OffersSearchQuery
 
           if context.q.present?
 
-            # should do
-            #   match 'name.#' do
-            #     query context.q
-            #   end
-            #   boost 10
-            # end
+            # minimum_should_match "90%"
+            # cutoff_frequency 0.001
+            # max_expansions 10
+            # prefix_length 5
+            # minimum_should_match "3"
+            # minimum_should_match "90%"
+            # operator "AND"
+            # fuzziness "AUTO"
+            # boost 5
+            # type "most_fields"
 
             should do
               multi_match do
                 query context.q
                 fields ['name.#^3', Feeds::Offers::CATEGORY_NAMES_KEY, 'description.#']
-                # minimum_should_match "90%"
-                # cutoff_frequency 0.001
-                # max_expansions 10
-                # prefix_length 5
-                # minimum_should_match "3"
-                # operator "AND"
-                # fuzziness "AUTO"
-                # boost 5
               end
             end
 
-            must do
+            filter do
               multi_match do
                 query context.q
-                # fields ['name.#']
                 fields ['name.#^3', "#{Feeds::Offers::CATEGORY_NAME_KEY}^1", 'description.#']
                 type "most_fields"
                 fuzziness "AUTO"
@@ -79,8 +74,6 @@ class Mixes::OffersSearchQuery
           end
         end
       end
-
-      # collapse 'description.#.keyword'
 
       # collapse Feeds::Offers::CATEGORY_ID_KEY do
       collapse "advertiser_id" do
