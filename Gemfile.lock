@@ -196,10 +196,10 @@ GEM
       dry-initializer (~> 3.0)
       dry-schema (~> 1.5, >= 1.5.2)
     e2mmap (0.1.0)
-    elasticsearch (7.10.0)
-      elasticsearch-api (= 7.10.0)
-      elasticsearch-transport (= 7.10.0)
-    elasticsearch-api (7.10.0)
+    elasticsearch (7.10.1)
+      elasticsearch-api (= 7.10.1)
+      elasticsearch-transport (= 7.10.1)
+    elasticsearch-api (7.10.1)
       multi_json
     elasticsearch-dsl (0.1.9)
     elasticsearch-model (7.1.1)
@@ -216,7 +216,7 @@ GEM
     elasticsearch-ruby (0.0.4)
       activesupport (>= 3.0.0)
       thrift
-    elasticsearch-transport (7.10.0)
+    elasticsearch-transport (7.10.1)
       faraday (~> 1)
       multi_json
     erubi (1.10.0)

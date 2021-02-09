@@ -122,6 +122,7 @@ gem 'view_component'
 # language detect
 # gem 'whatlanguage'
 gem 'cld'
+# gem 'stopwords-filter', require: 'stopwords', github: 'woto/stopwords-filter', branch: 'fix_locales'
 
 # Tree structure
 gem 'ancestry', github: 'stefankroes/ancestry'
@@ -136,6 +137,7 @@ gem 'ancestry', github: 'stefankroes/ancestry'
 # Elasticsearch family
 gem 'elasticsearch'
 gem 'elasticsearch-api'
+# gem 'elasticsearch-dsl', github: 'woto/elasticsearch-ruby', branch: 'highlight_for_collapse'
 gem 'elasticsearch-dsl'
 gem 'elasticsearch-model'
 gem 'elasticsearch-persistence'
