@@ -8,22 +8,31 @@
     <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
   </li>
 
-  <% css_class = 'active' unless @feed %>
+  <% css_class = 'active' unless @current_advertiser %>
   <li class="breadcrumb-item <%= css_class %>">
     <%=link_to t('breadcrumbs.offers'), offers_path %>
   </li>
 
-  <% if @feed %>
-    <% css_class = 'active' unless params[:category_id].present? %>
+  <% if @current_advertiser %>
+    <% css_class = 'active' unless @current_feed %>
     <li class="breadcrumb-item <%= css_class %>">
-      <% if @all_advertiser_feeds.count == 1 %>
-        <%= link_to "#{@feed.name} #{@advertiser.name}", feed_offers_path(@feed.slug_with_advertiser) %>
-      <% else %>
-        <%= render 'tables/offers/breadcrumbs/feeds' %>
-      <% end %>
+      <%=link_to @current_advertiser.to_label, advertiser_offers_path(advertiser_id: @current_advertiser) %>
     </li>
+
+    <% if @current_feed %>
+      <% css_class = 'active' unless @current_category %>
+      <li class="breadcrumb-item <%= css_class %>">
+        <%=link_to @current_feed.to_label, feed_offers_path(feed_id: @current_feed) %>
+      </li>
+
+      <% if @current_category %>
+        <% @current_category.path.each do |el| %>
+          <% css_class = 'active' if el.id == @current_category.id %>
+          <%= tag.li class: "breadcrumb-item #{css_class}" do  %>
+            <%= link_to el.name, feed_category_offers_path(q: params[:q], feed_category_id: el.id), class: css_class %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
-
-  <%= render 'tables/offers/breadcrumbs/categories' if params[:category_id].present?  %>
-
 <% end %>
