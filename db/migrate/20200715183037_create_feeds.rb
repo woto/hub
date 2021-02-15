@@ -26,7 +26,7 @@ class CreateFeeds < ActiveRecord::Migration[6.0]
       t.integer :priority, null: false, default: 0
       t.string :xml_file_path
       t.string :downloaded_file_type
-      t.boolean :is_active, default: true
+      t.boolean :is_active, null: false, default: true
       t.bigint :downloaded_file_size
 
       t.timestamps

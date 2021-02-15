@@ -13,8 +13,7 @@
 #  downloaded_file_type   :string
 #  error_class            :string
 #  error_text             :text
-#  index_name             :string
-#  is_active              :boolean          default(TRUE)
+#  is_active              :boolean          default(TRUE), not null
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
 #  name                   :string           not null
