@@ -1,4 +1,9 @@
 ru:
+  advertiser: Рекламодатель
+  feed: Прайс
+  feed_category: Категория
+  offers: Товары
+  advertisers/admitad: Рекламодатель
 
   frames:
     news:
@@ -30,6 +35,9 @@ ru:
   created_at: Дата создания
   updated_at: Дата изменения
   search_placeholder: Введите текст для поиска...
+  no_results_found: Ничего не найдено
+  try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Попробуйте очистить строку поиска или примененные фильтры. Или создайте новый элемент.
+  view: Просмотр
 
   layouts:
     homepage:
@@ -91,6 +99,8 @@ ru:
   header:
     language_component:
       title: Язык
+    favorites_component:
+      title: Избранное
 
     menu:
       login: Вход
@@ -101,9 +111,10 @@ ru:
     offers:
       search:
         button:
-          search_inside_category: В этой категории
-          search_inside_feed: В этом прайс листе
-          search_everywhere: Во всех прайс листах
+          search_everywhere: Искать везде
+          search_inside_advertiser: 'У рекламодателя: "%{name}"'
+          search_inside_feed: 'В прайс листе: "%{name}"'
+          search_inside_feed_category: 'В категории: "%{name}"'
 
   application:
     columns_form:

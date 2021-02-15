@@ -1,6 +1,6 @@
 ru:
   titles:
-    offers: Товары из всех прайс листов
+    offers: Все товары
     settings: Настройки
     feeds: Прайс листы
     advertisers: Рекламодатели
@@ -11,4 +11,6 @@ ru:
     accounts: Счета
     news: Новости
     transactions: Транзакции
+    checks: Выплаты
+    help: Справка
     dashboard: Личный кабинет
