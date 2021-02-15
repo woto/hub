@@ -8,6 +8,7 @@ class CreateAdvertisers < ActiveRecord::Migration[6.0]
       t.string :name
       t.jsonb :data
       t.datetime :synced_at
+      t.boolean :is_active, null: false, default: true
 
       t.integer :gdeslon_id
       t.string :gdeslon_name

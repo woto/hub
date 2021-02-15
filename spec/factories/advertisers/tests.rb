@@ -68,6 +68,7 @@
 #  gdeslon_tariffs                     :jsonb
 #  gdeslon_traffic_types               :jsonb
 #  gdeslon_url                         :string
+#  is_active                           :boolean          default(TRUE), not null
 #  name                                :string
 #  synced_at                           :datetime
 #  type                                :string
