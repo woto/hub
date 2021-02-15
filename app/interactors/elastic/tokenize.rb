@@ -10,33 +10,33 @@ module Elastic
       client = Elasticsearch::Client.new Rails.application.config.elastic
 
       index_name = 'russian_english_tokenizer'
-      # client.indices.delete index: index_name
-      # client.indices.create index: index_name, body: {
-      #   settings: {
-      #     analysis: {
-      #       filter: {
-      #         russian_stop: {
-      #           type: 'stop',
-      #           stopwords: '_russian_'
-      #         },
-      #         english_stop: {
-      #           type: 'stop',
-      #           stopwords: '_english_'
-      #         }
-      #       },
-      #       analyzer: {
-      #         default: {
-      #           tokenizer: 'standard',
-      #           filter: %i[
-      #             lowercase
-      #             russian_stop
-      #             english_stop
-      #           ]
-      #         }
-      #       }
-      #     }
-      #   }
-      # }
+      client.indices.delete index: index_name, ignore_unavailable: true
+      client.indices.create index: index_name, body: {
+        settings: {
+          analysis: {
+            filter: {
+              russian_stop: {
+                type: 'stop',
+                stopwords: '_russian_'
+              },
+              english_stop: {
+                type: 'stop',
+                stopwords: '_english_'
+              }
+            },
+            analyzer: {
+              default: {
+                tokenizer: 'standard',
+                filter: %i[
+                  lowercase
+                  russian_stop
+                  english_stop
+                ]
+              }
+            }
+          }
+        }
+      }
 
       result = client.indices.analyze(
         index: index_name,
