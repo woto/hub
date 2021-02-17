@@ -136,7 +136,8 @@ module Feeds
       else
         Rails.logger.warn("Offer categoryId is '#{ext_category_id}' but it was not found in <categories>")
         @current[CATEGORY_ID_KEY] = WRONG_CATEGORY_ERROR
-        @current[CATEGORY_IDS_KEY] = WRONG_CATEGORY_ERROR
+        @current[CATEGORY_IDS_KEY] = [WRONG_CATEGORY_ERROR]
+        @current["#{CATEGORY_ID_KEY}_0"] = WRONG_CATEGORY_ERROR
       end
       # @current[:feed_category_id] = @categories_cache.find_by_ext_id(@current['categoryId'].first[HASH_BABG])
       # @current[:feed_category_path] = @categories.tree(@current[:feed_category_id])
