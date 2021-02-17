@@ -4,6 +4,11 @@ class GlobalHelper
   FAVORITE_COLUMN = 'favorite'
 
   class << self
+
+    def feed_category_ids
+      20.times.map { |i| "feed_category_id_#{i}" }
+    end
+
     def create_index(client, model)
       client.indices.create(
         index: model.index_name,
@@ -28,6 +33,9 @@ class GlobalHelper
 
       PostCategory.setup_index(Columns::PostCategoryForm)
       create_index(client, PostCategory)
+
+      FeedCategory.setup_index(Columns::FeedCategoryForm)
+      create_index(client, FeedCategory)
 
       Favorite.setup_index(Columns::FavoriteForm)
       create_index(client, Favorite)
@@ -99,7 +107,7 @@ class GlobalHelper
     end
 
     def picture_address(picture)
-      Rails.env.test? ? '' : "//192.168.1.3.nip.io:8080/x380/#{picture[Feeds::Offers::HASH_BANG_KEY]}"
+      Rails.env.test? ? '' : "//192.168.31.54.nip.io:8080/x380/#{picture[Feeds::Offers::HASH_BANG_KEY]}"
     end
 
     def get_offer(ext_id)

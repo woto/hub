@@ -26,6 +26,10 @@ module Elastic
         new_picker('offers')
       end
 
+      def feed_categories
+        new_picker('feed_categories')
+      end
+
       def post_categories
         new_picker('post_categories')
       end
@@ -57,7 +61,6 @@ module Elastic
       def users
         new_picker('users')
       end
-
 
       def offers_crop(name)
         cropper(name, 'offers')

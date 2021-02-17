@@ -15,4 +15,6 @@ class ExchangeRate < ApplicationRecord
   validates :date, uniqueness: { scope: :currency }
 
   has_many :posts
+
+  validates :value, numericality: { greater_than: 0 }
 end

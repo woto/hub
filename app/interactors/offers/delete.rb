@@ -5,6 +5,11 @@ module Offers
     include ApplicationInteractor
 
     def call
+      unless context.feed
+        Rails.logger.info('There are no feeds to delete')
+        return
+      end
+
       client = Elasticsearch::Client.new Rails.application.config.elastic
       begin
         # Add result logging, which includes removed documents' count

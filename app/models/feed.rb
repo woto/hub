@@ -48,10 +48,11 @@ class Feed < ApplicationRecord
   belongs_to :advertiser
   has_many :feed_categories, dependent: :destroy
   has_many :feed_logs, dependent: :destroy
-  after_save :set_cached_fields
   after_save :log_changes
 
   validates :url, :name, :operation, presence: true
+
+  validates :operation, inclusion: { in: ['manual', 'sync', 'sweep', 'pick job', 'release job', 'downloaded_file_size', 'success'] }
 
   def as_indexed_json(_options = {})
     adv = advertiser.as_json(methods: :type)
@@ -72,6 +73,14 @@ class Feed < ApplicationRecord
     [advertiser.slug, slug].join('+')
   end
 
+  def to_label
+    name
+  end
+
+  def to_long_label
+    "#{advertiser.to_long_label} -> #{name}"
+  end
+
   private
 
   def log_changes
@@ -83,10 +92,5 @@ class Feed < ApplicationRecord
     end
 
     fl.save!
-  end
-
-  def set_cached_fields
-    # TODO: Don't know how to do it better (feed_log now has empty cached fields)
-    update_columns(index_name: slug_with_advertiser)
   end
 end

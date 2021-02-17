@@ -6,7 +6,7 @@ class CreateFeedCategories < ActiveRecord::Migration[6.0]
       t.string :ext_id, null: false
       t.string :ext_parent_id
       t.string :name
-      t.jsonb :data
+      t.text :data
       t.uuid :attempt_uuid, null: false
       t.boolean :parent_not_found
       t.index %i[feed_id ext_id], unique: true

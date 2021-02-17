@@ -28,14 +28,21 @@ class Feeds::Process
 
     loop do
       context = Feeds::PickJob.call
-      Feeds::Download.call(context)
-      Files::StoreFileType.call(context)
-      Files::StoreXmlFilePath.call(context)
-      unless Elastic::IndexExists.call(context).object
-        Elastic::CreateIndex.call(context)
+      if context.failure?
+        sleep 1
+        redo
       end
-      # Elastic::DeleteIndex.call(context)
-      Feeds::Parse.call(context)
+
+      if context.feed.is_active? && context.feed.advertiser.is_active?
+        Feeds::Download.call(context)
+        Files::StoreFileType.call(context)
+        Files::StoreXmlFilePath.call(context)
+        unless Elastic::IndexExists.call(context).object
+          Elastic::CreateIndex.call(context)
+        end
+        # Elastic::DeleteIndex.call(context)
+        Feeds::Parse.call(context)
+      end
     rescue GracefulExitError => e
       context.error = e
       exit

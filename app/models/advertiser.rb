@@ -103,4 +103,8 @@ class Advertiser < ApplicationRecord
   def to_label
     name
   end
+
+  def to_long_label
+    name
+  end
 end

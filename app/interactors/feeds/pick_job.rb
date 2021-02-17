@@ -19,7 +19,7 @@ class Feeds::PickJob
         Rails.logger.info(feed)
       else
         Rails.logger.info('No suitable jobs were found')
-        exit
+        context.fail!
       end
 
       context.feed = feed

@@ -4,7 +4,7 @@ class Feeds::Parse
   include ApplicationInteractor
 
   BULK_THRESHOLD = 1_000
-  OFFERS_LIMIT = 5_000
+  OFFERS_LIMIT = 1_000
 
   def call
     Nokogiri::XML.Reader(File.open(context.feed.xml_file_path)).each do |node|

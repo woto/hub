@@ -8,9 +8,9 @@ ruby '2.7.2'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4'
-gem 'rails', '~> 6.0'
+gem 'rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'webpacker', '~> 4.0'
+gem 'webpacker'
 gem 'jbuilder', '~> 2.7'
 # gem 'turbo-rails', github: 'hotwired/turbo-rails', branch: :main
 gem 'turbo-rails'

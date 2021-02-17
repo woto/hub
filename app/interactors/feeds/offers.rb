@@ -9,6 +9,7 @@ module Feeds
     CATEGORY_ID_KEY = :feed_category_id
     CATEGORY_IDS_KEY = :feed_category_ids
     ATTEMPT_UUID_KEY = :attempt_uuid
+    FAVORITE_IDS_KEY = :favorite_ids
     WRONG_CATEGORY_ERROR = -1
     MULTIPLE_CATEGORY_ERROR = -2
     UNEXPECTED_ATTRIBUTES_KEY = :unexpected_attributes
@@ -55,6 +56,9 @@ module Feeds
       # enrich indexed_at
       enrich_indexed_at
 
+      # enrich favorite_ids
+      enrich_favorite_ids
+
       @offers << @current
     end
 
@@ -69,8 +73,7 @@ module Feeds
           {
             index: {
               _id: "#{offer[SELF_NAME_KEY]['id']}-#{context.feed.id}",
-              data: offer.merge(feed_id: context.feed.id,
-                                advertiser_id: context.feed.advertiser.id)
+              data: offer.merge(feed_id: context.feed.id, advertiser_id: context.feed.advertiser.id)
             }
           }
         end
@@ -128,7 +131,7 @@ module Feeds
         @current[CATEGORY_ID_KEY] = feed_category.id
         @current[CATEGORY_IDS_KEY] = feed_category.path_ids
         feed_category.path_ids.each_with_index.map do |id, idx|
-          @current["category_level_#{idx}"] = id
+          @current["#{CATEGORY_ID_KEY}_#{idx}"] = id
         end
       else
         Rails.logger.warn("Offer categoryId is '#{ext_category_id}' but it was not found in <categories>")
@@ -148,6 +151,14 @@ module Feeds
 
     def enrich_indexed_at
       @current[INDEXED_AT] = Time.current
+    end
+
+    def enrich_favorite_ids
+      @current[FAVORITE_IDS_KEY] = [
+        "advertiser_id:#{context.feed.advertiser.id}",
+        "feed_id:#{context.feed.id}",
+        *@current[CATEGORY_IDS_KEY].map { |feed_category_id| "feed_category_id:#{feed_category_id}" }
+      ]
     end
 
     # .reject { |el| el.blank? }
