@@ -126,7 +126,7 @@ module Feeds
       end
 
       ext_category_id = category_value.first[HASH_BANG_KEY]
-      feed_category = FeedCategory.find_by!(feed_id: context.feed.id, ext_id: ext_category_id)
+      feed_category = FeedCategory.find_by(feed_id: context.feed.id, ext_id: ext_category_id)
       if feed_category
         if feed_category.children?
           feed_category = feed_category
