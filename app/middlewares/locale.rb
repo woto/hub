@@ -11,8 +11,6 @@ class Locale
   end
 
   def call(env)
-    locale_to_restore = I18n.locale
-
     locale = locale_from_domain(env['HTTP_HOST'])
     locale ||= locale_from_path(env['PATH_INFO'])
     locale ||= locale_from_cookie(env['HTTP_COOKIE'])

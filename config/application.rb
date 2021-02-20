@@ -15,6 +15,7 @@ require "action_cable/engine"
 # require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
+require_relative "../app/middlewares/locale"
 # require 'prometheus/middleware/collector'
 
 # Require the gems listed in Gemfile, including any gems
@@ -73,5 +74,7 @@ module Hub
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
+
+    config.middleware.insert_after(Rack::Head, ::Locale)
   end
 end
