@@ -126,8 +126,15 @@ module Feeds
       end
 
       ext_category_id = category_value.first[HASH_BANG_KEY]
-      feed_category = FeedCategory.find_by(feed_id: context.feed.id, ext_id: ext_category_id)
+      feed_category = FeedCategory.find_by!(feed_id: context.feed.id, ext_id: ext_category_id)
       if feed_category
+        if feed_category.children?
+          feed_category = feed_category
+                          .children
+                          .find_or_create_by!(feed_id: context.feed.id, ext_id: "#{ext_category_id}!") do |fc|
+            fc.attempt_uuid = context.feed.attempt_uuid
+          end
+        end
         @current[CATEGORY_ID_KEY] = feed_category.id
         @current[CATEGORY_IDS_KEY] = feed_category.path_ids
         feed_category.path_ids.each_with_index.map do |id, idx|
