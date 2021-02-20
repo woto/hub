@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Feeds page' do
+describe 'Feeds page' do
   context 'when feed is present' do
     it "shows row" do
       feed = create(:feed)

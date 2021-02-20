@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Trix `dirty` feature' do
+describe 'Trix `dirty` feature' do
   let!(:user) { create(:user) }
   let!(:post) { create(:post, user: user) }
   let!(:post_category) { create(:post_category) }

@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Tables::NewsController, browser: :desktop do
   let!(:news1) { create(:post, published_at: Time.zone.parse('2020-02-03 22:00')) }
   let!(:news2) { create(:post, published_at: Time.zone.parse('2020-04-05 00:00')) }
   let!(:news3) { create(:post, published_at: Time.zone.parse('2020-04-07 02:00'), tags: ['tag']) }
   let!(:news4) { create(:post, published_at: Time.zone.parse('2020-04-07 02:01')) }
+describe Tables::NewsController do
 
   let(:params) { {} }
 

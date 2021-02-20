@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Tawk' do
+describe 'Tawk' do
   context "when TAWK_ENABLED == 'true'" do
     before do
       stub_const('ENV', ENV.to_hash.merge('TAWK_ENABLED' => 'true'))

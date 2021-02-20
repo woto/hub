@@ -35,7 +35,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+describe User, type: :model do
   context 'with confirmed email' do
     let(:user) { create(:user) }
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe NewsController, browser: :desktop do
+describe NewsController do
   describe '#show' do
     let!(:news1) { create(:post, published_at: Time.zone.parse('2020-02-03 22:00')) }
     let!(:news2) { create(:post, published_at: Time.zone.parse('2020-04-05 00:00')) }

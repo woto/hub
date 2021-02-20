@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Tables::PostsController do
+describe Tables::PostsController do
 
   context 'when posts are present' do
 

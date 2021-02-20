@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Dashboard' do
+describe 'Dashboard' do
   let!(:user) { create(:user) }
   let!(:exchange_rate) { create(:exchange_rate) }
 

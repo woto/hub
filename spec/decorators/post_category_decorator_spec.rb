@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe PostCategoryDecorator do
+describe PostCategoryDecorator do
 end

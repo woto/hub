@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Offers page' do
+describe 'Offers page' do
 
   context 'with many feeds' do
     let!(:advertiser) { create(:advertisers_admitad) }

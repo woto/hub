@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Users page' do
+describe 'Users page' do
   context 'when user is present' do
     it "shows row" do
       user = create(:user, role: 'admin')

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Header' do
+describe 'Header' do
 
   context 'when user is not authenticated' do
     it 'shows login link for desktop' do

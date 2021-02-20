@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Frames::News::LatestController do
+describe Frames::News::LatestController do
 
 describe '#index' do
 

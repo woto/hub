@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Header::Profile::Authenticated::LogoutComponent, type: :component do
+describe Header::Profile::Authenticated::LogoutComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do

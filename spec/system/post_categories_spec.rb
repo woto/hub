@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'PostCategories' do
+describe 'PostCategories' do
   let!(:post_category) { create(:post_category) }
 
   describe '#index' do

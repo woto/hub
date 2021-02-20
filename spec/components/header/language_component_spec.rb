@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Header::LanguageComponent, type: :component do
+describe Header::LanguageComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do

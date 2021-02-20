@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PostsController do
+describe PostsController do
 
   context 'when posts are present' do
 

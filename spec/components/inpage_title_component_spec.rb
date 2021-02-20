@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe InpageTitleComponent, type: :component do
+describe InpageTitleComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do
