@@ -1,8 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-describe 'hub:admitad:sync' do
+RSpec.describe Import::SyncAdmitadJob, type: :job do
+  subject { described_class.perform_now }
+
   context 'when unable to find token in cache' do
     let(:context) { instance_double(Interactor::Context, failure?: true) }
 
@@ -10,7 +10,7 @@ describe 'hub:admitad:sync' do
       expect(Networks::Admitad::Token::Restore).to receive(:call).and_return(context)
       expect(Networks::Admitad::Token::Retrieve).to receive(:call)
       expect(Networks::Admitad::Sync).to receive(:call)
-      subject.execute
+      subject
     end
   end
 
@@ -21,7 +21,7 @@ describe 'hub:admitad:sync' do
       expect(Networks::Admitad::Token::Restore).to receive(:call).and_return(context)
       expect(Networks::Admitad::Token::Retrieve).not_to receive(:call)
       expect(Networks::Admitad::Sync).to receive(:call)
-      subject.execute
+      subject
     end
   end
 end
