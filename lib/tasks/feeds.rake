@@ -11,10 +11,5 @@ namespace :hub do
     task sweep: :environment do
       Feeds::Sweep.call
     end
-
-    desc 'Download and process feeds'
-    task process: :environment do
-      Feeds::Process.call
-    end
   end
 end

@@ -12,8 +12,4 @@ describe "hub:feeds" do
   describe 'hub:feeds:language' do
     it { expect(Feeds::StoreLanguage).to receive(:call) }
   end
-
-  describe 'hub:feeds:process' do
-    it { expect(Feeds::Process).to receive(:call) }
-  end
 end
