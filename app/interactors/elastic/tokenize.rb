@@ -6,37 +6,20 @@ module Elastic
   class Tokenize
     include ApplicationInteractor
 
+    class Contract < Dry::Validation::Contract
+      params do
+        required(:q).filled(:string)
+      end
+    end
+
+    before do
+      contract = Contract.new.call(context.to_h)
+      raise StandardError, contract.errors.to_h if contract.failure?
+    end
+
     def call
       client = Elasticsearch::Client.new Rails.application.config.elastic
-
-      index_name = 'russian_english_tokenizer'
-      client.indices.delete index: index_name, ignore_unavailable: true
-      client.indices.create index: index_name, body: {
-        settings: {
-          analysis: {
-            filter: {
-              russian_stop: {
-                type: 'stop',
-                stopwords: '_russian_'
-              },
-              english_stop: {
-                type: 'stop',
-                stopwords: '_english_'
-              }
-            },
-            analyzer: {
-              default: {
-                tokenizer: 'standard',
-                filter: %i[
-                  lowercase
-                  russian_stop
-                  english_stop
-                ]
-              }
-            }
-          }
-        }
-      }
+      index_name = Elastic::IndexName.tokenizer
 
       result = client.indices.analyze(
         index: index_name,
