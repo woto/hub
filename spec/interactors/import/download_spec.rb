@@ -13,8 +13,16 @@ describe Import::Download, :cleanup_feeds do
     end
   end
 
-  describe 'update feed with `downloaded_file_size` and `operation`' do
-    it { expect(feed.operation).not_to eq('downloaded_file_size') }
+  describe 'store file' do
+    it { expect(Pathname.new(feed.file.path)).not_to be_file }
+    it 'stores file' do
+      stub_request(:get, 'http://example.com/').to_return(status: 200, body: '123')
+      subject
+      expect(Pathname.new(feed.file.path)).to be_file
+    end
+  end
+
+  describe '#downloaded_file_size' do
     it { expect(feed.downloaded_file_size).not_to eq(3) }
     it 'stores file size and operation type in Feed' do
       stub_request(:get, 'http://example.com/').to_return(status: 200, body: '123')
