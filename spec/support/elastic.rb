@@ -11,6 +11,10 @@
 #   end
 # end
 
+def elastic_client
+  @elastic_client ||= Elasticsearch::Client.new Rails.application.config.elastic
+end
+
 RSpec.configure do |config|
   config.before(:each) do
     elastic_client.indices.delete index: ::Elastic::IndexName.wildcard

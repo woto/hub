@@ -44,8 +44,6 @@ RSpec.configure do |config|
   # # Aruba https://relishapp.com/cucumber/aruba
   # config.include Aruba::Api
 
-  config.include Helpers
-
   # https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html
   config.include ActiveSupport::Testing::TimeHelpers
 
