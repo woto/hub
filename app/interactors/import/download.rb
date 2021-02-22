@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Feeds
+module Import
   class Download
     include ApplicationInteractor
 

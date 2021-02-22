@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Feeds::Download, :cleanup_feeds do
+describe Import::Download, :cleanup_feeds do
   subject { described_class.call(feed: feed) }
 
   let(:feed) { create(:feed, url: 'http://example.com') }
