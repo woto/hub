@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Import
-  class Download
+  class DownloadFeed
     include ApplicationInteractor
 
     def call
