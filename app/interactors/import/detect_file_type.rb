@@ -40,7 +40,7 @@ module Import
         message: 'Error happened while detecting file type',
         feed_id: context.feed.id,
         out: out,
-        error: error
+        err: err
       )
       raise Feeds::Process::DetectFileTypeError, [out, err].reject(&:blank?).join("\r\n")
     end
