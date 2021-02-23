@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 module Elastic
-  class CreateIndex
+  class CreateOffersIndex
     include ApplicationInteractor
 
     def call
-      index_name = Elastic::IndexName.offers
       client = Elasticsearch::Client.new Rails.application.config.elastic
-      client.indices.create index: index_name, body: {
+      client.indices.create index: Elastic::IndexName.offers, body: {
         "settings": {
           "index": {
-              # "refresh_interval": -1,
-              "number_of_shards": 10,
-              "number_of_replicas": 1
+            "refresh_interval": -1,
+            "number_of_shards": 10,
+            "number_of_replicas": 1
           }
 
           # "analysis": {
