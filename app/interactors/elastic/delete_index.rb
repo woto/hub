@@ -19,11 +19,7 @@ module Elastic
     def call
       Rails.logger.info(message: 'Deleting elasticsearch index', index: context.index_name)
       client = Elasticsearch::Client.new Rails.application.config.elastic
-      begin
-        client.indices.delete(index: context.index_name, ignore_unavailable: context.ignore_unavailable)
-      rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
-        Rails.logger.info(message: 'There is no such index', index_name: context.index_name)
-      end
+      client.indices.delete(index: context.index_name, ignore_unavailable: context.ignore_unavailable)
     end
   end
 end

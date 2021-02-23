@@ -61,15 +61,17 @@ module Elastic
         new_picker('users')
       end
 
-      def offers_crop(name)
-        cropper(name, 'offers')
-      end
-
-      private
+      # def offers_crop(name)
+      #   cropper(name, 'offers')
+      # end
 
       def new_picker(name)
         "#{Rails.env}.#{name}"
       end
+
+      private
+
+
 
       def picker(name, suffix)
         "#{name}.#{Rails.env}.#{suffix}"
