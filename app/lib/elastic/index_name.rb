@@ -4,9 +4,8 @@ module Elastic
   class IndexName
     class << self
 
-      # TODO! conceive new mask. It is high probability that this mask will overlap with any unexpected index
       def wildcard
-        "*#{Rails.env}.*"
+        "#{Rails.env}.*"
       end
 
       def crop_environment(index_name)

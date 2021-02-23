@@ -8,7 +8,8 @@ module Elastic
       client = Elasticsearch::Client.new Rails.application.config.elastic
       index_name = Elastic::IndexName.tokenizer
 
-      client.indices.delete index: index_name, ignore_unavailable: true
+      Elastic::DeleteIndex(index_name: index_name, ignore_unavailable: true)
+
       client.indices.create index: index_name, body: {
         settings: {
           analysis: {
