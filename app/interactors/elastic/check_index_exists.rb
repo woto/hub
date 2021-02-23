@@ -7,6 +7,7 @@ module Elastic
     class Contract < Dry::Validation::Contract
       params do
         required(:index_name).filled(:string)
+        optional(:allow_no_indices).maybe(:bool)
       end
     end
 
@@ -18,7 +19,7 @@ module Elastic
     def call
       client = Elasticsearch::Client.new Rails.application.config.elastic
 
-      context.object = client.indices.exists(index: context.index_name)
+      context.object = client.indices.exists(index: context.index_name, allow_no_indices: context.allow_no_indices)
       unless context.object
         Rails.logger.info(message: 'There is no such index', index: context.index_name)
         context.fail!
