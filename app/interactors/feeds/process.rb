@@ -12,6 +12,7 @@ class Feeds::Process
   class DetectFileTypeError < SkipJobError; end
   class TimeoutError < SkipJobError; end
   class UnzipError < SkipJobError; end
+  class UnknownFileType < SkipJobError; end
 
   def call
     # Trap ^C
