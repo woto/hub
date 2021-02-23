@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Preprocess do
+describe Import::Preprocess, :cleanup_feeds do
   subject { described_class.call(params) }
 
   context 'when downloaded_file_type is empty' do

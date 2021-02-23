@@ -43,9 +43,8 @@
 require 'rspec/rails/file_fixture_support.rb'
 
 FactoryBot.define do
-
   factory :feed do
-    operation { 'factory_bot' }
+    operation { 'manual' }
     name { Faker::App.name }
     synced_at { 3.days.ago }
     advertiser
@@ -54,6 +53,16 @@ FactoryBot.define do
 
     trait :with_attempt_uuid do
       attempt_uuid { SecureRandom.uuid }
+    end
+
+    transient do
+      with_downloaded_file { nil }
+    end
+
+    after(:create) do |feed, evaluator|
+      if evaluator.with_downloaded_file
+        FileUtils.cp evaluator.with_downloaded_file, feed.file.path
+      end
     end
   end
 end
