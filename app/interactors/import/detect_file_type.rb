@@ -29,7 +29,7 @@ module Import
           downloaded_file_type: out
         )
 
-        context.feed.update!(operation: 'detect_file_type', downloaded_file_type: out)
+        context.feed.update!(operation: 'detect file type', downloaded_file_type: out)
       end
     end
 

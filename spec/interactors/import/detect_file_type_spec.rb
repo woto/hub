@@ -17,7 +17,7 @@ describe Import::DetectFileType do
     let(:feed) { create(:feed, :with_attempt_uuid, with_downloaded_file: file_fixture('feeds/yml-custom.xml')) }
 
     it 'stores text/xml file type in `downloaded_file_type`' do
-      expect(subject).to have_attributes(feed: have_attributes(operation: 'detect_file_type',
+      expect(subject).to have_attributes(feed: have_attributes(operation: 'detect file type',
                                                                downloaded_file_type: 'text/xml'))
     end
   end
@@ -26,7 +26,7 @@ describe Import::DetectFileType do
     let(:feed) { create(:feed, :with_attempt_uuid, with_downloaded_file: file_fixture('feeds/YML_sample.zip')) }
 
     it 'stores application/zip file type in `downloaded_file_type`' do
-      expect(subject).to have_attributes(feed: have_attributes(operation: 'detect_file_type',
+      expect(subject).to have_attributes(feed: have_attributes(operation: 'detect file type',
                                                                downloaded_file_type: 'application/zip'))
     end
   end

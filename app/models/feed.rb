@@ -53,7 +53,8 @@ class Feed < ApplicationRecord
   validates :url, :name, :operation, presence: true
 
   validates :operation, inclusion: { in: [
-    'manual', 'sync', 'sweep', 'pick job', 'release job', 'download', 'detect_file_type', 'preprocess', 'success'
+    'manual', 'sync', 'sweep', 'pick job', 'release job', 'download', 'detect file type', 'preprocess',
+    'detect language', 'success'
   ] }
 
   def as_indexed_json(_options = {})
