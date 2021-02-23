@@ -18,7 +18,6 @@ module Elastic
     end
 
     def call
-      client = Elasticsearch::Client.new Rails.application.config.elastic
       index_name = Elastic::IndexName.tokenizer
 
       result = client.indices.analyze(

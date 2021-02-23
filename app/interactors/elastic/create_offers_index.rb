@@ -5,7 +5,6 @@ module Elastic
     include ApplicationInteractor
 
     def call
-      client = Elasticsearch::Client.new Rails.application.config.elastic
       client.indices.create index: Elastic::IndexName.offers, body: {
         "settings": {
           "index": {

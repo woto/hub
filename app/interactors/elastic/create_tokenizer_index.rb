@@ -5,7 +5,6 @@ module Elastic
     include ApplicationInteractor
 
     def call
-      client = Elasticsearch::Client.new Rails.application.config.elastic
       index_name = Elastic::IndexName.tokenizer
 
       Elastic::DeleteIndex.call(index_name: index_name, ignore_unavailable: true)

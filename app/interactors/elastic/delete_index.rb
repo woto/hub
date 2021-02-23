@@ -18,7 +18,6 @@ module Elastic
 
     def call
       Rails.logger.info(message: 'Deleting elasticsearch index', index: context.index_name)
-      client = Elasticsearch::Client.new Rails.application.config.elastic
       client.indices.delete(index: context.index_name, ignore_unavailable: context.ignore_unavailable)
     end
   end

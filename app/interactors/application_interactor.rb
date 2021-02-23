@@ -12,6 +12,10 @@ module ApplicationInteractor
       context.fail!(code: code, message: message)
     end
 
+    def client
+      Elasticsearch::Client.new(Rails.application.config.elastic)
+    end
+
     before do
       Rails.logger.info("Starting interactor #{self.class.name}")
     end
