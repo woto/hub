@@ -3,6 +3,8 @@
 module Accounting
   module Actions
     class Post
+      include ApplicationInteractor
+
       class Contract < Dry::Validation::Contract
         params do
           required(:hub).value(type?: Account)
@@ -12,8 +14,6 @@ module Accounting
           optional(:group).value(type?: TransactionGroup)
         end
       end
-
-      include ApplicationInteractor
 
       before do
         contract = Contract.new.call(context.to_h)
