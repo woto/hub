@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Import
-  class StoreFileType
+  class DetectFileType
     include ApplicationInteractor
 
     def call
@@ -29,13 +29,19 @@ module Import
           downloaded_file_type: out
         )
 
-        context.feed.update!(downloaded_file_type: out)
+        context.feed.update!(operation: 'detect_file_type', downloaded_file_type: out)
       end
     end
 
     private
 
     def raise_error(out, err)
+      Rails.logger.info(
+        message: 'Error happened while detecting file type',
+        feed_id: context.feed.id,
+        out: out,
+        error: error
+      )
       raise Feeds::Process::DetectFileTypeError, [out, err].reject(&:blank?).join("\r\n")
     end
   end

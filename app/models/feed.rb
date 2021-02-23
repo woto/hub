@@ -52,7 +52,9 @@ class Feed < ApplicationRecord
 
   validates :url, :name, :operation, presence: true
 
-  validates :operation, inclusion: { in: ['manual', 'sync', 'sweep', 'pick job', 'release job', 'downloaded_file_size', 'success'] }
+  validates :operation, inclusion: { in: [
+    'manual', 'sync', 'sweep', 'pick job', 'release job', 'download', 'detect_file_type', 'preprocess', 'success'
+  ] }
 
   def as_indexed_json(_options = {})
     adv = advertiser.as_json(methods: :type)
