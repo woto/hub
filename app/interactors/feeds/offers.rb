@@ -18,10 +18,6 @@ module Feeds
 
     INDEXED_AT = :indexed_at
 
-    SYSTEM_PREFIX = '2'
-    LANGUAGE_KEY = "#{SYSTEM_PREFIX}language"
-    LANGUAGE_UNKNOWN = { name: 'UNKNOWN', code: 'un', reliable: false }.freeze
-
     def initialize(context)
       @offers = []
       super
@@ -50,8 +46,8 @@ module Feeds
       # append attempt_uuid
       enrich_attempt_uuid
 
-      # enrich language
-      enrich_language
+      # set language in @current
+      Import::Offers::Language.call(@current)
 
       # enrich indexed_at
       enrich_indexed_at
@@ -148,13 +144,6 @@ module Feeds
       end
       # @current[:feed_category_id] = @categories_cache.find_by_ext_id(@current['categoryId'].first[HASH_BABG])
       # @current[:feed_category_path] = @categories.tree(@current[:feed_category_id])
-    end
-
-    def enrich_language
-      @current[LANGUAGE_KEY] = LANGUAGE_UNKNOWN
-      string = @current.values_at('name', 'description')
-                       .flatten.compact.map { |el| el[HASH_BANG_KEY] }.join(' - ')
-      @current[LANGUAGE_KEY] = CLD.detect_language(string)
     end
 
     def enrich_indexed_at
