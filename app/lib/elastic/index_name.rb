@@ -17,6 +17,10 @@ module Elastic
         picker('*', 'offers')
       end
 
+      def tokenizer
+        new_picker('tokenizer')
+      end
+
       def news
         new_picker('news')
       end
