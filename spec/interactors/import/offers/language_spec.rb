@@ -11,7 +11,7 @@ describe Import::Offers::Language do
     it 'modifies params with detected language' do
       subject
       expect(params).to include(Import::Offers::Language::LANGUAGE_KEY =>
-                                  { name: 'RUSSIAN', code: 'ru', reliable: true })
+                                  { 'name' => 'RUSSIAN', 'code' => 'ru', 'reliable' => true })
     end
   end
 
@@ -21,7 +21,17 @@ describe Import::Offers::Language do
     it 'modifies params with detected language' do
       subject
       expect(params).to include(Import::Offers::Language::LANGUAGE_KEY =>
-                                  { name: 'ENGLISH', code: 'en', reliable: true })
+                                  { 'name' => 'ENGLISH', 'code' => 'en', 'reliable' => true })
+    end
+  end
+
+  context 'when name and description are empty' do
+    let(:params) { { 'description' => [Feeds::Offers::HASH_BANG_KEY => ''] } }
+
+    it 'detects unknown langugage and stores results in params' do
+      subject
+      expect(params).to include(Import::Offers::Language::LANGUAGE_KEY =>
+                                  { 'name' => 'Unknown', 'code' => 'un', 'reliable' => true })
     end
   end
 end
