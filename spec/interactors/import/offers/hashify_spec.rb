@@ -25,18 +25,18 @@ describe Import::Offers::Hashify do
     it 'works' do
       expect(subject).to eq(
         {
-          Import::Offers::SELF_NAME_KEY => {
+          Import::Offers::Hashify::SELF_NAME_KEY => {
             'attribute1' => '123',
             'attribute2' => 'abc'
           },
-          'categoryId' => [{ Import::Offers::HASH_BANG_KEY => 'category 1' }],
+          'categoryId' => [{ Import::Offers::Hashify::HASH_BANG_KEY => 'category 1' }],
           'description' => [{ '#' => '<p>Description</p>' }],
           'param' => [
             {
-              Import::Offers::HASH_BANG_KEY => 'white',
+              Import::Offers::Hashify::HASH_BANG_KEY => 'white',
               '@name' => 'color'
             },
-            { Import::Offers::HASH_BANG_KEY => 'male',
+            { Import::Offers::Hashify::HASH_BANG_KEY => 'male',
               '@name' => 'sex' }
           ],
           'picture' => [

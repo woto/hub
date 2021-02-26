@@ -2,14 +2,12 @@
 
 module Import
   module Offers
-    HASH_BANG_KEY = '#'
-    SELF_NAME_KEY = '*'
-    SKIPPED_TAGS = ['delivery-options'].freeze
-
     class Hashify
+      HASH_BANG_KEY = '#'
+      SELF_NAME_KEY = '*'
+      SKIPPED_TAGS = ['delivery-options'].freeze
+
       def self.call(doc)
-        # TODO: Make special class? It could be hard to understand
-        # in other tests that offer hash has default settings.
         offer = Hash.new { |hash, key| hash[key] = [] }
         offer[SELF_NAME_KEY] = doc.to_h
 
@@ -19,6 +17,9 @@ module Import
 
           offer[child.name] << hashify(child)
         end
+
+        # Do not need default proc further
+        offer.default_proc = nil
         offer
       end
 
