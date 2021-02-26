@@ -43,11 +43,11 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 plugin :tmp_restart
 
 if ENV.fetch('SSL_DEBUG') == 'true'
-    ssl_bind 'localhost', '443',
-             key: '/etc/letsencrypt/live/nv6.ru/privkey.pem',
-             cert: '/etc/letsencrypt/live/nv6.ru/fullchain.pem'
-  end
-  
-  activate_control_app
-  plugin :yabeda_prometheus
-    
+  ssl_bind 'localhost', '443',
+           key: '/etc/letsencrypt/live/nv6.ru/privkey.pem',
+           cert: '/etc/letsencrypt/live/nv6.ru/fullchain.pem'
+end
+
+activate_control_app
+plugin :yabeda
+plugin :yabeda_prometheus
