@@ -17,40 +17,44 @@ describe Feeds::Offers do
       %(
       <offer id="12346">
         <categoryId>category 1</categoryId>
-        <description>Отличный подарок для любителей венских вафель.</description></root>
+        <description>Отличный подарок для любителей венских вафель.</description>
       </offer>
       )
     end
 
     describe '#append' do
       it 'calls Import::Offers::Hashify with correct argument' do
-        expect(Import::Offers::Hashify).to receive(:call).with({}, doc)
+        expect(Import::Offers::Hashify).to receive(:call).with(
+          doc
+        ).and_call_original
         subject.append(doc)
       end
 
       it 'calls Import::Offers::Category with correct argument' do
         expect(Import::Offers::Category).to receive(:call).with(
           include('categoryId' => [include('#' => 'category 1')]), feed, feed.feed_categories_for_import
-        )
+        ).and_call_original
         subject.append(doc)
       end
 
       it 'calls Import::Offers::StandardAttributes with correct argument' do
-        expect(Import::Offers::StandardAttributes).to receive(:call).with(instance_of(Hash), feed)
+        expect(Import::Offers::StandardAttributes).to receive(:call).with(
+          instance_of(Hash), feed)
+        .and_call_original
         subject.append(doc)
       end
 
       it 'calls Import::Offers::Language with correct argument' do
         expect(Import::Offers::Language).to receive(:call).with(
           include('description' => [include('#' => include('Отличный подарок для любителей венских вафель.'))])
-        )
+        ).and_call_original
         subject.append(doc)
       end
 
       it 'calls Import::Offers::FavoriteIds with correct arguments' do
         expect(Import::Offers::FavoriteIds).to receive(:call).with(
           include('feed_category_ids' => [feed_category.id]), advertiser, feed
-        )
+        ).and_call_original
         subject.append(doc)
       end
 
@@ -70,9 +74,6 @@ describe Feeds::Offers do
             [
               '*' => { 'id' => '12346' },
               'attempt_uuid' => nil,
-              'categoryId' => [
-                { '#' => feed_category.ext_id }
-              ],
               'description' => [
                 { '#' => 'Отличный подарок для любителей венских вафель.' }
               ],
@@ -85,8 +86,7 @@ describe Feeds::Offers do
               'feed_category_id' => feed_category.id,
               'feed_category_id_0' => feed_category.id,
               'feed_category_ids' => [feed_category.id],
-              'indexed_at' => Time.current,
-              'name' => []
+              'indexed_at' => Time.current
             ]
           )
         end
@@ -99,7 +99,7 @@ describe Feeds::Offers do
         offers = subject.append(doc)
         expect(Import::Offers::Flush).to receive(:call).with(
           offers, advertiser, feed, instance_of(Elasticsearch::Transport::Client)
-        )
+        ).and_call_original
         subject.flush
       end
 

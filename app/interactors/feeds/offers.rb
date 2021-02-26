@@ -13,8 +13,8 @@ module Feeds
       super
     end
 
-    def append(doc, offer = Hash.new { |hash, key| hash[key] = [] })
-      Import::Offers::Hashify.call(offer, doc)
+    def append(doc)
+      offer = Import::Offers::Hashify.call(doc)
       Import::Offers::Category.call(offer, context.feed, @categories)
       Import::Offers::StandardAttributes.call(offer, context.feed)
       Import::Offers::Language.call(offer)
