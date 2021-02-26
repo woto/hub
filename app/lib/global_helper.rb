@@ -107,7 +107,7 @@ class GlobalHelper
     end
 
     def picture_address(picture)
-      Rails.env.test? ? '' : "//192.168.31.54.nip.io:8080/x380/#{picture[Feeds::Offers::HASH_BANG_KEY]}"
+      Rails.env.test? ? '' : "//192.168.31.80.nip.io:8080/x380/#{picture[Import::Offers::Hashify::HASH_BANG_KEY]}"
     end
 
     def get_offer(ext_id)
