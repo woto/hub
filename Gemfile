@@ -77,6 +77,7 @@ gem 'yabeda-rails'
 gem 'yabeda-prometheus'
 gem 'yabeda-sidekiq'
 gem 'yabeda-puma-plugin'
+gem 'yabeda-http_requests'
 
 # XML processing
 gem 'nokogiri'
