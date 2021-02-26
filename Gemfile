@@ -16,11 +16,14 @@ gem 'jbuilder', '~> 2.7'
 gem 'turbo-rails'
 # gem "stimulus-rails"
 
+# Active Record audit
+gem 'logidze'
+
 group :development, :test do
   # Debug
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'pry'
-  gem 'pry-byebug'
+  # gem 'pry'
+  # gem 'pry-byebug'
 
   # Audit
   # Bullet does not support active_record 6.1.0 yet
@@ -113,6 +116,7 @@ gem 'mobility', github: 'shioyama/mobility'
 # Sidekiq
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
+# gem 'sidekiq-failures'
 
 # Views
 gem 'kaminari'
