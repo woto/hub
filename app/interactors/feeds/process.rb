@@ -26,7 +26,7 @@ class Feeds::Process
     error = e
   ensure
     Offers::Delete.call(feed: feed, error: error)
-    Feeds::ReleaseJob.call(feed: feed, error: error)
+    Import::ReleaseFeed.call(feed: feed, error: error)
     Elastic::RefreshOffersIndex.call
     Import::AggregateLanguage.call(feed: feed)
   end
