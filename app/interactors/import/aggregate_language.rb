@@ -7,7 +7,7 @@ module Import
     class Contract < Dry::Validation::Contract
       params do
         config.validate_keys = true
-        required(:feed).value(type?: Feed)
+        required(:feed).maybe(type?: Feed)
       end
     end
 
@@ -17,6 +17,8 @@ module Import
     end
 
     def call
+      return unless context.feed
+
       query = AggregateLanguageQuery.call(feed: context.feed).object
       result = client.search(query)
       language = result['aggregations']['group']['buckets'].dig(0, 'key')

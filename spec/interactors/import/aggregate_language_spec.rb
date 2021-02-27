@@ -24,6 +24,15 @@ describe Import::AggregateLanguage do
     end
   end
 
+  context 'with nil feed param' do
+    let(:params) { { feed: nil } }
+
+    it 'does not raise error' do
+      expect(AggregateLanguageQuery).not_to receive(:call)
+      expect { subject }.not_to raise_error
+    end
+  end
+
   context 'with missed feed param' do
     let(:params) { {} }
 
