@@ -16,7 +16,7 @@ describe Import::AggregateLanguage do
       create(:offer, feed_id: feed.id, Import::Offers::DetectLanguage::LANGUAGE_KEY => { name: 'ENGLISH' })
     end
 
-    it 'calls AggregateLanguageQuery.call' do
+    it 'calls AggregateLanguageQuery.call and sets feed language' do
       expect(feed).to have_attributes(language: nil)
       expect(AggregateLanguageQuery).to receive(:call).and_call_original
       subject
