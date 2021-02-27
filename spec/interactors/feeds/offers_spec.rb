@@ -44,8 +44,8 @@ describe Feeds::Offers do
         subject.append(doc)
       end
 
-      it 'calls Import::Offers::Language with correct argument' do
-        expect(Import::Offers::Language).to receive(:call).with(
+      it 'calls Import::Offers::DetectLanguage with correct argument' do
+        expect(Import::Offers::DetectLanguage).to receive(:call).with(
           include('description' => [include('#' => include('Отличный подарок для любителей венских вафель.'))])
         ).and_call_original
         subject.append(doc)

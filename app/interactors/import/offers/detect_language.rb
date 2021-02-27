@@ -2,7 +2,7 @@
 
 module Import
   module Offers
-    class Language
+    class DetectLanguage
       LANGUAGE_KEY = 'detected_language'
 
       def self.call(offer)

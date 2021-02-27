@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Offers::Language do
+describe Import::Offers::DetectLanguage do
   subject { described_class.call(offer) }
 
   context 'when description includes russian language' do
@@ -10,7 +10,7 @@ describe Import::Offers::Language do
 
     it 'modifies offer with detected language' do
       subject
-      expect(offer).to include(Import::Offers::Language::LANGUAGE_KEY =>
+      expect(offer).to include(Import::Offers::DetectLanguage::LANGUAGE_KEY =>
                                   { 'name' => 'RUSSIAN', 'code' => 'ru', 'reliable' => true })
     end
   end
@@ -20,7 +20,7 @@ describe Import::Offers::Language do
 
     it 'modifies offer with detected language' do
       subject
-      expect(offer).to include(Import::Offers::Language::LANGUAGE_KEY =>
+      expect(offer).to include(Import::Offers::DetectLanguage::LANGUAGE_KEY =>
                                   { 'name' => 'ENGLISH', 'code' => 'en', 'reliable' => true })
     end
   end
@@ -30,7 +30,7 @@ describe Import::Offers::Language do
 
     it 'detects unknown langugage and stores results in offer' do
       subject
-      expect(offer).to include(Import::Offers::Language::LANGUAGE_KEY =>
+      expect(offer).to include(Import::Offers::DetectLanguage::LANGUAGE_KEY =>
                                   { 'name' => 'Unknown', 'code' => 'un', 'reliable' => true })
     end
   end

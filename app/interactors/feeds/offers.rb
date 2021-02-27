@@ -17,7 +17,7 @@ module Feeds
       offer = Import::Offers::Hashify.call(doc)
       Import::Offers::Category.call(offer, context.feed, @categories)
       Import::Offers::StandardAttributes.call(offer, context.feed)
-      Import::Offers::Language.call(offer)
+      Import::Offers::DetectLanguage.call(offer)
       Import::Offers::FavoriteIds.call(offer, context.feed.advertiser, context.feed)
       @batch_count += 1
       @total_count += 1

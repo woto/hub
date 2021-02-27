@@ -11,9 +11,9 @@ describe Import::AggregateLanguage do
     let(:params) { { feed: feed } }
 
     before do
-      create(:offer, feed_id: feed.id, Import::Offers::Language::LANGUAGE_KEY => { name: 'RUSSIAN' })
-      create(:offer, feed_id: feed.id, Import::Offers::Language::LANGUAGE_KEY => { name: 'RUSSIAN' })
-      create(:offer, feed_id: feed.id, Import::Offers::Language::LANGUAGE_KEY => { name: 'ENGLISH' })
+      create(:offer, feed_id: feed.id, Import::Offers::DetectLanguage::LANGUAGE_KEY => { name: 'RUSSIAN' })
+      create(:offer, feed_id: feed.id, Import::Offers::DetectLanguage::LANGUAGE_KEY => { name: 'RUSSIAN' })
+      create(:offer, feed_id: feed.id, Import::Offers::DetectLanguage::LANGUAGE_KEY => { name: 'ENGLISH' })
     end
 
     it 'calls AggregateLanguageQuery.call' do

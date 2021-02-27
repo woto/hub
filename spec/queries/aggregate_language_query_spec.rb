@@ -24,7 +24,7 @@ describe AggregateLanguageQuery do
             "aggs": {
               "group": {
                 "terms": {
-                  "field": "#{Import::Offers::Language::LANGUAGE_KEY}.name.keyword",
+                  "field": "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.name.keyword",
                   "size": 1
                 }
               }
