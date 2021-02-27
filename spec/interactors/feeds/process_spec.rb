@@ -21,7 +21,7 @@ describe Feeds::Process do
       expect(Import::Preprocess).to receive(:call).with(feed: feed)
       expect(Feeds::Parse).to receive(:call).with(feed: feed)
       expect(Offers::Delete).to receive(:call).with(feed: feed, error: nil)
-      expect(Feeds::ReleaseJob).to receive(:call).with(feed: feed, error: nil)
+      expect(Import::ReleaseFeed).to receive(:call).with(feed: feed, error: nil)
       expect(Elastic::RefreshOffersIndex).to receive(:call).with(no_args)
       expect(Import::AggregateLanguage).to receive(:call).with(feed: feed)
       subject
