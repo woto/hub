@@ -27,7 +27,7 @@ module Import
           Rails.logger.info(message: 'Downloading complete',
                             feed_id: context.feed.id,
                             downloaded_file_size: file_size)
-          context.feed.update!(operation: 'downloaded_file_size', downloaded_file_size: file_size)
+          context.feed.update!(operation: 'download', downloaded_file_size: file_size)
 
         rescue Net::HTTPServerException => e
           raise Feeds::Process::HTTPServerException, e

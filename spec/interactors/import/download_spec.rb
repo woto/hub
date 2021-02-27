@@ -36,7 +36,7 @@ describe Import::DownloadFeed, :cleanup_feeds do
     it 'stores operation type in feed' do
       stub_request(:get, 'http://example.com/').to_return(status: 200, body: '123')
       subject
-      expect(feed.operation).to eq('downloaded_file_size')
+      expect(feed.operation).to eq('download')
     end
   end
 
