@@ -24,7 +24,10 @@ describe Import::Offers::Category do
 
     it_behaves_like 'hash categories error values'
 
-    it 'sends error metrics' do
+    it 'sends error metrics and logs' do
+      expect(Rails).to receive_message_chain('logger.warn').with(
+        { feed_id: feed.id, message: 'There is no categoryId key', object: nil }
+      )
       expect(Yabeda).to receive_message_chain('hub.import.increment')
         .with({ feed_id: feed.id, message: 'There is no categoryId key' }, { by: 1 })
       subject
@@ -35,13 +38,17 @@ describe Import::Offers::Category do
     let(:offer) do
       { 'categoryId' => [
         { Import::Offers::Hashify::HASH_BANG_KEY => 1 },
-        { Import::Offers::Hashify::HASH_BANG_KEY => 1 }
+        { Import::Offers::Hashify::HASH_BANG_KEY => 'a' }
       ] }
     end
 
     it_behaves_like 'hash categories error values'
 
-    it 'sends error metrics' do
+    it 'sends error metrics and logs' do
+      expect(Rails).to receive_message_chain('logger.warn').with(
+        { feed_id: feed.id, message: 'There are more than one values for categoryId key',
+          object: { categoryId: [{ '#' => 1 }, { '#' => 'a' }] } }
+      )
       expect(Yabeda).to receive_message_chain('hub.import.increment')
         .with({ feed_id: feed.id, message: 'There are more than one values for categoryId key' }, { by: 1 })
       subject
@@ -53,9 +60,18 @@ describe Import::Offers::Category do
     let(:ext_id) { Faker::Lorem.word }
 
     context 'when there are no corresponding value in categories' do
-      it 'raises error and means that previous workflow includes error' do
-        expect { subject }.to raise_error(StandardError, 'FeedCategory must have been found')
+      it 'sends error metrics and logs' do
+        expect(Rails).to receive_message_chain('logger.warn').with(
+          { feed_id: feed.id, message: 'FeedCategory was not found',
+            object: { categoryId: ext_id } }
+        )
+        expect(Yabeda).to receive_message_chain('hub.import.increment')
+          .with({ feed_id: feed.id, message: 'FeedCategory was not found' }, { by: 1 })
+        subject
+        expect { subject }.not_to raise_error
       end
+
+      it_behaves_like 'hash categories error values'
     end
 
     context 'when there are corresponding leaf category' do
