@@ -22,6 +22,8 @@ class GlobalHelper
     def create_elastic_indexes
       client = Elasticsearch::Client.new Rails.application.config.elastic
 
+      Elastic::CreateOffersIndex.call
+
       User.setup_index(Columns::UserForm)
       create_index(client, User)
 
