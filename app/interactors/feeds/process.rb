@@ -3,56 +3,31 @@
 class Feeds::Process
   include ApplicationInteractor
 
-  class GracefulExitError < StandardError; end
   class SkipJobError < StandardError; end
   class OffersLimitError < SkipJobError; end
   class ElasticResponseError < SkipJobError; end
   class ElasticUnexpectedNestingError < SkipJobError; end
-  class FeedDisabledError < SkipJobError; end
+  class HTTPServerException < SkipJobError; end
+  class ReadTimeout < SkipJobError; end
   class DetectFileTypeError < SkipJobError; end
-  class TimeoutError < SkipJobError; end
   class UnzipError < SkipJobError; end
   class UnknownFileType < SkipJobError; end
 
   def call
-    # Trap ^C
-    Signal.trap('INT') do
-      puts 'Please wait while gracefully exiting'
-      raise GracefulExitError
-    end
+    result = Feeds::PickJob.call(feed: context.feed)
+    return if result.failure?
 
-    # Trap `Kill`
-    Signal.trap('TERM') do
-      puts 'Please wait while gracefully exiting'
-      raise GracefulExitError
-    end
-
-    loop do
-      context = Feeds::PickJob.call
-      if context.failure?
-        sleep 1
-        redo
-      end
-
-      if context.feed.is_active? && context.feed.advertiser.is_active?
-        Feeds::Download.call(context)
-        Files::StoreFileType.call(context)
-        Files::StoreXmlFilePath.call(context)
-        unless Elastic::IndexExists.call(context).object
-          Elastic::CreateIndex.call(context)
-        end
-        # Elastic::DeleteIndex.call(context)
-        Feeds::Parse.call(context)
-      end
-    rescue GracefulExitError => e
-      context.error = e
-      exit
-    rescue SkipJobError => e
-      context.error = e
-      # nil
-    ensure
-      Offers::Delete.call(context)
-      Feeds::ReleaseJob.call(context)
-    end
+    feed = result.object
+    Import::DownloadFeed.call(feed: feed)
+    Import::DetectFileType.call(feed: feed)
+    Import::Preprocess.call(feed: feed)
+    Feeds::Parse.call(feed: feed)
+  rescue SkipJobError => e
+    error = e
+  ensure
+    Offers::Delete.call(feed: feed, error: error)
+    Feeds::ReleaseJob.call(feed: feed, error: error)
+    Elastic::RefreshOffersIndex.call
+    Import::AggregateLanguage.call(feed: feed)
   end
 end
