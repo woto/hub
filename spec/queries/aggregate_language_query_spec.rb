@@ -17,7 +17,7 @@ describe AggregateLanguageQuery do
             "query": {
               "term": {
                 "feed_id": {
-                  "value": 1
+                  "value": feed.id
                 }
               }
             },
