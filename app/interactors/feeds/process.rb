@@ -14,7 +14,7 @@ class Feeds::Process
   class UnknownFileType < SkipJobError; end
 
   def call
-    result = Feeds::PickJob.call(feed: context.feed)
+    result = Import::LockFeed.call(feed: context.feed)
     return if result.failure?
 
     feed = result.object
@@ -25,7 +25,7 @@ class Feeds::Process
   rescue SkipJobError => e
     error = e
   ensure
-    Offers::Delete.call(feed: feed, error: error)
+    Import::DeleteOldOffers.call(feed: feed, error: error)
     Import::ReleaseFeed.call(feed: feed, error: error)
     Elastic::RefreshOffersIndex.call
     Import::AggregateLanguage.call(feed: feed)
