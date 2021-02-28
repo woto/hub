@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Feeds::Process
+class Import::Process
   include ApplicationInteractor
 
   class SkipJobError < StandardError; end

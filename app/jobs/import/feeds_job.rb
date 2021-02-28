@@ -1,7 +1,7 @@
 class Import::FeedsJob < ApplicationJob
-  queue_as :default
+  queue_as :low
 
-  def perform(*args)
-    Feeds::Process.call
+  def perform(feed = nil)
+    Import::Process.call(feed: feed)
   end
 end

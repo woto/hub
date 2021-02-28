@@ -42,7 +42,7 @@ module Import
         out: out,
         err: err
       )
-      raise Feeds::Process::DetectFileTypeError, [out, err].reject(&:blank?).join("\r\n")
+      raise Import::Process::DetectFileTypeError, [out, err].reject(&:blank?).join("\r\n")
     end
   end
 end

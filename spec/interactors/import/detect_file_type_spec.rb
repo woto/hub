@@ -9,7 +9,7 @@ describe Import::DetectFileType do
     let(:feed) { create(:feed, :with_attempt_uuid) }
 
     it 'raises error' do
-      expect { subject }.to raise_error(Feeds::Process::DetectFileTypeError, /cannot open/)
+      expect { subject }.to raise_error(Import::Process::DetectFileTypeError, /cannot open/)
     end
   end
 

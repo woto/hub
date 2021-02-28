@@ -50,16 +50,16 @@ describe Import::DownloadFeed, :cleanup_feeds do
   end
 
   context 'when got Net::HTTPServerException' do
-    it 'raises Feeds::Process::HTTPServerException' do
+    it 'raises Import::Process::HTTPServerException' do
       stub_request(:get, 'http://example.com').to_raise(Net::HTTPServerException.new('', :net_http_not_found))
-      expect { subject }.to raise_error(Feeds::Process::HTTPServerException)
+      expect { subject }.to raise_error(Import::Process::HTTPServerException)
     end
   end
 
   context 'when got Net::ReadTimeout' do
-    it 'raises Feeds::Process::ReadTimeout' do
+    it 'raises Import::Process::ReadTimeout' do
       stub_request(:get, 'http://example.com').to_raise(Net::ReadTimeout)
-      expect { subject }.to raise_error(Feeds::Process::ReadTimeout)
+      expect { subject }.to raise_error(Import::Process::ReadTimeout)
     end
   end
 end

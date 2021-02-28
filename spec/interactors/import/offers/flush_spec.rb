@@ -39,7 +39,7 @@ describe Import::Offers::Flush do
       expect do
         expect(client).to receive(:bulk).and_return('errors' => true)
         subject
-      end.to raise_error Feeds::Process::ElasticResponseError
+      end.to raise_error Import::Process::ElasticResponseError
     end
   end
 end

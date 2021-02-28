@@ -26,10 +26,10 @@ module Import
       def self.hashify(child)
         hsh = GlobalHelper.hashify(child)
 
-        raise Feeds::Process::ElasticUnexpectedNestingError, child.to_s unless child.elements.empty?
+        raise Import::Process::ElasticUnexpectedNestingError, child.to_s unless child.elements.empty?
 
         # TODO: May be should use simple format? What about XSS?
-        raise Feeds::Process::ElasticUnexpectedNestingError, child.to_s if child.children.reject(&:text?).size > 1
+        raise Import::Process::ElasticUnexpectedNestingError, child.to_s if child.children.reject(&:text?).size > 1
 
         hsh
       end

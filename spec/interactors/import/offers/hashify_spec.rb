@@ -60,7 +60,7 @@ describe Import::Offers::Hashify do
     end
 
     it 'does not able to process tags like this for now' do
-      expect { subject }.to raise_error(Feeds::Process::ElasticUnexpectedNestingError)
+      expect { subject }.to raise_error(Import::Process::ElasticUnexpectedNestingError)
     end
   end
 

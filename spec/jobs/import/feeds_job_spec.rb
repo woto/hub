@@ -5,7 +5,7 @@ RSpec.describe Import::FeedsJob, type: :job do
   subject { described_class.perform_now }
 
   specify do
-    expect(Feeds::Process).to receive(:call)
+    expect(Import::Process).to receive(:call)
     subject
   end
 end

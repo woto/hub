@@ -5,7 +5,7 @@ module Import
     include ApplicationInteractor
 
     def call
-      raise Feeds::Process::UnknownFileType if context.feed.downloaded_file_type.blank?
+      raise Import::Process::UnknownFileType if context.feed.downloaded_file_type.blank?
 
       if context.feed.file.zip?
 
@@ -48,7 +48,7 @@ module Import
             files: files
           )
 
-          raise Feeds::Process::UnzipError, 'Wrong number of unpacked files'
+          raise Import::Process::UnzipError, 'Wrong number of unpacked files'
         end
 
         xml_file_path = files.first
@@ -74,7 +74,7 @@ module Import
         out: out,
         err: err
       )
-      raise Feeds::Process::UnzipError, [out, err].reject(&:blank?).join("\r\n")
+      raise Import::Process::UnzipError, [out, err].reject(&:blank?).join("\r\n")
     end
   end
 end

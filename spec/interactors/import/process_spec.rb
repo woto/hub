@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Feeds::Process do
+describe Import::Process do
   subject { described_class.call(params) }
 
   describe 'simple success flow' do

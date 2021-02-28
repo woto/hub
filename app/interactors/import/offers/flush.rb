@@ -22,7 +22,7 @@ module Import
           end
         )
 
-        raise Feeds::Process::ElasticResponseError, res['errors'] if res['errors']
+        raise Import::Process::ElasticResponseError, res['errors'] if res['errors']
       end
     end
   end

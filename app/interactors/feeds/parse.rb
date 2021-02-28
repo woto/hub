@@ -60,7 +60,7 @@ class Feeds::Parse
 
     if @offers_counter == OFFERS_LIMIT
       finish_processing
-      raise Feeds::Process::OffersLimitError
+      raise Import::Process::OffersLimitError
     end
   end
 

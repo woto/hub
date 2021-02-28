@@ -30,9 +30,9 @@ module Import
           context.feed.update!(operation: 'download', downloaded_file_size: file_size)
 
         rescue Net::HTTPServerException => e
-          raise Feeds::Process::HTTPServerException, e
+          raise Import::Process::HTTPServerException, e
         rescue Net::ReadTimeout => e
-          raise Feeds::Process::ReadTimeout, e
+          raise Import::Process::ReadTimeout, e
         end
       end
     end

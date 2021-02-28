@@ -10,7 +10,7 @@ describe Import::Preprocess, :cleanup_feeds do
     let(:params) { { feed: feed } }
 
     it 'raises error' do
-      expect { subject }.to raise_error(Feeds::Process::UnknownFileType)
+      expect { subject }.to raise_error(Import::Process::UnknownFileType)
     end
   end
 
@@ -58,7 +58,7 @@ describe Import::Preprocess, :cleanup_feeds do
     let(:params) { { feed: feed } }
 
     it 'fails with "End-of-central-directory signature not found" error' do
-      expect { subject }.to raise_error(Feeds::Process::UnzipError, /End-of-central-directory signature not found/)
+      expect { subject }.to raise_error(Import::Process::UnzipError, /End-of-central-directory signature not found/)
     end
   end
 
@@ -70,7 +70,7 @@ describe Import::Preprocess, :cleanup_feeds do
     let(:params) { { feed: feed } }
 
     it 'fails with "Wrong number of unpacked files" error' do
-      expect { subject }.to raise_error(Feeds::Process::UnzipError, 'Wrong number of unpacked files')
+      expect { subject }.to raise_error(Import::Process::UnzipError, 'Wrong number of unpacked files')
     end
   end
 end
