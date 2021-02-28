@@ -16,17 +16,17 @@ describe DeleteOldOffersQuery do
           bool: {
             must_not: {
               term: {
-                'attempt_uuid.keyword' => feed.attempt_uuid
+                'attempt_uuid.keyword': feed.attempt_uuid
               }
             },
             filter: {
               term: {
-                'feed_id' => feed.id
+                feed_id: feed.id
               }
             }
           }
         }
-      }.to_json
+      }
     )
   end
 end

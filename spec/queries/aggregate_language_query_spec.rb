@@ -10,7 +10,7 @@ describe AggregateLanguageQuery do
   context 'when params are valid' do
     let(:params) { { feed: feed } }
 
-    it 'works' do
+    it 'builds correct query' do
       expect(subject).to have_attributes(
         object: {
           body: {
@@ -29,7 +29,7 @@ describe AggregateLanguageQuery do
                 }
               }
             }
-          }.to_json,
+          },
           index: Elastic::IndexName.offers,
           routing: feed.id,
           size: 0
@@ -41,7 +41,7 @@ describe AggregateLanguageQuery do
   context 'when params are invalid' do
     let(:params) { {} }
 
-    it 'works' do
+    it 'raises error' do
       expect { subject }.to raise_error
     end
   end

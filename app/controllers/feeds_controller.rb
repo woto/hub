@@ -21,9 +21,14 @@ class FeedsController < ApplicationController
   end
 
   def count
+    raise 'does not work'
     client = Elasticsearch::Client.new Rails.application.config.elastic
-    index_name = Elastic::IndexName.offers(params[:id])
-    render json: client.count(index: index_name)
+    json = client.count(
+      FeedOffersCountQuery.call(
+        feed_id: params[:id]
+      ).object
+    )
+    render json: json
   end
 
   def prioritize

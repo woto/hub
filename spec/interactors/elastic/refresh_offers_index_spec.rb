@@ -9,8 +9,8 @@ describe Elastic::RefreshOffersIndex do
   let(:offer) { create(:offer, feed_id: feed.id, refresh: false) }
 
   context 'without Elastic::RefreshOffersIndex.call' do
-    # because index offers refresh_interval setting is -1
-    # because factory creates without force_refresh
+    # does not change because index offers refresh_interval setting is -1
+    # and because factory creates without force_refresh
     it 'does not change offers count' do
       expect do
         offer

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AggregateLanguageQuery
   include ApplicationInteractor
 
@@ -14,7 +16,7 @@ class AggregateLanguageQuery
   end
 
   def call
-    body = Jbuilder.encode do |json|
+    body = Jbuilder.new do |json|
       json.query do
         json.term do
           json.feed_id do
@@ -33,11 +35,11 @@ class AggregateLanguageQuery
       end
     end
 
-    context.object = {}.tap do |h|
-      h[:body] = body
-      h[:index] = ::Elastic::IndexName.offers
-      h[:size] = 0
-      h[:routing] = context.feed.id
-    end
+    context.object = {
+      body: body.attributes!.deep_symbolize_keys,
+      index: Elastic::IndexName.offers,
+      size: 0,
+      routing: context.feed.id
+    }
   end
 end

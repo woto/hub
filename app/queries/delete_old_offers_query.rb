@@ -14,7 +14,7 @@ class DeleteOldOffersQuery
   end
 
   def call
-    body = Jbuilder.encode do |json|
+    body = Jbuilder.new do |json|
       json.query do
         json.bool do
           json.must_not do
@@ -34,7 +34,7 @@ class DeleteOldOffersQuery
     context.object = {
       index: Elastic::IndexName.offers,
       routing: context.feed.id,
-      body: body
+      body: body.attributes!.deep_symbolize_keys
     }
   end
 end
