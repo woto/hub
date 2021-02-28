@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: favorites_items
@@ -19,6 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe FavoritesItem, type: :model do
+describe FavoritesItem, type: :model do
+  # it_behaves_like 'elasticable'
   pending "add some examples to (or delete) #{__FILE__}"
 end

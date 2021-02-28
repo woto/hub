@@ -83,6 +83,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Advertisers::Admitad, type: :model do
+describe Advertisers::Admitad, type: :model do
+  it_behaves_like 'elasticable'
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: checks
@@ -22,5 +24,6 @@
 require 'rails_helper'
 
 describe Check, type: :model do
+  it_behaves_like 'elasticable'
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -8,14 +8,22 @@ module Elasticable
     # include Elasticsearch::Model::Callbacks
 
     after_commit lambda {
-      __elasticsearch__.index_document
-      self.class.__elasticsearch__.refresh_index!
-    }, on: [:create, :update]
+      send_document_to_elasticsearch if saved_changes?
+    }, on: %i[create update]
 
     after_commit lambda {
+      remove_document_from_elasticsearch
+    }, on: :destroy
+
+    def send_document_to_elasticsearch
+      __elasticsearch__.index_document
+      self.class.__elasticsearch__.refresh_index!
+    end
+
+    def remove_document_from_elasticsearch
       __elasticsearch__.delete_document
       self.class.__elasticsearch__.refresh_index!
-    }, on: :destroy
+    end
 
     # after_create lambda { __elasticsearch__.index_document  }
     # after_update lambda { __elasticsearch__.index_document  }

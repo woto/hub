@@ -11,12 +11,53 @@
 #   end
 # end
 
+shared_examples 'elasticable' do
+  let(:model) { described_class.name.underscore }
+
+  it 'index newly created documents' do
+    Current.set(responsible: create(:user)) do
+      record = build(model)
+      expect(record).to receive(:send_document_to_elasticsearch)
+      record.save!
+    end
+  end
+
+  it 'index changed documents' do
+    Current.set(responsible: create(:user)) do
+      record = create(model)
+      expect(record).to receive(:send_document_to_elasticsearch)
+      record.touch
+    end
+  end
+
+  context 'when model attributes does not changed' do
+    it 'does not index document' do
+      Current.set(responsible: create(:user)) do
+        record = create(model)
+        expect(record).not_to receive(:send_document_to_elasticsearch)
+        record.save!
+      end
+    end
+  end
+
+  context 'when attribute marked as dirty' do
+    it 'index document' do
+      Current.set(responsible: create(:user)) do
+        record = create(model)
+        record.id_will_change!
+        expect(record).to receive(:send_document_to_elasticsearch)
+        record.save!
+      end
+    end
+  end
+end
+
 def elastic_client
   @elastic_client ||= Elasticsearch::Client.new Rails.application.config.elastic
 end
 
 RSpec.configure do |config|
-  config.before(:each) do
+  config.before do
     elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
     GlobalHelper.create_elastic_indexes
   end
@@ -84,5 +125,3 @@ end
 #     # GlobalHelper.create_elastic_indexes
 #   end
 # end
-
-
