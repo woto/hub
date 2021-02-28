@@ -28,9 +28,7 @@ describe Elastic::RefreshOffersIndex do
   end
 
   def count
-    elastic_client.count(
-      index: Elastic::IndexName.offers,
-      routing: feed.id
-    )
+    query = FeedOffersCountQuery.call(feed: feed).object
+    elastic_client.count(query)
   end
 end
