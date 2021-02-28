@@ -28,7 +28,6 @@ describe Elastic::RefreshOffersIndex do
   end
 
   def count
-    query = FeedOffersCountQuery.call(feed: feed).object
-    elastic_client.count(query)
+    Elastic::FeedOffersCount.call(feed: feed).object
   end
 end
