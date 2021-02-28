@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Import::SyncAdmitadJob, type: :job do
+RSpec.describe Import::Sync::AdmitadJob, type: :job do
   subject { described_class.perform_now }
 
   context 'when unable to find token in cache' do
