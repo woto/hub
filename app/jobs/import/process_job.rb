@@ -1,4 +1,4 @@
-class Import::FeedsJob < ApplicationJob
+class Import::ProcessJob < ApplicationJob
   queue_as :low
 
   def perform(feed = nil)
