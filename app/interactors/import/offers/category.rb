@@ -56,7 +56,7 @@ module Import
         set_offer_values(offer, feed_category.id, feed_category.path_ids)
       rescue CategoryError => e
         Rails.logger.warn(message: e.message, feed_id: feed.id, object: e.object)
-        Yabeda.hub.import.increment({ feed_id: feed.id, message: e.message }, by: 1)
+        Yabeda.hub.categories_errors.increment({ feed_id: feed.id, message: e.message }, by: 1)
         set_offer_values(offer, WRONG_CATEGORY_ERROR, [WRONG_CATEGORY_ERROR])
       end
 
