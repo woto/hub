@@ -25,7 +25,7 @@ class Feeds::Process
   rescue SkipJobError => e
     error = e
   ensure
-    Import::DeleteOldOffers.call(feed: feed, error: error)
+    Import::DeleteOldOffers.call(feed: feed)
     Import::ReleaseFeed.call(feed: feed, error: error)
     Elastic::RefreshOffersIndex.call
     Import::AggregateLanguage.call(feed: feed)

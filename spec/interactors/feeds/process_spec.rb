@@ -20,7 +20,7 @@ describe Feeds::Process do
       expect(Import::DetectFileType).to receive(:call).with(feed: feed)
       expect(Import::Preprocess).to receive(:call).with(feed: feed)
       expect(Feeds::Parse).to receive(:call).with(feed: feed)
-      expect(Import::DeleteOldOffers).to receive(:call).with(feed: feed, error: nil)
+      expect(Import::DeleteOldOffers).to receive(:call).with(feed: feed)
       expect(Import::ReleaseFeed).to receive(:call).with(feed: feed, error: nil)
       expect(Elastic::RefreshOffersIndex).to receive(:call).with(no_args)
       expect(Import::AggregateLanguage).to receive(:call).with(feed: feed)
