@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-describe Import::ProcessJob, type: :job do
+describe Import::SweepJob, type: :job do
   subject { described_class.perform_now }
 
   specify do
-    expect(Import::Process).to receive(:call)
+    expect(Import::Sweep).to receive(:call)
     subject
   end
 end

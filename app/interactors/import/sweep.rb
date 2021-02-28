@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Feeds::Sweep
+class Import::Sweep
   include ApplicationInteractor
 
   def call

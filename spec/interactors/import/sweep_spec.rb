@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-describe Feeds::Sweep do
+describe Import::Sweep do
   let(:pid1) { 100 }
   let(:pid2) { pid1 + 100 }
   let(:pid3) { pid2 + 100 }
-  let(:operation) { 'factory_bot' }
-  let!(:feed1) { create(:feed, locked_by_pid: pid1, operation: operation) }
-  let!(:feed2) { create(:feed, locked_by_pid: pid2, operation: operation) }
-  let!(:feed3) { create(:feed, locked_by_pid: 0, operation: operation) }
+
+  let!(:feed1) { create(:feed, locked_by_pid: pid1, operation: 'manual') }
+  let!(:feed2) { create(:feed, locked_by_pid: pid2, operation: 'manual') }
+  let!(:feed3) { create(:feed, locked_by_pid: 0, operation: 'manual') }
 
   it 'sweeps stucked jobs' do
     expect(Process).to receive(:getpgid).with(pid1).and_return(pid1)
@@ -18,8 +18,8 @@ describe Feeds::Sweep do
 
     described_class.call
 
-    expect(feed1.reload).to have_attributes(operation: operation, locked_by_pid: pid1)
+    expect(feed1.reload).to have_attributes(operation: 'manual', locked_by_pid: pid1)
     expect(feed2.reload).to have_attributes(operation: 'sweep', locked_by_pid: 0)
-    expect(feed3.reload).to have_attributes(operation: operation, locked_by_pid: 0)
+    expect(feed3.reload).to have_attributes(operation: 'manual', locked_by_pid: 0)
   end
 end
