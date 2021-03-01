@@ -437,6 +437,9 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
+    rspec-sqlimit (0.0.3)
+      rails (> 4.2, < 7.0)
+      rspec (~> 3.0)
     rspec-support (3.10.1)
     rubocop (1.7.0)
       parallel (~> 1.10)
@@ -641,6 +644,7 @@ DEPENDENCIES
   redcarpet
   redis
   rspec-rails
+  rspec-sqlimit
   rubocop
   rubocop-performance
   rubocop-rails
