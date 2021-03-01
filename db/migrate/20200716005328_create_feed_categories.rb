@@ -6,9 +6,8 @@ class CreateFeedCategories < ActiveRecord::Migration[6.0]
       t.string :ext_id, null: false
       t.string :ext_parent_id
       t.string :name
-      t.text :data
-      t.uuid :attempt_uuid, null: false
-      t.boolean :parent_not_found
+      t.uuid :attempt_uuid
+      t.text :raw
       t.index %i[feed_id ext_id], unique: true
       t.references :feed, null: false, foreign_key: true
 

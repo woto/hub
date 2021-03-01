@@ -16,7 +16,7 @@ module Import
       ext_parent_id = doc.attributes['parentId']&.value
 
       feed_category = context.feed.feed_categories.find_or_initialize_by(ext_id: ext_id)
-      feed_category.update!(name: name, ext_parent_id: ext_parent_id)
+      feed_category.update!(name: name, ext_parent_id: ext_parent_id, raw: doc.to_s)
 
       @feeds_categories_ids << feed_category.id
       @total_count += 1

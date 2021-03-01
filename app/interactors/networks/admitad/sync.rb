@@ -46,7 +46,7 @@ class Networks::Admitad::Sync
       adv.each do |k, v|
         advertiser.public_send("_#{k}=", v)
       end
-      advertiser.data = adv
+      advertiser.raw = adv
       advertiser.synced_at = Time.current
       advertiser.save!
       yield(advertiser, adv['feeds_info'])
@@ -72,7 +72,7 @@ class Networks::Admitad::Sync
       url: feed_info['xml_link'],
       advertiser_updated_at: Time.zone.parse(feed_info['advertiser_last_update']),
       network_updated_at: Time.zone.parse(feed_info['admitad_last_update']),
-      data: feed_info,
+      raw: feed_info,
       synced_at: Time.current
     }
   end

@@ -4,18 +4,17 @@
 #
 # Table name: feed_categories
 #
-#  id               :bigint           not null, primary key
-#  ancestry         :string
-#  ancestry_depth   :integer          default(0)
-#  attempt_uuid     :uuid             not null
-#  data             :jsonb
-#  name             :string
-#  parent_not_found :boolean
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  ext_id           :string           not null
-#  ext_parent_id    :string
-#  feed_id          :bigint           not null
+#  id             :bigint           not null, primary key
+#  ancestry       :string
+#  ancestry_depth :integer          default(0)
+#  attempt_uuid   :uuid
+#  name           :string
+#  raw            :text
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  ext_id         :string           not null
+#  ext_parent_id  :string
+#  feed_id        :bigint           not null
 #
 # Indexes
 #
@@ -32,7 +31,6 @@ FactoryBot.define do
     feed
     ext_id { Faker::Alphanumeric.alphanumeric }
     ext_parent_id { Faker::Alphanumeric.alphanumeric }
-    data { '' }
-    attempt_uuid { SecureRandom.uuid }
+    name { Faker::Lorem.word }
   end
 end

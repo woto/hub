@@ -8,7 +8,6 @@
 #  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
-#  data                   :jsonb
 #  downloaded_file_size   :bigint
 #  downloaded_file_type   :string
 #  error_class            :string
@@ -23,6 +22,7 @@
 #  priority               :integer          default(0), not null
 #  processing_finished_at :datetime
 #  processing_started_at  :datetime
+#  raw                    :text
 #  succeeded_at           :datetime
 #  synced_at              :datetime
 #  url                    :string           not null
@@ -41,14 +41,13 @@
 #  fk_rails_...  (advertiser_id => advertisers.id)
 #
 class Feed < ApplicationRecord
+  has_logidze ignore_log_data: true
   include Elasticable
   # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.feeds"
 
   belongs_to :advertiser
   has_many :feed_categories, dependent: :destroy
-  has_many :feed_logs, dependent: :destroy
-  after_save :log_changes
 
   validates :url, :name, :operation, presence: true
 
@@ -62,7 +61,6 @@ class Feed < ApplicationRecord
     adv.transform_keys! { |k| "advertiser_#{k}" }
     as_json.merge(adv)
   end
-
 
   def file
     File.new(self)
@@ -82,18 +80,5 @@ class Feed < ApplicationRecord
 
   def to_long_label
     "#{advertiser.to_long_label} -> #{name}"
-  end
-
-  private
-
-  def log_changes
-    fl = FeedLog.new(feed_id: id)
-
-    Feed.column_names.each do |col_name|
-      fl["feed_#{col_name}_before"], fl["feed_#{col_name}_after"] =
-        public_send("#{col_name}_previous_change")
-    end
-
-    fl.save!
   end
 end

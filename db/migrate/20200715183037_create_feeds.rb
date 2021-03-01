@@ -12,9 +12,8 @@ class CreateFeeds < ActiveRecord::Migration[6.0]
       t.text :error_text
       t.integer :locked_by_pid, null: false, default: 0
       t.string :language
-      t.string :index_name
       t.uuid :attempt_uuid
-      t.jsonb :data
+      t.text :raw
       t.datetime :processing_started_at
       t.datetime :processing_finished_at
       t.datetime :synced_at

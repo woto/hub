@@ -12,7 +12,7 @@ module Tables
 
     # GET /feeds
     def index
-      get_index(%w[advertiser_id index_name])
+      get_index(%w[advertiser_id])
     end
 
     private

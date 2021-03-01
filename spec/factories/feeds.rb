@@ -8,7 +8,6 @@
 #  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
-#  data                   :jsonb
 #  downloaded_file_size   :bigint
 #  downloaded_file_type   :string
 #  error_class            :string
@@ -23,6 +22,7 @@
 #  priority               :integer          default(0), not null
 #  processing_finished_at :datetime
 #  processing_started_at  :datetime
+#  raw                    :text
 #  succeeded_at           :datetime
 #  synced_at              :datetime
 #  url                    :string           not null

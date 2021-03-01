@@ -8,7 +8,7 @@ if Rails.env.development?
     load seed
   end
 
-  website = Realm.create!(title: 'Яндекс Маркет', locale: 'ru', kind: 'website')
+  website = Realm.create!(title: 'Яндекс Маркет', locale: 'ru', kind: 'post')
 
   user = User.create!(email: 'user@example.com',
                       password: 'password',
@@ -42,7 +42,7 @@ if Rails.env.development?
                         body: Faker::Lorem.paragraph(sentence_count: 15, random_sentences_to_add: 50),
                         user: user,
                         status: :draft,
-                        post_category: PostCategory.joins(:realm).merge(Realm.website).order('RANDOM()').first,
+                        post_category: PostCategory.joins(:realm).merge(Realm.post).order('RANDOM()').first,
                         currency: :usd,
                         published_at: Time.current,
                         tags: ['тест', 'тестовые тег'])
@@ -108,7 +108,7 @@ if Rails.env.development?
     attempt_uuid: SecureRandom.uuid,
     url: 'http://example.com',
     name: 'Прайс 1',
-    operation: 'seeds',
+    operation: 'manual',
     xml_file_path: 'spec/fixtures/files/feeds/yml-custom.xml'
   )
   Feeds::Parse.call(feed: feed1)
@@ -117,7 +117,7 @@ if Rails.env.development?
     attempt_uuid: SecureRandom.uuid,
     url: 'http://example.com',
     name: 'Прайс 2',
-    operation: 'seeds',
+    operation: 'manual',
     xml_file_path: 'spec/fixtures/files/feeds/yml-simplified.xml'
   )
   Feeds::Parse.call(feed: feed2)
@@ -128,7 +128,7 @@ if Rails.env.development?
     attempt_uuid: SecureRandom.uuid,
     url: 'http://example.com',
     name: 'Прайс 3',
-    operation: 'seeds',
+    operation: 'manual',
     xml_file_path: 'spec/fixtures/files/feeds/776-petshop+678-taganrog.xml'
   )
   Feeds::Parse.call(feed: feed3)

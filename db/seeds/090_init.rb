@@ -5,7 +5,7 @@ I18n.available_locales.each do |locale|
     Realm.create!(
       title: Faker::Lorem.sentence(word_count: 1, random_words_to_add: 4),
       locale: locale,
-      kind: :website
+      kind: :post
     )
   end
 end

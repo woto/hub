@@ -108,7 +108,6 @@ describe Import::Offers::Category do
           ext_id: "#{non_leaf_category.ext_id}#{Import::Offers::Category::SURROGATE_KEY}",
           ext_parent_id: non_leaf_category.ext_id.to_s,
           attempt_uuid: feed.attempt_uuid,
-          parent_not_found: false,
           name: Import::Offers::Category::SURROGATE_NAME,
           ancestry: "#{root_category.id}/#{non_leaf_category.id}",
           ancestry_depth: 2

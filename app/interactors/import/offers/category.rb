@@ -46,8 +46,7 @@ module Import
             feed_id: feed.id,
             ext_id: "#{ext_category_id}#{SURROGATE_KEY}",
             ext_parent_id: ext_category_id,
-            name: 'surrogate',
-            parent_not_found: false
+            name: 'surrogate'
           ) do |fc|
             fc.attempt_uuid = feed.attempt_uuid
           end

@@ -2,7 +2,7 @@
 
 def create_post_categories_random_tree
   rand(1..100).times do |_i|
-    realm = Realm.website.order('random()').first
+    realm = Realm.post.order('random()').first
     parent = PostCategory.where(realm: realm).order('random()').first
     PostCategory.create!(
       realm: realm,
