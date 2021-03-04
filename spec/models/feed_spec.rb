@@ -8,13 +8,11 @@
 #  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
-#  data                   :jsonb
 #  downloaded_file_size   :bigint
 #  downloaded_file_type   :string
 #  error_class            :string
 #  error_text             :text
-#  index_name             :string
-#  is_active              :boolean          default(TRUE)
+#  is_active              :boolean          default(TRUE), not null
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
 #  name                   :string           not null
@@ -24,6 +22,7 @@
 #  priority               :integer          default(0), not null
 #  processing_finished_at :datetime
 #  processing_started_at  :datetime
+#  raw                    :text
 #  succeeded_at           :datetime
 #  synced_at              :datetime
 #  url                    :string           not null
@@ -45,5 +44,38 @@ require 'rails_helper'
 
 describe Feed, type: :model do
   it_behaves_like 'elasticable'
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#active' do
+    let!(:advertiser1) { create(:advertiser, is_active: true) }
+    let!(:feed1) { create(:feed, is_active: true, advertiser: advertiser1) }
+
+    before do
+      advertiser2 = create(:advertiser, is_active: false)
+      create(:feed, is_active: true, advertiser: advertiser2)
+      create(:feed, is_active: false, advertiser: advertiser2)
+      create(:feed, is_active: false, advertiser: advertiser1)
+    end
+
+    it 'returns only active feeds of active advertisers' do
+      expect(described_class.active).to eq([feed1])
+    end
+  end
+
+  describe '#feed_categories_for_import' do
+    let(:subject) { create(:feed) }
+    let!(:root) { create(:feed_category, feed: subject) }
+    let!(:cat1) { create(:feed_category, parent: root, feed: subject) }
+    let!(:cat2) { create(:feed_category, parent: root, feed: subject) }
+    let!(:cat3) { create(:feed_category, parent: cat1, feed: subject) }
+
+    it 'returns valid result' do
+      expect(subject.feed_categories_for_import).to(
+        match(
+          root.ext_id => OpenStruct.new(id: root.id, path_ids: root.path_ids, ext_id: root.ext_id),
+          cat1.ext_id => OpenStruct.new(id: cat1.id, path_ids: cat1.path_ids, ext_id: cat1.ext_id),
+          cat2.ext_id => OpenStruct.new(id: cat2.id, path_ids: cat2.path_ids, ext_id: cat2.ext_id),
+          cat3.ext_id => OpenStruct.new(id: cat3.id, path_ids: cat3.path_ids, ext_id: cat3.ext_id)
+        )
+      )
+    end
+  end
 end
