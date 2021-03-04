@@ -29,6 +29,37 @@
 require 'rails_helper'
 
 describe FeedCategory, type: :model do
+  let!(:subject) { create(:feed_category, name: 'Child category', parent: root, feed: feed) }
+  let(:root) { create(:feed_category, name: 'Root category', feed: feed) }
+  let(:feed) { create(:feed, name: 'Feed', advertiser: advertiser) }
+  let(:advertiser) { create(:advertiser, name: 'Advertiser') }
+
   it_behaves_like 'elasticable'
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe '#as_indexed_json' do
+    specify do
+      expect(subject.as_indexed_json).to include(
+        id: subject.id,
+        name: subject.name,
+        ancestry_depth: subject.ancestry_depth,
+        path: subject.path.map(&:name)[0...-1],
+        leaf: subject.children.none?,
+        ext_id: subject.ext_id,
+        ext_parent_id: subject.ext_parent_id,
+        feed_id: subject.feed_id
+      )
+    end
+  end
+
+  describe '#to_label' do
+    specify do
+      expect(subject.to_label).to eq(subject.name)
+    end
+  end
+
+  describe '#to_long_label' do
+    specify do
+      expect(subject.to_long_label).to eq('Advertiser -> Feed -> Root category -> Child category')
+    end
+  end
 end
