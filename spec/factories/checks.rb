@@ -22,7 +22,7 @@
 FactoryBot.define do
   factory :check do
     user
-    amount { rand(10) }
+    amount { rand(1..10) }
     currency { Rails.configuration.global[:currencies].to_a.sample.last }
     # payed { false }
     # payed_at { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }

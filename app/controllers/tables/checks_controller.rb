@@ -22,7 +22,10 @@ module Tables
                     model_class: Check,
                     form_class: Columns::CheckForm,
                     query_class: ChecksSearchQuery,
-                    decorator_class: CheckDecorator }
+                    decorator_class: CheckDecorator,
+                    favorites_kind: :checks,
+                    favorites_items_kind: :checks
+      }
     end
 
     def system_default_workspace
@@ -31,10 +34,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end

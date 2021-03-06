@@ -62,3 +62,4 @@ Authentication
 # v2.0
 
 * [ ] Google merchant categories
+* [ ] Check request form
