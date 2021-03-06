@@ -1,3 +1,4 @@
+# TODO: remove
 class Mixes::Search2Controller < ApplicationController
   def index
     client = Elasticsearch::Client.new Rails.application.config.elastic

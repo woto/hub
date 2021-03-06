@@ -40,10 +40,12 @@ Rails.application.routes.draw do
                  unlocks: 'users/unlocks'
                }
 
-    namespace 'mixes' do
-      resources 'search1'
-      resources 'search2'
-    end
+    # TODO: remove
+    namespace 'mixes' do  #
+      resources 'search1' #
+      resources 'search2' #
+      resources 'search3' #
+    end                   #
 
     scope module: 'tables' do
       resources :accounts, only: [:index]
@@ -135,6 +137,17 @@ Rails.application.routes.draw do
         get 'month(/:month)', to: 'month#index', as: :month
         get 'tag(/:tag)', to: 'tag#index', as: :tag
         get 'latest', to: 'latest#index', as: :latest
+      end
+    end
+
+    # TODO: remove
+    namespace :tests do
+      namespace :aggs do
+        resources :advertisers do
+          resources :feeds, shallow: true do
+            resources :feed_categories
+          end
+        end
       end
     end
 

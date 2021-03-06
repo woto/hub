@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# TODO: remove
 
 class Mixes::OffersSearchQuery
   include ApplicationInteractor
@@ -75,7 +76,7 @@ class Mixes::OffersSearchQuery
         end
       end
 
-      # collapse Feeds::Offers::CATEGORY_ID_KEY do
+      # collapse Import::Offers::Category::CATEGORY_ID_KEY do
       collapse "advertiser_id" do
         inner_hits 'offers' do
           size 10

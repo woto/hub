@@ -1,3 +1,4 @@
+# TODO: remove
 class Mixes::Search3Controller < ApplicationController
   def index
 
