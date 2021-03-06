@@ -9,7 +9,7 @@ module Feeds
       @offers = []
       @batch_count = 0
       @total_count = 0
-      @categories = context.feed.feed_categories_for_import
+      @categories = FeedCategoriesCache.new(context.feed)
       super
     end
 

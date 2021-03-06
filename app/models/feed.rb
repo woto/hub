@@ -58,13 +58,6 @@ class Feed < ApplicationRecord
 
   scope :active, -> { where(is_active: true).joins(:advertiser).where(advertisers: { is_active: true }) }
 
-  def feed_categories_for_import
-    select = ['ext_id', 'id', "array_append(string_to_array(ancestry, '/'), id::text)::int[] as uptree_ids"]
-    feed_categories.select(select).map do |fc|
-      { fc.ext_id => OpenStruct.new(id: fc.id, path_ids: fc.uptree_ids, ext_id: fc.ext_id) }
-    end.reduce(&:merge) || {}
-  end
-
   def as_indexed_json(_options = {})
     adv = advertiser.as_json(methods: :type)
     adv.transform_keys! { |k| "advertiser_#{k}" }

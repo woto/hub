@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Import::Offers::StandardAttributes do
   subject { described_class.call(offer, feed) }
 
-  let(:feed) { create(:feed, :with_attempt_uuid) }
+  let(:feed) { create(:feed) }
   let(:offer) { {} }
 
   it 'sets feed attempt_uuid to offer hash' do

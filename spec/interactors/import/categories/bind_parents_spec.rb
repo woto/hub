@@ -8,6 +8,28 @@ describe Import::Categories::BindParents do
   let(:feed) { create(:feed) }
   let(:ext_id) { Faker::Alphanumeric.alphanumeric }
 
+  context 'when processed category is changed' do
+    let!(:parent) { create(:feed_category, feed: feed, ext_id: ext_id) }
+    let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }
+
+    it "is not exceed 1 sql update" do
+      expect { subject }.not_to exceed_query_limit(1).with(/^UPDATE/)
+    end
+
+    it "is exceed 0 sql update" do
+      expect { subject }.to exceed_query_limit(0).with(/^UPDATE/)
+    end
+  end
+
+  context 'when processed category is not changed' do
+    let!(:parent) { create(:feed_category, feed: feed, ext_id: ext_id) }
+    let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id, parent: parent) }
+
+    it "is not exceed 0 sql updates" do
+      expect { subject }.not_to exceed_query_limit(0).with(/^UPDATE/)
+    end
+  end
+
   describe 'standard simple flow' do
     let!(:parent) { create(:feed_category, feed: feed, ext_id: ext_id) }
     let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }

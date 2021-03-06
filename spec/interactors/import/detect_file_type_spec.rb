@@ -6,7 +6,7 @@ describe Import::DetectFileType do
   subject { described_class.call(feed: feed) }
 
   context 'when downloaded file does not exist' do
-    let(:feed) { create(:feed, :with_attempt_uuid) }
+    let(:feed) { create(:feed) }
 
     it 'raises error' do
       expect { subject }.to raise_error(Import::Process::DetectFileTypeError, /cannot open/)
@@ -14,7 +14,7 @@ describe Import::DetectFileType do
   end
 
   context 'when downloaded xml file exists', :cleanup_feeds do
-    let(:feed) { create(:feed, :with_attempt_uuid, with_downloaded_file: file_fixture('feeds/yml-custom.xml')) }
+    let(:feed) { create(:feed, with_downloaded_file: file_fixture('feeds/yml-custom.xml')) }
 
     it 'stores text/xml file type in `downloaded_file_type`' do
       expect(subject).to have_attributes(feed: have_attributes(operation: 'detect file type',
@@ -23,7 +23,7 @@ describe Import::DetectFileType do
   end
 
   context 'when downloaded zip file exists', :cleanup_feeds do
-    let(:feed) { create(:feed, :with_attempt_uuid, with_downloaded_file: file_fixture('feeds/YML_sample.zip')) }
+    let(:feed) { create(:feed, with_downloaded_file: file_fixture('feeds/YML_sample.zip')) }
 
     it 'stores application/zip file type in `downloaded_file_type`' do
       expect(subject).to have_attributes(feed: have_attributes(operation: 'detect file type',

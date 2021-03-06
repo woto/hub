@@ -59,23 +59,4 @@ describe Feed, type: :model do
       expect(described_class.active).to eq([feed1])
     end
   end
-
-  describe '#feed_categories_for_import' do
-    let(:subject) { create(:feed) }
-    let!(:root) { create(:feed_category, feed: subject) }
-    let!(:cat1) { create(:feed_category, parent: root, feed: subject) }
-    let!(:cat2) { create(:feed_category, parent: root, feed: subject) }
-    let!(:cat3) { create(:feed_category, parent: cat1, feed: subject) }
-
-    it 'returns valid result' do
-      expect(subject.feed_categories_for_import).to(
-        match(
-          root.ext_id => OpenStruct.new(id: root.id, path_ids: root.path_ids, ext_id: root.ext_id),
-          cat1.ext_id => OpenStruct.new(id: cat1.id, path_ids: cat1.path_ids, ext_id: cat1.ext_id),
-          cat2.ext_id => OpenStruct.new(id: cat2.id, path_ids: cat2.path_ids, ext_id: cat2.ext_id),
-          cat3.ext_id => OpenStruct.new(id: cat3.id, path_ids: cat3.path_ids, ext_id: cat3.ext_id)
-        )
-      )
-    end
-  end
 end

@@ -5,7 +5,7 @@ require 'rails_helper'
 describe DeleteOldOffersQuery do
   subject { described_class.call(feed: feed) }
 
-  let(:feed) { create(:feed, :with_attempt_uuid) }
+  let(:feed) { create(:feed) }
 
   it 'builds correct query' do
     expect(subject.object).to eq(

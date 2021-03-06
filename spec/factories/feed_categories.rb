@@ -32,5 +32,6 @@ FactoryBot.define do
     ext_id { Faker::Alphanumeric.alphanumeric }
     ext_parent_id { Faker::Alphanumeric.alphanumeric }
     name { Faker::Lorem.word }
+    attempt_uuid { SecureRandom.uuid }
   end
 end

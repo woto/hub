@@ -50,10 +50,7 @@ FactoryBot.define do
     advertiser
     ext_id { Faker::Alphanumeric.alphanumeric }
     url { Faker::Internet.url }
-
-    trait :with_attempt_uuid do
-      attempt_uuid { SecureRandom.uuid }
-    end
+    attempt_uuid { SecureRandom.uuid }
 
     transient do
       with_downloaded_file { nil }

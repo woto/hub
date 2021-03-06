@@ -8,7 +8,7 @@ describe Import::CategoriesCreator do
   end
 
   let(:doc) { Nokogiri::XML(xml).children.first }
-  let(:feed) { create(:feed, :with_attempt_uuid) }
+  let(:feed) { create(:feed) }
 
   let(:xml) do
     %(

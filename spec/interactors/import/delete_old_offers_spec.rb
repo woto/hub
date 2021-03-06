@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Import::DeleteOldOffers do
   subject { described_class.call(feed: feed) }
 
-  let(:feed) { create(:feed, :with_attempt_uuid) }
+  let(:feed) { create(:feed) }
 
   shared_examples 'offers count becomes' do |num|
     before do

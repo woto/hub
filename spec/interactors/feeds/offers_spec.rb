@@ -32,7 +32,7 @@ describe Feeds::Offers do
 
       it 'calls Import::Offers::Category with correct argument' do
         expect(Import::Offers::Category).to receive(:call).with(
-          include('categoryId' => [include('#' => 'category 1')]), feed, feed.feed_categories_for_import
+          include('categoryId' => [include('#' => 'category 1')]), feed, FeedCategoriesCache.new(feed)
         ).and_call_original
         subject.append(doc)
       end
@@ -73,7 +73,7 @@ describe Feeds::Offers do
           expect(subject.append(doc)).to eq(
             [
               '*' => { 'id' => '12346' },
-              'attempt_uuid' => nil,
+              'attempt_uuid' => feed.attempt_uuid,
               'description' => [
                 { '#' => 'Отличный подарок для любителей венских вафель.' }
               ],
