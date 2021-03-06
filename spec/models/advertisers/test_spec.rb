@@ -53,7 +53,6 @@
 #  admitad_site_url                    :string
 #  admitad_status                      :string
 #  admitad_traffics                    :jsonb
-#  data                                :jsonb
 #  gdeslon_affiliate_link              :string
 #  gdeslon_categories                  :jsonb
 #  gdeslon_conditions                  :string
@@ -68,7 +67,9 @@
 #  gdeslon_tariffs                     :jsonb
 #  gdeslon_traffic_types               :jsonb
 #  gdeslon_url                         :string
+#  is_active                           :boolean          default(TRUE), not null
 #  name                                :string
+#  raw                                 :text
 #  synced_at                           :datetime
 #  type                                :string
 #  created_at                          :datetime         not null

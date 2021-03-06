@@ -6,6 +6,7 @@
 #
 #  id          :bigint           not null, primary key
 #  data        :jsonb
+#  kind        :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  ext_id      :string
