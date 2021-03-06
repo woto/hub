@@ -7,8 +7,6 @@ class HelpSearchQuery
   def call
     definition = search do
 
-      explain(true) if context.explain.present?
-
       query do
         bool do
           if context.q.present?

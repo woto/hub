@@ -7,8 +7,6 @@ class Widgets::NewsByMonthSearchQuery
   def call
     definition = search do
 
-      explain(true) if context.explain.present?
-
       aggregation :group_by_month do
         date_histogram do
           field 'published_at'

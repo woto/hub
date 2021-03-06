@@ -113,14 +113,6 @@ describe OffersSearchQuery do
     end
   end
 
-  context 'when context.explain passed' do
-    let(:args) { { explain: '1' } }
-
-    specify do
-      expect(subject).to include(body: include(explain: true))
-    end
-  end
-
   pending 'per'
   pending 'page'
   pending 'size'

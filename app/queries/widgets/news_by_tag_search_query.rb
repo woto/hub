@@ -7,8 +7,6 @@ class Widgets::NewsByTagSearchQuery
   def call
     definition = search do
 
-      explain(true) if context.explain.present?
-
       aggregation :group_by_tag do
         terms do
           field 'tags.keyword'
