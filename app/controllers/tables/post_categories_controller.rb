@@ -23,7 +23,10 @@ module Tables
                     model_class: PostCategory,
                     form_class: Columns::PostCategoryForm,
                     query_class: PostCategoriesSearchQuery,
-                    decorator_class: PostCategoryDecorator }
+                    decorator_class: PostCategoryDecorator,
+                    favorites_kind: :post_categories,
+                    favorites_items_kind: :post_categories
+      }
     end
 
     def system_default_workspace
@@ -32,10 +35,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end

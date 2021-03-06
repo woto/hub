@@ -20,7 +20,9 @@ module PostCategories
         *paths = row.join.split('/')
         scope = nil
         paths.each do |path|
-          created = (scope&.children || PostCategory).find_or_create_by!(title: path, realm: Realm.default_realm)
+          created = (scope&.children || PostCategory).find_or_create_by!(
+            title: path, realm: Realm.default_realm(kind: :post, locale: :ru)
+          )
           scope = created
         end
       end

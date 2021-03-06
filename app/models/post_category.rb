@@ -51,18 +51,20 @@ class PostCategory < ApplicationRecord
 
     {
       id: id,
-      # title_i18n: title_i18n,
       title: title,
       # TODO: Bugreport or fix it.
       # Next line doesn't work without overriding path above.
       # It makes wrong sql query with `WHERE ancestry = '...'` condition
+      # feed_category, post_category
       path: path.map(&:title),
       realm_id: realm_id,
       realm_title: realm.title,
       realm_locale: realm.locale,
       realm_kind: realm.kind,
       leaf: children.none?,
-      priority: priority
+      priority: priority,
+      created_at: created_at.utc,
+      updated_at: updated_at.utc
     }
   end
 

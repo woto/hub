@@ -43,7 +43,7 @@
 * [ ] To test + refactor 5959146e775140d2b385c49c91cc39f69ac8624f
 * [ ] User has unconfirmed e-mail address in `users.email`. User has misspelled changing e-mail address which stores in `users.unconfirmed_email`. User logs out. Confirmation period finished. Now confirmation link can be sent only on misspelled e-mail address.
 
-# v2.0
+# v1.2
 
 Authentication
 
@@ -58,3 +58,7 @@ Authentication
     * Email
     * Handler for reset link
     * New password form
+
+# v2.0
+
+* [ ] Google merchant categories
