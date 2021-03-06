@@ -8,81 +8,56 @@ module Elastic
         "#{Rails.env}.*"
       end
 
-      def crop_environment(index_name)
-        index_name.delete_prefix("#{Rails.env}.")
-      end
-
-
-      def all_offers
-        picker('*', 'offers')
-      end
-
       def tokenizer
-        new_picker('tokenizer')
+        pick('tokenizer')
       end
 
       def news
-        new_picker('news')
+        pick('news')
       end
 
       def offers
-        new_picker('offers')
+        pick('offers')
       end
 
       def feed_categories
-        new_picker('feed_categories')
+        pick('feed_categories')
       end
 
       def post_categories
-        new_picker('post_categories')
+        pick('post_categories')
       end
 
       def feeds
-        new_picker('feeds')
+        pick('feeds')
       end
 
       def posts
-        new_picker('posts')
+        pick('posts')
       end
 
       def accounts
-        new_picker('accounts')
+        pick('accounts')
       end
 
       def checks
-        new_picker('checks')
+        pick('checks')
       end
 
       def favorites
-        new_picker('favorites')
+        pick('favorites')
       end
 
       def transactions
-        new_picker('transactions')
+        pick('transactions')
       end
 
       def users
-        new_picker('users')
+        pick('users')
       end
 
-      # def offers_crop(name)
-      #   cropper(name, 'offers')
-      # end
-
-      def new_picker(name)
+      def pick(name)
         "#{Rails.env}.#{name}"
-      end
-
-      private
-
-
-
-      def picker(name, suffix)
-        "#{name}.#{Rails.env}.#{suffix}"
-      end
-
-      def cropper(name, suffix)
-        name.chomp!(".#{Rails.env}.#{suffix}")
       end
     end
   end
