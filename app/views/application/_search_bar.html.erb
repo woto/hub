@@ -1,12 +1,17 @@
-<%= tag.div class: "input-group",
+<%= tag.div class: "input-group input-group-flat",
             data: { controller: 'search-base',
-                    "search-base-everywhere-url": url_for(request.params.slice(*@preserved_search_params)
-                                                              .merge(action: :index, only_path: false)) } do %>
+                    "search-base-everywhere-url": url_for_search_everywhere } do %>
 
   <%= text_field_tag :q, params[:q],
                      id: nil,
                      data: { target: 'search-base.searchText', action: 'keydown->search-base#clickSearchButton' },
                      class: 'search-text form-control', placeholder: t('search_placeholder') %>
+
+  <span class="input-group-text">
+    <a href="#" class="link-secondary" title="" data-bs-toggle="tooltip" data-bs-original-title="Clear search">
+      <%== GlobalHelper.icon('x') %>
+    </a>
+  </span>
 
   <%= render 'button', btn_class: btn_class %>
 

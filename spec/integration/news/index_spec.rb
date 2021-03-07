@@ -11,6 +11,10 @@ describe Tables::NewsController, type: :system do
       let(:params) do
         { controller: plural, q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc, only_path: true }
       end
+
+      before do
+        visit "/ru/#{plural}"
+      end
     end
 
     it_behaves_like 'shared_language_component' do

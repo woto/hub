@@ -16,7 +16,8 @@ module Tables
     end
 
     def by_month
-      get_index([], month: Time.zone.parse("#{params[:month]}-01"))
+      month = Time.use_zone('UTC') { Time.zone.parse("#{params[:month]}-01") }
+      get_index([], month: month)
     end
 
     def by_tag
@@ -31,8 +32,9 @@ module Tables
                     model_class: News,
                     form_class: Columns::NewsForm,
                     query_class: NewsSearchQuery,
-                    decorator_class: NewsDecorator
-      }
+                    decorator_class: NewsDecorator,
+                    favorites_kind: :news,
+                    favorites_items_kind: :news }
     end
 
     def system_default_workspace
@@ -40,10 +42,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :published_at,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
 
     def path_for_switch_language(locale)
