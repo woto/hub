@@ -1,21 +1,20 @@
 <%= turbo_frame_tag 'news-by-month' do %>
-  <%= tag.div test_id => 'news_by_month_component',
-              class: 'list-group bg-white scrollable',
-              style: 'max-height: 500px' do %>
-    <% @result['aggregations']['group_by_month']['buckets'].each do |item| %>
-      <% next if item['doc_count'].zero? %>
+  <%= tag.div class: 'overflow-auto', style: 'max-height: 300px' do %>
+    <%= tag.div class: 'list-group bg-white' do %>
+      <% @result['aggregations']['group_by_month']['buckets'].each do |item| %>
+        <% next if item['doc_count'].zero? %>
 
-      <% link_value = Time.zone.parse(item['key_as_string']) + 1.month %>
-      <% active_css = 'active' if link_value.all_month.cover?(@month) %>
+        <% link_value = Time.zone.parse(item['key_as_string']) %>
+        <% active_css = 'active' if link_value.all_month.cover?(@month) %>
 
-      <%= link_to request.params.except(:tag, :q, :id).merge(controller: '/tables/news', action: :by_month, month: l(link_value, format: "%Y-%m")),
-                  test_class => 'link',
-                  target: '_top',
-                  class: "list-group-item d-flex list-group-item-action justify-content-between align-items-center #{active_css}" do %>
-        <%= l(link_value, format: "%Y %B") %>
-        <%= tag.span test_class => 'badge',
-                     class: 'badge badge-primary badge-pill' do %>
-          <%= item['doc_count'] %>
+        <%= link_to request.params.except(:tag, :q, :id, :page).merge(controller: '/tables/news', action: :by_month, month: l(link_value.utc, format: "%Y-%m")),
+                    test_class => 'link',
+                    'data-turbo-frame': '_top',
+                    class: "list-group-item d-flex list-group-item-action justify-content-between align-items-center #{active_css}" do %>
+          <%= l(link_value.utc, format: "%Y %B") %>
+          <%= tag.span test_class => 'badge', class: 'badge badge-primary badge-pill' do %>
+            <%= item['doc_count'] %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Widgets::NewsByMonthSearchQuery
+class Frames::NewsByMonthSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
@@ -12,6 +12,7 @@ class Widgets::NewsByMonthSearchQuery
           field 'published_at'
           interval 'month'
           order(_key: 'desc')
+          # time_zone Time.zone.formatted_offset
         end
       end
 
@@ -23,6 +24,12 @@ class Widgets::NewsByMonthSearchQuery
 
           filter do
             term "realm_locale.keyword" => context.locale
+          end
+
+          filter do
+            range :published_at do
+              lte Time.current.utc
+            end
           end
 
           # if context.q.present?

@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 module Frames
@@ -11,7 +12,7 @@ module Frames
 
         @month = Time.zone.parse("#{params[:month]}-01") if params[:month]
 
-        query = Widgets::NewsByMonthSearchQuery.call(
+        query = Frames::NewsByMonthSearchQuery.call(
           locale: locale
         ).object
 
