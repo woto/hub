@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Networks::Admitad::Token::Retrieve do
+describe Sync::Admitad::Token::Retrieve do
   let(:body) do
     {
       client_id: '7d2aa22417cce0f405a1fd72fe16cb',
@@ -32,7 +32,7 @@ describe Networks::Admitad::Token::Retrieve do
   end
 
   it 'stores token to cache' do
-    to_check = -> { Rails.cache.read(Networks::Admitad::Token::TOKEN_KEY) }
+    to_check = -> { Rails.cache.read(Sync::Admitad::Token::TOKEN_KEY) }
     expect { described_class.call }.to change(&to_check).from(nil).to('123')
   end
 
