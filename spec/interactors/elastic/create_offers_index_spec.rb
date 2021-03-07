@@ -8,6 +8,9 @@ describe Elastic::CreateOffersIndex do
   end
 
   it 'creates offers index with specific settings' do
+    # TODO: add meta tag for skip creating index
+    elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+
     expect(exists?).to be_falsey
     described_class.call
     expect(exists?).to be_truthy
