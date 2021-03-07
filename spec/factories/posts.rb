@@ -37,21 +37,62 @@
 #
 FactoryBot.define do
   factory :post do
-    realm
-    title { Faker::GreekPhilosophers.quote }
-    status { 'draft' }
+
+    title do
+      # Faker::GreekPhilosophers.quote
+      Faker::Lorem.sentence(word_count: 2, random_words_to_add: 12)
+    end
+
+    status { :draft }
+
     user
-    intro { Faker::Lorem.paragraph_by_chars(number: rand(100..1000)) }
-    body { Faker::Lorem.paragraph_by_chars(number: rand(100..10_000)) }
-    post_category
-    published_at { 1.minute.ago }
-    tags { [ 'tag' ] }
+
+    intro do
+      Faker::Lorem.paragraph_by_chars(number: rand(100..1000))
+      # Faker::Lorem.paragraph(sentence_count: 10, random_sentences_to_add: 20)
+    end
+
+    body do
+      Faker::Lorem.paragraph_by_chars(number: rand(100..10_000))
+      # Faker::Lorem.paragraph(sentence_count: 10, random_sentences_to_add: 50)
+    end
+
+    published_at do
+      Faker::Date.between(from: 5.months.ago, to: Time.current)
+    end
+
+    tags do
+      Faker::Lorem
+        .sentences(number: rand(1..10))
+        .map { |tag| tag.tr('.', '').split(' ') }
+        .map { |arr| arr.sample(rand(1..3)).join(' ') }
+        .select(&:present?)
+    end
+
     currency { :usd }
+
+    created_at do
+      Faker::Date.between(from: 2.years.ago, to: Time.current)
+    end
+
+    transient do
+      realm_kind { :post }
+      realm_locale { :ru }
+    end
+
+    realm do
+      Realm.default_realm(kind: realm_kind, locale: realm_locale)
+    end
+
+    post_category do
+      association :post_category,
+                  realm: Realm.default_realm(kind: realm_kind, locale: realm_locale)
+    end
 
     after(:build) do |post|
       date = (post.created_at || Time.current).to_date
       ExchangeRate.find_or_create_by!(currency: post.currency, date: date) do |rate|
-        rate.value = rand(100)
+        rate.value = rand(1..100)
       end
     end
   end

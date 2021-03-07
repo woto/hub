@@ -4,16 +4,14 @@ require 'rails_helper'
 
 describe Tables::NewsController, type: :system do
   describe '#index' do
-    let!(:plural) { 'news' }
-    let!(:singular) { 'news' }
 
     it_behaves_like 'shared_search_everywhere' do
       let(:params) do
-        { controller: plural, q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc, only_path: true }
+        { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc, only_path: true }
       end
 
       before do
-        visit "/ru/#{plural}"
+        visit "/ru/news"
       end
     end
 

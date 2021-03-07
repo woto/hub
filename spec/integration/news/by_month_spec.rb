@@ -4,10 +4,7 @@ require 'rails_helper'
 
 describe Tables::NewsController, type: :system do
   describe '#by_month' do
-    let!(:plural) { 'news' }
-    let!(:singular) { 'news' }
-
-    describe 'index data query' do
+    describe 'index' do
       let!(:post) { create(:post, realm_kind: :news, published_at: Time.zone.parse('2020-01-01')) }
 
       before do
@@ -62,7 +59,7 @@ describe Tables::NewsController, type: :system do
       end
 
       let(:params) do
-        { controller: plural, q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc, only_path: true }
+        { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc, only_path: true }
       end
     end
 
