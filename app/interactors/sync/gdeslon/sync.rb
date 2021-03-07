@@ -5,6 +5,18 @@ module Sync
     class Sync
       include ApplicationInteractor
 
+      class AttributesMapper
+        class << self
+          def id(obj, val)
+            obj.ext_id = val.text
+          end
+
+          def name(obj, val)
+            obj.name = val.text
+          end
+        end
+      end
+
       def call
         url = "https://www.gdeslon.ru/api/users/shops.xml?api_token=#{ENV.fetch('GDESLON_TOKEN')}"
         doc = Nokogiri::XML(URI.open(url))
@@ -15,8 +27,8 @@ module Sync
                        .first_or_initialize
           shop.elements.each do |el|
             method_name = el.name.underscore
-            if Advertisers::GdeslonAttributesMapper.respond_to?(method_name)
-              Advertisers::GdeslonAttributesMapper.public_send(method_name, advertiser, el)
+            if AttributesMapper.respond_to?(method_name)
+              AttributesMapper.public_send(method_name, advertiser, el)
             end
           end
           advertiser.raw = shop.to_s

@@ -3,6 +3,19 @@
 module Sync
   module Admitad
     class Sync
+
+      class AttributesMapper
+        class << self
+          def id(obj, val)
+            obj.ext_id = val
+          end
+
+          def name(obj, val)
+            obj.name = val
+          end
+        end
+      end
+
       include ApplicationInteractor
       LIMIT = 100
 
@@ -48,8 +61,8 @@ module Sync
 
           adv.each do |k, v|
             method_name = k
-            if Advertisers::AdmitadAttributesMapper.respond_to?(method_name)
-              Advertisers::AdmitadAttributesMapper.public_send(method_name, advertiser, v)
+            if AttributesMapper.respond_to?(method_name)
+              AttributesMapper.public_send(method_name, advertiser, v)
             end
           end
           advertiser.raw = adv
