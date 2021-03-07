@@ -7,7 +7,7 @@
 #  id         :bigint           not null, primary key
 #  is_active  :boolean          default(TRUE), not null
 #  name       :string
-#  network    :string
+#  network    :integer
 #  raw        :text
 #  synced_at  :datetime
 #  created_at :datetime         not null

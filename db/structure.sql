@@ -557,7 +557,7 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 
 CREATE TABLE public.advertisers (
     id bigint NOT NULL,
-    type character varying,
+    network integer,
     ext_id character varying,
     name character varying,
     raw text,
@@ -861,8 +861,6 @@ CREATE TABLE public.feeds (
     processing_finished_at timestamp without time zone,
     synced_at timestamp without time zone,
     succeeded_at timestamp without time zone,
-    network_updated_at timestamp without time zone,
-    advertiser_updated_at timestamp without time zone,
     offers_count integer,
     categories_count integer,
     priority integer DEFAULT 0 NOT NULL,
@@ -1708,10 +1706,10 @@ CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.ac
 
 
 --
--- Name: index_advertisers_on_type_and_ext_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_advertisers_on_network_and_ext_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_advertisers_on_type_and_ext_id ON public.advertisers USING btree (type, ext_id);
+CREATE UNIQUE INDEX index_advertisers_on_network_and_ext_id ON public.advertisers USING btree (network, ext_id);
 
 
 --

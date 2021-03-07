@@ -3,7 +3,7 @@
 class CreateAdvertisers < ActiveRecord::Migration[6.0]
   def change
     create_table :advertisers do |t|
-      t.string :network
+      t.integer :network
       t.string :ext_id
       t.string :name
       t.text :raw
