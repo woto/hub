@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Widgets
-  class NewsLatestQuery
+module Frames
+  class NewsCountQuery
     include ApplicationInteractor
     include Elasticsearch::DSL
 
@@ -19,22 +19,21 @@ module Widgets
             end
 
             filter do
+              range :published_at do
+                lte Time.current.utc
+              end
+            end
+
+            filter do
               match_all {}
             end
           end
-        end
-
-        sort do
-          by :published_at, order: :desc
         end
       end
 
       context.object = {}.tap do |h|
         h[:body] = definition.to_hash.deep_symbolize_keys
         h[:index] = ::Elastic::IndexName.posts
-        h[:from] = context.from
-        h[:size] = context.size
-        h[:_source] = context._source
       end
     end
   end

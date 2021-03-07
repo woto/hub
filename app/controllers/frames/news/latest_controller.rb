@@ -7,12 +7,10 @@ module Frames
       layout 'centered'
 
       def index
-        client = Elasticsearch::Client.new Rails.application.config.elastic
-
         @page = params[:page] || 0
 
         result = client.search(
-          Widgets::NewsLatestQuery.call(
+          Frames::NewsLatestQuery.call(
             locale: I18n.locale,
             published_at: params[:published_at],
             from: @page,
@@ -23,7 +21,7 @@ module Frames
         @news = result.dig('hits', 'hits', 0, '_source')
 
         result = client.count(
-          Widgets::NewsCountQuery.call(
+          Frames::NewsCountQuery.call(
             locale: I18n.locale
           ).object
         )
