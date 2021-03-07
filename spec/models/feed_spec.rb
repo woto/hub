@@ -5,7 +5,6 @@
 # Table name: feeds
 #
 #  id                     :bigint           not null, primary key
-#  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
 #  downloaded_file_size   :bigint
@@ -16,7 +15,6 @@
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
 #  name                   :string           not null
-#  network_updated_at     :datetime
 #  offers_count           :integer
 #  operation              :string           not null
 #  priority               :integer          default(0), not null
@@ -44,9 +42,24 @@ require 'rails_helper'
 
 describe Feed, type: :model do
   it_behaves_like 'elasticable'
+
+  describe '#as_indexed_json' do
+    subject { create(:feed) }
+
+    it 'returns expected structure' do
+      expect(subject.as_indexed_json).to include(
+        'id' => subject.id,
+        'raw' => subject.raw,
+        'advertiser_id' => subject.advertiser.id,
+        'advertiser_raw' => subject.advertiser.raw
+      )
+    end
+  end
+
   describe '#active' do
-    let!(:advertiser1) { create(:advertiser, is_active: true) }
-    let!(:feed1) { create(:feed, is_active: true, advertiser: advertiser1) }
+    subject! { create(:feed, is_active: true, advertiser: advertiser1) }
+
+    let(:advertiser1) { create(:advertiser, is_active: true) }
 
     before do
       advertiser2 = create(:advertiser, is_active: false)
@@ -56,7 +69,52 @@ describe Feed, type: :model do
     end
 
     it 'returns only active feeds of active advertisers' do
-      expect(described_class.active).to eq([feed1])
+      expect(described_class.active).to eq([subject])
+    end
+  end
+
+  context 'when factory with transient with_downloaded_file' do
+    subject! { create(:feed, with_downloaded_file: file_fixture('feeds/corrupted_archive.zip')) }
+
+    it 'copies file to expected place' do
+      subject
+      expect(Pathname.new(subject.file.path)).to be_file
+    end
+  end
+
+  describe '#slug' do
+    subject { create(:feed, name: 'Прайс') }
+
+    specify do
+      expect(subject.slug).to eq('1-prays')
+    end
+  end
+
+  describe '#slug_with_advertiser' do
+    subject { create(:feed, name: 'Feed', advertiser: advertiser) }
+
+    let(:advertiser) { create(:advertiser, name: 'Advertiser') }
+
+    specify do
+      expect(subject.slug_with_advertiser).to eq('1-advertiser+1-feed')
+    end
+  end
+
+  describe '#to_label' do
+    subject { create(:feed, name: 'Feed') }
+
+    specify do
+      expect(subject.to_label).to eq('Feed')
+    end
+  end
+
+  describe '#to_long_label' do
+    subject { create(:feed, name: 'Feed', advertiser: advertiser) }
+
+    let(:advertiser) { create(:advertiser, name: 'Advertiser') }
+
+    specify do
+      expect(subject.to_long_label).to eq('Advertiser -> Feed')
     end
   end
 end

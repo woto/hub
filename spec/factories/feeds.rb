@@ -5,7 +5,6 @@
 # Table name: feeds
 #
 #  id                     :bigint           not null, primary key
-#  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
 #  downloaded_file_size   :bigint
@@ -16,7 +15,6 @@
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
 #  name                   :string           not null
-#  network_updated_at     :datetime
 #  offers_count           :integer
 #  operation              :string           not null
 #  priority               :integer          default(0), not null

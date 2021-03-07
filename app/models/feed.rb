@@ -5,7 +5,6 @@
 # Table name: feeds
 #
 #  id                     :bigint           not null, primary key
-#  advertiser_updated_at  :datetime
 #  attempt_uuid           :uuid
 #  categories_count       :integer
 #  downloaded_file_size   :bigint
@@ -16,7 +15,6 @@
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
 #  name                   :string           not null
-#  network_updated_at     :datetime
 #  offers_count           :integer
 #  operation              :string           not null
 #  priority               :integer          default(0), not null
@@ -50,7 +48,6 @@ class Feed < ApplicationRecord
   has_many :feed_categories, dependent: :destroy
 
   validates :url, :name, :operation, presence: true
-
   validates :operation, inclusion: { in: [
     'manual', 'sync', 'sweep', 'lock feed', 'release feed', 'download', 'detect file type', 'preprocess',
     'detect language', 'success'
@@ -59,7 +56,7 @@ class Feed < ApplicationRecord
   scope :active, -> { where(is_active: true).joins(:advertiser).where(advertisers: { is_active: true }) }
 
   def as_indexed_json(_options = {})
-    adv = advertiser.as_json(methods: :type)
+    adv = advertiser.as_json
     adv.transform_keys! { |k| "advertiser_#{k}" }
     as_json.merge(adv)
   end
