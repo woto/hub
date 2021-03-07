@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Frames::News::TagController do
+describe Frames::News::TagController, type: :system do
   describe '#index' do
     before do
       # news1

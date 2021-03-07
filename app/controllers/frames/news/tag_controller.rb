@@ -7,11 +7,9 @@ module Frames
       layout 'centered'
 
       def index
-        client = Elasticsearch::Client.new Rails.application.config.elastic
-
         @tag = params[:tag]
 
-        query = Widgets::NewsByTagSearchQuery.call(
+        query = Frames::NewsByTagSearchQuery.call(
           locale: locale
         ).object
 

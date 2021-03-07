@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Widgets::NewsByTagSearchQuery
+class Frames::NewsByTagSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
@@ -35,6 +35,12 @@ class Widgets::NewsByTagSearchQuery
           #     match_all {}
           #   end
           # end
+
+          filter do
+            range :published_at do
+              lte Time.current.utc
+            end
+          end
         end
       end
 
