@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Import::Sync::AdmitadJob, type: :job do
+describe Sync::AdmitadJob, type: :job do
   subject { described_class.perform_now }
 
   context 'when unable to find token in cache' do
     let(:context) { instance_double(Interactor::Context, failure?: true) }
 
     it 'retrieves new token' do
-      expect(Networks::Admitad::Token::Restore).to receive(:call).and_return(context)
-      expect(Networks::Admitad::Token::Retrieve).to receive(:call)
-      expect(Networks::Admitad::Sync).to receive(:call)
+      expect(Sync::Admitad::Token::Restore).to receive(:call).and_return(context)
+      expect(Sync::Admitad::Token::Retrieve).to receive(:call)
+      expect(Sync::Admitad::Sync).to receive(:call)
       subject
     end
   end
@@ -18,9 +18,9 @@ RSpec.describe Import::Sync::AdmitadJob, type: :job do
     let(:context) { instance_double(Interactor::Context, failure?: false) }
 
     it 'does not tries to retrieve it' do
-      expect(Networks::Admitad::Token::Restore).to receive(:call).and_return(context)
-      expect(Networks::Admitad::Token::Retrieve).not_to receive(:call)
-      expect(Networks::Admitad::Sync).to receive(:call)
+      expect(Sync::Admitad::Token::Restore).to receive(:call).and_return(context)
+      expect(Sync::Admitad::Token::Retrieve).not_to receive(:call)
+      expect(Sync::Admitad::Sync).to receive(:call)
       subject
     end
   end
