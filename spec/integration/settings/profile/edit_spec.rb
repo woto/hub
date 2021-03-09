@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Settings::ProfilesController do
+describe Settings::ProfilesController, type: :system do
   let(:name) { Faker::Name.name }
   let(:bio) { Faker::Lorem.paragraph }
   let(:phone) { Faker::PhoneNumber.cell_phone_with_country_code }
@@ -45,14 +45,14 @@ describe Settings::ProfilesController do
 
   context 'when user has profile' do
     let(:user) do
-      create(:user, profile: create(:profile,
-                                    languages: ['en-US'],
-                                    name: 'Тестов Тест Тестович',
-                                    bio: 'Немного о себе',
-                                    time_zone: 'Kathmandu',
-                                    messengers: [
-                                      { type: 'WhatsApp', value: '+7 (919) 988-37-22' }
-                                    ]))
+      create(:user, profile: create(
+        :profile,
+        languages: ['en-US'],
+        name: 'Тестов Тест Тестович',
+        bio: 'Немного о себе',
+        time_zone: 'Kathmandu',
+        messengers: [{ type: 'WhatsApp', value: '+7 (919) 988-37-22' }]
+      ))
     end
 
     it 'shows filled form' do
@@ -79,6 +79,21 @@ describe Settings::ProfilesController do
       expect(page).to have_text('Тип мессенджера должен быть выбран')
       expect(page).to have_text('Адрес мессенджера не может быть пустым')
       expect(page).to have_text('Язык должен быть выбран')
+    end
+  end
+
+  context 'when user visits profile page again (with turbo)' do
+    before do
+      within '.list-group' do
+        click_on 'Профиль'
+      end
+    end
+
+    it 'reinitializes selectize and allows to select items' do
+      within find('.profile_form_languages') do
+        find('.selectize-input').click
+        find('div.option', text: 'Русский').click
+      end
     end
   end
 end
