@@ -40,7 +40,7 @@
                 <%= tag.div data: {controller: 'profile-avatar'}, id: "avatar-clickable" do %>
                   <%= form_tag settings_avatar_path,
                                class: 'dropzone d-flex align-items-center justify-content-center h-100 p-2',
-                               data: {target: 'profile-avatar.dropzoneComponent'} do %>
+                               'data-target': 'profile-avatar.dropzoneComponent' do %>
                     <div class="dz-message">
                       <% if current_user.avatar.attached? %>
                         <%= image_tag current_user.avatar.variant(resize_to_limit: [200, 200])  %>
