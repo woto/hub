@@ -17,7 +17,11 @@ module ApplicationInteractor
     end
 
     before do
-      Rails.logger.info("Starting interactor #{self.class.name}")
+      Rails.logger.info(message: "Starting interactor", class: self.class.name)
+    end
+
+    after do
+      Rails.logger.info(message: "Ending interactor", class: self.class.name)
     end
   end
 end
