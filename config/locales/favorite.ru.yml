@@ -4,5 +4,13 @@ ru:
       offers: Избранные товары
       feeds: Избранные прайсы
       users: Избранные пользователи
-      posts: Избранные посты
+      posts: Избранные статьи
+      transactions: Избранные транзакции
+      accounts: Избранные счета
+      checks: Избранные запросы выплат
+      feed_categories: Избранные категории товаров
+      post_categories: Избранные категории статей
+      feed_id: Избранное
+      advertiser_id: Избранное
+      feed_category_id: Избранное
     placeholder: Введите название...

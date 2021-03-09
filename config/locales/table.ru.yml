@@ -1,0 +1,75 @@
+ru:
+  table:
+    short:
+      feed:
+        id: ID
+        name: Назв. прайса
+        categories_count: Категорий
+        offers_count: Товаров
+        succeeded_at: Дата усп. обр.
+        created_at: Создан
+        updated_at: Изменен
+        favorite: Избр.
+        ext_id: Внешн. ID
+        operation: Операция
+        url: URL
+        error_class: Класс ошибки
+        error_text: Текст ошибки
+        locked_by_pid: PID проц.
+        attempt_uuid: UUID
+        language: Язык
+        processing_started_at: Дата нач. обр.
+        processing_finished_at: Дата оконч. обр.
+        synced_at: Дата синхр.
+        xml_file_path: Путь прайса
+        priority: Приоритет
+        is_active: Прайс акт.
+        downloaded_file_type: Тип файл
+        downloaded_file_size: Разм. файл
+        raw: Сыр. дан. прайса
+        advertiser_name: Назв. рекл.
+        advertiser_id: ID рекл.
+        advertiser_is_active: Рекл. акт.
+        advertiser_network: Партн. сеть
+        advertiser_ext_id: Внешн. ID рекл.
+        advertiser_synced_at: Дана синхр. рекл.
+        advertiser_created_at: Дата созд. рекл.
+        advertiser_updated_at: Дата обновл. рекл.
+        advertiser_raw: Сыр. дан. рекл.
+
+    long:
+      feed:
+        id: Идентификационный номер прайса
+        name: Название прайса
+        categories_count: Количество категорий прайса
+        offers_count: Количество товаров прайса
+        succeeded_at: Дата успешной обработки прайса
+        created_at: Дата создания прайса
+        updated_at: Дата изменения прайса
+        favorite: Избранное
+        ext_id: Внешний идентификационный номер прайса
+        operation: Тип операции
+        url: URL прайса
+        error_class: Тип ошибки
+        error_text: Текст ошибки
+        locked_by_pid: Заблокировано процессом PID
+        attempt_uuid: UUID операции обработки
+        language: Язык прайса
+        processing_started_at: Дата начала обработки
+        processing_finished_at: Дата завершения обработки
+        downloaded_file_size: Размер скачанного файла
+        raw: Сырые данные прайса
+        priority: Приоритет
+        is_active: Флаг активности прайса
+        xml_file_path: Путь до прайса
+        downloaded_file_type: Тип скачанного файла
+        synced_at: Дата синхронизации настроек прайса
+        advertiser_id: ID рекламодателя
+        advertiser_synced_at: Дата синхронизации настроек рекламодателя
+        advertiser_ext_id: Внешний ID рекламодателя
+        advertiser_raw: Сырые данные рекламодателя
+        advertiser_name: Название рекламодателя
+        advertiser_network: Партнерская сеть рекламодателя
+        advertiser_updated_at: Дата изменения рекламодателя
+        advertiser_created_at: Дата создания рекламодеталя
+        advertiser_is_active: Флаг активности рекламодателя

@@ -3,6 +3,9 @@ ru:
   feed: Прайс
   feed_category: Категория
   offers: Товары
+  feeds: Прайсы
+  feed_categories: Категории товаров
+  post_categories: Категории статей
   advertisers/admitad: Рекламодатель
 
   frames:
