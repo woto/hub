@@ -10,7 +10,7 @@ describe Settings::EmailsController, type: :system do
 
   let(:user) { create(:user) }
 
-  it 'prefills user user email in text input' do
+  it 'prefills user email in the text input' do
     expect(page).to have_field('user_email', with: user.email)
   end
 
@@ -29,12 +29,14 @@ describe Settings::EmailsController, type: :system do
       expect(page).to have_text('Ожидается подтверждение адреса E-mail: foo@bar.com')
     end
 
-    it 'sends email to new address' do
+    it 'sends email to new and old addresses' do
       expect do
         fill_in('user_email', with: 'foo@bar.com')
         click_on('Обновить')
         expect(page).to have_current_path('/ru')
       end.to change { ActionMailer::Base.deliveries.size }.by(2)
+      expect(ActionMailer::Base.deliveries.first.to).to eq([user.email])
+      expect(ActionMailer::Base.deliveries.last.to).to eq(['foo@bar.com'])
     end
   end
 end
