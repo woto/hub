@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import * as bootstrap from 'bootstrap';
 
 export default class extends Controller {
     static targets = [ "contentPlaceholder" ]
@@ -6,21 +7,18 @@ export default class extends Controller {
     open(html) {
         return new Promise((resolve, reject) => {
             let modalTemplate = `
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-xl" role="document">
+            <div class="modal" tabindex="-1">
+              <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body" data-target="modal-singleton.contentPlaceholder">
                     ${html}
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   </div>
                 </div>
               </div>
@@ -28,18 +26,17 @@ export default class extends Controller {
 
             this.element.insertAdjacentHTML('beforeend', modalTemplate);
             let modal = this.element.lastChild;
-            console.log(modal);
+            // console.log(modal);
 
-            $(modal).on('hidden.bs.modal', function (e) {
+            modal.addEventListener('hidden.bs.modal', function (event) {
                 modal.remove();
             })
 
-            $(modal).on('show.bs.modal', function (e) {
+            modal.addEventListener('show.bs.modal', function (event) {
                 resolve();
             })
 
-            $(modal).modal();
-
+            return new bootstrap.Modal(modal).show();
         });
 
     }
