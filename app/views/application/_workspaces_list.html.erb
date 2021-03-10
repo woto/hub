@@ -17,7 +17,7 @@
                   <% end %>
                 </span>
               <% end %>
-              <%= link_to table_workspace_path(workspace,
+              <%= link_to table_workspace_path(id: workspace,
                                                model: params[:controller],
                                                **request.params.slice(*GlobalHelper.workspace_params)),
                           data: { confirm: t('are_you_sure'), test_id: "delete-workspace-#{workspace.id}" },

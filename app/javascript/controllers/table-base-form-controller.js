@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-    static targets = [ "form" ]
+    static targets = [ "form", 'toggleButton' ]
 
     connect() {}
 
@@ -9,11 +9,13 @@ export default class extends Controller {
         event.preventDefault();
 
         let isDisplayed = this.data.get('isDisplayed')
-        if(isDisplayed == '1') {
+        if(isDisplayed === '1') {
             this.hideForm();
+            this.buttonOff();
             this.data.set('isDisplayed', '0');
         } else {
             this.displayForm();
+            this.buttonOn();
             this.data.set('isDisplayed', '1');
         }
     }
@@ -26,6 +28,22 @@ export default class extends Controller {
     hideForm() {
         this.formTarget.classList.add('d-none');
         this.formTarget.classList.remove('d-block');
+    }
+
+    buttonOn() {
+        this.toggleButtonTarget.classList.add('btn-info');
+        this.toggleButtonTarget.classList.remove('btn-primary');
+    }
+
+    buttonOff() {
+        this.toggleButtonTarget.classList.add('btn-primary');
+        this.toggleButtonTarget.classList.remove('btn-info');
+    }
+
+    teardown() {
+        this.hideForm();
+        this.buttonOff();
+        this.data.set('isDisplayed', '0');
     }
 }
 

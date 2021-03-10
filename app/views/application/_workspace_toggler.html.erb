@@ -1,7 +1,7 @@
 <%= link_to '#',
-            class: "flex-fill align-self-sm-center nav-link btn btn-light border",
+            class: "flex-fill align-self-sm-center nav-link btn btn-primary border",
             "data-action": 'table-workspace-form#toggleForm',
-            test_id => 'show-workspace-form' do %>
+            "data-target": 'table-workspace-form.toggleButton' do %>
   <%== GlobalHelper.icon('bookmark') %>
   <%= t('workspaces') %>
 <% end %>

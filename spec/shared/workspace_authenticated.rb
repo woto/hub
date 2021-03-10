@@ -5,7 +5,7 @@ require 'rails_helper'
 shared_examples 'shared_workspace_authenticated' do
 
   context 'when user has default workspace' do
-    fit 'loads automatically when user visits `plural`' do
+    it 'loads automatically when user visits `plural`' do
       login_as(user, scope: :user)
       workspace = create(:workspace, is_default: true, user: user, controller: "tables/#{plural}", path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
       visit "/ru/#{plural}"
@@ -40,6 +40,28 @@ shared_examples 'shared_workspace_authenticated' do
         find("[data-action='table-workspace-form#toggleForm']").click
         expect(page).to have_css('.d-block[data-target="table-workspace-form.form"]', visible: true)
       end
+    end
+
+    context 'when user clicking browser back button' do
+      it 'shows initial state' do
+        # showing form
+        find("[data-action='table-workspace-form#toggleForm']").click
+        expect(page).to have_css('.d-block[data-target="table-workspace-form.form"]', visible: true)
+
+        # clicking anywhere
+        click_on('Новости')
+        expect(page).to have_current_path(Regexp.new('/ru/news'))
+        # teardown does not have time to execute
+        # and we can't test it otherwise
+        sleep(1)
+
+
+        # clicking back
+        page.go_back
+        expect(page).to have_current_path(Regexp.new("/ru/#{plural}"))
+        expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
+      end
+
     end
   end
 
