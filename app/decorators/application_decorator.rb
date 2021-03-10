@@ -5,7 +5,6 @@ class ApplicationDecorator < Draper::Decorator
   #   def percent_amount
   #     h.number_to_percentage object.amount, precision: 2
   #   end
-  include FavorableConcern
 
   def self.collection_decorator_class
     PaginatingConcern
@@ -27,6 +26,10 @@ class ApplicationDecorator < Draper::Decorator
     GlobalHelper.decorate_datetime(datetime, h)
   end
 
+  def decorate_text(text)
+    GlobalHelper.decorate_text(text, h)
+  end
+
   def decorate_money(amount, currency)
     raise "currency can't be nil" if currency.nil?
     GlobalHelper.decorate_money(amount, currency, h)
@@ -37,7 +40,11 @@ class ApplicationDecorator < Draper::Decorator
     if method_name.first == '_'
       object[method_name]
     else
-      object['_source'][method_name]
+      if object['_source'].key?(method_name)
+        object['_source'][method_name]
+      else
+        raise method_name
+      end
     end
   end
 end

@@ -29,4 +29,8 @@ class UserDecorator < ApplicationDecorator
   def confirmation_sent_at
     decorate_datetime(super)
   end
+
+  def confirmed_at
+    decorate_datetime(super)
+  end
 end
