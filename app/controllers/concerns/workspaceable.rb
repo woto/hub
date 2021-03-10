@@ -1,7 +1,6 @@
 module Workspaceable
   extend ActiveSupport::Concern
   include Paginatable
-  include SearchBarable
 
   included do
     before_action :set_settings
@@ -13,7 +12,7 @@ module Workspaceable
 
     def check_defaults
       if workspace_params.values_at(*self.class::REQUIRED_PARAMS).any? { _1.nil? }
-        user_default_workspace = Workspace.find_by(controller: "tables/#{@settings[:plural]}", is_default: true)
+        user_default_workspace = policy_scope(Workspace).find_by(controller: "tables/#{@settings[:plural]}", is_default: true)
         if user_default_workspace
           redirect_to user_default_workspace.path
         else
@@ -23,7 +22,7 @@ module Workspaceable
     end
 
     def set_workspaces
-      @workspaces = policy_scope(Workspace.where(controller: "tables/#{@settings[:plural]}"))
+      @workspaces = policy_scope(Workspace).where(controller: "tables/#{@settings[:plural]}")
     end
 
     def set_workspace_form
