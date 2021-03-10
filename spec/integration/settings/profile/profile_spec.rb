@@ -83,6 +83,8 @@ describe Settings::ProfilesController, type: :system do
   end
 
   context 'when user visits profile page again (with turbo)' do
+    let(:user) { create(:user) }
+
     before do
       within '.list-group' do
         click_on 'Профиль'
@@ -93,6 +95,30 @@ describe Settings::ProfilesController, type: :system do
       within find('.profile_form_languages') do
         find('.selectize-input').click
         find('div.option', text: 'Русский').click
+      end
+    end
+  end
+
+  context 'when user clicks browser back button' do
+    let(:user) { create(:user) }
+
+    it 'shows initial state' do
+      # showing form
+      within find('.profile_form_languages') do
+        expect(page).to have_css('.selectize-control', count: 1)
+      end
+
+      # clicking anywhere
+      click_on('Новости')
+      expect(page).to have_current_path(Regexp.new('/ru/news'))
+      # teardown does not have time to execute
+      # and we can't test it otherwise
+      sleep(1)
+
+      # clicking back
+      page.go_back
+      within find('.profile_form_languages') do
+        expect(page).to have_css('.selectize-control', count: 1)
       end
     end
   end

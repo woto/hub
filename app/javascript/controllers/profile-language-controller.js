@@ -15,7 +15,6 @@ export default class extends Controller {
         });
     }
 
-    // TODO: maybe not needed
     disconnect() {
         console.log('profile-language-controller disconnect');
         if(this.selectize) {
@@ -23,7 +22,6 @@ export default class extends Controller {
         }
     }
 
-    // TODO: maybe not needed
     teardown() {
         console.log('profile-language-controller teardown');
         if(this.selectize) {
