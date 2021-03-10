@@ -33,12 +33,6 @@ class GlobalHelper
       Post.setup_index(Columns::PostForm)
       create_index(client, Post)
 
-      PostCategory.setup_index(Columns::PostCategoryForm)
-      create_index(client, PostCategory)
-
-      FeedCategory.setup_index(Columns::FeedCategoryForm)
-      create_index(client, FeedCategory)
-
       Favorite.setup_index(Columns::FavoriteForm)
       create_index(client, Favorite)
 
