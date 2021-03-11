@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 shared_examples 'shared_workspace_authenticated' do
-
   context 'when user has default workspace' do
     it 'loads automatically when user visits `plural`' do
       login_as(user, scope: :user)
-      workspace = create(:workspace, is_default: true, user: user, controller: "tables/#{plural}", path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
+      create(:workspace, is_default: true, user: user, controller: "tables/#{plural}",
+                                     path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
       visit "/ru/#{plural}"
       expect(page).to have_current_path("/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
     end
@@ -16,7 +16,8 @@ shared_examples 'shared_workspace_authenticated' do
   context 'when user clicks on saved workspace' do
     it 'loads workspace params' do
       login_as(user, scope: :user)
-      workspace = create(:workspace, is_default: false, user: user, controller: "tables/#{plural}", path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
+      workspace = create(:workspace, is_default: false, user: user, controller: "tables/#{plural}",
+                                     path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
       visit "/ru/#{plural}"
       click_on workspace.name
       expect(page).to have_current_path("/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
@@ -55,13 +56,11 @@ shared_examples 'shared_workspace_authenticated' do
         # and we can't test it otherwise
         sleep(1)
 
-
         # clicking back
         page.go_back
         expect(page).to have_current_path(Regexp.new("/ru/#{plural}"))
         expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
       end
-
     end
   end
 
@@ -148,7 +147,6 @@ shared_examples 'shared_workspace_authenticated' do
           end
 
           expect(page).to have_text(name)
-
         end.to change(user.workspaces, :count)
       end
     end

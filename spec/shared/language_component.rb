@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.shared_examples "shared_language_component" do
+shared_examples 'shared_language_component' do
   it 'has correct href' do
-    expect(page).to have_css("[data-test-class='language_component'] [data-test-class='link'][href='#{link}']", visible: :all)
+    selector = "[data-test-class='language_component'] [data-test-class='link'][href='#{link}']"
+    expect(page).to have_css(selector, visible: :all)
   end
 end

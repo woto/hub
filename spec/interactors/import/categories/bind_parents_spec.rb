@@ -12,11 +12,11 @@ describe Import::Categories::BindParents do
     let!(:parent) { create(:feed_category, feed: feed, ext_id: ext_id) }
     let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }
 
-    it "is not exceed 1 sql update" do
+    it 'is not exceed 1 sql update' do
       expect { subject }.not_to exceed_query_limit(1).with(/^UPDATE/)
     end
 
-    it "is exceed 0 sql update" do
+    it 'is exceed 0 sql update' do
       expect { subject }.to exceed_query_limit(0).with(/^UPDATE/)
     end
   end
@@ -25,7 +25,7 @@ describe Import::Categories::BindParents do
     let!(:parent) { create(:feed_category, feed: feed, ext_id: ext_id) }
     let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id, parent: parent) }
 
-    it "is not exceed 0 sql updates" do
+    it 'is not exceed 0 sql updates' do
       expect { subject }.not_to exceed_query_limit(0).with(/^UPDATE/)
     end
   end
@@ -47,7 +47,7 @@ describe Import::Categories::BindParents do
     let!(:invalid_child2) { create(:feed_category, feed: feed, ext_parent_id: SecureRandom.uuid) }
     let!(:child2) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }
 
-    it "updates children in a error safe loop" do
+    it 'updates children in a error safe loop' do
       subject
       expect(child1.reload.parent).to eq(parent)
       expect(child2.reload.parent).to eq(parent)
@@ -69,7 +69,7 @@ describe Import::Categories::BindParents do
 
     it 'does not update child and send metrics' do
       expect(Yabeda).to receive_message_chain('hub.bind_parents_error.increment')
-                          .with({ feed_id: feed.id, message: 'Unable to update child category' }, { by: 1 })
+        .with({ feed_id: feed.id, message: 'Unable to update child category' }, { by: 1 })
       subject
       expect(child).to be_invalid
       expect(child.errors.to_h).to eq({ base: 'Feedcategory cannot be a descendant of itself.' })
@@ -82,7 +82,7 @@ describe Import::Categories::BindParents do
 
     it 'does not update child and send metrics' do
       expect(Yabeda).to receive_message_chain('hub.bind_parents_error.increment')
-                          .with({ feed_id: feed.id, message: 'Parent category was not found' }, { by: 1 })
+        .with({ feed_id: feed.id, message: 'Parent category was not found' }, { by: 1 })
       expect(child).not_to receive(:update)
       subject
     end

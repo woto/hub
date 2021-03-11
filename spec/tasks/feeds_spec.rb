@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe "hub:feeds" do
+describe 'hub:feeds' do
   after { subject.execute }
 
   describe 'hub:feeds:sweep' do

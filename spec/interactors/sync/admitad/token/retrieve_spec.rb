@@ -27,8 +27,8 @@ describe Sync::Admitad::Token::Retrieve do
 
   before do
     stub_request(:post, 'https://api.admitad.com/token/')
-        .with(body: body, headers: headers)
-        .to_return(to_return)
+      .with(body: body, headers: headers)
+      .to_return(to_return)
   end
 
   it 'stores token to cache' do

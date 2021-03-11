@@ -22,7 +22,7 @@
 FactoryBot.define do
   factory :workspace do
     user
-    controller { "tables/news" }
+    controller { 'tables/news' }
     name { Faker::App.name }
     path { Faker::Internet.slug }
   end

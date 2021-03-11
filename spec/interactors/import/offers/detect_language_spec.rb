@@ -6,7 +6,9 @@ describe Import::Offers::DetectLanguage do
   subject { described_class.call(offer) }
 
   context 'when description includes russian language' do
-    let(:offer) { { 'description' => [Import::Offers::Hashify::HASH_BANG_KEY => 'Это длинный текст описания на русском.'] } }
+    let(:offer) do
+      { 'description' => [Import::Offers::Hashify::HASH_BANG_KEY => 'Это длинный текст описания на русском.'] }
+    end
 
     it 'modifies offer with detected language' do
       subject
@@ -16,7 +18,9 @@ describe Import::Offers::DetectLanguage do
   end
 
   context 'when description includes english language' do
-    let(:offer) { { 'description' => [Import::Offers::Hashify::HASH_BANG_KEY => 'Phrase and clause cover everything.'] } }
+    let(:offer) do
+      { 'description' => [Import::Offers::Hashify::HASH_BANG_KEY => 'Phrase and clause cover everything.'] }
+    end
 
     it 'modifies offer with detected language' do
       subject

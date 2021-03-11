@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :offer, class: Hash do
-
     transient do
       refresh { true }
     end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Frames::News::MonthController do
+describe Frames::News::MonthController, type: :system do
   describe '#index' do
     let(:future_time) { 1.minute.from_now }
 
@@ -30,7 +30,7 @@ describe Frames::News::MonthController do
 
     context 'when time is in future' do
       it 'displays only news which matches the filter' do
-        travel 2.minute do
+        travel 2.minutes do
           visit '/en-US/frames/news/month'
 
           expect(page).to have_link(count: 4)

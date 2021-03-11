@@ -112,7 +112,6 @@ describe Import::Offers::SurrogateCategory do
     end
 
     context 'when surrogate category does not exist yet' do
-
       it 'creates surrogate category with valid params' do
         subject
 

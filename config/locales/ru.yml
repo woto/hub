@@ -7,6 +7,9 @@ ru:
   feed_categories: Категории товаров
   post_categories: Категории статей
   advertisers/admitad: Рекламодатель
+  link: Ссылка
+  true: Да
+  false: Нет
 
   frames:
     news:

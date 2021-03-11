@@ -1,4 +1,4 @@
-<%= link_to '#', helpers.test_class => 'language_component', class: 'nav-link px-0', data: {'bs-toggle': 'dropdown'} do %>
+<%= link_to '#', helpers.test_class => 'language_component', class: 'nav-link px-0', 'data-bs-toggle': 'dropdown' do %>
   <%== GlobalHelper.icon('world') %>&nbsp;
   <% if @display_title %>
     <%= t('.title') %>

@@ -57,7 +57,6 @@ Rails.application.routes.draw do
         end
       end
       resources :offers, only: [:index]
-      resources :post_categories, only: [:index]
       resources :posts, only: [:index]
       resources :transactions, only: [:index]
       resources :users, only: [:index]

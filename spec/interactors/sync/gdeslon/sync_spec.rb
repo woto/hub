@@ -16,6 +16,6 @@ describe Sync::Gdeslon::Sync do
   end
 
   it 'creates advertisers' do
-    expect { described_class.call}.to change(Advertiser, :count).by(2)
+    expect { described_class.call }.to change(Advertiser, :count).by(2)
   end
 end

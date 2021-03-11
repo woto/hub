@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe 'Header' do
-
   context 'when user is not authenticated' do
     it 'shows login link for desktop' do
       visit '/ru/dashboard'
@@ -20,6 +19,7 @@ describe 'Header' do
 
   context 'when user is authenticated' do
     let(:user) { create(:user) }
+
     before do
       login_as(user, scope: :user)
     end

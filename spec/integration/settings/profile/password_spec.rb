@@ -18,10 +18,10 @@ describe Settings::PasswordsController, type: :system do
   it 'changes encrypted_password' do
     fill_in('user_password', with: '123456')
     fill_in('user_password_confirmation', with: '123456')
-    expect {
+    expect do
       click_on('Обновить')
       expect(page).to have_current_path('/ru')
-    }.to(change { user.reload.encrypted_password })
+    end.to(change { user.reload.encrypted_password })
   end
 
   it 'redirects to root page' do
@@ -50,7 +50,7 @@ describe Settings::PasswordsController, type: :system do
         click_on('Обновить')
         expect(page).to have_css('#user_password ~ .invalid-feedback', text: 'Пароль недостаточной длины')
         expect(page).to have_css('.alert', text: 'Невозможно сохранить')
-      end.not_to(change { user.encrypted_password })
+      end.not_to(change(user, :encrypted_password))
     end
   end
 
@@ -63,7 +63,7 @@ describe Settings::PasswordsController, type: :system do
         expect(page).to have_css('#user_password_confirmation ~ .invalid-feedback',
                                  text: 'Подтверждение пароля не совпадает')
         expect(page).to have_css('.alert', text: 'Невозможно сохранить')
-      end.not_to(change { user.encrypted_password })
+      end.not_to(change(user, :encrypted_password))
     end
   end
 end

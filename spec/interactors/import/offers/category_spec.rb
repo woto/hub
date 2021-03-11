@@ -78,6 +78,7 @@ describe Import::Offers::Category do
     context 'when there are corresponding leaf category' do
       let!(:root_category) { create(:feed_category, feed: feed) }
       let!(:leaf_category) { create(:feed_category, feed: feed, parent: root_category, ext_id: ext_id) }
+
       it "sets category's values to offer" do
         subject
         expect(offer).to eq(

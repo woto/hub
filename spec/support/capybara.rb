@@ -21,9 +21,7 @@ Capybara.test_id = 'data-test-id'
     # predictable results instead of relying on Chrome configuration.
     # options.add_option('prefs', 'intl.accept_languages' => 'ru')
     # options.add_argument("--lang=ru")
-    if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
-      options.headless!
-    end
+    options.headless! if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
 
     Capybara::Selenium::Driver.new(
       app,

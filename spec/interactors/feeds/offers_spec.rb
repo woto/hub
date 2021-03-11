@@ -39,8 +39,8 @@ describe Feeds::Offers do
 
       it 'calls Import::Offers::StandardAttributes with correct argument' do
         expect(Import::Offers::StandardAttributes).to receive(:call).with(
-          instance_of(Hash), feed)
-        .and_call_original
+          instance_of(Hash), feed
+        ).and_call_original
         subject.append(doc)
       end
 
@@ -94,7 +94,6 @@ describe Feeds::Offers do
     end
 
     describe '#flush' do
-
       it 'calls Import::Offers::Flush with correct arguments' do
         offers = subject.append(doc)
         expect(Import::Offers::Flush).to receive(:call).with(

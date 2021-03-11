@@ -89,6 +89,7 @@ describe Import::LockFeed do
   context 'when advertiser is inactive' do
     let(:params) { { feed: nil } }
     let(:advertiser) { create(:advertiser, is_active: false) }
+
     before do
       create(:feed, advertiser: advertiser, locked_by_pid: 0)
     end

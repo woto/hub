@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class Header::LanguageComponent < ViewComponent::Base
-  def initialize(display_title:, capybara_browser: nil)
-    @display_title = display_title
+module Header
+  class LanguageComponent < ViewComponent::Base
+    def initialize(display_title:, capybara_browser: nil)
+      @display_title = display_title
+    end
   end
 end

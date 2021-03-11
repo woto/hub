@@ -25,7 +25,7 @@ describe Frames::News::TagController, type: :system do
 
     context 'when time is in future' do
       it 'displays only news which matches the filter' do
-        travel 2.minute do
+        travel 2.minutes do
           visit '/en-US/frames/news/tag'
 
           expect(page).to have_link(count: 3)

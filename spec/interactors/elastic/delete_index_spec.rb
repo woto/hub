@@ -11,7 +11,7 @@ describe Elastic::DeleteIndex do
 
   context 'when index_name param has particular name' do
     let(:params) { { index_name: index_name } }
-    let(:index_name) { Elastic::IndexName.new_picker(rand.to_s) }
+    let(:index_name) { Elastic::IndexName.pick(rand.to_s) }
 
     it 'deletes index' do
       elastic_client.indices.create index: index_name
@@ -42,7 +42,7 @@ describe Elastic::DeleteIndex do
   end
 
   describe '#ignore_unavailable and index is absent' do
-    let(:index_name) { Elastic::IndexName.new_picker(rand.to_s) }
+    let(:index_name) { Elastic::IndexName.pick(rand.to_s) }
 
     context 'when ignore_unavailable param is false' do
       let(:params) { { index_name: index_name, ignore_unavailable: false } }
@@ -53,7 +53,7 @@ describe Elastic::DeleteIndex do
     end
 
     context 'when ignore_unavailable param is true' do
-      let(:params) { {index_name: index_name, ignore_unavailable: true} }
+      let(:params) { { index_name: index_name, ignore_unavailable: true } }
 
       it 'does not raise error even though absence of index' do
         expect { subject }.not_to raise_error

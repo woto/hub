@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 describe Frames::News::LatestController, type: :system do
-
   describe '#index' do
-
     context 'when latest news are present' do
       let!(:news1) { create(:post, realm_kind: :news, published_at: Time.zone.parse('2002-02-03 12:00')) }
       let!(:news2) { create(:post, realm_kind: :news, published_at: Time.zone.parse('2001-02-03 12:00')) }
@@ -24,7 +22,7 @@ describe Frames::News::LatestController, type: :system do
       it 'has link to previous news item' do
         within("div[data-test-id='link-to-older-news']") do
           expect(page).to(
-              have_css("a[data-test-id='older-news'][href='/ru/frames/news/latest?page=1']")
+            have_css("a[data-test-id='older-news'][href='/ru/frames/news/latest?page=1']")
           )
         end
       end
@@ -32,10 +30,10 @@ describe Frames::News::LatestController, type: :system do
       it 'does not have link to next news item' do
         within("div[data-test-id='link-to-newer-news']") do
           expect(page).to(
-              have_none_of_selectors('a')
+            have_none_of_selectors('a')
           )
           expect(page).to(
-              have_css("span[data-test-id='newer-news']")
+            have_css("span[data-test-id='newer-news']")
           )
         end
       end
@@ -55,10 +53,10 @@ describe Frames::News::LatestController, type: :system do
         it 'does not have link to previous news item' do
           within("div[data-test-id='link-to-older-news']") do
             expect(page).to(
-                have_none_of_selectors('a')
+              have_none_of_selectors('a')
             )
             expect(page).to(
-                have_css("span[data-test-id='older-news']")
+              have_css("span[data-test-id='older-news']")
             )
           end
         end
@@ -66,7 +64,7 @@ describe Frames::News::LatestController, type: :system do
         it 'has link to next news item' do
           within("div[data-test-id='link-to-newer-news']") do
             expect(page).to(
-                have_css("a[data-test-id='newer-news'][href='/ru/frames/news/latest?page=0']")
+              have_css("a[data-test-id='newer-news'][href='/ru/frames/news/latest?page=0']")
             )
           end
         end

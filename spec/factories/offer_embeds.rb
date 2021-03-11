@@ -22,6 +22,6 @@
 FactoryBot.define do
   factory :offer_embed do
     user { nil }
-    urls { "" }
+    urls { '' }
   end
 end

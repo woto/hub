@@ -17,7 +17,6 @@ describe Import::CategoriesCreator do
   end
 
   describe '#append' do
-
     it 'increases total_count' do
       subject.append(doc)
       expect(subject.total_count).to eq(1)
@@ -54,7 +53,7 @@ describe Import::CategoriesCreator do
     context 'when processed category is the same as in the database' do
       before do
         create(:feed_category, feed: feed, ext_id: 'abc', ext_parent_id: 'def', name: 'тест',
-               raw: '<category id="abc" parentId="def">&#x442;&#x435;&#x441;&#x442;</category>')
+                               raw: '<category id="abc" parentId="def">&#x442;&#x435;&#x441;&#x442;</category>')
       end
 
       it 'does not issue update SQL' do

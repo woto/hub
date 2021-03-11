@@ -37,7 +37,6 @@
 #
 FactoryBot.define do
   factory :post do
-
     title do
       # Faker::GreekPhilosophers.quote
       Faker::Lorem.sentence(word_count: 2, random_words_to_add: 12)
