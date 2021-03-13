@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: favorites
@@ -24,25 +26,30 @@ class Favorite < ApplicationRecord
   include Elasticable
   # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.favorites"
+  enum kind: { users: 0, posts: 1, transactions: 2, accounts: 3, checks: 4, news: 5, offers: 6, feeds: 7 }
+
   belongs_to :user
+
   has_many :favorites_items, dependent: :destroy
 
   validates :name, presence: true
-
-  validates :name, length: { maximum: 20 }
-
-  enum kind: [:users, :offers, :feeds, :posts, :transactions, :accounts, :checks, :news, :post_categories]
+  validates :name, length: { maximum: 30 }
+  validates :kind, presence: true
 
   def as_indexed_json(_options = {})
     {
-        id: id,
-        favorites_items_count: favorites_items_count,
-        is_default: is_default,
-        kind: kind,
-        name: name,
-        created_at: created_at,
-        updated_at: updated_at,
-        user_id: user_id
+      id: id,
+      favorites_items_count: favorites_items_count,
+      is_default: is_default,
+      kind: kind,
+      name: name,
+      created_at: created_at,
+      updated_at: updated_at,
+      user_id: user_id
     }
+  end
+
+  def to_label
+    name
   end
 end

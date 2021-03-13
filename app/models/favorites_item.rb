@@ -22,4 +22,9 @@
 #
 class FavoritesItem < ApplicationRecord
   belongs_to :favorite, counter_cache: true
+
+  enum kind: { users: 0, posts: 1, transactions: 2, accounts: 3, checks: 4, news: 5, feeds: 6,
+               advertiser_id: 7, feed_id: 8, feed_category_id: 9, _id: 10 }
+
+  validates :kind, presence: true
 end

@@ -2,6 +2,8 @@
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
   impersonates :user
 
   respond_to :html, :json
@@ -14,10 +16,18 @@ class ApplicationController < ActionController::Base
   before_action :set_responsible
 
   helper_method :path_for_switch_language
-
   helper_method :url_for_search_everywhere
 
   private
+
+  def render_404(exception)
+    Rails.logger.error(exception.message)
+    Yabeda.hub.http_errors.increment({ http_code: 404 }, by: 1)
+
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404.html", layout: false, status: 404 }
+    end
+  end
 
   def default_url_options
     return {} if I18n.available_locales.map(&:to_s).include?(request.subdomains.first)

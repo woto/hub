@@ -23,6 +23,7 @@
 FactoryBot.define do
   factory :favorite do
     user
-    name { "MyString" }
+    name { Faker::Lorem.word }
+    kind { Favorite.kinds.keys.sample }
   end
 end

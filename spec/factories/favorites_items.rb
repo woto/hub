@@ -20,7 +20,8 @@
 #
 FactoryBot.define do
   factory :favorites_item do
-    favorite { nil }
-    ext_id { 'MyString' }
+    favorite
+    ext_id { Faker::Alphanumeric.alphanumeric }
+    kind { FavoritesItem.kinds.keys.sample }
   end
 end

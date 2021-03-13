@@ -1,0 +1,28 @@
+<% content_for :title do %>
+  <% if @favorite %>
+    <%= t('titles.favorite') %>: <%= @favorite.to_label %>
+  <% elsif @current_feed_category %>
+    <%= t('titles.feed_category') %>: <%= @current_feed_category.to_label %>
+    <% kind = :feed_category_id %>
+    <% favorites_store = FavoritesStore.new(current_user, [@current_feed_category.id], :offers, kind) %>
+    <%= render FavoriteComponent.new(is_favorite: favorites_store.find(@current_feed_category.id),
+                                     ext_id: @current_feed_category.id,
+                                     favorites_items_kind: kind) %>
+  <% elsif @current_feed %>
+    <%= t('titles.feed') %>: <%= @current_feed.to_label %>
+    <% kind = :feed_id %>
+    <% favorites_store = FavoritesStore.new(current_user, [@current_feed.id], :offers, kind) %>
+    <%= render FavoriteComponent.new(is_favorite: favorites_store.find(@current_feed.id),
+                                     ext_id: @current_feed.id,
+                                     favorites_items_kind: kind) %>
+  <% elsif @current_advertiser %>
+    <%= t('titles.advertiser') %>: <%= @current_advertiser.to_label %>
+    <% kind = :advertiser_id %>
+    <% favorites_store = FavoritesStore.new(current_user, [@current_advertiser.id], :offers, kind) %>
+    <%= render FavoriteComponent.new(is_favorite: favorites_store.find(@current_advertiser.id),
+                                     ext_id: @current_advertiser.id,
+                                     favorites_items_kind: kind) %>
+  <% else %>
+    <%= t('titles.offers') %>
+  <% end %>
+<% end %>

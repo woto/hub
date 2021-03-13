@@ -3,11 +3,15 @@ ru:
     offers: Все товары
     settings: Настройки
     feeds: Прайс листы
+    feed: Прайс лист
     advertisers: Рекламодатели
+    advertiser: Рекламодатель
     posts: Статьи
     users: Пользователи
     favorites: Избранное
-    post_categories: Категории
+    favorite: Избранное
+    feed_categories: Категории
+    feed_category: Категория
     accounts: Счета
     news: Новости
     transactions: Транзакции
