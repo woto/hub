@@ -76,5 +76,8 @@ module Hub
     }
 
     config.middleware.insert_after(Rack::Head, ::Locale)
+
+    # NOTE: Logidze uses DB functions and triggers, hence you need to use SQL format for a schema dump:
+    config.active_record.schema_format = :sql
   end
 end
