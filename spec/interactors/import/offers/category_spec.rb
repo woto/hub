@@ -29,9 +29,8 @@ describe Import::Offers::Category do
       expect(Rails).to receive_message_chain('logger.warn').with(
         { feed_id: feed.id, message: 'There is no categoryId key', object: nil }
       )
-      expect(Yabeda).to receive_message_chain('hub.categories_errors.increment')
+      expect(Yabeda.hub.categories_errors).to receive(:increment)
         .with({ feed_id: feed.id, message: 'There is no categoryId key' }, { by: 1 })
-
       subject
     end
   end
@@ -51,7 +50,7 @@ describe Import::Offers::Category do
         { feed_id: feed.id, message: 'There are more than one values for categoryId key',
           object: { categoryId: [{ '#' => 1 }, { '#' => 'a' }] } }
       )
-      expect(Yabeda).to receive_message_chain('hub.categories_errors.increment')
+      expect(Yabeda.hub.categories_errors).to receive(:increment)
         .with({ feed_id: feed.id, message: 'There are more than one values for categoryId key' }, { by: 1 })
       subject
     end
@@ -69,7 +68,7 @@ describe Import::Offers::Category do
           { feed_id: feed.id, message: 'FeedCategory was not found',
             object: { categoryId: ext_id } }
         )
-        expect(Yabeda).to receive_message_chain('hub.categories_errors.increment')
+        expect(Yabeda.hub.categories_errors).to receive(:increment)
           .with({ feed_id: feed.id, message: 'FeedCategory was not found' }, { by: 1 })
         subject
       end

@@ -68,7 +68,7 @@ describe Import::Categories::BindParents do
     let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }
 
     it 'does not update child and send metrics' do
-      expect(Yabeda).to receive_message_chain('hub.bind_parents_error.increment')
+      expect(Yabeda.hub.bind_parents_error).to receive(:increment)
         .with({ feed_id: feed.id, message: 'Unable to update child category' }, { by: 1 })
       subject
       expect(child).to be_invalid
@@ -81,7 +81,7 @@ describe Import::Categories::BindParents do
     let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }
 
     it 'does not update child and send metrics' do
-      expect(Yabeda).to receive_message_chain('hub.bind_parents_error.increment')
+      expect(Yabeda.hub.bind_parents_error).to receive(:increment)
         .with({ feed_id: feed.id, message: 'Parent category was not found' }, { by: 1 })
       expect(child).not_to receive(:update)
       subject
