@@ -5,7 +5,7 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.dashboard'),
         path: { controller: '/dashboard', action: 'index' },
-        current_page: current_page?({controller: '/dashboard'}),
+        current_page: request.path.yield_self { |p| p.include?('dashboard') },
         icon: GlobalHelper.icon('layout-grid'),
         disabled: false
     ) %>
@@ -13,15 +13,15 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.feeds'),
         path: { controller: '/tables/feeds', action: 'index' },
-        current_page: current_page?({controller: '/tables/feeds'}),
+        current_page: request.path.yield_self { |p| p.include?('feeds') && p.exclude?('offers') },
         icon: GlobalHelper.icon('file-invoice'),
         disabled: false
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.offers'),
-        path: { controller: '/tables/offers', action: 'index', feed_id: nil },
-        current_page: current_page?({controller: '/tables/offers'}),
+        path: { controller: '/tables/offers', action: 'index', feed_id: nil, advertiser_id: nil, feed_category_id: nil },
+        current_page: request.path.yield_self { |p| p.include?('offers') },
         icon: GlobalHelper.icon('shopping-cart'),
         disabled: false
     ) %>
@@ -29,24 +29,16 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.posts'),
         path: { controller: '/tables/posts', action: 'index' },
-        current_page: current_page?({controller: '/tables/posts'}),
+        current_page: request.path.yield_self { |p| p.include?('posts') },
         icon: GlobalHelper.icon('pencil'),
-        disabled: !user_signed_in?
-    ) %>
-
-    <%= render Left::Menu::ItemComponent.new(
-        title: t('left_menu.post_categories'),
-        path: { controller: '/tables/post_categories', action: 'index' },
-        current_page: current_page?({controller: '/tables/post_categories'}),
-        icon: GlobalHelper.icon('sitemap'),
-        disabled: !user_signed_in?
+        disabled: false
     ) %>
 
     <% if policy(:user).index? %>
       <%= render Left::Menu::ItemComponent.new(
           title: t('left_menu.users'),
           path: { controller: '/tables/users', action: 'index' },
-          current_page: current_page?({controller: '/tables/users'}),
+          current_page: request.path.yield_self { |p| p.include?('users') },
           icon: GlobalHelper.icon('user'),
           disabled: false
       ) %>
@@ -62,9 +54,9 @@
 
     <%= render Left::Menu::DropdownComponent.new(
         title: t('left_menu.finances'),
-        current_page: params['controller'].in?(%w[tables/transactions tables/accounts tables/checks]),
+        current_page: request.path.yield_self { |p| p.include?('accounts') || p.include?('checks') || p.include?('transactions') },
         icon: GlobalHelper.icon('wallet'),
-        disabled: !user_signed_in?
+        disabled: false
     ) do |component| %>
 
       <% component.with(:items) do %>
@@ -72,21 +64,21 @@
         <%= render Left::Menu::Dropdown::ItemComponent.new(
             title: t('left_menu.transactions'),
             path: { controller: '/tables/transactions', action: 'index' },
-            current_page: current_page?({controller: '/tables/transactions'}),
+            current_page: request.path.yield_self { |p| p.include?('transactions') },
             disabled: false
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
             title: t('left_menu.accounts'),
             path: { controller: '/tables/accounts', action: 'index' },
-            current_page: current_page?({controller: '/tables/accounts'}),
+            current_page: request.path.yield_self { |p| p.include?('accounts') },
             disabled: false
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
             title: t('left_menu.checks'),
             path: { controller: '/tables/checks', action: 'index' },
-            current_page: current_page?({controller: '/tables/checks'}),
+            current_page: request.path.yield_self { |p| p.include?('checks') },
             disabled: false
         ) %>
 
@@ -96,19 +88,15 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.settings'),
         path: { controller: '/settings/profiles', action: 'edit' },
-        current_page:
-            current_page?({ controller: '/settings/profiles', action: 'edit' }) ||
-                current_page?({ controller: '/settings/passwords', action: 'edit' }) ||
-                current_page?({ controller: '/settings/emails', action: 'edit' }) ||
-                current_page?({ controller: '/settings/danger_zones', action: 'edit' }),
+        current_page: request.path.yield_self { |p| p.include?('profile') || p.include?('password') || p.include?('email') || p.include?('danger_zone') },
         icon: GlobalHelper.icon('settings'),
-        disabled: !user_signed_in?
+        disabled: false
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.news'),
         path: { controller: '/tables/news', action: 'index' },
-        current_page: current_page?({controller: '/tables/news'}),
+        current_page: request.path.yield_self { |p| p.include?('news') },
         icon: GlobalHelper.icon('news'),
         disabled: false
     ) %>
@@ -116,7 +104,7 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.help'),
         path: { controller: '/tables/help', action: 'index' },
-        current_page: current_page?({controller: '/tables/help'}),
+        current_page: request.path.yield_self { |p| p.include?('help') },
         icon: GlobalHelper.icon('help'),
         disabled: false
     ) %>
