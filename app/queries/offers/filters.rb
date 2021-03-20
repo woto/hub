@@ -9,8 +9,8 @@ module Offers
       params do
         config.validate_keys = true
         required(:json)
-        optional(:filter_by).maybe(:string)
-        optional(:filter_id).maybe { array? { each { string? } } }
+        required(:filter_by).maybe(:string)
+        required(:filter_id).maybe { array? { each { string? } } }
       end
     end
 
