@@ -52,8 +52,20 @@ describe FeedCategory, type: :model do
   end
 
   describe '#to_label' do
-    specify do
-      expect(subject.to_label).to eq(subject.name)
+    context 'when name is not nil' do
+      specify do
+        expect(subject.to_label).to eq(subject.name)
+      end
+    end
+
+    context 'when name is nil' do
+      let!(:subject) { create(:feed_category, name: nil) }
+
+      specify do
+        I18n.with_locale(:ru) do
+          expect(subject.to_label).to eq('Без названия')
+        end
+      end
     end
   end
 

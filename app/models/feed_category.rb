@@ -60,7 +60,7 @@ class FeedCategory < ApplicationRecord
   end
 
   def to_label
-    name
+    name || I18n.t('titles.without_name')
   end
 
   def to_long_label
@@ -73,3 +73,5 @@ class FeedCategory < ApplicationRecord
     errors.add(:base, 'Must belongs to same feed') if feed_id != parent.feed_id
   end
 end
+
+# TODO: replace name to title
