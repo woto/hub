@@ -9,7 +9,7 @@ module Offers
       params do
         config.validate_keys = true
         required(:json)
-        optional(:q).maybe(:string)
+        required(:q).maybe(:string)
       end
     end
 

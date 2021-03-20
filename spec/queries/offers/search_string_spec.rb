@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 describe Offers::SearchString do
-  context 'when `q` param is NOT present' do
+  context 'when `q` param is nil' do
     subject do
       Jbuilder.new do |json|
-        described_class.call(json: json)
+        described_class.call(json: json, q: nil)
       end.attributes!.deep_symbolize_keys
     end
 
