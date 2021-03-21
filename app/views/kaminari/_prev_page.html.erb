@@ -1,7 +1,0 @@
-<%= tag.li id: "pagination_previous", class: "page-item flex-fill" do %>
-  <% if current_page.first? %>
-    <%= link_to raw(t 'views.pagination.previous'), '', rel: 'prev', remote: remote, class: "page-link text-muted" %>
-  <% else %>
-    <%= link_to raw(t 'views.pagination.previous'), url, rel: 'prev', remote: remote, class: "page-link" %>
-  <% end %>
-<% end %>
