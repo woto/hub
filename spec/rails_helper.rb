@@ -46,6 +46,7 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
 
   config.include SystemHelpers, type: :system
+  config.include MailerHelpers, type: :mailer
 
   # Warden
   config.include Warden::Test::Helpers

@@ -60,4 +60,5 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
   config.i18n.available_locales = %w[en en-US en-GB ru zh-CN pt]
+  config.action_mailer.default_url_options = { host: 'example.com' }
 end
