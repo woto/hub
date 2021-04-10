@@ -1,14 +1,18 @@
 <div class="text-center mb-4">
-  <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
+  <%= link_to root_path do %>
+    <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
+  <% end %>
 </div>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'card card-md'}) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name),
+                    html: { class: 'card card-md', 'data-turbo': "false" }) do |f| %>
 
   <div class="card-body">
 
     <h2 class="mb-4 text-center"><%= t(".sign_in") %></h2>
 
     <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'danger') %>
+    <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
 
     <div class="form-inputs">
       <%= f.input :email,
