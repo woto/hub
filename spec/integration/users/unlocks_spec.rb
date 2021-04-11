@@ -6,7 +6,7 @@ describe Users::UnlocksController, type: :system do
   let(:user) { create(:user) }
 
   def send_form(email)
-    visit '/auth/unblock/new'
+    visit '/ru/auth/unblock/new'
     fill_in 'user_email', with: email
     click_button 'Выслать подтверждение заново'
   end
@@ -56,14 +56,14 @@ describe Users::UnlocksController, type: :system do
     end
 
     it 'shows alert that account is unlocked' do
-      visit user_unlock_path(unlock_token: token)
+      visit user_unlock_path(unlock_token: token, locale: :ru)
       expect(page).to have_text('Ваша учетная запись разблокирована. Теперь вы можете войти в систему.')
     end
   end
 
   context 'when token is invalid' do
     it 'shows alert that token is invalid' do
-      visit user_unlock_path(unlock_token: Faker::Alphanumeric.alphanumeric)
+      visit user_unlock_path(unlock_token: Faker::Alphanumeric.alphanumeric, locale: :ru)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       expect(page).to have_text('Токен разблокировки имеет неверное значение')
     end

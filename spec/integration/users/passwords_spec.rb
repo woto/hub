@@ -55,7 +55,7 @@ describe Users::PasswordsController, type: :system do
   context 'when token is valid' do
     before do
       token = user.send_reset_password_instructions
-      visit edit_user_password_path(reset_password_token: token)
+      visit edit_user_password_path(reset_password_token: token, locale: :ru)
     end
 
     context 'when form filled correctly but user confirmation period is over' do
@@ -123,7 +123,7 @@ describe Users::PasswordsController, type: :system do
 
   context 'when token is invalid' do
     before do
-      visit edit_user_password_path(reset_password_token: Faker::Alphanumeric.alphanumeric)
+      visit edit_user_password_path(reset_password_token: Faker::Alphanumeric.alphanumeric, locale: :ru)
     end
 
     it 'shows alert, does not change password' do
