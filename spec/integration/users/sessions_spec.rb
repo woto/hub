@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-describe Users::SessionsController do
+describe Users::SessionsController, type: :system do
   let(:user) { create(:user) }
 
-  def login(email, password)
+  def send_form(email, password)
+    visit '/ru/auth/login'
     fill_in 'user_email', with: email
     fill_in 'user_password', with: password
-    click_button 'login'
+    click_button 'Войти'
   end
 
   context 'when user enters correct login and password' do
     it 'signs in successfully' do
-      visit '/ru/auth/login'
-      login(user.email, user.password)
+      send_form(user.email, user.password)
       expect_dashboard
       expect_authenticated
       expect(page).to have_text('Вход в систему выполнен.')
@@ -23,15 +23,13 @@ describe Users::SessionsController do
 
   context 'when user enters incorrect login and password' do
     it 'displays invalid email or password message' do
-      visit '/ru/auth/login'
-      login(user.email, Faker::Alphanumeric.alphanumeric)
+      send_form(user.email, Faker::Alphanumeric.alphanumeric)
       expect(page).to have_text('Неправильный Email или пароль.')
     end
 
     it 'changes failed login attempts' do
       expect do
-        visit '/ru/auth/login'
-        login(user.email, Faker::Alphanumeric.alphanumeric)
+        send_form(user.email, Faker::Alphanumeric.alphanumeric)
       end.to change { user.reload.failed_attempts }.by(1)
     end
   end
@@ -69,33 +67,29 @@ describe Users::SessionsController do
 
     context 'when user enters correct login and password' do
       it 'logins' do
-        visit '/ru/auth/login'
-        login(user.email, user.password)
+        send_form(user.email, user.password)
         expect_dashboard
         expect_authenticated
         expect(page).to have_text('Вход в систему выполнен.')
       end
     end
 
-    context 'when he enters wrong login and password' do
+    context 'when user enters wrong login and password' do
       it 'locks account' do
         expect do
-          visit '/ru/auth/login'
-          login(user.email, Faker::Lorem.word)
+          send_form(user.email, Faker::Lorem.word)
         end.to change { user.reload.valid_for_authentication? }.from(true).to(false)
       end
 
-      it 'shows alert' do
-        visit '/ru/auth/login'
-        login(user.email, Faker::Lorem.word)
+      it 'shows alert that account is locked' do
+        send_form(user.email, Faker::Lorem.word)
         expect(page).to have_text('Ваша учетная запись заблокирована.')
       end
 
       it 'sends unlock email' do
         allow(Devise::Mailer).to receive(:send).and_call_original
-        visit '/ru/auth/login'
-        login(user.email, Faker::Lorem.word)
-        expect(Devise::Mailer).to have_received(:send).with(:unlock_instructions, user, any_args)
+        expect(Devise::Mailer).to receive(:send).with(:unlock_instructions, user, any_args)
+        send_form(user.email, Faker::Alphanumeric.alphanumeric)
       end
     end
   end
