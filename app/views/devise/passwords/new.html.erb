@@ -1,35 +1,31 @@
-<%# content_for :content do %>
-
-  <div class="text-center mb-4">
+<div class="text-center mb-4">
+  <%= link_to root_path do %>
     <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
-  </div>
+  <% end %>
+</div>
 
-  <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'card card-md' }) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name),
+                    html: { method: :post, class: 'card card-md' }) do |f| %>
 
-    <div class="card-body">
+  <div class="card-body">
 
-      <h2 class="mb-4 text-center"><%= t(".forgot_your_password") %></h2>
+    <h2 class="mb-4 text-center"><%= t(".forgot_your_password") %></h2>
 
-      <%= f.error_notification %>
+    <%= f.error_notification %>
 
-      <div class="form-inputs">
-        <%= f.input :email,
-                    required: true,
-                    autofocus: true,
-                    input_html: { autocomplete: "email" } %>
-      </div>
-
-      <div class="form-footer">
-        <%= f.button :submit, t(".send_me_reset_password_instructions"), class: 'btn btn-primary btn-block' %>
-      </div>
-
+    <div class="form-inputs">
+      <%= f.input :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" } %>
     </div>
 
-  <% end %>
+    <div class="form-footer">
+      <%= f.button :submit, t(".send_me_reset_password_instructions"), class: 'btn btn-primary w-100' %>
+    </div>
 
-  <%= render "devise/shared/links" %>
+  </div>
 
-<%# end %>
+<% end %>
 
-
-<%#= render template: 'layouts/centered' %>
+<%= render "devise/shared/links" %>
