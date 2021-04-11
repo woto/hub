@@ -1,5 +1,7 @@
 <div class="text-center mb-4">
-  <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
+  <%= link_to root_path do %>
+    <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
+  <% end %>
 </div>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'card card-md'}) do |f| %>
@@ -30,7 +32,7 @@
     </div>
 
     <div class="form-footer">
-      <%= f.button :button, t(".sign_up"), class: 'btn btn-primary btn-block', id: 'register' %>
+      <%= f.button :submit, t(".sign_up"), class: 'btn btn-primary w-100', id: 'register' %>
     </div>
 
   </div>

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Devise::Mailer.unlock_instructions' do
-  let(:user) { create(:user) }
-  let(:mail) { Devise::Mailer.deliveries.last }
-
   before do
     I18n.locale = :ru
-    user.lock_access!
   end
+
+  let!(:token) { user.lock_access! }
+  let(:user) { create(:user) }
+  let(:mail) { Devise::Mailer.deliveries.last }
 
   it 'renders the subject' do
     expect(mail.subject).to eq('Инструкции по разблокировке учетной записи')
@@ -23,6 +23,6 @@ RSpec.describe 'Devise::Mailer.unlock_instructions' do
 
   it 'includes unlock link' do
     expect(mail.body.encoded)
-      .to match(/<a href="http:\/\/example\.com\/auth\/unblock\?unlock_token=.*">Разблокировать учетную запись<\/a>/)
+      .to include("<a href=\"http://example.com/auth/unblock?unlock_token=#{token}\">Разблокировать учетную запись</a>")
   end
 end
