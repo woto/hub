@@ -66,7 +66,7 @@ describe Users::SessionsController, type: :system do
     end
 
     context 'when user enters correct login and password' do
-      it 'logins' do
+      it 'logs in' do
         send_form(user.email, user.password)
         expect_dashboard
         expect_authenticated

@@ -47,7 +47,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   config.hosts = nil
-  
+
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
 

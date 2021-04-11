@@ -1,4 +1,11 @@
-<h2><%= t(".resend_confirmation_instructions") %></h2>
+<div class="text-center mb-4">
+  <%= link_to root_path do %>
+    <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
+  <% end %>
+</div>
+
+<%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name),
+                    html: { class: 'card card-md', 'data-turbo': "false", method: :post }) do |f| %>
 
 <%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
   <%= f.error_notification %>

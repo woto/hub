@@ -13,7 +13,7 @@
     <h2 class="mb-4 text-center"><%= t(".resend_unlock_instructions") %></h2>
 
     <%= f.error_notification %>
-    <%= f.full_error :unlock_token %>
+    <%= render TopPageNotifyComponent.new(message: f.full_error(:unlock_token), alert_type: :warning) %>
 
     <div class="form-inputs">
       <%= f.input :email,

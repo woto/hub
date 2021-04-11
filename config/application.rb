@@ -43,7 +43,6 @@ module Hub
     config.global = config_for(:global)
 
     config.oauth_providers = %w[facebook google_oauth2].freeze
-    config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], protocol: 'https' }
 
     config.action_cable.allowed_request_origins = [
       "https://#{ENV['DOMAIN_NAME']}",

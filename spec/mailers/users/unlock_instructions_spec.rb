@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Devise::Mailer.unlock_instructions' do
@@ -23,6 +25,6 @@ RSpec.describe 'Devise::Mailer.unlock_instructions' do
 
   it 'includes unlock link' do
     expect(mail.body.encoded)
-      .to include("<a href=\"http://example.com/auth/unblock?unlock_token=#{token}\">Разблокировать учетную запись</a>")
+      .to include(%(<a href="http://example.com/auth/unblock?unlock_token=#{token}">Разблокировать учетную запись</a>))
   end
 end

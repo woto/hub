@@ -6,11 +6,25 @@ describe Users::RegistrationsController, type: :system do
   let(:user) { build(:user) }
 
   def send_form(email, password, password_confirmation)
-    visit 'auth/register/new'
+    visit '/ru/auth/register/new'
     fill_in 'user_email', with: email
     fill_in 'user_password', with: password
     fill_in 'user_password_confirmation', with: user.password
     click_button 'Регистрация'
+  end
+
+  context 'when there is already registered user with same email' do
+    before do
+      create(:user, email: user.email)
+    end
+
+    it 'does not register new user and shows alert' do
+      expect do
+        send_form(user.email, user.password, user.password)
+        expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
+        expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email уже существует')
+      end.not_to change(User, :count)
+    end
   end
 
   context 'when form filled correctly' do
