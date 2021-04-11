@@ -15,13 +15,13 @@ describe Settings::PasswordsController, type: :system do
     expect(page).to have_field('user_password_confirmation', with: '')
   end
 
-  it 'changes encrypted_password' do
+  it 'changes password' do
     fill_in('user_password', with: '123456')
     fill_in('user_password_confirmation', with: '123456')
     expect do
       click_on('Обновить')
       expect(page).to have_current_path('/ru')
-    end.to(change { user.reload.encrypted_password })
+    end.to(change { user.reload.valid_password?('123456') }.from(false).to(true))
   end
 
   it 'redirects to root page' do
