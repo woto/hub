@@ -58,6 +58,36 @@ describe Users::SessionsController, type: :system do
     expect_authenticated
   end
 
+  describe 'access with unconfirmed email' do
+    context 'when confirmation time is over' do
+      let(:user) do
+        travel_to 15.days.ago do
+          create(:user, :unconfirmed)
+        end
+      end
+
+      it 'shows alert asking to confirm email' do
+        send_form(user.email, user.password)
+        expect(page).to have_text('Вы должны подтвердить вашу учетную запись.')
+      end
+    end
+
+    context 'when confirmation time is not over' do
+      let(:user) do
+        travel_to 13.days.ago do
+          create(:user, :unconfirmed)
+        end
+      end
+
+      it 'logs in' do
+        send_form(user.email, user.password)
+        expect_dashboard
+        expect_authenticated
+        expect(page).to have_text('Вход в систему выполнен.')
+      end
+    end
+  end
+
   context 'when user has last attempt to login' do
     before do
       19.times do
