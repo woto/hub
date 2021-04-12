@@ -10,6 +10,7 @@ ru:
       checks: Избранные запросы выплат
       feed_categories: Избранные категории товаров
       post_categories: Избранные категории статей
+      _id: Избранное
       feed_id: Избранное
       advertiser_id: Избранное
       feed_category_id: Избранное
