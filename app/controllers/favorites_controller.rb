@@ -5,12 +5,10 @@ class FavoritesController < ApplicationController
   include Paginatable
   before_action :set_favorite, only: %i[show edit update destroy]
 
-  def modal_select
-    @favorites = policy_scope(Favorite).order(:is_default).to_a
-    @favorites.prepend(Favorite.new(name: all_favorite_name))
-
+  def navbar_favorite_list
+    @navbar_favorite_items = policy_scope(Favorite).order(updated_at: :desc).limit(10)
     respond_to do |format|
-      format.json { @favorites }
+      format.json { @navbar_favorite_items }
     end
   end
 
