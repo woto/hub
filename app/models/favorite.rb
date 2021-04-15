@@ -7,7 +7,6 @@
 #  id                    :bigint           not null, primary key
 #  favorites_items       :integer          default(0), not null
 #  favorites_items_count :integer
-#  is_default            :boolean          default(FALSE)
 #  kind                  :integer          not null
 #  name                  :string
 #  created_at            :datetime         not null
@@ -40,7 +39,6 @@ class Favorite < ApplicationRecord
     {
       id: id,
       favorites_items_count: favorites_items_count,
-      is_default: is_default,
       kind: kind,
       name: name,
       created_at: created_at,

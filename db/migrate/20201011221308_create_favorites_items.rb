@@ -4,7 +4,7 @@ class CreateFavoritesItems < ActiveRecord::Migration[6.0]
       t.references :favorite, null: false, foreign_key: true
       t.integer :kind, null: false
       t.string :ext_id
-      t.jsonb :data
+      # t.jsonb :data
       t.timestamps
     end
   end

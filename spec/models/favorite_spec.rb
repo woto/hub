@@ -7,7 +7,6 @@
 #  id                    :bigint           not null, primary key
 #  favorites_items       :integer          default(0), not null
 #  favorites_items_count :integer
-#  is_default            :boolean          default(FALSE)
 #  kind                  :integer          not null
 #  name                  :string
 #  created_at            :datetime         not null
@@ -39,13 +38,12 @@ describe Favorite, type: :model do
     it 'returns expected structure' do
       freeze_time do
         user = create(:user)
-        favorite = create(:favorite, is_default: true, kind: :offers, name: 'Some name', user: user,
+        favorite = create(:favorite, kind: :offers, name: 'Some name', user: user,
                                      favorites_items: create_list(:favorites_item, 2))
 
         expect(favorite.as_indexed_json).to match(
           id: favorite.id,
           favorites_items_count: 2,
-          is_default: true,
           kind: 'offers',
           name: 'Some name',
           created_at: Time.current,
