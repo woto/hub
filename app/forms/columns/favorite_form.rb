@@ -8,7 +8,6 @@ module Columns
       { key: 'id',                    pg: Favorite.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'name',                  pg: Favorite.columns_hash['name'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'kind',                  pg: Favorite.columns_hash['kind'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
-      { key: 'is_default',            pg: Favorite.columns_hash['is_default'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'favorites_items_count', pg: Favorite.columns_hash['favorites_items_count'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'created_at',            pg: Favorite.columns_hash['created_at'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'updated_at',            pg: Favorite.columns_hash['updated_at'], roles: ['guest', 'user', 'manager', 'admin'] },

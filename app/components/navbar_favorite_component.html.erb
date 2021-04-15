@@ -1,0 +1,13 @@
+<%= link_to '#', class: 'nav-link px-0',
+            'data-bs-toggle': 'dropdown',
+            'data-navbar-favorite-target': 'dropdown' do %>
+  <%== GlobalHelper.icon('star') %>&nbsp;
+  <% if @display_title %>
+    <%= t('.title') %>
+  <% end %>
+<% end %>
+
+<%= tag.div class: 'dropdown-menu dropdown-menu-end' do %>
+  <%= tag.div "data-navbar-favorite-target": 'itemsList' %>
+  <%# tag.div class: 'mx-3 text-red small', "data-navbar-favorite-target": 'errorPlaceholder' %>
+<% end %>

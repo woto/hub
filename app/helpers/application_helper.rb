@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def data_attributes_for_navbar_favorite
+    {
+      'data-controller': 'navbar-favorite',
+      'data-navbar-favorite-dropdown-list-path-value': navbar_favorite_list_favorites_path,
+      'data-navbar-favorite-others-path-value': favorites_path,
+      'data-navbar-favorite-no-favorites-value': t('.no_favorites')
+    }
+  end
+
+  def on_image_error_load
+    @on_image_error_load ||= asset_pack_path('media/images/static/image-not-found.png')
+  end
 
   def test_id
     'data-test-id'
