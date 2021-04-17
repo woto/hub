@@ -4,7 +4,9 @@
 
 <% content_for :body do %>
 
-  <body class="d-flex h-100 text-white bg-dark" data-controller="global" data-controller="global">
+  <%= tag.body class: "d-flex h-100 text-white bg-dark",
+               'data-controller': "global",
+               **data_attributes_for_body do %>
 
   <% content_for :prefix_inline_css do %>
     <style>
@@ -77,7 +79,7 @@
   <%= content_for :postfix_inline_css %>
   <%= content_for :postfix_inline_js %>
 
-  </body>
+  <% end %>
 
 <% end %>
 

@@ -4,7 +4,9 @@
 
 <% content_for :body do %>
 
-  <body class="antialiased border-top-wide border-primary d-flex flex-column" data-controller="global">
+  <%= tag.body class: 'antialiased border-top-wide border-primary d-flex flex-column',
+               'data-controller': "global",
+               **data_attributes_for_body do  %>
 
     <%= content_for :prefix_inline_css %>
     <%= content_for :prefix_inline_js %>
@@ -18,8 +20,7 @@
     <%= content_for :postfix_inline_css %>
     <%= content_for :postfix_inline_js %>
 
-  </body>
-
+  <% end %>
 <% end %>
 
 <%= render template: 'layouts/blank' %>

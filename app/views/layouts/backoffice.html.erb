@@ -4,10 +4,15 @@
 
 <% content_for(:body) do %>
 
-  <body class="antialiased" data-controller="global"
-        data-action="favorite-item:showToast->global#showToast
-                     favorite:showToast->global#showToast
-                     modal-embed:showToast->global#showToast">
+  <%= tag.body class: "antialiased",
+               'data-controller': "global",
+               'data-action': "star-favorite-item:showToast->global#showToast
+                               star-favorite:showToast->global#showToast
+                               modal-embed:showToast->global#showToast
+                               clipboard:showToast->global#showToast
+                               offer-modal-card:showToast->global#showToast
+                               navbar-favorite:showToast->global#showToast",
+               **data_attributes_for_body do %>
 
   <div class="position-absolute" style="z-index: 30;">
     <div data-target="global.toastPlaceholder" class="position-fixed" style="top: 0; right: 0;">
@@ -94,7 +99,7 @@
   <%= content_for :before_body_close %>
 
   <div data-controller="modal-singleton"></div>
-  </body>
+  <% end %>
 <% end %>
 
 <%= render template: 'layouts/blank' %>

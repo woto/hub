@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+
+  # TODO: Add test later for views/layouts backoffice, centered, homepage
+  def data_attributes_for_body
+    {
+      'data-is-authenticated': user_signed_in?,
+      'data-role': current_user&.role || 'guest',
+      'data-current-time': Time.current
+    }
+  end
+
   def data_attributes_for_navbar_favorite
     {
       'data-controller': 'navbar-favorite',
