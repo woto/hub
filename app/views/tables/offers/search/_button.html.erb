@@ -2,9 +2,8 @@
 
   <%= button_tag 'data-target': 'search-offers.searchButton',
                  'data-bs-toggle': 'dropdown',
-                 id: 'search-button',
                  class: "btn #{btn_class} btn-icon rounded-end" do %>
-    <%== GlobalHelper.icon('search') %>
+    <%= t('search') %>
   <% end %>
 
   <div class="dropdown-menu dropdown-menu-end">
@@ -35,8 +34,7 @@
 
   <%= button_tag 'data-target': 'search-offers.searchButton',
                  'data-action': 'search-offers#searchEverywhere',
-                 id: 'search-button',
                  class: "btn #{btn_class} btn-icon rounded-end" do %>
-    <%== GlobalHelper.icon('search') %>
+    <%= t('search') %>
   <% end %>
 <% end %>

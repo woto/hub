@@ -74,7 +74,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
         visit "/ru/#{plural}"
         within(opts[:selector]) do
           fill_in 'Введите текст для поиска...', with: objects.last.id
-          click_button 'search-button'
+          click_button 'Искать'
           has_correct_search_path(plural: plural, q: objects.last.id)
         end
       end

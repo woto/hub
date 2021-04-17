@@ -20,7 +20,7 @@ describe Tables::OffersController, type: :system do
     it 'includes item to search inside feed_category' do
       within('section.page') do
         fill_search_input(feed_category.to_label)
-        click_button 'search-button'
+        click_button 'Искать'
 
         click_button %(В категории: "#{feed_category.to_label}")
         expect(page).to have_current_path(path)
@@ -32,7 +32,7 @@ describe Tables::OffersController, type: :system do
     it 'includes item to search inside feed' do
       within('section.page') do
         fill_search_input(feed.to_label)
-        click_button 'search-button'
+        click_button 'Искать'
 
         click_button %(В прайс листе: "#{feed.to_label}")
         expect(page).to have_current_path(path)
@@ -44,7 +44,7 @@ describe Tables::OffersController, type: :system do
     it 'includes item to search inside advertiser' do
       within('section.page') do
         fill_search_input(advertiser.to_label)
-        click_button 'search-button'
+        click_button 'Искать'
 
         click_button %(У рекламодателя: "#{advertiser.to_label}")
         expect(page).to have_current_path(path)
@@ -56,7 +56,7 @@ describe Tables::OffersController, type: :system do
     it 'includes item to search everywhere' do
       within('section.page') do
         fill_search_input('everywhere')
-        click_button 'search-button'
+        click_button 'Искать'
 
         click_button 'Искать везде'
         expect(page).to have_current_path(path)
