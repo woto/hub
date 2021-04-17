@@ -1,12 +1,14 @@
 <%= tag.div class: "input-group input-group-flat",
-            data: { controller: 'search-base',
-                    "search-base-everywhere-url": url_for_search_everywhere } do %>
+            'data-controller': 'search-base',
+            'data-search-base-everywhere-url': url_for_search_everywhere do %>
 
   <%= text_field_tag :q, params[:q],
-                     id: nil,
-                     data: { target: 'search-base.searchText', action: 'keydown->search-base#clickSearchButton' },
-                     class: 'search-text form-control', placeholder: t('search_placeholder') %>
+                     'data-target': 'search-base.searchText',
+                     'data-action': 'keydown->search-base#clickSearchButton',
+                     class: 'search-text form-control',
+                     placeholder: t('search_placeholder') %>
 
+  <%# TODO: combine with another occurrence %>
   <span class="input-group-text">
     <a href="#" class="link-secondary" title="" data-bs-toggle="tooltip" data-bs-original-title="Clear search">
       <%== GlobalHelper.icon('x') %>

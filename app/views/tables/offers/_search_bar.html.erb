@@ -1,23 +1,22 @@
-<%
-  url_for_everywhere = offers_url
-  if params[:feed_id]
-    url_for_feed = feed_offers_url(feed_id: params[:feed_id])
-    if params[:category_id]
-      url_for_category = feed_offers_url(feed_id: params[:feed_id], category_id: params[:category_id])
-    end
-  end
-%>
-
-<%= tag.div class: "input-group",
-            data: { controller: 'search-offers',
-                    "search-offers-category-url": url_for_category,
-                    "search-offers-feed-url": url_for_feed,
-                    "search-offers-everywhere-url": url_for_everywhere } do %>
+<%= tag.div class: "input-group input-group-flat",
+            'data-controller': 'search-offers',
+            'data-search-offers-feed-category-url': url_for_search_inside_feed_category,
+            'data-search-offers-feed-url': url_for_search_inside_feed,
+            'data-search-offers-advertiser-url': url_for_search_inside_advertiser,
+            'data-search-offers-everywhere-url': url_for_search_everywhere do %>
 
   <%= text_field_tag :q, params[:q],
-                     id: nil,
-                     data: { target: 'search-offers.searchText', action: 'keydown->search-offers#clickSearchButton' },
-                     class: "search-text form-control", placeholder: t('search_placeholder') %>
+                     'data-target': 'search-offers.searchText',
+                     'data-action': 'keydown->search-offers#clickSearchButton',
+                     class: "search-text form-control",
+                     placeholder: t('search_placeholder') %>
+
+  <%# TODO: combine with another occurrence %>
+  <span class="input-group-text">
+    <a href="#" class="link-secondary" title="" data-bs-toggle="tooltip" data-bs-original-title="Clear search">
+      <%== GlobalHelper.icon('x') %>
+    </a>
+  </span>
 
   <%= render 'tables/offers/search/button', btn_class: btn_class %>
 

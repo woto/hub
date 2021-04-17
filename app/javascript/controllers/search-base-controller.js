@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import { Turbo, cable } from "@hotwired/turbo-rails"
 
 export default class extends Controller {
     static targets = ["searchButton",  "searchText"]
@@ -17,7 +18,7 @@ export default class extends Controller {
 
     _followLocation(url) {
         url = new URL(url);
-        url.searchParams.append('q', this.searchTextTarget.value)
-        window.location = url.toString();
+        url.searchParams.set('q', this.searchTextTarget.value)
+        Turbo.visit(url.toString());
     }
 }

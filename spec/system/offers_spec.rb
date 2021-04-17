@@ -3,18 +3,16 @@
 require 'rails_helper'
 
 describe 'Offers page' do
-
   context 'with many feeds' do
-    let!(:advertiser) { create(:advertisers_admitad) }
-    let!(:feed1) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-simplified.xml')) }
-    let!(:feed2) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-custom.xml')) }
-    let(:q1) { 'Вафельница' }
-    let(:q2) { 'Мороженица' }
+    let!(:advertiser) { create(:advertiser) }
+    let!(:feed1) { create(:feed, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-simplified.xml')) }
+    let!(:feed2) { create(:feed, advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-custom.xml')) }
     let(:small_household_appliances) { feed1.feed_categories.find_by(ext_id: '10') }
 
     before do
       20.times do |i|
-        feed = create(:feed, :with_attempt_uuid, name: "feed #{i}", advertiser: advertiser, xml_file_path: file_fixture('feeds/yml-custom.xml'))
+        feed = create(:feed, name: "feed #{i}", advertiser: advertiser,
+                             xml_file_path: file_fixture('feeds/yml-custom.xml'))
         Feeds::Parse.call(feed: feed)
       end
       Feeds::Parse.call(feed: feed1)
@@ -27,53 +25,11 @@ describe 'Offers page' do
       breadcrumbs_inside_feed_root
       breadcrumbs_inside_category
       left_feeds_for_more_than_20_feeds
-      search_control
     end
-
-    def search_control
-      search_control_in_root
-      search_control_in_feed
-      search_control_in_category
-    end
-
 
     def when_search_in_root_1
       visit offers_path(q: 'Мороженица', locale: 'ru')
       expect(page).to have_css('.item_offer', count: 12)
-    end
-
-    def search_control_in_root
-      visit offers_path(locale: 'ru')
-      within('section.page') do
-        fill_in 'Введите текст для поиска...', with: q1
-        click_button 'search-button'
-        expect(page).to have_current_path(offers_path(q: q1, locale: 'ru', only_path: true, per: 12, sort: 'id', order: :desc), url: false)
-      end
-    end
-
-    def search_control_in_feed
-      visit feed_offers_path(feed_id: feed1.slug_with_advertiser, q: q1, locale: 'ru')
-      within('section.page') do
-        # fill_in 'Введите текст для поиска...', with: q2
-        click_button 'search-button'
-        # expect(page).to have_current_path(offers_path(q: q2, locale: 'ru', only_path: true), url: false)
-        expect(page).to have_button('search-everywhere')
-        expect(page).to have_button('search-feed')
-        expect(page).not_to have_button('search-category')
-      end
-    end
-
-    def search_control_in_category
-      visit feed_offers_path(feed_id: feed1.slug_with_advertiser, category_id: small_household_appliances.id,
-                             q: q1, locale: 'ru')
-      within('section.page') do
-        # fill_in 'Введите текст для поиска...', with: q2
-        click_button 'search-button'
-        # expect(page).to have_current_path(offers_path(q: q2, locale: 'ru', only_path: true), url: false)
-        expect(page).to have_button('search-everywhere')
-        expect(page).to have_button('search-feed')
-        expect(page).to have_button('search-category')
-      end
     end
 
     def left_feeds_for_more_than_20_feeds
@@ -83,7 +39,7 @@ describe 'Offers page' do
       expect(page).to have_text('СМОТРИТЕ ТАКЖЕ')
       expect(page).to have_link('Не отображается: 2 шт.', href: '/404')
 
-      find(".left_feed", match: :first).click
+      find('.left_feed', match: :first).click
       expect(page).to have_css('.item_offer', count: 1)
     end
 
@@ -123,8 +79,10 @@ describe 'Offers page' do
   end
 
   context 'with many offers' do
-    let!(:advertiser) { create(:advertisers_admitad) }
-    let!(:feed) { create(:feed, :with_attempt_uuid, advertiser: advertiser, xml_file_path: file_fixture('feeds/776-petshop+678-taganrog.xml')) }
+    let!(:advertiser) { create(:advertiser) }
+    let!(:feed) do
+      create(:feed, advertiser: advertiser, xml_file_path: file_fixture('feeds/776-petshop+678-taganrog.xml'))
+    end
 
     before do
       Feeds::Parse.call(feed: feed)
@@ -162,7 +120,7 @@ describe 'Offers page' do
 
     def when_there_is_more_than_twenty_categories
       cat = feed.feed_categories.find_by(ext_id: '248298374')
-      visit feed_offers_path(feed_id: feed.slug_with_advertiser, q: 'для кошек', category_id: cat.id)
+      visit feed_offers_path(feed_id: feed.slug_with_advertiser, q: 'для кошек', category_id: cat.id, locale: 'ru')
       expect(page).to have_css('.left_feed_category', count: 20)
       expect(page).to have_text('СМОТРИТЕ ТАКЖЕ')
       expect(page).to have_link('Не отображается: 2 шт.', href: '/404')

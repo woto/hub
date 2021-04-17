@@ -1,35 +1,42 @@
-<% if params[:feed_id].present? %>
+<% if current_advertiser || current_feed || current_feed_category %>
 
-  <%= button_tag data: { target: 'search-offers.searchButton', 'bs-toggle': 'dropdown', test_id: 'search-button' },
-                 id: nil,
-                 class: "btn #{btn_class} dropdown-toggle",
-                 aria: { label: 'Button' } do %>
+  <%= button_tag 'data-target': 'search-offers.searchButton',
+                 'data-bs-toggle': 'dropdown',
+                 id: 'search-button',
+                 class: "btn #{btn_class} btn-icon rounded-end" do %>
     <%== GlobalHelper.icon('search') %>
   <% end %>
 
   <div class="dropdown-menu dropdown-menu-end">
-    <% if params[:category_id] %>
-      <%= button_tag t('.search_inside_category'),
-                     data: { action: 'search-offers#searchInsideCategory', test_id: 'search-category' },
-                     id: nil,
+    <% if current_feed_category %>
+      <%= button_tag t('.search_inside_feed_category', name: current_feed_category.to_label),
+                     'data-action': 'search-offers#searchInsideFeedCategory' ,
                      class: 'dropdown-item' %>
     <% end %>
-    <%= button_tag t('.search_inside_feed'),
-                   data: { action: 'search-offers#searchInsideFeed', test_id: 'search-feed' },
-                   id: nil,
-                   class: 'dropdown-item' %>
+
+    <% if current_feed %>
+      <%= button_tag t('.search_inside_feed', name: current_feed.to_label),
+                     'data-action': 'search-offers#searchInsideFeed',
+                     class: 'dropdown-item' %>
+    <% end %>
+
+    <% if current_advertiser %>
+      <%= button_tag t('.search_inside_advertiser', name: current_advertiser.to_label),
+                     'data-action': 'search-offers#searchInsideAdvertiser',
+                     class: 'dropdown-item' %>
+    <% end %>
+
     <%= button_tag t('.search_everywhere'),
-                   data: { action: 'search-offers#searchEverywhere', test_id: 'search-everywhere' },
-                   id: nil,
+                   'data-action': 'search-offers#searchEverywhere',
                    class: 'dropdown-item' %>
   </div>
 
 <% else %>
 
-  <%= button_tag data: { target: 'search-offers.searchButton', action: 'search-offers#searchEverywhere', test_id: 'search-button' },
-                 id: nil,
-                 class: "btn #{btn_class} btn-icon",
-                 aria: { label: 'Button' } do %>
+  <%= button_tag 'data-target': 'search-offers.searchButton',
+                 'data-action': 'search-offers#searchEverywhere',
+                 id: 'search-button',
+                 class: "btn #{btn_class} btn-icon rounded-end" do %>
     <%== GlobalHelper.icon('search') %>
   <% end %>
 <% end %>
