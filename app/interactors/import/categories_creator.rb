@@ -4,10 +4,10 @@ module Import
     include ApplicationInteractor
     attr_accessor :total_count
 
-    def initialize(context)
+    def initialize(hash)
+      super
       @total_count = 0
       @feeds_categories_ids = []
-      super
     end
 
     def append(doc)

@@ -38,7 +38,7 @@
 #
 #  fk_rails_...  (advertiser_id => advertisers.id)
 #
-require 'rspec/rails/file_fixture_support.rb'
+require 'rspec/rails/file_fixture_support'
 
 FactoryBot.define do
   factory :feed do
@@ -55,9 +55,7 @@ FactoryBot.define do
     end
 
     after(:create) do |feed, evaluator|
-      if evaluator.with_downloaded_file
-        FileUtils.cp evaluator.with_downloaded_file, feed.file.path
-      end
+      FileUtils.cp evaluator.with_downloaded_file, feed.file.path if evaluator.with_downloaded_file
     end
   end
 end

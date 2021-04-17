@@ -5,12 +5,12 @@ module Feeds
     include ApplicationInteractor
     attr_accessor :total_count, :batch_count
 
-    def initialize(context)
+    def initialize(hash)
+      super
       @offers = []
       @batch_count = 0
       @total_count = 0
       @categories = FeedCategoriesCache.new(context.feed)
-      super
     end
 
     def append(doc)
