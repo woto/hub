@@ -132,4 +132,5 @@ if Rails.env.development?
     xml_file_path: 'spec/fixtures/files/feeds/776-petshop+678-taganrog.xml'
   )
   Feeds::Parse.call(feed: feed3)
+  Elastic::RefreshOffersIndex.call
 end

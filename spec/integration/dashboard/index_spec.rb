@@ -3,17 +3,17 @@
 require 'rails_helper'
 
 describe DashboardController, type: :system do
-  describe '#index' do
-    describe 'shared_language_component' do
-      it_behaves_like 'shared_language_component' do
-        before do
-          visit '/ru/dashboard'
-        end
-
-        let(:link) { dashboard_path(locale: 'en') }
+  describe 'shared_language_component' do
+    it_behaves_like 'shared_language_component' do
+      before do
+        visit '/ru/dashboard'
       end
-    end
 
+      let(:link) { dashboard_path(locale: 'en') }
+    end
+  end
+
+  describe '#index' do
     describe 'TODO' do
       context 'renders latest-news frame' do
         before do

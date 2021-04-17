@@ -3,31 +3,31 @@
 require 'rails_helper'
 
 describe Tables::NewsController, type: :system do
-  describe '#index' do
-    describe 'shared_language_component' do
-      it_behaves_like 'shared_language_component' do
-        before do
-          visit news_index_path
-        end
+  describe 'shared_language_component' do
+    it_behaves_like 'shared_language_component' do
+      before do
+        visit news_index_path
+      end
 
-        let(:link) { news_index_path(locale: 'en') }
+      let(:link) { news_index_path(locale: 'en') }
+    end
+  end
+
+  describe 'shared_search_everywhere' do
+    it_behaves_like 'shared_search_everywhere' do
+      before do
+        visit '/ru/news'
+      end
+
+      let(:params) do
+        { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc,
+          only_path: true }
       end
     end
+  end
 
+  describe '#index' do
     describe 'TODO' do
-      describe 'shared_search_everywhere' do
-        it_behaves_like 'shared_search_everywhere' do
-          let(:params) do
-            { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc,
-              only_path: true }
-          end
-
-          before do
-            visit '/ru/news'
-          end
-        end
-      end
-
       describe 'news-by-tag turbo-frame' do
         before do
           visit news_index_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })

@@ -3,34 +3,34 @@
 require 'rails_helper'
 
 describe Tables::OffersController, type: :system do
-  describe '#index' do
-    describe 'shared_language_component' do
-      it_behaves_like 'shared_language_component' do
-        before do
-          visit offers_path
-        end
+  describe 'shared_language_component' do
+    it_behaves_like 'shared_language_component' do
+      before do
+        visit offers_path
+      end
 
-        let(:link) { offers_path(locale: 'en') }
+      let(:link) { offers_path(locale: 'en') }
+    end
+  end
+
+  describe 'shared_search_everywhere' do
+    it_behaves_like 'shared_search_everywhere' do
+      before do
+        feed = create(:feed, xml_file_path: file_fixture('feeds/yml-custom.xml'))
+        Feeds::Parse.call(feed: feed)
+        elastic_client.indices.refresh
+        visit '/ru/offers'
+      end
+
+      let(:params) do
+        { controller: 'tables/offers', q: q, locale: 'ru',
+          per: 12, sort: :id, order: :desc, only_path: true }
       end
     end
+  end
 
+  describe '#index' do
     describe 'TODO' do
-      describe 'shared_search_everywhere' do
-        it_behaves_like 'shared_search_everywhere' do
-          before do
-            feed = create(:feed, xml_file_path: file_fixture('feeds/yml-custom.xml'))
-            Feeds::Parse.call(feed: feed)
-            elastic_client.indices.refresh
-            visit '/ru/offers'
-          end
-
-          let(:params) do
-            { controller: 'tables/offers', q: q, locale: 'ru',
-              per: 12, sort: :id, order: :desc, only_path: true }
-          end
-        end
-      end
-
       describe 'shared_favorites_unauthenticated' do
         it_behaves_like 'shared_favorites_unauthenticated' do
           before do

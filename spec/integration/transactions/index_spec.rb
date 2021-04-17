@@ -3,19 +3,37 @@
 require 'rails_helper'
 
 describe Tables::TransactionsController, type: :system do
-  describe '#index' do
-    describe 'shared_language_component' do
-      it_behaves_like 'shared_language_component' do
-        before do
-          login_as(user, scope: :user)
-          visit transactions_path
-        end
+  describe 'shared_language_component' do
+    it_behaves_like 'shared_language_component' do
+      before do
+        login_as(user, scope: :user)
+        visit transactions_path
+      end
 
-        let!(:user) { create(:user) }
-        let(:link) { transactions_path(locale: 'en') }
+      let!(:user) { create(:user) }
+      let(:link) { transactions_path(locale: 'en') }
+    end
+  end
+
+  describe 'shared_search_everywhere' do
+    it_behaves_like 'shared_search_everywhere' do
+      before do
+        user = create(:user)
+        Current.set(responsible: user) do
+          create(:post, user: user)
+        end
+        login_as(user, scope: :user)
+        visit '/ru/transactions'
+      end
+
+      let(:params) do
+        { controller: 'tables/transactions', q: q, cols: '0.2.1.12.9.8.19.17.15.14.21.22', locale: 'ru',
+          per: 20, sort: :id, order: :desc, only_path: true }
       end
     end
+  end
 
+  describe '#index' do
     describe 'TODO' do
       describe 'shared_table' do
         it_behaves_like 'shared_table' do
@@ -41,24 +59,6 @@ describe Tables::TransactionsController, type: :system do
 
           before do
             login_as(user, scope: :user)
-          end
-        end
-      end
-
-      describe 'shared_search_everywhere' do
-        it_behaves_like 'shared_search_everywhere' do
-          before do
-            user = create(:user)
-            Current.set(responsible: user) do
-              create(:post, user: user)
-            end
-            login_as(user, scope: :user)
-            visit '/ru/transactions'
-          end
-
-          let(:params) do
-            { controller: 'tables/transactions', q: q, cols: '0.2.1.12.9.8.19.17.15.14.21.22', locale: 'ru',
-              per: 20, sort: :id, order: :desc, only_path: true }
           end
         end
       end

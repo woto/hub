@@ -563,70 +563,6 @@ CREATE TABLE public.advertisers (
     raw text,
     synced_at timestamp without time zone,
     is_active boolean DEFAULT true NOT NULL,
-    gdeslon_id integer,
-    gdeslon_name character varying,
-    gdeslon_short_description text,
-    gdeslon_description text,
-    gdeslon_url character varying,
-    gdeslon_conditions character varying,
-    gdeslon_is_green boolean,
-    gdeslon_gs_commission_mark character varying,
-    gdeslon_country character varying,
-    gdeslon_kind character varying,
-    gdeslon_categories jsonb,
-    gdeslon_logo_file_name character varying,
-    gdeslon_affiliate_link character varying,
-    gdeslon_traffic_types jsonb,
-    gdeslon_tariffs jsonb,
-    admitad_id integer,
-    admitad_name character varying,
-    admitad_site_url character varying,
-    admitad_description text,
-    admitad_raw_description text,
-    admitad_currency character varying,
-    admitad_rating double precision,
-    admitad_ecpc double precision,
-    admitad_epc double precision,
-    admitad_cr double precision,
-    admitad_actions jsonb,
-    admitad_regions jsonb,
-    admitad_categories jsonb,
-    admitad_status character varying,
-    admitad_image character varying,
-    admitad_ecpc_trend double precision,
-    admitad_epc_trend double precision,
-    admitad_cr_trend character varying,
-    admitad_exclusive boolean,
-    admitad_activation_date timestamp without time zone,
-    admitad_modified_date timestamp without time zone,
-    admitad_denynewwms boolean,
-    admitad_goto_cookie_lifetime integer,
-    admitad_retag boolean,
-    admitad_show_products_links boolean,
-    admitad_landing_code character varying,
-    admitad_landing_title character varying,
-    admitad_geotargeting boolean,
-    admitad_max_hold_time character varying,
-    admitad_traffics jsonb,
-    admitad_avg_hold_time integer,
-    admitad_avg_money_transfer_time integer,
-    admitad_allow_deeplink boolean,
-    admitad_coupon_iframe_denied boolean,
-    admitad_action_testing_limit character varying,
-    admitad_mobile_device_type character varying,
-    admitad_mobile_os character varying,
-    admitad_mobile_os_type character varying,
-    admitad_action_countries jsonb,
-    admitad_allow_actions_all_countries boolean,
-    admitad_connection_status character varying,
-    admitad_gotolink character varying,
-    admitad_products_xml_link character varying,
-    admitad_products_csv_link character varying,
-    admitad_moderation boolean,
-    admitad_feeds_info jsonb,
-    admitad_actions_detail jsonb,
-    admitad_actions_limit character varying,
-    admitad_actions_limit_24 character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb
@@ -741,7 +677,6 @@ CREATE TABLE public.favorites (
     user_id bigint NOT NULL,
     name character varying,
     kind integer NOT NULL,
-    is_default boolean DEFAULT false,
     favorites_items integer DEFAULT 0 NOT NULL,
     favorites_items_count integer,
     created_at timestamp(6) without time zone NOT NULL,
@@ -777,7 +712,6 @@ CREATE TABLE public.favorites_items (
     favorite_id bigint NOT NULL,
     kind integer NOT NULL,
     ext_id character varying,
-    data jsonb,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -928,41 +862,6 @@ ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
 
 
 --
--- Name: offer_embeds; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.offer_embeds (
-    id bigint NOT NULL,
-    user_id bigint NOT NULL,
-    name character varying,
-    url character varying,
-    description text,
-    picture character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: offer_embeds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.offer_embeds_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: offer_embeds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.offer_embeds_id_seq OWNED BY public.offer_embeds.id;
-
-
---
 -- Name: post_categories; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -970,7 +869,6 @@ CREATE TABLE public.post_categories (
     id bigint NOT NULL,
     title character varying NOT NULL,
     realm_id bigint NOT NULL,
-    priority integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     ancestry character varying
@@ -1239,6 +1137,138 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: widgets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.widgets (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    widgetable_type character varying NOT NULL,
+    widgetable_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: widgets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.widgets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: widgets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.widgets_id_seq OWNED BY public.widgets.id;
+
+
+--
+-- Name: widgets_multiples; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.widgets_multiples (
+    id bigint NOT NULL,
+    title character varying,
+    body text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: widgets_multiples_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.widgets_multiples_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: widgets_multiples_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.widgets_multiples_id_seq OWNED BY public.widgets_multiples.id;
+
+
+--
+-- Name: widgets_multiples_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.widgets_multiples_items (
+    id bigint NOT NULL,
+    url character varying,
+    title character varying,
+    body text,
+    widgets_multiple_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: widgets_multiples_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.widgets_multiples_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: widgets_multiples_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.widgets_multiples_items_id_seq OWNED BY public.widgets_multiples_items.id;
+
+
+--
+-- Name: widgets_simples; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.widgets_simples (
+    id bigint NOT NULL,
+    title character varying,
+    url character varying,
+    body text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: widgets_simples_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.widgets_simples_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: widgets_simples_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.widgets_simples_id_seq OWNED BY public.widgets_simples.id;
+
+
+--
 -- Name: workspaces; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1379,13 +1409,6 @@ ALTER TABLE ONLY public.identities ALTER COLUMN id SET DEFAULT nextval('public.i
 
 
 --
--- Name: offer_embeds id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offer_embeds ALTER COLUMN id SET DEFAULT nextval('public.offer_embeds_id_seq'::regclass);
-
-
---
 -- Name: post_categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1432,6 +1455,34 @@ ALTER TABLE ONLY public.transactions ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: widgets id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets ALTER COLUMN id SET DEFAULT nextval('public.widgets_id_seq'::regclass);
+
+
+--
+-- Name: widgets_multiples id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_multiples ALTER COLUMN id SET DEFAULT nextval('public.widgets_multiples_id_seq'::regclass);
+
+
+--
+-- Name: widgets_multiples_items id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_multiples_items ALTER COLUMN id SET DEFAULT nextval('public.widgets_multiples_items_id_seq'::regclass);
+
+
+--
+-- Name: widgets_simples id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_simples ALTER COLUMN id SET DEFAULT nextval('public.widgets_simples_id_seq'::regclass);
 
 
 --
@@ -1570,14 +1621,6 @@ ALTER TABLE ONLY public.identities
 
 
 --
--- Name: offer_embeds offer_embeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offer_embeds
-    ADD CONSTRAINT offer_embeds_pkey PRIMARY KEY (id);
-
-
---
 -- Name: post_categories post_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1639,6 +1682,38 @@ ALTER TABLE ONLY public.transactions
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: widgets_multiples_items widgets_multiples_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_multiples_items
+    ADD CONSTRAINT widgets_multiples_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: widgets_multiples widgets_multiples_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_multiples
+    ADD CONSTRAINT widgets_multiples_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: widgets widgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets
+    ADD CONSTRAINT widgets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: widgets_simples widgets_simples_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_simples
+    ADD CONSTRAINT widgets_simples_pkey PRIMARY KEY (id);
 
 
 --
@@ -1769,13 +1844,6 @@ CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_
 
 
 --
--- Name: index_offer_embeds_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_offer_embeds_on_user_id ON public.offer_embeds USING btree (user_id);
-
-
---
 -- Name: index_post_categories_on_ancestry; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1888,6 +1956,27 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 
 
 --
+-- Name: index_widgets_multiples_items_on_widgets_multiple_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_widgets_multiples_items_on_widgets_multiple_id ON public.widgets_multiples_items USING btree (widgets_multiple_id);
+
+
+--
+-- Name: index_widgets_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_widgets_on_user_id ON public.widgets USING btree (user_id);
+
+
+--
+-- Name: index_widgets_on_widgetable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_widgets_on_widgetable ON public.widgets USING btree (widgetable_type, widgetable_id);
+
+
+--
 -- Name: index_workspaces_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1941,14 +2030,6 @@ ALTER TABLE ONLY public.posts
 
 
 --
--- Name: offer_embeds fk_rails_628738de83; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offer_embeds
-    ADD CONSTRAINT fk_rails_628738de83 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
 -- Name: posts fk_rails_62c1a93a80; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1986,6 +2067,14 @@ ALTER TABLE ONLY public.feed_categories
 
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_743c91858d FOREIGN KEY (post_category_id) REFERENCES public.post_categories(id);
+
+
+--
+-- Name: widgets fk_rails_8d886df757; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets
+    ADD CONSTRAINT fk_rails_8d886df757 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2069,6 +2158,14 @@ ALTER TABLE ONLY public.transactions
 
 
 --
+-- Name: widgets_multiples_items fk_rails_fbb5afcd82; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_multiples_items
+    ADD CONSTRAINT fk_rails_fbb5afcd82 FOREIGN KEY (widgets_multiple_id) REFERENCES public.widgets_multiples(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2092,7 +2189,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200716005559'),
 ('20200719020459'),
 ('20201004013037'),
-('20201011161725'),
 ('20201011221033'),
 ('20201011221308'),
 ('20201025181528'),
@@ -2107,7 +2203,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210221204244'),
 ('20210221204301'),
 ('20210301232012'),
-('20210305034312'),
-('20210306021342');
+('20210328042112'),
+('20210328055745'),
+('20210328061106'),
+('20210330012352');
 
 

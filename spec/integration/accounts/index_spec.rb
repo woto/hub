@@ -3,19 +3,35 @@
 require 'rails_helper'
 
 describe Tables::AccountsController, type: :system do
-  describe '#index' do
-    describe 'shared_language_component' do
-      it_behaves_like 'shared_language_component' do
-        before do
-          login_as(user, scope: :user)
-          visit accounts_path
-        end
+  describe 'shared_language_component' do
+    it_behaves_like 'shared_language_component' do
+      before do
+        login_as(user, scope: :user)
+        visit accounts_path
+      end
 
-        let!(:user) { create(:user, role: 'admin') }
-        let(:link) { accounts_path(locale: 'en') }
+      let!(:user) { create(:user, role: 'admin') }
+      let(:link) { accounts_path(locale: 'en') }
+    end
+  end
+
+  describe 'shared_search_everywhere' do
+    it_behaves_like 'shared_search_everywhere' do
+      before do
+        Account.hub_pending_usd
+        user = create(:user, role: :admin)
+        login_as(user, scope: :user)
+        visit '/ru/accounts'
+      end
+
+      let(:params) do
+        { controller: 'tables/accounts', q: q, cols: '0.9.6.4.5.1.2.3.7.8.10.11', locale: 'ru',
+          per: 20, sort: :id, order: :desc, only_path: true }
       end
     end
+  end
 
+  describe '#index' do
     describe 'TODO' do
       describe 'shared_table' do
         it_behaves_like 'shared_table' do
@@ -31,22 +47,6 @@ describe Tables::AccountsController, type: :system do
 
           before do
             login_as(user, scope: :user)
-          end
-        end
-      end
-
-      describe 'shared_search_everywhere' do
-        it_behaves_like 'shared_search_everywhere' do
-          before do
-            Account.hub_pending_usd
-            user = create(:user, role: :admin)
-            login_as(user, scope: :user)
-            visit '/ru/accounts'
-          end
-
-          let(:params) do
-            { controller: 'tables/accounts', q: q, cols: '0.9.6.4.5.1.2.3.7.8.10.11', locale: 'ru',
-              per: 20, sort: :id, order: :desc, only_path: true }
           end
         end
       end

@@ -3,17 +3,30 @@
 require 'rails_helper'
 
 describe Tables::NewsController, type: :system do
-  describe '#by_tag' do
-    describe 'shared_language_component' do
-      it_behaves_like 'shared_language_component' do
-        before do
-          visit by_tag_news_index_path({ tag: 'tag', locale: 'ru' })
-        end
+  describe 'shared_language_component' do
+    it_behaves_like 'shared_language_component' do
+      before do
+        visit by_tag_news_index_path({ tag: 'tag', locale: 'ru' })
+      end
 
-        let(:link) { news_index_path(locale: 'ru') }
+      let(:link) { news_index_path(locale: 'ru') }
+    end
+  end
+
+  describe 'shared_search_everywhere' do
+    it_behaves_like 'shared_search_everywhere' do
+      before do
+        visit '/ru/news/tag/money'
+      end
+
+      let(:params) do
+        { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc,
+          only_path: true }
       end
     end
+  end
 
+  describe '#by_tag' do
     describe 'TODO' do
       describe 'index' do
         let!(:post) { create(:post, realm_kind: :news, tags: ['tag1'], realm_locale: 'ru') }
@@ -46,19 +59,6 @@ describe Tables::NewsController, type: :system do
 
         it 'passes query params to frames' do
           expect(page).to have_css('turbo-frame#news-by-tag[src="/ru/frames/news/tag?order=asc&per=5&sort=created_at&tag=tag1"]')
-        end
-      end
-
-      describe 'shared_search_everywhere' do
-        it_behaves_like 'shared_search_everywhere' do
-          before do
-            visit '/ru/news/tag/money'
-          end
-
-          let(:params) do
-            { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc,
-              only_path: true }
-          end
         end
       end
     end
