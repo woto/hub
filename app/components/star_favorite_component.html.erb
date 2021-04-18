@@ -1,0 +1,59 @@
+<%= tag.div class: 'dropdown',
+            'data-controller': 'star-favorite',
+            'data-star-favorite-ext-id-value': @ext_id,
+            'data-star-favorite-favorites-items-kind-value': @favorites_items_kind,
+            'data-star-favorite-is-favorite-value': @is_favorite,
+            'data-star-favorite-dropdown-list-path-value': dropdown_list_favorites_path,
+            'data-star-favorite-update-star-favorites-path-value': update_star_favorites_path,
+            'data-action': 'star-favorite-item:updateStarData->star-favorite#updateStarData
+                            star-favorite-item:updateList->star-favorite#updateList' do %>
+
+  <%= tag.button class: "star-favorite switch-icon switch-icon-scale #{@is_favorite ? 'active' : ''}",
+                 id: "favorite-#{@favorites_items_kind}-#{@ext_id}",
+                 'data-bs-toggle': 'dropdown',
+                 'data-star-favorite-target': 'dropdownButton' do %>
+
+
+    <%# unstarred %>
+    <span class="switch-icon-a text-muted">
+      <%== GlobalHelper.icon('star') %>
+    </span>
+
+    <%# starred %>
+    <span class="switch-icon-b text-yellow">
+      <%== GlobalHelper.icon('star', svg_class: 'icon-filled') %>
+    </span>
+
+  <% end %>
+
+  <%= tag.div class: 'dropdown-menu dropdown-menu-end pb-0',
+              "data-target": 'star-favorite.dropdownMenu' do %>
+    <form>
+      <%= link_to favorites_path do %>
+        <h6 class="dropdown-header py-2">
+            <%= t(@favorites_items_kind, scope: %w[favorites titles]) %>
+        </h6>
+      <% end %>
+      <%= tag.div "data-star-favorite-target": 'itemsList' %>
+    </form>
+
+    <%= tag.div class: 'mx-3 text-red small', "data-star-favorite-target": 'errorPlaceholder' %>
+
+    <div class="input-group mt-2">
+
+      <%= text_field_tag nil, nil, id: nil, type: 'text', class: 'form-control favorite--text-field',
+                         placeholder: t('favorites.placeholder'),
+                         "data-star-favorite-target": 'newItemName',
+                         "data-action": 'keydown->star-favorite#clickCreateFavorite'
+      %>
+
+      <%= button_tag nil, id: nil, type: 'button', class: 'btn btn-teal btn-icon favorite--button',
+                     "data-star-favorite-target": 'createButton',
+                     "data-action": 'star-favorite#createFavorite' do %>
+        <%== GlobalHelper.icon('corner-down-left') %>
+      <% end %>
+
+    </div>
+
+  <% end %>
+<% end %>
