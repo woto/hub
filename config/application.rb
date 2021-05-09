@@ -41,6 +41,8 @@ module Hub
     config.elastic = config_for(:elastic)
     config.prometheus = config_for(:prometheus)
     config.global = config_for(:global)
+    config.available_currencies = config_for(:available_currencies)
+    config.exchange_rates = config_for(:exchange_rates)
 
     config.oauth_providers = %w[facebook google_oauth2].freeze
 

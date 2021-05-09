@@ -1,9 +1,9 @@
 class CreateExchangeRates < ActiveRecord::Migration[6.0]
   def change
     create_table :exchange_rates do |t|
-      t.integer :currency, null: false
-      t.decimal :value, null: false
+      t.jsonb :currencies, null: false
       t.date :date, null: false
+      t.jsonb :extra_options, null: false
 
       t.timestamps
     end

@@ -1,0 +1,114 @@
+# type: 'check_boxes'
+
+default: &default
+  currencies:
+    - key: 'rub'
+      value: 0.0500100
+    - key: 'eur'
+      value: 0.0005551
+    - key: 'usd'
+      value: 0.0007001
+
+  extra_options:
+    - key: 'post_type'
+      disabled: false
+      priority: 10
+      type: 'radio_buttons'
+      read_only: false
+      values:
+        - title: 'rewrite'
+          rate: 1.0
+        - title: 'copywrite'
+          rate: 1.20
+      hint: 'post_type'
+
+    - key: 'product_type'
+      disabled: false
+      priority: 10
+      type: 'check_boxes'
+      read_only: false
+      values:
+        - title: 'brand_new_product'
+          rate: 1.0
+        - title: 'product_popular'
+          rate: 1.0
+        - title: 'searchable'
+          rate: 1.0
+      hint: 'product_type'
+
+    - key: 'images_type'
+      disabled: false
+      priority: 10
+      type: 'radio_buttons'
+      read_only: false
+      values:
+        - title: 'unique_images'
+          rate: 1.00
+        - title: 'does_not_include_images'
+          rate: 1.00
+        - title: 'do_not_found_in_google'
+          rate: 1.00
+        - title: 'found_in_google'
+          rate: 1.00
+      hint: 'images_type'
+
+    - key: 'overview_type'
+      disabled: false
+      priority: 10
+      type: 'radio_buttons'
+      read_only: false
+      values:
+        - title: 'specific_knowledge'
+          rate: 1.0
+        - title: 'not_specific_knowledge'
+          rate: 1.0
+      hint: 'overview_type'
+
+    - key: 'product_comparison'
+      disabled: false
+      priority: 10
+      type: 'check_boxes'
+      read_only: false
+      values:
+        - title: 'product_comparison'
+          rate: 1.0
+      hint: 'product_comparison'
+
+    - key: 'uniqueness_checked'
+      disabled: false
+      priority: 10
+      type: 'check_boxes'
+      read_only: false
+      values:
+        - title: 'advego_ru'
+          rate: 1.0
+        - title: 'text_ru'
+          rate: 1.0
+        - title: 'etxt_ru'
+          rate: 1.0
+      hint: 'uniqueness_checked'
+
+    - key: 'moderator_bonus'
+      disabled: true
+      priority: 5
+      type: radio_buttons
+      read_only: true
+      values:
+        - title: 'plus_5_percent'
+          rate: 1.05
+        - title: 'plus_10_percent'
+          rate: 1.10
+        - title: 'plus_15_percent'
+          rate: 1.15
+        - title: 'plus_20_percent'
+          rate: 1.20
+      hint: 'moderator_bonus'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
