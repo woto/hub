@@ -317,49 +317,15 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: account_groups; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.account_groups (
-    id bigint NOT NULL,
-    identifier character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: account_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.account_groups_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: account_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.account_groups_id_seq OWNED BY public.account_groups.id;
-
-
---
 -- Name: accounts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.accounts (
     id bigint NOT NULL,
     code integer NOT NULL,
-    identifier uuid,
-    comment character varying NOT NULL,
-    kind integer NOT NULL,
     amount numeric DEFAULT 0.0 NOT NULL,
-    subject_type character varying NOT NULL,
-    subject_id bigint NOT NULL,
+    subjectable_type character varying NOT NULL,
+    subjectable_id bigint NOT NULL,
     currency integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -609,10 +575,10 @@ CREATE TABLE public.checks (
     user_id bigint NOT NULL,
     amount numeric NOT NULL,
     currency integer NOT NULL,
-    is_payed boolean NOT NULL,
-    payed_at timestamp without time zone,
+    status integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -641,9 +607,10 @@ ALTER SEQUENCE public.checks_id_seq OWNED BY public.checks.id;
 
 CREATE TABLE public.exchange_rates (
     id bigint NOT NULL,
-    currency integer NOT NULL,
-    value numeric NOT NULL,
+    currencies jsonb NOT NULL,
     date date NOT NULL,
+    extra_options jsonb NOT NULL,
+    posts_count integer DEFAULT 0,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -869,6 +836,9 @@ CREATE TABLE public.post_categories (
     id bigint NOT NULL,
     title character varying NOT NULL,
     realm_id bigint NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    posts_count integer DEFAULT 0,
+    ancestry_depth integer DEFAULT 0,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     ancestry character varying
@@ -907,14 +877,14 @@ CREATE TABLE public.posts (
     status integer NOT NULL,
     user_id bigint NOT NULL,
     price numeric DEFAULT 0.0 NOT NULL,
-    comment text,
     extra_options jsonb,
     realm_id bigint NOT NULL,
     published_at timestamp without time zone NOT NULL,
     tags jsonb DEFAULT '[]'::jsonb,
     priority integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -982,8 +952,12 @@ CREATE TABLE public.realms (
     title character varying NOT NULL,
     locale character varying NOT NULL,
     kind integer NOT NULL,
+    posts_count integer DEFAULT 0,
+    post_categories_count integer DEFAULT 0,
+    domain character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -1013,6 +987,37 @@ ALTER SEQUENCE public.realms_id_seq OWNED BY public.realms.id;
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: subjects; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.subjects (
+    id bigint NOT NULL,
+    identifier integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.subjects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.subjects_id_seq OWNED BY public.subjects.id;
 
 
 --
@@ -1061,7 +1066,6 @@ CREATE TABLE public.transactions (
     amount numeric NOT NULL,
     obj_type character varying,
     obj_id bigint,
-    obj_hash jsonb,
     transaction_group_id bigint NOT NULL,
     responsible_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -1113,7 +1117,8 @@ CREATE TABLE public.users (
     locked_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    role integer
+    role integer,
+    posts_count integer DEFAULT 0
 );
 
 
@@ -1304,13 +1309,6 @@ ALTER SEQUENCE public.workspaces_id_seq OWNED BY public.workspaces.id;
 
 
 --
--- Name: account_groups id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.account_groups ALTER COLUMN id SET DEFAULT nextval('public.account_groups_id_seq'::regclass);
-
-
---
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1437,6 +1435,13 @@ ALTER TABLE ONLY public.realms ALTER COLUMN id SET DEFAULT nextval('public.realm
 
 
 --
+-- Name: subjects id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.subjects_id_seq'::regclass);
+
+
+--
 -- Name: transaction_groups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1490,14 +1495,6 @@ ALTER TABLE ONLY public.widgets_simples ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.workspaces ALTER COLUMN id SET DEFAULT nextval('public.workspaces_id_seq'::regclass);
-
-
---
--- Name: account_groups account_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.account_groups
-    ADD CONSTRAINT account_groups_pkey PRIMARY KEY (id);
 
 
 --
@@ -1661,6 +1658,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: subjects subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subjects
+    ADD CONSTRAINT subjects_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: transaction_groups transaction_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1728,14 +1733,14 @@ ALTER TABLE ONLY public.workspaces
 -- Name: account_set_uniqueness; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX account_set_uniqueness ON public.accounts USING btree (identifier, kind, currency, subject_id, subject_type);
+CREATE UNIQUE INDEX account_set_uniqueness ON public.accounts USING btree (code, currency, subjectable_id, subjectable_type);
 
 
 --
--- Name: index_accounts_on_subject_type_and_subject_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_accounts_on_subjectable_type_and_subjectable_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_accounts_on_subject_type_and_subject_id ON public.accounts USING btree (subject_type, subject_id);
+CREATE INDEX index_accounts_on_subjectable_type_and_subjectable_id ON public.accounts USING btree (subjectable_type, subjectable_id);
 
 
 --
@@ -1893,6 +1898,27 @@ CREATE INDEX index_profiles_on_user_id ON public.profiles USING btree (user_id);
 
 
 --
+-- Name: index_realms_on_domain; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_realms_on_domain ON public.realms USING btree (domain);
+
+
+--
+-- Name: index_realms_on_locale_and_kind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_realms_on_locale_and_kind ON public.realms USING btree (locale, kind) WHERE (kind <> 0);
+
+
+--
+-- Name: index_realms_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_realms_on_title ON public.realms USING btree (title);
+
+
+--
 -- Name: index_transactions_on_credit_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1991,10 +2017,31 @@ CREATE TRIGGER logidze_on_advertisers BEFORE INSERT OR UPDATE ON public.advertis
 
 
 --
+-- Name: checks logidze_on_checks; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_checks BEFORE INSERT OR UPDATE ON public.checks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+
+
+--
 -- Name: feeds logidze_on_feeds; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER logidze_on_feeds BEFORE INSERT OR UPDATE ON public.feeds FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+
+
+--
+-- Name: posts logidze_on_posts; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+
+
+--
+-- Name: realms logidze_on_realms; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_realms BEFORE INSERT OR UPDATE ON public.realms FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
 
 
 --
@@ -2203,9 +2250,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210221204244'),
 ('20210221204301'),
 ('20210301232012'),
+('20210301234012'),
+('20210301235012'),
 ('20210328042112'),
 ('20210328055745'),
 ('20210328061106'),
-('20210330012352');
+('20210330012352'),
+('20210511060126');
 
 

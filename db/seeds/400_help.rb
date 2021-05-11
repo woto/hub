@@ -1,4 +1,4 @@
-help_realm = Realm.create!(title: 'Помощь', locale: 'ru', kind: 'help')
+help_realm = Realm.pick(locale: 'ru', kind: 'help')
 
 ['Начало работы', 'Общая информация', 'Площадки', 'Программы', 'Финансы', 'Инструменты',
  'Статистика', 'Настройки', 'Aliexpress', 'Техподдержка', 'GDPR'].each do |pc|

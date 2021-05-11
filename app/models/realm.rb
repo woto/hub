@@ -4,28 +4,53 @@
 #
 # Table name: realms
 #
-#  id         :bigint           not null, primary key
-#  kind       :integer          not null
-#  locale     :string           not null
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                    :bigint           not null, primary key
+#  domain                :string           not null
+#  kind                  :integer          not null
+#  locale                :string           not null
+#  post_categories_count :integer          default(0)
+#  posts_count           :integer          default(0)
+#  title                 :string           not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+# Indexes
+#
+#  index_realms_on_domain           (domain) UNIQUE
+#  index_realms_on_locale_and_kind  (locale,kind) UNIQUE WHERE (kind <> 0)
+#  index_realms_on_title            (title) UNIQUE
 #
 class Realm < ApplicationRecord
-  validates :locale, :title, presence: true
-  enum kind: [:news, :help, :website]
+  has_logidze
+  has_logidze ignore_log_data: true
+
+  include Elasticable
+  index_name "#{Rails.env}.realms"
+
+  enum kind: { post: 0, news: 1, help: 2 }
   has_many :post_categories
   has_many :posts
 
-  validates :kind, presence: true
+  validates :kind, :locale, :title, :domain, presence: true
+  validates :kind, uniqueness: { scope: :locale }, unless: :post?
 
   def to_label
-    "#{locale}: #{title}"
+    title
   end
 
-  class << self
-    def default_realm
-      @default_realm ||= Realm.find_or_create_by!(title: 'По-умолчанию', locale: 'ru')
-    end
+  def as_indexed_json(_options = {})
+    {
+      id: id,
+      domain: domain,
+      kind: kind,
+      locale: locale,
+      post_categories_count: post_categories_count,
+      posts_count: posts_count,
+      title: title
+    }
+  end
+
+  def self.pick(kind:, locale:, title: "Website: { kind: #{kind}, locale: #{locale} }", domain: "#{kind}.#{locale}")
+    Realm.find_or_create_by!(locale: locale, kind: kind, title: title, domain: domain.downcase)
   end
 end
