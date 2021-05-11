@@ -20,14 +20,22 @@ module PostCategories
         *paths = row.join.split('/')
         scope = nil
         paths.each do |path|
-          created = (scope&.children || PostCategory).find_or_create_by!(
-            title: path, realm: Realm.default_realm(kind: :post, locale: :ru)
-          )
+          next if path == 'Все товары'
+
+          created = (scope&.children || PostCategory).find_or_create_by!(title: path, realm: realm)
           scope = created
         end
       end
+
       # PostCategory.__elasticsearch__.create_index!
       # PostCategory.__elasticsearch__.import
+      nil
+    end
+
+    private
+
+    def realm
+      Realm.pick(kind: :post, locale: 'ru', domain: 'yandex', title: 'Яндекс Маркет')
     end
   end
 end
