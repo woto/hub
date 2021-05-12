@@ -1,7 +1,10 @@
 
 <%= paginator.render do %>
   <nav class="my-3">
-    <%= next_page_tag unless current_page.last? %>
+    <div class="row g-3 mx-3 my-3">
+      <%= prev_page_tag unless current_page.first? %>
+      <%= next_page_tag unless current_page.last? %>
+    </div>
 
     <ul class="pagination justify-content-center">
       <% each_page do |page| %>
