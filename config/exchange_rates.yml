@@ -14,7 +14,6 @@ default: &default
       disabled: false
       priority: 10
       type: 'radio_buttons'
-      read_only: false
       values:
         - title: 'rewrite'
           rate: 1.0
@@ -26,7 +25,6 @@ default: &default
       disabled: false
       priority: 10
       type: 'check_boxes'
-      read_only: false
       values:
         - title: 'brand_new_product'
           rate: 1.0
@@ -40,7 +38,6 @@ default: &default
       disabled: false
       priority: 10
       type: 'radio_buttons'
-      read_only: false
       values:
         - title: 'unique_images'
           rate: 1.00
@@ -56,7 +53,6 @@ default: &default
       disabled: false
       priority: 10
       type: 'radio_buttons'
-      read_only: false
       values:
         - title: 'specific_knowledge'
           rate: 1.0
@@ -68,7 +64,6 @@ default: &default
       disabled: false
       priority: 10
       type: 'check_boxes'
-      read_only: false
       values:
         - title: 'product_comparison'
           rate: 1.0
@@ -78,7 +73,6 @@ default: &default
       disabled: false
       priority: 10
       type: 'check_boxes'
-      read_only: false
       values:
         - title: 'advego_ru'
           rate: 1.0
@@ -92,7 +86,6 @@ default: &default
       disabled: true
       priority: 5
       type: radio_buttons
-      read_only: true
       values:
         - title: 'plus_5_percent'
           rate: 1.05
