@@ -4,13 +4,15 @@
 #
 # Table name: post_categories
 #
-#  id         :bigint           not null, primary key
-#  ancestry   :string
-#  priority   :integer          default(0), not null
-#  title      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  realm_id   :bigint           not null
+#  id             :bigint           not null, primary key
+#  ancestry       :string
+#  ancestry_depth :integer          default(0)
+#  posts_count    :integer          default(0)
+#  priority       :integer          default(0), not null
+#  title          :string           not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  realm_id       :bigint           not null
 #
 # Indexes
 #
@@ -22,26 +24,22 @@
 #  fk_rails_...  (realm_id => realms.id)
 #
 class PostCategory < ApplicationRecord
+  has_logidze ignore_log_data: true
+
   include Elasticable
   index_name "#{Rails.env}.post_categories"
 
-  belongs_to :realm
+  belongs_to :realm, counter_cache: true, touch: true
+
+  has_ancestry cache_depth: true
+  has_many :posts
 
   validates :title, presence: true
+  validate :check_same_realms
+  validate :check_parent_does_not_have_posts
 
-  validate do
-    next if parent.nil?
-
-    errors.add(:realm_id, 'must be same realm_id') if realm_id != parent.realm_id
-    # TODO: must have same realm_id
-  end
-
-  validate do
-    # TODO: can not have any associated posts if it is not leaf
-    # add validation on adding children
-  end
-
-  has_ancestry
+  # TODO: check necessity of touching parent
+  # after_save :touch_parent
 
   def as_indexed_json(_options = {})
     categories_in_path = PostCategory.unscoped.find(path_ids)
@@ -63,12 +61,29 @@ class PostCategory < ApplicationRecord
       realm_kind: realm.kind,
       leaf: children.none?,
       priority: priority,
+      ancestry_depth: ancestry_depth,
       created_at: created_at.utc,
-      updated_at: updated_at.utc
+      updated_at: updated_at.utc,
+      posts_count: posts_count
     }
   end
 
-  after_save do
-    parent&.touch
+  private
+
+  def check_same_realms
+    return if parent.nil?
+
+    errors.add(:realm_id, 'must have same realm_id') if realm_id != parent.realm_id
   end
+
+  def check_parent_does_not_have_posts
+    errors.add(:parent_id, 'parent must not have the posts') if parent && parent.posts.count.positive?
+    # TODO: can not have any associated posts if it is not leaf
+    # add validation on adding children
+  end
+
+  # TODO: check necessity of touching parent
+  # def touch_parent
+  #   parent&.touch
+  # end
 end
