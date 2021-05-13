@@ -6,16 +6,12 @@ module Elastic
   class Tokenize
     include ApplicationInteractor
 
-    class Contract < Dry::Validation::Contract
+    contract do
       params do
         required(:q).filled(:string)
       end
     end
 
-    before do
-      contract = Contract.new.call(context.to_h)
-      raise StandardError, contract.errors.to_h if contract.failure?
-    end
 
     def call
       index_name = Elastic::IndexName.tokenizer
