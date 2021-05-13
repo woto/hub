@@ -4,58 +4,49 @@
 #
 # Table name: accounts
 #
-#  id           :bigint           not null, primary key
-#  amount       :decimal(, )      default(0.0), not null
-#  code         :integer          not null
-#  comment      :string           not null
-#  currency     :integer          not null
-#  identifier   :uuid
-#  kind         :integer          not null
-#  subject_type :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  subject_id   :bigint           not null
+#  id               :bigint           not null, primary key
+#  amount           :decimal(, )      default(0.0), not null
+#  code             :integer          not null
+#  currency         :integer          not null
+#  subjectable_type :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  subjectable_id   :bigint           not null
 #
 # Indexes
 #
-#  account_set_uniqueness                         (identifier,kind,currency,subject_id,subject_type) UNIQUE
-#  index_accounts_on_subject_type_and_subject_id  (subject_type,subject_id)
+#  account_set_uniqueness                                 (code,currency,subjectable_id,subjectable_type) UNIQUE
+#  index_accounts_on_subjectable_type_and_subjectable_id  (subjectable_type,subjectable_id)
 #
 class Account < ApplicationRecord
-  belongs_to :subject, polymorphic: true, optional: true
+  has_logidze ignore_log_data: true
+
+  include AccountIdentifiable
 
   include Elasticable
-  # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.accounts"
 
-  enum currency: Rails.configuration.global[:currencies]
-  enum kind: { active: 1, passive: 0 }
-  enum code: { pending: 0, accrued: 1, requested: 2, payed: 3 }
+  belongs_to :subjectable, polymorphic: true
 
-  before_validation on: :create do
-    self.amount = 0
-  end
+  # belongs_to :for_user,
+  #            -> { joins(:accounts).where(accounts: { subjectable_type: 'User' }) },
+  #            foreign_key: 'subjectable_id',
+  #            class_name: 'User', optional: true
 
-  validates :amount, :code, :currency, :kind, :subject, presence: true
+  enum currency: GlobalHelper.currencies_table
+  enum code: { draft: 0, pending: 1, approved: 2, rejected: 3, accrued: 4, canceled: 5, requested: 6, payed: 7 }
 
-  # AccountGroup can have multiple accounts with same :currency and :code
-  validates :identifier, uniqueness: true, if: -> { subject_type.in? %w[AccountGroup] }
+  before_validation :set_amount_to_zero, on: :create
 
-  # User or Advertiser can have only one account with same :currency and :code
-  validates :currency, uniqueness: { scope: %i[code subject_id subject_type] }, if: -> { subject_type.in? %w[User Advertiser] }
+  attr_readonly :code, :currency, :subjectable_id, :subjectable_type, :amount
+  validates :amount, :code, :currency, :subjectable, presence: true
+  validates :currency, uniqueness: { scope: %i[code subjectable_id subjectable_type] }
+  validate :restrict_change_fields, if: :persisted?
 
-  # TODO: is there a way to engage parser gem and check statically
-  # attempts to change unpermitted field values (all except `amount`)?
+  has_many :transactions_as_credit, class_name: 'Transaction', foreign_key: :credit_id
+  has_many :transactions_as_debit, class_name: 'Transaction', foreign_key: :debit_id
 
-  validate if: ->(acc) { acc.persisted? } do
-    unpermitted_changed_fields = changed_attributes.keys - ['amount']
-    unpermitted_changed_fields.each do |field|
-      errors.add(field, 'can not be changed')
-    end
-  end
-
-  has_many :transactions_as_credit, class_name: "Transaction", foreign_key: :credit_id
-  has_many :transactions_as_debit, class_name: "Transaction", foreign_key: :debit_id
+  scope :subjects, -> { where(subjectable_type: 'Subject') }
 
   def as_indexed_json(_options = {})
     {
@@ -63,150 +54,58 @@ class Account < ApplicationRecord
       amount: amount,
       code: code,
       currency: currency,
-      identifier: identifier,
-      comment: comment,
-      kind: kind,
-      subject_id: subject_id,
-      subject_type: subject_type,
-      subject_label: subject.to_label,
+      subjectable_id: subjectable_id,
+      subjectable_type: subjectable_type,
+      subjectable_label: subjectable.to_label,
       created_at: created_at,
       updated_at: updated_at
     }
   end
 
-  class << self
-    def for_user_pending_usd(user)
-      user.accounts.find_or_create_by!(code: :pending, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'for_user_pending_usd'
-      end
+  def to_label
+    label = ''
+    label += if subjectable.is_a?(Subject)
+               subjectable.to_label
+             else
+               subjectable.class.name.underscore
+             end
+    label += ", #{code}, #{currency}"
+    label
+  end
+
+  def self.available_to_request(user, currency)
+    # accounts = if subjectables.is_a?(User)
+    #              Account.joins(:for_user).where(
+    #                code: %i[accrued requested payed],
+    #                for_user: { id: subjectables.id }, currency: currency
+    #              ).to_a
+    #            else
+    #              Account.joins(:for_subject).where(
+    #                code: %i[accrued requested payed],
+    #                for_subject: { id: subjectables.pluck(:id) }, currency: currency
+    #              ).to_a
+    #            end
+    #
+    # amount_by_code = ->(code) { accounts.find { |account| account.code == code }&.amount || 0 }
+    #
+    # amount_by_code.call('accrued') -
+    #   amount_by_code.call('requested') -
+    #   amount_by_code.call('payed')
+
+    Account.for_user(user, :accrued, currency).amount -
+      Account.for_user(user, :requested, currency).amount -
+      Account.for_user(user, :payed, currency).amount
+  end
+
+  private
+
+  def set_amount_to_zero
+    self.amount = 0
+  end
+
+  def restrict_change_fields
+    changed_attributes.keys.each do |field|
+      errors.add(field, :readonly)
     end
-
-    def for_user_accrued_usd(user)
-      user.accounts.find_or_create_by!(code: :accrued, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'for_user_accrued_usd'
-      end
-    end
-
-    def for_user_requested_usd(user)
-      user.accounts.find_or_create_by!(code: :requested, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'for_user_requested_usd'
-      end
-    end
-
-    def for_user_payed_usd(user)
-      user.accounts.find_or_create_by!(code: :payed, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'for_user_payed_usd'
-      end
-    end
-
-    def for_advertiser_payed_rub(advertiser)
-      advertiser.accounts.find_or_create_by!(code: :payed, currency: :rub, kind: :passive) do |ag|
-        ag.comment = 'for_advertiser_payed_rub'
-      end
-    end
-
-    def hub_pending_usd
-      uuid = '0eb402b6-5029-4f2d-ba13-9c28b78564a6'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :pending, currency: :usd, kind: :active) do |ag|
-        ag.comment = 'hub_pending_usd'
-      end
-    end
-
-    def hub_accrued_usd
-      uuid = 'd7bbb84f-1b1d-497f-925f-81f8e46e3886'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :accrued, currency: :usd, kind: :active) do |ag|
-        ag.comment = 'hub_accrued_usd'
-      end
-    end
-
-    def hub_requested_usd
-      uuid = '9ec481ff-e325-4ef4-89ed-fff1f11e3418'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :requested, currency: :usd, kind: :active) do |ag|
-        ag.comment = 'hub_requested_usd'
-      end
-    end
-
-    def hub_payed_usd
-      uuid = '505c3a4e-d567-43d7-9be6-def39b09f7ca'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :usd, kind: :active) do |ag|
-        ag.comment = 'hub_payed_usd'
-      end
-    end
-
-    def hub_pending_rub
-      uuid = 'b3bb0560-8426-4e53-9a92-19ceedabd9ab'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :pending, currency: :rub, kind: :active) do |ag|
-        ag.comment = 'hub_pending_rub'
-      end
-    end
-
-    def hub_accrued_rub
-      uuid = '56f682a5-6097-415d-81bd-86dd60ffce77'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :accrued, currency: :rub, kind: :active) do |ag|
-        ag.comment = 'hub_accrued_rub'
-      end
-    end
-
-    def hub_payed_rub
-      uuid = '01e5c757-155a-4564-8440-8cf3b1ab805e'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :rub, kind: :active) do |ag|
-        ag.comment = 'hub_payed_rub'
-      end
-    end
-
-    def yandex_payed
-      uuid = 'd6241eb3-ba62-41ca-864b-d2c687d812b6'
-      AccountGroup.yandex.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'yandex_payed'
-      end
-    end
-
-    def yandex_commission
-      uuid = '24641f0c-4636-46a9-ab81-cc1b3d46c373'
-      AccountGroup.yandex.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'yandex_commission'
-      end
-    end
-
-    def stakeholder_payed_rub
-      uuid = '37067bc0-10a9-4bc3-9214-15799be826bf'
-      AccountGroup.stakeholder.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :rub, kind: :passive) do |ag|
-        ag.comment = 'stakeholder_payed_rub'
-      end
-    end
-
-    def advego_convertor_rub
-      uuid = '477db258-745a-4006-ab81-77d2e8f87bb2'
-      AccountGroup.advego.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :rub, kind: :passive) do |ag|
-        ag.comment = 'advego_convertor_rub'
-      end
-    end
-
-    def advego_convertor_usd
-      uuid = 'e9aa9b4d-0baf-4338-bc8d-006632994f88'
-      AccountGroup.advego.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :usd, kind: :passive) do |ag|
-        ag.comment = 'advego_convertor_usd'
-      end
-    end
-
-    def advego_account_usd
-      uuid = 'e7252ac1-b8ae-4746-a354-e18c6f219d0e'
-      AccountGroup.advego.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :usd, kind: :active) do |ag|
-        ag.comment = 'advego_account_usd'
-      end
-    end
-
-    def hub_bank_rub
-      uuid = '58cca0a6-1d7a-4c74-be22-d4d297f79292'
-      AccountGroup.hub.accounts.find_or_create_by!(identifier: uuid, code: :payed, currency: :rub, kind: :active) do |ag|
-        ag.comment = 'hub_bank_rub'
-      end
-    end
-
-    # TODO
-    # advego_payed_usd = Account.create!(
-    #   subject: advego, name: 'account', code: 'payed', currency: :usd, kind: :passive
-    # ) 63181466-316a-45d4-8513-feee972bca68
-
   end
 end

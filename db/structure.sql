@@ -529,6 +529,7 @@ CREATE TABLE public.advertisers (
     raw text,
     synced_at timestamp without time zone,
     is_active boolean DEFAULT true NOT NULL,
+    feeds_count integer DEFAULT 0,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb
@@ -764,6 +765,7 @@ CREATE TABLE public.feeds (
     succeeded_at timestamp without time zone,
     offers_count integer,
     categories_count integer,
+    feed_categories_count integer DEFAULT 0,
     priority integer DEFAULT 0 NOT NULL,
     xml_file_path character varying,
     downloaded_file_type character varying,
@@ -1118,7 +1120,9 @@ CREATE TABLE public.users (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     role integer,
-    posts_count integer DEFAULT 0
+    posts_count integer DEFAULT 0,
+    checks_count integer DEFAULT 0,
+    favorites_count integer DEFAULT 0
 );
 
 
@@ -1919,6 +1923,13 @@ CREATE UNIQUE INDEX index_realms_on_title ON public.realms USING btree (title);
 
 
 --
+-- Name: index_subjects_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_subjects_on_identifier ON public.subjects USING btree (identifier);
+
+
+--
 -- Name: index_transactions_on_credit_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2251,11 +2262,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210221204301'),
 ('20210301232012'),
 ('20210301234012'),
+('20210301234512'),
 ('20210301235012'),
 ('20210328042112'),
 ('20210328055745'),
 ('20210328061106'),
-('20210330012352'),
-('20210511060126');
+('20210330012352');
 
 

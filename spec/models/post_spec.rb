@@ -41,10 +41,13 @@ describe Post, type: :model do
   it_behaves_like 'logidzable'
 
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
-  it { is_expected.to define_enum_for(:status) }
   it { is_expected.to have_many_attached(:images) }
   it { is_expected.to have_rich_text(:body) }
   it { is_expected.to have_rich_text(:intro) }
+  specify do
+    statuses = %i[draft pending approved rejected accrued canceled]
+    expect(subject).to define_enum_for(:status).with_values(statuses)
+  end
 
   describe 'associations' do
     it { is_expected.to belong_to(:realm) }
