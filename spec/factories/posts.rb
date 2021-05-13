@@ -7,7 +7,7 @@
 #  id               :bigint           not null, primary key
 #  currency         :integer          not null
 #  extra_options    :jsonb
-#  price            :decimal(, )      default(0.0), not null
+#  price            :decimal(, )      not null
 #  priority         :integer          default(0), not null
 #  published_at     :datetime         not null
 #  status           :integer          not null

@@ -876,7 +876,7 @@ CREATE TABLE public.posts (
     title character varying NOT NULL,
     status integer NOT NULL,
     user_id bigint NOT NULL,
-    price numeric DEFAULT 0.0 NOT NULL,
+    price numeric NOT NULL,
     extra_options jsonb,
     realm_id bigint NOT NULL,
     published_at timestamp without time zone NOT NULL,

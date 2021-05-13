@@ -20,6 +20,7 @@ module Columns
       { key: 'processing_finished_at'                          , pg: Feed.columns_hash['processing_finished_at'], roles: ['admin'] },
       { key: 'synced_at'                                       , pg: Feed.columns_hash['synced_at'], roles: ['admin'] },
       { key: 'categories_count'                                , pg: Feed.columns_hash['categories_count'], roles: ['guest', 'user', 'manager', 'admin'] },
+      { key: 'feed_categories_count'                           , pg: Feed.columns_hash['feed_categories_count'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'offers_count'                                    , pg: Feed.columns_hash['offers_count'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'priority'                                        , pg: Feed.columns_hash['priority'], roles: ['admin'] },
       { key: 'xml_file_path'                                   , pg: Feed.columns_hash['xml_file_path'], roles: ['admin'] },

@@ -83,7 +83,10 @@ class User < ApplicationRecord
       profile_languages: profile&.languages,
       profile_messengers: profile&.messengers,
       profile_created_at: profile&.created_at,
-      profile_updated_at: profile&.updated_at
+      profile_updated_at: profile&.updated_at,
+      posts_count: posts_count,
+      checks_count: checks_count,
+      favorites_count: favorites_count
     }
   end
 

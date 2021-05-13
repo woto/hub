@@ -133,4 +133,18 @@ if Rails.env.development?
   )
   Feeds::Parse.call(feed: feed3)
   Elastic::RefreshOffersIndex.call
+
+  # def create_post_categories_random_tree
+  #   rand(1..20).times do |_i|
+  #     realm = Realm.pick(locale: :ru, kind: :post, title: 'Random tree', domain: 'best.ru')
+  #     parent = PostCategory.order('random()').find_by(realm: realm)
+  #     PostCategory.create!(
+  #       realm: realm,
+  #       title: Faker::Lorem.sentence(word_count: 1, random_words_to_add: 4),
+  #       parent: [nil, parent].sample
+  #     )
+  #   end
+  # end
+  #
+  # create_post_categories_random_tree
 end

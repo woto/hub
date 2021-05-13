@@ -20,7 +20,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Check < ApplicationRecord
-  belongs_to :user
+  has_logidze ignore_log_data: true
+  belongs_to :user, counter_cache: true, touch: true
 
   include CheckStatuses
   include Elasticable

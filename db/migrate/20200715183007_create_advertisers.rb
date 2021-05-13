@@ -9,6 +9,7 @@ class CreateAdvertisers < ActiveRecord::Migration[6.0]
       t.text :raw
       t.datetime :synced_at
       t.boolean :is_active, null: false, default: true
+      t.integer :feeds_count, default: 0
 
       t.index %i[network ext_id], unique: true
 

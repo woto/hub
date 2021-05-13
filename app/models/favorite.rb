@@ -27,7 +27,7 @@ class Favorite < ApplicationRecord
   index_name "#{Rails.env}.favorites"
   enum kind: { users: 0, posts: 1, transactions: 2, accounts: 3, checks: 4, news: 5, offers: 6, feeds: 7 }
 
-  belongs_to :user
+  belongs_to :user, counter_cache: true, touch: true
 
   has_many :favorites_items, dependent: :destroy
 

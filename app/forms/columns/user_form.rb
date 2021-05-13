@@ -34,6 +34,9 @@ module Columns
       { key: 'profile_messengers'               , pg: Profile.columns_hash['messengers'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'profile_created_at'               , pg: Profile.columns_hash['created_at'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'profile_updated_at'               , pg: Profile.columns_hash['updated_at'], roles: ['guest', 'user', 'manager', 'admin'] },
+      { key: 'posts_count'                      , pg: User.columns_hash['posts_count'], roles: ['guest', 'user', 'manager', 'admin'] },
+      { key: 'checks_count'                     , pg: User.columns_hash['checks_count'], roles: ['guest', 'user', 'manager', 'admin'] },
+      { key: 'favorites_count'                  , pg: User.columns_hash['favorites_count'], roles: ['guest', 'user', 'manager', 'admin'] },
     ]
   end
 end
