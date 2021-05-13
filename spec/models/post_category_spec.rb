@@ -108,4 +108,19 @@ describe PostCategory, type: :model do
       )
     end
   end
+
+  describe '#touch_parent' do
+    subject { create(:post_category, realm: realm) }
+
+    let(:realm) { create(:realm) }
+
+    it 'touches parent and makes it non-leaf' do
+      expect do
+        create(:post_category, title: 'Дочерняя категория', parent: subject, realm: realm)
+      end.to change {
+        result = elastic_client.get({ index: Elastic::IndexName.post_categories, id: subject.id })
+        result['_source']['leaf']
+      }.from(true).to(false)
+    end
+  end
 end

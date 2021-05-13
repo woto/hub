@@ -9,10 +9,6 @@ class Ajax::PostCategoriesController < ApplicationController
             multi_match: {
               query: params[:q],
               type: 'bool_prefix',
-              # fields: %W[
-              #   title_i18n.#{params[:post_language]}.autocomplete
-              #   title_i18n.#{params[:post_language]}.autocomplete._2gram
-              #   title_i18n.#{params[:post_language]}.autocomplete._3gram
               fields: %w[
                 title.autocomplete
                 title.autocomplete._2gram

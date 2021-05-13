@@ -38,8 +38,7 @@ class PostCategory < ApplicationRecord
   validate :check_same_realms
   validate :check_parent_does_not_have_posts
 
-  # TODO: check necessity of touching parent
-  # after_save :touch_parent
+  after_save :touch_parent
 
   def as_indexed_json(_options = {})
     categories_in_path = PostCategory.unscoped.find(path_ids)
@@ -82,8 +81,7 @@ class PostCategory < ApplicationRecord
     # add validation on adding children
   end
 
-  # TODO: check necessity of touching parent
-  # def touch_parent
-  #   parent&.touch
-  # end
+  def touch_parent
+    parent&.touch
+  end
 end
