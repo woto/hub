@@ -21,7 +21,6 @@
 #  index_realms_on_title            (title) UNIQUE
 #
 class Realm < ApplicationRecord
-  has_logidze
   has_logidze ignore_log_data: true
 
   include Elasticable

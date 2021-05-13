@@ -8,7 +8,15 @@ module ApplicationInteractor
   included do
     include Interactor
 
-    def fail!(code: nil, message:)
+    def self.contract(&block)
+      before do
+        contract_class = Class.new(Dry::Validation::Contract, &block)
+        contract = contract_class.new.call(context.to_h)
+        raise StandardError, contract.errors.to_h if contract.failure?
+      end
+    end
+
+    def fail!(message:, code: nil)
       context.fail!(code: code, message: message)
     end
 
