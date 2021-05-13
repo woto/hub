@@ -4,6 +4,19 @@ class AccountsSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
+  # contract do
+  #   params do
+  #     config.validate_keys = true
+  #     required(:q)
+  #     required(:locale)
+  #     required(:sort)
+  #     required(:order)
+  #     required(:from)
+  #     required(:size)
+  #     required(:filter_ids)
+  #   end
+  # end
+
   def call
     definition = search do
 
@@ -11,10 +24,10 @@ class AccountsSearchQuery
         bool do
           if context.filter_ids
             filter do
-              term "subject_id" => context.filter_ids
+              term "subjectable_id" => context.filter_ids
             end
             filter do
-              term "subject_type.keyword" => "User"
+              term "subjectable_type.keyword" => "User"
             end
           end
 
