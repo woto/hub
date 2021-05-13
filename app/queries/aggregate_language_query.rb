@@ -3,16 +3,11 @@
 class AggregateLanguageQuery
   include ApplicationInteractor
 
-  class Contract < Dry::Validation::Contract
+  contract do
     params do
       config.validate_keys = true
       required(:feed).value(type?: Feed)
     end
-  end
-
-  before do
-    result = Contract.new.call(context.to_h)
-    raise result.inspect if result.failure?
   end
 
   def call
