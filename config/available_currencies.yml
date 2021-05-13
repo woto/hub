@@ -1,0 +1,17 @@
+default: &default
+
+
+development:
+  - rub
+  - eur
+  - usd
+  - ghc
+
+test:
+  - rub
+  - eur
+  - usd
+  - ghc
+
+production:
+  *default

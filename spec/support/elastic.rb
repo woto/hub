@@ -17,7 +17,7 @@ shared_examples 'elasticable' do
   it 'index newly created documents' do
     Current.set(responsible: create(:user)) do
       record = build(model)
-      expect(record).to receive(:send_document_to_elasticsearch)
+      expect(record).to receive(:send_document_to_elasticsearch).at_least(:once)
       record.save!
     end
   end
@@ -25,7 +25,7 @@ shared_examples 'elasticable' do
   it 'index changed documents' do
     Current.set(responsible: create(:user)) do
       record = create(model)
-      expect(record).to receive(:send_document_to_elasticsearch)
+      expect(record).to receive(:send_document_to_elasticsearch).at_least(:once)
       record.touch
     end
   end

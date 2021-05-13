@@ -9,8 +9,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :title, null: false
       t.integer :status, null: false
       t.references :user, null: false, foreign_key: true
-      t.decimal :price, null: false, default: 0
-      t.text :comment
+      t.decimal :price, null: false
       t.jsonb :extra_options
       t.references :realm, null: false, foreign_key: true
       t.datetime :published_at, null: false

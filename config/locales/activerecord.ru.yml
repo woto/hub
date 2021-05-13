@@ -14,13 +14,16 @@
 ru:
   activerecord:
     errors:
+      models:
+        post:
+          attributes:
+            currency:
+              no_rate: "'%{currency}' не имеет курса на дату '%{date}', пожалуйста свяжитесь со службой поддержки чтобы использовать эту валюту"
       messages:
         select_language: должен быть выбран
         select_messenger_type: должен быть выбран
 
   errors:
-    attributes:
-      name: asdf
     models:
       user: Customer
     attributes:

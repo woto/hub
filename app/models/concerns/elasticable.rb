@@ -15,6 +15,10 @@ module Elasticable
       remove_document_from_elasticsearch
     }, on: :destroy
 
+    after_touch lambda {
+      send_document_to_elasticsearch
+    }
+
     def send_document_to_elasticsearch
       __elasticsearch__.index_document
       self.class.__elasticsearch__.refresh_index!
