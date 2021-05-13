@@ -6,17 +6,19 @@ class PostDecorator < ApplicationDecorator
   end
 
   def price
-    decorate_money(super, currency)
+    h.tag.mark do
+      decorate_money(super, currency)
+    end
   end
 
   def title
     truncated = h.truncate(super, length: 50)
-    tooltip_options = if truncated != super
-                        { 'data-bs-toggle': "tooltip", title: super }
-                      else
-                        {}
-                      end
-    h.link_to(truncated, h.post_path(_id), **tooltip_options)
+    link_options = { 'data-turbo' => 'false' }
+    if truncated != super
+      link_options['data-bs-toggle'] = 'tooltip'
+      link_options['title'] = super
+    end
+    h.link_to(truncated, h.post_path(_id), **link_options)
   end
 
   def intro

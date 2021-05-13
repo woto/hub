@@ -2,6 +2,12 @@
 
 class AccountDecorator < ApplicationDecorator
   def amount
-    decorate_money(super, currency)
+    h.tag.mark do
+      decorate_money(super, currency)
+    end
+  end
+
+  def code
+    h.render PostStatusComponent.new(status: super)
   end
 end

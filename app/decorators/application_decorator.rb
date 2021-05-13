@@ -23,16 +23,17 @@ class ApplicationDecorator < Draper::Decorator
   private
 
   def decorate_datetime(datetime)
-    GlobalHelper.decorate_datetime(datetime, h)
+    GlobalHelper.decorate_datetime(datetime)
   end
 
   def decorate_text(text)
-    GlobalHelper.decorate_text(text, h)
+    GlobalHelper.decorate_text(text)
   end
 
   def decorate_money(amount, currency)
     raise "currency can't be nil" if currency.nil?
-    GlobalHelper.decorate_money(amount, currency, h)
+
+    GlobalHelper.decorate_money(amount, currency)
   end
 
   def method_missing(m, *args, &block)

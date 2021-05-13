@@ -1,6 +1,12 @@
 class CheckDecorator < ApplicationDecorator
+  def status
+    h.render PostStatusComponent.new(status: super)
+  end
+
   def amount
-    decorate_money(super, currency)
+    h.tag.mark do
+      decorate_money(super, currency)
+    end
   end
 
   def payed_at
