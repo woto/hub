@@ -5,7 +5,7 @@ module Offers
     include ApplicationInteractor
     delegate :json, to: :context
 
-    class Contract < Dry::Validation::Contract
+    contract do
       params do
         config.validate_keys = true
         required(:json)
@@ -14,10 +14,7 @@ module Offers
       end
     end
 
-    before do
-      result = Contract.new.call(context.to_h)
-      raise result.inspect if result.failure?
-    end
+
 
     def call
       context.object = _group
