@@ -13,7 +13,7 @@ describe Import::Categories::BindParents do
     let!(:child) { create(:feed_category, feed: feed, ext_parent_id: ext_id) }
 
     it 'is not exceed 1 sql update' do
-      expect { subject }.not_to exceed_query_limit(1).with(/^UPDATE/)
+      expect { subject }.not_to exceed_query_limit(1).with(/^UPDATE "feed_categories"/)
     end
 
     it 'is exceed 0 sql update' do

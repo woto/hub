@@ -5,16 +5,11 @@ module Import
     class BindParents
       include ApplicationInteractor
 
-      class Contract < Dry::Validation::Contract
+      contract do
         params do
           config.validate_keys = true
           required(:feed).maybe(type?: Feed)
         end
-      end
-
-      before do
-        result = Contract.new.call(context.to_h)
-        raise result.inspect if result.failure?
       end
 
       class BindParentError < StandardError; end
