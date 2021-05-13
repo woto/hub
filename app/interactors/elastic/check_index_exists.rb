@@ -4,17 +4,13 @@ module Elastic
   class CheckIndexExists
     include ApplicationInteractor
 
-    class Contract < Dry::Validation::Contract
+    contract do
       params do
         required(:index_name).filled(:string)
         optional(:allow_no_indices).maybe(:bool)
       end
     end
 
-    before do
-      contract = Contract.new.call(context.to_h)
-      raise StandardError, contract.errors.to_h if contract.failure?
-    end
 
     def call
       context.object = client.indices.exists(index: context.index_name, allow_no_indices: context.allow_no_indices)
