@@ -3,7 +3,7 @@
 class OffersSearchQuery
   include ApplicationInteractor
 
-  class Contract < Dry::Validation::Contract
+  contract do
     params do
       config.validate_keys = true
       required(:q).maybe(:string)
@@ -14,11 +14,6 @@ class OffersSearchQuery
       required(:include).maybe { array? { each { string? } } }
       required(:filter_by).maybe(:string)
     end
-  end
-
-  before do
-    result = Contract.new.call(context.to_h)
-    raise result.inspect if result.failure?
   end
 
   def call
