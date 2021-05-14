@@ -44,6 +44,7 @@ describe Post, type: :model do
   it { is_expected.to have_many_attached(:images) }
   it { is_expected.to have_rich_text(:body) }
   it { is_expected.to have_rich_text(:intro) }
+
   specify do
     statuses = %i[draft pending approved rejected accrued canceled]
     expect(subject).to define_enum_for(:status).with_values(statuses)
@@ -239,6 +240,43 @@ describe Post, type: :model do
   end
 
   describe '#create_transactions' do
-    pending
+    context 'when post is not persisted yet' do
+      subject { build(:post, status: described_class.statuses.keys.sample) }
+
+      it 'calls `Accounting::Posts::ChangeStatus` with correct params' do
+        expect(Accounting::Posts::ChangeStatus).to receive(:call).with(post: subject,
+                                                                       from_status: nil,
+                                                                       to_status: subject.status)
+        expect(subject.save).to be_truthy
+      end
+    end
+
+    context 'when post already persisted' do
+      subject! { Current.set(responsible: user) { create(:post, user: user) } }
+
+      let(:user) { create(:user) }
+      let(:status) { described_class.statuses.keys.sample }
+
+      it 'calls `Accounting::Posts::ChangeStatus` with correct params' do
+        expect(Accounting::Posts::ChangeStatus).to receive(:call).with(post: subject,
+                                                                       from_status: subject.status,
+                                                                       to_status: status)
+        expect(subject.update(status: status)).to be_truthy
+      end
+    end
+
+    context 'when `ActiveRecord::ActiveRecordError` occurs' do
+      it 're-raises error to break transaction' do
+        expect(Accounting::Posts::ChangeStatus).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
+        expect(Rails.logger).to receive(:error)
+        expect { create(:post) }.to raise_error(StandardError, 'aaa')
+      end
+    end
+  end
+
+  context 'when responsible is not set' do
+    it 'raises error' do
+      expect { create(:post) }.to raise_error(Pundit::NotAuthorizedError, 'responsible is not set')
+    end
   end
 end

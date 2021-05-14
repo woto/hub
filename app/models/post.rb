@@ -136,10 +136,10 @@ class Post < ApplicationRecord
   def create_transactions
     # Any exception that is not ActiveRecord::Rollback or ActiveRecord::RecordInvalid
     # will be re-raised by Rails after the callback chain is halted.
-    action = "Accounting::Posts::TransitTo#{status.camelcase}".constantize
-    action.call(post: self)
+    from_status = attribute_before_last_save(:status)
+    Accounting::Posts::ChangeStatus.call(post: self, from_status: from_status, to_status: status)
   rescue ActiveRecord::ActiveRecordError => e
-    puts e.backtrace
+    logger.error e.backtrace
     raise e.message
   end
 
