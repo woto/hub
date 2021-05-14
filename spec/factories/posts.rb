@@ -5,11 +5,11 @@
 # Table name: posts
 #
 #  id               :bigint           not null, primary key
+#  amount           :decimal(, )      not null
 #  currency         :integer          not null
 #  extra_options    :jsonb
-#  price            :decimal(, )      not null
 #  priority         :integer          default(0), not null
-#  published_at     :datetime         not null
+#  published_at     :datetime
 #  status           :integer          not null
 #  tags             :jsonb
 #  title            :string           not null

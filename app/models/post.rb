@@ -5,11 +5,11 @@
 # Table name: posts
 #
 #  id               :bigint           not null, primary key
+#  amount           :decimal(, )      not null
 #  currency         :integer          not null
 #  extra_options    :jsonb
-#  price            :decimal(, )      not null
 #  priority         :integer          default(0), not null
-#  published_at     :datetime         not null
+#  published_at     :datetime
 #  status           :integer          not null
 #  tags             :jsonb
 #  title            :string           not null
@@ -56,16 +56,19 @@ class Post < ApplicationRecord
   has_many :transactions, as: :obj
 
   before_validation :set_exchange_rate
-  before_validation :set_price
+  before_validation :set_amount
 
-  validates :title, :status, :published_at, :tags, presence: true
+  validates :title, :status, :tags, presence: true
   validates :tags, length: { minimum: 2 }
   validates :currency, inclusion: { in: Rails.configuration.available_currencies }
-  # validates :price, numericality: { greater_than: 0 }
-  validate :check_min_intro_length
   validate :check_min_body_length
   validate :check_post_category_is_leaf
   validate :check_currency_value
+  with_options if: :accrued? do |accrued|
+    accrued.validates :published_at, presence: true
+    accrued.validate :check_min_intro_length
+  end
+  # validates :amount, numericality: { greater_than: 0 }
 
   after_save :create_transactions
 
@@ -86,11 +89,11 @@ class Post < ApplicationRecord
       tags: tags,
       created_at: created_at.utc,
       updated_at: updated_at.utc,
-      published_at: published_at.utc,
+      published_at: published_at&.utc,
       user_id: user_id,
       intro: intro.to_s,
       body: body.to_s,
-      price: price,
+      amount: amount,
       currency: currency,
       priority: priority
     }
@@ -100,7 +103,7 @@ class Post < ApplicationRecord
 
   def check_min_intro_length
     min = 1
-    errors.add(:intro, :too_short, count: min) if !intro || !intro.body || intro.body.to_plain_text.length < min
+    errors.add(:intro, :too_short, count: min) if Post.sanitize(intro).length < min
   end
 
   def check_min_body_length
@@ -112,12 +115,12 @@ class Post < ApplicationRecord
     self.exchange_rate = ExchangeRate.pick(created_at)
   end
 
-  def set_price
+  def set_amount
     return if errors.include?(:body)
     return if errors.include?(:currency)
 
     rate = exchange_rate.get_currency_value(currency)
-    self.price = Post.sanitize(body).length * rate
+    self.amount = Post.sanitize(body).length * rate
   end
 
   def check_post_category_is_leaf
@@ -136,8 +139,7 @@ class Post < ApplicationRecord
   def create_transactions
     # Any exception that is not ActiveRecord::Rollback or ActiveRecord::RecordInvalid
     # will be re-raised by Rails after the callback chain is halted.
-    from_status = attribute_before_last_save(:status)
-    Accounting::Posts::ChangeStatus.call(post: self, from_status: from_status, to_status: status)
+    Accounting::Main::ChangeStatus.call(obj: self)
   rescue ActiveRecord::ActiveRecordError => e
     logger.error e.backtrace
     raise e.message

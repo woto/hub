@@ -878,10 +878,10 @@ CREATE TABLE public.posts (
     title character varying NOT NULL,
     status integer NOT NULL,
     user_id bigint NOT NULL,
-    price numeric NOT NULL,
+    amount numeric NOT NULL,
     extra_options jsonb,
     realm_id bigint NOT NULL,
-    published_at timestamp without time zone NOT NULL,
+    published_at timestamp without time zone,
     tags jsonb DEFAULT '[]'::jsonb,
     priority integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -1122,7 +1122,8 @@ CREATE TABLE public.users (
     role integer DEFAULT 0,
     posts_count integer DEFAULT 0,
     checks_count integer DEFAULT 0,
-    favorites_count integer DEFAULT 0
+    favorites_count integer DEFAULT 0,
+    workspaces_count integer DEFAULT 0
 );
 
 

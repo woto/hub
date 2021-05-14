@@ -5,11 +5,11 @@
 # Table name: posts
 #
 #  id               :bigint           not null, primary key
+#  amount           :decimal(, )      not null
 #  currency         :integer          not null
 #  extra_options    :jsonb
-#  price            :decimal(, )      not null
 #  priority         :integer          default(0), not null
-#  published_at     :datetime         not null
+#  published_at     :datetime
 #  status           :integer          not null
 #  tags             :jsonb
 #  title            :string           not null
@@ -61,7 +61,6 @@ describe Post, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:status) }
-    it { is_expected.to validate_presence_of(:published_at) }
     it { is_expected.to validate_presence_of(:tags) }
     it { is_expected.to validate_length_of(:tags).is_at_least(2) }
 
@@ -73,11 +72,27 @@ describe Post, type: :model do
         expect(subject.errors.details).to eq(currency: [{ error: :inclusion, value: 'eek' }])
       end
     end
+
+    describe '#published_at' do
+      it { is_expected.to validate_presence_of(:published_at).allow_nil }
+
+      context 'when post has :accrued status' do
+        subject { build(:post, status: :accrued) }
+
+        it { is_expected.to validate_presence_of(:published_at) }
+      end
+    end
   end
 
   describe '#check_min_intro_length' do
     it { is_expected.to allow_value('text').for(:intro) }
-    it { is_expected.not_to allow_value(nil).for(:intro) }
+    it { is_expected.to allow_value(nil).for(:intro) }
+
+    context 'when post has :accrued status' do
+      subject { build(:post, status: :accrued, intro: '') }
+
+      it { is_expected.not_to allow_value(nil).for(:intro) }
+    end
   end
 
   describe '#check_min_body_length' do
@@ -117,11 +132,11 @@ describe Post, type: :model do
         post_category_id: post.post_category_id,
         post_category_title: post.post_category.title,
         tags: post.tags,
-        published_at: post.published_at.utc,
+        published_at: post.published_at&.utc,
         user_id: post.user_id,
         intro: post.intro.to_s,
         body: post.body.to_s,
-        price: post.price,
+        amount: post.amount,
         currency: post.currency,
         priority: post.priority
       )
@@ -154,7 +169,7 @@ describe Post, type: :model do
     end
   end
 
-  describe '#set_price' do
+  describe '#set_amount' do
     subject { build(:post, **params) }
 
     context 'when `body` is empty' do
@@ -163,7 +178,7 @@ describe Post, type: :model do
       it 'blames on `body`' do
         expect(subject).to be_invalid
         expect(subject.errors.details).to eq(body: [{ count: 1, error: :too_short }])
-        expect(subject.price).to be_zero
+        expect(subject.amount).to be_zero
       end
     end
 
@@ -173,7 +188,7 @@ describe Post, type: :model do
       it 'blames on `currency`' do
         expect(subject).to be_invalid
         expect(subject.errors.details).to eq(currency: [{ error: :inclusion, value: nil }])
-        expect(subject.price).to be_zero
+        expect(subject.amount).to be_zero
       end
     end
 
@@ -185,21 +200,21 @@ describe Post, type: :model do
           date = Time.current.utc.to_date
           expect(subject).to be_invalid
           expect(subject.errors.details).to eq(currency: [{ currency: 'ghc', date: date, error: :no_rate }])
-          expect(subject.price).to be_zero
+          expect(subject.amount).to be_zero
         end
       end
     end
 
-    context 'when all params needed to calculate price is present' do
+    context 'when all params needed to calculate amount is present' do
       let(:params) { { body: body, currency: currency } }
       let(:body) { Faker::Lorem.word }
       let(:rate) { Faker::Number.decimal(l_digits: 7, r_digits: 7) }
       let(:currency) { 'ghc' }
 
-      it 'sets `price`' do
+      it 'sets `amount`' do
         expect(Rails.configuration.exchange_rates).to receive(:currencies).and_return([{ key: currency, value: rate }])
         expect(subject).to be_valid
-        expect(subject.price).to eq((rate * body.length))
+        expect(subject.amount).to eq((rate * body.length))
       end
     end
   end
@@ -243,10 +258,8 @@ describe Post, type: :model do
     context 'when post is not persisted yet' do
       subject { build(:post, status: described_class.statuses.keys.sample) }
 
-      it 'calls `Accounting::Posts::ChangeStatus` with correct params' do
-        expect(Accounting::Posts::ChangeStatus).to receive(:call).with(post: subject,
-                                                                       from_status: nil,
-                                                                       to_status: subject.status)
+      it 'calls `Accounting::Main::ChangeStatus` with correct params' do
+        expect(Accounting::Main::ChangeStatus).to receive(:call).with(obj: subject)
         expect(subject.save).to be_truthy
       end
     end
@@ -257,17 +270,15 @@ describe Post, type: :model do
       let(:user) { create(:user) }
       let(:status) { described_class.statuses.keys.sample }
 
-      it 'calls `Accounting::Posts::ChangeStatus` with correct params' do
-        expect(Accounting::Posts::ChangeStatus).to receive(:call).with(post: subject,
-                                                                       from_status: subject.status,
-                                                                       to_status: status)
+      it 'calls `Accounting::Main::ChangeStatus` with correct params' do
+        expect(Accounting::Main::ChangeStatus).to receive(:call).with(obj: subject)
         expect(subject.update(status: status)).to be_truthy
       end
     end
 
     context 'when `ActiveRecord::ActiveRecordError` occurs' do
       it 're-raises error to break transaction' do
-        expect(Accounting::Posts::ChangeStatus).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
+        expect(Accounting::Main::ChangeStatus).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
         expect(Rails.logger).to receive(:error)
         expect { create(:post) }.to raise_error(StandardError, 'aaa')
       end
