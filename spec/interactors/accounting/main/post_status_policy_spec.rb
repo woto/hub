@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Accounting::Main::PostStatusPolicy, type: :policy do
   subject { described_class }
 
-  let(:policy_context) { Accounting::Main::StatusContext.new(obj: build(:post), from_status: from_status) }
+  let(:policy_context) { Accounting::Main::StatusContext.new(record: build(:post), from_status: from_status) }
 
   context 'without user' do
     let(:user) { nil }

@@ -9,6 +9,6 @@
 #
 FactoryBot.define do
   factory :transaction_group do
-    
+    kind { TransactionGroup.kinds.keys.sample }
   end
 end

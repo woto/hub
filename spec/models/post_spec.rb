@@ -259,7 +259,7 @@ describe Post, type: :model do
       subject { build(:post, status: described_class.statuses.keys.sample) }
 
       it 'calls `Accounting::Main::ChangeStatus` with correct params' do
-        expect(Accounting::Main::ChangeStatus).to receive(:call).with(obj: subject)
+        expect(Accounting::Main::ChangeStatus).to receive(:call).with(record: subject)
         expect(subject.save).to be_truthy
       end
     end
@@ -271,7 +271,7 @@ describe Post, type: :model do
       let(:status) { described_class.statuses.keys.sample }
 
       it 'calls `Accounting::Main::ChangeStatus` with correct params' do
-        expect(Accounting::Main::ChangeStatus).to receive(:call).with(obj: subject)
+        expect(Accounting::Main::ChangeStatus).to receive(:call).with(record: subject)
         expect(subject.update(status: status)).to be_truthy
       end
     end

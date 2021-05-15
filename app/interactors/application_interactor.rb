@@ -12,7 +12,7 @@ module ApplicationInteractor
       before do
         contract_class = Class.new(Dry::Validation::Contract, &block)
         contract = contract_class.new.call(context.to_h)
-        raise StandardError, contract.errors.to_h if contract.failure?
+        raise StandardError, contract.errors.to_h.to_json if contract.failure?
       end
     end
 

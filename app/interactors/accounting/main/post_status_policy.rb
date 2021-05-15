@@ -3,20 +3,20 @@
 module Accounting
   module Main
     class PostStatusPolicy < ApplicationPolicy
-      def initialize(user, record)
+      def initialize(user, context)
         raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
 
         super
       end
 
       def to_draft?
-        return true if record.from_status.in?([nil, 'draft', 'pending', 'rejected'])
+        return true if context.from_status.in?([nil, 'draft', 'pending', 'rejected'])
 
         user.role.in?(%w[admin manager])
       end
 
       def to_pending?
-        return true if record.from_status.in?([nil, 'draft', 'pending', 'rejected'])
+        return true if context.from_status.in?([nil, 'draft', 'pending', 'rejected'])
 
         user.role.in?(%w[admin manager])
       end
