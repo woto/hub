@@ -5,44 +5,34 @@ module Accounting
     include ApplicationInteractor
     include AfterCommitEverywhere
 
-    class Contract < Dry::Validation::Contract
+    contract do
       params do
-        required(:debit).value(type?: Account)
+        config.validate_keys = true
         required(:credit).value(type?: Account)
+        required(:debit).value(type?: Account)
         required(:group).value(type?: TransactionGroup)
         required(:amount).value(type?: BigDecimal)
         optional(:obj)
       end
 
       rule(:credit, :debit) do
-        key.failure('must have same code') if values[:credit].code != values[:debit].code
-      end
-
-      rule(:credit, :debit) do
-        key.failure('must have same currency') if values[:credit].currency != values[:debit].currency
-      end
-
-      rule(:amount) do
-        key.failure('must be equal or greater than 0.01') unless value.abs >= 0.01
-      end
-
-      rule(:obj) do
-        if values[:obj]
-          if values[:obj].currency != values[:credit].currency
-            key.failure('obj.currency and credit.currency must be equal')
-          end
-          if values[:obj].currency != values[:debit].currency
-            key.failure('obj.currency and debit.currency must be equal')
-          end
+        if [values[:credit].code, values[:debit].code].compact.uniq.size > 1
+          key.failure('must have same codes')
         end
       end
 
+      rule(:credit, :debit, :obj) do
+        if [values[:credit].currency, values[:debit].currency, values[:obj]&.currency].compact.uniq.size > 1
+          key.failure('must have same currencies')
+        end
+      end
+
+      rule(:amount) do
+        key.failure('must be equal or greater than 0') if value.negative?
+      end
     end
 
     def call
-      contract = Contract.new.call(context.to_h)
-      raise StandardError, contract.errors.to_h if contract.failure?
-
       amount = context.amount
 
       credit_amount = update_balance(context.credit.id, -amount)
