@@ -81,6 +81,26 @@ module ApplicationHelper
     end
   end
 
+  def badge(status:)
+    color = case status
+             when 'draft'
+               'grey'
+             when 'pending', 'requested'
+               'cyan'
+             when 'approved'
+               'teal'
+             when 'accrued', 'payed'
+               'green'
+             when 'rejected'
+               'orange'
+             when 'canceled'
+               'red'
+             end
+    tag.span class: "badge bg-#{color}" do
+      t(status, scope: 'posts.show.badge.statuses')
+    end
+end
+
   def favorites_dropdown_items
     @favorites_dropdown_items ||= begin
          client = Elasticsearch::Client.new Rails.application.config.elastic

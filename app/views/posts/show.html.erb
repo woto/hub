@@ -61,7 +61,7 @@
             <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at, self) %> </dd>
 
             <dt class="col-sm-3"> <%= t('status', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> <%= render PostStatusComponent.new(status: @post.status) %> </dd>
+            <dd class="col-sm-9"> <%= badge(status: @post.status) %> </dd>
 
             <dt class="col-sm-3"> <%= t('comment', scope: ['simple_form', 'labels', 'post']) %> </dt>
             <dd class="col-sm-9"> </dd>

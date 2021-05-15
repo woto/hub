@@ -8,6 +8,6 @@ class AccountDecorator < ApplicationDecorator
   end
 
   def code
-    h.render PostStatusComponent.new(status: super)
+    h.badge(status: super)
   end
 end

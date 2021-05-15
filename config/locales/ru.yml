@@ -84,11 +84,15 @@ ru:
       badge:
         status: Статус статьи
         statuses:
-          draft: Черновик
-          pending: Ожидает модерации
-          accrued: Модерация пройдена
-          rejected: Требуется доработка
-          canceled: Выплата отменена
+          draft: черновик
+          pending: модерация
+          approved: принято
+          rejected: доработка
+          accrued: зачислено
+          canceled: отменено
+
+          requested: запрошено
+          payed: выплачено
 
 #  omni-buttons:
 #    search: 'Поиск'

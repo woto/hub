@@ -13,11 +13,11 @@ class TransactionDecorator < ApplicationDecorator
   end
 
   def credit_code
-    h.render PostStatusComponent.new(status: super)
+    h.badge(status: super)
   end
 
   def debit_code
-    h.render PostStatusComponent.new(status: super)
+    h.badge(status: super)
   end
 
   def debit_amount
