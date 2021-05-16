@@ -41,66 +41,76 @@ describe Check, type: :model do
   it { is_expected.to validate_presence_of(:status) }
   it { is_expected.to validate_presence_of(:currency) }
 
-  # rubocop:disable RSpec/NestedGroups
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#check_amount' do
-    let(:currency) { 'eur' }
-    let(:user) { create(:user) }
-
-    context 'when check is persisted' do
-      before do
-        # On the first invocation amount is 10 (in let! block)
-        expect(Account).to receive(:available_to_request).with(user, currency).and_return(10)
-        # On the second one amount is 8 less (because check was requested)
-        expect(Account).to receive(:available_to_request).with(user, currency).and_return(2)
-      end
-
-      let!(:check) do
-        Current.set(responsible: create(:user, role: :admin)) do
-          create(:check, user: user, amount: 8, currency: currency)
-        end
-      end
-
-      context 'when `amount` (9) is less than `Account.available_to_request` (2) + sum of processed check (8)' do
-        it 'does not take into account amount of processed check' do
-          check.amount = 9
-          expect(check).to be_valid
-        end
-      end
-
-      context 'when `amount (11)` is greater than `Account.available_to_request` (2) + sum of processed check (8)' do
-        it 'does not take into account amount of processed check' do
-          check.amount = 11
-          expect(check).to be_invalid
-        end
+    around do |example|
+      admin = create(:user, role: :admin)
+      Current.set(responsible: admin) do
+        example.run
       end
     end
 
-    context 'when check is not persisted' do
-      before do
-        expect(Account).to receive(:available_to_request).with(user, currency).and_return(10)
+    let(:currency) { 'rub' }
+    let(:user) { create(:user) }
+    let(:admin) { create(:user, role: :admin) }
+    let!(:post) do
+      create(:post, user: user, status: :accrued, currency: currency, body: '*' * 10_000)
+    end
+    let(:available_amount) do
+      post.amount - requested_amount - payed_amount
+    end
+    let(:requested_amount) do
+      create(:check, user: user, status: :requested, amount: 1.23, currency: currency).amount
+    end
+    let(:payed_amount) do
+      create(:check, user: user, status: :payed, amount: 1.23, currency: currency).amount
+    end
+
+    context 'when changes check amount' do
+      let!(:check) { create(:check, user: user, amount: available_amount - 0.02, currency: currency) }
+
+      it 'takes into account that we just change amount of this check on a new valid value' do
+        check.amount = available_amount - 0.01
+        expect(check).to be_valid
       end
+    end
 
-      let(:check) { build(:check, user: user, amount: amount, currency: currency) }
+    context 'when changes currency' do
+      let(:check) { create(:check, user: user, amount: available_amount - 0.01, currency: currency) }
 
-      context 'when `amount` is less than `Account.available_to_request`' do
-        let(:amount) { 9 }
-
-        it 'passes validation' do
-          expect(check).to be_valid
-        end
+      it 'does not increase available amount on an amount of changed check' do
+        check.currency = 'usd'
+        expect(check).to be_invalid
+        expect(check.errors.details).to eq(
+          amount: [{
+            count: GlobalHelper.decorate_money('-$0.01', currency), error: :less_than_or_equal_to
+          }]
+        )
       end
+    end
 
-      context 'when `amount` is greater than `Account.available_to_request`' do
-        let(:amount) { 11 }
+    context 'when requested amount is less than available amount' do
+      let(:check) { build(:check, user: user, amount: available_amount - 0.01, currency: currency) }
 
-        it 'passes validation' do
-          expect(check).to be_invalid
-          expect(check.errors.details).to eq({ amount: [{ count: '€9,99', error: :less_than_or_equal_to }] })
-        end
+      specify do
+        expect(check).to be_valid
+      end
+    end
+
+    context 'when requested amount is greater than available amount' do
+      let(:check) { build(:check, user: user, amount: available_amount + 0.01, currency: currency) }
+
+      specify do
+        expect(check).to be_invalid
+        expect(check.errors.details).to eq(
+          amount: [{
+            count: GlobalHelper.decorate_money(available_amount - 0.01, currency), error: :less_than_or_equal_to
+          }]
+        )
       end
     end
   end
-  # rubocop:enable RSpec/NestedGroups
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   describe '#as_indexed_json' do
     subject { Current.set(responsible: create(:user)) { check.as_indexed_json } }

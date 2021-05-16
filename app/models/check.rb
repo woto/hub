@@ -44,7 +44,12 @@ class Check < ApplicationRecord
     return if errors.include?(:currency)
     return if errors.include?(:amount)
 
-    available_amount = Account.available_to_request(user, currency) + attribute_in_database(:amount).to_d
+    current_amount = 0
+    if attribute_in_database(:currency) == currency
+      current_amount = attribute_in_database(:amount).to_d
+    end
+
+    available_amount = Account.available_to_request(user, currency) + current_amount
     if amount >= available_amount
       errors.add(:amount, :less_than_or_equal_to, count: GlobalHelper.decorate_money(available_amount - 0.01, currency))
     end
