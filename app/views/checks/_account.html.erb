@@ -1,0 +1,55 @@
+<div class="col-12">
+  <div class="card card-sm">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <span class="bg-green text-white avatar">
+            <% case currency.to_s %>
+            <% when 'rub' %>
+              <%== GlobalHelper.icon('currency-rubel') %>
+            <% when 'usd' %>
+              <%== GlobalHelper.icon('currency-dollar') %>
+            <% when 'eur' %>
+              <%== GlobalHelper.icon('currency-euro') %>
+            <% end %>
+          </span>
+        </div>
+        <div class="col">
+          <div class="font-weight-bold">
+            <% if current_user.user? %>
+              <% scope = current_user %>
+            <% else %>
+              <% scope = Subject.hub.first %>
+            <% end %>
+            <%= GlobalHelper.decorate_money(Account.available_to_request(scope, currency), currency) %>
+          </div>
+          <div class="text-muted">
+            <%= link_to t('.details'), "#accounts-#{currency}", 'data-bs-toggle': "collapse" %>
+          </div>
+        </div>
+
+        <%= tag.div class: 'mt-3 collapse', id: "accounts-#{currency}" do %>
+          <% if current_user.user? %>
+            <% scope = current_user.accounts.where(code: [:accrued, :requested, :payed], currency: currency) %>
+          <% else %>
+            <% scope = Account.subjects.where(code: [:approved, :accrued, :requested, :payed], currency: currency) %>
+          <% end %>
+          <% scope.each do |account| %>
+            <div class="mb-2 card card-sm bg-lime-lt">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                <div class="text-muted">
+                    <%= GlobalHelper.decorate_money(account.amount, account.currency) %>
+                  </div>
+                  <div class="font-weight-medium">
+                    <%= badge(status: account.code)  %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

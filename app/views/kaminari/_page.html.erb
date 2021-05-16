@@ -1,9 +1,12 @@
+<% li_class = "page-item" %>
+<% li_id = "pagination_#{page.number}" %>
+
 <% if page.current? %>
-  <li class="page-item active">
+  <%= tag.li id: li_id, class: "#{li_class} active" do %>
     <%= content_tag :a, page, rel: page.rel, class: 'page-link' %>
-  </li>
+  <% end %>
 <% else %>
-  <li class="page-item">
+  <%= tag.li id: li_id, class: "#{li_class}" do %>
     <%= link_to page, url, rel: page.rel, class: 'page-link' %>
-  </li>
+  <% end %>
 <% end %>

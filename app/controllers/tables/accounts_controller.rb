@@ -8,7 +8,6 @@ module Tables
     include Workspaceable
     include Tableable
     layout 'backoffice'
-    skip_before_action :authenticate_user!
 
     # GET /accounts
     def index
@@ -23,7 +22,10 @@ module Tables
                     model_class: Account,
                     form_class: Columns::AccountForm,
                     query_class: AccountsSearchQuery,
-                    decorator_class: AccountDecorator }
+                    decorator_class: AccountDecorator,
+                    favorites_kind: :accounts,
+                    favorites_items_kind: :accounts
+      }
     end
 
     def system_default_workspace
@@ -32,10 +34,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end
