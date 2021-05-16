@@ -29,7 +29,7 @@ class Check < ApplicationRecord
   index_name "#{Rails.env}.checks"
 
   enum currency: GlobalHelper.currencies_table
-  enum status: { requested: 0, payed: 1 }
+  enum status: { requested: 0, processing: 1, payed: 2 }
 
   has_many :transactions, as: :obj
 

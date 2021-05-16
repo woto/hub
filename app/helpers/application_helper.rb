@@ -87,7 +87,7 @@ module ApplicationHelper
                'grey'
              when 'pending', 'requested'
                'cyan'
-             when 'approved'
+             when 'approved', 'processing'
                'teal'
              when 'accrued', 'payed'
                'green'

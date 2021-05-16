@@ -34,7 +34,8 @@ class Account < ApplicationRecord
   #            class_name: 'User', optional: true
 
   enum currency: GlobalHelper.currencies_table
-  enum code: { draft: 0, pending: 1, approved: 2, rejected: 3, accrued: 4, canceled: 5, requested: 6, payed: 7 }
+  enum code: { draft: 0, pending: 1, approved: 2, rejected: 3, accrued: 4,
+               canceled: 5, requested: 6, processing: 7, payed: 8 }
 
   before_validation :set_amount_to_zero, on: :create
 
