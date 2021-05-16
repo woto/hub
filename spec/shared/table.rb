@@ -2,14 +2,28 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples 'shared_table' do |class_name|
+shared_examples 'shared_table' do |_class_name|
+  it 'shows row' do
+    objects
+    visit "/#{plural}"
+    expect(page).to have_css("#table_#{singular}_#{objects.first.id}")
+  end
+
+  context 'when there are no items' do
+    it 'shows blank page' do
+      visit "/#{plural}"
+      expect(page).to have_text('No results found')
+    end
+  end
 
   it 'shows 1 item on 3rd page' do
+    objects
     visit "/#{plural}?page=3&per=5"
     expect(page).to have_css(".table_#{singular}", count: 1)
   end
 
   it 'respects page param and visits second page' do
+    objects
     visit "/#{plural}?per=5"
     expect(page).to have_css(".table_#{singular}", count: 5)
 
@@ -27,6 +41,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
   end
 
   it 'shows navigation links on desktop' do
+    objects
     visit "/#{plural}?per=5&page=2"
     # expect(page).to have_css('#pagination_first')
     expect(page).to have_css('#pagination_previous')
@@ -35,16 +50,19 @@ RSpec.shared_examples 'shared_table' do |class_name|
   end
 
   it 'does not show pagination when items amount less than per' do
+    objects
     "/#{plural}?per=100"
     expect(page).to have_no_css('.pagination')
   end
 
   it 'shows pagination when items amount more than per' do
+    objects
     visit "/#{plural}?per=5"
     expect(page).to have_css('.pagination')
   end
 
   it 'changes per page items' do
+    objects
     visit "/#{plural}?per=5"
     expect(page).to have_css(".table_#{singular}", count: 5)
 
@@ -53,6 +71,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
   end
 
   it 'preselects select option with corresponding per value' do
+    objects
     visit "/#{plural}?per=5"
     expect(page).to have_select('capybara-perselect', selected: '5')
 
@@ -61,6 +80,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
   end
 
   it 'shows correct entries info' do
+    objects
     visit "/#{plural}?per=5&page=2"
     expect(page).to have_text('Displaying 6 - 10 of 11 in total')
   end
@@ -73,6 +93,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
 
     options.each do |opts|
       it "searches by clicking on search button '#{opts[:browser]}'", browser: opts[:browser] do
+        objects
         visit "/ru/#{plural}"
         within(opts[:selector]) do
           fill_in 'Введите текст для поиска...', with: objects.last.id
@@ -82,6 +103,7 @@ RSpec.shared_examples 'shared_table' do |class_name|
       end
 
       it "searches by pressing Enter on keyboard '#{opts[:browser]}'", browser: opts[:browser] do
+        objects
         visit "/ru/#{plural}"
         within(opts[:selector]) do
           fill_in 'Введите текст для поиска...', with: objects.last.id

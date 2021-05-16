@@ -35,9 +35,19 @@
 #
 FactoryBot.define do
   factory :transaction do
-    debit { nil }
-    credit { nil }
-    amount { 1 }
-    object { nil }
+    transient do
+      code { Account.codes.keys.sample }
+      currency { Rails.configuration.available_currencies.excluding(['ghc']).sample }
+      user { association :user }
+    end
+    credit { Account.for_subject('hub', code, currency) }
+    debit { Account.for_user(user, code, currency) }
+    amount { Faker::Number.positive }
+    credit_amount { Faker::Number.positive }
+    debit_amount { Faker::Number.positive }
+    transaction_group
+    responsible { user }
+    # Don't user `obj` here, because creating object will
+    # create transaction (at least true for Post and Check)
   end
 end
