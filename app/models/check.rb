@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: checks
@@ -5,8 +7,7 @@
 #  id         :bigint           not null, primary key
 #  amount     :decimal(, )      not null
 #  currency   :integer          not null
-#  is_payed   :boolean          not null
-#  payed_at   :datetime
+#  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
@@ -23,50 +24,51 @@ class Check < ApplicationRecord
   has_logidze ignore_log_data: true
   belongs_to :user, counter_cache: true, touch: true
 
-  include CheckStatuses
   include Elasticable
   # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.checks"
 
-  validates :amount, :currency, presence: true
+  enum currency: GlobalHelper.currencies_table
+  enum status: { requested: 0, payed: 1 }
+
+  has_many :transactions, as: :obj
+
   validates :amount, numericality: { greater_than: 0 }
-  enum currency: Rails.configuration.global[:currencies]
+  validates :status, :currency, presence: true
+  validate :check_amount
 
-  validate do
-    if is_payed? && !payed_at?
-      errors.add(:payed_at, :not_empty)
-    end
+  after_save :create_transactions
 
-    if payed_at? && !is_payed?
-      errors.add(:is_payed, :not_empty)
-    end
-  end
+  def check_amount
+    return if errors.include?(:currency)
+    return if errors.include?(:amount)
 
-  before_create do
-    self.is_payed = false
-    self.payed_at = nil
-    self.currency = :usd
-  end
-
-  after_save do
-    case is_payed
-    when false
-      to_requested
-    when true
-      to_payed
+    available_amount = Account.available_to_request(user, currency)
+    if amount >= available_amount
+      errors.add(:amount, :less_than_or_equal_to, count: GlobalHelper.decorate_money(available_amount - 0.01, currency))
     end
   end
 
   def as_indexed_json(_options = {})
     {
-        id: id,
-        amount: amount,
-        currency: currency,
-        is_payed: is_payed,
-        payed_at: payed_at,
-        user_id: user_id,
-        created_at: created_at,
-        updated_at: updated_at
+      id: id,
+      amount: amount,
+      currency: currency,
+      status: status,
+      user_id: user_id,
+      created_at: created_at,
+      updated_at: updated_at
     }
+  end
+
+  private
+
+  def create_transactions
+    # Any exception that is not ActiveRecord::Rollback or ActiveRecord::RecordInvalid
+    # will be re-raised by Rails after the callback chain is halted.
+    Accounting::Main::ChangeStatus.call(record: self)
+  rescue ActiveRecord::ActiveRecordError => e
+    logger.error e.backtrace
+    raise e.message
   end
 end

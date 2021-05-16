@@ -5,8 +5,7 @@
 #  id         :bigint           not null, primary key
 #  amount     :decimal(, )      not null
 #  currency   :integer          not null
-#  is_payed   :boolean          not null
-#  payed_at   :datetime
+#  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
@@ -22,9 +21,8 @@
 FactoryBot.define do
   factory :check do
     user
-    amount { rand(1..10) }
-    currency { Rails.configuration.global[:currencies].to_a.sample.last }
-    # payed { false }
-    # payed_at { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
+    amount { rand(1..100.00) }
+    currency { Check.currencies.keys.sample }
+    status { :requested }
   end
 end

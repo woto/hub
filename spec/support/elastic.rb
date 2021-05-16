@@ -32,7 +32,7 @@ shared_examples 'elasticable' do
 
   context 'when model attributes does not changed' do
     it 'does not index document' do
-      Current.set(responsible: create(:user)) do
+      Current.set(responsible: create(:user, role: :admin)) do
         record = create(model)
         expect(record).not_to receive(:send_document_to_elasticsearch)
         record.save!
@@ -42,7 +42,7 @@ shared_examples 'elasticable' do
 
   context 'when attribute marked as dirty' do
     it 'index document' do
-      Current.set(responsible: create(:user)) do
+      Current.set(responsible: create(:user, role: :admin)) do
         record = create(model)
         record.id_will_change!
         expect(record).to receive(:send_document_to_elasticsearch)
