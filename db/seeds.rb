@@ -4,105 +4,73 @@ if Rails.env.development?
 
   GlobalHelper.create_elastic_indexes
 
+  admin = User.create!(
+    email: 'admin@example.com',
+    password: 'password',
+    password_confirmation: 'password',
+    role: 'admin'
+  )
+
+  user = User.create!(
+    email: 'user@example.com',
+    password: 'password',
+    password_confirmation: 'password',
+    role: 'user'
+  )
+
   Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each do |seed|
     load seed
   end
 
-  website = Realm.create!(title: 'Яндекс Маркет', locale: 'ru', kind: 'post')
-
-  user = User.create!(email: 'user@example.com',
-                      password: 'password',
-                      password_confirmation: 'password',
-                      role: 'user')
-
-  admin = User.create!(email: 'admin@example.com',
-                       password: 'password',
-                       password_confirmation: 'password',
-                       role: 'admin')
-
-  group = TransactionGroup.create!(
-    kind: 'stakeholder_to_hub'
-  )
-
-  Current.set(responsible: admin) do
-    Accounting::Actions::StakeholderToHub.call(
-      stakeholder_payed: Account.stakeholder_payed_rub,
-      hub_payed: Account.hub_payed_rub,
-      amount: 50_000.to_d,
-      group: group
+  3.times do |i|
+    user = User.create!(
+      email: "user_#{i + 1}@example.com",
+      password: 'password',
+      password_confirmation: 'password',
+      role: 'user'
     )
+
+    10.times do |i|
+      post = nil
+      Current.set(responsible: user) do
+        created_at = Faker::Date.between(from: 2.years.ago, to: Time.current)
+        post = FactoryBot.create(:post, user: user, created_at: created_at)
+      end
+
+      next unless i < 8
+
+      Current.set(responsible: admin) do
+        post.update!(status: :approved)
+      end
+
+      next unless i < 6
+
+      Current.set(responsible: admin) do
+        post.update!(status: :accrued)
+      end
+
+      next unless i < 4
+
+      check = nil
+      Current.set(responsible: user) do
+        check = user.checks.create!(amount: post.amount * rand(0.9..1), currency: post.currency, status: :requested)
+      end
+
+      next unless i < 3
+
+      Current.set(responsible: admin) do
+        check.update!(status: :processing)
+      end
+
+      next unless i < 2
+
+      Current.set(responsible: admin) do
+        check.update!(status: :payed)
+      end
+    end
   end
-
-  post = nil
-
-  Current.set(responsible: user) do
-    post = Post.create!(realm: website,
-                        title: Faker::Lorem.sentence(word_count: 2, random_words_to_add: 12),
-                        intro: Faker::Lorem.paragraph(sentence_count: 8, random_sentences_to_add: 30),
-                        body: Faker::Lorem.paragraph(sentence_count: 15, random_sentences_to_add: 50),
-                        user: user,
-                        status: :draft,
-                        post_category: PostCategory.joins(:realm).merge(Realm.post).order('RANDOM()').first,
-                        currency: :usd,
-                        published_at: Time.current,
-                        tags: ['тест', 'тестовые тег'])
-    post.update!(status: :pending)
-  end
-
-  Current.set(responsible: admin) do
-    post.update!(status: :accrued)
-  end
-
-  # TODO
-  #   group = TransactionGroup.create!(
-  #     kind: 'accrued_to_paid_with_yandex'
-  #   )
-  #   Accounting::Actions::AccruedToPaidWithYandex.call(
-  #     user_accrued: Account.for_user_accrued_usd(user),
-  #     hub_accrued: Account.hub_accrued_usd,
-  #
-  #     hub_payed: Account.hub_payed_usd,
-  #     yandex_payed: Account.yandex_payed_usd,
-  #     yandex_commission: Account.yandex_commission_usd,
-  #     user_payed: Account.for_user_payed_usd(user),
-  #
-  #     amount: post.price,
-  #     group: group
-  #   )
 
   advertiser = Advertiser.create!(name: 'Рекламодатель 1')
-
-  group = TransactionGroup.create!(
-    kind: 'advertiser_to_hub_payed_rub'
-  )
-  Current.set(responsible: admin) do
-    Accounting::Actions::AdvertiserToHubPayedRub.call(
-      hub_bank_rub: Account.hub_bank_rub,
-      hub_payed_rub: Account.hub_payed_rub,
-      advertiser_rub: Account.for_advertiser_payed_rub(advertiser),
-      amount: 30_000.to_d,
-      group: group
-    )
-  end
-
-  group = TransactionGroup.create!(
-    kind: 'hub_rub_to_advego_account_usd'
-  )
-  Current.set(responsible: admin) do
-    Accounting::Actions::HubToAdvegoAccountUsd.call(
-      amount_in_rub: 5_000.to_d,
-      amount_in_usd: 60.to_d,
-      hub_payed: Account.hub_payed_rub,
-      advego_convertor_rub: Account.advego_convertor_rub,
-      advego_convertor_usd: Account.advego_convertor_usd,
-      advego_account_usd: Account.advego_account_usd,
-      group: group
-    )
-  end
-
-  Current.set(responsible: user) do
-    user.checks.create!(amount: 1, currency: :rub)
-  end
 
   feed1 = advertiser.feeds.create!(
     attempt_uuid: SecureRandom.uuid,
@@ -134,8 +102,10 @@ if Rails.env.development?
   Feeds::Parse.call(feed: feed3)
   Elastic::RefreshOffersIndex.call
 
+  # post_category: PostCategory.joins(:realm).merge(Realm.post).order('RANDOM()').first,
+
   # def create_post_categories_random_tree
-  #   rand(1..20).times do |_i|
+  #   10.times do |_i|
   #     realm = Realm.pick(locale: :ru, kind: :post, title: 'Random tree', domain: 'best.ru')
   #     parent = PostCategory.order('random()').find_by(realm: realm)
   #     PostCategory.create!(

@@ -78,13 +78,11 @@ describe Check, type: :model do
     context 'when changes currency' do
       let(:check) { create(:check, user: user, amount: available_amount - 0.01, currency: currency) }
 
-      it 'does not increase available amount on an amount of changed check' do
+      it 'does not increase available amount on the amount of changed check' do
         check.currency = 'usd'
         expect(check).to be_invalid
         expect(check.errors.details).to eq(
-          amount: [{
-            count: GlobalHelper.decorate_money('-$0.01', currency), error: :less_than_or_equal_to
-          }]
+          amount: [{ count: '-$0.01', error: :less_than_or_equal_to }]
         )
       end
     end

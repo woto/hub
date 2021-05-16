@@ -1,4 +1,6 @@
-@import 'selectize/dist/css/selectize.css';
+//@import 'selectize/dist/css/selectize.css';
+// TODO: copy from old version
+@import '@tabler/core/dist/libs/selectize/dist/css/selectize.css';
 
 .selectize-dropdown {
   z-index: 50

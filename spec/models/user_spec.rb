@@ -26,6 +26,7 @@
 #  sign_in_count          :integer          default(0), not null
 #  unconfirmed_email      :string
 #  unlock_token           :string
+#  workspaces_count       :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
