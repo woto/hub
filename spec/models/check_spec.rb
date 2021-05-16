@@ -35,7 +35,7 @@ describe Check, type: :model do
 
   it { is_expected.to belong_to(:user).counter_cache(true).touch(true) }
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
-  it { is_expected.to define_enum_for(:status).with_values(%w[requested payed]) }
+  it { is_expected.to define_enum_for(:status).with_values(%w[requested processing payed]) }
   it { is_expected.to have_many(:transactions) }
   it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
   it { is_expected.to validate_presence_of(:status) }

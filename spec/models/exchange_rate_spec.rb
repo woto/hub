@@ -78,7 +78,7 @@ describe ExchangeRate, type: :model do
 
       it 'returns currency value' do
         expect(Rails.configuration.exchange_rates).to receive(:currencies).and_return([{ key: currency, value: value }])
-        expect(subject).to eq(value)
+        expect(subject).to eq(value.to_d)
       end
     end
 

@@ -28,7 +28,7 @@ describe Account, type: :model do
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
 
   specify do
-    codes = %i[draft pending approved rejected accrued canceled requested payed]
+    codes = %i[draft pending approved rejected accrued canceled requested processing payed]
     expect(subject).to define_enum_for(:code).with_values(codes)
   end
 
