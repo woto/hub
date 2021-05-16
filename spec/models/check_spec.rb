@@ -40,41 +40,66 @@ describe Check, type: :model do
   it { is_expected.to validate_presence_of(:status) }
   it { is_expected.to validate_presence_of(:currency) }
 
+  # rubocop:disable RSpec/NestedGroups
   describe '#check_amount' do
     let(:currency) { 'eur' }
     let(:user) { create(:user) }
-    let(:check) { build(:check, user: user, amount: amount, currency: currency) }
 
-    before do
-      expect(Account).to receive(:available_to_request).with(user, currency).and_return(10)
-    end
+    context 'when check is persisted' do
+      before do
+        # On the first invocation amount is 10 (in let! block)
+        expect(Account).to receive(:available_to_request).with(user, currency).and_return(10)
+        # On the second one amount is 8 less (because check was requested)
+        expect(Account).to receive(:available_to_request).with(user, currency).and_return(2)
+      end
 
-    context 'when `amount` is less than `Account.available_to_request`' do
-      let(:amount) { 9 }
+      let!(:check) do
+        Current.set(responsible: create(:user, role: :admin)) do
+          create(:check, user: user, amount: 8, currency: currency)
+        end
+      end
 
-      it 'passes validation' do
-        expect(check).to be_valid
+      context 'when `amount` (9) is less than `Account.available_to_request` (2) + sum of processed check (8)' do
+        it 'does not take into account amount of processed check' do
+          check.amount = 9
+          expect(check).to be_valid
+        end
+      end
+
+      context 'when `amount (11)` is greater than `Account.available_to_request` (2) + sum of processed check (8)' do
+        it 'does not take into account amount of processed check' do
+          check.amount = 11
+          expect(check).to be_invalid
+        end
       end
     end
 
-    context 'when `amount` is equal to `Account.available_to_request`' do
-      let(:amount) { 10 }
-
-      it 'passes validation' do
-        expect(check).to be_invalid
-        expect(check.errors.details).to eq({ amount: [{ count: '€9,99', error: :less_than_or_equal_to }] })
+    context 'when check is not persisted' do
+      before do
+        expect(Account).to receive(:available_to_request).with(user, currency).and_return(10)
       end
-    end
 
-    context 'when `amount` is greater than `Account.available_to_request`' do
-      let(:amount) { 11 }
+      let(:check) { build(:check, user: user, amount: amount, currency: currency) }
 
-      it 'passes validation' do
-        expect(check).to be_invalid
-        expect(check.errors.details).to eq({ amount: [{ count: '€9,99', error: :less_than_or_equal_to }] })
+      context 'when `amount` is less than `Account.available_to_request`' do
+        let(:amount) { 9 }
+
+        it 'passes validation' do
+          expect(check).to be_valid
+        end
+      end
+
+      context 'when `amount` is greater than `Account.available_to_request`' do
+        let(:amount) { 11 }
+
+        it 'passes validation' do
+          expect(check).to be_invalid
+          expect(check.errors.details).to eq({ amount: [{ count: '€9,99', error: :less_than_or_equal_to }] })
+        end
       end
     end
   end
+  # rubocop:enable RSpec/NestedGroups
 
   describe '#as_indexed_json' do
     subject { Current.set(responsible: create(:user)) { check.as_indexed_json } }
