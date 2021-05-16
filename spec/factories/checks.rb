@@ -2,13 +2,14 @@
 #
 # Table name: checks
 #
-#  id         :bigint           not null, primary key
-#  amount     :decimal(, )      not null
-#  currency   :integer          not null
-#  status     :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint           not null
+#  id           :bigint           not null, primary key
+#  amount       :decimal(, )      not null
+#  currency     :integer          not null
+#  lock_version :integer          not null
+#  status       :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :bigint           not null
 #
 # Indexes
 #

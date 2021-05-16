@@ -5,6 +5,7 @@ class CreateChecks < ActiveRecord::Migration[6.0]
       t.decimal :amount, null: false
       t.integer :currency, null: false
       t.integer :status, null: false
+      t.integer :lock_version, null: false
 
       t.timestamps
     end
