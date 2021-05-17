@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples 'favorites_initial_starred', focus: true do
+shared_examples 'favorites_initial_starred' do
   let!(:starred) { raise 'is starred' }
 
   context 'when element added to favorites' do
@@ -16,7 +16,7 @@ shared_examples 'favorites_initial_starred', focus: true do
 end
 
 
-shared_examples 'favorites_initial_unstarred', focus: true do
+shared_examples 'favorites_initial_unstarred' do
   let!(:unstarred) { raise 'is not starred' }
 
   context 'when element is not added to favorites' do

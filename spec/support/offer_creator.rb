@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ParameterLists
 module OfferCreator
   def self.call(feed_category:,
                 id: SecureRandom.uuid,
@@ -36,3 +37,4 @@ module OfferCreator
     FactoryBot.create(:offer, offer)
   end
 end
+# rubocop:enable Metrics/ParameterLists
