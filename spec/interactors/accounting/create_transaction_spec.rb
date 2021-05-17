@@ -4,7 +4,9 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Accounting::CreateTransaction do
-  subject { described_class.call(credit: credit, debit: debit, group: group, amount: amount, obj: obj) }
+  subject do
+    described_class.call(credit: credit, debit: debit, group: group, amount: amount, obj: obj, currency: obj_currency)
+  end
 
   let(:admin) { create(:user, role: :admin) }
   let(:currency) { %w[usd eur rub].sample }
@@ -24,7 +26,8 @@ describe Accounting::CreateTransaction do
 
   let(:obj) do
     Current.set(responsible: admin) do
-      create(:post, currency: obj_currency)
+      post = create(:post, currency: obj_currency)
+      { id: post.id, type: post.class.name }
     end
   end
 
@@ -122,7 +125,8 @@ describe Accounting::CreateTransaction do
       debit_amount: debit.reload.amount + amount,
       transaction_group: group,
       amount: amount,
-      obj: obj,
+      obj_id: obj[:id],
+      obj_type: obj[:type],
       responsible: admin
     )
 

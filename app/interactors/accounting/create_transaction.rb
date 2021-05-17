@@ -12,7 +12,13 @@ module Accounting
         required(:debit).value(type?: Account)
         required(:group).value(type?: TransactionGroup)
         required(:amount).value(type?: BigDecimal)
-        optional(:obj)
+        required(:currency)
+        required(:obj).maybe do
+          hash do
+            required(:id).value(:int?)
+            required(:type).value(:str?)
+          end
+        end
       end
 
       rule(:credit, :debit) do
@@ -21,8 +27,8 @@ module Accounting
         end
       end
 
-      rule(:credit, :debit, :obj) do
-        if [values[:credit].currency, values[:debit].currency, values[:obj]&.currency].compact.uniq.size > 1
+      rule(:credit, :debit, :currency) do
+        if [values[:credit].currency, values[:debit].currency, values[:currency]].compact.uniq.size > 1
           key.failure('must have same currencies')
         end
       end
@@ -43,7 +49,8 @@ module Accounting
         debit: context.debit, debit_amount: debit_amount,
         transaction_group: context.group,
         amount: context.amount,
-        obj: context.obj,
+        obj_id: context.obj&.dig(:id),
+        obj_type: context.obj&.dig(:type),
         responsible: Current.responsible
       )
 
