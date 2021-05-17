@@ -1,0 +1,11 @@
+<span class="input-group-text search-bar-x">
+  <%= link_to '#',
+              class: "link-secondary",
+              title: t("clear_search"),
+              # TODO: later return tooltip
+              # 'data-bs-toggle': "tooltip",
+              # 'data-bs-original-title': t("clear_search"),
+              'data-action': 'clear-search#clear' do %>
+    <%== GlobalHelper.icon('x') %>
+  <% end %>
+</span>

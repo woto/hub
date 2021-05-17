@@ -1,22 +1,19 @@
 <%= tag.div class: "input-group input-group-flat",
-            'data-controller': 'search-offers',
+            'data-controller': 'search-offers clear-search',
             'data-search-offers-feed-category-url': url_for_search_inside_feed_category,
             'data-search-offers-feed-url': url_for_search_inside_feed,
             'data-search-offers-advertiser-url': url_for_search_inside_advertiser,
             'data-search-offers-everywhere-url': url_for_search_everywhere do %>
 
   <%= text_field_tag :q, params[:q],
-                     'data-target': 'search-offers.searchText',
+                     'data-search-offers-target': 'searchText',
+                     'data-clear-search-target': 'searchText',
                      'data-action': 'keydown->search-offers#clickSearchButton',
                      class: "search-text form-control",
                      placeholder: t('search_placeholder') %>
 
-  <%# TODO: combine with another occurrence %>
-  <span class="input-group-text">
-    <a href="#" class="link-secondary" title="" data-bs-toggle="tooltip" data-bs-original-title="Clear search">
-      <%== GlobalHelper.icon('x') %>
-    </a>
-  </span>
+
+  <%= render Header::ClearSearchComponent.new %>
 
   <%= render 'tables/offers/search/button', btn_class: btn_class %>
 
