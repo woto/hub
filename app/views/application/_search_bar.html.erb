@@ -3,6 +3,7 @@
             'data-search-base-everywhere-url': url_for_search_everywhere do %>
 
   <%= text_field_tag :q, params[:q],
+                     id: nil,
                      'data-search-base-target': 'searchText',
                      'data-clear-search-target': 'searchText',
                      'data-action': 'keydown->search-base#clickSearchButton',

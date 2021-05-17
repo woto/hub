@@ -76,7 +76,7 @@ shared_examples 'shared_workspace_authenticated' do
 
       it "includes only the user's workspaces" do
         expect(page).to have_css("#left_workspace_#{workspace1.id}")
-        expect(page).not_to have_css("#left_workspace_#{workspace2.id}")
+        expect(page).to have_no_css("#left_workspace_#{workspace2.id}")
         within("#left_workspace_#{workspace1.id}") do
           expect(page).to have_link(workspace1.name, href: Regexp.new(workspace1.path))
         end
@@ -116,7 +116,7 @@ shared_examples 'shared_workspace_authenticated' do
     end
 
     context 'when name filled in submitted form' do
-      let('name') { Faker::Lorem.word }
+      let(:name) { Faker::Lorem.word }
 
       it 'saves workspace and shows link to workspace' do
         expect do
@@ -130,7 +130,7 @@ shared_examples 'shared_workspace_authenticated' do
     end
 
     context 'when there was an error in previous save step' do
-      let('name') { Faker::Lorem.word }
+      let(:name) { Faker::Lorem.word }
 
       it 'still saves form on next attempt' do
         expect do
