@@ -123,4 +123,15 @@ describe PostCategory, type: :model do
       }.from(true).to(false)
     end
   end
+
+  describe '.leaves' do
+    subject { described_class.leaves }
+
+    let(:realm) { create(:realm) }
+    let(:post_category1) { create(:post_category, realm: realm) }
+    let(:post_category2) { create(:post_category, parent: post_category1, realm: realm) }
+    let(:post_category3) { create(:post_category, parent: post_category2, realm: realm) }
+
+    it { is_expected.to contain_exactly(post_category3) }
+  end
 end
