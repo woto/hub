@@ -45,9 +45,13 @@ FactoryBot.define do
     tags { Faker::Lorem.sentences(number: rand(2..10)) }
     currency { %i[rub usd eur].sample }
     realm { post_category.realm }
+    transient do
+      realm_kind { Realm.kinds.keys.sample }
+      realm_locale { I18n.available_locales }
+    end
 
     post_category do
-      association :post_category, realm: Realm.pick(kind: :post, locale: %i[ru en].sample)
+      association :post_category, realm: Realm.pick(kind: realm_kind, locale: realm_locale)
     end
   end
 end
