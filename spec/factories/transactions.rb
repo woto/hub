@@ -5,10 +5,9 @@
 #  id                   :bigint           not null, primary key
 #  amount               :decimal(, )      not null
 #  credit_amount        :decimal(, )      not null
-#  credit_label         :string
+#  credit_label         :string           not null
 #  debit_amount         :decimal(, )      not null
-#  debit_label          :string
-#  obj_hash             :jsonb
+#  debit_label          :string           not null
 #  obj_type             :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -38,7 +37,9 @@ FactoryBot.define do
     transient do
       code { Account.codes.keys.sample }
       currency { Rails.configuration.available_currencies.excluding(['ghc']).sample }
-      user { association :user }
+      # Not sure that `create` is correct way.
+      # But otherwise it fails on getting account for this user
+      user { create(:user) }
     end
     credit { Account.for_subject('hub', code, currency) }
     debit { Account.for_user(user, code, currency) }
