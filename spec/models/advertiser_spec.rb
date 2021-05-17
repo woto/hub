@@ -4,15 +4,16 @@
 #
 # Table name: advertisers
 #
-#  id         :bigint           not null, primary key
-#  is_active  :boolean          default(TRUE), not null
-#  name       :string
-#  network    :integer
-#  raw        :text
-#  synced_at  :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  ext_id     :string
+#  id          :bigint           not null, primary key
+#  feeds_count :integer          default(0)
+#  is_active   :boolean          default(TRUE), not null
+#  name        :string
+#  network     :integer
+#  raw         :text
+#  synced_at   :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  ext_id      :string
 #
 # Indexes
 #
@@ -21,6 +22,13 @@
 require 'rails_helper'
 
 describe Advertiser, type: :model do
+  it_behaves_like 'logidzable'
+
+  it { is_expected.to define_enum_for(:network).with_values([:admitad, :gdeslon]) }
+  it { is_expected.to have_many(:feeds).dependent(:destroy) }
+  it { is_expected.to have_many(:accounts) }
+  it { is_expected.to validate_presence_of(:name) }
+
   describe '#slug' do
     subject { create(:advertiser, name: 'Cuernos y pezuñas') }
 
