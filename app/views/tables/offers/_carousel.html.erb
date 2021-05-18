@@ -1,46 +1,63 @@
-<div id="carousel-controls-<%= offer_idx %>" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-  <ol class="carousel-indicators" style="z-index: 30">
-    <% if row.pictures && row.pictures.size > 1 %>
-      <% row.pictures.each_with_index do |picture, idx| %>
-        <li data-bs-target="#carousel-controls-<%= offer_idx %>" data-bs-slide-to="<%= idx %>" class="<%= 'active' if idx == 0 %>"></li>
+<%= tag.div id: "carousel-controls-#{row._id.parameterize}",
+        class: 'carousel',
+        'data-controller': "offer-carousel",
+        'data-offer-carousel-images-count-value': row.pictures.size,
+        'data-action': "mousemove->offer-carousel#slideImage" do %>
+
+  <% if row.pictures.size > 1 %>
+    <ol class="carousel-indicators">
+      <% row.pictures.each_with_index do |_, idx| %>
+        <%= tag.li class: idx == 0 ? 'active' : '',
+                   'data-bs-target': "#carousel-controls-#{row._id.parameterize}",
+                   'data-bs-slide-to': idx %>
       <% end %>
-    <% end %>
-  </ol>
-  <div class="carousel-inner d-flex">
-    <% if row.pictures && row.pictures.size > 0 %>
-      <% row.pictures.each_with_index do |picture, idx| %>
-        <div class="carousel-item <%= 'active' if idx == 0 %>">
-          <div style="min-height: 200px" class="d-flex align-items-center justify-content-center">
-            <div data-controller="carousel-hover" data-action="mousemove->carousel-hover#slideImage" class="d-flex">
-              <div class="spinner-border text-indigo position-absolute" style="z-index: 10" role="status"></div>
-              <%= image_tag GlobalHelper.picture_address(picture),
-                            onerror: "this.src='#{asset_pack_path('media/images/static/image-not-found.png')}'",
-                            style: 'z-index: 20; max-height: 380px',
-                            alt: 'TODO', data: { 'holder-rendered' => 'true'}
-              %>
+    </ol>
+  <% end %>
+
+  <%= tag.div 'data-controller': 'offer-modal-card',
+              'data-offer-modal-card-offer-url-value': modal_card_offer_path(row._id),
+              'data-offer-modal-card-widgets-url-value': modal_list_widgets_path(url: row.url) do  %>
+
+    <%= tag.div 'data-offer-modal-card-target': 'modalPlaceholder' %>
+
+    <%= link_to '#', class: 'd-block', 'data-action': "click->offer-modal-card#openOfferCardModal" do %>
+
+      <div class="carousel-inner">
+
+        <% row.pictures.each_with_index do |picture, idx| %>
+
+          <%= tag.div class: "carousel-item #{'active' if idx == 0}" do %>
+
+            <div style="min-height: 300px;" class="d-flex align-items-center justify-content-center">
+
+              <%# Spinner %>
+              <%= tag.div class: 'spinner-border text-indigo position-absolute',
+                          style: 'top: calc(50% - 10px); left: calc(50% - 10px)' %>
+
+                <%# Image %>
+                <%= image_tag GlobalHelper.picture_address(picture),
+                              class: 'position-relative',
+                              alt: row.name,
+                              loading: 'lazy' %>
+
             </div>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <div class="carousel-item active">
-        <div style="min-height: 200px" class="d-flex align-items-center justify-content-center">
-          <%= image_tag asset_pack_path('media/images/static/image-not-found.png'),
-                        style: 'z-index: 20; max-height: 380px'
-          %>
-        </div>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
-  </div>
-
-  <% if row.pictures && row.pictures.size > 1 %>
-    <a class="carousel-control-prev" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-bs-slide="prev">
-      <span class="carousel-control-outline carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next" style="z-index: 30;" href="#carousel-controls-<%= offer_idx %>" role="button" data-bs-slide="next">
-      <span class="carousel-control-outline carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </a>
   <% end %>
-</div>
+
+  <%# Left, right arrows %>
+  <% if false %>
+    <% if row.pictures.size > 1 %>
+      <a class="carousel-control-prev" href="#carousel-controls-<%= row._id.parameterize %>" role="button" data-bs-slide="prev">
+        <span class="carousel-control-outline carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-controls-<%= row._id.parameterize %>" role="button" data-bs-slide="next">
+        <span class="carousel-control-outline carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </a>
+    <% end %>
+  <% end %>
+<% end %>

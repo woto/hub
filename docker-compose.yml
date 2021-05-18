@@ -123,6 +123,7 @@ services:
     image: darthsim/imgproxy:latest
     environment:
       - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
+      - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/volume/
     volumes:
       - ./docker/imgproxy:/volume/
     ports:
