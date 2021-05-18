@@ -119,11 +119,14 @@ services:
 #    stdin_open: true
 #    tty: true
 
-  imageproxy:
-    image: willnorris/imageproxy
-    command: -addr 0.0.0.0:8080
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    environment:
+      - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
+    volumes:
+      - ./docker/imgproxy:/volume/
     ports:
-      - ${IMAGEPROXY_PORT}:8080
+      - ${IMGPROXY_PORT}:8080
 
 #  prometheus:
 #    image: prom/prometheus:v2.16.0

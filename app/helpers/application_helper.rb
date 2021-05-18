@@ -20,10 +20,6 @@ module ApplicationHelper
     }
   end
 
-  def on_image_error_load
-    @on_image_error_load ||= asset_pack_path('media/images/static/image-not-found.png')
-  end
-
   def test_id
     'data-test-id'
   end
@@ -100,15 +96,6 @@ module ApplicationHelper
       t(status, scope: 'posts.show.badge.statuses')
     end
 end
-
-  def favorites_dropdown_items
-    @favorites_dropdown_items ||= begin
-         client = Elasticsearch::Client.new Rails.application.config.elastic
-         client.search(FavoritesSearchQuery.call(sort: 'name.keyword', order: 'asc', from: 0, size: 40).object)
-               .dig('hits', 'hits')
-               .map { _1['_source'] }
-       end
-  end
 
   # def tree_item(parent, children)
   #   concat render('feed_category_checkbox', name: parent.name, style: "margin-left: #{parent.depth * 20}px")

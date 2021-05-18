@@ -103,21 +103,7 @@ class GlobalHelper
     end
 
     def picture_address(picture)
-      Rails.env.test? ? '' : "//192.168.31.80.nip.io:8080/x380/#{picture[Import::Offers::Hashify::HASH_BANG_KEY]}"
-    end
-
-    def get_offer(ext_id)
-      client = Elasticsearch::Client.new Rails.application.config.elastic
-      result = client.get({ index: ::Elastic::IndexName.offers, id: ext_id })
-
-      {
-        url: result['_source']['url'].first[Feeds::Offers::HASH_BANG_KEY],
-        name: result['_source']['name'].first[Feeds::Offers::HASH_BANG_KEY],
-        picture: picture_address(result['_source']['picture'].first),
-        description: ApplicationController.helpers.truncate(
-          result['_source']['description'].first[Feeds::Offers::HASH_BANG_KEY], length: 100
-        )
-      }
+      Rails.env.test? ? '' : "//ru.192.168.31.80.nip.io:8080/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/background:FFF/rs:fit:400:400:1/ex:1/el:1/g:sm/plain/#{picture[Import::Offers::Hashify::HASH_BANG_KEY]}"
     end
 
     def icon(name, svg_class: '')
