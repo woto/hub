@@ -1,3 +1,11 @@
+<%# TODO: remove. demo modal %>
+<%= tag.div 'data-controller': 'modal', 'data-modal-url-value': modal_path do %>
+  <%= tag.div 'data-modal-target': 'modalPlaceholder' %>
+  <%= link_to '#', 'data-action': "modal#open" do %>
+    open modal
+  <% end %>
+<% end %>
+
 <% render 'breadcrumbs' %>
 <% content_for :title do %>
   <%= t("titles.dashboard") %>

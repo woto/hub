@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   end
 
   scope '(:locale)', constraints: LocalesConstraint.new do
+    # TODO: remove. demo modal
+    get 'modal' => 'modal#index'
+
     devise_for :users,
                path: 'auth',
                path_names: {
