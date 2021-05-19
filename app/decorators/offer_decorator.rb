@@ -2,20 +2,25 @@
 
 class OfferDecorator < ApplicationDecorator
   def pictures
-    (
-      object['_source']['picture'] ||
-        object['_source']['image'] ||
-        # Triple forward slash is not error. By the way it is ironically that if image will not be found
-        # in IMGPROXY_LOCAL_FILESYSTEM_ROOT it will fallback to the same image due to IMGPROXY_FALLBACK_IMAGE_PATH.
-        # You could check local serving behaviour by commenting IMGPROXY_FALLBACK_IMAGE_PATH
-        [{ Import::Offers::Hashify::HASH_BANG_KEY => 'local:///image-not-found.png' }]
-    )&.slice(0, 10)
+    # Triple forward slash is not error. By the way it is ironically that if image will not be found
+    # in IMGPROXY_LOCAL_FILESYSTEM_ROOT it will fallback to the same image due to IMGPROXY_FALLBACK_IMAGE_PATH.
+    # You could check local serving behaviour by commenting IMGPROXY_FALLBACK_IMAGE_PATH
+
+    images = object['_source']['picture'].yield_self do |objects|
+      objects.pluck(Import::Offers::Hashify::HASH_BANG_KEY).slice(0, 10)
+    end
+
+    (images.presence || ['local:///image-not-found.png']).map do |url|
+      format(ENV.fetch('IMGPROXY_URL'), url)
+    end
   end
 
   def name
-    names = object.dig('_source', 'name')
-    names = names&.map { |item| h.strip_tags(item[Import::Offers::Hashify::HASH_BANG_KEY]) }&.join(', ')
-    h.truncate(names.to_s, length: 100)
+    (super.presence || [])
+      .pluck(Import::Offers::Hashify::HASH_BANG_KEY)
+      .map { |name| h.strip_tags(name) }
+      .join(', ')
+      .yield_self { |names| h.truncate(names.to_s, length: 100) }
   end
 
   def url
