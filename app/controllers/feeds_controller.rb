@@ -22,8 +22,7 @@ class FeedsController < ApplicationController
 
   def count
     raise 'does not work'
-    client = Elasticsearch::Client.new Rails.application.config.elastic
-    json = client.count(
+    json = GlobalHelper.elastic_client.count(
       FeedOffersCountQuery.call(
         feed_id: params[:id]
       ).object

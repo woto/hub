@@ -16,7 +16,7 @@ module Elastic
     def call
       index_name = Elastic::IndexName.tokenizer
 
-      result = client.indices.analyze(
+      result = GlobalHelper.elastic_client.indices.analyze(
         index: index_name,
         body: {
           analyzer: 'default',

@@ -8,8 +8,7 @@ class DashboardController < ApplicationController
   def index
     if current_user
       account_ids = current_user.accounts.pluck('id')
-      client = Elasticsearch::Client.new Rails.application.config.elastic
-      @test = client.search(
+      @test = GlobalHelper.elastic_client.search(
         index: ::Elastic::IndexName.transactions,
         body: {
           "size": 0,
@@ -47,7 +46,6 @@ class DashboardController < ApplicationController
           }
         }
       )
-      p 1
     end
   end
 end

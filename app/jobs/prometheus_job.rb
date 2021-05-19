@@ -39,8 +39,7 @@ class PrometheusJob < ApplicationJob
       metric.set(result[0][bname], labels: { minutes: bname })
     end
 
-    client = Elasticsearch::Client.new Rails.application.config.elastic
-    indices = client.cat.indices(format: 'json', index: Elastic::IndexName.all_offers)
+    indices = GlobalHelper.elastic_client.cat.indices(format: 'json', index: Elastic::IndexName.offers)
 
     docstring = 'Количество индексов прайсов в Elasticsearch'
     metric = pusher.metric(:feeds, :gauge,

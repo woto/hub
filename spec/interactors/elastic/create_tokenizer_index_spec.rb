@@ -19,7 +19,7 @@ describe Elastic::CreateTokenizerIndex do
   context 'when index does not exist' do
     it 'creates index' do
       # TODO: add meta tag for skip creating index
-      elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+      GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
 
       expect(exists?).to eq(false)
       subject

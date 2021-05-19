@@ -11,11 +11,11 @@ module Elastic
       end
     end
 
-
-
     def call
       Rails.logger.info(message: 'Deleting elasticsearch index', index: context.index_name)
-      client.indices.delete(index: context.index_name, ignore_unavailable: context.ignore_unavailable)
+      GlobalHelper.elastic_client.indices.delete(
+        index: context.index_name, ignore_unavailable: context.ignore_unavailable
+      )
     end
   end
 end

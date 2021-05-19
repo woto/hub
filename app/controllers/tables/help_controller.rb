@@ -24,8 +24,7 @@ module Tables
     private
 
     def by_categories_menu
-      client = Elasticsearch::Client.new Rails.application.config.elastic
-      client.search(
+      GlobalHelper.elastic_client.search(
         index: Elastic::IndexName.posts,
         body: {
           "size": 1_000,

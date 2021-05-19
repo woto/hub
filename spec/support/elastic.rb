@@ -6,7 +6,7 @@
 
 # RSpec.configure do |config|
 #   config.before(:each) do
-#     elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+#     GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
 #     GlobalHelper.create_elastic_indexes
 #   end
 # end
@@ -52,18 +52,14 @@ shared_examples 'elasticable' do
   end
 end
 
-def elastic_client
-  @elastic_client ||= Elasticsearch::Client.new Rails.application.config.elastic
-end
-
 RSpec.configure do |config|
   config.before do
-    elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+    GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
     GlobalHelper.create_elastic_indexes
   end
 
   # config.before(:each) do
-  #   elastic_client.delete_by_query(
+  #   GlobalHelper.elastic_client.delete_by_query(
   #     index: 'test.*',
   #     wait_for_completion: true,
   #     body: {
@@ -79,7 +75,7 @@ end
 
 # RSpec.configure do |config|
 #   config.before(:each) do
-#     elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+#     GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
 #     GlobalHelper.create_elastic_indexes
 #   end
 # end
@@ -90,9 +86,8 @@ end
 #
 # RSpec.configure do |config|
 #   config.before(:suite) do
-#     client = Elasticsearch::Client.new Rails.application.config.elastic
 #     GlobalHelper.create_elastic_indexes
-#     client.snapshot.create_repository(
+#     GlobalHelper.elastic_client.snapshot.create_repository(
 #         repository: 'my_backup',
 #         body: {
 #             "type": 'fs',
@@ -101,7 +96,7 @@ end
 #             }
 #         }
 #     )
-#     client.snapshot.create(
+#     GlobalHelper.elastic_client.snapshot.create(
 #         repository: 'my_backup',
 #         snapshot: "snapshot_#{id}",
 #         wait_for_completion: true,
@@ -112,9 +107,8 @@ end
 #   end
 #
 #   config.before do
-#     elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
-#     client = Elasticsearch::Client.new Rails.application.config.elastic
-#     client.snapshot.restore(
+#     GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+#     GlobalHelper.elastic_client.snapshot.restore(
 #         repository: 'my_backup',
 #         snapshot: "snapshot_#{id}",
 #         body: {

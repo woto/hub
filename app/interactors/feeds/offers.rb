@@ -25,7 +25,7 @@ module Feeds
     end
 
     def flush
-      Import::Offers::Flush.call(@offers, context.feed.advertiser, context.feed, client)
+      Import::Offers::Flush.call(@offers, context.feed.advertiser, context.feed)
       @batch_count = 0
       @offers = []
     end

@@ -19,7 +19,7 @@ module Import
       # https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
       Elastic::RefreshOffersIndex.call
       query = DeleteOldOffersQuery.call(feed: context.feed).object
-      result = client.delete_by_query(query)
+      result = GlobalHelper.elastic_client.delete_by_query(query)
       # TODO test it later
       Rails.logger.info(message: 'Deleted old offers', deleted: result['deleted'])
       # TODO test it later

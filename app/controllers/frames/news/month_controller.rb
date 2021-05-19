@@ -8,15 +8,13 @@ module Frames
       layout 'centered'
 
       def index
-        client = Elasticsearch::Client.new Rails.application.config.elastic
-
-        @month = Time.zone.parse("#{params[:month]}-01") if params[:month]
+        @month = Time.use_zone('UTC') { Time.zone.parse("#{params[:month]}-01") } if params[:month]
 
         query = Frames::NewsByMonthSearchQuery.call(
           locale: locale
         ).object
 
-        @result = client.search(query)
+        @result = GlobalHelper.elastic_client.search(query)
       end
     end
   end

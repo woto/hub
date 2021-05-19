@@ -13,7 +13,7 @@ module Frames
           locale: locale
         ).object
 
-        @result = client.search(query)
+        @result = GlobalHelper.elastic_client.search(query)
       end
     end
   end

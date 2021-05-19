@@ -118,7 +118,7 @@ describe PostCategory, type: :model do
       expect do
         create(:post_category, title: 'Дочерняя категория', parent: subject, realm: realm)
       end.to change {
-        result = elastic_client.get({ index: Elastic::IndexName.post_categories, id: subject.id })
+        result = GlobalHelper.elastic_client.get({ index: Elastic::IndexName.post_categories, id: subject.id })
         result['_source']['leaf']
       }.from(true).to(false)
     end

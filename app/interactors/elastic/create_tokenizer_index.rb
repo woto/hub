@@ -9,7 +9,7 @@ module Elastic
 
       Elastic::DeleteIndex.call(index_name: index_name, ignore_unavailable: true)
 
-      client.indices.create index: index_name, body: {
+      GlobalHelper.elastic_client.indices.create index: index_name, body: {
         settings: {
           analysis: {
             filter: {

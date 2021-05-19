@@ -3,10 +3,10 @@
 module Import
   module Offers
     class Flush
-      def self.call(offers, advertiser, feed, client)
+      def self.call(offers, advertiser, feed)
         return if offers.empty?
 
-        res = client.bulk(
+        res = GlobalHelper.elastic_client.bulk(
           index: Elastic::IndexName.offers,
           routing: feed.id,
           body: offers.map do |offer|

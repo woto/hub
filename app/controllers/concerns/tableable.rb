@@ -5,7 +5,6 @@ module Tableable
     def get_index(additional_columns, **query_class_params)
       authorize(@settings[:singular])
 
-      client = Elasticsearch::Client.new Rails.application.config.elastic
       context = {
           q: params[:q],
           locale: I18n.locale,
@@ -18,7 +17,7 @@ module Tableable
       }.merge(query_class_params)
 
       query = @settings[:query_class].call(context).object
-      result = client.search(query)
+      result = GlobalHelper.elastic_client.search(query)
 
       hits = result['hits']
 

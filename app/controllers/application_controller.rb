@@ -67,8 +67,4 @@ class ApplicationController < ActionController::Base
   def url_for_search_everywhere
     url_for(request.params.slice(:order, :per, :sort, :cols).merge(action: :index, only_path: false))
   end
-
-  def client
-    Elasticsearch::Client.new Rails.application.config.elastic
-  end
 end

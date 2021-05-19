@@ -10,7 +10,7 @@ class GlobalHelper
     end
 
     def create_index(client, model)
-      client.indices.create(
+      elastic_client.indices.create(
         index: model.index_name,
         body: {
           settings: model.settings.to_hash,
@@ -19,33 +19,46 @@ class GlobalHelper
       )
     end
 
+    def elastic_client
+      Elasticsearch::Client.new(Rails.application.config.elastic)
+    end
+
     def create_elastic_indexes
-      client = Elasticsearch::Client.new Rails.application.config.elastic
+      elastic_client
 
       Elastic::CreateOffersIndex.call
 
       User.setup_index(Columns::UserForm)
-      create_index(client, User)
+      create_index(elastic_client, User)
 
       Feed.setup_index(Columns::FeedForm)
-      create_index(client, Feed)
+      create_index(elastic_client, Feed)
 
       Post.setup_index(Columns::PostForm)
-      create_index(client, Post)
+      create_index(elastic_client, Post)
 
       Favorite.setup_index(Columns::FavoriteForm)
-      create_index(client, Favorite)
+      create_index(elastic_client, Favorite)
 
       Account.setup_index(Columns::AccountForm)
-      create_index(client, Account)
+      create_index(elastic_client, Account)
 
       Transaction.setup_index(Columns::TransactionForm)
-      create_index(client, Transaction)
+      create_index(elastic_client, Transaction)
 
       Check.setup_index(Columns::CheckForm)
-      create_index(client, Check)
+      create_index(elastic_client, Check)
 
-      client.indices.refresh
+      PostCategory.setup_index(Columns::PostCategoryForm)
+      create_index(elastic_client, PostCategory)
+
+      PostCategory.setup_index(Columns::ExchangeRateForm)
+      create_index(elastic_client, ExchangeRate)
+
+      PostCategory.setup_index(Columns::RealmForm)
+      create_index(elastic_client, Realm)
+
+      elastic_client.indices.refresh
     end
 
     def decorate_datetime(datetime, h)

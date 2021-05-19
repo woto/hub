@@ -9,7 +9,7 @@ module Frames
       def index
         @page = params[:page] || 0
 
-        result = client.search(
+        result = GlobalHelper.elastic_client.search(
           Frames::NewsLatestQuery.call(
             locale: I18n.locale,
             published_at: params[:published_at],
@@ -20,7 +20,7 @@ module Frames
 
         @news = result.dig('hits', 'hits', 0, '_source')
 
-        result = client.count(
+        result = GlobalHelper.elastic_client.count(
           Frames::NewsCountQuery.call(
             locale: I18n.locale
           ).object

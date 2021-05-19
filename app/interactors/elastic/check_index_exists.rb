@@ -13,7 +13,9 @@ module Elastic
 
 
     def call
-      context.object = client.indices.exists(index: context.index_name, allow_no_indices: context.allow_no_indices)
+      context.object = GlobalHelper.elastic_client.indices.exists(
+        index: context.index_name, allow_no_indices: context.allow_no_indices
+      )
       unless context.object
         Rails.logger.info(message: 'There is no such index', index: context.index_name)
         context.fail!

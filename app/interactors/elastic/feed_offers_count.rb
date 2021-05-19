@@ -11,11 +11,9 @@ module Elastic
       end
     end
 
-
-
     def call
       query = FeedOffersCountQuery.call(feed: context.feed).object
-      context.object = client.count(query)['count']
+      context.object = GlobalHelper.elastic_client.count(query)['count']
     end
   end
 end

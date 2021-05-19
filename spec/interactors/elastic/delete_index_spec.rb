@@ -14,7 +14,7 @@ describe Elastic::DeleteIndex do
     let(:index_name) { Elastic::IndexName.pick(rand.to_s) }
 
     it 'deletes index' do
-      elastic_client.indices.create index: index_name
+      GlobalHelper.elastic_client.indices.create index: index_name
       expect(exists?(index_name)).to eq(true)
       subject
       expect(exists?(index_name)).to eq(false)

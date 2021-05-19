@@ -17,7 +17,7 @@ describe 'Offers page' do
       end
       Feeds::Parse.call(feed: feed1)
       Feeds::Parse.call(feed: feed2)
-      elastic_client.indices.refresh
+      GlobalHelper.elastic_client.indices.refresh
     end
 
     it 'works', :aggregate_failures do
@@ -86,7 +86,7 @@ describe 'Offers page' do
 
     before do
       Feeds::Parse.call(feed: feed)
-      elastic_client.indices.refresh
+      GlobalHelper.elastic_client.indices.refresh
     end
 
     it 'works', :aggregate_failures do

@@ -9,8 +9,7 @@ FactoryBot.define do
     _id { nil }
 
     to_create do |instance, evaluator|
-      client = Elasticsearch::Client.new(Rails.application.config.elastic)
-      result = client.index(
+      result = GlobalHelper.elastic_client.index(
         id: instance['_id'],
         body: instance.without('_id'),
         routing: instance['feed_id'],
