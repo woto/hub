@@ -30,6 +30,21 @@ describe Feeds::Offers do
         subject.append(doc)
       end
 
+      it 'calls Import::Offers::Customs::Aliexpress' do
+        expect(Import::Offers::Customs::Aliexpress).to receive(:call).with(
+          instance_of(Hash),
+          feed
+        ).and_call_original
+        subject.append(doc)
+      end
+
+      it 'calls Import::Offers::Customs::VendorModel' do
+        expect(Import::Offers::Customs::VendorModel).to receive(:call).with(
+          instance_of(Hash)
+        ).and_call_original
+        subject.append(doc)
+      end
+
       it 'calls Import::Offers::Category with correct argument' do
         expect(Import::Offers::Category).to receive(:call).with(
           include('categoryId' => [include('#' => 'category 1')]), feed, FeedCategoriesCache.new(feed)
@@ -39,7 +54,8 @@ describe Feeds::Offers do
 
       it 'calls Import::Offers::StandardAttributes with correct argument' do
         expect(Import::Offers::StandardAttributes).to receive(:call).with(
-          instance_of(Hash), feed
+          instance_of(Hash),
+          feed
         ).and_call_original
         subject.append(doc)
       end
@@ -53,7 +69,9 @@ describe Feeds::Offers do
 
       it 'calls Import::Offers::FavoriteIds with correct arguments' do
         expect(Import::Offers::FavoriteIds).to receive(:call).with(
-          include('feed_category_ids' => [feed_category.id]), advertiser, feed
+          include('feed_category_ids' => [feed_category.id]),
+          advertiser,
+          feed
         ).and_call_original
         subject.append(doc)
       end
@@ -97,7 +115,9 @@ describe Feeds::Offers do
       it 'calls Import::Offers::Flush with correct arguments' do
         offers = subject.append(doc)
         expect(Import::Offers::Flush).to receive(:call).with(
-          offers, advertiser, feed, instance_of(Elasticsearch::Transport::Client)
+          offers,
+          advertiser,
+          feed
         ).and_call_original
         subject.flush
       end

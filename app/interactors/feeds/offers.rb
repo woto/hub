@@ -15,6 +15,8 @@ module Feeds
 
     def append(doc)
       offer = Import::Offers::Hashify.call(doc)
+      Import::Offers::Customs::Aliexpress.call(offer, context.feed)
+      Import::Offers::Customs::VendorModel.call(offer)
       Import::Offers::Category.call(offer, context.feed, @categories)
       Import::Offers::StandardAttributes.call(offer, context.feed)
       Import::Offers::DetectLanguage.call(offer)
