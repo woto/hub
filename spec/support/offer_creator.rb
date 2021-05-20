@@ -6,11 +6,12 @@ module OfferCreator
                 description: Faker::Lorem.paragraph,
                 name: Faker::Commerce.product_name,
                 price: Faker::Commerce.price,
-                currency_id: Faker::Currency.code)
+                currency_id: Faker::Currency.code,
+                pictures: %w[megan_vale.jpg sasha_rose.jpeg angel_rivas.jpg])
     feed = feed_category.feed
     advertiser = feed.advertiser
     offer = {}.tap do |h|
-      h['_id'] = "#{id}-#{advertiser.id}"
+      h['_id'] = "#{id}-#{feed.id}"
       h['feed_id'] = feed.id
       h['advertiser_id'] = advertiser.id
       h['url'] = [{ '#' => url }]
@@ -21,6 +22,7 @@ module OfferCreator
       h['indexed_at'] = Time.current
       h['feed_category_id'] = feed_category.id
       h['feed_category_ids'] = feed_category.path_ids
+      h['picture'] = pictures.map { |pic| { Import::Offers::Hashify::HASH_BANG_KEY => "local:///fixtures/#{pic}" } }
 
       feed_category.path.each_with_index do |fc, i|
         h["feed_category_id_#{i}"] = fc.id

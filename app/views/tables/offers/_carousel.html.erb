@@ -35,7 +35,8 @@
                           style: 'top: calc(50% - 10px); left: calc(50% - 10px)' %>
 
                 <%# Image %>
-                <%= image_tag GlobalHelper.picture_address(picture),
+                <%= image_tag picture,
+                              id: "carousel-controls-#{row._id.parameterize}-#{idx}",
                               class: 'position-relative',
                               alt: row.name,
                               loading: 'lazy' %>
