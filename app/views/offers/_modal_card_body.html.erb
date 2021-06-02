@@ -1,0 +1,69 @@
+<%= render 'modal_card_wrapper' do %>
+
+  <%= render('address_for_widget') %>
+
+  <% if @offer.pictures %>
+    <div class="my-4 d-grid gap-3">
+      <% @offer.pictures.each do |picture| %>
+        <%= image_tag picture, class: 'img-thumbnail mx-auto' %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="my-3">
+    <strong><%= t('.name') %>:</strong>
+    <%= @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+  </div>
+
+  <%= tag.div class: 'my-3',
+              'data-controller': 'read-more',
+              'data-read-more-more-text-value': t('.read_more'),
+              'data-read-more-less-text-value': t('.read_less') do %>
+
+    <strong><%= t('.description') %>:</strong>
+    <% description = @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY).to_s %>
+
+    <p data-read-more-target="content">
+      <%= truncate(description, length: 200) %>
+    </p>
+
+    <% if description.size > 200 %>
+      <button data-action="read-more#toggle" class="btn btn-light btn-sm">
+        <%= t('.read_more') %>
+      </button>
+    <% end %>
+
+    <template data-read-more-target="full">
+      <%= @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+    </template>
+  <% end %>
+
+  <div class="my-3">
+    <strong><%= t('.price') %>:</strong>
+    <%= @offer._source.dig('price', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+    <%= @offer._source.dig('currencyId', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+  </div>
+
+  <div class="my-3">
+    <% advertiser = Advertiser.find(@offer.advertiser_id) %>
+    <strong><%= t('advertiser') %>:</strong> <%= link_to advertiser.to_label, advertiser_offers_path(advertiser), 'data-turbo': 'false' %>
+  </div>
+
+  <div class="my-3">
+    <% feed = Feed.find(@offer.feed_id) %>
+    <strong><%= t('feed') %>:</strong> <%= link_to feed.to_label, feed_offers_path(feed), 'data-turbo': 'false' %>
+  </div>
+
+  <div class="my-3">
+    <% feed_category = FeedCategory.find(@offer.feed_category_id) %>
+    <strong><%= t('feed_category') %>:</strong> <%= link_to feed_category.to_label, feed_category_offers_path(feed_category), 'data-turbo': 'false' %>
+  </div>
+
+  <div class="my-3">
+    <%= link_to t('.visit_advertiser'),
+                @offer.url,
+                class: 'btn btn-primary d-block',
+                target: '_blank',
+                'data-turbo': 'false' %>
+  </div>
+<% end %>

@@ -1,0 +1,22 @@
+<div class="mb-3" data-controller="clipboard">
+  <label class="form-label">
+    <%= t('.address_for_widget') %>
+  </label>
+  <div class="row g-2">
+    <div class="col">
+      <input type="text" class="form-control"
+             value="<%= @offer.url %>"
+             data-clipboard-target="source"
+             readonly>
+      <div class="form-text">
+        <%= t('.address_for_widget_help') %>
+      </div>
+    </div>
+    <div class="col-auto">
+      <button href="#" class="btn btn-pink btn-icon"
+              data-action="clipboard#copy">
+        <%== GlobalHelper.icon('clipboard') %>
+      </button>
+    </div>
+  </div>
+</div>

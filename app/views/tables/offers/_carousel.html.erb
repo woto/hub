@@ -15,12 +15,11 @@
   <% end %>
 
   <%= tag.div 'data-controller': 'offer-modal-card',
-              'data-offer-modal-card-offer-url-value': modal_card_offer_path(row._id),
-              'data-offer-modal-card-widgets-url-value': modal_list_widgets_path(url: row.url) do  %>
+              'data-offer-modal-card-offer-url-value': modal_card_offer_path(row._id) do %>
 
     <%= tag.div 'data-offer-modal-card-target': 'modalPlaceholder' %>
 
-    <%= link_to '#', class: 'd-block', 'data-action': "click->offer-modal-card#openOfferCardModal" do %>
+    <%= link_to '#', class: 'd-block', 'data-action': "click->offer-modal-card#openOfferModalCard" do %>
 
       <div class="carousel-inner">
 
