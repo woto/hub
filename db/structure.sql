@@ -1186,8 +1186,6 @@ ALTER SEQUENCE public.widgets_id_seq OWNED BY public.widgets.id;
 
 CREATE TABLE public.widgets_multiples (
     id bigint NOT NULL,
-    title character varying,
-    body text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -1218,10 +1216,10 @@ ALTER SEQUENCE public.widgets_multiples_id_seq OWNED BY public.widgets_multiples
 
 CREATE TABLE public.widgets_multiples_items (
     id bigint NOT NULL,
-    url character varying,
-    title character varying,
-    body text,
     widgets_multiple_id bigint NOT NULL,
+    title character varying,
+    url character varying,
+    body text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -2268,7 +2266,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210301235012'),
 ('20210328042112'),
 ('20210328055745'),
-('20210328061106'),
-('20210330012352');
+('20210526162912'),
+('20210526162933');
 
 

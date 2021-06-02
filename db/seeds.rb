@@ -34,7 +34,7 @@ if Rails.env.development?
       post = nil
       Current.set(responsible: user) do
         created_at = Faker::Date.between(from: 2.years.ago, to: Time.current)
-        post = FactoryBot.create(:post, user: user, created_at: created_at)
+        post = FactoryBot.create(:post, realm_kind: :post, user: user, created_at: created_at)
       end
 
       next unless i < 8
@@ -101,20 +101,4 @@ if Rails.env.development?
   )
   Feeds::Parse.call(feed: feed3)
   Elastic::RefreshOffersIndex.call
-
-  # post_category: PostCategory.joins(:realm).merge(Realm.post).order('RANDOM()').first,
-
-  # def create_post_categories_random_tree
-  #   10.times do |_i|
-  #     realm = Realm.pick(locale: :ru, kind: :post, title: 'Random tree', domain: 'best.ru')
-  #     parent = PostCategory.order('random()').find_by(realm: realm)
-  #     PostCategory.create!(
-  #       realm: realm,
-  #       title: Faker::Lorem.sentence(word_count: 1, random_words_to_add: 4),
-  #       parent: [nil, parent].sample
-  #     )
-  #   end
-  # end
-  #
-  # create_post_categories_random_tree
 end

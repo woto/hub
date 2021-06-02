@@ -1,26 +1,27 @@
 # frozen_string_literal: true
 
-users = []
-rand(1..2).times do |_i|
-  users << FactoryBot.create(:user)
+def create_post_categories_random_tree(realm)
+  Array.new(20).map do
+    parent = PostCategory.order('random()').find_by(realm: realm)
+    PostCategory.create!(
+      realm: realm,
+      title: Faker::Lorem.sentence(word_count: 1, random_words_to_add: 4),
+      parent: [nil, parent].sample
+    )
+  end
 end
 
+user = FactoryBot.create(:user)
+
 I18n.available_locales.each do |locale|
-  news_realm = Realm.create!(title: 'Новости', locale: locale, kind: 'news')
+  realm = Realm.pick(kind: :news, locale: locale)
 
-  payments = PostCategory.create!(realm: news_realm, title: 'Выплаты')
-  maintenance = PostCategory.create!(realm: news_realm, title: 'Регламентные работы')
-  advertisers = PostCategory.create!(realm: news_realm, title: 'Рекламодателям')
-  webmasters =  PostCategory.create!(realm: news_realm, title: 'Вебмастерам')
+  create_post_categories_random_tree(realm)
+  post_categories = PostCategory.leaves.where(realm: realm).order("RANDOM()")
 
-  categories = [payments, advertisers, maintenance, webmasters]
-
-  rand(20..40).times do
-
-    user = users.sample
-
+  20.times do
     Current.set(responsible: user) do
-      post = FactoryBot.create(:post, realm: news_realm, user: user, post_category: categories.sample)
+      post = FactoryBot.create(:post, realm: realm, user: user, post_category: post_categories.sample)
       post.update!(status: :pending)
     end
   end
