@@ -88,12 +88,13 @@ class GlobalHelper
       h.number_to_currency(amount, locale: locale)
     end
 
-    def isolated
-      ActiveRecord::Base.transaction(isolation: :serializable) do
-        yield
-      rescue ActiveRecord::Rollback, Rollback => e
-        raise Rollback, e
-      end
+    def decorate_money(amount, currency)
+      c = Money::Currency.new(currency)
+      ActionController::Base.helpers.number_to_currency(amount,
+                                                        unit: c.symbol,
+                                                        separator: c.decimal_mark,
+                                                        delimiter: c.thousands_separator,
+                                                        locale: :en)
     end
 
     def retryable(&block)
