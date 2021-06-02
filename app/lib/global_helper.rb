@@ -4,9 +4,11 @@ class GlobalHelper
   FAVORITE_COLUMN = 'favorite'
 
   class << self
-
-    def feed_category_ids
-      20.times.map { |i| "feed_category_id_#{i}" }
+    def currencies_table
+      Money::Currency.table.map { |key, value| { key => value[:iso_numeric].to_i } }
+                     .reduce(&:merge)
+                     .reject { |k, _| k.in?(%i[all try]) }
+                     .reject { |_, v| v.zero? }
     end
 
     def create_index(client, model)
