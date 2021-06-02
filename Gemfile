@@ -12,7 +12,6 @@ gem 'rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker'
 gem 'jbuilder', '~> 2.7'
-# gem 'turbo-rails', github: 'hotwired/turbo-rails', branch: :main
 gem 'turbo-rails'
 # gem "stimulus-rails"
 
@@ -45,6 +44,7 @@ group :development, :test do
   gem 'fantaskspec'
   gem 'webmock'
   gem 'test-prof'
+  gem 'shoulda-matchers'
   # gem 'isolator'
   # gem 'aruba'
   # gem 'awesome_print'
@@ -176,6 +176,9 @@ gem 'dry-validation'
 # Image processing
 gem 'image_processing', '~> 1.11'
 gem 'mini_magick', '~> 4.10'
+
+# Graph visualization
+gem 'ruby-graphviz'
 
 # Deprecated
 gem 'rails-controller-testing'
