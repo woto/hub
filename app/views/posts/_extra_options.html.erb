@@ -1,0 +1,31 @@
+<div class="card bg-muted-lt">
+  <div class="card-status-left bg-warning"></div>
+  <div class="card-header">
+    <div class="card-title align-items-center d-flex">
+      <%= t('.extra_options') %>
+    </div>
+  </div>
+  <div class="card-body">
+    <small class="text-muted"><%= t('.extra_options_hint') %></small>
+
+    <% f.object.exchange_rate.extra_options.sort { |obj| -obj['priority'] }.each do |extra_option| %>
+      <%= f.simple_fields_for :extra_options do |extra| %>
+
+        <%
+          collection = extra_option['values'].pluck('title').map do |a|
+            [t(a, scope: ['posts', 'extra_options', 'labels', extra_option['key']]), a]
+          end
+        %>
+
+        <%= extra.input extra_option['key'],
+                        as: extra_option['type'],
+                        hint: t(extra_option['hint'], scope: %w[posts extra_options hints]),
+                        checked: f.object.extra_options&.dig(extra_option['key']),
+                        item_wrapper_class: 'form-check',
+                        wrapper_html: {class: 'my-3'},
+                        collection: collection,
+                        disabled: disabled || extra_option['disabled'] %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

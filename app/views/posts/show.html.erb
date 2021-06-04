@@ -19,8 +19,7 @@
 
 <div class="col">
   <div class="row">
-    <div class="col">
-
+    <div class="col-12 col-xl-8 mb-3">
       <div class="card mb-3">
         <div class="card-status-left bg-warning"></div>
         <div class="card-body">
@@ -47,38 +46,27 @@
               <% @post.tags.each do |item| %>
                 <% next if item.blank? %>
 
-                <%= tag.span item %>
+                <%= tag.span item, class: 'badge bg-blue-lt' %>
               <% end %>
             </dd>
 
-            <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at, self) %> </dd>
+            <% if current_user.role.in?(['manager', 'admin']) %>
+              <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at) %> </dd>
+            <% end %>
 
             <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at, self) %> </dd>
+            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.created_at) %> </dd>
 
             <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at, self) %> </dd>
+            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.updated_at) %> </dd>
 
             <dt class="col-sm-3"> <%= t('status', scope: ['simple_form', 'labels', 'post']) %> </dt>
             <dd class="col-sm-9"> <%= badge(status: @post.status) %> </dd>
 
-            <dt class="col-sm-3"> <%= t('comment', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> </dd>
+            <dt class="col-sm-3"> <%= t('amount', scope: ['simple_form', 'labels', 'post']) %> </dt>
+            <dd class="col-sm-9"> <mark> <%= GlobalHelper.decorate_money(@post.amount, @post.currency) %> </mark> </dd>
           </dl>
-        </div>
-      </div>
-
-      <div class="card card-lg mb-3">
-        <div class="card-header">
-          <h3 class="card-title fs-5"> <%= t('intro', scope: ['simple_form', 'labels', 'post']) %> </h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-lg-12 offset-xl-2 col-xl-8 fs-6 lh-lg">
-              <%= @post.intro %>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -88,18 +76,38 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-12 offset-xl-2 col-xl-8 fs-6 lh-lg">
+            <div style="max-width: 600px" class="fs-6 lh-lg" data-turbo="false">
               <%= @post.body %>
             </div>
           </div>
         </div>
       </div>
 
+      <% if current_user.role.in?(['manager', 'admin']) %>
+        <div class="card card-lg mb-3">
+          <div class="card-header">
+            <h3 class="card-title fs-5"> <%= t('intro', scope: ['simple_form', 'labels', 'post']) %> </h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div style="max-width: 600px" class="fs-6 lh-lg" data-turbo="false">
+                <%= @post.intro %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+    <div class="col-12 col-sm-9 col-md-8 col-lg-8 col-xl-4 mb-3">
+      <%= simple_form_for(@post) do |f| %>
+        <%= render 'extra_options', f: f, disabled: true %>
+      <% end %>
     </div>
   </div>
 
   <div class="col">
-    <%= link_to 'Back', posts_path, class: "btn btn-white" %>
-    <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-primary" %>
+    <%= link_to t('edit'), edit_post_path(@post), class: "btn btn-primary" %>
+    <%= link_to t('back'), posts_path, class: "btn btn-white" %>
   </div>
 </div>

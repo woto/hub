@@ -4,8 +4,10 @@ class PostsController < ApplicationController
   layout 'backoffice'
   before_action :set_post, only: %i[show edit update destroy]
 
-  # GET /posts/1
-  def show; end
+  # GET /posts/:id
+  def show
+    authorize(@post)
+  end
 
   # GET /posts/new
   def new
@@ -54,7 +56,7 @@ class PostsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_post
-    @post = Post.find(params[:id])
+    @post = policy_scope(Post).find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.

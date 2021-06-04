@@ -38,7 +38,7 @@ FactoryBot.define do
   factory :post do
     user
     title { Faker::Lorem.sentence(word_count: 2, random_words_to_add: 12) }
-    status { %i[draft pending].sample }
+    status { %i[draft_post pending_post].sample }
     intro { Faker::Lorem.paragraph_by_chars(number: rand(100..1000)) }
     body { Faker::Lorem.paragraph_by_chars(number: rand(100..10_000)) }
     published_at { Faker::Date.between(from: 5.months.ago, to: Time.current) }
@@ -47,9 +47,8 @@ FactoryBot.define do
     realm { post_category.realm }
     transient do
       realm_kind { Realm.kinds.keys.sample }
-      realm_locale { I18n.available_locales }
+      realm_locale { I18n.available_locales.sample }
     end
-
     post_category do
       association :post_category, realm: Realm.pick(kind: realm_kind, locale: realm_locale)
     end
