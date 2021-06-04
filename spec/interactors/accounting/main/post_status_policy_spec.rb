@@ -12,9 +12,9 @@ describe Accounting::Main::PostStatusPolicy, type: :policy do
     let(:from_status) { nil }
 
     it 'raises error' do
-      expect {
+      expect do
         described_class.new(user, policy_context)
-      }.to raise_error(Pundit::NotAuthorizedError, 'responsible is not set')
+      end.to raise_error(Pundit::NotAuthorizedError, 'responsible is not set')
     end
   end
 
@@ -24,71 +24,83 @@ describe Accounting::Main::PostStatusPolicy, type: :policy do
     context 'when `from_status` is `nil`' do
       let(:from_status) { nil }
 
-      permissions :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_approved_post?, :to_rejected_post?, :to_accrued_post?, :to_canceled_post?, :to_removed_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
 
-      permissions :to_draft?, :to_pending? do
+      permissions :to_draft_post?, :to_pending_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `draft`' do
-      let(:from_status) { 'draft' }
+    context 'when `from_status` is `draft_post`' do
+      let(:from_status) { 'draft_post' }
 
-      permissions :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_approved_post?, :to_rejected_post?, :to_accrued_post?, :to_canceled_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
 
-      permissions :to_draft?, :to_pending? do
+      permissions :to_draft_post?, :to_pending_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `pending`' do
-      let(:from_status) { 'pending' }
+    context 'when `from_status` is `pending_post`' do
+      let(:from_status) { 'pending_post' }
 
-      permissions :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_approved_post?, :to_rejected_post?, :to_accrued_post?, :to_canceled_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
 
-      permissions :to_draft?, :to_pending? do
+      permissions :to_draft_post?, :to_pending_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `approved`' do
-      let(:from_status) { 'approved' }
+    context 'when `from_status` is `approved_post`' do
+      let(:from_status) { 'approved_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `rejected`' do
-      let(:from_status) { 'rejected' }
+    context 'when `from_status` is `rejected_post`' do
+      let(:from_status) { 'rejected_post' }
 
-      permissions :to_draft?, :to_pending? do
+      permissions :to_draft_post?, :to_pending_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
 
-      permissions :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_approved_post?, :to_rejected_post?, :to_accrued_post?, :to_canceled_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `accrued`' do
-      let(:from_status) { 'accrued' }
+    context 'when `from_status` is `accrued_post`' do
+      let(:from_status) { 'accrued_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `canceled`' do
-      let(:from_status) { 'canceled' }
+    context 'when `from_status` is `canceled_post`' do
+      let(:from_status) { 'canceled_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
+        it { is_expected.not_to permit(user, policy_context) }
+      end
+    end
+
+    context 'when `from_status` is `removed_post`' do
+      let(:from_status) { 'removed_post' }
+
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.not_to permit(user, policy_context) }
       end
     end
@@ -100,55 +112,71 @@ describe Accounting::Main::PostStatusPolicy, type: :policy do
     context 'when `from_status` is `nil`' do
       let(:from_status) { nil }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `draft`' do
-      let(:from_status) { 'draft' }
+    context 'when `from_status` is `draft_post`' do
+      let(:from_status) { 'draft_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `pending`' do
-      let(:from_status) { 'pending' }
+    context 'when `from_status` is `pending_post`' do
+      let(:from_status) { 'pending_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `approved`' do
-      let(:from_status) { 'approved' }
+    context 'when `from_status` is `approved_post`' do
+      let(:from_status) { 'approved_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `rejected`' do
-      let(:from_status) { 'rejected' }
+    context 'when `from_status` is `rejected_post`' do
+      let(:from_status) { 'rejected_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `accrued`' do
-      let(:from_status) { 'accrued' }
+    context 'when `from_status` is `accrued_post`' do
+      let(:from_status) { 'accrued_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `canceled`' do
-      let(:from_status) { 'canceled' }
+    context 'when `from_status` is `canceled_post`' do
+      let(:from_status) { 'canceled_post' }
 
-      permissions :to_draft?, :to_pending?, :to_approved?, :to_rejected?, :to_accrued?, :to_canceled? do
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
+        it { is_expected.to permit(user, policy_context) }
+      end
+    end
+
+    context 'when `from_status` is `removed_post`' do
+      let(:from_status) { 'removed_post' }
+
+      permissions :to_draft_post?, :to_pending_post?, :to_approved_post?, :to_rejected_post?, :to_accrued_post?,
+                  :to_canceled_post?, :to_removed_post? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
