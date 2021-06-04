@@ -9,17 +9,23 @@ module Accounting
         super
       end
 
-      def to_requested?
-        return true if context.from_status.in?([nil, 'requested'])
+      def to_pending_check?
+        return true if context.from_status.in?([nil, 'pending_check'])
 
         user.role.in?(%w[admin manager])
       end
 
-      def to_processing?
+      def to_approved_check?
         user.role.in?(%w[admin manager])
       end
 
-      def to_payed?
+      def to_payed_check?
+        user.role.in?(%w[admin manager])
+      end
+
+      def to_removed_check?
+        return true if context.from_status.in?(%w[pending_check])
+
         user.role.in?(%w[admin manager])
       end
     end

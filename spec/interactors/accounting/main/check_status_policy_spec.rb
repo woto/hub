@@ -24,39 +24,47 @@ describe Accounting::Main::CheckStatusPolicy, type: :policy do
     context 'when `from_status` is `nil`' do
       let(:from_status) { nil }
 
-      permissions :to_payed?, :to_processing? do
+      permissions :to_payed_check?, :to_approved_check?, :to_removed_check? do
         it { is_expected.not_to permit(user, policy_context) }
       end
 
-      permissions :to_requested? do
+      permissions :to_pending_check? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `requested`' do
-      let(:from_status) { 'requested' }
+    context 'when `from_status` is `pending_check`' do
+      let(:from_status) { 'pending_check' }
 
-      permissions :to_payed?, :to_processing? do
+      permissions :to_payed_check?, :to_approved_check? do
         it { is_expected.not_to permit(user, policy_context) }
       end
 
-      permissions :to_requested? do
+      permissions :to_pending_check?, :to_removed_check? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `processing`' do
-      let(:from_status) { 'processing' }
+    context 'when `from_status` is `approved_check`' do
+      let(:from_status) { 'approved_check' }
 
-      permissions :to_requested?, :to_processing?, :to_payed? do
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
         it { is_expected.not_to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `payed`' do
-      let(:from_status) { 'payed' }
+    context 'when `from_status` is `payed_check`' do
+      let(:from_status) { 'payed_check' }
 
-      permissions :to_requested?, :to_processing?, :to_payed? do
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
+        it { is_expected.not_to permit(user, policy_context) }
+      end
+    end
+
+    context 'when `from_status` is `removed_check`' do
+      let(:from_status) { 'removed_check' }
+
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
         it { is_expected.not_to permit(user, policy_context) }
       end
     end
@@ -68,31 +76,39 @@ describe Accounting::Main::CheckStatusPolicy, type: :policy do
     context 'when `from_status` is `nil`' do
       let(:from_status) { nil }
 
-      permissions :to_requested?, :to_processing?, :to_payed? do
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `requested`' do
-      let(:from_status) { 'requested' }
+    context 'when `from_status` is `pending_check`' do
+      let(:from_status) { 'pending_check' }
 
-      permissions :to_requested?, :to_processing?, :to_payed? do
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `processing`' do
-      let(:from_status) { 'processing' }
+    context 'when `from_status` is `approved_check`' do
+      let(:from_status) { 'approved_check' }
 
-      permissions :to_requested?, :to_processing?, :to_payed? do
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
 
-    context 'when `from_status` is `payed`' do
-      let(:from_status) { 'pending' }
+    context 'when `from_status` is `payed_check`' do
+      let(:from_status) { 'payed_check' }
 
-      permissions :to_requested?, :to_processing?, :to_payed? do
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
+        it { is_expected.to permit(user, policy_context) }
+      end
+    end
+
+    context 'when `from_status` is `removed_check`' do
+      let(:from_status) { 'removed_check' }
+
+      permissions :to_pending_check?, :to_approved_check?, :to_payed_check?, :to_removed_check? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
