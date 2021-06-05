@@ -14,10 +14,9 @@ class CheckPolicy < ApplicationPolicy
   end
 
   def update?
-    case record.is_payed
-    when false
-      return true if user.role.in?(['admin', 'manager'])
-    end
+    return true if super
+
+    true if context.user == user && context.pending_check?
   end
 
   def create?
@@ -26,5 +25,17 @@ class CheckPolicy < ApplicationPolicy
 
   def index?
     true
+  end
+
+  def show?
+    return true if super
+
+    true if context.user == user
+  end
+
+  def destroy?
+    return true if super
+
+    true if context.user == user && context.pending_check?
   end
 end

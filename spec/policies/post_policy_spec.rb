@@ -7,23 +7,23 @@ require 'rails_helper'
 describe PostPolicy, responsible: :admin do
   subject { described_class }
 
+  # everybody can create posts
+  describe 'create?' do
+    permissions :create? do
+      it { is_expected.to permit(nil, nil) }
+    end
+  end
+
+  # everybody can index posts
+  describe 'index?' do
+    permissions :index? do
+      it { is_expected.to permit(nil, nil) }
+    end
+  end
+
   context 'with user' do
     let(:user) { create(:user) }
     let(:policy_context) { create(:post, user: user, status: status) }
-
-    # anybody can create posts
-    describe 'create?' do
-      permissions :create? do
-        it { is_expected.to permit(user, nil) }
-      end
-    end
-
-    # anybody can index posts
-    describe 'index?' do
-      permissions :index? do
-        it { is_expected.to permit(user, nil) }
-      end
-    end
 
     context 'when `status` is `draft_post`' do
       let(:status) { :draft_post }
@@ -140,7 +140,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `draft_post`' do
       let(:status) { :draft_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
@@ -148,7 +148,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `pending_post`' do
       let(:status) { :pending_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
@@ -156,7 +156,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `approved_post`' do
       let(:status) { :approved_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
@@ -164,7 +164,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `rejected_post`' do
       let(:status) { :rejected_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
@@ -172,7 +172,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `accrued_post`' do
       let(:status) { :accrued_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
@@ -180,7 +180,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `canceled_post`' do
       let(:status) { :canceled_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
@@ -188,7 +188,7 @@ describe PostPolicy, responsible: :admin do
     context 'when `status` is `removed_post`' do
       let(:status) { :removed_post }
 
-      permissions :update?, :create?, :show?, :destroy? do
+      permissions :update?, :show?, :destroy? do
         it { is_expected.to permit(user, policy_context) }
       end
     end
