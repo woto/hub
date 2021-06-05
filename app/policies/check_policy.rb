@@ -3,7 +3,13 @@
 class CheckPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(user: user)
+      raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
+
+      if user.role.in?(%w[admin manager])
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 

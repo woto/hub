@@ -3,6 +3,8 @@
 class PostPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
+      raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
+
       if user.role.in?(%w[admin manager])
         scope.all
       else

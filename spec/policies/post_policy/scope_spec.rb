@@ -4,10 +4,10 @@ require 'rails_helper'
 
 describe PostPolicy::Scope do
   subject do
-    PostPolicy::Scope.new(user, Post).resolve.to_sql
+    described_class.new(user, Post).resolve.to_sql
   end
 
-  context 'without user', :pending do
+  context 'without user' do
     let(:user) { nil }
 
     it 'raises error' do
