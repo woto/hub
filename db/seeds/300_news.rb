@@ -22,7 +22,7 @@ I18n.available_locales.each do |locale|
   20.times do
     Current.set(responsible: user) do
       post = FactoryBot.create(:post, realm: realm, user: user, post_category: post_categories.sample)
-      post.update!(status: :pending)
+      post.update!(status: :pending_post)
     end
   end
 end

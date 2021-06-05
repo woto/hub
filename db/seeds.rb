@@ -40,32 +40,32 @@ if Rails.env.development?
       next unless i < 8
 
       Current.set(responsible: admin) do
-        post.update!(status: :approved)
+        post.update!(status: :approved_post)
       end
 
       next unless i < 6
 
       Current.set(responsible: admin) do
-        post.update!(status: :accrued)
+        post.update!(status: :accrued_post)
       end
 
       next unless i < 4
 
       check = nil
       Current.set(responsible: user) do
-        check = user.checks.create!(amount: post.amount * rand(0.9..1), currency: post.currency, status: :requested)
+        check = user.checks.create!(amount: post.amount * rand(0.9..1), currency: post.currency, status: :pending_check)
       end
 
       next unless i < 3
 
       Current.set(responsible: admin) do
-        check.update!(status: :processing)
+        check.update!(status: :approved_check)
       end
 
       next unless i < 2
 
       Current.set(responsible: admin) do
-        check.update!(status: :payed)
+        check.update!(status: :payed_check)
       end
     end
   end

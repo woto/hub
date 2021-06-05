@@ -34,8 +34,9 @@ class Account < ApplicationRecord
   #            class_name: 'User', optional: true
 
   enum currency: GlobalHelper.currencies_table
-  enum code: { draft: 0, pending: 1, approved: 2, rejected: 3, accrued: 4,
-               canceled: 5, requested: 6, processing: 7, payed: 8 }
+  enum code: { draft_post: 0, pending_post: 1, approved_post: 2, rejected_post: 3, accrued_post: 4,
+               canceled_post: 5, pending_check: 6, approved_check: 7, payed_check: 8,
+               removed_post: 9, removed_check: 10 }
 
   before_validation :set_amount_to_zero, on: :create
 
@@ -77,25 +78,25 @@ class Account < ApplicationRecord
   def self.available_to_request(user, currency)
     # accounts = if subjectables.is_a?(User)
     #              Account.joins(:for_user).where(
-    #                code: %i[accrued requested payed],
+    #                code: %i[accrued_post pending_check payed_check],
     #                for_user: { id: subjectables.id }, currency: currency
     #              ).to_a
     #            else
     #              Account.joins(:for_subject).where(
-    #                code: %i[accrued requested payed],
+    #                code: %i[accrued_post pending_check payed_check],
     #                for_subject: { id: subjectables.pluck(:id) }, currency: currency
     #              ).to_a
     #            end
     #
     # amount_by_code = ->(code) { accounts.find { |account| account.code == code }&.amount || 0 }
     #
-    # amount_by_code.call('accrued') -
-    #   amount_by_code.call('requested') -
-    #   amount_by_code.call('payed')
+    # amount_by_code.call('accrued_post') -
+    #   amount_by_code.call('pending_check') -
+    #   amount_by_code.call('payed_check')
 
-    Account.for_user(user, :accrued, currency).amount -
-      Account.for_user(user, :requested, currency).amount -
-      Account.for_user(user, :payed, currency).amount
+    Account.for_user(user, :accrued_post, currency).amount -
+      Account.for_user(user, :pending_check, currency).amount -
+      Account.for_user(user, :payed_check, currency).amount
   end
 
   private

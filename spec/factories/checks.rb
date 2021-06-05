@@ -24,6 +24,6 @@ FactoryBot.define do
     user
     amount { rand(1..100.00) }
     currency { Check.currencies.keys.sample }
-    status { :requested }
+    status { :pending_check }
   end
 end

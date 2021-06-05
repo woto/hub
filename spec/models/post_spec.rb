@@ -46,7 +46,7 @@ describe Post, type: :model do
   it { is_expected.to have_rich_text(:intro) }
 
   specify do
-    statuses = %i[draft pending approved rejected accrued canceled]
+    statuses = %i[draft_post pending_post approved_post rejected_post accrued_post canceled_post]
     expect(subject).to define_enum_for(:status).with_values(statuses)
   end
 
@@ -76,8 +76,8 @@ describe Post, type: :model do
     describe '#published_at' do
       it { is_expected.to validate_presence_of(:published_at).allow_nil }
 
-      context 'when post has :accrued status' do
-        subject { build(:post, status: :accrued) }
+      context 'when post has :accrued_post status' do
+        subject { build(:post, status: :accrued_post) }
 
         it { is_expected.to validate_presence_of(:published_at) }
       end
@@ -88,8 +88,8 @@ describe Post, type: :model do
     it { is_expected.to allow_value('text').for(:intro) }
     it { is_expected.to allow_value(nil).for(:intro) }
 
-    context 'when post has :accrued status' do
-      subject { build(:post, status: :accrued, intro: '') }
+    context 'when post has :accrued_post status' do
+      subject { build(:post, status: :accrued_post, intro: '') }
 
       it { is_expected.not_to allow_value(nil).for(:intro) }
     end

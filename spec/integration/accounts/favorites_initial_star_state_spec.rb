@@ -13,7 +13,7 @@ describe Tables::AccountsController, type: :system, responsible: :admin do
       end
 
       let(:starred) { "favorite-accounts-#{starred_object.id}" }
-      let(:starred_object) { Account.for_subject(:hub, :pending, :usd) }
+      let(:starred_object) { Account.for_subject(:hub, :pending_post, :usd) }
     end
 
     it_behaves_like 'favorites_initial_unstarred' do
@@ -23,7 +23,7 @@ describe Tables::AccountsController, type: :system, responsible: :admin do
       end
 
       let(:unstarred) { "favorite-accounts-#{unstarred_object.id}" }
-      let(:unstarred_object) { Account.for_user(Current.responsible, :pending, :rub) }
+      let(:unstarred_object) { Account.for_user(Current.responsible, :pending_post, :rub) }
     end
   end
 end

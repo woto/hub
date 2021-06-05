@@ -28,7 +28,7 @@ describe Account, type: :model do
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
 
   specify do
-    codes = %i[draft pending approved rejected accrued canceled requested processing payed]
+    codes = %i[draft_post pending_post approved_post rejected_post accrued_post canceled_post pending_check approved_check payed_check]
     expect(subject).to define_enum_for(:code).with_values(codes)
   end
 
@@ -68,12 +68,12 @@ describe Account, type: :model do
   end
 
   describe '#restrict_change_fields' do
-    subject { create(:account, code: :draft, currency: :rub, subjectable: subject_object, amount: 0) }
+    subject { create(:account, code: :draft_post, currency: :rub, subjectable: subject_object, amount: 0) }
 
     let(:subject_object) { create(:subject) }
 
     it 'does not allow to change code' do
-      subject.code = :pending
+      subject.code = :pending_post
       expect(subject).to be_invalid
     end
 
@@ -206,19 +206,19 @@ describe Account, type: :model do
 
     # This strange updates due to the readonly attributes
     before do
-      result = described_class.for_user(user, :accrued, :rub)
+      result = described_class.for_user(user, :accrued_post, :rub)
       described_class.where(id: result.id).update_all(amount: 150)
-      result = described_class.for_user(user, :requested, :rub)
+      result = described_class.for_user(user, :pending_check, :rub)
       described_class.where(id: result.id).update_all(amount: 50)
-      result = described_class.for_user(user, :payed, :rub)
+      result = described_class.for_user(user, :payed_check, :rub)
       described_class.where(id: result.id).update_all(amount: 50)
 
       # other data
-      result = described_class.for_user(user, :accrued, :usd)
+      result = described_class.for_user(user, :accrued_post, :usd)
       described_class.where(id: result.id).update_all(amount: 1)
-      result = described_class.for_user(user, :pending, :rub)
+      result = described_class.for_user(user, :pending_post, :rub)
       described_class.where(id: result.id).update_all(amount: 1)
-      result = described_class.for_user(create(:user), :accrued, :rub)
+      result = described_class.for_user(create(:user), :accrued_post, :rub)
       described_class.where(id: result.id).update_all(amount: 1)
     end
 

@@ -42,7 +42,15 @@ class Post < ApplicationRecord
   index_name "#{Rails.env}.posts"
 
   enum currency: GlobalHelper.currencies_table
-  enum status: { draft: 0, pending: 1, approved: 2, rejected: 3, accrued: 4, canceled: 5 }
+  enum status: {
+    draft_post: 0,
+    pending_post: 1,
+    approved_post: 2,
+    rejected_post: 3,
+    accrued_post: 4,
+    canceled_post: 5,
+    removed_post: 6
+  }
 
   belongs_to :realm, counter_cache: true, touch: true
   belongs_to :user, counter_cache: true, touch: true
@@ -64,9 +72,9 @@ class Post < ApplicationRecord
   validate :check_min_body_length
   validate :check_post_category_is_leaf
   validate :check_currency_value
-  with_options if: :accrued? do |accrued|
-    accrued.validates :published_at, presence: true
-    accrued.validate :check_min_intro_length
+  with_options if: :accrued_post? do |accrued_post|
+    accrued_post.validates :published_at, presence: true
+    accrued_post.validate :check_min_intro_length
   end
   # validates :amount, numericality: { greater_than: 0 }
 

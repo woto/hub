@@ -79,17 +79,17 @@ module ApplicationHelper
 
   def badge(status:)
     color = case status
-             when 'draft'
+             when 'draft_post'
                'grey'
-             when 'pending', 'requested'
+             when 'pending_post', 'pending_check'
                'cyan'
-             when 'approved', 'processing'
+             when 'approved_post', 'approved_check'
                'teal'
-             when 'accrued', 'payed'
+             when 'accrued_post', 'payed_check'
                'green'
-             when 'rejected'
+             when 'rejected_post'
                'orange'
-             when 'canceled'
+             when 'canceled_post'
                'red'
              end
     tag.span class: "badge bg-#{color}" do

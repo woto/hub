@@ -35,7 +35,7 @@ describe Check, type: :model do
 
   it { is_expected.to belong_to(:user).counter_cache(true).touch(true) }
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
-  it { is_expected.to define_enum_for(:status).with_values(%w[requested processing payed]) }
+  it { is_expected.to define_enum_for(:status).with_values(%w[pending_check approved_check payed_check]) }
   it { is_expected.to have_many(:transactions) }
   it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
   it { is_expected.to validate_presence_of(:status) }
@@ -54,16 +54,16 @@ describe Check, type: :model do
     let(:user) { create(:user) }
     let(:admin) { create(:user, role: :admin) }
     let!(:post) do
-      create(:post, user: user, status: :accrued, currency: currency, body: '*' * 10_000)
+      create(:post, user: user, status: :accrued_post, currency: currency, body: '*' * 10_000)
     end
     let(:available_amount) do
-      post.amount - requested_amount - payed_amount
+      post.amount - pending_check_amount - payed_check_amount
     end
-    let(:requested_amount) do
-      create(:check, user: user, status: :requested, amount: 1.23, currency: currency).amount
+    let(:pending_check_amount) do
+      create(:check, user: user, status: :pending_check, amount: 1.23, currency: currency).amount
     end
-    let(:payed_amount) do
-      create(:check, user: user, status: :payed, amount: 1.23, currency: currency).amount
+    let(:payed_check_amount) do
+      create(:check, user: user, status: :payed_check, amount: 1.23, currency: currency).amount
     end
 
     context 'when changes check amount' do
@@ -87,7 +87,7 @@ describe Check, type: :model do
       end
     end
 
-    context 'when requested amount is less than available amount' do
+    context 'when pending_check amount is less than available amount' do
       let(:check) { build(:check, user: user, amount: available_amount - 0.01, currency: currency) }
 
       specify do
@@ -95,7 +95,7 @@ describe Check, type: :model do
       end
     end
 
-    context 'when requested amount is greater than available amount' do
+    context 'when pending_check amount is greater than available amount' do
       let(:check) { build(:check, user: user, amount: available_amount + 0.01, currency: currency) }
 
       specify do

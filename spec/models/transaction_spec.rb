@@ -50,8 +50,8 @@ describe Transaction, type: :model do
     context 'when accounts have different codes' do
       subject(:transaction) { build(:transaction, credit: credit, debit: debit) }
 
-      let(:credit) { create(:account, currency: currency, code: :draft) }
-      let(:debit) { create(:account, currency: currency, code: :pending) }
+      let(:credit) { create(:account, currency: currency, code: :draft_post) }
+      let(:debit) { create(:account, currency: currency, code: :pending_post) }
       let(:currency) { :rub }
 
       it 'is invalid' do
@@ -66,7 +66,7 @@ describe Transaction, type: :model do
 
     let(:credit) { create(:account, code: code, currency: :rub) }
     let(:debit) { create(:account, code: code, currency: :usd) }
-    let(:code) { :draft }
+    let(:code) { :draft_post }
 
     it 'is invalid' do
       expect(subject).to be_invalid
