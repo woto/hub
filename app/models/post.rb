@@ -79,6 +79,7 @@ class Post < ApplicationRecord
   # validates :amount, numericality: { greater_than: 0 }
 
   after_save :create_transactions
+  before_destroy :stop_destroy
 
   scope :news, -> { joins(:realm).where(realms: { kind: :news }) }
 
@@ -151,6 +152,11 @@ class Post < ApplicationRecord
   rescue ActiveRecord::ActiveRecordError => e
     logger.error e.backtrace
     raise e.message
+  end
+
+  def stop_destroy
+    errors.add(:base, :undestroyable)
+    throw :abort
   end
 
   class << self

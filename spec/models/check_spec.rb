@@ -35,7 +35,7 @@ describe Check, type: :model do
 
   it { is_expected.to belong_to(:user).counter_cache(true).touch(true) }
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
-  it { is_expected.to define_enum_for(:status).with_values(%w[pending_check approved_check payed_check]) }
+  it { is_expected.to define_enum_for(:status).with_values(%w[pending_check approved_check payed_check removed_check]) }
   it { is_expected.to have_many(:transactions) }
   it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
   it { is_expected.to validate_presence_of(:status) }
@@ -161,6 +161,20 @@ describe Check, type: :model do
         expect(Accounting::Main::ChangeStatus).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
         expect(Rails.logger).to receive(:error)
         expect { create(:check) }.to raise_error(StandardError, 'aaa')
+      end
+    end
+  end
+
+  describe '#stop_destroy', responsible: :admin do
+    context 'when check is trying to destroy' do
+      let(:check) { create(:check) }
+
+      it 'returns validation error' do
+        allow_any_instance_of(described_class).to receive(:check_amount)
+        expect(check.destroy).to be_falsey
+        expect(check).to be_persisted
+        expect(check.errors.details).to eq({ base: [{ error: :undestroyable }] })
+        expect(check).to be_valid
       end
     end
   end

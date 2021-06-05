@@ -5,7 +5,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
-#  checks_count           :integer          default(0)
+#  checks_count           :integer          default(0), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -14,18 +14,19 @@
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
-#  favorites_count        :integer          default(0)
+#  favorites_count        :integer          default(0), not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  locked_at              :datetime
-#  posts_count            :integer          default(0)
+#  posts_count            :integer          default(0), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :integer          default("user")
+#  role                   :integer          default("user"), not null
 #  sign_in_count          :integer          default(0), not null
 #  unconfirmed_email      :string
 #  unlock_token           :string
+#  workspaces_count       :integer          default(0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

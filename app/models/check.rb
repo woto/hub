@@ -44,6 +44,7 @@ class Check < ApplicationRecord
   validate :check_amount
 
   after_save :create_transactions
+  before_destroy :stop_destroy
 
   def check_amount
     return if errors.include?(:currency)
@@ -81,5 +82,10 @@ class Check < ApplicationRecord
   rescue ActiveRecord::ActiveRecordError => e
     logger.error e.backtrace
     raise e.message
+  end
+
+  def stop_destroy
+    errors.add(:base, :undestroyable)
+    throw :abort
   end
 end

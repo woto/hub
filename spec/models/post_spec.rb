@@ -46,7 +46,7 @@ describe Post, type: :model do
   it { is_expected.to have_rich_text(:intro) }
 
   specify do
-    statuses = %i[draft_post pending_post approved_post rejected_post accrued_post canceled_post]
+    statuses = %i[draft_post pending_post approved_post rejected_post accrued_post canceled_post removed_post]
     expect(subject).to define_enum_for(:status).with_values(statuses)
   end
 
@@ -102,11 +102,11 @@ describe Post, type: :model do
 
   describe 'scopes' do
     describe '.news' do
-      let(:post) { Current.set(responsible: create(:user)) { create(:post, realm: create(:realm, kind: :news)) } }
+      let(:post) { Current.set(responsible: create(:user)) { create(:post, realm_kind: :news) } }
 
       before do
-        Current.set(responsible: create(:user)) { create(:post, realm: create(:realm, kind: :post)) }
-        Current.set(responsible: create(:user)) { create(:post, realm: create(:realm, kind: :help)) }
+        Current.set(responsible: create(:user)) { create(:post, realm_kind: :post) }
+        Current.set(responsible: create(:user)) { create(:post, realm_kind: :help) }
       end
 
       it 'returns posts with news realm kind' do
@@ -281,6 +281,19 @@ describe Post, type: :model do
         expect(Accounting::Main::ChangeStatus).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
         expect(Rails.logger).to receive(:error)
         expect { create(:post) }.to raise_error(StandardError, 'aaa')
+      end
+    end
+  end
+
+  describe '#stop_destroy', responsible: :admin do
+    context 'when post is trying to destroy' do
+      let(:post) { create(:post) }
+
+      it 'returns validation error' do
+        expect(post.destroy).to be_falsey
+        expect(post).to be_persisted
+        expect(post.errors.details).to eq({ base: [{ error: :undestroyable }] })
+        expect(post).to be_valid
       end
     end
   end

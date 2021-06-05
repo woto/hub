@@ -1120,11 +1120,11 @@ CREATE TABLE public.users (
     locked_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    role integer DEFAULT 0,
-    posts_count integer DEFAULT 0,
-    checks_count integer DEFAULT 0,
-    favorites_count integer DEFAULT 0,
-    workspaces_count integer DEFAULT 0
+    role integer DEFAULT 0 NOT NULL,
+    posts_count integer DEFAULT 0 NOT NULL,
+    checks_count integer DEFAULT 0 NOT NULL,
+    favorites_count integer DEFAULT 0 NOT NULL,
+    workspaces_count integer DEFAULT 0 NOT NULL
 );
 
 
