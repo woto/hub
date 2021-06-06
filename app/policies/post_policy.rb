@@ -13,6 +13,15 @@ class PostPolicy < ApplicationPolicy
     end
   end
 
+  def permitted_attributes
+    attributes = [
+      :title, :status, :intro, :body, :language, :post_category_id, :published_at, :realm_id, :currency,
+      { tags: [], extra_options: {} }
+    ]
+    attributes << :user_id if user.role.in?(%w[admin manager])
+    attributes
+  end
+
   def update?
     return true if super
 
