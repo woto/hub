@@ -1,5 +1,55 @@
-<%= debug @check.attributes %>
+<% content_for :title do %>
+  <%= t("titles.checks") %>
+<% end %>
 
-<div class="form-actions">
-  <%= link_to 'Back', checks_path, class: "btn btn-white" %>
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.checks'), checks_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_check'), check_path(@check) %>
+  </li>
+<% end %>
+
+<div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+  <div class="card mb-3">
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3"> <%= t('amount', scope: ['simple_form', 'labels', 'check']) %> </dt>
+        <dd class="col-sm-9"> <%= GlobalHelper.decorate_money(@check.amount, @check.currency) %> </dd>
+
+        <dt class="col-sm-3"> <%= t('status', scope: ['simple_form', 'labels', 'check']) %> </dt>
+        <dd class="col-sm-9"> <%= badge(status: @check.status) %> </dd>
+
+        <dt class="col-sm-3"> <%= t('created_at') %> </dt>
+        <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@check.created_at) %> </dd>
+
+        <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
+        <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@check.updated_at) %> </dd>
+
+        <% if current_user.staff? %>
+          <hr class="my-2">
+
+          <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'check']) %> </dt>
+          <dd class="col-sm-9"> <%= @check.user.to_label %> </dd>
+        <% end %>
+      </dl>
+    </div>
+  </div>
 </div>
+
+<%= render 'account_wrapper', check: @check %>
+
+<div class="row">
+  <div class="col">
+    <%= link_to t('edit'), edit_check_path(@check), class: "btn btn-primary #{'disabled' unless policy(@check).edit?}" %>
+    <%= link_to t('back'), checks_path, class: "btn btn-white" %>
+  </div>
+</div>
+

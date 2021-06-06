@@ -62,7 +62,6 @@ describe PostsController, type: :system, responsible: :user do
     end
   end
 
-
   context 'with admin' do
     it 'shows additional fields' do
       login_as(create(:user, role: :admin), scope: :user)
