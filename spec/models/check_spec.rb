@@ -42,14 +42,7 @@ describe Check, type: :model do
   it { is_expected.to validate_presence_of(:currency) }
 
   # rubocop:disable RSpec/MultipleMemoizedHelpers
-  describe '#check_amount' do
-    around do |example|
-      admin = create(:user, role: :admin)
-      Current.set(responsible: admin) do
-        example.run
-      end
-    end
-
+  describe '#check_amount', responsible: :admin do
     let(:currency) { 'rub' }
     let(:user) { create(:user) }
     let(:admin) { create(:user, role: :admin) }
@@ -57,21 +50,30 @@ describe Check, type: :model do
       create(:post, user: user, status: :accrued_post, currency: currency, body: '*' * 10_000)
     end
     let(:available_amount) do
-      post.amount - pending_check_amount - payed_check_amount
+      post.amount - pending_check_amount - approved_check_amount - payed_check_amount
     end
     let(:pending_check_amount) do
       create(:check, user: user, status: :pending_check, amount: 1.23, currency: currency).amount
+    end
+    let(:approved_check_amount) do
+      create(:check, user: user, status: :approved_check, amount: 1.23, currency: currency).amount
     end
     let(:payed_check_amount) do
       create(:check, user: user, status: :payed_check, amount: 1.23, currency: currency).amount
     end
 
-    context 'when changes check amount' do
-      let!(:check) { create(:check, user: user, amount: available_amount - 0.02, currency: currency) }
+    context 'when changes check amount it increases available amount on the amount of changed check' do
+      let(:amount) { available_amount - Random.new.rand(available_amount) - 0.01 }
+      let!(:check) { create(:check, user: user, amount: amount, currency: currency) }
 
-      it 'takes into account that we just change amount of this check on a new valid value' do
+      it 'is valid' do
         check.amount = available_amount - 0.01
         expect(check).to be_valid
+      end
+
+      it 'is invalid' do
+        check.amount = available_amount + 0.01
+        expect(check).to be_invalid
       end
     end
 
@@ -82,7 +84,23 @@ describe Check, type: :model do
         check.currency = 'usd'
         expect(check).to be_invalid
         expect(check.errors.details).to eq(
-          amount: [{ count: '-$0.01', error: :less_than_or_equal_to }]
+          amount: [{
+            count: '-$0.01', error: :less_than_or_equal_to
+          }]
+        )
+      end
+    end
+
+    context 'when changes user' do
+      let(:check) { create(:check, user: user, amount: available_amount - 0.01, currency: currency) }
+
+      it 'does not increase available amount on the amount of changed check' do
+        check.user = create(:user)
+        expect(check).to be_invalid
+        expect(check.errors.details).to eq(
+          amount: [{
+            count: '-₽0,01', error: :less_than_or_equal_to
+          }]
         )
       end
     end
