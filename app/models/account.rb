@@ -95,6 +95,7 @@ class Account < ApplicationRecord
     #   amount_by_code.call('payed_check')
 
     Account.for_user(user, :accrued_post, currency).amount -
+      Account.for_user(user, :approved_check, currency).amount -
       Account.for_user(user, :pending_check, currency).amount -
       Account.for_user(user, :payed_check, currency).amount
   end

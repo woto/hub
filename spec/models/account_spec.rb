@@ -28,7 +28,8 @@ describe Account, type: :model do
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
 
   specify do
-    codes = %i[draft_post pending_post approved_post rejected_post accrued_post canceled_post pending_check approved_check payed_check]
+    codes = %i[draft_post pending_post approved_post rejected_post accrued_post canceled_post pending_check
+               approved_check payed_check removed_post removed_check]
     expect(subject).to define_enum_for(:code).with_values(codes)
   end
 
@@ -209,9 +210,11 @@ describe Account, type: :model do
       result = described_class.for_user(user, :accrued_post, :rub)
       described_class.where(id: result.id).update_all(amount: 150)
       result = described_class.for_user(user, :pending_check, :rub)
-      described_class.where(id: result.id).update_all(amount: 50)
+      described_class.where(id: result.id).update_all(amount: 5)
+      result = described_class.for_user(user, :approved_check, :rub)
+      described_class.where(id: result.id).update_all(amount: 6)
       result = described_class.for_user(user, :payed_check, :rub)
-      described_class.where(id: result.id).update_all(amount: 50)
+      described_class.where(id: result.id).update_all(amount: 7)
 
       # other data
       result = described_class.for_user(user, :accrued_post, :usd)
@@ -222,8 +225,8 @@ describe Account, type: :model do
       described_class.where(id: result.id).update_all(amount: 1)
     end
 
-    it 'calculates correct value as 150-50-50' do
-      expect(subject).to eq(50)
+    it 'calculates correct value as 150-5-6-7' do
+      expect(subject).to eq(132)
     end
   end
 end
