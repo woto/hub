@@ -13,6 +13,12 @@ class CheckPolicy < ApplicationPolicy
     end
   end
 
+  def permitted_attributes
+    attributes = %i[amount currency status]
+    attributes << :user_id if user.role.in?(%w[admin manager])
+    attributes
+  end
+
   def update?
     return true if super
 

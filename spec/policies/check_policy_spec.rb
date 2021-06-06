@@ -11,6 +11,30 @@ describe CheckPolicy, responsible: :admin do
     allow_any_instance_of(Check).to receive(:check_amount)
   end
 
+  describe '#permitted_attributes' do
+    subject { described_class.new(user, nil).permitted_attributes }
+
+    let(:permitted_attributes) do
+      %i[
+        amount currency status
+      ]
+    end
+
+    context 'with user' do
+      let(:user) { create(:user) }
+      let(:user_permitted_attributes) { permitted_attributes }
+
+      it { is_expected.to eq(user_permitted_attributes) }
+    end
+
+    context 'with admin' do
+      let(:user) { create(:user, role: :admin) }
+      let(:admin_permitted_attributes) { permitted_attributes << :user_id }
+
+      it { is_expected.to eq(admin_permitted_attributes) }
+    end
+  end
+
   # everybody can create checks
   describe 'create?' do
     permissions :create? do
