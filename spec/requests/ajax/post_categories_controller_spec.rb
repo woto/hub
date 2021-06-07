@@ -5,7 +5,6 @@ require 'rails_helper'
 describe Ajax::PostCategoriesController, type: :request do
   subject { get ajax_categories_path(q: 'кат', realm_id: realm.id), xhr: true }
 
-  # let(:headers) { { 'Accept' => 'application/json' } }
   let(:user) { create(:user) }
 
   let(:realm) { create(:realm) }
