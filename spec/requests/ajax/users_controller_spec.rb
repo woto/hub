@@ -15,6 +15,7 @@ describe Ajax::UsersController, type: :request do
       sign_in admin
       get ajax_users_path(q: 'user'), xhr: true
 
+      expect(response).to have_http_status(:ok)
       expect(response.parsed_body).to contain_exactly({ 'id' => user.id, 'email' => user.email })
     end
   end

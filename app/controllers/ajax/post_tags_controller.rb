@@ -2,6 +2,8 @@
 
 class Ajax::PostTagsController < ApplicationController
   def index
+    authorize %i[ajax post_tags]
+
     body = {
       size: 0,
       aggregations: {

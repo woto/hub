@@ -50,6 +50,11 @@ class Realm < ApplicationRecord
   end
 
   def self.pick(kind:, locale:, title: "Website: { kind: #{kind}, locale: #{locale} }", domain: "#{kind}.#{locale}")
-    Realm.find_or_create_by!(locale: locale, kind: kind, title: title, domain: domain.downcase)
+    begin
+      Realm.find_or_create_by!(locale: locale, kind: kind, title: title, domain: domain.downcase)
+    rescue ActiveRecord::RecordInvalid
+      p 1
+      debugger
+    end
   end
 end
