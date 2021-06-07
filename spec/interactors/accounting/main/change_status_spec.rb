@@ -24,9 +24,10 @@ describe Accounting::Main::ChangeStatus do
         .with(
           credit: Account.for_subject(:hub, post.status, post.currency),
           debit: Account.for_user(post.user, post.status, post.currency),
-          amount: post.amount,
           group: transaction_group,
-          obj: post
+          currency: post.currency,
+          amount: post.amount,
+          obj: { id: post.id, type: post.class.name }
         )
     end
   end
@@ -59,18 +60,20 @@ describe Accounting::Main::ChangeStatus do
         .with(
           credit: Account.for_user(from_user, from_status, from_currency),
           debit: Account.for_subject(:hub, from_status, from_currency),
-          amount: from_amount,
           group: transaction_group,
-          obj: post
+          currency: from_currency,
+          amount: from_amount,
+          obj: { id: post.id, type: post.class.name }
         )
 
       expect(Accounting::CreateTransaction).to have_received(:call)
         .with(
           credit: Account.for_subject(:hub, post.status, post.currency),
           debit: Account.for_user(post.user, post.status, post.currency),
-          amount: post.amount,
           group: transaction_group,
-          obj: post
+          currency: post.currency,
+          amount: post.amount,
+          obj: { id: post.id, type: post.class.name }
         )
     end
   end

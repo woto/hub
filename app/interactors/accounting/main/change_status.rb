@@ -29,8 +29,12 @@ module Accounting
               credit: Account.for_user(from_user, from_status, from_currency),
               debit: Account.for_subject(:hub, from_status, from_currency),
               amount: from_amount,
+              currency: from_currency,
               group: group,
-              obj: context.record
+              obj: {
+                id: from_id,
+                type: from_type
+              }
             )
           end
 
@@ -38,8 +42,12 @@ module Accounting
             credit: Account.for_subject(:hub, context.record.status, context.record.currency),
             debit: Account.for_user(context.record.user, context.record.status, context.record.currency),
             amount: context.record.amount,
+            currency: context.record.currency,
             group: group,
-            obj: context.record
+            obj: {
+              id: context.record.id,
+              type: context.record.class.name
+            }
           )
         end
       end
@@ -69,6 +77,10 @@ module Accounting
 
       def from_id
         context.record.attribute_before_last_save(:id)
+      end
+
+      def from_type
+        context.record.class.name
       end
 
       def from_user_id
