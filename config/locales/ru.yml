@@ -1,4 +1,11 @@
 ru:
+  shared:
+    balance:
+      account_wrapper:
+        user_balance: "Счета пользователя: %{user}"
+      account:
+        details: Подробности
+
   advertiser: Рекламодатель
   feed: Прайс
   feed_category: Категория
