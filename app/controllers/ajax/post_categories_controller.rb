@@ -2,6 +2,8 @@
 
 class Ajax::PostCategoriesController < ApplicationController
   def index
+    authorize %i[ajax post_categories]
+
     body = {
       query: {
         bool: {
