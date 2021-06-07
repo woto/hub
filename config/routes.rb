@@ -125,6 +125,7 @@ Rails.application.routes.draw do
     namespace :ajax do
       resources :categories, controller: 'post_categories', only: %i[index]
       resources :tags, controller: 'post_tags', only: %i[index]
+      resources :users, controller: 'users', only: %i[index]
     end
 
     namespace :frames do
