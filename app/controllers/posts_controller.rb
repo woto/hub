@@ -11,11 +11,8 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    # language = Rails.configuration.global[:languages].find do
-    #   _1[:domain].to_s == I18n.locale.to_s
-    # end[:english_name]
-    # @post = Post.new(status: :draft, language: language)
-    @post = Post.new(status: :draft, published_at: Time.current)
+    @post = current_user.posts.new(exchange_rate: ExchangeRate.pick)
+    authorize(@post)
   end
 
   # GET /posts/1/edit
