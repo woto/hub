@@ -23,32 +23,34 @@ class PostsController < ApplicationController
   # POST /posts
   def create
     GlobalHelper.retryable do
-      @post = policy_scope(Post).new(post_params)
+      @post = policy_scope(Post).new(permitted_attributes(Post))
       authorize(@post)
       if @post.save
         redirect_to @post, notice: 'Post was successfully created.'
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
   end
 
-  # PATCH/PUT /posts/1
+  # PATCH/PUT /posts/:id
   def update
     GlobalHelper.retryable do
       authorize(@post)
-      if @post.update(post_params)
+      if @post.update(permitted_attributes(Post))
         redirect_to @post, notice: 'Post was successfully updated.'
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
   end
 
-  # DELETE /posts/1
+  # DELETE /posts/:id
   def destroy
-    @post.destroy
-    redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    GlobalHelper.retryable do
+      authorize(@post)
+      redirect_to posts_url, notice: 'Post was successfully destroyed.' if @post.update(status: :removed_post)
+    end
   end
 
   private
@@ -56,11 +58,5 @@ class PostsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = policy_scope(Post).find(params[:id])
-  end
-
-  # Only allow a trusted parameter "white list" through.
-  def post_params
-    params.require(:post).permit(:title, :status, :intro, :body, :language, :post_category_id, :comment,
-                                 :published_at, :realm_id, tags: [], extra_options: {})
   end
 end
