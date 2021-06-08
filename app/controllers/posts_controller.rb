@@ -26,7 +26,7 @@ class PostsController < ApplicationController
       @post = policy_scope(Post).new(permitted_attributes(Post))
       authorize(@post)
       if @post.save
-        redirect_to @post, notice: 'Post was successfully created.'
+        redirect_to @post, notice: t('.post_was_successfully_created')
       else
         render :new, status: :unprocessable_entity
       end
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
     GlobalHelper.retryable do
       authorize(@post)
       if @post.update(permitted_attributes(Post))
-        redirect_to @post, notice: 'Post was successfully updated.'
+        redirect_to @post, notice: t('.post_was_successfully_updated')
       else
         render :edit, status: :unprocessable_entity
       end
@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   def destroy
     GlobalHelper.retryable do
       authorize(@post)
-      redirect_to posts_url, notice: 'Post was successfully destroyed.' if @post.update(status: :removed_post)
+      redirect_to posts_url, notice: t('.post_was_successfully_destroyed') if @post.update(status: :removed_post)
     end
   end
 
