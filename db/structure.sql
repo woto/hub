@@ -1124,7 +1124,8 @@ CREATE TABLE public.users (
     posts_count integer DEFAULT 0 NOT NULL,
     checks_count integer DEFAULT 0 NOT NULL,
     favorites_count integer DEFAULT 0 NOT NULL,
-    workspaces_count integer DEFAULT 0 NOT NULL
+    workspaces_count integer DEFAULT 0 NOT NULL,
+    profiles_count integer DEFAULT 0 NOT NULL
 );
 
 
