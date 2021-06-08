@@ -11,24 +11,21 @@ describe PostPolicy, responsible: :admin do
     subject { described_class.new(user, nil).permitted_attributes }
 
     let(:permitted_attributes) do
-      [
-        :title, :status, :intro, :body, :language, :post_category_id, :published_at, :realm_id, :currency,
-        { extra_options: {}, tags: [] }
-      ]
+      [:title, :status, :body, :post_category_id, :realm_id, :currency, { extra_options: {}, tags: [] }]
     end
 
     context 'with user' do
       let(:user) { create(:user) }
       let(:user_permitted_attributes) { permitted_attributes }
 
-      it { is_expected.to eq(user_permitted_attributes) }
+      it { is_expected.to match_array(user_permitted_attributes) }
     end
 
     context 'with admin' do
       let(:user) { create(:user, role: :admin) }
-      let(:admin_permitted_attributes) { permitted.append(:user_id) }
+      let(:admin_permitted_attributes) { permitted_attributes.append(:user_id, :intro, :published_at) }
 
-      it { is_expected.to eq(admin_permitted_attributes) }
+      it { is_expected.to match_array(admin_permitted_attributes) }
     end
   end
 

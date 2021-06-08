@@ -15,10 +15,10 @@ class PostPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = [
-      :title, :status, :intro, :body, :language, :post_category_id, :published_at, :realm_id, :currency,
+      :title, :status, :body, :post_category_id, :realm_id, :currency,
       { tags: [], extra_options: {} }
     ]
-    attributes << :user_id if user.role.in?(%w[admin manager])
+    attributes.append(:user_id, :published_at, :intro) if user.staff?
     attributes
   end
 
