@@ -219,6 +219,18 @@ describe Post, type: :model do
     end
   end
 
+  describe '#check_post_category_realm', responsible: :user do
+    subject { build(:post, post_category: post_category, realm: realm) }
+
+    let(:realm) { create(:realm) }
+    let(:post_category) { create(:post_category) }
+
+    it 'blames on `post_category`' do
+      expect(subject).to be_invalid
+      expect(subject.errors.details).to eq(post_category: [{ error: :realms_differ }])
+    end
+  end
+
   describe '#check_post_category_is_leaf' do
     let(:realm) { create(:realm) }
     let!(:parent) { create(:post_category, realm: realm) }

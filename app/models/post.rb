@@ -138,6 +138,13 @@ class Post < ApplicationRecord
     errors.add(:post_category, :must_be_leaf) unless post_category.children.none?
   end
 
+  def check_post_category_realm
+    return unless post_category&.persisted?
+    return unless realm&.persisted?
+
+    errors.add(:post_category, :realms_differ) if post_category.realm.id != realm.id
+  end
+
   def check_currency_value
     return if errors.include?(:currency)
     return if exchange_rate.get_currency_value(currency).positive?
