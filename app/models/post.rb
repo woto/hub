@@ -71,6 +71,7 @@ class Post < ApplicationRecord
   validates :currency, inclusion: { in: Rails.configuration.available_currencies }
   validate :check_min_body_length
   validate :check_post_category_is_leaf
+  validate :check_post_category_realm
   validate :check_currency_value
   with_options if: :accrued_post? do |accrued_post|
     accrued_post.validates :published_at, presence: true
