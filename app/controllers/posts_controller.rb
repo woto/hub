@@ -15,8 +15,10 @@ class PostsController < ApplicationController
     authorize(@post)
   end
 
-  # GET /posts/1/edit
-  def edit; end
+  # GET /posts/:id/edit
+  def edit
+    authorize(@post)
+  end
 
   # POST /posts
   def create

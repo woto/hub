@@ -2,41 +2,23 @@
 
 require 'rails_helper'
 
-describe Tables::PostsController, type: :system do
-  describe 'shared_language_component' do
-    it_behaves_like 'shared_language_component' do
-      before do
-        login_as(user, scope: :user)
-        visit edit_post_path(post, locale: 'ru')
-      end
+describe PostsController, type: :system, responsible: :user do
+  let(:post) { create(:post, user: Current.responsible) }
 
-      let(:user) { create(:user, role: :admin) }
-
-      let(:post) do
-        Current.set(responsible: user) do
-          create(:post, user: user)
-        end
-      end
-
-      let(:link) { edit_post_path(post, locale: 'en') }
+  context 'with user' do
+    it 'shows edit page' do
+      login_as(Current.responsible, scope: :user)
+      visit edit_post_path(post, locale: :ru)
+      expect(page).to have_text('Редактирование статьи')
     end
   end
 
-  describe 'shared_search_everywhere' do
-    it_behaves_like 'shared_search_everywhere' do
-      before do
-        user = create(:user)
-        post = Current.set(responsible: user) do
-          create(:post, user: user)
-        end
-        login_as(user, scope: :user)
-        visit "/ru/posts/#{post.id}/edit"
-      end
+  context 'with another user' do
+    it 'returns friendly error' do
+      login_as(create(:user), scope: :user)
+      visit post_path(post, locale: :ru)
 
-      let(:params) do
-        { controller: 'posts', q: q, cols: '0.6.5.16.13', locale: 'ru',
-          per: 20, sort: :id, order: :desc, only_path: true }
-      end
+      expect(page).to have_text("The page you were looking for doesn't exist")
     end
   end
 end
