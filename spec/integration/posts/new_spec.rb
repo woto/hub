@@ -7,7 +7,7 @@ describe PostsController, type: :system do
 
   it 'shows new post page' do
     login_as(user, scope: :user)
-    visit new_post_path
-    expect(response).to have_http_status(:ok)
+    visit new_post_path(locale: :ru)
+    expect(page).to have_text('Новая статья')
   end
 end
