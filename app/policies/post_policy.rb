@@ -5,7 +5,7 @@ class PostPolicy < ApplicationPolicy
     def resolve
       raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
 
-      if user.role.in?(%w[admin manager])
+      if user.staff?
         scope.all
       else
         scope.where(user: user)

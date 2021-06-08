@@ -12,21 +12,21 @@ module Accounting
       def to_pending_check?
         return true if context.from_status.in?([nil, 'pending_check'])
 
-        user.role.in?(%w[admin manager])
+        user.staff?
       end
 
       def to_approved_check?
-        user.role.in?(%w[admin manager])
+        user.staff?
       end
 
       def to_payed_check?
-        user.role.in?(%w[admin manager])
+        user.staff?
       end
 
       def to_removed_check?
         return true if context.from_status.in?(%w[pending_check])
 
-        user.role.in?(%w[admin manager])
+        user.staff?
       end
     end
   end

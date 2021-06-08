@@ -5,7 +5,7 @@ class CheckPolicy < ApplicationPolicy
     def resolve
       raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
 
-      if user.role.in?(%w[admin manager])
+      if user.staff?
         scope.all
       else
         scope.where(user: user)
@@ -15,7 +15,7 @@ class CheckPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = %i[amount currency status]
-    attributes << :user_id if user.role.in?(%w[admin manager])
+    attributes << :user_id if user.staff?
     attributes
   end
 
