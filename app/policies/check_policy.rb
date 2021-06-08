@@ -15,7 +15,7 @@ class CheckPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = %i[amount currency status]
-    attributes << :user_id if user.staff?
+    attributes.append(:user_id) if user.staff?
     attributes
   end
 

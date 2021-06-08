@@ -26,7 +26,7 @@ describe PostPolicy, responsible: :admin do
 
     context 'with admin' do
       let(:user) { create(:user, role: :admin) }
-      let(:admin_permitted_attributes) { permitted_attributes << :user_id }
+      let(:admin_permitted_attributes) { permitted.append(:user_id) }
 
       it { is_expected.to eq(admin_permitted_attributes) }
     end
