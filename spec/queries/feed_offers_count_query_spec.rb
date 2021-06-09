@@ -18,4 +18,25 @@ describe FeedOffersCountQuery do
       routing: feed.id
     )
   end
+
+  context 'when calls' do
+    subject do
+      GlobalHelper.elastic_client.count(
+        described_class.call(
+          feed: feed_category.feed
+        ).object
+      )
+    end
+
+    let(:feed_category) { create(:feed_category) }
+
+    before do
+      OfferCreator.call(feed_category: create(:feed_category))
+      OfferCreator.call(feed_category: feed_category)
+    end
+
+    it 'counts offers correctly' do
+      expect(subject).to include('count' => 1)
+    end
+  end
 end

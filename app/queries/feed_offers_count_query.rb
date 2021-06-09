@@ -2,7 +2,13 @@
 
 class FeedOffersCountQuery
   include ApplicationInteractor
-  include Elasticsearch::DSL
+
+  contract do
+    params do
+      config.validate_keys = true
+      required(:feed).value(type?: Feed)
+    end
+  end
 
   def call
     body = Jbuilder.new do |json|

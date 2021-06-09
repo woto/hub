@@ -20,16 +20,6 @@ class FeedsController < ApplicationController
     end
   end
 
-  def count
-    raise 'does not work'
-    json = GlobalHelper.elastic_client.count(
-      FeedOffersCountQuery.call(
-        feed_id: params[:id]
-      ).object
-    )
-    render json: json
-  end
-
   def prioritize
     Feed.increment_counter(:priority, params[:id])
   end

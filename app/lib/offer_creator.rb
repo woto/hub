@@ -1,5 +1,7 @@
+# TODO: move to test directory!
+
 # rubocop:disable Metrics/ParameterLists
-module OfferCreator
+class OfferCreator
   def self.call(feed_category:,
                 id: SecureRandom.uuid,
                 url: Faker::Internet.url,

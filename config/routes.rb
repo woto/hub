@@ -93,7 +93,6 @@ Rails.application.routes.draw do
 
     resources :feeds do
       member do
-        get :count
         get :logs
         patch :prioritize
       end
