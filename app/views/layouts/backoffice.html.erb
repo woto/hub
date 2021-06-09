@@ -65,14 +65,12 @@
                   </h1>
                 <% end %>
 
-                <% if content_for?(:breadcrumbs) %>
-                  <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
-                    <%= content_for :breadcrumbs %>
-                  </ol>
-                <% end %>
-
-              </div>
-            </div>
+        <% if content_for?(:breadcrumbs) %>
+          <div class="overflow-auto pt-1 pb-3 py-xl-1 mb-3">
+            <ol class="breadcrumb breadcrumb-arrows flex-nowrap text-nowrap">
+              <%= content_for :breadcrumbs %>
+            </ol>
+            </nav>
           </div>
         <% end %>
 
