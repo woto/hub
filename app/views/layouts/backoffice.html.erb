@@ -53,9 +53,8 @@
     <main class="content">
 
       <div class="container-xl">
-
         <% if content_for?(:title) || content_for?(:breadcrumbs) %>
-          <div class="page-header">
+          <div class="page-header pb-0 mb-0">
             <div class="row align-items-center">
               <div class="col-12">
 
@@ -65,12 +64,16 @@
                   </h1>
                 <% end %>
 
+              </div>
+            </div>
+          </div>
+        <% end %>
+
         <% if content_for?(:breadcrumbs) %>
           <div class="overflow-auto pt-1 pb-3 py-xl-1 mb-3">
             <ol class="breadcrumb breadcrumb-arrows flex-nowrap text-nowrap">
               <%= content_for :breadcrumbs %>
             </ol>
-            </nav>
           </div>
         <% end %>
 
