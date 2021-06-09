@@ -24,6 +24,7 @@
 #
 FactoryBot.define do
   factory :profile do
+    user
     name { Faker::Name.name }
     bio { Faker::Hipster.sentence }
     messengers do
@@ -34,6 +35,6 @@ FactoryBot.define do
       ]
     end
     languages { I18n.available_locales.sample(rand(2)) }
-    user
+    time_zone { ActiveSupport::TimeZone.all.sample.name }
   end
 end

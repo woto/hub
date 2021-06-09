@@ -1,1 +1,3 @@
-<%= paginate rows %>
+<%= tag.div 'data-turbo': 'false' do %>
+  <%= paginate rows %>
+<% end %>

@@ -12,11 +12,7 @@ class TransactionDecorator < ApplicationDecorator
     end
   end
 
-  def credit_code
-    h.badge(status: super)
-  end
-
-  def debit_code
+  def code
     h.badge(status: super)
   end
 

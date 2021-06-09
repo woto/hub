@@ -5,7 +5,7 @@ class PostDecorator < ApplicationDecorator
     h.badge(status: super)
   end
 
-  def price
+  def amount
     h.tag.mark do
       decorate_money(super, currency)
     end

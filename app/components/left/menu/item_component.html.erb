@@ -5,7 +5,7 @@
 
   <% a_class = ' disabled' if @disabled %>
 
-  <%= link_to(@path, class: "nav-link #{a_class}") do %>
+  <%= link_to(@path, class: "nav-link #{a_class}", 'data-turbo': false) do %>
     <span class="nav-link-icon d-lg-inline-block">
       <%== @icon %>
     </span>

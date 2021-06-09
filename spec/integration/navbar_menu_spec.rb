@@ -45,11 +45,11 @@ describe DashboardController, type: :system do
     # end
   end
 
-  describe 'highlight "Дашборд"' do
+  describe 'highlight "Личный кабинет"' do
     it_behaves_like 'highlight active' do
       let(:url) { '/ru/dashboard' }
       let(:href) { '/ru/dashboard' }
-      let(:title) { 'Дашборд' }
+      let(:title) { 'Личный кабинет' }
       let(:checker) { :flat }
     end
   end
@@ -108,11 +108,11 @@ describe DashboardController, type: :system do
     end
   end
 
-  describe 'highlight "Запросы выплат"' do
+  describe 'highlight "Выплаты"' do
     it_behaves_like 'highlight active' do
       let(:url) { '/ru/checks' }
       let(:href) { '/ru/checks' }
-      let(:title) { 'Запросы выплат' }
+      let(:title) { 'Выплаты' }
       let(:checker) { :nested }
     end
   end

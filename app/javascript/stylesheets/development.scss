@@ -2,3 +2,11 @@
   background: yellow !important;
   color: black !important;
 }
+
+//turbo-frame {
+//  @extend .border;
+//  @extend .d-block;
+//  &:before{
+//    content: attr(id);
+//  }
+//}

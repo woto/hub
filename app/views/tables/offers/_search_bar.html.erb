@@ -6,6 +6,7 @@
             'data-search-offers-everywhere-url': url_for_search_everywhere do %>
 
   <%= text_field_tag :q, params[:q],
+                     id: nil,
                      'data-search-offers-target': 'searchText',
                      'data-clear-search-target': 'searchText',
                      'data-action': 'keydown->search-offers#clickSearchButton',

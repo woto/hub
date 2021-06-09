@@ -10,8 +10,12 @@
 
 import { Application } from "stimulus"
 import StimulusControllerResolver from 'stimulus-controller-resolver'
+import ReadMore from "stimulus-read-more"
+import TextareaAutogrow from "stimulus-textarea-autogrow"
 
 const application = Application.start();
+application.register("read-more", ReadMore)
+application.register("textarea-autogrow", TextareaAutogrow)
 
 // import FavoriteController from './favorite-controller';
 // import FavoriteItemController from './favorite-item-controller';

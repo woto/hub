@@ -19,5 +19,8 @@ ru:
     news: Новости
     transactions: Транзакции
     checks: Выплаты
+    new_check: Новая выплата
+    edit_check: Редактирование выплаты
+    show_check: Просмотр выплаты
     help: Справка
     danger_zone: Опасная зона

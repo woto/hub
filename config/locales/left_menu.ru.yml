@@ -2,7 +2,7 @@ ru:
   left_menu:
     workspaces: Рабочие области
     advertisers: Рекламодатели
-    dashboard: Дашборд
+    dashboard: Личный кабинет
     feeds: Прайс листы
     offers: Товары
     posts: Статьи
@@ -22,4 +22,4 @@ ru:
     favorites: Избранное
     accounts: Счета
     transactions: Транзакции
-    checks: Запросы выплат
+    checks: Выплаты

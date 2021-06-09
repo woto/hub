@@ -11,6 +11,7 @@
 #  downloaded_file_type   :string
 #  error_class            :string
 #  error_text             :text
+#  feed_categories_count  :integer          default(0)
 #  is_active              :boolean          default(TRUE), not null
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
