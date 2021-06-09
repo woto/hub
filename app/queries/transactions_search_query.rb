@@ -13,6 +13,7 @@ class TransactionsSearchQuery
       required(:sort).maybe(:string)
       required(:order).maybe(:string)
       required(:locale).maybe(:symbol)
+      required(:_source).filled { array? { each { string? } } }
     end
   end
 
@@ -48,24 +49,14 @@ class TransactionsSearchQuery
           json.order context.order
         end
       end
-      # sort do
-      #
-      # end
-    end.attributes!.deep_symbolize_keys
+    end
 
     context.object = {}.tap do |h|
-      h[:body] = body
+      h[:body] = body.attributes!.deep_symbolize_keys
       h[:index] = ::Elastic::IndexName.transactions
       h[:size] = context.size
       h[:from] = context.from
+      h[:_source] = context._source
     end
-
-    # context.object = {}.tap do |h|
-    #   h[:body] = definition.to_hash.deep_symbolize_keys
-    #   h[:index] = ::Elastic::IndexName.transactions
-    #   h[:from] = context.from
-    #   h[:size] = context.size
-    #   h[:_source] = context._source
-    # end
   end
 end
