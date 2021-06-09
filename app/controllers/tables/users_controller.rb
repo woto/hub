@@ -23,7 +23,10 @@ module Tables
                     model_class: User,
                     form_class: Columns::UserForm,
                     query_class: UsersSearchQuery,
-                    decorator_class: UserDecorator }
+                    decorator_class: UserDecorator,
+                    favorites_kind: :users,
+                    favorites_items_kind: :users
+      }
     end
 
     def system_default_workspace
@@ -32,10 +35,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end

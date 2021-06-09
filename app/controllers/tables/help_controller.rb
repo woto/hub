@@ -3,7 +3,7 @@
 module Tables
   class HelpController < ApplicationController
     ALLOWED_PARAMS = %i[q per page sort order].freeze
-    REQUIRED_PARAMS = %i[per order sort].freeze
+    REQUIRED_PARAMS = %i[order sort].freeze
 
     include Workspaceable
     include Tableable
@@ -43,18 +43,16 @@ module Tables
                     model_class: Help,
                     form_class: Columns::HelpForm,
                     query_class: HelpSearchQuery,
-                    decorator_class: HelpDecorator }
+                    decorator_class: HelpDecorator,
+                    favorites_kind: :help,
+                    favorites_items_kind: :help
+      }
     end
 
     def system_default_workspace
       url_for(**workspace_params,
-              per: @pagination_rule.per,
               sort: :priority,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end

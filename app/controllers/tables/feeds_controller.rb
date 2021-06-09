@@ -23,7 +23,10 @@ module Tables
                     model_class: Feed,
                     form_class: Columns::FeedForm,
                     query_class: FeedsSearchQuery,
-                    decorator_class: FeedDecorator }
+                    decorator_class: FeedDecorator,
+                    favorites_kind: :feeds,
+                    favorites_items_kind: :feeds
+      }
     end
 
     def system_default_workspace
@@ -32,10 +35,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end

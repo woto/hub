@@ -11,7 +11,7 @@ module Tables
 
     # GET /posts
     def index
-      get_index(['currency'],  filter_ids: (current_user.id if current_user.role == 'user'))
+      get_index(['currency'], filter_ids: (current_user.id unless current_user.staff?))
     end
 
     def set_settings
@@ -20,7 +20,10 @@ module Tables
                     model_class: Post,
                     form_class: Columns::PostForm,
                     query_class: PostsSearchQuery,
-                    decorator_class: PostDecorator }
+                    decorator_class: PostDecorator,
+                    favorites_kind: :posts,
+                    favorites_items_kind: :posts
+      }
     end
 
     def system_default_workspace
@@ -29,10 +32,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end

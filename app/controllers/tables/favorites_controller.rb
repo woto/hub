@@ -11,7 +11,7 @@ module Tables
 
     # GET /favorites
     def index
-      get_index([], filter_ids: (current_user.id if current_user.role == 'user'))
+      get_index([], filter_ids: current_user.id)
     end
 
     private
@@ -22,7 +22,10 @@ module Tables
                     model_class: Favorite,
                     form_class: Columns::FavoriteForm,
                     query_class: FavoritesSearchQuery,
-                    decorator_class: FavoriteDecorator }
+                    decorator_class: FavoriteDecorator,
+                    favorites_kind: nil,
+                    favorites_items_kind: nil
+      }
     end
 
     def system_default_workspace
@@ -31,10 +34,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end
