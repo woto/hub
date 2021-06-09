@@ -12,7 +12,7 @@ module Tables
 
     # GET /transactions
     def index
-      get_index(['currency'], filter_ids: (current_user.account_ids if current_user.role == 'user'))
+      get_index(%w[currency debit_id credit_id], filter_ids: (current_user.account_ids if current_user.role == 'user'))
     end
 
     private
@@ -23,7 +23,10 @@ module Tables
                     model_class: Transaction,
                     form_class: Columns::TransactionForm,
                     query_class: TransactionsSearchQuery,
-                    decorator_class: TransactionDecorator }
+                    decorator_class: TransactionDecorator,
+                    favorites_kind: :transactions,
+                    favorites_items_kind: :transactions
+      }
     end
 
     def system_default_workspace
@@ -32,10 +35,6 @@ module Tables
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
-    end
-
-    def set_preserved_search_params
-      @preserved_search_params = %i[order per sort q]
     end
   end
 end
