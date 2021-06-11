@@ -69,6 +69,10 @@ class PostCategory < ApplicationRecord
     }
   end
 
+  def to_label
+    title
+  end
+
   private
 
   def check_same_realms
