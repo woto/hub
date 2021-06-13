@@ -13,7 +13,7 @@ describe PostsController, type: :system, responsible: :admin do
     expect(page).to have_select('post[user_id]', visible: :hidden, selected: post.user.to_label)
 
     within '.post_user' do
-      find('.selectize-input').click
+      find('input').click
       find('input').native.send_key(:backspace)
       find('input').native.send_key(another_user.email[..3])
       find('div.option', text: another_user.email).click

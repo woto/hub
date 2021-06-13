@@ -13,7 +13,7 @@ describe PostsController, type: :system, responsible: :admin do
     expect(page).to have_select('post[post_category_id]', visible: :hidden, selected: post.post_category.to_label)
 
     within '.post_post_category' do
-      find('.selectize-input').click
+      find('input').click
       find('input').native.send_key(:backspace)
       find('input').native.send_key(another_post_category.title[..3])
       find('div.option', text: another_post_category.title).click
