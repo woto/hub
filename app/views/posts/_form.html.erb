@@ -1,16 +1,20 @@
-<%= content_tag :div, data: { controller: 'posts-form',
-                              posts_form_trix_translations: trix_translations,
-                              action:
-                                  'beforeunload@window->posts-form#AskConfirmationOnBeforeunload
-                                   turbo:before-visit@window->posts-form#AskConfirmationTurbo
-                                   trix-initialize@document->posts-form#addToolbarButtonOnTrixInitialize
-                                   trix-action-invoke@document->posts-form#openModalOnTrixActionInvoke
-                                   trix-document-change@document->posts-form#markAsDirtyOnTrixChange
-                                   load@window->posts-form#openModalOnPageLoad
-                                   posts-realm:postRealmIdChange->posts-form#handlePostRealmIdChange'
-} do %>
+<%# TODO should be moved to helper %>
+<% status_context = Accounting::Main::StatusContext.new(
+  record: @post, from_status: @post.attribute_in_database(:status)) %>
 
-  <%# posts-language:setPostLanguageData->posts-form#setPostLanguageData' %>
+<%# TODO should be moved to helper %>
+<% status_policy = Accounting::Main::PostStatusPolicy.new(current_user, status_context) %>
+
+<%= content_tag :div,
+                "data-controller": 'posts-form',
+                "data-action": 'beforeunload@window->posts-form#AskConfirmationOnBeforeunload
+                                trix-document-change@document->posts-form#markAsDirtyOnTrixChange' do %>
+
+  <%= tag.div 'data-controller': 'posts-widgets',
+              'data-posts-widgets-url-value': widgets_path,
+              'data-action': 'trix-action-invoke@document->posts-widgets#openModalOnTrixActionInvoke' do %>
+    <%= tag.div 'data-posts-widgets-target': 'modalPlaceholder' %>
+  <% end %>
 
   <%= simple_form_for(@post,
                       wrapper_mappings: {
@@ -18,182 +22,205 @@
                           radio_buttons:  :vertical_collection,
                           file:           :custom_file,
                           boolean:        :custom_boolean_switch
+                      },
+                      html: {
+                        'data-turbo': false
                       }) do |f| %>
+
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-    <div class="card">
-      <div class="card-body">
-        <div class="form-inputs">
+    <div class="row">
 
-          <%= f.input :title,
-                      wrapper_html: {class: 'mb-3 col-xl-10'},
-                      label_html: { :class => "mb-2" } %>
+      <div class="col-12 col-xl-8 mb-3">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="form-inputs">
 
-          <%# f.input :language, as: :select,
-                      wrapper_html: {class: 'mb-3 col-xl-10'},
-                      label_html: { :class => "mb-2" },
-                      collection: Rails.configuration.global[:languages].map { |lng| [lng[:language], lng[:english_name]] },
-                      input_html: { data: { controller: 'posts-language' }},
-                      selected: f.object.language
-          %>
+              <%= f.input :title,
+                          wrapper_html: {class: 'mb-3'},
+                          label_html: { :class => "mb-2" } %>
 
-          <%= f.association :realm, as: :select,
-                      wrapper_html: {
-                          test_id => 'realm',
-                          class: 'mb-3 col-xl-10',
-                      },
-                      label_html: { :class => "mb-2" },
-                      input_html: {
-                          data: {
-                              controller: 'posts-realm',
-                              posts_realm_realm_change_question: t('Are you sure?')
-                          }
-                      },
-                      include_blank: true,
-                      placeholder: true
-          %>
+              <div class="mb-3">
+                <%= f.input :body,
+                            as: :rich_text_area,
+                            input_html: {
+                                class: 'trix-content fs-6 lh-lg',
+                                'data-controller': 'posts-trix',
+                                'data-posts-trix-translations-value': trix_translations.to_json,
+                                style: 'max-width: 600px'
+                            },
+                            placeholder: true,
+                            required: true,
+                            wrapper_html: { class: '' }
+                %>
+              </div>
 
-          <%= f.association :post_category, as: :select,
-                      input_html: {
-                          data: {
-                              controller: 'posts-category',
-                              posts_category_realm_id: @post.realm_id
-                          }
-                      },
-                      wrapper_html: {class: 'mb-3 col-xl-10'},
-                      label_html: { class: "mb-2" },
-                      placeholder: true,
-                      collection: PostCategory.where(id: f.object.post_category_id).map { |post|
-                        # title = _1.title_i18n[@post.language.to_s]
-                        # [_1[:title], _1[:id], data: { data: {title: title, path: "_1.path.pluck(:title).join(' > ')" } }]
-                        [
-                            post.title,
-                            post.id,
-                            data: {
-                                data: {
-                                    title: post.title,
-                                    path: post.path.pluck(:title).join(' > ')
-                                }
-                            }
-                        ]
-                      },
-                      selected: f.object.post_category_id
-          %>
+              <%= f.association :realm, as: :select,
+                                wrapper_html: {
+                                  test_id => 'realm',
+                                  class: 'mb-3',
+                                },
+                                label_html: { :class => "mb-2" },
+                                input_html: {
+                                  "data-controller": 'posts-realm',
+                                  "data-posts-realm-realm-change-question": t('.are_you_sure'),
+                                  "data-action": 'posts-category:setDirty@window->posts-realm#setDirty
+                                                  posts-tags:setDirty@window->posts-realm#setDirty'
+                                },
+                                include_blank: true,
+                                placeholder: true,
+                                collection: current_user.staff? ? Realm.all : Realm.post
+              %>
 
-          <%= f.input :tags, as: :select,
-                      input_html: {
-                          multiple: true,
-                          data: {
-                              controller: 'posts-tags',
-                              posts_tags_realm_id: @post.realm_id
+              <%= f.association :post_category, as: :select,
+                                input_html: {
+                                  "data-controller": 'posts-category',
+                                  "data-posts-category-realm-id-value": @post.realm_id,
+                                  "data-posts-category-is-dirty-value": !f.object.post_category_id.nil?,
+                                  "data-action": 'posts-realm:postRealmIdChange@window->posts-category#postRealmIdChange'
+                                },
+                                wrapper_html: {class: 'mb-3'},
+                                label_html: { class: "mb-2" },
+                                placeholder: true,
+                                collection: PostCategory.where(id: f.object.post_category_id).map { |post|
+                                  [
+                                    post.title,
+                                    post.id,
+                                    data: {
+                                      data: {
+                                        title: post.title,
+                                        path: post.path.pluck(:title).join(' > ')
+                                      }
+                                    }
+                                  ]
+                                },
+                                selected: f.object.post_category_id
+              %>
+
+              <%= f.input :tags, as: :select,
+                          input_html: {
+                            multiple: true,
+                            "data-controller": 'posts-tags',
+                            "data-posts-tags-realm-id-value": @post.realm_id,
+                            "data-posts-tags-is-dirty-value": !f.object.tags.compact_blank.size.zero?,
+                            "data-action": 'posts-realm:postRealmIdChange@window->posts-tags#postRealmIdChange'
                           },
-                      },
-                      wrapper_html: { class: 'mb-3 col-xl-10' },
-                      collection: f.object.tags,
-                      placeholder: true
-          %>
+                          wrapper_html: { class: 'mb-3' },
+                          collection: f.object.tags,
+                          placeholder: true
+              %>
 
-          <%= f.input :published_at, as: :string,
-                      wrapper_html: { class: 'mb-3 col-xl-10' },
-                      input_html: {
-                        data: {
-                            controller: "flatpickr"
-                        }
-                      }
-          %>
-
-          <div class="mb-3">
-            <%= f.input :intro,
-                        as: :rich_text_area,
-                        input_html: { class: 'trix-content fs-6 lh-lg', data: { target: 'posts-form.editor' } },
-                        placeholder: true,
-                        wrapper_html: { class: 'col-xl-10' }
-            %>
+              <%= f.input :currency,
+                          collection: Rails.configuration.available_currencies.map { |currency_code|
+                            [ Money.from_amount(0, currency_code).currency.name, currency_code ]
+                          },
+                          required: true,
+                          wrapper_html: {class: 'mb-3'},
+                          input_html: { class: 'form-select'} %>
+            </div>
           </div>
+        </div>
 
-          <div class="mb-3">
-            <%= f.input :body,
-                        as: :rich_text_area,
-                        input_html: { class: 'trix-content fs-6 lh-lg', data: { target: 'posts-form.editor' } },
-                        placeholder: true,
-                        wrapper_html: { class: 'col-xl-10' }
-            %>
+        <% if current_user.staff? %>
+          <div class="card mb-3">
+            <div class="card-header">
+              <div class="card-title align-items-center d-flex">
+                <%= t('.editorial') %>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-inputs">
+
+                <%= f.input :published_at, as: :string,
+                            wrapper_html: { class: 'mb-3' },
+                            input_html: {
+                              "data-controller": "flatpickr"
+                            }
+                %>
+
+                <%= f.association :user, as: :select,
+                                  input_html: {
+                                    "data-controller": 'ajax-user',
+                                  },
+                                  wrapper_html: {class: 'mb-3'},
+                                  label_html: { class: "mb-2" },
+                                  placeholder: true,
+                                  collection: User.where(id: f.object.user_id).map { |user|
+                                    [user.email, user.id]
+                                  },
+                                  selected: f.object.user_id
+                %>
+
+                <%= f.input :intro,
+                            as: :rich_text_area,
+                            input_html: {
+                              class: 'trix-content fs-6 lh-lg',
+                              'data-controller': 'posts-trix',
+                              'data-posts-trix-translations-value': trix_translations.to_json,
+                              style: 'max-width: 600px'
+                            },
+                            placeholder: true,
+                            wrapper_html: { class: 'mb-3' }
+                %>
+              </div>
+            </div>
           </div>
-
-          <%= f.input :status,
-                      as: :radio_buttons,
-                      collection: [
-                          ([t('.statuses.draft'), 'draft'] if PostStatusesPolicy.new(current_user, @post).to_draft?),
-                          ([t('.statuses.pending'), 'pending'] if PostStatusesPolicy.new(current_user, @post).to_pending?),
-                      ].compact,
-                      wrapper: :vertical_collection_inline,
-                      wrapper_html: {class: 'mb-3 col-xl-10'}
-          %>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="card my-3 col-lg-6">
-      <div class="card-status-left bg-warning"></div>
-      <div class="card-body">
-        <div class="card-title align-items-center d-flex">
-          <%= t('.post_price_settings') %>
-        </div>
-        <% Rails.configuration.global[:post_extra_options].each do |option_title, option_settings| %>
-          <%= f.simple_fields_for :extra_options do |extra| %>
-            <%= extra.input option_title.to_sym,
-                            as: option_settings[:type],
-                            checked: f.object.extra_options&.dig(option_title.to_s),
-                            item_wrapper_class: 'mt-0',
-                            item_label_class: 'ms-2',
-                            wrapper_html: {class: 'my-3 col-xl-10'},
-                            collection: option_settings[:values].pluck(:title).map { |a| [t(a, scope: ['posts', 'settings', option_title.to_sym]), a]}
-            %>
-          <% end %>
         <% end %>
-        <small class="text-muted"><%= t('.post_price_hint') %></small>
-      </div>
-    </div>
 
-    <% if PostStatusesPolicy.new(current_user, @post).to_accrued? ||
-        PostStatusesPolicy.new(current_user, @post).to_rejected? ||
-        PostStatusesPolicy.new(current_user, @post).to_canceled?
-    %>
-      <div class="card my-3 col-lg-6">
-        <div class="card-status-left bg-warning"></div>
-        <div class="card-body">
-          <h3 class="card-title">
-            <%= t('.moderation_status') %>
-          </h3>
-          <%= f.input :status,
-                      as: :radio_buttons,
-                      collection: [
-                          ([t('.statuses.accrued'), 'accrued'] if PostStatusesPolicy.new(current_user, @post).to_accrued?),
-                          ([t('.statuses.rejected'), 'rejected'] if PostStatusesPolicy.new(current_user, @post).to_rejected?),
-                          ([t('.statuses.canceled'), 'canceled'] if PostStatusesPolicy.new(current_user, @post).to_canceled?)
-                      ].compact,
-                      label: false,
-                      include_hidden: false,
-                      wrapper: :vertical_boolean,
-                      hint: t('.moderation_parting_words')
-          %>
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-7 col-xxl-6">
+            <div class="card bg-white">
+              <div class="card-body">
 
-          <%= f.input :comment %>
+                <%= f.input :status,
+                            as: :radio_buttons,
+                            collection: [
+                              ([badge(status: 'draft_post'), 'draft_post'] if status_policy.to_draft_post?),
+                              ([badge(status: 'pending_post'), 'pending_post'] if status_policy.to_pending_post?),
+                            ].compact,
+                            wrapper: :vertical_collection_inline,
+                            wrapper_html: {class: ''} %>
+
+                <% if status_policy.to_approved_post? || status_policy.to_rejected_post? || status_policy.to_accrued_post? || status_policy.to_canceled_post? %>
+
+                  <%= f.input :status,
+                              as: :radio_buttons,
+                              collection: [
+                                ([badge(status: 'approved_post'), 'approved_post'] if status_policy.to_approved_post?),
+                                ([badge(status: 'rejected_post'), 'rejected_post'] if status_policy.to_rejected_post?),
+                                ([badge(status: 'accrued_post'), 'accrued_post'] if status_policy.to_accrued_post?),
+                                ([badge(status: 'canceled_post'), 'canceled_post'] if status_policy.to_canceled_post?)
+                              ].compact,
+                              label: false,
+                              include_hidden: false,
+                              hint: false,
+                              wrapper: :vertical_boolean,
+                              item_wrapper_class: 'mb-2',
+                              wrapper_html: {class: 'mt-3'} %>
+                <% end %>
+
+                <div class="bg-cyan-lt p-2 mt-2">
+                  Текущий статус: <%= badge(status: @post.attribute_in_database(:status) || 'draft_post') %>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    <% end %>
+
+      <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-4 mb-3">
+        <%= render 'extra_options', f: f, disabled: false %>
+      </div>
+    </div>
 
     <div class="form-actions">
-      <%= f.button :submit, class: 'btn btn-primary', data:{
-          action: 'posts-form#sendForm'
-      } %>
-      <%= link_to 'Back', posts_path, class: "btn btn-white" %>
+      <%= f.button :submit,
+                   class: 'btn btn-primary',
+                   'data-action': 'posts-form#sendForm'
+      %>
+      <%= link_to t('back'), posts_path, class: "btn btn-white" %>
     </div>
-
   <% end %>
-
-  <%= render 'modal_embed' %>
-
 <% end %>
