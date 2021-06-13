@@ -13,7 +13,7 @@
     <%=link_to t('breadcrumbs.posts'), posts_path %>
   </li>
   <li class="breadcrumb-item active">
-    <%=link_to t('breadcrumbs.edit_post'), edit_post_path(@post) %>
+    <%=link_to t('breadcrumbs.edit_post'), edit_post_path(@post), 'data-turbo': false %>
   </li>
 <% end %>
 
