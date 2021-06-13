@@ -7,11 +7,12 @@ describe Ajax::PostTagsController, type: :request, responsible: :user do
 
   let(:user) { create(:user) }
   let(:realm) { create(:realm) }
+  let(:post_category) { create(:post_category, realm: realm) }
 
   before do
-    create(:post, tags: ['', 'первый тег', 'some tag'], realm: realm)
-    create(:post, tags: ['', 'тег в этом же realm'], realm: realm)
-    create(:post, tags: ['', 'mismatch'], realm: realm)
+    create(:post, tags: ['', 'первый тег', 'some tag'], realm: realm, post_category: post_category)
+    create(:post, tags: ['', 'тег в этом же realm'], realm: realm, post_category: post_category)
+    create(:post, tags: ['', 'mismatch'], realm: realm, post_category: post_category)
     create(:post, tags: ['', 'тег в другом realm'])
   end
 

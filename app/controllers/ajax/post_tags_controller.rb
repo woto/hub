@@ -20,7 +20,7 @@ class Ajax::PostTagsController < ApplicationController
               filter: [
                 {
                   term: {
-                    realm_id: params[:realm_id].to_i
+                    realm_id: params[:realm_id]
                   }
                 }
               ]
