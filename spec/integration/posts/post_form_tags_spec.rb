@@ -16,7 +16,7 @@ describe PostsController, type: :system, responsible: :admin do
     expect(page).to have_select('post[tags][]', visible: :hidden, selected: %w[first second])
 
     within '.post_tags' do
-      find('input').click
+      find('.selectize-input').click
       find('input').native.send_key(:backspace)
       find('input').native.send_key('thi')
       find('div.option', text: 'third').click
