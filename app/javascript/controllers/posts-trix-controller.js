@@ -6,10 +6,9 @@ export default class extends Controller {
 
     connect() {
         const that = this;
-        this.element.addEventListener("trix-initialize", function() {
-            that.#addWidgetButton()
-            that.#localizeToolbar()
-        })
+        // that.element.addEventListener("trix-initialize", function() {
+        that.#localizeToolbar()
+        that.#addWidgetButton()
     }
 
     #addWidgetButton() {
