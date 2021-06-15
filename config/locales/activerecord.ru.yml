@@ -13,6 +13,14 @@
 
 ru:
   activerecord:
+    models:
+      widgets/simple: виджет
+    attributes:
+      widgets/simple:
+        url: URL
+        title: Название
+        body: Описание
+        pictures: Изображения
     errors:
       models:
         post:

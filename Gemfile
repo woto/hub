@@ -54,11 +54,11 @@ group :development do
   # Conflicts with rails 6.1
   # gem 'meta_request'
   gem 'annotate'
+  gem 'i18n-debug'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
-  # gem 'i18n-debug'
 end
 
 group :test do

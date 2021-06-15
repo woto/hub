@@ -1,0 +1,49 @@
+<%= simple_form_for(widgets_simple, html: {
+  'data-controller': 'direct-upload'
+}) do |f| %>
+
+<!--  <div class="my-3">-->
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+    <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
+<!--  </div>-->
+
+  <div class="form-inputs">
+    <%= f.input :url,
+                wrapper_html: {class: 'mb-3'},
+                label_html: { :class => "mb-2" } %>
+
+    <%= f.input :title,
+                wrapper_html: {class: 'mb-3'},
+                label_html: { :class => "mb-2" } %>
+
+    <%= f.input :body,
+                input_html: {
+                  'data-controller': 'textarea-autogrow'
+                },
+                wrapper_html: {class: 'mb-3'},
+                label_html: { :class => "mb-2" } %>
+
+    <%= f.input :pictures,
+                input_html: {
+                  multiple: true,
+                  class: 'form-control',
+                  direct_upload: true,
+                  'data-direct-upload-target': 'inputFile'
+                },
+                wrapper_html: {class: 'mb-3'},
+                label_html: { :class => "mb-2" } %>
+
+    <%# if false %>
+    <% f.object.pictures.each do |attach| %>
+      <%= f.hidden_field :pictures, value: attach.signed_id, multiple: true %>
+      <%= image_tag attach.preview(resize_to_limit: [100, 100]), class: 'img-thumbnail' if attach.previewable? %>
+      <%= image_tag attach.variant(resize_to_limit: [100, 100]), class: 'img-thumbnail' if attach.variable? %>
+    <% end %>
+    <%# end %>
+  </div>
+
+  <div class="form-footer">
+    <%= f.button :submit, class: 'btn btn-pink' %>
+  </div>
+<% end %>

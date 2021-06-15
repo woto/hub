@@ -1,0 +1,15 @@
+<% unless @widgets.empty? %>
+  <%= yield %>
+<% else %>
+  <div class="empty">
+    <p class="empty-title">Создание виджета</p>
+    <p class="empty-subtitle text-muted">
+      Пока что в вашей коллекции нет ни одного виджета с товарами. Создайте новый! <br />
+      После его создания он появится в вашей коллекции и вы сможете добавлять новые товары в него.
+    </p>
+
+    <div class="empty-action">
+      <%= yield %>
+    </div>
+  </div>
+<% end %>

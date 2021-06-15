@@ -1,0 +1,77 @@
+<% widget_dom_id = dom_id(widget, 'carousel') %>
+
+<div class="card max-width-300 mx-auto">
+  <%= tag.div id: widget_dom_id,
+             class: 'card-img-top carousel slide',
+             "data-bs-ride": "carousel" do %>
+
+    <% if widget.widgetable.pictures.size > 1 %>
+      <ol class="carousel-indicators">
+        <% widget.widgetable.pictures.each_with_index do |_picture, index| %>
+          <%= tag.li "data-bs-target": "##{widget_dom_id}",
+                    "data-bs-slide-to": index,
+                    class: "#{index == 0 ? 'active' : ''}" %>
+        <% end %>
+      </ol>
+    <% end %>
+
+    <div class="carousel-inner">
+
+      <% if widget.widgetable.pictures.many? %>
+        <% widget.widgetable.pictures.each_with_index do |picture, index| %>
+          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+            <%= image_tag picture,
+                          loading: 'lazy',
+                          class: 'd-block mx-auto max-height-300',
+                          alt: widget.widgetable.title,
+                          style: "max-height: 300px" %>
+          </div>
+        <% end %>
+      <% elsif widget.widgetable.pictures.one? %>
+        <%= image_tag widget.widgetable.pictures.first,
+                      loading: 'lazy',
+                      class: 'd-block mx-auto max-height-300',
+                      alt: widget.widgetable.title,
+                      style: "max-height: 300px" %>
+      <% else %>
+        <%= image_tag asset_pack_path('media/images/placeholder.png'),
+                      loading: 'lazy',
+                      class: 'd-block mx-auto max-height-300',
+                      alt: widget.widgetable.title,
+                      style: "max-height: 300px" %>
+      <% end %>
+    </div>
+
+    <% if widget.widgetable.pictures.size > 1 %>
+      <%= link_to "##{widget_dom_id}",
+                  class: 'carousel-control-prev',
+                  "data-bs-slide": "prev" do %>
+        <span class="carousel-control-outline carousel-control-prev-icon"></span>
+        <span class="visually-hidden"><%= t('.previous') %></span>
+      <% end %>
+
+      <%= link_to "##{widget_dom_id}",
+                  class: 'carousel-control-next',
+                  "data-bs-slide": "next" do %>
+        <span class="carousel-control-outline carousel-control-next-icon"></span>
+        <span class="visually-hidden"><%= t('.next') %></span>
+      <% end %>
+    <% end %>
+
+  <% end %>
+
+  <div class="card-body">
+    <h3 class="card-title">
+      <%= link_to(widget.widgetable.url.presence || 'https://example.com', target: '_blank') do %>
+        <%= widget.widgetable.title.presence || t('.title') %>
+      <% end %>
+    </h3>
+
+    <%= simple_format((widget.widgetable.body.presence || t('.body')), {}, { wrapper_tag: 'small' }) %>
+
+    <%= link_to widget.widgetable.url.presence || 'https://example.com', target: '_blank', class: 'd-block mt-3 btn btn-primary' do %>
+      <%= t('.visit_advertiser') %>
+    <% end %>
+
+  </div>
+</div>

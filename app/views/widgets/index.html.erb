@@ -1,0 +1,82 @@
+<% content_for :modal_title do %>
+  <%= t('.widget_setup') %>
+<% end %>
+
+<% content_for :modal_body do %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-lg-11 col-xl-10 col-xxl-9 mx-auto">
+        <div class="card">
+          <div class="card-body py-5">
+            <%= render 'widgets/empty_wrapper' do %>
+              <div class="row mb-5">
+                <div class="col-auto mx-auto">
+                  <%= link_to t('.create_new_widget'), new_widget_path(url: params[:url]), class: 'btn btn-pink btn-lg' %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="row form-selectgroup-boxes gy-3">
+              <% @widgets.each do |widget| %>
+                <div class="col-12">
+                  <div class="max-width-300 mx-auto">
+                    <label class="form-selectgroup-item">
+                      <%= radio_button_tag 'widget-checkbox', widget.id, false,
+                                           'data-posts-widgets-target': 'widgetCheckbox',
+                                           'data-action': 'posts-widgets#showWidgetControls',
+                                           class: "form-selectgroup-input",
+                                           style: "top: 50%" %>
+
+                      <span class="form-selectgroup-label d-block p-0">
+                        <div class="form-selectgroup-label-content">
+                          <%= render 'widgets/preview', widget: widget %>
+                        </div>
+
+                        <%= tag.div id: "widget-cover-#{widget.id}",
+                                    class: 'position-absolute d-flex align-items-center justify-content-center',
+                                    style: 'top: 0; right: 0; bottom: 0; left: 0;' do %>
+
+                          <%= tag.div class: 'd-none',
+                                     'data-posts-widgets-target': 'widgetControls' do %>
+
+                            <%= link_to t('.insert'), '#',
+                                        class: 'btn btn-pink d-block',
+                                        'data-action': 'posts-widgets#insertWidget' %>
+
+                            <%= link_to t('.edit'), edit_widgets_simple_path(widget),
+                                        class: 'btn btn-pink d-block mt-3 ' %>
+
+                            <%= link_to '#',
+                                        style: 'top: 2px; right: 2px;',
+                                        class: 'btn btn-sm btn-icon btn-light d-block position-absolute p-0',
+                                        'data-action': 'posts-widgets#destroyWidget' do %>
+                              <%== GlobalHelper.icon('x') %>
+                            <% end %>
+                          <% end %>
+
+                        <% end %>
+
+                      </span>
+                    </label>
+                  </div>
+
+                </div>
+              <% end %>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <%= paginate @widgets %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :modal_footer do %>
+<% end %>
+
+<%= render template: 'widgets/modal_wrapper' %>

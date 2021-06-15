@@ -4,11 +4,13 @@ import Trix from "trix";
 export default class extends Controller {
     static values = { translations: Object }
 
-    connect() {
+    initialize() {
         const that = this;
+        // console.log('initialized?', this.element.editor.element.initialized);
         // that.element.addEventListener("trix-initialize", function() {
-        that.#localizeToolbar()
-        that.#addWidgetButton()
+            that.#localizeToolbar()
+            that.#addWidgetButton()
+        // })
     }
 
     #addWidgetButton() {

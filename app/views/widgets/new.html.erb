@@ -1,0 +1,52 @@
+<% content_for :modal_title do %>
+  <%= link_to widgets_path, class: 'btn btn-icon btn-link' do %>
+    <%== GlobalHelper.icon('arrow-left') %>
+  <% end %>
+
+  <%= t('.selecting_widget_type') %>
+<% end %>
+
+<% content_for :modal_body do %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-lg-11 col-xl-10 col-xxl-9 mx-auto">
+        <div class="card">
+          <div class="card-body py-5">
+            <div class="row">
+              <div class="text-center mx-auto">
+
+                <h1 class="mb-5">Выберите тип создаваемого виджета</h1>
+
+                <div class="row gy-3">
+                  <div class="col-12">
+                    <div class="d-inline-block">
+                      <%= link_to new_widgets_simple_path, class: 'btn btn-outline-azure d-block p-0' do %>
+                        <%= image_tag(asset_pack_path('media/images/widgets/simple.jpg'), width: '300px') %>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="d-inline-block disabled">
+                      <%= link_to '#', onclick: "alert('error'); return false;", class: 'btn btn-outline-azure d-block p-0' do %>
+                        <%= image_tag(asset_pack_path('media/images/widgets/under_construction.jpg'), width: '300px') %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :modal_footer do %>
+<!--  <button type="button" class="btn btn-light me-auto" data-bs-dismiss="modal"><%#= t('close') %></button>-->
+  <%= link_to 'Назад к списку виджетов', widgets_path, class: 'btn btn-pink' %>
+<% end %>
+
+<%= render template: 'widgets/modal_wrapper' %>

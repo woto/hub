@@ -2,6 +2,15 @@
 
 module ApplicationHelper
 
+  def resolve_widgetable_partial(widget)
+    case widget.widgetable.class.name.underscore
+    when 'widgets/simple'
+      'widgets/simples/widget'
+    else
+      raise 'Unexpected widgetable class'
+    end
+  end
+
   # TODO: Add test later for views/layouts backoffice, centered, homepage
   def data_attributes_for_body
     {
