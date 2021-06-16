@@ -27,8 +27,8 @@ describe PostsController, type: :system, responsible: :admin do
   end
 
   context 'when realm changes previous realm but category and tags are empty' do
-    let!(:realm) { create(:realm) }
-    let!(:another_realm) { create(:realm) }
+    let!(:realm) { create(:realm, locale: :ru) }
+    let!(:another_realm) { create(:realm, locale: :en) }
 
     it 'does not ask confirmation' do
       visit new_post_path(locale: :ru)
