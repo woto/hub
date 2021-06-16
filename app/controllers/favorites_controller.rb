@@ -13,17 +13,31 @@ class FavoritesController < ApplicationController
   end
 
   def dropdown_list
-    ext_id = ActiveRecord::Base.connection.quote(params['ext_id'])
+    # TODO: make it a little bit nicer with dry contract
+    raise '`ext_id` must be present' if params[:ext_id].blank?
+    raise '`favorites_items_kind` must be present' if params[:favorites_items_kind].blank?
+
+    ext_id = ActiveRecord::Base.connection.quote(params[:ext_id])
+    favorites_items_kind = FavoritesItem.kinds[params[:favorites_items_kind]]
+
     select = <<-SQL
-      favorites.id, 
+      favorites.id,
       name,
-      COUNT(favorites_items.id) as count,
-      COUNT(CASE WHEN favorites_items.ext_id = #{ext_id} then 1 ELSE NULL END) as "is_checked"
+      -- previous version was like like below. With dynamic count
+      -- COUNT(favorites_items.id) as count
+      favorites_items_count as count,
+      COUNT(
+        CASE WHEN favorites_items.ext_id = #{ext_id} AND favorites_items.kind = #{favorites_items_kind}
+             THEN 1
+             ELSE NULL
+        END
+      ) as "is_checked"
     SQL
 
     @favorites = policy_scope(Favorite)
                  .select(select)
-                 .where(kind: params[:kind]).left_joins(:favorites_items)
+                 .where(kind: FavoritesItem.favorites_item_kind_to_favorite_kind(params[:favorites_items_kind]))
+                 .left_joins(:favorites_items)
                  .group(:id, :name)
                  .order(:name)
 
@@ -131,23 +145,5 @@ class FavoritesController < ApplicationController
   def set_favorite
     @favorite = Favorite.find(params[:id])
     authorize(@favorite)
-  end
-
-  # Only allow a trusted parameter "white list" through.
-  def favorite_params
-    params.permit(:name, :kind)
-  end
-
-  def favorites_item_params
-    params.permit(:ext_id, :is_checked)
-  end
-
-  def get_offer
-    @get_offer ||= GlobalHelper.get_offer(params[:ext_id])
-  end
-
-  # TODO: move to model
-  def all_favorite_name
-    t('all')
   end
 end

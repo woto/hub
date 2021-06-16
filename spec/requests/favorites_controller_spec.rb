@@ -3,6 +3,48 @@
 require 'rails_helper'
 
 describe FavoritesController, type: :request do
+  describe '#dropdown_list' do
+    context 'when favorite includes two offers and one of them is passed in `ext_id`' do
+      subject { get dropdown_list_favorites_path(ext_id: 'a1', favorites_items_kind: :_id), xhr: true }
+
+      let(:user) { create(:user) }
+      let!(:favorites_item) do
+        create(:favorites_item, kind: :_id, ext_id: 'a1', favorite: create(:favorite, kind: :offers, user: user))
+      end
+      # empty favorite
+      let!(:favorite) { create(:favorite, kind: :offers, user: user) }
+
+      before do
+        # another `user`
+        create(:favorites_item, kind: :_id, ext_id: 'a2', favorite: create(:favorite, kind: :offers))
+        # another `favorite.kind` and `faovorites_item.kind`
+        create(:favorites_item, kind: :users, ext_id: Faker::Alphanumeric.alphanumeric,
+               favorite: create(:favorite, kind: :users, user: user))
+      end
+
+      it 'returns correct response' do
+        sign_in(user)
+        subject
+        expect(response.parsed_body).to(
+          contain_exactly(
+            {
+              'count' => 1,
+              'id' => favorites_item.favorite.id,
+              'is_checked' => true,
+              'name' => favorites_item.favorite.name
+            },
+            {
+              'count' => 0,
+              'id' => favorite.id,
+              'is_checked' => false,
+              'name' => favorite.name
+            }
+          )
+        )
+      end
+    end
+  end
+
   describe '#navbar_favorite_list' do
     subject { get navbar_favorite_list_favorites_path, xhr: true }
 
