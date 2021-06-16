@@ -41,3 +41,13 @@ describe PostsController, type: :system, responsible: :admin do
     end
   end
 end
+
+# NOTE: Here is another ways to change trix content. May be helpful someday
+#
+# def fill_in_trix_editor(id, with:)
+#   find(:xpath, "//trix-editor[@id='#{id}']").click.set(with)
+# end
+#
+# def find_trix_editor(id)
+#   find(:xpath, "//*[@id='#{id}']", visible: false)
+# end
