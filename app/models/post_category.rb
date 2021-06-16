@@ -7,7 +7,7 @@
 #  id             :bigint           not null, primary key
 #  ancestry       :string
 #  ancestry_depth :integer          default(0)
-#  posts_count    :integer          default(0)
+#  posts_count    :integer          default(0), not null
 #  priority       :integer          default(0), not null
 #  title          :string           not null
 #  created_at     :datetime         not null

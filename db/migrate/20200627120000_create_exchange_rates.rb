@@ -4,7 +4,7 @@ class CreateExchangeRates < ActiveRecord::Migration[6.0]
       t.jsonb :currencies, null: false
       t.date :date, null: false
       t.jsonb :extra_options, null: false
-      t.integer :posts_count, default: 0
+      t.integer :posts_count, default: 0, null: false
 
       t.timestamps
     end

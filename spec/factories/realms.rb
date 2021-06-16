@@ -6,8 +6,8 @@
 #  domain                :string           not null
 #  kind                  :integer          not null
 #  locale                :string           not null
-#  post_categories_count :integer          default(0)
-#  posts_count           :integer          default(0)
+#  post_categories_count :integer          default(0), not null
+#  posts_count           :integer          default(0), not null
 #  title                 :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

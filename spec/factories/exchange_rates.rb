@@ -6,7 +6,7 @@
 #  currencies    :jsonb            not null
 #  date          :date             not null
 #  extra_options :jsonb            not null
-#  posts_count   :integer          default(0)
+#  posts_count   :integer          default(0), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #

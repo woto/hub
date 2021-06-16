@@ -18,9 +18,9 @@ class CreateFeeds < ActiveRecord::Migration[6.0]
       t.datetime :processing_finished_at
       t.datetime :synced_at
       t.datetime :succeeded_at
-      t.integer :offers_count
-      t.integer :categories_count
-      t.integer :feed_categories_count, default: 0
+      t.integer :offers_count, default: 0, null: false
+      t.integer :categories_count, default: 0, null: false
+      t.integer :feed_categories_count, default: 0, null: false
       t.integer :priority, null: false, default: 0
       t.string :xml_file_path
       t.string :downloaded_file_type

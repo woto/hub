@@ -5,7 +5,7 @@
 # Table name: advertisers
 #
 #  id          :bigint           not null, primary key
-#  feeds_count :integer          default(0)
+#  feeds_count :integer          default(0), not null
 #  is_active   :boolean          default(TRUE), not null
 #  name        :string
 #  network     :integer

@@ -6,8 +6,8 @@ class CreateRealms < ActiveRecord::Migration[6.0]
       t.string :title, null: false, index: { unique: true }
       t.string :locale, null: false
       t.integer :kind, null: false
-      t.integer :posts_count, default: 0
-      t.integer :post_categories_count, default: 0
+      t.integer :posts_count, default: 0, null: false
+      t.integer :post_categories_count, default: 0, null: false
       t.string :domain, null: false, index: { unique: true }
       t.timestamps
     end
