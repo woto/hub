@@ -3,42 +3,50 @@
 require 'rails_helper'
 
 describe Tables::OffersController, type: :system do
-  context 'when visits all offers' do
-    it 'shows title with "Все товары"' do
+  before { OfferCreator.call(feed_category: feed_category) }
+
+  let(:feed_category) { create(:feed_category) }
+  let(:feed) { feed_category.feed }
+  let(:advertiser) { feed.advertiser }
+
+  describe '/offers' do
+    specify do
       visit offers_path(locale: :ru)
+      expect(page).to have_title 'Все товары'
       expect(page).to have_css('h1', text: 'Все товары')
     end
   end
 
-  context "when visits advertiser's offers" do
-    it 'shows correct title' do
-      advertiser = create(:advertiser)
+  describe '/advertisers/:id/offers' do
+    specify 'shows correct title' do
       visit advertiser_offers_path(advertiser_id: advertiser.id, locale: :ru)
+      expect(page).to have_title("Рекламодатель: #{advertiser.to_label}")
       expect(page).to have_css('h1', text: "Рекламодатель: #{advertiser.to_label}")
     end
   end
 
-  context "when visits feed's offers" do
-    it 'shows correct title' do
-      feed = create(:feed)
+  describe '/feeds/:id/offers' do
+    specify do
       visit feed_offers_path(feed_id: feed.id, locale: :ru)
+      expect(page).to have_title("Прайс лист: #{feed.to_label}")
       expect(page).to have_css('h1', text: "Прайс лист: #{feed.to_label}")
     end
   end
 
-  context "when visits feed_category's offers" do
-    it 'shows correct title' do
-      feed_category = create(:feed_category)
+  describe '/feed_categories/:id/offers' do
+    specify do
       visit feed_category_offers_path(feed_category_id: feed_category.id, locale: :ru)
+      expect(page).to have_title("Категория: #{feed_category.to_label}")
       expect(page).to have_css('h1', text: "Категория: #{feed_category.to_label}")
     end
   end
 
-  context "when visits favorite's offers" do
-    it 'shows correct title' do
+  describe '/offers?favorite_id=:id' do
+    specify do
       favorite = create(:favorite, kind: :offers)
       login_as(favorite.user, scope: :user)
       visit offers_path(favorite_id: favorite.id, locale: :ru)
+      expect(page).to have_title "Избранное: #{favorite.to_label}"
       expect(page).to have_css('h1', text: "Избранное: #{favorite.to_label}")
     end
   end

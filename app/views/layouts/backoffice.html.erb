@@ -59,11 +59,14 @@
             <div class="row align-items-center">
               <div class="col-12">
 
-                <% if content_for?(:title) %>
-                  <h1 class="page-title">
-                    <%= content_for :title %>
-                  </h1>
-                <% end %>
+                <div class="d-flex">
+                  <% if content_for?(:title) %>
+                    <h1 class="page-title">
+                      <%= content_for :title %>
+                    </h1>
+                    <%= content_for :star %>
+                  <% end %>
+                </div>
 
               </div>
             </div>

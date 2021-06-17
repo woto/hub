@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def bobber(attrs, &block)
+    hash = {
+      'data-controller': 'z-index-switcher',
+      'data-action': 'star-favorite:increaseZIndex->z-index-switcher#increaseZIndex
+                      star-favorite:decreaseZIndex->z-index-switcher#decreaseZIndex'
+    }
+
+    tag.div hash.merge(attrs), &block
+  end
 
   def resolve_widgetable_partial(widget)
     case widget.widgetable.class.name.underscore
