@@ -46,29 +46,12 @@ class FavoritesController < ApplicationController
     end
   end
 
-  def modal_items
-    @favorites_items = policy_scope(FavoritesItem)
-                       .where(favorites: { kind: 'offers' })
-                       .joins(:favorite)
-                       .preload(:favorite)
-                       .order(updated_at: :desc)
-                       .page(@pagination_rule.page)
-                       .per(@pagination_rule.per)
-
-    if params[:favorite_name] && params[:favorite_name] != all_favorite_name
-      @favorites_items.where!(favorites: { name: params[:favorite_name] })
-    end
-
-    respond_to do |format|
-      format.json { @favorites_items }
-    end
-  end
-
+  # GET /favorites/update_star
   def update_star
-    kind = favorite_params[:kind]
-    ext_id = favorites_item_params[:ext_id]
+    kind = params[:favorites_items_kind]
+    ext_id = params[:ext_id]
     @exists = policy_scope(FavoritesItem)
-    @exists = @exists.where(favorites: { kind: kind }, ext_id: ext_id).exists?
+    @exists = @exists.where(kind: kind, ext_id: ext_id).exists?
 
     respond_to do |format|
       format.json { @exists }
