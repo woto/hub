@@ -14,17 +14,17 @@ describe Tables::OffersController, type: :system do
       visit offers_path(locale: 'ru')
     end
 
-    # _id
-    it_behaves_like 'shared_favorites_unauthenticated' do
-      before do
-        click_on("favorite-_id-#{offer['_id']}")
-      end
-    end
-
     # advertiser_id
     it_behaves_like 'shared_favorites_unauthenticated' do
       before do
         click_on("favorite-advertiser_id-#{offer['advertiser_id']}")
+      end
+    end
+
+    # _id
+    it_behaves_like 'shared_favorites_unauthenticated' do
+      before do
+        click_on("favorite-_id-#{offer['_id']}")
       end
     end
   end
@@ -34,10 +34,10 @@ describe Tables::OffersController, type: :system do
       visit advertiser_offers_path(advertiser_id: advertiser.id, locale: 'ru')
     end
 
-    # _id
+    # advertiser_id
     it_behaves_like 'shared_favorites_unauthenticated' do
       before do
-        click_on("favorite-_id-#{offer['_id']}")
+        click_on("favorite-advertiser_id-#{offer['advertiser_id']}")
       end
     end
 
@@ -47,6 +47,13 @@ describe Tables::OffersController, type: :system do
         click_on("favorite-feed_id-#{offer['feed_id']}")
       end
     end
+
+    # _id
+    it_behaves_like 'shared_favorites_unauthenticated' do
+      before do
+        click_on("favorite-_id-#{offer['_id']}")
+      end
+    end
   end
 
   describe 'GET /feeds/:feed_id/offers' do
@@ -54,10 +61,10 @@ describe Tables::OffersController, type: :system do
       visit feed_offers_path(feed_id: feed.id, locale: 'ru')
     end
 
-    # _id
+    # feed_id
     it_behaves_like 'shared_favorites_unauthenticated' do
       before do
-        click_on("favorite-_id-#{offer['_id']}")
+        click_on("favorite-feed_id-#{offer['feed_id']}")
       end
     end
 
@@ -67,11 +74,25 @@ describe Tables::OffersController, type: :system do
         click_on("favorite-feed_category_id-#{offer['feed_category_id']}")
       end
     end
+
+    # _id
+    it_behaves_like 'shared_favorites_unauthenticated' do
+      before do
+        click_on("favorite-_id-#{offer['_id']}")
+      end
+    end
   end
 
   describe 'GET /feed_categories/:feed_category_id/offers' do
     before do
       visit feed_category_offers_path(feed_category_id: feed_category.id, locale: 'ru')
+    end
+
+    # feed_category_id
+    it_behaves_like 'shared_favorites_unauthenticated' do
+      before do
+        click_on("favorite-feed_category_id-#{offer['feed_category_id']}")
+      end
     end
 
     # _id
