@@ -10,6 +10,14 @@ shared_examples 'favorites_initial_starred' do
       within('section.page') do
         button = find_button(starred)
         expect(button).to match_css('.active')
+        button.ancestor('.z-index-decreased')
+        button.click
+        expect(button).to match_css('.active.show')
+        button.ancestor('.z-index-increased')
+        # TODO
+        # within(button.ancestor('.z-index-increased')) do
+        #   dropdown_list_check
+        # end
       end
     end
   end

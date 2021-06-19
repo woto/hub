@@ -1,3 +1,13 @@
+<%
+    hash = {
+    'data-controller': 'bobber',
+    'data-action': 'star-favorite:increaseZIndex->bobber#increaseZIndex
+                    star-favorite:decreaseZIndex->bobber#decreaseZIndex'
+    }
+%>
+
+<%= tag.div hash.merge(@bobber) do %>
+
 <%= tag.div class: 'dropdown',
             'data-controller': 'star-favorite',
             'data-star-favorite-ext-id-value': @ext_id,
