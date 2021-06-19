@@ -5,6 +5,7 @@ class FavoritesController < ApplicationController
   include Paginatable
   before_action :set_favorite, only: %i[show edit update destroy]
 
+  # GET /favorites/navbar_favorite_list
   def navbar_favorite_list
     @navbar_favorite_items = policy_scope(Favorite).order(updated_at: :desc).limit(10)
     respond_to do |format|
@@ -12,6 +13,7 @@ class FavoritesController < ApplicationController
     end
   end
 
+  # GET /favorites/dropdown_list
   def dropdown_list
     # TODO: make it a little bit nicer with dry contract
     raise '`ext_id` must be present' if params[:ext_id].blank?

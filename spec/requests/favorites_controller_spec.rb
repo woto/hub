@@ -3,28 +3,36 @@
 require 'rails_helper'
 
 describe FavoritesController, type: :request do
-  describe '#dropdown_list' do
-    context 'when favorite includes two offers and one of them is passed in `ext_id`' do
-      subject { get dropdown_list_favorites_path(ext_id: 'a1', favorites_items_kind: :_id), xhr: true }
+  describe 'GET /favorites/dropdown_list' do
+    context 'when user is not authenticated' do
+      it 'returns error' do
+        get dropdown_list_favorites_path, xhr: true
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
 
+    context 'when favorite includes two favorites_items with kind `feeds` and one of them is passed in `ext_id`' do
       let(:user) { create(:user) }
       let!(:favorites_item) do
-        create(:favorites_item, kind: :_id, ext_id: 'a1', favorite: create(:favorite, kind: :offers, user: user))
+        create(:favorites_item, kind: :feeds, ext_id: 'a1', favorite: create(:favorite, kind: :feeds, user: user))
       end
-      # empty favorite
-      let!(:favorite) { create(:favorite, kind: :offers, user: user) }
+      let!(:not_checked) do
+        create(:favorites_item, kind: :feeds, ext_id: 'a2', favorite: create(:favorite, kind: :feeds, user: user))
+      end
+      let!(:empty_favorite) { create(:favorite, kind: :feeds, user: user) }
 
       before do
         # another `user`
-        create(:favorites_item, kind: :_id, ext_id: 'a2', favorite: create(:favorite, kind: :offers))
-        # another `favorite.kind` and `faovorites_item.kind`
+        create(:favorites_item, kind: :feeds, ext_id: 'a2', favorite: create(:favorite, kind: :feeds))
+        # another `favorite.kind` and `favorites_item.kind`
         create(:favorites_item, kind: :users, ext_id: Faker::Alphanumeric.alphanumeric,
-               favorite: create(:favorite, kind: :users, user: user))
+                                favorite: create(:favorite, kind: :users, user: user))
       end
 
       it 'returns correct response' do
         sign_in(user)
-        subject
+        get dropdown_list_favorites_path(ext_id: 'a1', favorites_items_kind: :feeds), xhr: true
         expect(response.parsed_body).to(
           contain_exactly(
             {
@@ -34,18 +42,77 @@ describe FavoritesController, type: :request do
               'name' => favorites_item.favorite.name
             },
             {
-              'count' => 0,
-              'id' => favorite.id,
+              'count' => 1,
+              'id' => not_checked.favorite.id,
               'is_checked' => false,
-              'name' => favorite.name
+              'name' => not_checked.favorite.name
+            },
+            {
+              'count' => 0,
+              'id' => empty_favorite.id,
+              'is_checked' => false,
+              'name' => empty_favorite.name
             }
           )
         )
       end
     end
+
+    # rubocop:disable RSpec/NestedGroups
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
+    describe 'special case with `favorites.kind == :offers`' do
+      subject do
+        sign_in(user)
+        get dropdown_list_favorites_path(ext_id: 'a1', favorites_items_kind: favorites_items_kind), xhr: true
+      end
+
+      let(:user) { create(:user) }
+      let(:favorite) { create(:favorite, kind: :offers, user: user) }
+
+      before do
+        create(:favorites_item, ext_id: 'a1', favorite: favorite, kind: :advertiser_id)
+        create(:favorites_item, ext_id: 'a1', favorite: favorite, kind: :feed_id)
+        create(:favorites_item, ext_id: 'a1', favorite: favorite, kind: :feed_category_id)
+        create(:favorites_item, ext_id: 'a1', favorite: favorite, kind: :_id)
+      end
+
+      shared_examples_for 'includes 4 favorites_items' do
+        it 'responses correctly' do
+          subject
+          expect(response.parsed_body).to eq([{ 'count' => 4, 'id' => favorite.id,
+                                                'is_checked' => true, 'name' => favorite.name }])
+        end
+      end
+
+      context 'when `favorites_items_kind` is `:_id`' do
+        let(:favorites_items_kind) { :_id }
+
+        it_behaves_like 'includes 4 favorites_items'
+      end
+
+      context 'when `favorites_items_kind` is `:advertiser_id`' do
+        let(:favorites_items_kind) { :advertiser_id }
+
+        it_behaves_like 'includes 4 favorites_items'
+      end
+
+      context 'when `favorites_items_kind` is `:feed_id`' do
+        let(:favorites_items_kind) { :feed_id }
+
+        it_behaves_like 'includes 4 favorites_items'
+      end
+
+      context 'when `favorites_items_kind` is `:feed_category_id`' do
+        let(:favorites_items_kind) { :feed_category_id }
+
+        it_behaves_like 'includes 4 favorites_items'
+      end
+    end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
+    # rubocop:enable RSpec/NestedGroups
   end
 
-  describe '#navbar_favorite_list' do
+  describe 'GET /favorites/navbar_favorite_list' do
     subject { get navbar_favorite_list_favorites_path, xhr: true }
 
     context 'when user is authenticated' do
