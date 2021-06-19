@@ -8,7 +8,7 @@
 #  kind        :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  ext_id      :string
+#  ext_id      :string           not null
 #  favorite_id :bigint           not null
 #
 # Indexes
@@ -28,6 +28,7 @@ describe FavoritesItem, type: :model do
 
   it { is_expected.to belong_to(:favorite).counter_cache(true).touch(true) }
   it { is_expected.to validate_presence_of(:kind) }
+  it { is_expected.to validate_presence_of(:ext_id) }
 
   it {
     expect(subject).to define_enum_for(:kind).with_values(

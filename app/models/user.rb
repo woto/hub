@@ -56,6 +56,7 @@ class User < ApplicationRecord
   has_many :workspaces, dependent: :destroy
   has_many :accounts, as: :subjectable
   has_many :checks
+  has_many :favorites
 
   def as_indexed_json(options={})
     {

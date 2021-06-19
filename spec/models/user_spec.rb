@@ -56,6 +56,7 @@ describe User, type: :model do
   it { is_expected.to have_many(:workspaces).dependent(:destroy) }
   it { is_expected.to have_many(:accounts) }
   it { is_expected.to have_many(:checks) }
+  it { is_expected.to have_many(:favorites) }
 
   describe '#set_default_role' do
     subject { user.role }

@@ -70,27 +70,37 @@ class FavoritesController < ApplicationController
 
   # POST /favorites
   def create
-    result = nil
-    ActiveRecord::Base.transaction do
-      favorite = policy_scope(Favorite).find_or_create_by(favorite_params)
-      if favorite.invalid?
-        render json: favorite.errors.full_messages, status: :unprocessable_entity
-        return
+    favorite = policy_scope(Favorite).find_or_create_by(
+      name: params[:name],
+      kind: FavoritesItem.favorites_item_kind_to_favorite_kind(params[:favorites_items_kind])
+    )
+
+    if favorite.invalid?
+      respond_to do |format|
+        format.json { render(json: favorite.errors.full_messages, status: :unprocessable_entity) and return }
       end
-
-      result = if ActiveModel::Type::Boolean.new.cast(favorites_item_params[:is_checked])
-                 favorites_item = favorite.favorites_items.find_or_initialize_by(favorites_item_params.slice(:ext_id))
-                 favorites_item.data = get_offer if favorite.offers?
-                 favorites_item.save!
-               else
-                 favorite.favorites_items.destroy_by(favorites_item_params.slice(:ext_id))
-               end
-
-      favorite.touch
     end
 
+    is_create = ActiveModel::Type::Boolean.new.cast(params[:is_checked])
+    result = if is_create
+               favorites_item = favorite.favorites_items.find_or_initialize_by(
+                 ext_id: params[:ext_id],
+                 kind: params[:favorites_items_kind]
+               )
+               favorites_item.save!
+               # TODO: check AR status
+               body = t('.successfully_added', favorite_name: favorite.name)
+             else
+               favorite.favorites_items.destroy_by(
+                 ext_id: params[:ext_id],
+                 kind: params[:favorites_items_kind]
+               )
+               # TODO: check AR status
+               body = t('.successfully_removed', favorite_name: favorite.name)
+             end
+
     if result
-      head :ok
+      render json: { body: body }
     else
       head :unprocessable_entity
     end

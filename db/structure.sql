@@ -680,7 +680,7 @@ CREATE TABLE public.favorites_items (
     id bigint NOT NULL,
     favorite_id bigint NOT NULL,
     kind integer NOT NULL,
-    ext_id character varying,
+    ext_id character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );

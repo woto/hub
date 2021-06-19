@@ -131,4 +131,104 @@ describe FavoritesController, type: :request do
       end
     end
   end
+
+  describe 'POST /favorites' do
+    context 'when user is not authenticated' do
+      it 'returns error' do
+        post favorites_path, xhr: true
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
+
+    it 'returns error if favorite params are invalid' do
+      user = create(:user)
+      sign_in(user)
+
+      post favorites_path, xhr: true
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to eq(["Name can't be blank", "Kind can't be blank"])
+    end
+
+    context 'when favorites is not exists yet' do
+      it 'creates favorites and add new favorites_item to it' do
+        user = create(:user)
+        sign_in(user)
+        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'feeds', is_checked: true }
+        action1 = -> { post favorites_path, params: params, xhr: true }
+        check1 = -> { Favorite.where(name: 'name', kind: 'feeds', user_id: user.id).exists? }
+        action2 = -> { expect(&action1).to change(&check1).from(false).to(true) }
+        check2 = -> { FavoritesItem.where(ext_id: 'a1', kind: 'feeds', favorite: Favorite.last).exists? }
+        expect(&action2).to change(&check2).from(false).to(true)
+      end
+    end
+
+    context 'when favorites already exists' do
+      it 'finds it and adds favorites_item to it' do
+        user = create(:user)
+        sign_in(user)
+        create(:favorite, user: user, name: 'name', kind: 'feeds')
+
+        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'feeds', is_checked: true }
+        action1 = -> { post favorites_path, params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.where(ext_id: 'a1', kind: 'feeds', favorite: Favorite.last).exists? }
+        expect(&action2).to change(&check2).from(false).to(true)
+      end
+    end
+
+    context 'with `is_checked` as false' do
+      it 'destroys favorites_item' do
+        favorites_item = create(:favorites_item)
+        ext_id = favorites_item.ext_id
+        kind = favorites_item.kind
+        favorite = favorites_item.favorite
+        sign_in(favorite.user)
+
+        params = { name: favorites_item.favorite.name,
+                   ext_id: favorites_item.ext_id,
+                   favorites_items_kind: favorites_item.kind,
+                   is_checked: false }
+        action1 = -> { post favorites_path, params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.where(ext_id: ext_id, kind: kind, favorite: favorite).exists? }
+        expect(&action2).to change(&check2).from(true).to(false)
+      end
+    end
+
+    context 'when favorites_item already exists and passed `is_checked` as true' do
+      it 'does nothing' do
+        favorites_item = create(:favorites_item)
+        favorite = favorites_item.favorite
+        sign_in(favorite.user)
+
+        params = { name: favorites_item.favorite.name,
+                   ext_id: favorites_item.ext_id,
+                   favorites_items_kind: favorites_item.kind,
+                   is_checked: true }
+        action1 = -> { post favorites_path, params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.count }
+        expect(&action2).not_to change(&check2)
+      end
+    end
+
+    context 'when favorites_item does not exist but passed `is_checked` as false' do
+      it 'does nothing' do
+        user = create(:user)
+        sign_in(user)
+        create(:favorite, user: user, name: 'name', kind: 'feeds')
+
+        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'feeds', is_checked: false }
+        action1 = -> { post favorites_path, params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.count }
+        expect(&action2).not_to change(&check2)
+      end
+    end
+  end
 end

@@ -6,7 +6,7 @@
 #  kind        :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  ext_id      :string
+#  ext_id      :string           not null
 #  favorite_id :bigint           not null
 #
 # Indexes
@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :favorites_item do
-    favorite
+    favorite { association :favorite, kind: FavoritesItem.favorites_item_kind_to_favorite_kind(kind) }
     ext_id { Faker::Alphanumeric.alphanumeric }
     kind { FavoritesItem.kinds.keys.sample }
   end
