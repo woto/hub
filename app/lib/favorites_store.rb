@@ -12,6 +12,7 @@ class FavoritesStore
   end
 
   def find(needle_id, needle_favorite_item_kind)
+    # TODO: make parameters validation better with dry contract
     favorite_item_kind = FavoritesItem.kinds[needle_favorite_item_kind.to_s]
     raise "kind `#{needle_favorite_item_kind.inspect}` is not defined in FavoritesItem" unless favorite_item_kind
 
