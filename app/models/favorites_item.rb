@@ -29,7 +29,7 @@ class FavoritesItem < ApplicationRecord
   validate :kind, :check_kind_matching
 
   def self.favorites_item_kind_to_favorite_kind(kind)
-    case kind
+    case kind.to_s
     when 'advertiser_id', 'feed_id', 'feed_category_id', '_id'
       'offers'
     else

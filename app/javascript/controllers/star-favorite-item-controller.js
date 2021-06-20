@@ -1,12 +1,8 @@
-import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
 
 export default class extends ApplicationController {
     static targets = [ "counterPlaceholder" ]
-
-    connect() {
-        console.log('favorite-item-controller connected');
-    }
+    static values = { extId: String, favoritesItemsKind: String, name: String }
 
     markCheckbox(element) {
         this.counterPlaceholderTarget.innerHTML = '<div class="ms-auto spinner-border spinner-border-sm" role="status"></div>'
@@ -15,13 +11,13 @@ export default class extends ApplicationController {
             url: '/favorites',
             type: 'post',
             data: {
-                kind: this.data.get('kind'),
-                ext_id: this.data.get('ext-id'),
-                name: this.data.get('name'),
+                favorites_items_kind: this.favoritesItemsKindValue,
+                ext_id: this.extIdValue,
+                name: this.nameValue,
                 is_checked: element.target.checked
             },
             success: (data, textStatus, jqXHR) => {
-                // that.dispatch('showToast', {detail: {title: textStatus, body: "success"}});
+                that.dispatch('showToast', {detail: {title: textStatus, body: data.body}});
                 that.dispatch('updateStarData')
                 that.dispatch('updateList')
             },

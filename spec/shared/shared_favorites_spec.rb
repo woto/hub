@@ -2,39 +2,113 @@
 
 require 'rails_helper'
 
-shared_examples 'favorites_initial_starred' do
-  let!(:starred) { raise 'is starred' }
+shared_examples 'shared favorites removing favorites_item from exiting favorite' do
+  it 'removes favorites_item from exiting favorite' do
+    favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
+    favorites_item = create(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
 
-  context 'when element added to favorites' do
-    it 'is starred' do
-      within('section.page') do
-        button = find_button(starred)
-        expect(button).to match_css('.active')
-        button.ancestor('.z-index-decreased')
-        button.click
-        expect(button).to match_css('.active.show')
-        button.ancestor('.z-index-increased')
-        # TODO
-        # within(button.ancestor('.z-index-increased')) do
-        #   dropdown_list_check
-        # end
+    login_as(Current.responsible, scope: :user)
+    visit visit_path
+
+    within('section.page') do
+      button = find_button("favorite-#{favorites_item.kind}-#{favorites_item.ext_id}")
+      expect(button).to match_css('.active')
+      button.ancestor('.z-index-decreased')
+
+      button.click
+
+      expect(button).to match_css('.active.show')
+      button.ancestor('.z-index-increased')
+
+      expect(page).to have_text("#{favorite.name}\n1")
+
+      label = find("[data-star-favorite-item-name-value='#{favorite.name}'][data-star-favorite-item-ext-id-value='#{favorites_item.ext_id}']")
+
+      within(label) do
+        checkbox = find('input')
+        expect(checkbox).to be_checked
       end
+
+      label.click
+
+      expect(button).not_to match_css('.active')
+      expect(button).not_to match_css('.show')
+      button.ancestor('.z-index-decreased')
     end
+
+    expect(page).to have_text 'Успешно удалено из избранного'
   end
 end
 
+shared_examples 'shared favorites adding favorites_item to exiting favorite' do
+  it 'adds new favorites_item to exiting favorite' do
+    favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
+    favorites_item = build(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
 
-shared_examples 'favorites_initial_unstarred' do
-  let!(:unstarred) { raise 'is not starred' }
+    login_as(Current.responsible, scope: :user)
+    visit visit_path
 
-  context 'when element is not added to favorites' do
-    it 'is not starred' do
-      within('section.page') do
-        button = find_button(unstarred)
-        expect(button).to not_match_css('.active')
+    within('section.page') do
+      button = find_button("favorite-#{favorites_item.kind}-#{favorites_item.ext_id}")
+      expect(button).to not_match_css('.active')
+      expect(button).to not_match_css('.show')
+
+      button.click
+
+      expect(button).to not_match_css('.active')
+      expect(button).to match_css('.show')
+
+      expect(page).to have_text("#{favorite.name}\n0")
+      label = find([
+        "[data-star-favorite-item-name-value='#{favorite.name}']",
+        "[data-star-favorite-item-ext-id-value='#{favorites_item.ext_id}']"
+      ].join)
+
+      within(label) do
+        checkbox = find('input')
+        expect(checkbox).not_to be_checked
       end
-    end
-  end
 
+      label.click
+
+      expect(button).to match_css('.active')
+      expect(button).not_to match_css('.show')
+      button.ancestor('.z-index-decreased')
+    end
+
+    expect(page).to have_text 'Успешно добавлено в избранное'
+  end
 end
 
+shared_examples 'shared favorites creating adding favorites_item to new favorite' do
+  it 'adds new favorites_item to new favorite' do
+    favorite = build(:favorite, user: Current.responsible, kind: favorite_kind)
+    favorites_item = build(:favorites_item, ext_id: ext_id, kind: favorites_item_kind)
+
+    login_as(Current.responsible, scope: :user)
+    visit visit_path
+
+    within('section.page') do
+      button = find_button("favorite-#{favorites_item.kind}-#{favorites_item.ext_id}")
+      expect(button).to not_match_css('.active')
+      expect(button).to not_match_css('.show')
+
+      button.click
+
+      expect(button).to not_match_css('.active')
+      expect(button).to match_css('.show')
+      button.ancestor('.z-index-increased')
+
+      fill_in('Введите название...', with: favorite.name)
+
+      create_button = find('[data-action="star-favorite#createFavorite"]')
+      create_button.click
+
+      expect(button).to match_css('.active')
+      expect(button).to not_match_css('.show')
+      button.ancestor('.z-index-decreased')
+    end
+
+    expect(page).to have_text 'Успешно добавлено в избранное'
+  end
+end
