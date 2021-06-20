@@ -19,8 +19,12 @@
 #
 FactoryBot.define do
   factory :favorites_item do
-    favorite { association :favorite, kind: FavoritesItem.favorites_item_kind_to_favorite_kind(kind) }
+    favorite { association :favorite, user: user, kind: FavoritesItem.favorites_item_kind_to_favorite_kind(kind) }
     ext_id { Faker::Alphanumeric.alphanumeric }
     kind { FavoritesItem.kinds.keys.sample }
+
+    transient {
+      user { association :user }
+    }
   end
 end
