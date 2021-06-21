@@ -32,5 +32,8 @@
     <% content_for :left_menu do %>
       <%= render 'feeds' %>
     <% end %>
+      <% if group[:count] %>
+        <%= render 'group_link', group: group %>
+      <% end %>
   <% end %>
 <% end %>
