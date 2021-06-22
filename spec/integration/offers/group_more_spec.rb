@@ -15,8 +15,8 @@ describe 'group link card', type: :system do
 
   describe 'GET /offers' do
     specify do
-      visit offers_path
-      within "#group-link-advertiser_id-#{advertiser.id}" do
+      visit offers_path(locale: :ru)
+      within "#offers-group-more-advertiser_id-#{advertiser.id}" do
         expect(page).to have_text("Товаров в категории:\n#{n}")
         expect(page).to have_link('Перейти', href: advertiser_offers_path(advertiser_id: advertiser, locale: :ru))
       end
@@ -25,8 +25,8 @@ describe 'group link card', type: :system do
 
   describe 'GET /advertisers/:advertiser_id/offers' do
     specify do
-      visit advertiser_offers_path(advertiser_id: advertiser)
-      within "#group-link-feed_id-#{feed.id}" do
+      visit advertiser_offers_path(advertiser_id: advertiser, locale: :ru)
+      within "#offers-group-more-feed_id-#{feed.id}" do
         expect(page).to have_text("Товаров в категории:\n#{n}")
         expect(page).to have_link('Перейти', href: feed_offers_path(feed_id: feed, locale: :ru))
       end
@@ -35,8 +35,8 @@ describe 'group link card', type: :system do
 
   describe 'GET /feeds/:feed_id/offers' do
     specify do
-      visit feed_offers_path(feed_id: feed)
-      within "#group-link-feed_category_id-#{parent_feed_category.id}" do
+      visit feed_offers_path(feed_id: feed, locale: :ru)
+      within "#offers-group-more-feed_category_id-#{parent_feed_category.id}" do
         expect(page).to have_text("Товаров в категории:\n#{n}")
         expect(page).to have_link('Перейти', href: feed_category_offers_path(feed_category_id: parent_feed_category, locale: :ru))
       end
@@ -45,8 +45,8 @@ describe 'group link card', type: :system do
 
   describe 'GET /feed_categories/:feed_category_id/offers' do
     specify do
-      visit feed_category_offers_path(feed_category_id: parent_feed_category)
-      within "#group-link-feed_category_id-#{child_feed_category.id}" do
+      visit feed_category_offers_path(feed_category_id: parent_feed_category, locale: :ru)
+      within "#offers-group-more-feed_category_id-#{child_feed_category.id}" do
         expect(page).to have_text("Товаров в категории:\n#{n}")
         expect(page).to have_link('Перейти', href: feed_category_offers_path(feed_category_id: child_feed_category, locale: :ru))
       end

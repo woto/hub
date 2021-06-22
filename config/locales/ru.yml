@@ -129,6 +129,9 @@ ru:
 
   tables:
     offers:
+      card_wrapper:
+        follow_link: Перейти
+        offers_in_group: Товаров в категории
       search:
         button:
           search_everywhere: Искать везде

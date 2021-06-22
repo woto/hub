@@ -1,12 +1,12 @@
 <%= render 'tables/offers/card_wrapper' do %>
-  <% tag.div class: 'empty', id: "group-link-#{group[:favorite_item_kind]}-#{group[:ext_id]}" do %>
+  <% tag.div class: 'empty', id: "offers-group-more-#{group[:favorite_item_kind]}-#{group[:ext_id]}" do %>
     <p class="empty-subtitle text-muted">
-      Товаров в категории:
+      <%= t('.offers_in_group') %>:
     </p>
     <p class="empty-title"><%= group[:count] %></p>
     <div class="empty-action">
       <% entity = @groups_store.find(group[:ext_id], group[:favorite_item_kind]) %>
-      <%= link_to "Перейти",
+      <%= link_to t('.follow_link'),
                   polymorphic_path([entity, :offers], q: params[:q], locale: params[:locale]),
                   class: 'btn btn-primary',
                   'data-turbo': 'false' %>
