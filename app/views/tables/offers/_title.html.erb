@@ -13,13 +13,12 @@
   <% end %>
 
   <% content_for :star do %>
-    <% kind = :feed_category_id %>
-    <%= bobber class: 'z-index-decreased' do %>
-        <%= render StarFavoriteComponent.new(
-          is_favorite: @favorites_store.find(current_feed_category.id, kind),
-          ext_id: current_feed_category.id,
-          favorites_items_kind: kind) %>
-    <% end %>
+    <% kind = 'feed_category_id' %>
+    <%= render StarFavoriteComponent.new(
+      is_favorite: @favorites_store.find(current_feed_category.id, kind),
+      ext_id: current_feed_category.id,
+      favorites_items_kind: kind,
+      bobber: { class: 'z-index-decreased' }) %>
   <% end %>
 
 <% elsif current_feed %>
@@ -29,13 +28,12 @@
   <% end %>
 
   <% content_for :star do %>
-    <% kind = :feed_id %>
-    <%= bobber class: 'z-index-decreased' do %>
-      <%= render StarFavoriteComponent.new(
-        is_favorite: @favorites_store.find(current_feed.id, kind),
-        ext_id: current_feed.id,
-        favorites_items_kind: kind) %>
-    <% end %>
+    <% kind = 'feed_id' %>
+    <%= render StarFavoriteComponent.new(
+      is_favorite: @favorites_store.find(current_feed.id, kind),
+      ext_id: current_feed.id,
+      favorites_items_kind: kind,
+      bobber: { class: 'z-index-decreased' }) %>
   <% end %>
 
 <% elsif current_advertiser %>
@@ -45,13 +43,12 @@
   <% end %>
 
   <% content_for :star do %>
-    <% kind = :advertiser_id %>
-    <%= bobber class: 'z-index-decreased' do %>
-      <%= render StarFavoriteComponent.new(
-        is_favorite: @favorites_store.find(current_advertiser.id, kind),
-        ext_id: current_advertiser.id,
-        favorites_items_kind: kind) %>
-    <% end %>
+    <% kind = 'advertiser_id' %>
+    <%= render StarFavoriteComponent.new(
+      is_favorite: @favorites_store.find(current_advertiser.id, kind),
+      ext_id: current_advertiser.id,
+      favorites_items_kind: kind,
+      bobber: { class: 'z-index-decreased' }) %>
   <% end %>
 <% else %>
   <% content_for :title do %>

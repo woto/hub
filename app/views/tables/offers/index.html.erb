@@ -1,11 +1,4 @@
-<% content_for :title do %>
-  <% if @feed %>
-    <%= "#{@advertiser.name} - #{@feed.name}" %>
-  <% else %>
-    <%= t("titles.offers") %>
-  <% end %>
-<% end %>
-
+<%= render 'title' %>
 <%= render 'breadcrumbs' %>
 
 <div class="col-12">
