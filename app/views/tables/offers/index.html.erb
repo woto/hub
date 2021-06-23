@@ -16,21 +16,31 @@
   <div class="mb-3">
     <%= render 'items_summary', rows: @offers %>
   </div>
-  <div class="row row-deck">
-    <%= render partial: 'card', collection: @offers, as: :row %>
-  </div>
-  <%= paginate @offers %>
-  <%= render 'advice' %>
-</div>
 
-<% if params[:feed_id] %>
-  <% content_for :left_menu do %>
-    <%= render 'categories' %>
-  <% end %>
-<% else %>
-  <% if params[:q] %>
-    <% content_for :left_menu do %>
-      <%= render 'feeds' %>
+  <% @results.each do |group| %>
+
+    <% if group[:favorite_item_kind] && group[:ext_id] %>
+
+      <%= tag.div id: "offers-group-title-#{group[:favorite_item_kind]}-#{group[:ext_id]}",
+                  class: "row mt-4 mb-3" do %>
+          <div class="col-12">
+            <h2 class="d-flex align-items-center">
+              <% entity = @groups_store.find(group[:ext_id], group[:favorite_item_kind]) %>
+
+              <%= link_to "#{t(entity.model_name.to_s.underscore)}: #{entity.to_label }",
+                          polymorphic_path([entity, :offers],
+                                           q: params[:q],
+                                           locale: params[:locale],
+                                           per: params[:per]), 'data-turbo': 'false' %>
+
+              <%= render StarFavoriteComponent.new(
+                is_favorite: @favorites_store.find(group[:ext_id], group[:favorite_item_kind]),
+                ext_id: group[:ext_id],
+                favorites_items_kind: group[:favorite_item_kind],
+                bobber: { class: 'z-index-decreased' }) %>
+            </h2>
+          </div>
+      <% end %>
     <% end %>
       <% if group[:count] %>
         <%= render 'group_more', group: group %>
