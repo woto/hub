@@ -57,7 +57,11 @@
         <h1 class="fs-1 my-3"><%= t('.title') %></h1>
         <p class="fs-5 mb-4"><%= t('.tagline') %></p>
         <p class="lead">
-          <%= link_to t('.link'), offers_path, class: 'noshadow btn btn-lg btn-white fw-bold' %>
+          <% if current_user %>
+            <%= link_to t('.dashboard'), dashboard_path, class: 'noshadow btn btn-lg btn-white fw-bold' %>
+          <% else %>
+            <%= link_to t('.link'), offers_path, class: 'noshadow btn btn-lg btn-white fw-bold' %>
+          <% end %>
         </p>
       </div>
 
