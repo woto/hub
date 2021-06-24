@@ -8,28 +8,40 @@
     <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
   </li>
 
-  <% css_class = 'active' unless @current_advertiser %>
+  <% css_class = 'active' unless current_advertiser || @favorite %>
   <li class="breadcrumb-item <%= css_class %>">
-    <%=link_to t('breadcrumbs.offers'), offers_path %>
+    <%= link_to t('breadcrumbs.offers'),
+               offers_path(q: params[:q], per: params[:per]) %>
   </li>
 
-  <% if @current_advertiser %>
-    <% css_class = 'active' unless @current_feed %>
+  <% if @favorite %>
+    <li class="breadcrumb-item active">
+      <%= link_to "Избранное: #{@favorite.to_label}",
+                 polymorphic_path(@favorite.kind, favorite_id: @favorite.id, q: params[:q], per: params[:per]) %>
+    </li>
+  <% end %>
+
+  <% if current_advertiser %>
+    <% css_class = 'active' unless current_feed %>
     <li class="breadcrumb-item <%= css_class %>">
-      <%=link_to @current_advertiser.to_label, advertiser_offers_path(advertiser_id: @current_advertiser) %>
+      <%= link_to current_advertiser.to_label,
+                 advertiser_offers_path(advertiser_id: current_advertiser, q: params[:q], per: params[:per]) %>
     </li>
 
-    <% if @current_feed %>
-      <% css_class = 'active' unless @current_category %>
+    <% if current_feed %>
+      <% css_class = 'active' unless current_feed_category %>
       <li class="breadcrumb-item <%= css_class %>">
-        <%=link_to @current_feed.to_label, feed_offers_path(feed_id: @current_feed) %>
+        <%= link_to current_feed.to_label,
+                   feed_offers_path(feed_id: current_feed, q: params[:q], per: params[:per]) %>
       </li>
 
-      <% if @current_category %>
-        <% @current_category.path.each do |el| %>
-          <% css_class = 'active' if el.id == @current_category.id %>
+      <% if current_feed_category %>
+        <% current_feed_category.path.each do |el| %>
+          <% css_class = 'active' if el.id == current_feed_category.id %>
           <%= tag.li class: "breadcrumb-item #{css_class}" do  %>
-            <%= link_to el.name, feed_category_offers_path(q: params[:q], feed_category_id: el.id), class: css_class %>
+            <%= link_to el.to_label,
+                        feed_category_offers_path(feed_category_id: el.id, q: params[:q], per: params[:per]),
+                        class: css_class %>
           <% end %>
         <% end %>
       <% end %>
