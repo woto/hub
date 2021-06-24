@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples 'shared_search_everywhere' do
+shared_examples 'shared_search_everywhere', responsible: :admin do
   let(:q) { Faker::Lorem.word }
 
   it 'clicking on "search everywhere" leads to the correct address' do

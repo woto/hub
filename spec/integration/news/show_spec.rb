@@ -2,32 +2,7 @@
 
 require 'rails_helper'
 
-describe NewsController, type: :system do
-  describe 'shared_language_component' do
-    it_behaves_like 'shared_language_component' do
-      before do
-        visit news_index_path
-      end
-
-      let(:link) { news_index_path(locale: 'en') }
-    end
-  end
-
-  describe 'shared_search_everywhere' do
-    it_behaves_like 'shared_search_everywhere' do
-      let(:news) { create(:post, realm_kind: :news) }
-
-      before do
-        visit "/ru/news/#{news.id}"
-      end
-
-      let(:params) do
-        { controller: 'tables/news', q: q, locale: 'ru', per: 20, sort: :published_at, order: :desc,
-          only_path: true }
-      end
-    end
-  end
-
+describe NewsController, type: :system, responsible: :admin do
   describe '#show' do
     let!(:news) do
       create(:post, realm_kind: :news, published_at: Time.zone.parse('2020-04-07 02:00'), tags: %w[tag1 tag2])

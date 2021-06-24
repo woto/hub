@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::NewsController, type: :system do
+describe Tables::NewsController, type: :system, responsible: :admin do
   describe 'news-by-tag turbo-frame' do
     before do
       visit news_index_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
