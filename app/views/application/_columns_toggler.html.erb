@@ -1,7 +1,7 @@
-<% active_css_class = params[:dcf] == '1' ? 'active' : '' %>
-
-<%= link_to request.params.merge(dcf: params[:dcf] == '1' ? nil : '1'),
-            class: "flex-fill align-self-sm-center nav-link btn btn-light #{active_css_class}" do %>
+<%= link_to '#',
+            class: "flex-fill align-self-sm-center nav-link btn btn-primary border me-3",
+            "data-action": 'table-columns-form#toggleForm',
+            "data-table-columns-form-target": 'toggleButton' do %>
   <%== GlobalHelper.icon('columns') %>
   <%= t('columns') %>
 <% end %>

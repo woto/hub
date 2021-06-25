@@ -12,7 +12,7 @@ module Tables
 
     # GET /post_categories
     def index
-      get_index([])
+      get_index(%w[id])
     end
 
     private

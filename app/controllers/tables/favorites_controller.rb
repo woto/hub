@@ -11,7 +11,7 @@ module Tables
 
     # GET /favorites
     def index
-      get_index([], filter_ids: current_user.id)
+      get_index(%w[id], filter_ids: current_user.id)
     end
 
     private

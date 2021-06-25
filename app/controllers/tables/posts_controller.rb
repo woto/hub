@@ -11,7 +11,7 @@ module Tables
 
     # GET /posts
     def index
-      get_index(['currency'], filter_ids: (current_user.id unless current_user.staff?))
+      get_index(%w[id currency], filter_ids: (current_user.id unless current_user.staff?))
     end
 
     def set_settings

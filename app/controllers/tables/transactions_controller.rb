@@ -11,7 +11,7 @@ module Tables
 
     # GET /transactions
     def index
-      get_index(%w[currency debit_id credit_id], filter_ids: (current_user.account_ids if current_user.role == 'user'))
+      get_index(%w[id currency debit_id credit_id], filter_ids: (current_user.account_ids if current_user.role == 'user'))
     end
 
     private
