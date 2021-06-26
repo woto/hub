@@ -3,5 +3,21 @@
 require 'rails_helper'
 
 describe 'Checks shared columns', type: :system do
-  skip
+  before do
+    allow_any_instance_of(Check).to receive(:check_amount)
+  end
+
+  # NOTE: there are no such columns for now
+  # it_behaves_like 'shared columns invisible by default' do
+  #   skip
+  # end
+
+  it_behaves_like 'shared columns visible only to admin' do
+    let(:path) { checks_path({ cols: '0.3', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:object) { create(:check, user: user) }
+    let(:column_id) { 'user_id' }
+    let(:select_title) { 'User' }
+    let(:column_title) { 'User' }
+    let(:column_value) { user.id }
+  end
 end
