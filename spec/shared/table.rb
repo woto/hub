@@ -5,26 +5,26 @@ require 'rails_helper'
 shared_examples 'shared_table' do |_class_name|
   it 'shows row' do
     objects
-    visit "/#{plural}"
+    visit "/ru/#{plural}"
     expect(page).to have_css("#table_#{singular}_#{objects.first.id}")
   end
 
   context 'when there are no items' do
     it 'shows blank page' do
-      visit "/#{plural}"
-      expect(page).to have_text('No results found')
+      visit "/ru/#{plural}"
+      expect(page).to have_text('%{entry_name.capitalize} не найдено')
     end
   end
 
   it 'shows 1 item on 3rd page' do
     objects
-    visit "/#{plural}?page=3&per=5"
+    visit "/ru/#{plural}?page=3&per=5"
     expect(page).to have_css(".table_#{singular}", count: 1)
   end
 
   it 'respects page param and visits second page' do
     objects
-    visit "/#{plural}?per=5"
+    visit "/ru/#{plural}?per=5"
     expect(page).to have_css(".table_#{singular}", count: 5)
 
     find('#pagination_3 a').click
@@ -34,7 +34,7 @@ shared_examples 'shared_table' do |_class_name|
   xit 'does not show other pages except current', browser: :mobile do
     # NOTE: this test is outdated. We always show same navigation as on the desktop
     objects
-    visit "/#{plural}?per=5&page=2"
+    visit "/ru/#{plural}?per=5&page=2"
     expect(page).to have_no_css('#pagination_1 a')
     expect(page).to have_css('#pagination_2 a')
     expect(page).to have_no_css('#pagination_3 a')
@@ -42,7 +42,7 @@ shared_examples 'shared_table' do |_class_name|
 
   it 'shows navigation links on desktop' do
     objects
-    visit "/#{plural}?per=5&page=2"
+    visit "/ru/#{plural}?per=5&page=2"
     # expect(page).to have_css('#pagination_first')
     expect(page).to have_css('#pagination_previous')
     expect(page).to have_css('#pagination_next')
@@ -51,19 +51,19 @@ shared_examples 'shared_table' do |_class_name|
 
   it 'does not show pagination when items amount less than per' do
     objects
-    "/#{plural}?per=100"
+    "/ru/#{plural}?per=100"
     expect(page).to have_no_css('.pagination')
   end
 
   it 'shows pagination when items amount more than per' do
     objects
-    visit "/#{plural}?per=5"
+    visit "/ru/#{plural}?per=5"
     expect(page).to have_css('.pagination')
   end
 
   it 'changes per page items' do
     objects
-    visit "/#{plural}?per=5"
+    visit "/ru/#{plural}?per=5"
     expect(page).to have_css(".table_#{singular}", count: 5)
 
     page.select '20', from: 'capybara-perselect'
@@ -72,17 +72,17 @@ shared_examples 'shared_table' do |_class_name|
 
   it 'preselects select option with corresponding per value' do
     objects
-    visit "/#{plural}?per=5"
+    visit "/ru/#{plural}?per=5"
     expect(page).to have_select('capybara-perselect', selected: '5')
 
-    visit "/#{plural}?per=20"
+    visit "/ru/#{plural}?per=20"
     expect(page).to have_select('capybara-perselect', selected: '20')
   end
 
   it 'shows correct entries info' do
     objects
-    visit "/#{plural}?per=5&page=2"
-    expect(page).to have_text('Displaying 6 - 10 of 11 in total')
+    visit "/ru/#{plural}?per=5&page=2"
+    expect(page).to have_text('Отображение 6 - 10 из 11 всего')
   end
 
   context 'with search bar' do

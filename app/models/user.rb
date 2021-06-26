@@ -19,6 +19,7 @@
 #  last_sign_in_ip        :inet
 #  locked_at              :datetime
 #  posts_count            :integer          default(0), not null
+#  profiles_count         :integer          default(0), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -97,5 +98,9 @@ class User < ApplicationRecord
 
   def to_label
     email
+  end
+
+  def staff?
+    role.in?(%w[admin manager])
   end
 end

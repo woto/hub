@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def bobber(attrs, &block)
-    hash = {
-      'data-controller': 'z-index-switcher',
-      'data-action': 'star-favorite:increaseZIndex->z-index-switcher#increaseZIndex
-                      star-favorite:decreaseZIndex->z-index-switcher#decreaseZIndex'
-    }
-
-    tag.div hash.merge(attrs), &block
-  end
-
   def resolve_widgetable_partial(widget)
     case widget.widgetable.class.name.underscore
     when 'widgets/simple'
@@ -109,23 +99,23 @@ module ApplicationHelper
 
   def badge(status:)
     color = case status
-             when 'draft_post'
-               'grey'
-             when 'pending_post', 'pending_check'
-               'cyan'
-             when 'approved_post', 'approved_check'
-               'teal'
-             when 'accrued_post', 'payed_check'
-               'green'
-             when 'rejected_post'
-               'orange'
-             when 'canceled_post'
-               'red'
-             end
+            when 'draft_post'
+              'grey'
+            when 'pending_post', 'pending_check'
+              'cyan'
+            when 'approved_post', 'approved_check'
+              'teal'
+            when 'accrued_post', 'payed_check'
+              'green'
+            when 'rejected_post'
+              'orange'
+            when 'canceled_post'
+              'red'
+            end
     tag.span class: "badge bg-#{color}" do
       t(status, scope: 'posts.show.badge.statuses')
     end
-end
+  end
 
   # def tree_item(parent, children)
   #   concat render('feed_category_checkbox', name: parent.name, style: "margin-left: #{parent.depth * 20}px")

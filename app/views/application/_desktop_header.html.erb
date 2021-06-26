@@ -6,7 +6,7 @@
     <% end %>
 
     <%= render 'desktop_search_wrapper' do %>
-      <%= render 'search_bar', btn_class: 'btn-secondary capybara-desktop-header-search' %>
+      <%= render 'search_bar', btn_class: 'btn-secondary' %>
     <% end %>
 
     <div class="navbar-nav d-flex ms-auto">
@@ -16,11 +16,7 @@
       <% end %>
 
       <div class="nav-item dropdown me-3">
-        <%= render Header::FavoritesComponent.new %>
-      </div>
-
-      <div class="nav-item dropdown me-3">
-        <%= render Header::LanguageComponent.new(display_title: false, capybara_browser: 'capybara-desktop') %>
+        <%= render Header::LanguageComponent.new(display_title: true, capybara_browser: 'capybara-desktop') %>
       </div>
 
       <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-desktop', current_user: current_user, true_user: true_user) %>

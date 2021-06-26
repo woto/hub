@@ -18,101 +18,108 @@
 <% end %>
 
 <div class="col">
-  <div class="row">
-    <div class="col-12 col-xl-8 mb-3">
-      <div class="card mb-3">
-        <div class="card-status-left bg-warning"></div>
-        <div class="card-body">
-          <dl class="row">
-            <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> <%= @post.title %> </dd>
+<div class="row">
+  <div class="col">
+    <div class="row">
+      <div class="col-12 col-xl-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <dl class="row">
+              <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9"> <%= @post.title %> </dd>
 
-            <dt class="col-sm-3"> <%= t('realm', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> <%= @post.realm.title %> </dd>
+              <dt class="col-sm-3"> <%= t('realm', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9"> <%= @post.realm.title %> </dd>
 
-            <dt class="col-sm-3"> <%= t('post_category', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9">
-              <ol class="breadcrumb breadcrumb-arrows d-block d-lg-flex" aria-label="breadcrumbs">
-                <% @post.post_category.path.each do |slice| %>
-                  <li class="breadcrumb-item">
-                    <%= slice.title %>
-                  </li>
+              <dt class="col-sm-3"> <%= t('post_category', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9">
+                <ol class="breadcrumb breadcrumb-arrows d-block d-lg-flex" aria-label="breadcrumbs">
+                  <% @post.post_category.path.each do |slice| %>
+                    <li class="breadcrumb-item">
+                      <%= slice.title %>
+                    </li>
+                  <% end %>
+                </ol>
+              </dd>
+
+              <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9">
+                <% @post.tags.each do |item| %>
+                  <% next if item.blank? %>
+
+                  <%= tag.span item, class: 'badge bg-blue-lt' %>
                 <% end %>
-              </ol>
-            </dd>
+              </dd>
 
-            <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9">
-              <% @post.tags.each do |item| %>
-                <% next if item.blank? %>
+              <dt class="col-sm-3"> <%= t('created_at') %> </dt>
+              <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.created_at) %> </dd>
 
-                <%= tag.span item, class: 'badge bg-blue-lt' %>
+              <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
+              <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.updated_at) %> </dd>
+
+              <dt class="col-sm-3"> <%= t('status', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9"> <%= badge(status: @post.status) %> </dd>
+
+              <dt class="col-sm-3"> <%= t('amount', scope: ['simple_form', 'labels', 'post']) %> </dt>
+              <dd class="col-sm-9"> <mark> <%= GlobalHelper.decorate_money(@post.amount, @post.currency) %> </mark> </dd>
+
+              <% if current_user.staff? %>
+                <hr class="my-2">
+
+                <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'post']) %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'post']) %> </dt>
+                <dd class="col-sm-9"> <%= @post.user.to_label %> </dd>
               <% end %>
-            </dd>
-
-            <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.created_at) %> </dd>
-
-            <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-            <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.updated_at) %> </dd>
-
-            <dt class="col-sm-3"> <%= t('status', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> <%= badge(status: @post.status) %> </dd>
-
-            <dt class="col-sm-3"> <%= t('amount', scope: ['simple_form', 'labels', 'post']) %> </dt>
-            <dd class="col-sm-9"> <mark> <%= GlobalHelper.decorate_money(@post.amount, @post.currency) %> </mark> </dd>
-
-            <% if current_user.role.in?(['manager', 'admin']) %>
-              <hr class="my-2">
-
-              <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'post']) %> </dt>
-              <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at) %> </dd>
-
-              <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'post']) %> </dt>
-              <dd class="col-sm-9"> <%= @post.user.to_label %> </dd>
-            <% end %>
-          </dl>
-        </div>
-      </div>
-
-      <div class="card card-lg mb-3">
-        <div class="card-header">
-          <h3 class="card-title fs-5"> <%= t('body', scope: ['simple_form', 'labels', 'post']) %> </h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div style="max-width: 600px" class="fs-6 lh-lg" data-turbo="false">
-              <%= @post.body %>
-            </div>
+            </dl>
           </div>
         </div>
-      </div>
 
-      <% if current_user.role.in?(['manager', 'admin']) %>
         <div class="card card-lg mb-3">
           <div class="card-header">
-            <h3 class="card-title fs-5"> <%= t('intro', scope: ['simple_form', 'labels', 'post']) %> </h3>
+            <h3 class="card-title fs-5"> <%= t('body', scope: ['simple_form', 'labels', 'post']) %> </h3>
           </div>
           <div class="card-body">
             <div class="row">
               <div style="max-width: 600px" class="fs-6 lh-lg" data-turbo="false">
-                <%= @post.intro %>
+                <%= @post.body %>
               </div>
             </div>
           </div>
         </div>
-      <% end %>
 
-    </div>
-    <div class="col-12 col-sm-9 col-md-8 col-lg-8 col-xl-4 mb-3">
-      <%= simple_form_for(@post) do |f| %>
-        <%= render 'extra_options', f: f, disabled: true %>
-      <% end %>
+        <% if current_user.staff? %>
+          <div class="card card-lg mb-3">
+            <div class="card-header">
+              <h3 class="card-title fs-5"> <%= t('intro', scope: ['simple_form', 'labels', 'post']) %> </h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div style="max-width: 600px" class="fs-6 lh-lg" data-turbo="false">
+                  <%= @post.intro %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-12 col-sm-9 col-md-8 col-lg-8 col-xl-4 mb-3">
+        <%= simple_form_for(@post) do |f| %>
+          <%= render 'extra_options', f: f, disabled: true %>
+        <% end %>
+      </div>
     </div>
   </div>
+</div>
 
+<div class="row">
   <div class="col">
-    <%= link_to t('edit'), edit_post_path(@post), class: "btn btn-primary #{'disabled' unless policy(@post).edit?}" %>
+    <%= link_to t('edit'), edit_post_path(@post),
+                class: "btn btn-primary #{'disabled' unless policy(@post).edit?}",
+                'data-turbo': false %>
     <%= link_to t('back'), posts_path, class: "btn btn-white" %>
   </div>
+</div>
 </div>

@@ -1,0 +1,24 @@
+<h1 class="mt-5"><%= @post_category.title %></h1>
+
+<%= render 'websites/breadcumb', category: @post_category %>
+
+<% content_for :categories do %>
+  <div class="text-center mb-3">
+    <% if @post_category.parent %>
+      <%= link_to category_path(@post_category.parent) do %>
+        <%== GlobalHelper.icon('arrow-back-up') %>
+        <%= t('back') %>
+      <% end %>
+    <% else %>
+      <%= link_to root_path do %>
+        <%== GlobalHelper.icon('arrow-back-up') %>
+        <%= t('back') %>
+      <% end unless @post_category.parent  %>
+    <% end %>
+  </div>
+  <%= render 'websites/categories', categories: PostCategory.order(:title).children_of(@post_category).arrange %>
+<% end %>
+
+<% @posts.each do |post| %>
+  <%= render 'websites/post_intro', post: post %>
+<% end %>

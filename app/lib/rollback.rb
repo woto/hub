@@ -1,2 +1,0 @@
-class Rollback < StandardError
-end

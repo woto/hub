@@ -21,7 +21,7 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.offers'),
         path: { controller: '/tables/offers', action: 'index', feed_id: nil, advertiser_id: nil, feed_category_id: nil },
-        current_page: request.path.yield_self { |p| p.include?('offers') },
+        current_page: request.path.yield_self { |p| p.include?('offers') && !params[:favorite_id] },
         icon: GlobalHelper.icon('shopping-cart'),
         disabled: false
     ) %>
@@ -107,6 +107,24 @@
         current_page: request.path.yield_self { |p| p.include?('help') },
         icon: GlobalHelper.icon('help'),
         disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+      title: t('left_menu.favorites'),
+      path: { controller: '/tables/favorites', action: 'index' },
+      current_page: request.path.yield_self do |p|
+        (p.include?('offers') && params[:favorite_id]) || p.include?('favorites')
+      end,
+      icon: GlobalHelper.icon('star'),
+      disabled: false
+    ) %>
+
+    <%= render Left::Menu::ItemComponent.new(
+      title: t('left_menu.post_categories'),
+      path: { controller: '/tables/post_categories', action: 'index' },
+      current_page: request.path.yield_self { |p| p.include?('post_categories') },
+      icon: GlobalHelper.icon('atom'),
+      disabled: false
     ) %>
 
   </ul>

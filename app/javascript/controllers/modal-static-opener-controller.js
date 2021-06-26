@@ -1,6 +1,8 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
+    static values = { text: String }
+
     get modalSingleton() {
         return this.application.router.modulesByIdentifier.get('modal-singleton').contexts[0].controller;
     }
@@ -9,10 +11,9 @@ export default class extends Controller {
         event.preventDefault();
         event.stopPropagation();
 
-        let text = this.data.get('text');
         this.modalSingleton.open()
             .then( () => {
-                this.modalSingleton.contentPlaceholderTarget.innerText = text;
+                this.modalSingleton.contentPlaceholderTarget.innerHTML = this.textValue;
             });
     }
 }

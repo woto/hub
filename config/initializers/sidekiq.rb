@@ -8,6 +8,7 @@ require 'sidekiq/web.rb'
 Sidekiq::Web.set :sessions, false
 
 Sidekiq.configure_server do |config|
+  # config.log_formatter = Sidekiq::Logger::Formatters::JSON.new
   config.redis = Rails.configuration.redis
   Yabeda::Prometheus::Exporter.start_metrics_server!
 end
@@ -15,3 +16,6 @@ end
 Sidekiq.configure_client do |config|
   config.redis = Rails.configuration.redis
 end
+
+# https://github.com/woto/sidekiq_backtrace/commit/b40efadc14013ffc5607ecc4c2d25c1c988fe061#diff-ae13acc8819c30684b141a36c3994f78d0cef31e9a029931f472009f1d0b79bd
+Sidekiq.default_worker_options = { 'backtrace' => true }

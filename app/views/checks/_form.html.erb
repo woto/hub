@@ -1,15 +1,72 @@
-<%= simple_form_for(@check) do |f| %>
+<%# TODO should be moved to helper %>
+<% status_context = Accounting::Main::StatusContext.new(
+  record: check, from_status: check.attribute_in_database(:status)) %>
+
+<%# TODO should be moved to helper %>
+<% status_policy = Accounting::Main::CheckStatusPolicy.new(current_user, status_context) %>
+
+<%= simple_form_for(check,
+                    html: {
+                      'data-turbo': false
+                    }) do |f| %>
+
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :amount %>
-    <%= f.input :currency, collection: Rails.configuration.global[:currencies].keys %>
-    <%#= f.input :is_payed %>
-    <%#= f.input :payed_at %>
+  <div class="row">
+    <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-inputs">
+
+            <%= f.input :amount,
+                        wrapper_html: {class: 'mb-3'},
+                        required: true,
+                        label_html: { :class => "mb-2" } %>
+
+            <%= f.input :currency,
+                        collection: Rails.configuration.available_currencies.map { |currency_code| [ Money.from_amount(0, currency_code).currency.name, currency_code ] },
+                        required: true,
+                        wrapper_html: {class: 'mb-3'},
+                        input_html: { class: 'form-select'} %>
+
+            <% if current_user.staff? %>
+              <%= f.association :user, as: :select,
+                                input_html: {
+                                  "data-controller": 'ajax-user',
+                                },
+                                wrapper_html: {class: 'mb-3'},
+                                label_html: { class: "mb-2" },
+                                placeholder: true,
+                                collection: User.where(id: f.object.user_id).map { |user|
+                                  [user.email, user.id]
+                                },
+                                selected: f.object.user_id
+              %>
+            <% end %>
+
+            <%= f.input :status,
+                        as: :radio_buttons,
+                        collection: [
+                          ([badge(status: 'pending_check'), 'pending_check'] if status_policy.to_pending_check?),
+                          ([badge(status: 'approved_check'), 'approved_check'] if status_policy.to_approved_check?),
+                          ([badge(status: 'payed_check'), 'payed_check'] if status_policy.to_payed_check?),
+                        ].compact,
+                        required: true,
+                        wrapper: :vertical_collection_inline,
+                        wrapper_html: {class: 'mb-3'}
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render 'shared/balance/account_wrapper', check: check %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to t('back'), checks_path, class: "btn btn-white" %>
   </div>
+
 <% end %>

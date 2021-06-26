@@ -6,6 +6,7 @@ module Elastic
 
     def call
       index_name = Elastic::IndexName.offers
+      # GlobalHelper.elastic_client.indices.refresh
       context.object = GlobalHelper.elastic_client.indices.refresh(index: index_name)
     end
   end

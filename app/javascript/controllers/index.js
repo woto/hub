@@ -42,13 +42,16 @@ StimulusControllerResolver.install(application, async controllerName => (
     (await import(`./${controllerName}-controller.js`)).default
 ))
 
-document.addEventListener('turbo:before-cache', function() {
-    application.controllers.forEach(function(controller){
-        if(typeof controller.teardown === 'function') {
-            controller.teardown();
-        }
-    });
-});
+// NOTE: not used anymore. Because support of js components which are is not idempotent is very expensive.
+// The pages which include such js components made as not a turbo.
+//
+// document.addEventListener('turbo:before-cache', function() {
+//     application.controllers.forEach(function(controller){
+//         if(typeof controller.teardown === 'function') {
+//             controller.teardown();
+//         }
+//     });
+// });[
 
 document.addEventListener('turbo:click', function() {
   console.log('turbo:click fires when you click a Turbo-enabled link. The clicked element is the event target. Access the requested location with event.detail.url. Cancel this event to let the click fall through to the browser as normal navigation.');

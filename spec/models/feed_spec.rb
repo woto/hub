@@ -6,16 +6,17 @@
 #
 #  id                     :bigint           not null, primary key
 #  attempt_uuid           :uuid
-#  categories_count       :integer
+#  categories_count       :integer          default(0), not null
 #  downloaded_file_size   :bigint
 #  downloaded_file_type   :string
 #  error_class            :string
 #  error_text             :text
+#  feed_categories_count  :integer          default(0), not null
 #  is_active              :boolean          default(TRUE), not null
 #  language               :string
 #  locked_by_pid          :integer          default(0), not null
 #  name                   :string           not null
-#  offers_count           :integer
+#  offers_count           :integer          default(0), not null
 #  operation              :string           not null
 #  priority               :integer          default(0), not null
 #  processing_finished_at :datetime
@@ -41,6 +42,7 @@
 require 'rails_helper'
 
 describe Feed, type: :model do
+  it_behaves_like 'logidzable'
   it_behaves_like 'elasticable'
 
   describe '#as_indexed_json' do

@@ -1,27 +1,4 @@
 default: &default
-  currencies:
-    rub: 643
-    eur: 978
-    usd: 840
-  cost_per_character_rub: 0.03
-  post_extra_options:
-    some_radio:
-      type: radio_buttons
-      values:
-        - title: rewrite
-          rate: 1
-        - title: copywrite
-          rate: 1.03
-    some_checkbox:
-      type: check_boxes
-      values:
-        - title: 1
-          rate: 1
-        - title: 2
-          rate: 1.01
-        - title: 3
-          rate: 1.02
-
   blank_messenger:
     short: select ...
     long: Select ...

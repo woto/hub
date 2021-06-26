@@ -62,12 +62,12 @@ class FavoritesController < ApplicationController
 
   # GET /favorites/1
   def show
-    p 1
+    raise 'TODO'
   end
 
   # GET /favorites/1/edit
   def edit
-    p 1
+    raise 'TODO'
   end
 
   # POST /favorites
@@ -108,20 +108,12 @@ class FavoritesController < ApplicationController
     end
   end
 
-  def write_post
-    favorite = policy_scope(Favorite).find_or_create_by!(is_default: true, kind: 'offers') do |f|
-      f.name = t('default')
-    end
-    favorites_item = favorite.favorites_items.find_or_initialize_by(favorites_item_params.slice(:ext_id))
-    favorites_item.assign_attributes(data: get_offer, updated_at: Time.current)
-    favorites_item.save!
-
-    redirect_to new_post_path(embed: '1')
-  end
-
   # PATCH/PUT /favorites/1
   def update
-    if @favorite.update(favorite_params)
+    raise 'TODO'
+    if @favorite.update(
+      name: params[:favorite][:name]
+    )
       redirect_to @favorite, notice: 'Favorite was successfully updated.'
     else
       render :edit
@@ -130,6 +122,7 @@ class FavoritesController < ApplicationController
 
   # DELETE /favorites/1
   def destroy
+    raise 'TODO'
     @favorite.destroy
     redirect_to favorites_url, notice: 'Favorite was successfully destroyed.'
   end
@@ -138,7 +131,7 @@ class FavoritesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_favorite
-    @favorite = Favorite.find(params[:id])
+    @favorite = policy_scope(Favorite).find(params[:id])
     authorize(@favorite)
   end
 end

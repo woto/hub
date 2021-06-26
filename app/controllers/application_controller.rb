@@ -7,9 +7,13 @@ class ApplicationController < ActionController::Base
 
   impersonates :user
 
-  respond_to :html, :json
+  # NOTE: Seems not needed due to the customizations in devise.rb
+  #
+  # respond_to :html, :json
 
   include Pundit
+  # after_action :verify_authorized, except: :index
+  # after_action :verify_policy_scoped, only: :index
 
   around_action :set_time_zone
   before_action :detect_device_format
@@ -67,7 +71,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_responsible
-    Current.responsible = current_user
+    Current.responsible = true_user
   end
 
   def path_for_switch_language(_locale)

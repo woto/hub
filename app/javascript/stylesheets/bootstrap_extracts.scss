@@ -51,6 +51,14 @@ aside {
   }
 }
 
-.demo-class {
-  max-width: 70px;
+.star-favorite {
+  margin: $btn-padding-y $btn-padding-x !important;
+}
+
+.z-index-increased {
+  z-index: 1040;
+}
+
+.z-index-decreased {
+  z-index: 10;
 }

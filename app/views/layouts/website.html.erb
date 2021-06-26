@@ -1,0 +1,34 @@
+<% content_for :body do %>
+
+  <%= tag.body do  %>
+
+    <%= content_for :prefix_inline_css %>
+    <%= content_for :prefix_inline_js %>
+
+    <%= render 'websites/google_analytics' %>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-6 col-lg-5 col-xl-4 col-xxl-3 bg-dark">
+          <div class="bg-azure-lt my-5 pt-2">
+            <a href="/">
+              <%= image_tag(asset_pack_path('media/images/logo-white.svg'), width: "110", height: "32", class: "my-3 mx-auto navbar-brand-image") %>
+              <%#= link_to Current.realm.domain, '/', class: 'm-2 d-block' %>
+            </a>
+            <hr>
+            <%= content_for :categories %>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+
+    <%= content_for :postfix_inline_css %>
+    <%= content_for :postfix_inline_js %>
+
+  <% end %>
+<% end %>
+
+<%= render template: 'layouts/blank' %>

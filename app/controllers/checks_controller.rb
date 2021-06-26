@@ -3,38 +3,53 @@
 class ChecksController < ApplicationController
   layout 'backoffice'
   before_action :set_check, only: %i[show edit update destroy]
-  
-  def new
-    @check = Check.new
+
+  # GET /checks/:id
+  def show
+    authorize(@check)
   end
 
+  # GET /checks/new
+  def new
+    @check = current_user.checks.new
+    authorize(@check)
+  end
+
+  # GET /checks/:id/edit
+  def edit
+    authorize(@check)
+  end
+
+  # POST /checks
   def create
     GlobalHelper.retryable do
-      @check = policy_scope(Check).new(check_params)
+      @check = policy_scope(Check).new(permitted_attributes(Check))
       authorize(@check)
       if @check.save
-        redirect_to @check, notice: 'Check was successfully created.'
+        redirect_to @check, notice: t('.check_was_successfully_created')
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
   end
 
+  # PATCH/PUT /checks/:id
   def update
     GlobalHelper.retryable do
       authorize(@check)
-      if @check.update(check_params)
-        redirect_to @check, notice: 'Check was successfully updated.'
+      if @check.update(permitted_attributes(Check))
+        redirect_to @check, notice: t('.check_was_successfully_updated')
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
   end
 
-  def show
-    respond_to do |format|
-      format.json { render json: @feed }
-      format.html
+  # DELETE /checks/:id
+  def destroy
+    GlobalHelper.retryable do
+      authorize(@check)
+      redirect_to checks_url, notice: t('.check_was_successfully_destroyed') if @check.update(status: :removed_check)
     end
   end
 
@@ -42,10 +57,6 @@ class ChecksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_check
-    @check = Check.find(params[:id])
-  end
-
-  def check_params
-    params.require(:check).permit(:amount, :currency, :is_payed, :payed_at)
+    @check = policy_scope(Check).find(params[:id])
   end
 end

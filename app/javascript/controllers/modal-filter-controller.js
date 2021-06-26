@@ -13,7 +13,7 @@ export default class extends Controller {
         //
         // this.modalSingleton.open()
         //     .then( () => {
-        //         this.modalSingleton.contentPlaceholderTarget.innerHTML = 'zzzz';
+        //         this.modalSingleton.contentPlaceholderTarget.innerHTML = 'lkajdflkladsfkjh';
         //     });
 
         $.ajax({

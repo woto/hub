@@ -68,5 +68,5 @@ Rails.application.configure do
   config.time_zone = 'UTC'
 
   config.i18n.available_locales = %w[en en-US ru]
-  config.action_mailer.default_url_options = { host: 'ru.192.168.31.80.xip.io', protocol: 'http', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'ru.192.168.31.80.nip.io', protocol: 'http', port: 3000 }
 end

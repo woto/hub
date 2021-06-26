@@ -7556,6 +7556,11 @@ stimulus-read-more@^1.0.1:
   resolved "https://registry.yarnpkg.com/stimulus-read-more/-/stimulus-read-more-1.0.1.tgz#cdfcc356cb660cbf3af37872b018c28715ec1a61"
   integrity sha512-0Fn5NvXM9tCL0q4VCJke/X2sjhr77qQqiJrFxaK3106spBBGYECGiHE9AynsLxViY6saAzlCF6VN3/RFQIxAag==
 
+stimulus-textarea-autogrow@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/stimulus-textarea-autogrow/-/stimulus-textarea-autogrow-3.0.0.tgz#40dd34b262b4a65e2838f75f60c2a17b59dee631"
+  integrity sha512-IFTMw34E+iwUAKCEwFNA9nX7bGCmMtWFPnRktzMipnlYhK4BpaHC8uP0nurAfuenVqaCMb4Vn5pTkZPZ2pgx4w==
+
 stimulus-use@^0.24.0-2:
   version "0.24.0-2"
   resolved "https://registry.yarnpkg.com/stimulus-use/-/stimulus-use-0.24.0-2.tgz#4778f0761ace9dbd0fc311fa5371e876ba8a2636"

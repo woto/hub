@@ -208,7 +208,7 @@ describe Post, type: :model do
     context 'when all params needed to calculate amount is present' do
       let(:params) { { body: body, currency: currency } }
       let(:body) { Faker::Lorem.word }
-      let(:rate) { Faker::Number.decimal(l_digits: 7, r_digits: 7) }
+      let(:rate) { Faker::Number.decimal(l_digits: 6, r_digits: 6) }
       let(:currency) { 'ghc' }
 
       it 'sets `amount`' do

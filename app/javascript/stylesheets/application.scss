@@ -1,10 +1,22 @@
 $assets-base: '../images/tabler/flags';
 
-//@import '~bootstrap/dist/css/bootstrap';
+// TODO: Check double import of bootstrap.
+// Because it's already should be imported from tabler
+// Needed .fs-* classes from:
+// https://github.com/twbs/bootstrap/commit/e5fa7084910c3ad68232c4580f4e2dd5a4c3fad1#diff-582480d4813d58a3ed1225fb8cafd661e0ccc2a12d08a5f4c1812e06148977d4R36
+// There is no such class in. Why? https://github.com/tabler/tabler/blob/dev/dist/css/tabler.css
+
+// @import '~bootstrap/dist/css/bootstrap';
 @import 'flatpickr/dist/flatpickr.css';
 
 $enable-extra-colors: true;
+$enable-negative-margins: true;
+// NOTE: required for the situations without access to the Internet
+$google-font: false;
+
 @import '@tabler/core/src/scss/tabler';
+@import '@tabler/core/src/scss/tabler-vendors';
+
 //@import 'tabler/scss/tabler-buttons';
 //@import 'tabler/scss/tabler-flags';
 @import 'dropzone_avatar';
@@ -16,3 +28,4 @@ $enable-extra-colors: true;
 @import 'development';
 @import 'elastic';
 @import 'bootstrap_extracts';
+@import 'widget';

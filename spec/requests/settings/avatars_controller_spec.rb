@@ -7,6 +7,7 @@ describe Settings::AvatarsController, type: :request do
     put '/settings/avatar', params: {
       # TODO: update rspec-rails gem and replace to fixture_file_upload
       # https://github.com/rspec/rspec-rails/issues/2430
+      # include ActiveSupport::Testing::FileFixtures
       # file: fixture_file_upload('files/avatar.png')
       file: Rack::Test::UploadedFile.new(file_fixture('avatar.png'))
     }

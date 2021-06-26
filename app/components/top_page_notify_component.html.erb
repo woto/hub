@@ -1,4 +1,11 @@
-<div class="alert alert-<%= @alert_type %> alert-dismissible" role="alert">
-  <%= @message %>
-  <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+<div class="alert alert-important alert-<%= @alert_type %> alert-dismissible" role="alert">
+  <div class="d-flex">
+    <div>
+      <%== GlobalHelper.icon('info-circle', svg_class: 'alert-icon') %>
+    </div>
+    <div>
+      <%= @message %>
+    </div>
+  </div>
+  <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
 </div>

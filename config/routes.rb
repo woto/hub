@@ -3,8 +3,13 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  # get 'post_categories/index'
   # mount Yabeda::Prometheus::Exporter => "/metrics"
+
+  scope module: :websites, constraints: WebsiteConstraint.new do
+    root to: 'realms#show', as: nil
+    resources :categories
+    resources :articles
+  end
 
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
@@ -21,9 +26,6 @@ Rails.application.routes.draw do
   end
 
   scope '(:locale)', constraints: LocalesConstraint.new do
-    # TODO: remove. demo modal
-    get 'modal' => 'modal#index'
-
     devise_for :users,
                path: 'auth',
                path_names: {
@@ -47,7 +49,18 @@ Rails.application.routes.draw do
       resources :accounts, only: [:index]
       resources :checks, only: [:index]
       resources :favorites, only: [:index]
+      resources :advertisers, only: [:index] do
+        resources :offers, only: [:index]
+      end
       resources :feeds, only: [:index] do
+        resources :offers, only: [:index]
+      end
+      resources :post_categories, only: [:index]
+      # TODO: remove
+      resources :categories, only: [:index] do
+        resources :offers, only: [:index]
+      end
+      resources :feed_categories, only: [:index] do
         resources :offers, only: [:index]
       end
       resources :help, only: [:index]
@@ -56,7 +69,7 @@ Rails.application.routes.draw do
       resources :news, only: [:index] do
         collection do
           get 'month/:month', action: :by_month, as: :by_month
-          get 'tag/:tag', action: :by_tag, as: :by_tag
+          get 'tag/:tag', action: :by_tag, as: :by_tag, :constraints => { :tag => /[^\/]*/ }
         end
       end
       resources :offers, only: [:index]
@@ -64,6 +77,11 @@ Rails.application.routes.draw do
       resources :transactions, only: [:index]
       resources :users, only: [:index]
     end
+
+    namespace :widgets do
+      resources :simples
+    end
+    resources :widgets
 
     # TODO
     resources :accounts
@@ -74,11 +92,9 @@ Rails.application.routes.draw do
     resources :checks
     resources :favorites do
       collection do
+        get :navbar_favorite_list
         get :dropdown_list
         get :update_star
-        post :write_post
-        get :modal_items
-        get :modal_select
       end
     end
     resources :users do
@@ -98,10 +114,21 @@ Rails.application.routes.draw do
       end
     end
 
+    # NOTE: temporary workaround for "shared_search_everywhere" passing tests.
+    # It's not needed for working application. Just for tests.
+    resources :offers, only: [:index] do
+      member do
+        get :modal_card
+      end
+    end
+    resources :post_categories, only: [:index]
+    resources :feed_categories, only: [:index]
+    resources :transactions, only: [:index]
+    resources :help, only: [:index]
+
     resources :posts
 
     resources :promotions
-    resources :offer_embeds, only: %i[create]
     namespace :table do
       resources :columns
       resources :workspaces

@@ -11,7 +11,7 @@ class FeedsController < ApplicationController
 
   def create
     @feed = Feed.new(feed_params)
-    @feed.operation = 'form'
+    @feed.operation = 'manual'
 
     if @feed.save
       redirect_to @feed, notice: 'Feed was successfully created.'
@@ -33,7 +33,7 @@ class FeedsController < ApplicationController
   end
 
   def logs
-    render json: Feed.find(params[:id]).feed_logs.order(id: :desc).limit(20)
+    render json: Feed.with_log_data.find(params[:id]).log_data
   end
 
   private

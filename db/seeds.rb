@@ -7,14 +7,12 @@ if Rails.env.development?
   admin = User.create!(
     email: 'admin@example.com',
     password: 'password',
-    password_confirmation: 'password',
     role: 'admin'
   )
 
   user = User.create!(
     email: 'user@example.com',
     password: 'password',
-    password_confirmation: 'password',
     role: 'user'
   )
 
@@ -24,9 +22,8 @@ if Rails.env.development?
 
   3.times do |i|
     user = User.create!(
-      email: "user_#{i + 1}@example.com",
+      email: "user#{i + 1}@example.com",
       password: 'password',
-      password_confirmation: 'password',
       role: 'user'
     )
 

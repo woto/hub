@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import { Turbo, cable } from "@hotwired/turbo-rails"
 
 export default class extends Controller {
     initialize() {
@@ -14,6 +15,6 @@ export default class extends Controller {
         params.delete('page');
         params.set('per', event.currentTarget.value);
         url.search = params;
-        window.location = url.toString();
+        Turbo.visit(url.toString());
     }
 }

@@ -4,12 +4,14 @@ class CheckDecorator < ApplicationDecorator
   end
 
   def amount
-    h.tag.mark do
-      decorate_money(super, currency)
+    h.link_to h.check_path(_id) do
+      h.tag.mark do
+        decorate_money(super, currency)
+      end
     end
   end
 
-  def payed_at
-    decorate_datetime(super)
-  end
+  # def payed_at
+  #   decorate_datetime(super)
+  # end
 end

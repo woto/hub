@@ -7,7 +7,7 @@
   <%= render 'remove_search_query' %>
 
   <div class="mb-3">
-    <%= render 'items_summary', rows: @offers %>
+    <%= render 'items_summary', rows: @results %>
   </div>
 
   <% @results.each do |group| %>
@@ -35,8 +35,25 @@
           </div>
       <% end %>
     <% end %>
+
+    <%= tag.div id: "offers-group-row-#{group[:favorite_item_kind]}-#{group[:ext_id]}",
+                class: "row g-1 mb-1 row-deck" do %>
+      <%= render partial: 'card', collection: OfferDecorator.decorate_collection(group[:products]), as: :row %>
+
       <% if group[:count] %>
         <%= render 'group_more', group: group %>
       <% end %>
+
+    <% end %>
   <% end %>
+
+  <%= tag.div 'data-turbo': 'false' do %>
+    <%= paginate @results %>
+  <% end %>
+
+  <%= render 'empty_page' if @results.empty?  %>
+</div>
+
+<% content_for :left_menu do %>
+  <%#= render 'brands' %>
 <% end %>

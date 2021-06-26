@@ -48,7 +48,8 @@
 
 <div class="row">
   <div class="col">
-    <%= link_to t('edit'), edit_check_path(@check), class: "btn btn-primary #{'disabled' unless policy(@check).edit?}" %>
+    <% disabled = 'disabled' unless policy(@check).edit? %>
+    <%= link_to t('edit'), edit_check_path(@check), 'data-turbo': 'false', class: "btn btn-primary #{disabled}" %>
     <%= link_to t('back'), checks_path, class: "btn btn-white" %>
   </div>
 </div>

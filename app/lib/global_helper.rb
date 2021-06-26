@@ -2,6 +2,9 @@
 
 class GlobalHelper
   FAVORITE_COLUMN = 'favorite'
+  MULTIPLICATOR = 6
+  GROUP_NAME = :group
+  GROUP_LIMIT = 1000
 
   class << self
     def currencies_table
@@ -29,6 +32,7 @@ class GlobalHelper
       elastic_client
 
       Elastic::CreateOffersIndex.call
+      Elastic::CreateTokenizerIndex.call
 
       User.setup_index(Columns::UserForm)
       create_index(elastic_client, User)
@@ -63,29 +67,28 @@ class GlobalHelper
       elastic_client.indices.refresh
     end
 
-    def decorate_datetime(datetime, h)
-      return if datetime.blank?
+    def decorate_datetime(datetime)
+      return ActionController::Base.helpers.tag.span('&nbsp;'.html_safe) if datetime.blank?
 
-      datetime = Time.zone.parse(datetime).iso8601 if datetime.is_a? String
-      h.tag.span datetime.to_s,
-                 style: 'cursor: pointer',
-                 data: {
-                   controller: 'timeago',
-                   timeago_source_time: datetime.to_s,
-                   action: 'click->timeago#toggleSourceTime'
-                 }
+      datetime = Time.zone.parse(datetime) if datetime.is_a?(String)
+
+      ActionController::Base.helpers.tag.span(
+        datetime.iso8601,
+        style: 'cursor: pointer',
+        "data-controller": 'timeago',
+        "data-timeago-source-time": datetime.iso8601,
+        "data-action": 'click->timeago#toggleSourceTime'
+      )
     end
 
-    def decorate_money(amount, currency, h)
-      locale = case currency
-               when 'usd'
-                 :en
-               when 'rub'
-                 :ru
-               else
-                 :en
-               end
-      h.number_to_currency(amount, locale: locale)
+    def decorate_text(text)
+      ActionController::Base.helpers.link_to(
+        I18n.t('view'),
+        '#',
+        'data-controller': 'modal-static-opener',
+        'data-action': 'modal-static-opener#open',
+        'data-modal-static-opener-text-value': text
+      )
     end
 
     def decorate_money(amount, currency)
@@ -97,15 +100,17 @@ class GlobalHelper
                                                         locale: :en)
     end
 
-    def retryable(&block)
-      attempts = 0
+    def retryable
+      attempt = 0
       begin
-        isolated(&block)
-      rescue Rollback => e
-        Rails.logger.warn('Retrying transaction')
+        attempt += 1
+        ActiveRecord::Base.transaction(isolation: :serializable) do
+          result = yield
+          result
+        end
+      rescue ActiveRecord::SerializationFailure => e
         Rails.logger.warn(e)
-        attempts += 1
-        retry if attempts < 4
+        retry if attempt != 5
         raise
       end
     end

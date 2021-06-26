@@ -1,0 +1,15 @@
+<h1 class="mt-5"><%= @post.title %></h1>
+
+<%= render 'websites/breadcumb', category: @post.post_category %>
+
+<% content_for :categories do %>
+  <%= render 'websites/categories', categories: Current.realm.post_categories.to_depth(0).arrange %>
+<% end %>
+
+<div class="card my-4">
+  <div class="card-body">
+    <%= @post.body %>
+  </div>
+</div>
+
+<%= link_to t('back'), :back, class: 'd-block my-3' %>

@@ -1,7 +1,8 @@
 import { Controller } from "stimulus";
-import Rails from "@rails/ujs";
 
 export default class extends Controller {
+    static values = { url: String}
+
     get modalSingleton() {
         return this.application.router.modulesByIdentifier.get('modal-singleton').contexts[0].controller;
     }
@@ -10,15 +11,13 @@ export default class extends Controller {
         event.preventDefault();
         event.stopPropagation();
 
-        // replace with jQuery
-        Rails.ajax({
-            url: this.data.get('url'),
+        $.get({
+            url: this.urlValue,
             type: "get",
-            dataType: 'json',
             success: (data) => {
                 this.modalSingleton.open()
                     .then( () => {
-                        this.modalSingleton.contentPlaceholderTarget.innerText = JSON.stringify(data);
+                        this.modalSingleton.contentPlaceholderTarget.innerHTML = data;
                     });
             },
             error: function(data) { alert(data) }

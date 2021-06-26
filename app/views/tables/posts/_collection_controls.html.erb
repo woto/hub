@@ -1,3 +1,5 @@
 <% if policy(:post).new? %>
-  <%= link_to t("buttons.new_post"), new_post_path, class: 'align-self-sm-center nav-link btn btn-pink' %>
+  <%= link_to t("buttons.new_post"), new_post_path,
+              class: 'align-self-sm-center nav-link btn btn-pink me-0 me-sm-3 mb-3 mb-sm-0',
+              'data-turbo': false %>
 <% end %>

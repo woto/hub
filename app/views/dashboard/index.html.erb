@@ -1,58 +1,62 @@
-<%# TODO: remove. demo modal %>
-<%= tag.div 'data-controller': 'modal', 'data-modal-url-value': modal_path do %>
-  <%= tag.div 'data-modal-target': 'modalPlaceholder' %>
-  <%= link_to '#', 'data-action': "modal#open" do %>
-    open modal
-  <% end %>
-<% end %>
-
 <% render 'breadcrumbs' %>
+
 <% content_for :title do %>
   <%= t("titles.dashboard") %>
 <% end %>
 
 <div class="col">
-
-<div class="row">
-  <div class="col-md-6 mb-3">
-
-    <%= turbo_frame_tag 'latest-news', src: frames_news_latest_path %>
-
-    <div class="my-3"></div>
-
-    <%= render 'dashboard/widgets/payments' %>
-  </div>
-</div>
-
-<% if current_user && false %>
-
-  <div class="row row-cards">
-    <% current_user.accounts.each do |account| %>
-      <div class="col-3">
-        <div class="card card-sm">
-          <div class="card-body d-flex align-items-center">
-          <span class="bg-green text-white avatar me-3"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="9" cy="19" r="2"></circle><circle cx="17" cy="19" r="2"></circle><path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2"></path></svg>
-          </span>
-            <div class="me-3">
-              <div class="font-weight-medium">
-                <%#= account.identifier %>
-                <%= account.code %>
-              </div>
-              <div class="text-muted">
-                <%= GlobalHelper.decorate_money(account.amount, account.currency, self) %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
   <div class="row">
+    <div class="col-md-8 mb-3">
 
+      <h2><%= t('.posts_statuses') %></h2>
+      <% [['draft_post', 'pending_post', 'approved_post'], ['accrued_post', 'rejected_post', 'canceled_post']].each do |statuses| %>
+        <div class="row">
+          <% statuses.each do |status| %>
+            <% if current_user.user? %>
+              <% scope = current_user.posts %>
+            <% else %>
+              <% scope = Post %>
+            <% end %>
+            <% count = scope.where(status: status).count %>
+            <%= render 'post_card', status: status, count: count %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <h2><%= t('.today_rates') %></h2>
+      <div class="row">
+        <% ExchangeRate.pick.currencies.each do |excchange_rate| %>
+          <%= render 'exchange_rate_card', currency_code: excchange_rate['key'], currency_value: excchange_rate['value']  %>
+        <% end %>
+      </div>
+
+      <h2><%= t('.under_construction') %></h2>
+      <%= render 'dashboard/widgets/payments' %>
+    </div>
+
+    <div class="col-md-4">
+
+      <h2><%= t('.accounts') %></h2>
+      <% Rails.configuration.available_currencies.each do |currency| %>
+        <div class="mb-3">
+          <%= render 'shared/balance/account', currency: currency, user: current_user %>
+        </div>
+      <% end %>
+      <%= link_to t('buttons.checks'), checks_path, class: 'btn btn-pink d-block' %>
+
+      <div class="my-3"></div>
+
+      <h2><%= t('.news') %></h2>
+      <%= turbo_frame_tag 'latest-news', src: frames_news_latest_path %>
+    </div>
+  </div>
+
+  <% if false %>
+  <div class="row">
     <div class="col">
       <div class="row row-deck row-cards">
         <div class="col-sm-6 col-lg-3">
+
           <div class="card">
 
 
@@ -116,8 +120,8 @@
             </div>
             <%= tag.div data: {
                 controller: 'chart',
-                chart_dates: @test['aggregations']['by_debit_id']['by_debit_code']['buckets'].find { |bucket| bucket['key'] == 'pending' }['by_created_at']['buckets'].map { |datetime| Time.zone.parse(datetime['key_as_string']).to_date },
-                chart_values: @test['aggregations']['by_debit_id']['by_debit_code']['buckets'].find { |bucket| bucket['key'] == 'pending' }['by_created_at']['buckets'].map { |bucket| bucket['by_debit_amount']['top'].first&.dig('metrics', 'debit_amount')&.round(2) }
+                chart_dates: @test['aggregations']['by_debit_id']['by_debit_code']['buckets'].find { |bucket| bucket['key'] == 'pending_post' }&.dig('by_created_at', 'buckets')&.map { |datetime| Time.zone.parse(datetime['key_as_string']).to_date },
+                chart_values: @test['aggregations']['by_debit_id']['by_debit_code']['buckets'].find { |bucket| bucket['key'] == 'pending_post' }&.dig('by_created_at', 'buckets')&.map { |bucket| bucket['by_debit_amount']['top'].first&.dig('metrics', 'debit_amount')&.round(2) }
             },
                         class: 'chart-sm' %>
           </div>
@@ -126,5 +130,5 @@
       </div>
     </div>
   </div>
-<% end %>
+  <% end %>
 </div>

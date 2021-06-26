@@ -12,7 +12,7 @@ module TableComponent
       end
 
       @params = {
-        data: { 'bs-toggle': 'tooltip' },
+        'data-bs-toggle': 'tooltip',
         title: t(col_name, scope: [:table, :long, @settings[:singular]])
       }
     end

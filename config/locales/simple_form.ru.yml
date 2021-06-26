@@ -18,27 +18,48 @@ ru:
         time_zone: Часовой пояс
         messengers: Мессенджеры
         languages: Владеемые языки
+      check:
+        amount: Сумма
+        currency: Валюта
+        status: Статус
+        user: Пользователь
       post:
         status: Статус
         title: Заголовок
         post_category: Категория
+        currency: Валюта
         tags: Теги
         published_at: Дата публикации
         intro: Вступление
+        user: Пользователь
         body: Статья
         realm: Сайт
+        amount: Цена
+        # Do not remove old keys from extra_options.
+        extra_options:
+          post_type: Тип статьи
+          product_type: Обозреваемый товар
+          overview_type: Полнота обзора
+          images_type: Изображения
+          uniqueness_checked: Уникальность проверена
+          product_comparison: Сравнительная статья
+          moderator_bonus: Бонус от модератора
     hints:
       widgets_simple:
         url: Используйте адрес товара скопированный из карточки товара
       defaults:
-        published_at: Материал не будет опубликован, если дата публикации еще не наступила
-        tags: Используйте запятую в качестве разделителя тегов
+        example: example
       advertiser_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       feed_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       post:
-        status: Поставьте статус "На модерацию", когда завершите статью
+        status: Поставьте статус "На модерацию", когда завершите статью. Модерация занимает не более 48 часов.
+        realm: Ознакомьтесь с полным списком доступных сайтов для размещения статьи <a href="/realms" target="_blank">по этой ссылке</a>
+        post_category: Ознакомьтесь с полным списком доступных категорий для размещения статьи <a href="/post_categories" target="_blank">по этой ссылке</a>
+        tags: Ознакомьтесь с полным списком доступных тегов для размещения статьи <a href="/tags" target="_blank">по этой ссылке</a>.<br/>Используйте запятую в качестве разделителя тегов или клавишу Enter
+        published_at: Материал не будет опубликован, если дата публикации еще не наступила
+        currency: Выберите национальную валюту вашей страны
     placeholders:
       post:
         realm: Выберите наиболее подходящий сайт для размещения вашей статьи

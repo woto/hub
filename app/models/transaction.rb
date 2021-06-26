@@ -38,8 +38,8 @@ class Transaction < ApplicationRecord
   include Elasticable
   index_name "#{Rails.env}.transactions"
 
-  belongs_to :debit, class_name: 'Account'
-  belongs_to :credit, class_name: 'Account'
+  belongs_to :debit, class_name: 'Account', touch: true
+  belongs_to :credit, class_name: 'Account', touch: true
   belongs_to :transaction_group
   belongs_to :obj, polymorphic: true, optional: true
   belongs_to :responsible, class_name: 'User'

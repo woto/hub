@@ -4,7 +4,8 @@ default: &default
   port: <%= ENV['REDIS_PORT'] %>
 
 development:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
 
 test:
   adapter: test

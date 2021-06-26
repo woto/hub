@@ -95,15 +95,16 @@ class PrometheusJob < ApplicationJob
       metric.set(count, labels: { depth: depth })
     end
 
-    # TODO: Add flag for skip monitoring (eg. bad_categories)
-    docstring = 'Категории по уровню вложенности'
-    metric = pusher.metric(:feed_categories_parent_not_found, :gauge,
-                           labels: [:feed_id],
-                           docstring: docstring)
-    FeedCategory.where(parent_not_found: nil).group(:feed_id).order('count_all DESC')
-                .limit(10).count.each do |feed_id, count|
-      metric.set(count, labels: { feed_id: feed_id })
-    end
+    # TODO: move metric to import process
+    # # TODO: Add flag for skip monitoring (eg. bad_categories)
+    # docstring = 'Категории по уровню вложенности'
+    # metric = pusher.metric(:feed_categories_parent_not_found, :gauge,
+    #                        labels: [:feed_id],
+    #                        docstring: docstring)
+    # FeedCategory.where(parent_not_found: nil).group(:feed_id).order('count_all DESC')
+    #             .limit(10).count.each do |feed_id, count|
+    #   metric.set(count, labels: { feed_id: feed_id })
+    # end
 
     # pusher.push
   end

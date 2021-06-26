@@ -1,0 +1,17 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/"><%= t('home') %></a>
+    </li>
+
+    <% category.path[..-2].each do |item| %>
+      <li class="breadcrumb-item">
+        <%= link_to item.title, category_path(item) %>
+      </li>
+    <% end %>
+
+    <li class="breadcrumb-item active">
+      <%= link_to category.title, category_path(category) %>
+    </li>
+  </ol>
+</nav>

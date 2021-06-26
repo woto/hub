@@ -66,7 +66,7 @@ document.addEventListener("turbo:load", function() {
         // debugger
         return new bootstrap.Dropdown(dropdownTriggerEl, {
             popperConfig: {
-                strategy: "fixed"
+                // strategy: "fixed"
             }
         });
     });

@@ -1182,70 +1182,6 @@ ALTER SEQUENCE public.widgets_id_seq OWNED BY public.widgets.id;
 
 
 --
--- Name: widgets_multiples; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.widgets_multiples (
-    id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: widgets_multiples_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.widgets_multiples_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: widgets_multiples_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.widgets_multiples_id_seq OWNED BY public.widgets_multiples.id;
-
-
---
--- Name: widgets_multiples_items; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.widgets_multiples_items (
-    id bigint NOT NULL,
-    widgets_multiple_id bigint NOT NULL,
-    title character varying,
-    url character varying,
-    body text,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: widgets_multiples_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.widgets_multiples_items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: widgets_multiples_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.widgets_multiples_items_id_seq OWNED BY public.widgets_multiples_items.id;
-
-
---
 -- Name: widgets_simples; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1475,20 +1411,6 @@ ALTER TABLE ONLY public.widgets ALTER COLUMN id SET DEFAULT nextval('public.widg
 
 
 --
--- Name: widgets_multiples id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_multiples ALTER COLUMN id SET DEFAULT nextval('public.widgets_multiples_id_seq'::regclass);
-
-
---
--- Name: widgets_multiples_items id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_multiples_items ALTER COLUMN id SET DEFAULT nextval('public.widgets_multiples_items_id_seq'::regclass);
-
-
---
 -- Name: widgets_simples id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1692,22 +1614,6 @@ ALTER TABLE ONLY public.transactions
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: widgets_multiples_items widgets_multiples_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_multiples_items
-    ADD CONSTRAINT widgets_multiples_items_pkey PRIMARY KEY (id);
-
-
---
--- Name: widgets_multiples widgets_multiples_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_multiples
-    ADD CONSTRAINT widgets_multiples_pkey PRIMARY KEY (id);
 
 
 --
@@ -1994,13 +1900,6 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 
 
 --
--- Name: index_widgets_multiples_items_on_widgets_multiple_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_widgets_multiples_items_on_widgets_multiple_id ON public.widgets_multiples_items USING btree (widgets_multiple_id);
-
-
---
 -- Name: index_widgets_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2217,14 +2116,6 @@ ALTER TABLE ONLY public.transactions
 
 
 --
--- Name: widgets_multiples_items fk_rails_fbb5afcd82; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_multiples_items
-    ADD CONSTRAINT fk_rails_fbb5afcd82 FOREIGN KEY (widgets_multiple_id) REFERENCES public.widgets_multiples(id);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -2266,8 +2157,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210301234512'),
 ('20210301235012'),
 ('20210328042112'),
-('20210328055745'),
-('20210526162912'),
-('20210526162933');
+('20210328055745');
 
 

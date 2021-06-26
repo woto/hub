@@ -9,7 +9,7 @@ ru:
   advertiser: Рекламодатель
   feed: Прайс
   feed_category: Категория
-  offers: Товары
+  products: Товары
   feeds: Прайсы
   feed_categories: Категории товаров
   post_categories: Категории статей
@@ -17,6 +17,73 @@ ru:
   link: Ссылка
   true: Да
   false: Нет
+  continue: Продолжить
+  back: Назад
+  edit: Изменить
+
+#  accounting/posts/transit_to_draft_post: posts/draft_post
+#  accounting/posts/transit_to_pending_post: posts/pending_post
+#  accounting/posts/transit_to_approved_post: posts/approved_post
+#  accounting/posts/transit_to_rejected_post: posts/rejected_post
+#  accounting/posts/transit_to_accrued_post: posts/accrued_post
+#  accounting/posts/transit_to_canceled_post: posts/canceled_post
+#  accounting/posts/change_status: Статьи
+
+#  accounting/checks/transit_to_pending_check: checks/pending_check
+#  accounting/checks/transit_to_payed_check: checks/payed_check
+#  accounting/checks/change_status: Выплаты
+
+  favorites:
+    create:
+      successfully_added: 'Успешно добавлено в избранное %{favorite_name}'
+      successfully_removed: 'Успешно удалено из избранного %{favorite_name}'
+
+  widgets:
+    new:
+      selecting_widget_type: Выбор типа создаваемого виджета
+      new_simple_widget: Простой виджет
+    simples:
+      create:
+        simple_was_successfully_created: Виджет успешно создан
+      update:
+        simple_was_successfully_updated: Виджет успешно изменен
+      content:
+        widget_preview: Предпросмотр виджета
+        widget_form: Форма редактирования виджета
+      new:
+        creating_widget: Создание виджета
+        insert: Вставить виджет в статью
+      edit:
+        editing_widget: Редактирование виджета
+        insert: Вставить виджет в статью
+      widget:
+        visit_advertiser: Перейти в магазин
+        title: Пример названия товара
+        body: Яркий и информативный пример описания, содержащий основные характеристики товара
+    empty_wrapper:
+      create_new_widget: Создать новый виджет
+    index:
+      widget_setup: Управление виджетами
+      edit: Редактировать виджет
+      insert: Вставить виджет в статью
+#    modal_list_wrapper:
+#      insert: ыВставить виджет
+#      edit: Редыактировать виджет
+#      modal_title: Ныастройка виджета
+#      create_new_widget: Соыздать новый виджет
+
+  offers:
+    address_for_widget:
+      address_for_widget: Ссылка для виджета
+      address_for_widget_help: Используйте данную ссылку для вставки в виджет
+    modal_card_wrapper:
+      modal_title: "Информация о товаре: %{ext_id}"
+      name: Название
+      description: Описание
+      price: Цена
+      visit_advertiser: Перейти в магазин
+      read_more: Развернуть
+      read_less: Свернуть
 
   frames:
     news:
@@ -35,8 +102,6 @@ ru:
   continue_reading: Продолжить чтение
   search: Искать
   close: Закрыть
-  see_also: Смотрите также
-  see_more: 'Не отображается: %{count} шт.'
   columns: Колонки
   workspaces: Области
   save: Сохранить
@@ -57,35 +122,71 @@ ru:
       title: Only good reviews ;)
       tagline: Контент платформа, с помощью которой авторы зарабатывают деньги за обзоры и отзывы на товары, в рекламе которых нуждаются интернет магазины.
       link: Выбрать товар
+      dashboard: Личный кабинет
 
   inputs:
     profiles:
       messengers_collection:
         add_messenger: Добавить мессенджер
 
+  checks:
+    create:
+      check_was_successfully_created: Выплата была успешно создана
+    update:
+      check_was_successfully_updated: Выплата была успешно изменена
+    destroy:
+      check_was_successfully_destroyed: Выплата была успешно удалена
+
   posts:
-    settings:
-      some_radio:
-        rewrite: Рерайт
-        copywrite: Копирайт
-      some_checkbox:
-        1: Тест 1
-        2: Тест 2
-        3: Тест 3
-    modal_embed:
-      embed_offer: Вставка виджета
-      select: Списки избранного
+    create:
+      post_was_successfully_created: Статья была успешно создана
+    update:
+      post_was_successfully_updated: Статья была успешно изменена
+    destroy:
+      post_was_successfully_destroyed: Статья была успешно удалена
+    # Do not remove old keys from extra_options. The reason is in that old extra_options
+    # could be stored in the old records of Post.
+    extra_options:
+      extra_options: Экстра опции
+      extra_options_hint: Данные опции не обязательны для заполнения. Но могут положительно отразиться на величине вознаграждения в виде экстра бонуса.
+      hints:
+        post_type: 'Рерайт - пересказ общедоступного текста в интернете. Копирайт - авторская работа.'
+        product_type: ''
+        images_type: ''
+        overview_type: ''
+        product_comparison: ''
+        uniqueness_checked: ''
+        moderator_bonus: ''
+      labels:
+        post_type:
+          rewrite: Рерайт
+          copywrite: Копирайт
+        product_type:
+          brand_new_product: Товар недавно поступил в продажу
+          product_popular: Товар можно приобрести в разных магазинах
+          searchable: Товар легко находится в поисковых системах по названию
+        images_type:
+          unique_images: Изображения собственные и уникальные
+          do_not_found_in_google: Изображения обработаны и не находятся в поисковых системах по изображению
+          found_in_google: Изображения являются копиями и находятся в поисковых системах по изображению
+          does_not_include_images: Статья не содержит картинок
+        overview_type:
+          specific_knowledge: Статья обозревает специфические узкие характеристики товара
+          not_specific_knowledge: Статья содержит поверхностный текст, без углублений в подробности
+        product_comparison:
+          product_comparison: Статья содержит обзор и сравнение нескольких товаров сгруппированных тематически
+        uniqueness_checked:
+          advego_ru: на сайте advego.ru
+          text_ru: на сайте text.ru
+          etxt_ru: на сайте etxt.ru
+        moderator_bonus:
+          plus_5_percent: + 5%
+          plus_10_percent: + 10%
+          plus_15_percent: + 15%
+          plus_20_percent: + 20%
     form:
-      post_price_settings: Настройки, влияющие на стоимость статьи
-      post_price_hint: Будьте объективны высталяя настройки. Они повышают стоимость вашей статьи. Модератор проверит их соответствие.
-      statuses:
-        draft: Черновик
-        pending: На модерацию
-        accrued: Принять статью
-        rejected: Запросить доработку
-        canceled: Отменить выплату
-      moderation_status: Статус модерирования
-      moderation_parting_words: 'Не переключайте бездумно статус. Переключение статуса влечёт отправку нотификации пользователю и созданию финансовой транзакции.'
+      editorial: Редактура
+      are_you_sure: Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены
     show:
       language: Язык статьи
       badge:
@@ -116,16 +217,18 @@ ru:
       update:
         saved: Профиль успешно сохранен
 
+  navbar_favorite_component:
+    title: Избранное
+
   header:
     language_component:
       title: Язык
-    favorites_component:
-      title: Избранное
 
     menu:
       login: Вход
       logout: Выход
       settings: Настройки
+      restore_permissions: Восстановить полномочия
 
   tables:
     offers:

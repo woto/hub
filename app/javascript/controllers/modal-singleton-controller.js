@@ -7,11 +7,11 @@ export default class extends Controller {
     open(html) {
         return new Promise((resolve, reject) => {
             let modalTemplate = `
-            <div class="modal" tabindex="-1">
-              <div class="modal-dialog modal-xl">
+            <div class="modal modal-blur fade" tabindex="-1">
+              <div class="modal-dialog modal-md">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body" data-target="modal-singleton.contentPlaceholder">
@@ -25,19 +25,24 @@ export default class extends Controller {
             </div>`
 
             this.element.insertAdjacentHTML('beforeend', modalTemplate);
-            let modal = this.element.lastChild;
-            // console.log(modal);
+            this.modal = this.element.lastChild;
 
-            modal.addEventListener('hidden.bs.modal', function (event) {
-                modal.remove();
+
+            // let turbo_prevent = function() {
+            //     event.preventDefault();
+            // }
+
+            this.modal.addEventListener('hide.bs.modal', (event) => {
+                this.modal.remove();
+                // document.removeEventListener('turbo:click', turbo_prevent);
             })
 
-            modal.addEventListener('show.bs.modal', function (event) {
+            this.modal.addEventListener('show.bs.modal', (event) => {
+                // document.addEventListener('turbo:click', turbo_prevent);
                 resolve();
             })
 
-            return new bootstrap.Modal(modal).show();
+            return new bootstrap.Modal(this.modal).show();
         });
-
     }
 }
