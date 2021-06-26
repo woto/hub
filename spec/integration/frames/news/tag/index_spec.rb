@@ -6,13 +6,14 @@ describe Frames::News::TagController, type: :system, responsible: :admin do
   describe '#index' do
     before do
       # news1
-      create(:post, realm_kind: :news, realm_locale: 'en-US', tags: ['', 'tag 1', 'tag 2'])
+      create(:post, realm_kind: :news, realm_locale: 'en-US', tags: ['', 'tag 1', 'tag 2'], status: :accrued_post)
       # news2
-      create(:post, realm_kind: :news, realm_locale: 'en-US', tags: ['', 'tag 2'])
+      create(:post, realm_kind: :news, realm_locale: 'en-US', tags: ['', 'tag 2'], status: :accrued_post)
       # news4 - Russian
-      create(:post, realm_kind: :news, realm_locale: 'ru', tags: ['', 'tag 3'])
+      create(:post, realm_kind: :news, realm_locale: 'ru', tags: ['', 'tag 3'], status: :accrued_post)
       # news5 - News from the feature
-      create(:post, realm_kind: :news, realm_locale: 'en-US', tags: ['', 'future'], published_at: 1.minute.from_now)
+      create(:post, realm_kind: :news, realm_locale: 'en-US', tags: ['', 'future'], published_at: 1.minute.from_now,
+                    status: :accrued_post)
     end
 
     it 'displays only news which matches the filter' do

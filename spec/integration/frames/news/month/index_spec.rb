@@ -8,15 +8,18 @@ describe Frames::News::MonthController, type: :system, responsible: :admin do
 
     before do
       # news1
-      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: Time.zone.parse('2020-03-31 22:00'))
+      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: Time.zone.parse('2020-03-31 22:00'),
+                    status: :accrued_post)
       # news2
-      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: Time.zone.parse('2020-04-01 02:00'))
+      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: Time.zone.parse('2020-04-01 02:00'),
+                    status: :accrued_post)
       # news3
-      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: Time.zone.parse('2020-05-10 12:00'))
+      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: Time.zone.parse('2020-05-10 12:00'),
+                    status: :accrued_post)
       # news4 - Russian
-      create(:post, realm_kind: :news, realm_locale: 'ru', published_at: 1.minute.ago)
+      create(:post, realm_kind: :news, realm_locale: 'ru', published_at: 1.minute.ago, status: :accrued_post)
       # news5 - News from the feature
-      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: future_time)
+      create(:post, realm_kind: :news, realm_locale: 'en-US', published_at: future_time, status: :accrued_post)
     end
 
     it 'displays only news which matches the filter' do

@@ -6,12 +6,12 @@ describe Frames::News::LatestController, type: :system, responsible: :admin do
   describe '#index' do
     context 'when latest news are present' do
       let!(:news1) do
-        create(:post, realm_kind: :news, realm_locale: :ru,
-                      published_at: Time.zone.parse('2002-02-03 12:00'))
+        create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2002-02-03 12:00'),
+                      status: :accrued_post)
       end
       let!(:news2) do
-        create(:post, realm_kind: :news, realm_locale: :ru,
-                      published_at: Time.zone.parse('2001-02-03 12:00'))
+        create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2001-02-03 12:00'),
+                      status: :accrued_post)
       end
 
       before do

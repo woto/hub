@@ -4,10 +4,13 @@ require 'rails_helper'
 
 describe Tables::NewsController, type: :system, responsible: :admin do
   describe 'index' do
-    let!(:post) { create(:post, realm_kind: :news, published_at: Time.zone.parse('2020-01-01')) }
+    let!(:post) do
+      create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2020-01-01'),
+                    status: :accrued_post)
+    end
 
     before do
-      create(:post, realm_kind: :news)
+      create(:post, realm_kind: :news, status: :accrued_post)
       visit by_month_news_index_path({ month: '2020-01', locale: 'ru' })
     end
 

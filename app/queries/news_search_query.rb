@@ -6,16 +6,18 @@ class NewsSearchQuery
 
   def call
     definition = search do
-
       query do
         bool do
-
           filter do
-            term "realm_kind.keyword" => 'news'
+            term 'realm_kind.keyword' => 'news'
           end
 
           filter do
-            term "realm_locale.keyword" => context.locale
+            term 'status.keyword' => 'accrued_post'
+          end
+
+          filter do
+            term 'realm_locale.keyword' => context.locale
           end
 
           filter do
@@ -26,7 +28,7 @@ class NewsSearchQuery
 
           if context.tag.present?
             filter do
-              term "tags.keyword" => context.tag
+              term 'tags.keyword' => context.tag
             end
           end
 

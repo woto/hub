@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Tables::NewsController, type: :system, responsible: :admin do
   describe 'index' do
-    let!(:post) { create(:post, realm_kind: :news, tags: ['', 'tag1'], realm_locale: 'ru') }
+    let!(:post) { create(:post, realm_kind: :news, tags: ['', 'tag1'], realm_locale: 'ru', status: :accrued_post) }
 
     before do
       create(:post, realm_kind: :news, realm_locale: 'ru')

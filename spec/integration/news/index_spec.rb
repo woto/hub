@@ -24,7 +24,7 @@ describe Tables::NewsController, type: :system, responsible: :admin do
   end
 
   context 'without language locale param' do
-    let!(:news) { create(:post, realm_locale: 'en-US', realm_kind: :news) }
+    let!(:news) { create(:post, realm_locale: 'en-US', realm_kind: :news, status: :accrued_post) }
 
     before do
       visit news_index_path
@@ -37,7 +37,10 @@ describe Tables::NewsController, type: :system, responsible: :admin do
   end
 
   context 'with russian locale param' do
-    let!(:news) { create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.current) }
+    let!(:news) do
+      create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.current,
+                    status: :accrued_post)
+    end
 
     before do
       visit news_index_path({ locale: 'ru' })
@@ -71,8 +74,8 @@ describe Tables::NewsController, type: :system, responsible: :admin do
 
   context 'when "per" param is 1 and "page" is 2' do
     before do
-      create(:post, realm_kind: :news, realm_locale: :ru)
-      create(:post, realm_kind: :news, realm_locale: :ru)
+      create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post)
+      create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post)
       visit news_index_path({ per: 1, page: 2, locale: 'ru' })
     end
 
@@ -84,8 +87,8 @@ describe Tables::NewsController, type: :system, responsible: :admin do
 
   describe 'pagination' do
     before do
-      create(:post, realm_kind: :news, realm_locale: :ru)
-      create(:post, realm_kind: :news, realm_locale: :ru)
+      create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post)
+      create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post)
     end
 
     it 'displays pagination' do
@@ -95,7 +98,7 @@ describe Tables::NewsController, type: :system, responsible: :admin do
   end
 
   describe 'preview selector' do
-    let!(:post) { create(:post, realm_kind: :news, realm_locale: :ru) }
+    let!(:post) { create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post) }
 
     it 'wraps intro in selector' do
       visit news_index_path({ locale: 'ru' })

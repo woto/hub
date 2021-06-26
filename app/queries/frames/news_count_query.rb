@@ -11,7 +11,11 @@ module Frames
         query do
           bool do
             filter do
-              term 'realm_kind' => 'news'
+              term 'realm_kind.keyword' => 'news'
+            end
+
+            filter do
+              term 'status.keyword' => 'accrued_post'
             end
 
             filter do
