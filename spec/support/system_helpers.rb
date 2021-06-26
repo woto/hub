@@ -2,11 +2,11 @@
 
 module SystemHelpers
   def expect_authenticated
-    expect(page).to have_selector('.capybara-authenticated')
+    expect(page).to have_selector('.authenticated_component')
   end
 
   def expect_unauthenticated
-    expect(page).to have_selector('.capybara-unauthenticated')
+    expect(page).to have_selector('.unauthenticated_component')
   end
 
   def expect_dashboard

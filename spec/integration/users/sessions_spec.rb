@@ -38,7 +38,7 @@ describe Users::SessionsController, type: :system do
     it 'signs out successfully' do
       login_as(user, scope: :user)
       visit '/ru/dashboard'
-      find('.capybara-desktop.capybara-authenticated').click
+      find('.authenticated_component .capybara-desktop').click
       click_link 'logout'
       expect(page).to have_text('Выход из системы выполнен.')
     end

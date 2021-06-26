@@ -1,5 +1,5 @@
-<div class="nav-item dropdown">
-  <%= link_to '#', class: "#{@capybara_browser} capybara-authenticated nav-link d-flex lh-1 text-reset p-0",
+<div class="nav-item dropdown authenticated_component">
+  <%= link_to '#', class: "#{@capybara_browser} nav-link d-flex lh-1 text-reset p-0",
                    'data-bs-toggle': 'dropdown' do %>
     <%= render AvatarComponent.new(avatar: helpers.current_user.avatar) %>
 

@@ -5,15 +5,15 @@ require 'rails_helper'
 describe 'Header' do
   context 'when user is not authenticated' do
     it 'shows login link for desktop' do
-      visit '/ru/dashboard'
-      expect(page).to have_css('.capybara-desktop.capybara-unauthenticated')
-      expect(page).to have_no_css('.capybara-mobile.capybara-unauthenticated')
+      visit '/ru/offers'
+      expect(page).to have_css('.unauthenticated_component .capybara-desktop')
+      expect(page).to have_no_css('.unauthenticated_component .capybara-mobile')
     end
 
     it 'shows login link for mobile', browser: :mobile do
-      visit '/ru/dashboard'
-      expect(page).to have_css('.capybara-mobile.capybara-unauthenticated')
-      expect(page).to have_no_css('.capybara-desktop.capybara-unauthenticated')
+      visit '/ru/offers'
+      expect(page).to have_css('.unauthenticated_component .capybara-mobile')
+      expect(page).to have_no_css('.unauthenticated_component .capybara-desktop')
     end
   end
 
@@ -25,15 +25,15 @@ describe 'Header' do
     end
 
     it 'shows profile link for desktop' do
-      visit '/ru/dashboard'
-      expect(page).to have_css('.capybara-desktop.capybara-authenticated')
-      expect(page).to have_no_css('.capybara-mobile.capybara-authenticated')
+      visit '/ru/offers'
+      expect(page).to have_css('.authenticated_component .capybara-desktop')
+      expect(page).to have_no_css('.authenticated_component .capybara-mobile')
     end
 
     it 'shows profile link for mobile', browser: :mobile do
-      visit '/ru/dashboard'
-      expect(page).to have_css('.capybara-mobile.capybara-authenticated')
-      expect(page).to have_no_css('.capybara-desktop.capybara-authenticated')
+      visit '/ru/offers'
+      expect(page).to have_css('.authenticated_component .capybara-mobile')
+      expect(page).to have_no_css('.authenticated_component .capybara-desktop')
     end
   end
 end
