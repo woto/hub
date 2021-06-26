@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Frames::News::MonthController, type: :system do
+describe Frames::News::MonthController, type: :system, responsible: :admin do
   describe '#index' do
     let(:future_time) { 1.minute.from_now }
 

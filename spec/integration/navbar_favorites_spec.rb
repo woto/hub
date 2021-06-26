@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Navbar favorites', type: :system do
   subject do
-    visit '/ru/dashboard'
+    visit '/ru/offers'
     within 'header' do
       click_on 'Избранное'
     end

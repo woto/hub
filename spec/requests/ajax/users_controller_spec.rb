@@ -23,9 +23,8 @@ describe Ajax::UsersController, type: :request do
   context 'with user' do
     it 'returns authorization error' do
       sign_in user
-      expect {
-        get ajax_users_path(q: Faker::Alphanumeric.alphanumeric), xhr: true
-      }.to raise_error(Pundit::NotAuthorizedError)
+      get ajax_users_path(q: Faker::Alphanumeric.alphanumeric), xhr: true
+      expect(response).to have_http_status(403)
     end
   end
 end

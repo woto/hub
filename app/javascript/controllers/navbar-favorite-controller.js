@@ -37,8 +37,6 @@ export default class extends ApplicationController {
                 } else {
                     bootstrap.Dropdown.getInstance(that.dropdownTarget).hide();
                     that.dispatch('showToast', {detail: {title: textStatus, body: this.noFavoritesValue }});
-
-                    // that.errorPlaceholderTarget.innerHTML = 'Nothing yet! Add something to favorite to fill list.';
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
