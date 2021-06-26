@@ -13,7 +13,7 @@
     "@rails/ujs": "^6.0",
     "@rails/webpacker": "4.2.2",
     "@tabler/core": "https://github.com/tabler/tabler.git#e7141220e328041d63f7933b1650a113e62e6774",
-    "apexcharts": "^3.22.2",
+    "apexcharts": "^3.24.0",
     "bootstrap": "^5.0.0-beta3",
     "dayjs": "^1.9.4",
     "dropzone": "^5.7.1",
