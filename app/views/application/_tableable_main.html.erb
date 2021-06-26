@@ -1,0 +1,41 @@
+<% content_for :title do %>
+  <%= t(@settings[:plural], scope: ['titles']) %>
+<% end %>
+
+<%= render 'breadcrumbs' %>
+
+<%= tag.div class: 'col-12',
+            "data-controller": 'table-workspace-form table-columns-form' do %>
+
+  <%= tag.div class: 'd-none',
+              "data-target": 'table-columns-form.form' do %>
+    <%= render 'columns_form'  %>
+  <% end %>
+
+  <%= tag.div class: 'd-none',
+              "data-target": 'table-workspace-form.form' do %>
+    <%= render 'workspace_form' %>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <%= render 'table_header', rows: rows %>
+      <div class="table-responsive" style="min-height: 400px">
+        <table class="table card-table table-vcenter text-nowrap table-hover">
+          <thead>
+            <%= render 'tableable_thead' %>
+          </thead>
+          <tbody>
+            <%= render 'tableable_tbody', rows: rows %>
+          </tbody>
+        </table>
+        <%= render 'empty_page' if rows.empty?  %>
+      </div>
+    </div>
+    <%= render 'table_footer', rows: rows %>
+  </div>
+<% end %>
+
+<% content_for :left_menu do %>
+  <%= render 'application/workspaces_list' %>
+<% end %>

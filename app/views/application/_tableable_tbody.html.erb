@@ -1,0 +1,28 @@
+<% rows.each do |row| %>
+  <%= tag.tr id: "table_#{@settings[:singular]}_#{row.id}", class: "table_#{@settings[:singular]}" do %>
+
+    <% if params[:controller] != 'tables/favorites' %>
+      <%= tag.td id: "tr_#{row.id}_td_favorite" do %>
+        <% kind = @settings[:favorites_items_kind] %>
+          <%= render StarFavoriteComponent.new(
+            is_favorite: @favorites_store.find(row._id, kind),
+            ext_id: row.id,
+            favorites_items_kind: kind,
+            bobber: { class: 'z-index-decreased' }) %>
+      <% end %>
+    <% end %>
+
+    <% @settings[:form_class].parsed_columns_for(request, current_user&.role).each do |col_name| %>
+      <%= tag.td id: "tr_#{row.id}_td_#{col_name}" do %>
+        <%= row.public_send(col_name) %>
+      <% end %>
+    <% end %>
+
+    <% if policy(@settings[:model_class]).new? %>
+      <td>
+        <%= render 'member_controls', row: row %>
+      </td>
+    <% end %>
+
+  <% end %>
+<% end %>

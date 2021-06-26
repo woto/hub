@@ -1,0 +1,18 @@
+<tr>
+  <% if params[:controller] != 'tables/favorites' %>
+    <%= render TableComponent::HeaderComponent.new col_name: GlobalHelper::FAVORITE_COLUMN,
+                                                   settings: @settings
+    %>
+  <% end %>
+
+  <% @settings[:form_class].parsed_columns_for(request, current_user && current_user.role).each do |col_name| %>
+    <%= render TableComponent::HeaderComponent.new col_name: col_name,
+                                                   settings: @settings
+    %>
+  <% end %>
+
+  <% if policy(@settings[:model_class]).new? %>
+    <th>
+    </th>
+  <% end %>
+</tr>
