@@ -1,8 +1,7 @@
 <%= turbo_frame_tag 'news-by-tag' do %>
   <%= tag.div class: 'overflow-auto', style: 'max-height: 300px' do %>
     <%= tag.div class: 'list-group bg-white' do %>
-      <% @result['aggregations']['group_by_tag']['buckets'].each do |item| %>
-
+      <% @result['aggregations']['group_by_tag']['buckets'].select { |bucket| bucket['key'].present? } .each do |item| %>
 
         <% link_value = item['key'] %>
         <% active_css = 'active' if link_value == @tag %>
