@@ -20,6 +20,6 @@ describe FetchFeedQuery do
   end
 
   it 'adds locking statement' do
-    expect(subject.object.to_sql).to match('FOR UPDATE NOWAIT')
+    expect(subject.object.to_sql).to match('FOR UPDATE')
   end
 end
