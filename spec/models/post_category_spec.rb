@@ -25,7 +25,7 @@
 #
 require 'rails_helper'
 
-describe PostCategory, type: :model do
+describe PostCategory, type: :model, responsible: :admin do
   it_behaves_like 'elasticable'
   it_behaves_like 'logidzable'
 
@@ -66,21 +66,17 @@ describe PostCategory, type: :model do
     subject { build(:post_category, parent: parent, realm: realm) }
 
     let(:realm) { create(:realm) }
-    let(:parent) do
-      Current.set(responsible: create(:user, role: :admin)) do
-        create(:post_category, posts: posts, realm: realm)
-      end
-    end
+    let(:parent) { create(:post_category, realm: realm) }
 
     context 'when parent has posts' do
-      let(:posts) { create_list(:post, 1) }
+      before do
+        create_list(:post, 1, post_category: parent)
+      end
 
       it { is_expected.to be_invalid }
     end
 
     context 'when parent does not have posts' do
-      let(:posts) { [] }
-
       it { is_expected.to be_valid }
     end
   end
