@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples_for 'shared get_index', focus: true do |role, permission|
+shared_examples_for 'shared get_index' do |role, permission|
   it "#{permission} for the role: #{role}" do
     case role
     when :user, :manager, :admin

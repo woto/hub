@@ -2,12 +2,31 @@
 
 require 'rails_helper'
 
-shared_examples 'shared_workspace_authenticated' do
+shared_examples 'shared workspace unauthenticated', focus: true do
+  describe 'save workspace' do
+    before do
+      find("[data-action='table-workspace-form#toggleForm']").click
+    end
+
+    it 'proposes to login' do
+      within('#workspace-form') do
+        click_button 'Сохранить'
+      end
+      expect(page).to have_current_path(new_user_session_path, url: false)
+      expect(page).to have_text('Вам необходимо войти в систему или зарегистрироваться.')
+    end
+  end
+end
+
+shared_examples 'shared workspace authenticated', focus: true do
   context 'when user has default workspace' do
     it 'loads automatically when user visits `plural`' do
       login_as(user, scope: :user)
-      create(:workspace, is_default: true, user: user, controller: "tables/#{plural}",
-                                     path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
+      create(:workspace,
+             is_default: true,
+             user: user,
+             controller: "tables/#{plural}",
+             path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
       visit "/ru/#{plural}"
       expect(page).to have_current_path("/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
     end
@@ -16,8 +35,11 @@ shared_examples 'shared_workspace_authenticated' do
   context 'when user clicks on saved workspace' do
     it 'loads workspace params' do
       login_as(user, scope: :user)
-      workspace = create(:workspace, is_default: false, user: user, controller: "tables/#{plural}",
-                                     path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
+      workspace = create(:workspace,
+                         is_default: false,
+                         user: user,
+                         controller: "tables/#{plural}",
+                         path: "/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
       visit "/ru/#{plural}"
       click_on workspace.name
       expect(page).to have_current_path("/ru/#{plural}?cols=0&order=asc&page=1&per=10&sort=id")
@@ -30,37 +52,17 @@ shared_examples 'shared_workspace_authenticated' do
       visit "/ru/#{plural}"
     end
 
-    context 'when page loads' do
-      it 'does not show workspace form' do
-        expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
-      end
-    end
+    it 'shows and hides form' do
+      # initially form is not shown
+      expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
 
-    context 'when clicks on "workspaces"' do
-      it 'shows workspace form' do
-        find("[data-action='table-workspace-form#toggleForm']").click
-        expect(page).to have_css('.d-block[data-target="table-workspace-form.form"]', visible: true)
-      end
-    end
+      # clicking on the button shows form
+      find("[data-action='table-workspace-form#toggleForm']").click
+      expect(page).to have_css('.d-block[data-target="table-workspace-form.form"]', visible: true)
 
-    context 'when user clicking browser back button' do
-      it 'shows initial state' do
-        # showing form
-        find("[data-action='table-workspace-form#toggleForm']").click
-        expect(page).to have_css('.d-block[data-target="table-workspace-form.form"]', visible: true)
-
-        # clicking anywhere
-        click_on('Новости')
-        expect(page).to have_current_path(Regexp.new('/ru/news'))
-        # teardown does not have time to execute
-        # and we can't test it otherwise
-        sleep(1)
-
-        # clicking back
-        page.go_back
-        expect(page).to have_current_path(Regexp.new("/ru/#{plural}"))
-        expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
-      end
+      # clicking on the button again hides form
+      find("[data-action='table-workspace-form#toggleForm']").click
+      expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
     end
   end
 
