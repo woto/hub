@@ -109,20 +109,35 @@ describe Realm, type: :model do
   end
 
   describe '.pick' do
+    let(:locale) { I18n.available_locales.sample.to_s }
+    let(:kind) { described_class.kinds.keys.sample }
+
     context 'when only :kind and :locale are passed' do
       subject { described_class.pick(locale: locale, kind: kind) }
 
-      let(:locale) { I18n.available_locales.sample }
-      let(:kind) { described_class.kinds.keys.sample }
-
       it 'calls .find_or_create_by!' do
-        expect(Realm).to receive(:find_or_create_by!).with(
+        expect { subject }.to change(described_class, :count)
+        expect(described_class.last).to have_attributes(
           locale: locale,
           kind: kind,
           title: "Website: { kind: #{kind}, locale: #{locale} }",
           domain: "#{kind}.#{locale.downcase}"
-        ).and_call_original
-        expect(subject).to be_persisted
+        )
+      end
+    end
+
+    context 'when all params are passed' do
+      subject { described_class.pick(locale: locale, kind: kind, title: 'title', domain: 'domain') }
+
+      it 'calls .find_or_create_by!' do
+        expect { subject }.to change(described_class, :count)
+
+        expect(described_class.last).to have_attributes(
+          locale: locale,
+          kind: kind,
+          title: 'title',
+          domain: 'domain'
+        )
       end
     end
   end
