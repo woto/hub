@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples 'shared workspace unauthenticated', focus: true do
+shared_examples 'shared workspace unauthenticated' do
   describe 'save workspace' do
     before do
       find("[data-action='table-workspace-form#toggleForm']").click
@@ -18,7 +18,7 @@ shared_examples 'shared workspace unauthenticated', focus: true do
   end
 end
 
-shared_examples 'shared workspace authenticated', focus: true do
+shared_examples 'shared workspace authenticated' do
   context 'when user has default workspace' do
     it 'loads automatically when user visits `plural`' do
       login_as(user, scope: :user)

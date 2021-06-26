@@ -32,10 +32,12 @@ shared_examples_for 'shared columns visible only to admin', responsible: :admin 
     let(:user) { create(:user) }
 
     it 'does not show columns' do
+      # in the form
       within '#new_columns_form' do
         expect(page).to have_no_text(select_title)
       end
 
+      # in the table
       within 'table' do
         expect(page).to have_no_text(column_title)
       end

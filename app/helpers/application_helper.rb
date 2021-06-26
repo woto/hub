@@ -29,6 +29,18 @@ module ApplicationHelper
     }
   end
 
+  def collection_for_columns
+    keys = @settings[:form_class].parsed_columns_for(request, current_user&.role) |
+           @settings[:form_class]
+           .all_columns
+           .reject { _1[:roles].exclude?(current_user&.role || 'guest') }
+           .map { _1[:key] }
+
+    keys.map do |k|
+      [t(k, scope: [:table, :long, @settings[:singular]]), k]
+    end
+  end
+
   def data_attributes_for_navbar_favorite
     {
       'data-controller': 'navbar-favorite',

@@ -52,7 +52,7 @@ class Columns::BaseForm
 
     def parsed_columns_for(request, role)
       ints = request.params[:cols]&.yield_self do |cols|
-        cols.split('.').map { |el| el.to_i }
+        cols.split('.').map(&:to_i)
       end
       ints_to_strings(ints, role)
     end
@@ -61,8 +61,8 @@ class Columns::BaseForm
       role = 'guest' if role.nil?
 
       all_columns.values_at(*ints)
-          .select { _1[:roles].include?(role) }
-          .map { _1[:key] }
+                 .select { _1[:roles].include?(role) }
+                 .map { _1[:key] }
     end
 
     def strings_to_ints(strings)
