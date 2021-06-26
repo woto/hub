@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples_for 'shared columns visible only to admin', responsible: :admin, focus: true do
+shared_examples_for 'shared columns visible only to admin', responsible: :admin do
   before do
     object
     login_as(user, scope: :user)
@@ -46,7 +46,7 @@ shared_examples_for 'shared columns visible only to admin', responsible: :admin,
   end
 end
 
-shared_examples_for 'shared columns invisible by default', responsible: :admin, focus: true do
+shared_examples_for 'shared columns invisible by default', responsible: :admin do
   let(:user) { create(:user) }
 
   before do

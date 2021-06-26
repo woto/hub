@@ -3,6 +3,7 @@
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from Pundit::NotAuthorizedError, with: :render_403
 
   impersonates :user
 
@@ -25,7 +26,16 @@ class ApplicationController < ActionController::Base
     Yabeda.hub.http_errors.increment({ http_code: 404 }, by: 1)
 
     respond_to do |format|
-      format.html { render file: "#{Rails.root}/public/404.html", layout: false, status: 404 }
+      format.html { render file: Rails.root.join('public/404.html'), layout: false, status: :not_found }
+    end
+  end
+
+  def render_403(exception)
+    Rails.logger.error(exception.message)
+    Yabeda.hub.http_errors.increment({ http_code: 403 }, by: 1)
+
+    respond_to do |format|
+      format.html { render file: Rails.root.join('public/404.html'), layout: false, status: :forbidden }
     end
   end
 
