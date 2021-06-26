@@ -9,6 +9,7 @@ class AddFieldsToUsers < ActiveRecord::Migration[5.2]
       t.integer :favorites_count, default: 0, null: false
       t.integer :workspaces_count, default: 0, null: false
       t.integer :profiles_count, default: 0, null: false
+      t.integer :identities_count, default: 0, null: false
     end
   end
 end

@@ -18,11 +18,10 @@ describe Widgets::SimplesController, type: :request do
   context 'with another user' do
     let(:another_user) { create(:user) }
 
-    it 'raises exception' do
+    it 'responses with `forbidden`' do
       sign_in(another_user)
-      expect do
-        get edit_widgets_simple_path(widget.widgetable)
-      end.to raise_error(Pundit::NotAuthorizedError)
+      get edit_widgets_simple_path(widget.widgetable)
+      expect(response).to have_http_status(:forbidden)
     end
   end
 

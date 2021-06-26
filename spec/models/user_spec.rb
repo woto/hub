@@ -15,6 +15,7 @@
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
 #  favorites_count        :integer          default(0), not null
+#  identities_count       :integer          default(0), not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  locked_at              :datetime

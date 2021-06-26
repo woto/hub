@@ -9,7 +9,7 @@ describe 'Tawk' do
     end
 
     it 'shows tawk widget' do
-      get '/dashboard'
+      get '/'
       expect(response.body).to match('Tawk_API')
     end
   end
@@ -20,7 +20,7 @@ describe 'Tawk' do
     end
 
     it 'does not show tawk widget' do
-      get '/dashboard'
+      get '/'
       expect(response.body).not_to match('Tawk_API')
     end
   end

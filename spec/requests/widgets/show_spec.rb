@@ -23,11 +23,10 @@ describe WidgetsController, type: :request do
   context 'with another user' do
     let(:another_user) { create(:user) }
 
-    it 'rejects access' do
+    it 'responses with `forbidden`' do
       sign_in(another_user)
-      expect do
-        get widget_path(widget)
-      end.to raise_error(Pundit::NotAuthorizedError)
+      get widget_path(widget)
+      expect(response).to have_http_status(:forbidden)
     end
   end
 
