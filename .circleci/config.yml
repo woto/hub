@@ -1,0 +1,44 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7-node-browsers
+      - image: elasticsearch:7.4.1
+        environment:
+          node.name: hub
+          discovery.type: single-node
+          cluster.name: hub
+          bootstrap.memory_lock: 'true'
+          ES_JAVA_OPTS: -Xms512m -Xmx512m
+      - image: postgres
+        environment:
+          POSTGRES_USER: hub
+          POSTGRES_DB: hub_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+    environment:
+      RAILS_ENV: test
+      NODE_ENV: test
+      DB_USER: hub
+      DB_HOST: localhost
+      DB_NAME: hub_test
+      DB_PASSWORD: 'Vet:orget5'
+    executor: ruby/default
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client
+      - checkout
+      - run: gem update bundler
+      - run: yarn install --pure-lockfile
+#      - run:
+#          name: Which bundler?
+#          command: bundle -v
+      - ruby/bundle-install
+      - run:
+          name: Setup PostgreSQL test database
+          command: bin/rails db:test:prepare RAILS_ENV=test
+      - run:
+          name: Run tests
+          command: bundle exec rspec
