@@ -1,19 +1,16 @@
 // Load all the controllers within this directory and all subdirectories.
 // Controller files must be named *_controller.js.
 
-// import { Application } from "stimulus"
-// import { definitionsFromContext } from "stimulus/webpack-helpers"
-//
-// const application = Application.start()
-// const context = require.context("controllers", true, /-controller\.js$/)
-// application.load(definitionsFromContext(context))
-
 import { Application } from "stimulus"
-import StimulusControllerResolver from 'stimulus-controller-resolver'
+import { definitionsFromContext } from "stimulus/webpack-helpers"
+
+const application = Application.start()
+const context = require.context("controllers", true, /-controller\.js$/)
+application.load(definitionsFromContext(context))
+
 import ReadMore from "stimulus-read-more"
 import TextareaAutogrow from "stimulus-textarea-autogrow"
 
-const application = Application.start();
 application.register("read-more", ReadMore)
 application.register("textarea-autogrow", TextareaAutogrow)
 
@@ -37,10 +34,6 @@ application.register("textarea-autogrow", TextareaAutogrow)
 // application.register('posts-form-controller', PostsFormController)
 // application.register('timeago-controller', TimeagoController)
 // application.register('profile-language-controller', ProfileLanguageController)
-
-StimulusControllerResolver.install(application, async controllerName => (
-    (await import(`./${controllerName}-controller.js`)).default
-))
 
 // NOTE: not used anymore. Because support of js components which are is not idempotent is very expensive.
 // The pages which include such js components made as not a turbo.
