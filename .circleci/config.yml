@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run: gem update bundler
       - run: yarn install --pure-lockfile
-      - run: rake webpacker:compile
+      - run: bundle exec rake webpacker:compile
 #      - run:
 #          name: Which bundler?
 #          command: bundle -v

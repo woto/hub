@@ -84,7 +84,7 @@ jobs:
         yarn install --pure-lockfile
 
     - name: Compile assets
-      run: rake webpacker:compile
+      run: bundle exec rake webpacker:compile
 
     - name: Setup DB
       run: bin/rails db:create db:schema:load
