@@ -26,6 +26,7 @@ Capybara.test_id = 'data-test-id'
 
     Capybara::Selenium::Driver.new(
       app,
+      timeout: 10,
       browser: :chrome,
       # desired_capabilities: capabilities,
       # http_client: client,
