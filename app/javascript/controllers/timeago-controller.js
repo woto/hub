@@ -22,7 +22,7 @@ export default class extends Controller {
 
         let locale = document.documentElement.lang;
         import(`dayjs/locale/${locale}.js`).then(foo => {
-            dayjs.locale('ru');
+            dayjs.locale(locale);
             this.element.innerHTML = dayjs(this.sourceTime).fromNow()
             this.#sourceTimeStateToggler = true
         })
