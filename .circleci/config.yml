@@ -32,11 +32,11 @@ jobs:
       - checkout
       - run: gem update bundler
       - run: yarn install --pure-lockfile
-      - run: bundle exec rake webpacker:compile
 #      - run:
 #          name: Which bundler?
 #          command: bundle -v
       - ruby/bundle-install
+      - run: rake webpacker:compile
       - run:
           name: Setup PostgreSQL test database
           command: bin/rails db:test:prepare RAILS_ENV=test
