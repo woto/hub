@@ -74,6 +74,8 @@ shared_examples_for 'shared columns invisible by default', responsible: :admin d
 
     click_on 'Update'
 
+    sleep 3
+    Rails.logger.debug page.driver.browser.manage.logs.get(:browser)
     expect(page).to have_text(column_title)
     within "#tr_#{object.id}_td_#{column_id}" do
       expect(page).to have_text(column_value)

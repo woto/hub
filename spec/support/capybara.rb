@@ -15,6 +15,8 @@ Capybara.test_id = 'data-test-id'
   # Capybara.server = :puma, { Silent: true }
   Capybara.default_max_wait_time = 60
   Capybara.register_driver name do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "goog:loggingPrefs": { browser: 'ALL' } )
+
     options = Selenium::WebDriver::Chrome::Options.new
     # NOTE: Maybe github actions doesn't have russian locale in Chrome.
     # So we can't set it in CI. But locally it works.
@@ -28,7 +30,7 @@ Capybara.test_id = 'data-test-id'
       app,
       timeout: 60,
       browser: :chrome,
-      # desired_capabilities: capabilities,
+      desired_capabilities: capabilities,
       # http_client: client,
       options: options
     ).tap do |driver|
