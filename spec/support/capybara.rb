@@ -13,7 +13,7 @@ Capybara.test_id = 'data-test-id'
   name = item[:name]
   resolution = item[:resolution]
   # Capybara.server = :puma, { Silent: true }
-  Capybara.default_max_wait_time = 10
+  Capybara.default_max_wait_time = 60
   Capybara.register_driver name do |app|
     options = Selenium::WebDriver::Chrome::Options.new
     # NOTE: Maybe github actions doesn't have russian locale in Chrome.
@@ -26,7 +26,7 @@ Capybara.test_id = 'data-test-id'
 
     Capybara::Selenium::Driver.new(
       app,
-      timeout: 10,
+      timeout: 60,
       browser: :chrome,
       # desired_capabilities: capabilities,
       # http_client: client,
