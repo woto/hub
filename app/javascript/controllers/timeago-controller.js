@@ -13,8 +13,6 @@ export default class extends Controller {
     #sourceTimeStateToggler;
 
     connect() {
-        document.body.style.backgroundColor = "red";
-
         // Settings.defaultZoneName = "America/Los_Angeles";
         // let time = DateTime.fromISO(this.element.innerHTML, {zone: "Europe/Paris"})
         // debugger
@@ -22,11 +20,9 @@ export default class extends Controller {
 
         let locale = document.documentElement.lang;
         import(`dayjs/locale/${locale}.js`).then(foo => {
-            document.body.style.backgroundColor = "green";
             dayjs.locale(locale);
             this.element.innerHTML = dayjs(this.sourceTime).fromNow()
             this.#sourceTimeStateToggler = true
-            document.body.style.backgroundColor = "blue";
         })
     }
 

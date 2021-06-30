@@ -36,6 +36,10 @@ import '../stylesheets/application.scss';
 
 import * as bootstrap from 'bootstrap'
 
+import('dayjs/locale/ru.js').then(foo => {
+    document.body.style.backgroundColor = "green";
+})
+
 document.addEventListener("turbo:load", function() {
     /**
      */
