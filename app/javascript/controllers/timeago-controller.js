@@ -5,10 +5,6 @@ import dayjs from 'dayjs';
 // import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-// TODO: for ci debugging purposes
-import 'dayjs/locale/ru' // load on demand
-dayjs.locale('ru') // use Spanish locale globally
-
 dayjs.extend(relativeTime);
 // dayjs.extend(utc);
 // dayjs.extend(timezone);
