@@ -1,8 +1,5 @@
 import {Controller} from "stimulus"
 
-const context = require.context("controllers", true, /dayjs\/locale\/.*\.js$/)
-definitionsFromContext(context)
-
 import dayjs from 'dayjs';
 // import utc from 'dayjs/plugin/utc';
 // import timezone from 'dayjs/plugin/timezone';
@@ -22,7 +19,8 @@ export default class extends Controller {
         // alert(time.toRelative({style: 'narrow', base: DateTime.local().setZone('Europe/Paris')}))
 
         let locale = document.documentElement.lang;
-        import(`dayjs/locale/${locale}.js`).then(foo => {
+        const locale_module = 'dayjs/locale/' + locale + '.js'
+        import(locale_module).then(foo => {
             dayjs.locale(locale);
             this.element.innerHTML = dayjs(this.sourceTime).fromNow()
             this.#sourceTimeStateToggler = true

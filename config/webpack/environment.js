@@ -1,6 +1,6 @@
-const { environment } = require('@rails/webpacker')
-
+const { environment, config } = require('@rails/webpacker')
 const webpack = require('webpack')
+const { resolve } = require('path')
 
 environment.plugins.append('Provide', new webpack.ProvidePlugin({
     $: 'jquery',
@@ -14,6 +14,13 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
     // Popper: ['popper.js', 'default'],
     // ActionCable: 'actioncable'
 }))
+
+environment.plugins.append('ContextReplacement',
+    new webpack.ContextReplacementPlugin(
+        /dayjs[/\\]locale$/,
+        resolve(config.source_path)
+    )
+)
 
 environment.splitChunks();
 
