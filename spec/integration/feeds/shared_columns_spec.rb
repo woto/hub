@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Feeds shared columns', type: :system do
+describe 'Feeds shared columns', type: :system, focus: true do
   it_behaves_like 'shared columns invisible by default' do
     let(:path) { feeds_path(locale: :ru) }
     let(:object) { create(:feed, updated_at: 1.day.ago) }

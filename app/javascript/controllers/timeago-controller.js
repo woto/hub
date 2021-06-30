@@ -13,6 +13,8 @@ export default class extends Controller {
     #sourceTimeStateToggler;
 
     connect() {
+        document.body.style.backgroundColor = "red";
+
         // Settings.defaultZoneName = "America/Los_Angeles";
         // let time = DateTime.fromISO(this.element.innerHTML, {zone: "Europe/Paris"})
         // debugger
