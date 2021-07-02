@@ -1,2 +1,0 @@
-class HelpDecorator < ApplicationDecorator
-end

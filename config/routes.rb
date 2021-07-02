@@ -63,7 +63,6 @@ Rails.application.routes.draw do
       resources :feed_categories, only: [:index] do
         resources :offers, only: [:index]
       end
-      resources :help, only: [:index]
       # TODO?
       # get 'articles/:date/:title' => 'articles#show', as: 'article'
       resources :news, only: [:index] do
@@ -124,7 +123,6 @@ Rails.application.routes.draw do
     resources :post_categories, only: [:index]
     resources :feed_categories, only: [:index]
     resources :transactions, only: [:index]
-    resources :help, only: [:index]
 
     resources :posts
 

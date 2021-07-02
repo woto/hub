@@ -102,14 +102,6 @@
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
-        title: t('left_menu.help'),
-        path: { controller: '/tables/help', action: 'index' },
-        current_page: request.path.yield_self { |p| p.include?('help') },
-        icon: GlobalHelper.icon('help'),
-        disabled: false
-    ) %>
-
-    <%= render Left::Menu::ItemComponent.new(
       title: t('left_menu.favorites'),
       path: { controller: '/tables/favorites', action: 'index' },
       current_page: request.path.yield_self do |p|
