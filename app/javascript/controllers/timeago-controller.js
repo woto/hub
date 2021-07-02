@@ -16,6 +16,7 @@ dayjs.extend(relativeTime);
 
 export default class extends Controller {
     #sourceTimeStateToggler;
+    static values = { sourceTime: String }
 
     connect() {
         // Settings.defaultZoneName = "America/Los_Angeles";
@@ -25,22 +26,17 @@ export default class extends Controller {
 
         let locale = document.documentElement.lang;
         dayjs.locale(locale);
-        this.element.innerHTML = dayjs(this.sourceTime).fromNow()
+        this.element.innerHTML = dayjs(this.sourceTimeValue).fromNow()
         this.#sourceTimeStateToggler = true
-    }
-
-    // TODO: Replace with Stimulus Value attribute
-    get sourceTime() {
-        return this.data.get('sourceTime');
     }
 
     toggleSourceTime() {
         if(this.#sourceTimeStateToggler) {
             this.#sourceTimeStateToggler = false
-            this.element.innerHTML = this.sourceTime
+            this.element.innerHTML = this.sourceTimeValue
         } else {
             this.#sourceTimeStateToggler = true
-            this.element.innerHTML = dayjs(this.sourceTime).fromNow()
+            this.element.innerHTML = dayjs(this.sourceTimeValue).fromNow()
         }
     }
 }

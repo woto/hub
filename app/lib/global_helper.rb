@@ -76,7 +76,7 @@ class GlobalHelper
         datetime.iso8601,
         style: 'cursor: pointer',
         "data-controller": 'timeago',
-        "data-timeago-source-time": datetime.iso8601,
+        'data-timeago-source-time-value': datetime.iso8601,
         "data-action": 'click->timeago#toggleSourceTime'
       )
     end
