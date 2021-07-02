@@ -55,7 +55,7 @@ shared_examples_for 'shared columns invisible by default', responsible: :admin d
     object
     login_as(user, scope: :user)
     visit path
-    click_on('Columns')
+    click_on('Колонки')
   end
 
   it 'does not show column on page load' do
@@ -72,10 +72,8 @@ shared_examples_for 'shared columns invisible by default', responsible: :admin d
     # loose selectize focus
     find('.card-status-start').click
 
-    click_on 'Update'
+    click_on 'Обновить'
 
-    sleep 3
-    puts page.driver.browser.manage.logs.get(:browser)
     expect(page).to have_text(column_title)
     within "#tr_#{object.id}_td_#{column_id}" do
       expect(page).to have_text(column_value)

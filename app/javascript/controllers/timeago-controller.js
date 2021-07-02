@@ -5,6 +5,11 @@ import dayjs from 'dayjs';
 // import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+// Temporary there is a problem with dynamic import
+// https://github.com/rails/webpacker/issues/3075
+import 'dayjs/locale/ru.js'
+import 'dayjs/locale/en.js'
+
 dayjs.extend(relativeTime);
 // dayjs.extend(utc);
 // dayjs.extend(timezone);
@@ -19,14 +24,12 @@ export default class extends Controller {
         // alert(time.toRelative({style: 'narrow', base: DateTime.local().setZone('Europe/Paris')}))
 
         let locale = document.documentElement.lang;
-        const locale_module = 'dayjs/locale/' + locale + '.js'
-        import(locale_module).then(foo => {
-            dayjs.locale(locale);
-            this.element.innerHTML = dayjs(this.sourceTime).fromNow()
-            this.#sourceTimeStateToggler = true
-        })
+        dayjs.locale(locale);
+        this.element.innerHTML = dayjs(this.sourceTime).fromNow()
+        this.#sourceTimeStateToggler = true
     }
 
+    // TODO: Replace with Stimulus Value attribute
     get sourceTime() {
         return this.data.get('sourceTime');
     }
