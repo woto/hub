@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
   scope module: :websites, constraints: WebsiteConstraint.new do
-    root to: 'realms#show', as: nil
+    root to: 'articles#index', as: nil
     resources :categories
     resources :articles
   end
