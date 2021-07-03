@@ -29,9 +29,7 @@ group :development, :test do
   # gem 'bullet'
   gem 'bundler-audit'
 
-  # Testing
-  # https://github.com/DatabaseCleaner/database_cleaner-active_record/pull/39
-  gem 'database_cleaner-active_record', github: 'DatabaseCleaner/database_cleaner-active_record'
+  gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'fantaskspec'
