@@ -127,7 +127,6 @@ describe Post, type: :model do
     let(:realm) { create(:realm) }
     let(:parent_category) { create(:post_category, realm: realm) }
     let(:child_category) { create(:post_category, realm: realm, parent: parent_category) }
-
     let(:post) { create(:post, post_category: child_category) }
 
     it 'returns correct result' do
@@ -150,9 +149,9 @@ describe Post, type: :model do
         amount: post.amount,
         currency: post.currency,
         priority: post.priority,
-        post_category_id_0: parent_category.id,
-        post_category_id_1: child_category.id,
-        post_category_ids: [parent_category.id, child_category.id],
+        post_category_id_0: post.post_category.parent.id,
+        post_category_id_1: post.post_category.id,
+        post_category_ids: [post.post_category.parent.id, post.post_category.id],
         created_at: Time.current,
         updated_at: Time.current
       )
