@@ -116,17 +116,28 @@ describe Post, type: :model do
   end
 
   describe '#as_indexed_json' do
+    around(:each) do |example|
+      freeze_time do
+        example.run
+      end
+    end
+
     subject { Current.set(responsible: create(:user)) { post.as_indexed_json } }
 
-    let(:post) { create(:post) }
+    let(:realm) { create(:realm) }
+    let(:parent_category) { create(:post_category, realm: realm) }
+    let(:child_category) { create(:post_category, realm: realm, parent: parent_category) }
+
+    let(:post) { create(:post, post_category: child_category) }
 
     it 'returns correct result' do
-      expect(subject).to include(
+      expect(subject).to match(
         id: post.id,
         realm_id: post.realm.id,
         realm_title: post.realm.title,
         realm_locale: post.realm.locale,
         realm_kind: post.realm.kind,
+        realm_domain: post.realm.domain,
         status: post.status,
         title: post.title,
         post_category_id: post.post_category_id,
@@ -138,7 +149,12 @@ describe Post, type: :model do
         body: post.body.to_s,
         amount: post.amount,
         currency: post.currency,
-        priority: post.priority
+        priority: post.priority,
+        post_category_id_0: parent_category.id,
+        post_category_id_1: child_category.id,
+        post_category_ids: [parent_category.id, child_category.id],
+        created_at: Time.current,
+        updated_at: Time.current
       )
     end
   end

@@ -44,7 +44,8 @@ class ApplicationDecorator < Draper::Decorator
       if object['_source'].key?(method_name)
         object['_source'][method_name]
       else
-        raise method_name
+        Rails.logger.info("#{method_name} in decorator was not found")
+        ""
       end
     end
   end

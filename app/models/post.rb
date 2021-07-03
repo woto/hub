@@ -85,7 +85,7 @@ class Post < ApplicationRecord
   scope :news, -> { joins(:realm).where(realms: { kind: :news }) }
 
   def as_indexed_json(_options = {})
-    {
+    json = {
       id: id,
       realm_id: realm_id,
       realm_title: realm.title,
@@ -95,6 +95,7 @@ class Post < ApplicationRecord
       status: status,
       title: title,
       post_category_id: post_category_id,
+      post_category_ids: post_category.path_ids,
       post_category_title: post_category.title,
       tags: tags,
       created_at: created_at.utc,
@@ -107,6 +108,10 @@ class Post < ApplicationRecord
       currency: currency,
       priority: priority
     }
+    post_category.path_ids.each_with_index do |id, index|
+      json["post_category_id_#{index}".to_sym] = id
+    end
+    json
   end
 
   private

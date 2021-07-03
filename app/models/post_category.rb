@@ -82,7 +82,7 @@ class PostCategory < ApplicationRecord
   end
 
   def check_parent_does_not_have_posts
-    errors.add(:parent_id, 'parent must not have the posts') if parent && parent.posts.count.positive?
+    errors.add(:parent_id, 'must not have the posts') if parent && parent.posts.count.positive?
     # TODO: can not have any associated posts if it is not leaf
     # add validation on adding children
   end
