@@ -70,6 +70,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'webdrivers'
+  gem 'capybara-chromedriver-logger'
 end
 
 # Application monitoring

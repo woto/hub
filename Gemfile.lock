@@ -118,10 +118,14 @@ GEM
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
     byebug (11.1.3)
+    capybara-chromedriver-logger (0.3.0)
+      capybara
+      colorize
     childprocess (3.0.0)
     choice (0.2.0)
     cld (0.8.0)
       ffi
+    colorize (0.8.1)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crack (0.4.5)
@@ -598,6 +602,7 @@ DEPENDENCIES
   bundler-audit
   byebug
   capybara!
+  capybara-chromedriver-logger
   cld
   database_cleaner-active_record
   devise
