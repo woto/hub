@@ -40,7 +40,9 @@ describe Frames::News::MonthController, type: :system, responsible: :admin do
           expect(page).to have_link('2020 March 1', href: '/en-US/news/month/2020-03')
           expect(page).to have_link('2020 April 1', href: '/en-US/news/month/2020-04')
           expect(page).to have_link('2020 May 1', href: '/en-US/news/month/2020-05')
-          expect(page).to have_link("#{ApplicationController.helpers.l(future_time, format: '%Y %B')} 1")
+          I18n.with_locale(:en) do
+            expect(page).to have_link("#{ApplicationController.helpers.l(future_time, format: '%Y %B')} 1")
+          end
         end
       end
     end
