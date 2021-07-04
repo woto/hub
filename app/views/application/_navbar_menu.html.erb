@@ -6,7 +6,7 @@
         title: t('left_menu.dashboard'),
         path: { controller: '/dashboard', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('dashboard') },
-        icon: GlobalHelper.icon('layout-grid'),
+        icon: '<i class="fas fa-solar-panel"></i>',
         disabled: false
     ) %>
 
@@ -14,7 +14,7 @@
         title: t('left_menu.feeds'),
         path: { controller: '/tables/feeds', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('feeds') && p.exclude?('offers') },
-        icon: GlobalHelper.icon('file-invoice'),
+        icon: '<i class="fas fa-file-invoice"></i>',
         disabled: false
     ) %>
 
@@ -22,7 +22,7 @@
         title: t('left_menu.offers'),
         path: { controller: '/tables/offers', action: 'index', feed_id: nil, advertiser_id: nil, feed_category_id: nil },
         current_page: request.path.yield_self { |p| p.include?('offers') && !params[:favorite_id] },
-        icon: GlobalHelper.icon('shopping-cart'),
+        icon: '<i class="fas fa-shopping-cart"></i>',
         disabled: false
     ) %>
 
@@ -30,7 +30,7 @@
         title: t('left_menu.posts'),
         path: { controller: '/tables/posts', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('posts') },
-        icon: GlobalHelper.icon('pencil'),
+        icon: '<i class="fas fa-pen"></i>',
         disabled: false
     ) %>
 
@@ -39,7 +39,7 @@
           title: t('left_menu.users'),
           path: { controller: '/tables/users', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('users') },
-          icon: GlobalHelper.icon('user'),
+          icon: '<i class="far fa-user"></i>',
           disabled: false
       ) %>
     <% end %>
@@ -48,14 +48,14 @@
         title: t('left_menu.promotions'),
         path: { controller: '/promotions', action: 'index' },
         current_page: current_page?({controller: '/promotions'}),
-        icon: GlobalHelper.icon('ad'),
+        icon: '',
         disabled: false
     ) %>
 
     <%= render Left::Menu::DropdownComponent.new(
         title: t('left_menu.finances'),
         current_page: request.path.yield_self { |p| p.include?('accounts') || p.include?('checks') || p.include?('transactions') },
-        icon: GlobalHelper.icon('wallet'),
+        icon: '<i class="fas fa-wallet"></i>',
         disabled: false
     ) do |component| %>
 
@@ -89,7 +89,7 @@
         title: t('left_menu.settings'),
         path: { controller: '/settings/profiles', action: 'edit' },
         current_page: request.path.yield_self { |p| p.include?('profile') || p.include?('password') || p.include?('email') || p.include?('danger_zone') },
-        icon: GlobalHelper.icon('settings'),
+        icon: '<i class="fas fa-cog"></i>',
         disabled: false
     ) %>
 
@@ -97,7 +97,7 @@
         title: t('left_menu.news'),
         path: { controller: '/tables/news', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('news') },
-        icon: GlobalHelper.icon('news'),
+        icon: '<i class="fas fa-newspaper"></i>',
         disabled: false
     ) %>
 
@@ -107,7 +107,7 @@
       current_page: request.path.yield_self do |p|
         (p.include?('offers') && params[:favorite_id]) || p.include?('favorites')
       end,
-      icon: GlobalHelper.icon('star'),
+      icon: '<i class="far fa-star"></i>',
       disabled: false
     ) %>
 
@@ -115,7 +115,7 @@
       title: t('left_menu.post_categories'),
       path: { controller: '/tables/post_categories', action: 'index' },
       current_page: request.path.yield_self { |p| p.include?('post_categories') },
-      icon: GlobalHelper.icon('atom'),
+      icon: '<i class="fas fa-stream"></i>',
       disabled: false
     ) %>
 

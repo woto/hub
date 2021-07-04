@@ -17,7 +17,9 @@
     <%= render Header::Profile::Authenticated::LogoutComponent.new %>
     <% if @current_user != @true_user %>
       <%= link_to(stop_impersonating_users_path, method: :post, class: 'dropdown-item', id: 'logout') do %>
-        <%== GlobalHelper.icon('logout', svg_class: 'dropdown-item-icon') %>
+        <div class="dropdown-item-icon">
+          <i class="fas fa-sign-out-alt"></i>
+        </div>
         <%= t('header.menu.restore_permissions') %>
       <% end %>
     <% end %>

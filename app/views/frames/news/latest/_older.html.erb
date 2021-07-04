@@ -6,12 +6,12 @@
     <%= link_to frames_news_latest_path(page: page + 1),
                 test_id => 'older-news',
                 class: 'p-1' do %>
-      <%== GlobalHelper.icon('chevron-left') %>
+      <i class="fas fa-chevron-left"></i>
     <% end %>
   <% else %>
     <%= tag.span test_id => 'older-news',
                  class: 'link-dark p-1' do %>
-      <%== GlobalHelper.icon('chevron-left') %>
+      <i class="fas fa-chevron-left"></i>
     <% end %>
   <% end %>
 <% end %>

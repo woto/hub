@@ -20,7 +20,7 @@
       <div class="order-2 d-flex me-sm-4">
         <% if policy(:news).edit? %>
           <%= link_to edit_post_path(id: @news.id), class: 'btn btn-icon btn-pink me-1' do %>
-            <%== GlobalHelper.icon('pencil') %>
+            <i class="fas fa-pen icon"></i>
           <% end %>
         <% end %>
 

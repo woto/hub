@@ -1,7 +1,9 @@
 <%= link_to '#', class: 'nav-link px-0',
             'data-bs-toggle': 'dropdown',
             'data-navbar-favorite-target': 'dropdown' do %>
-  <%== GlobalHelper.icon('star') %>&nbsp;
+  <div class="dropdown-item-icon">
+    <i class="fas fa-star fa-lg"></i>
+  </div>
   <% if @display_title %>
     <%= t('.title') %>
   <% end %>

@@ -6,11 +6,13 @@
           <span class="bg-green text-white avatar">
             <% case currency.to_s %>
             <% when 'rub' %>
-              <%== GlobalHelper.icon('currency-rubel') %>
+              <i class="fas fa-ruble-sign fa-lg"></i>
             <% when 'usd' %>
-              <%== GlobalHelper.icon('currency-dollar') %>
+              <i class="fas fa-dollar-sign fa-lg"></i>
             <% when 'eur' %>
-              <%== GlobalHelper.icon('currency-euro') %>
+              <i class="fas fa-euro-sign fa-lg"></i>
+            <% else %>
+              <i class="fas fa-money-bill-wave-alt"></i>
             <% end %>
           </span>
         </div>

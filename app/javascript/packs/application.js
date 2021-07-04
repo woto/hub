@@ -3,6 +3,8 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+import "@fortawesome/fontawesome-free/css/all"
+
 // TODO: remove
 require("@rails/ujs").start()
 

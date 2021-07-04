@@ -25,12 +25,12 @@
 
     <%# unstarred %>
     <span class="switch-icon-a text-muted">
-      <%== GlobalHelper.icon('star') %>
+      <i class="far fa-star fa-fw icon"></i>
     </span>
 
     <%# starred %>
     <span class="switch-icon-b text-yellow">
-      <%== GlobalHelper.icon('star', svg_class: 'icon-filled') %>
+      <i class="fas fa-star fa-fw icon"></i>
     </span>
 
   <% end %>
@@ -59,7 +59,7 @@
       <%= button_tag nil, id: nil, type: 'button', class: 'btn btn-teal btn-icon favorite--button',
                      "data-star-favorite-target": 'createButton',
                      "data-action": 'star-favorite#createFavorite' do %>
-        <%== GlobalHelper.icon('corner-down-left') %>
+        <i class="fas fa-plus icon"></i>
       <% end %>
 
     </div>
