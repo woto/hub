@@ -161,13 +161,4 @@ describe DashboardController, type: :system do
       let(:checker) { :flat }
     end
   end
-
-  describe 'highlight "Справка"' do
-    it_behaves_like 'highlight active' do
-      let(:url) { '/ru/help' }
-      let(:href) { '/ru/help' }
-      let(:title) { 'Справка' }
-      let(:checker) { :flat }
-    end
-  end
 end
