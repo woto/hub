@@ -3,7 +3,7 @@
 <%= render 'websites/breadcumb', category: @post.post_category %>
 
 <% content_for :categories do %>
-  <%= render 'websites/categories', categories: Current.realm.post_categories.to_depth(0).arrange %>
+  <%= render 'websites/categories', categories: Current.realm.post_categories.order(:title).to_depth(0).arrange %>
 <% end %>
 
 <div class="card my-4">

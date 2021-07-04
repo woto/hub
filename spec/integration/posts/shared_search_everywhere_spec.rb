@@ -15,7 +15,7 @@ describe Tables::PostsController, type: :system do
       end
 
       let(:params) do
-        { controller: 'posts', q: q, cols: '0.7.6.17.16.13.14', locale: 'ru',
+        { controller: 'posts', q: q, cols: '0.7.6.28.27.24.25', locale: 'ru',
           per: 20, sort: :id, order: :desc, only_path: true }
       end
     end
@@ -33,7 +33,7 @@ describe Tables::PostsController, type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/posts', q: q, cols: '0.7.6.17.16.13.14', locale: 'ru',
+        { controller: 'tables/posts', q: q, cols: '0.7.6.28.27.24.25', locale: 'ru',
           per: 20, sort: :id, order: :desc, only_path: true }
       end
     end
