@@ -20,7 +20,7 @@ describe WidgetsController, type: :system do
     end
   end
 
-  context 'when clicks on simple widget' do
+  context 'when clicks on simple widget', focus: true do
     let(:user) { create(:user) }
 
     it 'shows simple widget form' do
