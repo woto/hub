@@ -223,13 +223,13 @@ describe Post, type: :model do
     context 'when all params needed to calculate amount is present' do
       let(:params) { { body: body, currency: currency } }
       let(:body) { Faker::Lorem.word }
-      let(:rate) { Faker::Number.decimal(l_digits: 6, r_digits: 6) }
+      let(:rate) { Faker::Number.decimal(l_digits: 5, r_digits: 5) }
       let(:currency) { 'ghc' }
 
       it 'sets `amount`' do
         expect(Rails.configuration.exchange_rates).to receive(:currencies).and_return([{ key: currency, value: rate }])
         expect(subject).to be_valid
-        expect(subject.amount).to eq((rate * body.length))
+        expect(subject.amount).to be_within(0.00001).of((rate * body.length))
       end
     end
   end
