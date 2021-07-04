@@ -13,7 +13,7 @@ Capybara.test_id = 'data-test-id'
   name = item[:name]
   resolution = item[:resolution]
   # Capybara.server = :puma, { Silent: true }
-  Capybara.default_max_wait_time = 5
+  # Capybara.default_max_wait_time = 5
   Capybara.register_driver name do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "goog:loggingPrefs": { browser: 'ALL' } )
 

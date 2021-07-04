@@ -6,7 +6,7 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.7-node-browsers
-      - image: elasticsearch:7.4.1
+      - image: elasticsearch:7.10.1
         environment:
           node.name: hub
           discovery.type: single-node
