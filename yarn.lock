@@ -939,7 +939,7 @@
     "@fullcalendar/daygrid" "~5.8.0"
     tslib "^2.1.0"
 
-"@hotwired/turbo-rails@^7.0.0-beta.5":
+"@hotwired/turbo-rails@^7.0.0-beta.8":
   version "7.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.0.0-beta.8.tgz#609eccfdc636c40e34244333f0fe947e573b4b8f"
   integrity sha512-Azs1UevWbGLCFfcf0ymz/uZlvQR3nuc/ymT4+XTMpsiAIVjq1Y3FJw5gseXpumzz+r3U6sLWIPa+c1Acd5Zofw==
@@ -947,7 +947,7 @@
     "@hotwired/turbo" "^7.0.0-beta.8"
     "@rails/actioncable" "^6.0.0"
 
-"@hotwired/turbo@^7.0.0-beta.4", "@hotwired/turbo@^7.0.0-beta.8":
+"@hotwired/turbo@^7.0.0-beta.8":
   version "7.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.0-beta.8.tgz#133630eabbd3c26183efcfb6dea2db5dd172e8da"
   integrity sha512-3HfWoxtGGQOxaXo2bh2tvEBFAV4oSSIA/BFnMvIfY5D4HbEKYpPH2Q3Roa707/E9LtnIgyN/RibDY6dszCwPuw==
