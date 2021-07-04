@@ -6,12 +6,12 @@
   <div class="text-center mb-3">
     <% if @post_category.parent %>
       <%= link_to category_path(@post_category.parent) do %>
-        <i class="fas fa-chevron-left"></i>&nbsp;
+        <i class="fas fa-chevron-left me-2"></i>
         <%= t('back') %>
       <% end %>
     <% else %>
       <%= link_to root_path do %>
-        <i class="fas fa-chevron-left"></i>&nbsp;
+        <i class="fas fa-chevron-left me-2"></i>
         <%= t('back') %>
       <% end unless @post_category.parent  %>
     <% end %>
