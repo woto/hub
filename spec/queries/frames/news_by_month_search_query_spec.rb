@@ -15,7 +15,7 @@ describe Frames::NewsByMonthSearchQuery do
             group_by_month: {
               date_histogram: {
                 field: 'published_at',
-                interval: 'month',
+                calendar_interval: '1M',
                 order: { _key: 'desc' }
               }
             }

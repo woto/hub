@@ -11,7 +11,7 @@ module Frames
           json.group_by_month do
             json.date_histogram do
               json.field 'published_at'
-              json.interval 'month'
+              json.calendar_interval '1M'
               json.order do
                 json._key 'desc'
               end
