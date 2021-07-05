@@ -9,8 +9,7 @@ describe Frames::NewsByMonthSearchQuery do
 
   it 'builds correct query' do
     freeze_time do
-      expect(subject.object).to eq(
-        _source: nil,
+      expect(subject.object).to match(
         body: {
           aggregations: {
             group_by_month: {
@@ -23,12 +22,12 @@ describe Frames::NewsByMonthSearchQuery do
           },
           query: {
             bool: {
-              filter: [
-                { term: { "realm_kind.keyword": 'news' } },
-                { term: { "status.keyword": 'accrued_post' } },
-                { term: { "realm_locale.keyword": :ru } },
-                { range: { published_at: { lte: Time.current.utc } } }
-              ]
+              filter: match_array([
+                                    { term: { "realm_kind.keyword": 'news' } },
+                                    { term: { "status.keyword": 'accrued_post' } },
+                                    { term: { "realm_locale.keyword": 'ru' } },
+                                    { range: { published_at: { lte: Time.current.utc } } }
+                                  ])
             }
           }
         },

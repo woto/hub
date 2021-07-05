@@ -6,62 +6,54 @@ module Frames
     include Elasticsearch::DSL
 
     def call
-      definition = search do
-        aggregation :group_by_month do
-          date_histogram do
-            field 'published_at'
-            interval 'month'
-            order(_key: 'desc')
-            # time_zone Time.zone.formatted_offset
-          end
-        end
-
-        query do
-          bool do
-            filter do
-              term 'realm_kind.keyword' => 'news'
-            end
-
-            filter do
-              term 'status.keyword' => 'accrued_post'
-            end
-
-            filter do
-              term 'realm_locale.keyword' => context.locale
-            end
-
-            filter do
-              range :published_at do
-                lte Time.current.utc
+      body = Jbuilder.new do |json|
+        json.aggregations do
+          json.group_by_month do
+            json.date_histogram do
+              json.field 'published_at'
+              json.interval 'month'
+              json.order do
+                json._key 'desc'
               end
             end
-
-            # if context.q.present?
-            #   must do
-            #     query_string do
-            #       query context.q
-            #     end
-            #   end
-            # else
-            #   filter do
-            #     match_all {}
-            #   end
-            # end
           end
         end
 
-        # sort do
-        #   by context.sort, order: context.order
-        # end
+        json.query do
+          json.bool do
+            json.filter do
+              json.array! ['fuck'] do
+                json.term do
+                  json.set! 'realm_kind.keyword', 'news'
+                end
+              end
+              json.array! ['fuck'] do
+                json.term do
+                  json.set! 'status.keyword', 'accrued_post'
+                end
+              end
+              json.array! ['fuck'] do
+                json.term do
+                  json.set! 'realm_locale.keyword', 'ru'
+                end
+              end
+              json.array! ['fuck'] do
+                json.range do
+                  json.published_at do
+                    json.lte Time.current.utc
+                  end
+                end
+              end
+            end
+          end
+        end
       end
 
-      context.object = {}.tap do |h|
-        h[:body] = definition.to_hash.deep_symbolize_keys
-        h[:index] = ::Elastic::IndexName.posts
-        # h[:from] = context.from
-        h[:size] = 0
-        h[:_source] = context._source
-      end
+      context.object = {
+        index: Elastic::IndexName.posts,
+        body: body.attributes!.deep_symbolize_keys,
+        size: 0
+      }
     end
   end
 end
