@@ -22,12 +22,12 @@ describe Frames::NewsByMonthSearchQuery do
           },
           query: {
             bool: {
-              filter: match_array([
-                                    { term: { "realm_kind.keyword": 'news' } },
-                                    { term: { "status.keyword": 'accrued_post' } },
-                                    { term: { "realm_locale.keyword": 'ru' } },
-                                    { range: { published_at: { lte: Time.current.utc } } }
-                                  ])
+              filter: contain_exactly(
+                { term: { "realm_kind.keyword": 'news' } },
+                { term: { "status.keyword": 'accrued_post' } },
+                { term: { "realm_locale.keyword": 'ru' } },
+                { range: { published_at: { lte: Time.current.utc } } }
+              )
             }
           }
         },

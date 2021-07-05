@@ -58,7 +58,7 @@ module Frames
         h[:index] = ::Elastic::IndexName.posts
         # h[:from] = context.from
         h[:size] = 0
-        h[:_source] = context._source
+        # h[:_source] = context._source
       end
     end
   end
