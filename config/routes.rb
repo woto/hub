@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   scope module: :websites, constraints: WebsiteConstraint.new do
     root to: 'articles#index', as: nil
-    resources :categories
+    resources :categories, to: 'articles#index'
     resources :articles
   end
 
