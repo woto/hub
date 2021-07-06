@@ -5,14 +5,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.3'
 
-gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jbuilder', '~> 2.7'
-gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 4'
-gem 'rails'
+gem 'pg', '~> 1.1'
+gem 'puma', '~> 5.0'
+gem 'rails', '~> 6.1.4'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'webpacker'
+gem 'webpacker', '~> 5.0'
 # gem "stimulus-rails"
 
 # Active Record audit
@@ -53,10 +53,11 @@ group :development do
   # gem 'meta_request'
   gem 'annotate'
   gem 'i18n-debug'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '~> 3.3'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '>= 4.1.0'
+  gem 'rack-mini-profiler', '~> 2.0'
 end
 
 group :test do
@@ -66,6 +67,8 @@ group :test do
   # https://github.com/teamcapybara/capybara/issues/2432
   # https://github.com/teamcapybara/capybara/compare/master...woto:order_independent_compare
   gem 'capybara', github: 'woto/capybara', branch: 'order_independent_compare'
+  # TODO: update to
+  # gem 'capybara', '>= 3.26'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false

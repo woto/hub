@@ -202,7 +202,7 @@ GEM
       elasticsearch-transport (= 7.13.1)
     elasticsearch-api (7.13.1)
       multi_json
-    elasticsearch-dsl (0.1.9)
+    elasticsearch-dsl (0.1.10)
     elasticsearch-model (7.1.1)
       activesupport (> 3)
       elasticsearch (> 1)
@@ -236,19 +236,23 @@ GEM
     fantaskspec (1.2.0)
       rake (>= 10.0)
       rspec (~> 3.4)
-    faraday (1.4.3)
+    faraday (1.5.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
+      faraday-httpclient (~> 1.0.1)
       faraday-net_http (~> 1.0)
       faraday-net_http_persistent (~> 1.1)
+      faraday-patron (~> 1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords (>= 0.0.4)
     faraday-em_http (1.0.0)
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
+    faraday-httpclient (1.0.1)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
+    faraday-patron (1.0.0)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
     ffi (1.15.3)
@@ -286,10 +290,9 @@ GEM
     kaminari-core (1.2.1)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.1.5)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-      ruby_dep (~> 1.2)
+    listen (3.5.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     logidze (1.2.0)
       activerecord (>= 5.0)
       railties (>= 5.0)
@@ -316,7 +319,7 @@ GEM
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
-    numbers_and_words (0.11.10)
+    numbers_and_words (0.11.11)
       i18n (<= 2)
     oauth (0.5.6)
     oauth2 (1.4.7)
@@ -359,7 +362,7 @@ GEM
       actionpack (>= 4.2)
     prometheus-client (2.1.0)
     public_suffix (4.0.6)
-    puma (4.3.8)
+    puma (5.3.2)
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
@@ -368,6 +371,8 @@ GEM
     rack (2.2.3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
+    rack-mini-profiler (2.3.2)
+      rack (>= 1.2.0)
     rack-proxy (0.7.0)
       rack
     rack-test (1.1.0)
@@ -411,7 +416,7 @@ GEM
       rake (>= 0.13)
       thor (~> 1.0)
     rainbow (3.0.0)
-    rake (13.0.3)
+    rake (13.0.4)
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -448,7 +453,7 @@ GEM
       activerecord (> 4.2, < 7.0)
       rspec (~> 3.0)
     rspec-support (3.10.2)
-    rubocop (1.18.2)
+    rubocop (1.18.3)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -477,8 +482,7 @@ GEM
     ruby-vips (2.1.2)
       ffi (~> 1.12)
     ruby2_keywords (0.0.4)
-    ruby_dep (1.5.0)
-    rubyzip (2.3.1)
+    rubyzip (2.3.2)
     rufus-scheduler (3.7.0)
       fugit (~> 1.1, >= 1.1.6)
     selenium-webdriver (3.142.7)
@@ -525,9 +529,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    standard (1.1.4)
-      rubocop (= 1.18.2)
-      rubocop-performance (= 1.11.3)
+    standard (0.0.36)
+      rubocop (>= 0.63)
     test-prof (1.0.6)
     thor (1.1.0)
     thrift (0.14.2)
@@ -598,7 +601,7 @@ DEPENDENCIES
   after_commit_everywhere
   ancestry!
   annotate
-  bootsnap (>= 1.4.2)
+  bootsnap (>= 1.4.4)
   bundler-audit
   byebug
   capybara!
@@ -632,7 +635,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   kaminari
   launchy
-  listen (>= 3.0.5, < 3.2)
+  listen (~> 3.3)
   logidze
   mini_magick (~> 4.10)
   mobility!
@@ -646,12 +649,13 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-instagram
   omniauth-twitter
-  pg (>= 0.18, < 2.0)
+  pg (~> 1.1)
   pretender
-  puma (~> 4)
+  puma (~> 5.0)
   pundit
   rack-cors
-  rails
+  rack-mini-profiler (~> 2.0)
+  rails (~> 6.1.4)
   rails-controller-testing
   rails-erd
   rails-i18n
@@ -679,10 +683,10 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   view_component
-  web-console (>= 3.3.0)
+  web-console (>= 4.1.0)
   webdrivers
   webmock
-  webpacker
+  webpacker (~> 5.0)
   yabeda-http_requests
   yabeda-prometheus
   yabeda-puma-plugin
