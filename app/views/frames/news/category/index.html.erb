@@ -1,0 +1,17 @@
+<%= turbo_frame_tag 'news-by-category' do %>
+  <% if @post_category %>
+    <% if @post_category.parent %>
+      <%= link_to t('.up'), by_category_news_index_path({category_id: @post_category.parent.id}.merge(request.params.slice('per', 'sort', 'order'))), 'data-turbo-frame': '_top' %>
+    <% else %>
+      <%= link_to t('.up'), news_index_path(request.params.slice('per', 'sort', 'order')), 'data-turbo-frame': '_top' %>
+    <% end %>
+  <% end %>
+
+  <% @result['aggregations']['group_by_category_id']['buckets'].each do |obj| %>
+    <% category = PostCategory.find(obj['key']) %>
+    <div>
+      <%= link_to category.to_label, by_category_news_index_path({category_id: category.id}.merge(request.params.slice('per', 'sort', 'order'))), 'data-turbo-frame': '_top' %>
+      <%= obj['doc_count'] %>
+    </div>
+  <% end %>
+<% end %>

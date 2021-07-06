@@ -32,6 +32,13 @@ class NewsSearchQuery
             end
           end
 
+          if context.post_category_id.present?
+            post_category = PostCategory.find(context.post_category_id)
+            filter do
+              term "post_category_id_#{post_category.ancestry_depth}" => context.post_category_id.to_i
+            end
+          end
+
           if context.month.present?
             filter do
               range :published_at do

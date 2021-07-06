@@ -24,6 +24,10 @@ module Tables
       get_index([], tag: params[:tag])
     end
 
+    def by_category
+      get_index([], post_category_id: params[:category_id])
+    end
+
     private
 
     def set_settings

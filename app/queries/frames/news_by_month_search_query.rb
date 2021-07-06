@@ -3,7 +3,7 @@
 module Frames
   class NewsByMonthSearchQuery
     include ApplicationInteractor
-    include Elasticsearch::DSL
+    # include Elasticsearch::DSL
 
     def call
       body = Jbuilder.new do |json|
@@ -34,7 +34,7 @@ module Frames
               end
               json.array! ['fuck'] do
                 json.term do
-                  json.set! 'realm_locale.keyword', 'ru'
+                  json.set! 'realm_locale.keyword', context.locale
                 end
               end
               json.array! ['fuck'] do

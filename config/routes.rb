@@ -69,6 +69,7 @@ Rails.application.routes.draw do
         collection do
           get 'month/:month', action: :by_month, as: :by_month
           get 'tag/:tag', action: :by_tag, as: :by_tag, :constraints => { :tag => /[^\/]*/ }
+          get 'category/:category_id', action: :by_category, as: :by_category
         end
       end
       resources :offers, only: [:index]
@@ -156,6 +157,7 @@ Rails.application.routes.draw do
       namespace :news do
         get 'month(/:month)', to: 'month#index', as: :month
         get 'tag(/:tag)', to: 'tag#index', as: :tag
+        get 'category(/:category_id)', to: 'category#index', as: :category
         get 'latest', to: 'latest#index', as: :latest
       end
     end

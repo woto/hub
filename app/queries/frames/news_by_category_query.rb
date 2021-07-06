@@ -1,17 +1,22 @@
 # frozen_string_literal: true
 
 module Frames
-  class NewsByTagSearchQuery
+  class NewsByCategoryQuery
     include ApplicationInteractor
-    # include Elasticsearch::DSL
 
     def call
+      level = if context.post_category_id
+                PostCategory.find_by(id: context.post_category_id)&.ancestry_depth
+              else
+                -1
+              end
+
       body = Jbuilder.new do |json|
         json.aggregations do
-          json.group_by_tag do
+          json.group_by_category_id do
             json.terms do
-              json.field 'tags.keyword'
-              json.size 20
+              json.field "post_category_id_#{level + 1}"
+              json.size 100
             end
           end
         end
@@ -38,6 +43,13 @@ module Frames
                 json.range do
                   json.published_at do
                     json.lte Time.current.utc
+                  end
+                end
+              end
+              if context.post_category_id
+                json.array! ['fuck'] do
+                  json.term do
+                    json.set! "post_category_id_#{level}", context.post_category_id
                   end
                 end
               end

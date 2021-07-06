@@ -12,4 +12,8 @@ class NewsPolicy < ApplicationPolicy
   def by_tag?
     true
   end
+
+  def by_category?
+    true
+  end
 end

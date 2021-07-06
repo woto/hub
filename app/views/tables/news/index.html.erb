@@ -35,6 +35,8 @@
       <%= turbo_frame_tag 'news-by-month', src: frames_news_month_path(request.params.slice('per', 'sort', 'order', 'month')) %>
       <div class="my-3"></div>
       <%= turbo_frame_tag 'news-by-tag', src: frames_news_tag_path(request.params.slice('per', 'sort', 'order', 'tag')) %>
+      <div class="my-3"></div>
+      <%= turbo_frame_tag 'news-by-category', src: frames_news_category_path(request.params.slice('per', 'sort', 'order', 'category_id')) %>
     </div>
 
   </div>
