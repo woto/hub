@@ -13,6 +13,18 @@ describe Locale do
     end
   end
 
+  context 'when requested domain matches with realm domain' do
+    let!(:realm) { create(:realm) }
+
+    it 'gets locale from `realm.locale`' do
+      host! realm.domain
+      expect(I18n).to receive(:with_locale).with(realm.locale).and_call_original
+      get '/'
+      expect(cookies[:locale]).to eq(realm.locale)
+      expect(response.get_header('Content-Language')).to eq(realm.locale)
+    end
+  end
+
   context 'when locale in params' do
     it 'sets session locale' do
       expect(I18n).to receive(:with_locale).with('pt').and_call_original

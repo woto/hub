@@ -12,6 +12,7 @@ class Locale
 
   def call(env)
     locale = locale_from_domain(env['HTTP_HOST'])
+    locale ||= locale_from_realm(env['HTTP_HOST'])
     locale ||= locale_from_path(env['PATH_INFO'])
     locale ||= locale_from_cookie(env['HTTP_COOKIE'])
     locale ||= user_preferred_locale(env['HTTP_ACCEPT_LANGUAGE'])
@@ -42,6 +43,11 @@ class Locale
 
   def locale_from_domain(host)
     locale = host.sub(/:\d+$/, '').split('.').first
+    locale if I18n.available_locales.find { |al| match?(al, locale) }
+  end
+
+  def locale_from_realm(host)
+    locale = Realm.find_by(domain: host)&.locale
     locale if I18n.available_locales.find { |al| match?(al, locale) }
   end
 
