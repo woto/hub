@@ -38,22 +38,22 @@ class Locale
 
   def locale_from_path(path)
     locale = path.split('/').reject(&:blank?).first
-    locale if I18n.available_locales.find { |al| match?(al, locale) }
+    I18n.available_locales.find { |al| match?(al, locale) }
   end
 
   def locale_from_domain(host)
-    locale = host.sub(/:\d+$/, '').split('.').first
-    locale if I18n.available_locales.find { |al| match?(al, locale) }
+    locale = remove_port(host).split('.').first
+    I18n.available_locales.find { |al| match?(al, locale) }
   end
 
   def locale_from_realm(host)
-    locale = Realm.find_by(domain: host)&.locale
-    locale if I18n.available_locales.find { |al| match?(al, locale) }
+    locale = Realm.find_by(domain: remove_port(host))&.locale
+    I18n.available_locales.find { |al| match?(al, locale) }
   end
 
   def locale_from_cookie(cookie)
     locale = Rack::Utils.parse_cookies_header(cookie)['locale']
-    locale if I18n.available_locales.find { |al| match?(al, locale) }
+    I18n.available_locales.find { |al| match?(al, locale) }
   end
 
   # Accept-Language header is covered mainly by RFC 7231
@@ -94,15 +94,17 @@ class Locale
 
     return if locales.empty?
 
-    if I18n.enforce_available_locales
-      locale = locales.reverse.find { |locale| I18n.available_locales.any? { |al| match?(al, locale) } }
-      I18n.available_locales.find { |al| match?(al, locale) } if locale
-    else
-      locales.last
+    locales.reverse_each do |locale|
+      val = I18n.available_locales.find { |al| match?(al, locale) }
+      break val if val
     end
   end
 
   def match?(s1, s2)
-    s1.to_s.casecmp(s2.to_s).zero?
+    s1 if s1.to_s.casecmp(s2.to_s).zero?
+  end
+
+  def remove_port(host)
+    host.sub(/:\d+$/, '')
   end
 end

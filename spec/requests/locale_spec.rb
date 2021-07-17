@@ -14,7 +14,7 @@ describe Locale do
   end
 
   context 'when requested domain matches with realm domain' do
-    let!(:realm) { create(:realm) }
+    let!(:realm) { create(:realm, domain: 'crissy-moran.net') }
 
     it 'gets locale from `realm.locale`' do
       host! realm.domain
@@ -47,10 +47,10 @@ describe Locale do
 
   context 'when locale present in Accept-Language' do
     specify do
-      expect(I18n).to receive(:with_locale).with('ru').and_call_original
-      headers = { 'Accept-Language' => 'ru-RU, ru;q=0.9, en-US;q=0.8, en;q=0.7, fr;q=0.6' }
+      expect(I18n).to receive(:with_locale).with('en-US').and_call_original
+      headers = { 'Accept-Language' => 'ru-RU, ru;q=0.9, en-US;q=1, en;q=0.7, fr;q=0.6' }
       get '/', headers: headers
-      expect(response.get_header('Content-Language')).to eq('ru')
+      expect(response.get_header('Content-Language')).to eq('en-US')
     end
   end
 
