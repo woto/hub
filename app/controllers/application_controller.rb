@@ -44,6 +44,9 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options
+    # NOTE: if realm is set we do not want to add locale params to the links, because locale info "stored" in domain
+    return {} if Current.realm
+
     return {} if I18n.available_locales.map(&:to_s).include?(request.subdomains.first)
 
     { locale: I18n.locale }

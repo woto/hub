@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Capybara.test_id = 'data-test-id'
+# Capybara.default_max_wait_time = 5
+
 # Capybara.server = :puma, { Silent: true }
 # ActiveSupport.on_load(:action_dispatch_system_test_case) do
 #   ActionDispatch::SystemTesting::Server.silence_puma = true
@@ -13,7 +15,6 @@ Capybara.test_id = 'data-test-id'
   name = item[:name]
   resolution = item[:resolution]
   # Capybara.server = :puma, { Silent: true }
-  # Capybara.default_max_wait_time = 5
   Capybara.register_driver name do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "goog:loggingPrefs": { browser: 'ALL' } )
 
@@ -52,6 +53,16 @@ RSpec.configure do |config|
     else
       driven_by :desktop
     end
+  end
+end
+
+RSpec.configure do |config|
+  def switch_realm(realm)
+    original_app_host = Capybara.app_host
+    Capybara.app_host = "http://#{realm.domain}"
+    yield
+  ensure
+    Capybara.app_host = original_app_host
   end
 end
 

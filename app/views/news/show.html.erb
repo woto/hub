@@ -1,34 +1,31 @@
 <% content_for :title do %>
-  <%= t("news", scope: ['titles']) %>
+  <%= @news.title %>
 <% end %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
     <%= link_to t('breadcrumbs.homepage'), root_path %>
   </li>
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
-  </li>
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.news'), news_index_path %>
-  </li>
+
+  <% @post_category.path.each do |post_category| %>
+    <%= tag.li class: "breadcrumb-item" do %>
+      <%= link_to post_category.to_label, by_category_news_index_path({category_id: post_category.id}.merge(request.params.slice('per', 'sort', 'order'))) %>
+    <% end %>
+  <% end %>
+
   <li class="breadcrumb-item active">
     <%= link_to @news.title, news_path(id: @news.id) %>
   </li>
 <% end %>
 
-<div class="col">
-  <div class="row">
+<%= render 'card' %>
 
-    <div class="col-md-8 col-lg-9">
-      <%= render 'card' %>
-    </div>
+<% content_for :left_bar do %>
+  <%= turbo_frame_tag 'news-by-category', src: frames_news_category_path(request.params.slice('per', 'sort', 'order', 'category_id')) %>
+<% end %>
 
-    <div class="col-md-4 col-lg-3">
-      <%= turbo_frame_tag 'news-by-month', src: frames_news_month_path(request.params.slice('per', 'sort', 'order')) %>
-      <div class="my-3"></div>
-      <%= turbo_frame_tag 'news-by-tag', src: frames_news_tag_path(request.params.slice('per', 'sort', 'order')) %>
-    </div>
-
-  </div>
-</div>
+<% content_for :right_bar do %>
+  <%= turbo_frame_tag 'news-by-month', src: frames_news_month_path(request.params.slice('per', 'sort', 'order')) %>
+  <div class="my-3"></div>
+  <%= turbo_frame_tag 'news-by-tag', src: frames_news_tag_path(request.params.slice('per', 'sort', 'order')) %>
+<% end %>

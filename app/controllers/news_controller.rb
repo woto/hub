@@ -2,10 +2,11 @@
 
 class NewsController < ApplicationController
   skip_before_action :authenticate_user!
-  layout 'backoffice'
+  layout 'website'
 
   def show
     @news = Post.find(params[:id])
+    @post_category = @news.post_category
   end
 
   private
