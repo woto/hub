@@ -1,0 +1,8 @@
+<%= link_to helpers.news_index_url(host: @realm.domain, locale: nil), class: 'nav-link px-0' do %>
+  <div class="dropdown-item-icon">
+    <i class="fas fa-question-circle fa-lg"></i>
+  </div>
+  <span class="d-none d-xl-inline">
+    <%= t('.title') %>
+  </span>
+<% end %>
