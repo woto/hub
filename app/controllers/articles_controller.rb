@@ -19,4 +19,8 @@ class ArticlesController < ApplicationController
       '/404'
     end
   end
+
+  def url_for_search_everywhere
+    articles_url(request.params.slice(:order, :per, :sort))
+  end
 end

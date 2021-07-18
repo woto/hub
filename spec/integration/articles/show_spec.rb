@@ -85,4 +85,13 @@ describe 'ArticlesController#show', type: :system, responsible: :admin do
     src = frames_articles_category_path(per: 1, sort: :created_at, order: :asc)
     expect(page).to have_css("turbo-frame#articles-by-category[src='#{src}']", visible: :all)
   end
+
+  context "when clicks on form's search" do
+    it 'follows to correct page' do
+      fill_in('Введите текст для поиска...', with: 'foo')
+      click_on('Искать')
+      path = articles_path(per: 1, sort: :created_at, order: :asc, q: 'foo')
+      expect(page).to have_current_path(path)
+    end
+  end
 end
