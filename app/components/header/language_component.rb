@@ -2,8 +2,7 @@
 
 module Header
   class LanguageComponent < ViewComponent::Base
-    def initialize(display_title:, capybara_browser: nil)
-      @display_title = display_title
+    def initialize(capybara_browser: nil)
     end
   end
 end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class NavbarFavoriteComponent < ViewComponent::Base
-  def initialize(display_title:)
+  def initialize()
     super
-    @display_title = display_title
   end
 end
