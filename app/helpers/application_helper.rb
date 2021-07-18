@@ -10,6 +10,15 @@ module ApplicationHelper
     )
   end
 
+  def articles_by_tag_link(tag)
+    articles_by_tag_path(
+      tag: tag,
+      per: params[:per],
+      sort: params[:sort],
+      order: params[:order]
+    )
+  end
+
   def resolve_widgetable_partial(widget)
     case widget.widgetable.class.name.underscore
     when 'widgets/simple'
