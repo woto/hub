@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def articles_by_month_link(month)
+    articles_by_month_path(
+      month: month,
+      per: params[:per],
+      sort: params[:sort],
+      order: params[:order]
+    )
+  end
+
   def resolve_widgetable_partial(widget)
     case widget.widgetable.class.name.underscore
     when 'widgets/simple'
