@@ -1,0 +1,42 @@
+<% content_for :title do %>
+  <%= @article.title %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+
+  <% @article_category.path.each do |post_category| %>
+    <%= tag.li class: "breadcrumb-item" do %>
+      <%= link_to post_category.to_label, articles_by_category_link(post_category.id) %>
+    <% end %>
+  <% end %>
+
+  <li class="breadcrumb-item active">
+    <%= link_to @article.title, articles_path(id: @article.id) %>
+  </li>
+<% end %>
+
+<%= render 'card' %>
+
+<% content_for :left_bar do %>
+  <%= turbo_frame_tag 'articles-by-category', src: frames_articles_category_path(category_id: params[:category_id],
+                                                                                 per: params[:per],
+                                                                                 sort: params[:sort],
+                                                                                 order: params[:order]) %>
+<% end %>
+
+<% content_for :right_bar do %>
+  <%= turbo_frame_tag 'articles-by-month', src: frames_articles_month_path(month: params[:month],
+                                                                           per: params[:per],
+                                                                           sort: params[:sort],
+                                                                           order: params[:order]) %>
+
+  <div class="my-3"></div>
+
+  <%= turbo_frame_tag 'articles-by-tag', src: frames_articles_tag_path(tag: params[:tag],
+                                                                       per: params[:per],
+                                                                       sort: params[:sort],
+                                                                       order: params[:order]) %>
+<% end %>
