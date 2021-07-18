@@ -5,10 +5,21 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
-  scope module: :websites, constraints: WebsiteConstraint.new do
-    root to: 'articles#index', as: nil
-    resources :categories, to: 'articles#index'
-    resources :articles
+  scope constraints: WebsiteConstraint.new do
+    root to: 'tables/articles#index', as: :articles
+    scope controller: 'tables/articles', as: :articles do
+      get 'month/:month', action: :by_month, as: :by_month
+      get 'tag/:tag', action: :by_tag, as: :by_tag, constraints: { tag: %r{[^/]*} }
+      get 'category/:category_id', action: :by_category, as: :by_category
+    end
+    namespace :frames do
+      namespace :articles do
+        get 'month(/:month)', to: 'month#index', as: :month
+        get 'tag(/:tag)', to: 'tag#index', as: :tag, constraints: { tag: %r{[^/]*} }
+        get 'category(/:category_id)', to: 'category#index', as: :category
+      end
+    end
+    resources :articles, only: :show
   end
 
   authenticate :user, ->(u) { u.admin? } do
@@ -63,19 +74,16 @@ Rails.application.routes.draw do
       resources :feed_categories, only: [:index] do
         resources :offers, only: [:index]
       end
-      # TODO?
-      # get 'articles/:date/:title' => 'articles#show', as: 'article'
-      resources :news, only: [:index] do
-        collection do
-          get 'month/:month', action: :by_month, as: :by_month
-          get 'tag/:tag', action: :by_tag, as: :by_tag, :constraints => { :tag => /[^\/]*/ }
-          get 'category/:category_id', action: :by_category, as: :by_category
-        end
-      end
       resources :offers, only: [:index]
       resources :posts, only: [:index]
       resources :transactions, only: [:index]
       resources :users, only: [:index]
+    end
+
+    namespace :frames do
+      namespace :articles do
+        get 'latest', to: 'latest#index', as: :latest
+      end
     end
 
     namespace :widgets do
@@ -86,9 +94,6 @@ Rails.application.routes.draw do
     # TODO
     resources :accounts
     resources :advertisers
-
-    resources :news
-
     resources :checks
     resources :favorites do
       collection do
@@ -151,15 +156,6 @@ Rails.application.routes.draw do
       resources :categories, controller: 'post_categories', only: %i[index]
       resources :tags, controller: 'post_tags', only: %i[index]
       resources :users, controller: 'users', only: %i[index]
-    end
-
-    namespace :frames do
-      namespace :news do
-        get 'month(/:month)', to: 'month#index', as: :month
-        get 'tag(/:tag)', to: 'tag#index', as: :tag
-        get 'category(/:category_id)', to: 'category#index', as: :category
-        get 'latest', to: 'latest#index', as: :latest
-      end
     end
 
     get 'dashboard', to: 'dashboard#index'
