@@ -121,7 +121,7 @@ describe Realm, type: :model do
           locale: locale,
           kind: kind,
           title: "Website: { kind: #{kind}, locale: #{locale} }",
-          domain: "#{kind}.#{locale.downcase}"
+          domain: "#{kind}.#{locale.downcase}.lvh.me"
         )
       end
     end
