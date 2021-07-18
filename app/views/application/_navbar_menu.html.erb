@@ -34,6 +34,15 @@
         disabled: false
     ) %>
 
+
+    <%= render Left::Menu::ItemComponent.new(
+      title: t('left_menu.post_categories'),
+      path: { controller: '/tables/post_categories', action: 'index' },
+      current_page: request.path.yield_self { |p| p.include?('post_categories') },
+      icon: '<i class="fas fa-stream"></i>',
+      disabled: false
+    ) %>
+
     <% if policy(:user).index? %>
       <%= render Left::Menu::ItemComponent.new(
           title: t('left_menu.users'),
@@ -94,14 +103,6 @@
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
-        title: t('left_menu.news'),
-        path: { controller: '/tables/news', action: 'index' },
-        current_page: request.path.yield_self { |p| p.include?('news') },
-        icon: '<i class="fas fa-newspaper"></i>',
-        disabled: false
-    ) %>
-
-    <%= render Left::Menu::ItemComponent.new(
       title: t('left_menu.favorites'),
       path: { controller: '/tables/favorites', action: 'index' },
       current_page: request.path.yield_self do |p|
@@ -110,14 +111,5 @@
       icon: '<i class="far fa-star"></i>',
       disabled: false
     ) %>
-
-    <%= render Left::Menu::ItemComponent.new(
-      title: t('left_menu.post_categories'),
-      path: { controller: '/tables/post_categories', action: 'index' },
-      current_page: request.path.yield_self { |p| p.include?('post_categories') },
-      icon: '<i class="fas fa-stream"></i>',
-      disabled: false
-    ) %>
-
   </ul>
 </div>
