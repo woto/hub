@@ -98,7 +98,7 @@ ru:
     name: Название
   homepage: Главная
   articles: Новости
-  back_to_news: Назад к новостям
+  back_to_articles: Назад к новостям
   continue_reading: Продолжить чтение
   search: Искать
   close: Закрыть
@@ -223,6 +223,9 @@ ru:
   header:
     language_component:
       title: Язык
+
+    news_component:
+      title: Новости
 
     menu:
       login: Вход
