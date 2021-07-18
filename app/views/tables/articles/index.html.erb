@@ -1,0 +1,48 @@
+<% content_for :title do %>
+  <% if @post_category %>
+    <%= @post_category.to_label %>
+  <% else %>
+    <%= Current.realm.to_label %>
+  <% end %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+    <% unless @post_category %>
+      <% css_class = 'active' %>
+    <% end %>
+
+    <%= tag.li class: "breadcrumb-item #{css_class}" do %>
+      <%= link_to t('breadcrumbs.homepage'), root_path %>
+    <% end %>
+
+    <% @post_category && @post_category.path.each do |post_category| %>
+      <% if @post_category.path.last == post_category %>
+        <% css_class = 'active' %>
+      <% end %>
+
+      <%= tag.li class: "breadcrumb-item #{css_class}" do %>
+        <%= link_to post_category.to_label, articles_by_category_link(post_category.id) %>
+      <% end %>
+    <% end %>
+<% end %>
+
+<%= render 'items_summary', rows: rows %>
+<div class="mb-3"></div>
+
+<% rows.each do |row| %>
+  <%= render 'card', row: row %>
+<% end %>
+
+<%= render 'empty_page' if rows.empty?  %>
+
+<%= render 'table_footer', rows: rows %>
+
+<% content_for :left_bar do %>
+  <%= turbo_frame_tag 'articles-by-category', src: frames_articles_category_path(category_id: params[:category_id], per: params[:per], sort: params[:sort], order: params[:order]) %>
+<% end %>
+
+<% content_for :right_bar do %>
+  <%= turbo_frame_tag 'articles-by-month', src: frames_articles_month_path(month: params[:month], per: params[:per], sort: params[:sort], order: params[:order]) %>
+  <div class="my-3"></div>
+  <%= turbo_frame_tag 'articles-by-tag', src: frames_articles_tag_path(tag: params[:tag], per: params[:per], sort: params[:sort], order: params[:order]) %>
+<% end %>
