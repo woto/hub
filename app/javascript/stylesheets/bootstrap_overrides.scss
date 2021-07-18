@@ -69,8 +69,14 @@ aside {
 
 // TODO: seems should be reported to tabler
 .search-bar-x {
-  background: #1f2a36 !important;
-  border-color: #232f3c !important;
+  background: white !important;
+}
+
+aside.navbar {
+  .search-bar-x {
+    background: #1f2a36 !important;
+    border-color: #232f3c !important;
+  }
 }
 
 @include media-breakpoint-up(lg) {
