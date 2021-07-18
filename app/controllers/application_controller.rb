@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   private
 
   def render_404(exception)
-    Rails.logger.error(exception.message)
+    Rails.logger.error [exception.message, *exception.backtrace].join($INPUT_RECORD_SEPARATOR)
     Yabeda.hub.http_errors.increment({ http_code: 404 }, by: 1)
 
     respond_to do |format|
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_403(exception)
-    Rails.logger.error(exception.message)
+    Rails.logger.error [exception.message, *exception.backtrace].join($INPUT_RECORD_SEPARATOR)
     Yabeda.hub.http_errors.increment({ http_code: 403 }, by: 1)
 
     respond_to do |format|
