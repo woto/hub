@@ -1,15 +1,15 @@
-<%= tag.div test_id => 'link-to-older-news' do %>
+<%= tag.div test_id => 'link-to-older-article' do %>
 
   <% page = params['page'].to_i %>
 
   <% if page + 1 < @count %>
-    <%= link_to frames_news_latest_path(page: page + 1),
-                test_id => 'older-news',
+    <%= link_to frames_articles_latest_path(page: page + 1),
+                test_id => 'older-article',
                 class: 'p-1' do %>
       <i class="fas fa-chevron-left"></i>
     <% end %>
   <% else %>
-    <%= tag.span test_id => 'older-news',
+    <%= tag.span test_id => 'older-article',
                  class: 'link-dark p-1' do %>
       <i class="fas fa-chevron-left"></i>
     <% end %>

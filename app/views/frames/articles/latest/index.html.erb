@@ -1,0 +1,35 @@
+<%= turbo_frame_tag 'articles-latest' do %>
+  <div class="card">
+    <div class="d-flex card-header justify-content-between">
+      <h3 class="card-title"><%= t('.latest_news') %></h3>
+      <%= l Time.zone.parse(@article['published_at']), format: :short if @article %>
+    </div>
+
+    <div class="card-body">
+      <% if @article %>
+        <%== @article['intro'] %>
+      <% else %>
+        <div class="empty p-2">
+          <p class="empty-title"><%= t('.no_news_yet') %></p>
+          <p class="empty-subtitle text-muted">
+            <%= t('.no_news_yet_in_your_language') %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @article %>
+      <div class="d-flex card-header justify-content-between">
+        <%= render 'frames/articles/latest/older' %>
+        <%= link_to t('.details'),
+                    article_url(
+                      id: @article['id'],
+                      host: Realm.find(@article['realm_id']).domain,
+                      locale: nil
+                    ),
+                    target: "_top" %>
+        <%= render 'frames/articles/latest/newer' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Frames
-  module News
+  module Articles
     class LatestController < ApplicationController
       skip_before_action :authenticate_user!
       layout 'centered'
@@ -18,7 +18,7 @@ module Frames
           ).object
         )
 
-        @news = result.dig('hits', 'hits', 0, '_source')
+        @article = result.dig('hits', 'hits', 0, '_source')
 
         result = GlobalHelper.elastic_client.count(
           Frames::NewsCountQuery.call(

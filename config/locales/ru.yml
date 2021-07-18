@@ -86,7 +86,7 @@ ru:
       read_less: Свернуть
 
   frames:
-    news:
+    articles:
       latest:
         index:
           latest_news: Новости

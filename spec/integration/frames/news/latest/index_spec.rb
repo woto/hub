@@ -2,92 +2,98 @@
 
 require 'rails_helper'
 
-describe Frames::News::LatestController, type: :system, responsible: :admin do
-  describe '#index' do
-    context 'when latest news are present' do
-      let!(:news1) do
-        create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2002-02-03 12:00'),
-                      status: :accrued_post)
-      end
-      let!(:news2) do
-        create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2001-02-03 12:00'),
-                      status: :accrued_post)
-      end
+describe 'Frames::Articles::LatestController#index', type: :system, responsible: :admin do
+  context 'when latest news are present' do
+    let!(:article1) do
+      create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2002-02-03 12:00'),
+                    status: :accrued_post)
+    end
+    let!(:article2) do
+      create(:post, realm_kind: :news, realm_locale: :ru, published_at: Time.zone.parse('2001-02-03 12:00'),
+                    status: :accrued_post)
+    end
 
+    before do
+      visit frames_articles_latest_path(locale: 'ru')
+    end
+
+    it 'shows latest news intro' do
+      within('turbo-frame#articles-latest') do
+        expect(page).to have_text(article1.intro.to_plain_text)
+        expect(page).to have_link('Подробнее...', href: article_url(
+          article1,
+          host: article1.realm.domain,
+          port: Capybara.current_session.server.port
+        ))
+      end
+    end
+
+    it 'has link to older article' do
+      within("div[data-test-id='link-to-older-article']") do
+        expect(page).to(
+          have_css("a[data-test-id='older-article'][href='/ru/frames/articles/latest?page=1']")
+        )
+      end
+    end
+
+    it 'does not have link to newer article' do
+      within("div[data-test-id='link-to-newer-article']") do
+        expect(page).to(
+          have_none_of_selectors('a')
+        )
+        expect(page).to(
+          have_css("span[data-test-id='newer-article']")
+        )
+      end
+    end
+
+    context 'when user clicks on previous news link' do
       before do
-        visit frames_news_latest_path(locale: 'ru')
+        click_on('older-article')
       end
 
-      it 'shows latest news intro' do
-        within('turbo-frame#latest-news') do
-          expect(page).to have_text(news1.intro.to_plain_text)
-          expect(page).to have_link('Подробнее', href: news_path(news1, locale: 'ru'))
+      it 'shows older article intro' do
+        within('turbo-frame#articles-latest') do
+          expect(page).to have_text(article2.intro.to_plain_text)
+          expect(page).to have_link('Подробнее...', href: article_url(
+            article2,
+            host: article1.realm.domain,
+            port: Capybara.current_session.server.port
+          ))
         end
       end
 
-      it 'has link to previous news item' do
-        within("div[data-test-id='link-to-older-news']") do
-          expect(page).to(
-            have_css("a[data-test-id='older-news'][href='/ru/frames/news/latest?page=1']")
-          )
-        end
-      end
-
-      it 'does not have link to next news item' do
-        within("div[data-test-id='link-to-newer-news']") do
+      it 'does not have link to previous news item' do
+        within("div[data-test-id='link-to-older-article']") do
           expect(page).to(
             have_none_of_selectors('a')
           )
           expect(page).to(
-            have_css("span[data-test-id='newer-news']")
+            have_css("span[data-test-id='older-article']")
           )
         end
       end
 
-      context 'when user clicks on previous news link' do
-        before do
-          click_on('older-news')
-        end
-
-        it 'shows previous news intro' do
-          within('turbo-frame#latest-news') do
-            expect(page).to have_text(news2.intro.to_plain_text)
-            expect(page).to have_link('Подробнее', href: news_path(news2, locale: 'ru'))
-          end
-        end
-
-        it 'does not have link to previous news item' do
-          within("div[data-test-id='link-to-older-news']") do
-            expect(page).to(
-              have_none_of_selectors('a')
-            )
-            expect(page).to(
-              have_css("span[data-test-id='older-news']")
-            )
-          end
-        end
-
-        it 'has link to next news item' do
-          within("div[data-test-id='link-to-newer-news']") do
-            expect(page).to(
-              have_css("a[data-test-id='newer-news'][href='/ru/frames/news/latest?page=0']")
-            )
-          end
+      it 'has link to next news item' do
+        within("div[data-test-id='link-to-newer-article']") do
+          expect(page).to(
+            have_css("a[data-test-id='newer-article'][href='/ru/frames/articles/latest?page=0']")
+          )
         end
       end
     end
+  end
 
-    context 'when latest news are absent' do
-      before do
-        visit frames_news_latest_path(locale: 'ru')
-      end
+  context 'when latest article is absent' do
+    before do
+      visit frames_articles_latest_path(locale: 'ru')
+    end
 
-      it 'shows empty widget' do
-        within('turbo-frame#latest-news') do
-          expect(page).to have_text('Новости')
-          expect(page).to have_text('Нет новостей')
-          expect(page).to have_text('Новости на вашем языке пока что отсутствуют')
-        end
+    it 'shows empty widget' do
+      within('turbo-frame#articles-latest') do
+        expect(page).to have_text('Новости')
+        expect(page).to have_text('Нет новостей')
+        expect(page).to have_text('Новости на вашем языке пока что отсутствуют')
       end
     end
   end
