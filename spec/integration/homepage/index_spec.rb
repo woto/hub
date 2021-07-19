@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::HomepageController, type: :system do
+describe HomepageController, type: :system do
   context 'when user authenticated' do
     it 'shows `Выбрать товар`' do
       visit root_path(locale: :ru)
