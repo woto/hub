@@ -1,34 +1,86 @@
 <% content_for :body do %>
 
-  <%= tag.body do  %>
+  <%= content_for :prefix_inline_css %>
+  <%= content_for :prefix_inline_js %>
 
-    <%= content_for :prefix_inline_css %>
-    <%= content_for :prefix_inline_js %>
+  <%= render 'websites/google_analytics' %>
 
-    <%= render 'websites/google_analytics' %>
+  <body class="antialiased">
+    <div class="wrapper">
+      <aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent">
+        <div class="container-fluid">
 
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-9 col-md-6 col-lg-5 col-xl-4 col-xxl-3 bg-dark">
-          <div class="bg-azure-lt my-5 pt-2">
-            <a href="/">
-              <%= image_tag(asset_pack_path('media/images/logo-white.svg'), width: "110", height: "32", class: "my-3 mx-auto navbar-brand-image") %>
-              <%#= link_to Current.realm.domain, '/', class: 'm-2 d-block' %>
-            </a>
-            <hr>
-            <%= content_for :categories %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <h1 class="navbar-brand navbar-brand-autodark">
+            <%= link_to root_path do %>
+              <%= image_tag(asset_pack_path('media/images/logo.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
+            <% end %>
+          </h1>
+
+          <div class="collapse navbar-collapse" id="navbar-menu">
+            <%= content_for :left_bar %>
           </div>
         </div>
-        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-          <%= yield %>
-        </div>
-      </div>
+      </aside>
+
+      <section class="page">
+        <main class="content">
+          <div class="container-xl">
+
+            <% if content_for?(:title) || content_for?(:breadcrumbs) %>
+              <div class="page-header pb-0 mb-0">
+                <div class="row align-items-center">
+                  <div class="col-12">
+
+                    <div class="d-flex">
+                      <% if content_for?(:title) %>
+                        <h1 class="page-title flex-grow-1">
+                          <%= content_for :title %>
+                        </h1>
+                      <% end %>
+                      <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-desktop') %>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <% if content_for?(:breadcrumbs) %>
+              <div class="overflow-auto pt-1 pb-3 py-xl-1 mb-3">
+                <ol class="breadcrumb breadcrumb-arrows flex-nowrap text-nowrap">
+                  <%= content_for :breadcrumbs %>
+                </ol>
+              </div>
+            <% end %>
+
+            <div class="row">
+              <div class="col max-width-600">
+                <%= yield %>
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="mb-3">
+                  <%= render 'search_bar', btn_class: 'btn-light' %>
+                </div>
+
+                <%= content_for :right_bar %>
+              </div>
+            </div>
+          </div>
+
+          <%= render 'websites/footer' %>
+
+        </main>
+      </section>
     </div>
 
     <%= content_for :postfix_inline_css %>
     <%= content_for :postfix_inline_js %>
 
-  <% end %>
+  </body>
 <% end %>
 
 <%= render template: 'layouts/blank' %>

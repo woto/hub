@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module Tables
-  class NewsController < ApplicationController
+  class ArticlesController < ApplicationController
     ALLOWED_PARAMS = %i[q per page sort order].freeze
     REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
     include Tableable
-    layout 'backoffice'
+    layout 'website'
     skip_before_action :authenticate_user!
 
     # GET /news
@@ -25,6 +25,7 @@ module Tables
     end
 
     def by_category
+      @post_category = PostCategory.find_by(id: params[:category_id])
       get_index([], post_category_id: params[:category_id])
     end
 
@@ -49,7 +50,12 @@ module Tables
     end
 
     def path_for_switch_language(locale)
-      news_index_path(locale)
+      realm = Realm.news.find_by(locale: locale)
+      if realm
+        articles_url(host: realm.domain)
+      else
+        '/404'
+      end
     end
   end
 end

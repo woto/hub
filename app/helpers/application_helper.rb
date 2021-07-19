@@ -19,6 +19,32 @@ module ApplicationHelper
     )
   end
 
+  def articles_by_category_link(category_id)
+    articles_by_category_path(
+      category_id: category_id,
+      per: params[:per],
+      sort: params[:sort],
+      order: params[:order]
+    )
+  end
+
+  def articles_link
+    articles_path(
+      per: params[:per],
+      sort: params[:sort],
+      order: params[:order]
+    )
+  end
+
+  def article_link(id)
+    article_path(
+      id: id,
+      per: params[:per],
+      sort: params[:sort],
+      order: params[:order]
+    )
+  end
+
   def resolve_widgetable_partial(widget)
     case widget.widgetable.class.name.underscore
     when 'widgets/simple'
