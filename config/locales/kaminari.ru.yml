@@ -10,7 +10,7 @@ ru:
     page_entries_info:
       one_page:
         display_entries:
-          zero: "%{entry_name.capitalize} не найдено"
+          zero: "не найдено"
           one: "Отображение <b>все %{count}</b> %{entry_name}"
           few: "Отображение <b>все %{count}</b> %{entry_name}"
           many: "Отображение <b>все %{count}</b> %{entry_name}"
