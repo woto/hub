@@ -4,7 +4,11 @@ module Header
   class NewsComponent < ViewComponent::Base
     def initialize(locale)
       super
-      @realm = Realm.news.find_by!(locale: locale)
+      @realm = Realm.news.find_by(locale: locale)
+    end
+
+    def render?
+      @realm
     end
   end
 end
