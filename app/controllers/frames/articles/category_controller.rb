@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Frames
-  module News
+  module Articles
     class CategoryController < ApplicationController
       skip_before_action :authenticate_user!
       layout 'centered'

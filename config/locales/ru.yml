@@ -87,6 +87,9 @@ ru:
 
   frames:
     articles:
+      category:
+        index:
+          up: Главная
       latest:
         index:
           latest_news: Новости

@@ -1,0 +1,40 @@
+<%= turbo_frame_tag 'articles-by-category' do %>
+
+  <% category_class = 'px-0 list-group-item d-flex list-group-item-action justify-content-between align-items-center' %>
+
+  <div class="list-group list-group-flush mt-3">
+
+    <% if @post_category %>
+
+      <%= link_to articles_link, class: category_class, 'data-turbo-frame': '_top' do %>
+        <%= t('.up') %>
+        <span class="badge bg-cyan-lt">
+          <i class="fas fa-level-up-alt"></i>
+        </span>
+      <% end %>
+
+      <% @post_category.path[0..-2].each_with_index do |parent, index| %>
+        <%= link_to articles_by_category_link(parent.id), class: category_class, 'data-turbo-frame': '_top' do %>
+          <%= parent.to_label %>
+          <span class="badge bg-cyan-lt">
+            <i class="fas fa-level-up-alt"></i>
+          </span>
+        <% end %>
+      <% end %>
+
+      <div class="my-3"></div>
+    <% end %>
+
+    <% @result['aggregations']['group_by_category_id']['buckets'].each do |obj| %>
+      <% category = PostCategory.find(obj['key']) %>
+      <%= link_to articles_by_category_link(category.id), 'data-turbo-frame': '_top', class: category_class do %>
+            <%=  category.to_label %>
+            <span class="badge badge-primary badge-pill">
+              <%= obj['doc_count'] %>
+            </span>
+        <% end %>
+    <% end %>
+
+  </div>
+
+<% end %>
