@@ -24,6 +24,11 @@
 FactoryBot.define do
   factory :post_category do
     title { Faker::Commerce.department(max: 2) }
-    realm
+    realm do
+      Realm.pick(kind: Realm.kinds.keys.sample,
+                 locale: I18n.available_locales.sample,
+                 title: Faker::Lorem.unique.word,
+                 domain: "#{Faker::Alphanumeric.unique.alpha(number: 10)}.lvh.me")
+    end
   end
 end

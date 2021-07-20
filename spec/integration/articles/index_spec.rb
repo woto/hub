@@ -80,7 +80,37 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     end
   end
 
-  describe 'articles-by-tag turbo-frame' do
+  describe 'article visibility by publication time' do
+    let(:article) { create(:post, realm_kind: :news, published_at: published_at, status: :accrued_post) }
+
+    before do
+      switch_realm(article.realm) do
+        visit articles_by_month_path(
+                month: ApplicationController.helpers.l(published_at, format: '%Y-%m')
+              )
+      end
+    end
+
+    shared_examples 'published_at visibility' do |count|
+      it 'shows or hides article' do
+        expect(page).to have_css('.articles-preview', count: count)
+      end
+    end
+
+    context 'when publication time has not yet come' do
+      let(:published_at) { 1.hour.after }
+
+      it_behaves_like 'published_at visibility', 0
+    end
+
+    context 'when publication time already come' do
+      let(:published_at) { 1.hour.before }
+
+      it_behaves_like 'published_at visibility', 1
+    end
+  end
+
+  describe 'articles-by-month turbo-frame' do
     before do
       switch_realm(create(:realm, locale: :ru)) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
@@ -93,7 +123,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     end
   end
 
-  describe 'articles-by-month turbo-frame' do
+  describe 'articles-by-tag turbo-frame' do
     before do
       switch_realm(create(:realm, locale: :ru)) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })

@@ -12,7 +12,7 @@ shared_examples 'shared_table' do |_class_name|
   context 'when there are no items' do
     it 'shows blank page' do
       visit "/ru/#{plural}"
-      expect(page).to have_text('%{entry_name.capitalize} не найдено')
+      expect(page).to have_text('не найдено')
     end
   end
 

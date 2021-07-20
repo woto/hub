@@ -21,7 +21,7 @@
 FactoryBot.define do
   factory :realm do
     title { Faker::Lorem.unique.word }
-    domain { "#{Faker::Lorem.unique.word}.lvh.me" }
+    domain { "#{Faker::Alphanumeric.unique.alpha(number: 10)}.lvh.me" }
     locale { I18n.available_locales.sample }
     kind { Realm.kinds.keys.sample }
   end

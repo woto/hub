@@ -39,7 +39,7 @@ describe 'Tables::ArticlesController#by_tag', type: :system, responsible: :admin
       end
     end
 
-    it 'passes query params to frames' do
+    it 'passes query params to frame' do
       src = frames_articles_month_path(per: 5, sort: :created_at, order: :asc)
       expect(page).to have_css("turbo-frame#articles-by-month[src='#{src}']")
     end
@@ -52,7 +52,7 @@ describe 'Tables::ArticlesController#by_tag', type: :system, responsible: :admin
       end
     end
 
-    it 'passes query params to frames' do
+    it 'passes query params to frame' do
       src = frames_articles_tag_path(tag: 'tag1', per: 5, sort: :created_at, order: :asc)
       expect(page).to have_css("turbo-frame#articles-by-tag[src='#{src}']")
     end
