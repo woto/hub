@@ -14,8 +14,8 @@ describe Frames::NewsByMonthSearchQuery do
           aggregations: {
             group_by_month: {
               date_histogram: {
-                field: 'published_at',
                 calendar_interval: '1M',
+                field: 'published_at',
                 order: { _key: 'desc' }
               }
             }
@@ -25,7 +25,7 @@ describe Frames::NewsByMonthSearchQuery do
               filter: contain_exactly(
                 { term: { "realm_kind.keyword": 'news' } },
                 { term: { "status.keyword": 'accrued_post' } },
-                { term: { "realm_locale.keyword": 'ru' } },
+                { term: { "realm_locale.keyword": :ru } },
                 { range: { published_at: { lte: Time.current.utc } } }
               )
             }

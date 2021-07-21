@@ -36,7 +36,7 @@ application.register("textarea-autogrow", TextareaAutogrow)
 // application.register('profile-language-controller', ProfileLanguageController)
 
 // NOTE: not used anymore. Because support of js components which are is not idempotent is very expensive.
-// The pages which include such js components made as not a turbo.
+// The pages which include such js components must be made as not a turbo.
 //
 // document.addEventListener('turbo:before-cache', function() {
 //     application.controllers.forEach(function(controller){

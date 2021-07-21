@@ -8,7 +8,7 @@ describe 'Tables::ArticlesController shared_language_component', type: :system d
   describe 'GET /articles/month/:month' do
     it_behaves_like 'shared_language_component' do
       before do
-        switch_realm(create(:realm, locale: :ru)) do
+        switch_realm(Realm.pick(locale: :ru, kind: :news)) do
           visit articles_by_month_path('2020-04')
         end
       end
@@ -20,7 +20,7 @@ describe 'Tables::ArticlesController shared_language_component', type: :system d
   describe 'GET /articles/tag/:tag' do
     it_behaves_like 'shared_language_component' do
       before do
-        switch_realm(create(:realm, locale: :ru)) do
+        switch_realm(Realm.pick(locale: :ru, kind: :news)) do
           visit articles_by_tag_path(tag: 'tag')
         end
       end
@@ -32,7 +32,7 @@ describe 'Tables::ArticlesController shared_language_component', type: :system d
   describe 'GET /articles' do
     it_behaves_like 'shared_language_component' do
       before do
-        switch_realm(create(:realm, locale: :ru)) do
+        switch_realm(Realm.pick(locale: :ru, kind: :news)) do
           visit articles_path
         end
       end

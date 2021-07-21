@@ -22,7 +22,7 @@ describe Accounting::CreateTransaction do
   let(:debit) { create(:account, code: debit_code, currency: debit_currency) }
 
   let(:group) { create(:transaction_group) }
-  let(:amount) { rand(100).to_d }
+  let(:amount) { Faker::Number.between(from: 1, to: 100).to_d }
 
   let(:obj) do
     Current.set(responsible: admin) do

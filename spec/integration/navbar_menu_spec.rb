@@ -152,13 +152,4 @@ describe DashboardController, type: :system do
       let(:checker) { :flat }
     end
   end
-
-  describe 'highlight "Новости"' do
-    it_behaves_like 'highlight active' do
-      let(:url) { '/ru/news' }
-      let(:href) { '/ru/news' }
-      let(:title) { 'Новости' }
-      let(:checker) { :flat }
-    end
-  end
 end

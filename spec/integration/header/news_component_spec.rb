@@ -9,8 +9,8 @@ describe Header::NewsComponent, type: :system do
     it 'shows correct link to the news' do
       login_as(create(:user), scope: :user)
       visit dashboard_path(locale: realm.locale)
-      expect(page).to have_link('Новости', href: news_index_url(host: realm.domain,
-                                                                port: Capybara.current_session.server.port))
+      expect(page).to have_link('Новости', href: articles_url(host: realm.domain,
+                                                              port: Capybara.current_session.server.port))
     end
   end
 end

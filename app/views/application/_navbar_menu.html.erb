@@ -68,7 +68,7 @@
         disabled: false
     ) do |component| %>
 
-      <% component.with(:items) do %>
+      <% component.items do %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
             title: t('left_menu.transactions'),

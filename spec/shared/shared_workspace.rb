@@ -54,15 +54,15 @@ shared_examples 'shared workspace authenticated' do
 
     it 'shows and hides form' do
       # initially form is not shown
-      expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
+      expect(page).to have_css('.d-none[data-table-workspace-form-target="form"]', visible: false)
 
       # clicking on the button shows form
       find("[data-action='table-workspace-form#toggleForm']").click
-      expect(page).to have_css('.d-block[data-target="table-workspace-form.form"]', visible: true)
+      expect(page).to have_css('.d-block[data-table-workspace-form-target="form"]', visible: true)
 
       # clicking on the button again hides form
       find("[data-action='table-workspace-form#toggleForm']").click
-      expect(page).to have_css('.d-none[data-target="table-workspace-form.form"]', visible: false)
+      expect(page).to have_css('.d-none[data-table-workspace-form-target="form"]', visible: false)
     end
   end
 

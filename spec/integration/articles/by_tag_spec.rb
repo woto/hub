@@ -34,7 +34,7 @@ describe 'Tables::ArticlesController#by_tag', type: :system, responsible: :admin
 
   describe 'articles-by-month turbo-frame' do
     before do
-      switch_realm(create(:realm)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_by_tag_path({ tag: 'tag1', order: :asc, per: 5, sort: :created_at })
       end
     end
@@ -47,7 +47,7 @@ describe 'Tables::ArticlesController#by_tag', type: :system, responsible: :admin
 
   describe 'articles-by-tag turbo-frame' do
     before do
-      switch_realm(create(:realm)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_by_tag_path({ tag: 'tag1', order: :asc, per: 5, sort: :created_at })
       end
     end
@@ -60,7 +60,7 @@ describe 'Tables::ArticlesController#by_tag', type: :system, responsible: :admin
 
   describe 'articles-by-category turbo-frame' do
     before do
-      switch_realm(create(:realm)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_by_tag_path({ tag: 'tag1', order: :asc, per: 5, sort: :created_at })
       end
     end

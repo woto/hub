@@ -98,28 +98,4 @@ describe Settings::ProfilesController, type: :system do
       end
     end
   end
-
-  context 'when user clicks browser back button' do
-    let(:user) { create(:user) }
-
-    it 'shows initial state' do
-      # showing form
-      within find('.profile_form_languages') do
-        expect(page).to have_css('.selectize-control', count: 1)
-      end
-
-      # clicking anywhere
-      click_on('Новости')
-      expect(page).to have_current_path(Regexp.new('/ru/news'))
-      # teardown does not have time to execute
-      # and we can't test it otherwise
-      sleep(1)
-
-      # clicking back
-      page.go_back
-      within find('.profile_form_languages') do
-        expect(page).to have_css('.selectize-control', count: 1)
-      end
-    end
-  end
 end

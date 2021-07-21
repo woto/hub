@@ -39,11 +39,5 @@ export default class extends Controller {
         this.toggleButtonTarget.classList.add('btn-primary');
         this.toggleButtonTarget.classList.remove('btn-info');
     }
-
-    teardown() {
-        this.hideForm();
-        this.buttonOff();
-        this.data.set('isDisplayed', '0');
-    }
 }
 

@@ -8,12 +8,12 @@
             "data-controller": 'table-workspace-form table-columns-form' do %>
 
   <%= tag.div class: 'd-none',
-              "data-target": 'table-columns-form.form' do %>
-    <%= render 'columns_form'  %>
+              "data-table-columns-form-target": "form" do %>
+    <%= render 'columns_form' %>
   <% end %>
 
   <%= tag.div class: 'd-none',
-              "data-target": 'table-workspace-form.form' do %>
+              "data-table-workspace-form-target": "form" do %>
     <%= render 'workspace_form' %>
   <% end %>
 

@@ -14,7 +14,7 @@ export default class extends Controller {
                     <h5 class="modal-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body" data-target="modal-singleton.contentPlaceholder">
+                  <div class="modal-body" data-modal-singleton-target="contentPlaceholder">
                     ${html}
                   </div>
                   <div class="modal-footer">

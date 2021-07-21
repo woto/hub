@@ -5,6 +5,7 @@ class DashboardController < ApplicationController
   layout 'backoffice'
 
   def index
+    # TODO: to use or delete
     if current_user
       account_ids = current_user.accounts.pluck('id')
       @test = GlobalHelper.elastic_client.search(

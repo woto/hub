@@ -58,9 +58,9 @@
         <p class="fs-5 mb-4"><%= t('.tagline') %></p>
         <p class="lead">
           <% if current_user %>
-            <%= link_to t('.dashboard'), dashboard_path, class: 'noshadow btn btn-lg btn-white fw-bold' %>
+            <%= link_to t('.dashboard'), dashboard_path, class: 'noshadow btn btn-lg btn-white fw-bold', 'data-turbo': false %>
           <% else %>
-            <%= link_to t('.link'), offers_path, class: 'noshadow btn btn-lg btn-white fw-bold' %>
+            <%= link_to t('.link'), offers_path, class: 'noshadow btn btn-lg btn-white fw-bold', 'data-turbo': false %>
           <% end %>
         </p>
       </div>

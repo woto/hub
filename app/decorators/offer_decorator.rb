@@ -6,7 +6,7 @@ class OfferDecorator < ApplicationDecorator
     # in IMGPROXY_LOCAL_FILESYSTEM_ROOT it will fallback to the same image due to IMGPROXY_FALLBACK_IMAGE_PATH.
     # You could check local serving behaviour by commenting IMGPROXY_FALLBACK_IMAGE_PATH
 
-    images = object['_source']['picture'].yield_self do |objects|
+    images = (object['_source']['picture'] || []).yield_self do |objects|
       objects.pluck(Import::Offers::Hashify::HASH_BANG_KEY).slice(0, 10)
     end
 

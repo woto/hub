@@ -41,7 +41,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   context 'when params is empty' do
     before do
-      switch_realm(create(:realm, locale: :ru)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_path
       end
     end
@@ -73,7 +73,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     end
 
     it 'shows pagination' do
-      switch_realm(create(:realm, locale: :ru)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_path(per: 1)
       end
       expect(page).to have_css('.pagination')
@@ -112,7 +112,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   describe 'articles-by-month turbo-frame' do
     before do
-      switch_realm(create(:realm, locale: :ru)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
       end
     end
@@ -125,7 +125,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   describe 'articles-by-tag turbo-frame' do
     before do
-      switch_realm(create(:realm, locale: :ru)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
       end
     end
@@ -138,7 +138,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   describe 'articles-by-category turbo-frame' do
     before do
-      switch_realm(create(:realm, locale: :ru)) do
+      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
       end
     end
