@@ -237,8 +237,8 @@ describe Post, type: :model do
   describe '#check_post_category_realm', responsible: :user do
     subject { build(:post, post_category: post_category, realm: realm) }
 
-    let(:realm) { create(:realm) }
-    let(:post_category) { create(:post_category) }
+    let(:realm) { Realm.pick(locale: :ru, kind: :news) }
+    let(:post_category) { create(:post_category, realm: Realm.pick(locale: :en, kind: :news)) }
 
     it 'blames on `post_category`' do
       expect(subject).to be_invalid
