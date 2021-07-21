@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Header' do
+describe Header::Profile::AuthenticatedComponent do
   context 'when user is not authenticated' do
     it 'shows login link for desktop' do
       visit '/ru/offers'
