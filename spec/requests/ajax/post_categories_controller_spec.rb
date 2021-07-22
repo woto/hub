@@ -6,13 +6,13 @@ describe Ajax::PostCategoriesController, type: :request do
   subject { get ajax_categories_path(q: 'кат', realm_id: realm.id), xhr: true }
 
   let(:user) { create(:user) }
-  let(:realm) { create(:realm) }
+  let(:realm) { Realm.pick(locale: :ru, kind: :post) }
   let!(:parent) { create(:post_category, title: 'Родительская категория', realm: realm) }
   let!(:child) { create(:post_category, title: 'Дочерняя категория', realm: realm, parent: parent) }
 
   before do
-    realm = create(:realm)
-    create(:post_category, title: 'Другая категория', realm: realm)
+    another_realm = Realm.pick(locale: :en, kind: :post)
+    create(:post_category, title: 'Другая категория', realm: another_realm)
   end
 
   it 'requires authentication' do
