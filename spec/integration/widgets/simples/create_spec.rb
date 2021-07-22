@@ -15,7 +15,10 @@ describe Widgets::SimplesController, type: :system do
     end
 
     click_on('Создать новый виджет')
+    # this timeouts relates to the issue https://github.com/hotwired/turbo-rails/issues/197
+    sleep(1)
     click_link(href: '/ru/widgets/simples/new')
+    sleep(1)
     expect(page).to have_text('Создание виджета')
   end
 
