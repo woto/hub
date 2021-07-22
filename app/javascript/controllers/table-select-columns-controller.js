@@ -5,8 +5,19 @@ export default class extends Controller {
     #selectize;
 
     connect() {
-        this.#selectize = $(this.element).selectize({
+        this.selectize = $(this.element).selectize({
             delimiter: ',',
         });
+    }
+    disconnect() {
+        this.selectize.destroy();
+    }
+
+    get selectize() {
+        return this.#selectize[0].selectize;
+    }
+
+    set selectize(value) {
+        this.#selectize = value;
     }
 }
