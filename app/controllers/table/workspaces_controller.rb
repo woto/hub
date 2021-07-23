@@ -4,12 +4,12 @@ module Table
   class WorkspacesController < ApplicationController
     def create
       @workspace_form = policy_scope(Workspace).new(workspace_params)
-      redirect_back(fallback_location: root_path) if @workspace_form.save
+      redirect_to(path) if @workspace_form.save
     end
 
     def destroy
       policy_scope(Workspace).find(params[:id]).destroy!
-      redirect_to path
+      redirect_to(path)
     end
 
     private
