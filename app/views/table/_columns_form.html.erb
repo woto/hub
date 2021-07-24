@@ -18,12 +18,11 @@
                           "data-controller": 'table-select-columns'
                       },
                       as: :select,
-                      collection: collection_for_columns,
-                      hint: t('.columns_hint') %>
+                      collection: collection_for_columns %>
 
-          <%= f.button :submit, t('buttons.update_displayed_columns'), class: 'btn btn-primary mt-2' %>
+          <%= f.button :submit, class: 'btn btn-primary mt-2' %>
 
-        <% end %>
+      <% end %>
       </div>
     </div>
   </div>

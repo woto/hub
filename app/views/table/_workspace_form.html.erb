@@ -14,19 +14,16 @@
           <%= f.input :name,
                       input_html: {
                           class: 'mb-1'
-                      },
-                      placeholder: 'Введите имя',
-                      hint: t('.workspaces_hint')
+                      }
           %>
 
           <%= f.input :is_default,
                       wrapper_html: {
                           class: 'mt-2'
-                      },
-                      hint: "Сделайте рабочую область по-умолчанию и она будет открываться автоматически при заходе в раздел. По-умолчанию может быть только одна рабочая область."
+                      }
           %>
 
-          <%= f.button :submit, t('buttons.save'), class: 'btn btn-primary mt-2' %>
+          <%= f.button :submit, class: 'btn btn-primary mt-2' %>
 
         <% end %>
       </div>
