@@ -1,4 +1,10 @@
 ru:
+  dashboard:
+    index:
+      accounts: Счета
+      posts_statuses: Статусы статей
+      today_rates: Курс на сегодня
+      under_construction: В разработке
   shared:
     balance:
       account_wrapper:
