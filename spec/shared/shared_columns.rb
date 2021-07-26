@@ -72,7 +72,7 @@ shared_examples_for 'shared columns invisible by default', responsible: :admin d
     # loose selectize focus
     find('.card-status-start').click
 
-    click_on 'Обновить'
+    click_on 'Сохранить'
 
     expect(page).to have_text(column_title)
     within "#tr_#{object.id}_td_#{column_id}" do
