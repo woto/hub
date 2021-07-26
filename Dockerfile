@@ -11,7 +11,8 @@ RUN apk add --no-cache --update build-base \
                                 less \
                                 python2 \
                                 graphviz \
-                                ttf-freefont
+                                ttf-freefont \
+                                imagemagick
 
 
 ENV APP_PATH /app
