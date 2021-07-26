@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from Pundit::NotAuthorizedError, with: :render_403
 
+  helper ActionText::Engine.helpers
+
   impersonates :user
 
   # NOTE: Seems not needed due to the customizations in devise.rb
