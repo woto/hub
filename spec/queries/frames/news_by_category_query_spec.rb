@@ -8,29 +8,32 @@ describe Frames::NewsByCategoryQuery do
   context 'when `context.post_category_id` is nil' do
     subject { described_class.call(locale: locale, post_category_id: nil) }
 
+    let(:realm) { create(:realm) }
+
     it 'builds correct query' do
-      freeze_time do
-        expect(subject.object).to match(
-          body: {
-            aggregations: {
-              group_by_category_id: {
-                terms: { field: 'post_category_id_0', size: 100 }
+      Current.set(realm: realm) do
+        freeze_time do
+          expect(subject.object).to match(
+            body: {
+              aggregations: {
+                group_by_category_id: {
+                  terms: { field: 'post_category_id_0', size: 100 }
+                }
+              },
+              query: {
+                bool: {
+                  filter: [
+                    { term: { "realm_id.keyword": Current.realm.id } },
+                    { term: { "status.keyword": 'accrued_post' } },
+                    { range: { published_at: { lte: Time.current.utc } } }
+                  ]
+                }
               }
             },
-            query: {
-              bool: {
-                filter: [
-                  { term: { "realm_kind.keyword": 'news' } },
-                  { term: { "status.keyword": 'accrued_post' } },
-                  { term: { "realm_locale.keyword": :ru } },
-                  { range: { published_at: { lte: Time.current.utc } } }
-                ]
-              }
-            }
-          },
-          index: Elastic::IndexName.posts,
-          size: 0
-        )
+            index: Elastic::IndexName.posts,
+            size: 0
+          )
+        end
       end
     end
   end
@@ -43,29 +46,30 @@ describe Frames::NewsByCategoryQuery do
     let(:child_post_category) { create(:post_category, realm: realm, parent: parent_post_category) }
 
     it 'builds correct query' do
-      freeze_time do
-        expect(subject.object).to match(
-          body: {
-            aggregations: {
-              group_by_category_id: {
-                terms: { field: "post_category_id_#{child_post_category.ancestry_depth + 1}", size: 100 }
+      Current.set(realm: realm) do
+        freeze_time do
+          expect(subject.object).to match(
+            body: {
+              aggregations: {
+                group_by_category_id: {
+                  terms: { field: "post_category_id_#{child_post_category.ancestry_depth + 1}", size: 100 }
+                }
+              },
+              query: {
+                bool: {
+                  filter: contain_exactly(
+                    { term: { "realm_id.keyword": Current.realm.id } },
+                    { term: { "status.keyword": 'accrued_post' } },
+                    { range: { published_at: { lte: Time.current.utc } } },
+                    { term: { "post_category_id_#{child_post_category.ancestry_depth}".to_sym => child_post_category.id } }
+                  )
+                }
               }
             },
-            query: {
-              bool: {
-                filter: contain_exactly(
-                  { term: { "realm_kind.keyword": 'news' } },
-                  { term: { "status.keyword": 'accrued_post' } },
-                  { term: { "realm_locale.keyword": :ru } },
-                  { range: { published_at: { lte: Time.current.utc } } },
-                  { term: { "post_category_id_#{child_post_category.ancestry_depth}".to_sym => child_post_category.id } }
-                )
-              }
-            }
-          },
-          index: Elastic::IndexName.posts,
-          size: 0
-        )
+            index: Elastic::IndexName.posts,
+            size: 0
+          )
+        end
       end
     end
   end

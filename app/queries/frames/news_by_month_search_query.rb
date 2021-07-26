@@ -24,17 +24,12 @@ module Frames
             json.filter do
               json.array! ['fuck'] do
                 json.term do
-                  json.set! 'realm_kind.keyword', 'news'
+                  json.set! 'realm_id.keyword', Current.realm.id
                 end
               end
               json.array! ['fuck'] do
                 json.term do
                   json.set! 'status.keyword', 'accrued_post'
-                end
-              end
-              json.array! ['fuck'] do
-                json.term do
-                  json.set! 'realm_locale.keyword', context.locale
                 end
               end
               json.array! ['fuck'] do
