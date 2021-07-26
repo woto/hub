@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NewsSearchQuery
+class ArticlesSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
@@ -9,15 +9,11 @@ class NewsSearchQuery
       query do
         bool do
           filter do
-            term 'realm_kind.keyword' => 'news'
+            term 'realm_id.keyword' => Current.realm.id
           end
 
           filter do
             term 'status.keyword' => 'accrued_post'
-          end
-
-          filter do
-            term 'realm_locale.keyword' => context.locale
           end
 
           filter do

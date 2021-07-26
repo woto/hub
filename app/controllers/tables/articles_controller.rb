@@ -36,7 +36,7 @@ module Tables
                     plural: :news,
                     model_class: News,
                     form_class: Columns::NewsForm,
-                    query_class: NewsSearchQuery,
+                    query_class: ArticlesSearchQuery,
                     decorator_class: NewsDecorator,
                     favorites_kind: :news,
                     favorites_items_kind: :news }

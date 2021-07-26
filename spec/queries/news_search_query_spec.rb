@@ -2,18 +2,20 @@
 
 require 'rails_helper'
 
-describe NewsSearchQuery do
+describe ArticlesSearchQuery do
   subject do
-    described_class.call(locale: 'ru',
-                         tag: 'tag',
-                         post_category_id: child_category.id,
-                         month: month,
-                         q: 'q',
-                         sort: 'sort',
-                         order: 'order',
-                         from: 0,
-                         size: 100,
-                         _source: ['_source'])
+    Current.set(realm: realm) do
+      described_class.call(locale: 'ru',
+                           tag: 'tag',
+                           post_category_id: child_category.id,
+                           month: month,
+                           q: 'q',
+                           sort: 'sort',
+                           order: 'order',
+                           from: 0,
+                           size: 100,
+                           _source: ['_source'])
+    end
   end
 
   let(:realm) { create(:realm) }
@@ -29,9 +31,8 @@ describe NewsSearchQuery do
             query: {
               bool: {
                 filter: contain_exactly(
-                  { term: { "realm_kind.keyword": 'news' } },
+                  { term: { "realm_id.keyword": realm.id } },
                   { term: { "status.keyword": 'accrued_post' } },
-                  { term: { "realm_locale.keyword": 'ru' } },
                   { range: { published_at: { lte: Time.current.utc } } },
                   { term: { "tags.keyword": 'tag' } },
                   { term: { "post_category_id_#{child_category.ancestry_depth}": child_category.id } },
