@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Tables::ChecksController, type: :request do
-  let(:path) { checks_path(cols: '', order: :desc, per: 20, sort: :id) }
+  let(:path) { checks_path(columns: ['id'], order: :desc, per: 20, sort: :id) }
 
   it_behaves_like 'shared get_index', :guest, :unauthorized
   it_behaves_like 'shared get_index', :user, :ok
