@@ -2,7 +2,7 @@
 
 module Tables
   class ArticlesController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order].freeze
+    ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
     REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
@@ -32,14 +32,7 @@ module Tables
     private
 
     def set_settings
-      @settings = { singular: :news,
-                    plural: :news,
-                    model_class: News,
-                    form_class: Columns::NewsForm,
-                    query_class: ArticlesSearchQuery,
-                    decorator_class: NewsDecorator,
-                    favorites_kind: :news,
-                    favorites_items_kind: :news }
+      @settings = GlobalHelper.class_configurator('article')
     end
 
     def system_default_workspace

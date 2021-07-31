@@ -2,8 +2,8 @@
 
 module Tables
   class TransactionsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
-    REQUIRED_PARAMS = %i[per order sort cols].freeze
+    ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
+    REQUIRED_PARAMS = %i[per order sort columns].freeze
 
     include Workspaceable
     include Tableable
@@ -11,26 +11,19 @@ module Tables
 
     # GET /transactions
     def index
-      get_index(%w[id currency debit_id credit_id], filter_ids: (current_user.account_ids if current_user.role == 'user'))
+      get_index(%w[id currency debit_id credit_id],
+                filter_ids: (current_user.account_ids if current_user.role == 'user'))
     end
 
     private
 
     def set_settings
-      @settings = { singular: :transaction,
-                    plural: :transactions,
-                    model_class: Transaction,
-                    form_class: Columns::TransactionForm,
-                    query_class: TransactionsSearchQuery,
-                    decorator_class: TransactionDecorator,
-                    favorites_kind: :transactions,
-                    favorites_items_kind: :transactions
-      }
+      @settings = GlobalHelper.class_configurator('transaction')
     end
 
     def system_default_workspace
       url_for(**workspace_params,
-              cols: @settings[:form_class].default_stringified_columns_for(request),
+              columns: @settings[:form_class]::DEFAULTS,
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)

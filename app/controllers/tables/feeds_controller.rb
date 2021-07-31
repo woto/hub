@@ -2,8 +2,8 @@
 
 module Tables
   class FeedsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
-    REQUIRED_PARAMS = %i[per order sort cols].freeze
+    ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
+    REQUIRED_PARAMS = %i[per order sort columns].freeze
 
     include Workspaceable
     include Tableable
@@ -18,20 +18,12 @@ module Tables
     private
 
     def set_settings
-      @settings = { singular: :feed,
-                    plural: :feeds,
-                    model_class: Feed,
-                    form_class: Columns::FeedForm,
-                    query_class: FeedsSearchQuery,
-                    decorator_class: FeedDecorator,
-                    favorites_kind: :feeds,
-                    favorites_items_kind: :feeds
-      }
+      @settings = GlobalHelper.class_configurator('feed')
     end
 
     def system_default_workspace
       url_for(**workspace_params,
-              cols: @settings[:form_class].default_stringified_columns_for(request),
+              columns: @settings[:form_class]::DEFAULTS,
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)

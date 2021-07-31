@@ -2,8 +2,8 @@
 
 module Tables
   class AccountsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
-    REQUIRED_PARAMS = %i[per order sort cols].freeze
+    ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
+    REQUIRED_PARAMS = %i[per order sort columns].freeze
 
     include Workspaceable
     include Tableable
@@ -17,20 +17,12 @@ module Tables
     private
 
     def set_settings
-      @settings = { singular: :account,
-                    plural: :accounts,
-                    model_class: Account,
-                    form_class: Columns::AccountForm,
-                    query_class: AccountsSearchQuery,
-                    decorator_class: AccountDecorator,
-                    favorites_kind: :accounts,
-                    favorites_items_kind: :accounts
-      }
+      @settings = GlobalHelper.class_configurator('account')
     end
 
     def system_default_workspace
       url_for(**workspace_params,
-              cols: @settings[:form_class].default_stringified_columns_for(request),
+              columns: @settings[:form_class]::DEFAULTS,
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)

@@ -2,8 +2,8 @@
 
 module Tables
   class PostsController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols].freeze
-    REQUIRED_PARAMS = %i[per order sort cols].freeze
+    ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
+    REQUIRED_PARAMS = %i[per order sort columns].freeze
 
     include Workspaceable
     include Tableable
@@ -15,20 +15,12 @@ module Tables
     end
 
     def set_settings
-      @settings = { singular: :post,
-                    plural: :posts,
-                    model_class: Post,
-                    form_class: Columns::PostForm,
-                    query_class: PostsSearchQuery,
-                    decorator_class: PostDecorator,
-                    favorites_kind: :posts,
-                    favorites_items_kind: :posts
-      }
+      @settings = GlobalHelper.class_configurator('post')
     end
 
     def system_default_workspace
       url_for(**workspace_params,
-              cols: @settings[:form_class].default_stringified_columns_for(request),
+              columns: @settings[:form_class]::DEFAULTS,
               per: @pagination_rule.per,
               sort: :id,
               order: :desc)
