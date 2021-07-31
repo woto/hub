@@ -70,7 +70,7 @@ module ApplicationHelper
            .reject { _1[:roles].exclude?(current_user&.role || 'guest') }
            .map { _1[:key] }
 
-    keys.map do |k|
+    keys.compact_blank.map do |k|
       [t(k, scope: [:table, :long, @settings[:singular]]), k]
     end
   end
