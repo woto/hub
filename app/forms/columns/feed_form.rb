@@ -32,7 +32,7 @@ module Columns
       { key: 'updated_at'                                      , pg: Feed.columns_hash['updated_at'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'advertiser_id'                                   , pg: Advertiser.columns_hash['id'], roles: ['admin'] },
       { key: 'advertiser_is_active'                            , pg: Advertiser.columns_hash['is_active'], roles: ['admin'] },
-      { key: 'advertiser_name'                                 , pg: Advertiser.columns_hash['name'], roles: ['admin'] },
+      { key: 'advertiser_name'                                 , pg: Advertiser.columns_hash['name'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'advertiser_network'                              , pg: Advertiser.columns_hash['network'], as: :string, roles: ['admin'] },
       { key: 'advertiser_raw'                                  , pg: Advertiser.columns_hash['raw'], roles: ['admin'] },
       { key: 'advertiser_ext_id'                               , pg: Advertiser.columns_hash['ext_id'], roles: ['admin'] },
