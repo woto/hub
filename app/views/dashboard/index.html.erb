@@ -30,7 +30,13 @@
         <% end %>
       </div>
 
-      <h2><%= t('.under_construction') %></h2>
+      <div class="card min-height-450">
+        <div class="card-body">
+          <h2><%= t('.under_construction') %></h2>
+        </div>
+      </div>
+
+
     </div>
 
     <div class="col-md-4">
@@ -45,7 +51,6 @@
 
       <div class="my-3"></div>
 
-      <h2><%= t('.news') %></h2>
       <%= turbo_frame_tag 'articles-latest', src: frames_articles_latest_path %>
     </div>
   </div>
