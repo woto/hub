@@ -30,7 +30,9 @@ module Workspaceable
     end
 
     def workspace_params
-      params.permit(*self.class::ALLOWED_PARAMS).slice(*self.class::ALLOWED_PARAMS)
+      # NOTE: is there a way to make it better?
+      keys = self.class::ALLOWED_PARAMS.map { |item| item.is_a?(Hash) ? item.keys.first : item }
+      params.permit(*self.class::ALLOWED_PARAMS).slice(*keys)
     end
   end
 end

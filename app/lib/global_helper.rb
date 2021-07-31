@@ -129,9 +129,5 @@ class GlobalHelper
     def hashify(child)
       child.to_h.transform_keys { |k| "@#{k}" }.merge('#' => child.text)
     end
-
-    def workspace_params
-      %i[q per page sort order cols]
-    end
   end
 end

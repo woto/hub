@@ -16,11 +16,12 @@
     <% end %>
 
     <%= link_to url_for(
-                    **request.params.slice(*GlobalHelper.workspace_params),
+                    **controller.send(:workspace_params),
                     sort: @sort,
                     order: params[:order] == 'desc' && sorted ? 'asc' : 'desc',
                     page: 1,
         ),
+        id: "sort_#{@sort}",
         class: "ms-2 btn btn-sm #{btn_color} btn-icon" do %>
       <% if params[:order] == 'desc' && sorted %>
         <i class="fas fa-arrow-down fa-sm py-1"></i>
