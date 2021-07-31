@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Tables::ArticlesController shared_search_everywhere', type: :system do
+describe 'Articles shared search everywhere', type: :system do
 
   describe 'GET /articles/month/:month' do
     it_behaves_like 'shared_search_everywhere' do

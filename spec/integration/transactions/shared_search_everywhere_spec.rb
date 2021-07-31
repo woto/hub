@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::TransactionsController, type: :system do
+describe 'Transactions shared search everywhere', type: :system do
   describe 'GET /transactions' do
     it_behaves_like 'shared_search_everywhere' do
       before do
@@ -15,8 +15,9 @@ describe Tables::TransactionsController, type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/transactions', q: q, cols: '0.3.6.8.9.11.12.15.16', locale: 'ru',
-          per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/transactions', q: q,
+          columns: %w[id transaction_group_id code credit_label credit_amount debit_label debit_amount created_at updated_at],
+          locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
       end
     end
   end
