@@ -19,7 +19,7 @@
               <% end %>
               <%= link_to table_workspace_path(id: workspace,
                                                model: params[:controller],
-                                               **request.params.slice(*GlobalHelper.workspace_params)),
+                                               state: controller.send(:workspace_params)),
                           data: { confirm: t('are_you_sure'), test_id: "delete-workspace-#{workspace.id}" },
                           method: :delete,
                           class: 'ms-auto' do %>

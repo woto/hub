@@ -7,9 +7,7 @@
         <%= simple_form_for @workspace_form,
                             as: :workspace_form,
                             method: :post,
-                            url: table_workspaces_path(
-                                model: params[:model] || params[:controller],
-                                **request.params.slice(*GlobalHelper.workspace_params)),
+                            url: table_workspaces_path,
                             local: true do |f| %>
           <%= f.input :name,
                       input_html: {
@@ -20,8 +18,13 @@
           <%= f.input :is_default,
                       wrapper_html: {
                           class: 'mt-2'
-                      }
+                      },
+                      as: :boolean
           %>
+
+          <%= f.input :model, as: :hidden %>
+
+          <%= f.input :state, as: :hidden %>
 
           <%= f.button :submit, class: 'btn btn-primary mt-2' %>
 

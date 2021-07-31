@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Workspaceable
   extend ActiveSupport::Concern
   include Paginatable
@@ -11,13 +13,16 @@ module Workspaceable
     private
 
     def check_defaults
-      if workspace_params.values_at(*self.class::REQUIRED_PARAMS).any? { _1.nil? }
-        user_default_workspace = policy_scope(Workspace).find_by(controller: "tables/#{@settings[:plural]}", is_default: true)
-        if user_default_workspace
-          redirect_to user_default_workspace.path
-        else
-          redirect_to system_default_workspace
-        end
+      return if workspace_params.values_at(*self.class::REQUIRED_PARAMS).none?(&:nil?)
+
+      user_default_workspace = policy_scope(Workspace).find_by(
+        controller: "tables/#{@settings[:plural]}", is_default: true
+      )
+
+      if user_default_workspace
+        redirect_to user_default_workspace.path
+      else
+        redirect_to system_default_workspace
       end
     end
 
@@ -26,7 +31,11 @@ module Workspaceable
     end
 
     def set_workspace_form
-      @workspace_form = Workspace.new
+      # TODO: check for security
+      @workspace_form = WorkspaceForm.new(
+        model: params[:controller].split('/').last,
+        state: workspace_params.to_json
+      )
     end
 
     def workspace_params
