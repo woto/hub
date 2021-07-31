@@ -7,6 +7,17 @@ class GlobalHelper
   GROUP_LIMIT = 1000
 
   class << self
+    def class_configurator(model)
+      { singular: model.singularize.to_sym,
+        plural: model.pluralize.to_sym,
+        model_class: model.singularize.camelize.safe_constantize,
+        form_class: "Columns::#{model.singularize.camelize}Form".constantize,
+        query_class: "#{model.pluralize.camelize}SearchQuery".constantize,
+        decorator_class: "#{model.singularize.camelize}Decorator".constantize,
+        favorites_kind: model.pluralize.to_sym,
+        favorites_items_kind: model.pluralize.to_sym }
+    end
+
     def currencies_table
       Money::Currency.table.map { |key, value| { key => value[:iso_numeric].to_i } }
                      .reduce(&:merge)
