@@ -10,6 +10,7 @@
                 "data-action": 'beforeunload@window->posts-form#AskConfirmationOnBeforeunload
                                 trix-document-change@document->posts-form#markAsDirtyOnTrixChange' do %>
 
+  <!-- TODO: rename to `openWidgetsModal`? -->
   <%= tag.div 'data-controller': 'posts-widgets',
               'data-posts-widgets-url-value': widgets_path,
               'data-action': 'trix-action-invoke@document->posts-widgets#openModalOnTrixActionInvoke' do %>
