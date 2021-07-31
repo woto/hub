@@ -5,7 +5,7 @@
 
 import "@fortawesome/fontawesome-free/css/all"
 
-// TODO: remove
+// TODO: remove. We can't remove it because `link_to ... method: :destroy` will be broken
 require("@rails/ujs").start()
 
 import { Turbo, cable } from "@hotwired/turbo-rails"
