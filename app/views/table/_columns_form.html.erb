@@ -7,8 +7,7 @@
         <%= simple_form_for @columns_form,
                             as: :columns_form,
                             method: :post,
-                            url: table_columns_path(model: params[:controller],
-                                                    **request.params.slice(*GlobalHelper.workspace_params)),
+                            url: table_columns_path,
                             local: true do |f| %>
 
           <%= f.input :displayed_columns,
@@ -19,6 +18,10 @@
                       },
                       as: :select,
                       collection: collection_for_columns %>
+
+          <%= f.input :model, as: :hidden %>
+
+          <%= f.input :state, as: :hidden %>
 
           <%= f.button :submit, class: 'btn btn-primary mt-2' %>
 
