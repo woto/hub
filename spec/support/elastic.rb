@@ -80,12 +80,11 @@ end
 #   end
 # end
 
-# frozen_string_literal: true
-
 # id = Time.current.to_i
 #
 # RSpec.configure do |config|
 #   config.before(:suite) do
+#     GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
 #     GlobalHelper.create_elastic_indexes
 #     GlobalHelper.elastic_client.snapshot.create_repository(
 #         repository: 'my_backup',
