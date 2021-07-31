@@ -15,11 +15,12 @@ GIT
 
 GIT
   remote: https://github.com/woto/capybara.git
-  revision: e2d76d10d0b261b10714f83dfeb9ba7043c4f903
+  revision: 58fbec205dbff654cf1e69b625bdb0e90bc7ba3e
   branch: order_independent_compare
   specs:
-    capybara (3.34.0)
+    capybara (3.36.0)
       addressable
+      matrix
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
@@ -303,6 +304,7 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
+    matrix (0.4.2)
     method_source (1.0.0)
     mini_magick (4.11.0)
     mini_mime (1.1.0)

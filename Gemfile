@@ -61,14 +61,14 @@ group :development do
 end
 
 group :test do
-  # gem 'capybara', '>= 2.15'
-  # this needed for order independent compare of query string
   # TODO: check answer
   # https://github.com/teamcapybara/capybara/issues/2432
   # https://github.com/teamcapybara/capybara/compare/master...woto:order_independent_compare
+  #
+  # This needed for order independent compare of query string
+  # Also fixes problem with comparing arrays in query string (ex. foo[]=1&foo[]=2)
+  # by replacing Addressable with Rack query string parser
   gem 'capybara', github: 'woto/capybara', branch: 'order_independent_compare'
-  # TODO: update to
-  # gem 'capybara', '>= 3.26'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
