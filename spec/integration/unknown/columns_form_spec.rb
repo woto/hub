@@ -57,26 +57,28 @@ describe Tables::FeedsController, type: :system do
     end
   end
 
-  it 'redirects to correct page after save' do
-    click_on('Колонки')
+  context "when sent form's data is correct" do
+    it 'redirects to correct page after save' do
+      click_on('Колонки')
 
-    within '#new_columns_form' do
-      within('.selectize-input') do
-        find('input').click
+      within '#new_columns_form' do
+        within('.selectize-input') do
+          find('input').click
+        end
+        find('div.option', text: 'Дата изменения прайса').click
       end
-      find('div.option', text: 'Дата изменения прайса').click
-    end
 
-    # collapse selectize
-    find('.card-status-start').click
+      # collapse selectize
+      find('.card-status-start').click
 
-    click_on 'Сохранить'
+      click_on 'Сохранить'
 
-    expect(page).to(
-      have_current_path(
-        feeds_path({ q: 'a', per: 5, page: 10, sort: 'id', order: 'asc', columns: %w[id name updated_at],
-                     filters: { id: { max: 10, min: 1 } }, locale: 'ru' })
+      expect(page).to(
+        have_current_path(
+          feeds_path({ q: 'a', per: 5, page: 10, sort: 'id', order: 'asc', columns: %w[id name updated_at],
+                       filters: { id: { max: 10, min: 1 } }, locale: 'ru' })
+        )
       )
-    )
+    end
   end
 end

@@ -1,18 +1,33 @@
 # frozen_string_literal: true
 
 module Table
-  class ColumnsController < BaseController
+  class ColumnsController < ApplicationController
     skip_before_action :authenticate_user!
 
     def create
-      # seems not too secure
-      form_class = "Columns::#{params[:model].camelize.demodulize.singularize}Form".constantize
+      # TODO: to secure
+      @settings = GlobalHelper.class_configurator(columns_form_params[:model])
+      @columns_form = @settings[:form_class].new(columns_form_params)
+      return unless @columns_form.valid?
 
-      strings = params[:columns_form][:displayed_columns]
-      ints = form_class.strings_to_ints(strings).join('.')
+      redirect_to url_for(params_for_url)
+    end
 
-      url_opts = path_opts.merge(cols: ints)
-      redirect_to url_for(url_opts)
+    private
+
+    # TODO: to secure
+    def params_for_url
+      {
+        'controller' => "/tables/#{columns_form_params[:model]}",
+        **JSON.parse(columns_form_params[:state]).merge(
+          'columns' => columns_form_params[:displayed_columns].compact_blank
+        ),
+        'only_path' => true
+      }
+    end
+
+    def columns_form_params
+      params.require(:columns_form).permit(:model, :state, displayed_columns: [])
     end
   end
 end
