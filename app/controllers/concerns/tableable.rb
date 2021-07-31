@@ -36,6 +36,8 @@ module Tableable
       @rows = @settings[:decorator_class].decorate_collection(rows)
 
       @columns_form = @settings[:form_class].new(
+        model: params[:controller].split('/').last,
+        state: workspace_params.to_json,
         displayed_columns: @settings[:form_class].parsed_columns_for(request, current_user && current_user.role)
       )
       render 'index', locals: { rows: @rows }
