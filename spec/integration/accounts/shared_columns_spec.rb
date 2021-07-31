@@ -13,7 +13,9 @@ describe 'Accounts shared columns', type: :system do
   end
 
   it_behaves_like 'shared columns visible only to admin' do
-    let(:path) { accounts_path({ cols: '0.6', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:path) do
+      accounts_path({ columns: %w[id subjectable_label], order: :desc, per: 20, sort: :id, locale: :ru })
+    end
     let(:object) { Account.for_user(user, :pending_post, :rub) }
     let(:column_id) { 'subjectable_label' }
     let(:select_title) { 'Subjectable Label' }

@@ -13,7 +13,7 @@ describe 'Feeds shared columns', type: :system do
   end
 
   it_behaves_like 'shared columns visible only to admin' do
-    let(:path) { feeds_path({ cols: '0.18', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:path) { feeds_path({ columns: %w[id xml_file_path], order: :desc, per: 20, sort: :id, locale: :ru }) }
     let(:object) { create(:feed, xml_file_path: 'fake') }
     let(:column_id) { 'xml_file_path' }
     let(:select_title) { 'Путь до прайса' }

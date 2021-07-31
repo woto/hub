@@ -13,7 +13,7 @@ describe 'Favorites shared columns', type: :system do
   end
 
   it_behaves_like 'shared columns visible only to admin' do
-    let(:path) { favorites_path({ cols: '0.6', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:path) { favorites_path({ columns: %w[id user_id], order: :desc, per: 20, sort: :id, locale: :ru }) }
     let(:object) { create(:favorite, user: user) }
     let(:column_id) { 'user_id' }
     let(:select_title) { 'User' }

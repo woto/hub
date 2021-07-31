@@ -13,8 +13,10 @@ describe 'Posts shared columns', type: :system do
   end
 
   it_behaves_like 'shared columns visible only to admin' do
-    let(:path) { posts_path({ cols: '0.5', order: :desc, per: 20, sort: :id, locale: :ru }) }
-    let(:object) { create(:post, user: user, post_category: create(:post_category, realm: create(:realm, domain: 'fake.ru'))) }
+    let(:path) { posts_path({ columns: %w[id realm_domain], order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:object) do
+      create(:post, user: user, post_category: create(:post_category, realm: create(:realm, domain: 'fake.ru')))
+    end
     let(:column_id) { 'realm_domain' }
     let(:select_title) { 'Realm Domain' }
     let(:column_title) { 'Realm Domain' }

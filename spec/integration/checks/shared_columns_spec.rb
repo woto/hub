@@ -13,7 +13,7 @@ describe 'Checks shared columns', type: :system do
   # end
 
   it_behaves_like 'shared columns visible only to admin' do
-    let(:path) { checks_path({ cols: '0.3', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:path) { checks_path({ columns: %w[id user_id], order: :desc, per: 20, sort: :id, locale: :ru }) }
     let(:object) { create(:check, user: user) }
     let(:column_id) { 'user_id' }
     let(:select_title) { 'User' }

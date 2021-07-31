@@ -19,7 +19,7 @@ describe 'Transactions shared columns', type: :system do
   it_behaves_like 'shared columns visible only to admin' do
     let(:credit_account) { Account.for_subject('hub', :pending_post, :rub) }
     let(:debit_account) { Account.for_user(user, :pending_post, :rub) }
-    let(:path) { transactions_path({ cols: '0.7', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:path) { transactions_path({ columns: %w[id credit_id], order: :desc, per: 20, sort: :id, locale: :ru }) }
     let(:object) { create(:transaction, debit: debit_account, credit: credit_account) }
     let(:column_id) { 'credit_id' }
     let(:select_title) { 'Credit' }

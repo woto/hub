@@ -14,7 +14,7 @@ describe 'PostCategories shared columns', type: :system do
   end
 
   it_behaves_like 'shared columns visible only to admin' do
-    let(:path) { post_categories_path({ cols: '0.9', order: :desc, per: 20, sort: :id, locale: :ru }) }
+    let(:path) { post_categories_path({ columns: %w[id posts_count], order: :desc, per: 20, sort: :id, locale: :ru }) }
     let(:object) { create(:post_category) }
     let(:column_id) { 'posts_count' }
     let(:select_title) { 'Posts Count' }
