@@ -4,18 +4,21 @@ class AccountsSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
-  # contract do
-  #   params do
-  #     config.validate_keys = true
-  #     required(:q)
-  #     required(:locale)
-  #     required(:sort)
-  #     required(:order)
-  #     required(:from)
-  #     required(:size)
-  #     required(:filter_ids)
-  #   end
-  # end
+  contract do
+    params do
+      # TODO: make it later?
+      # config.validate_keys = true
+      required(:q).maybe(:string)
+      required(:from).filled(:integer)
+      required(:size).filled(:integer)
+      required(:filter_ids).maybe { array? { each { string? } } }
+      required(:sort).maybe(:string)
+      required(:order).maybe(:string)
+      required(:locale).maybe(:symbol)
+      required(:_source).filled { array? { each { string? } } }
+    end
+  end
+
 
   def call
     definition = search do
