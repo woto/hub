@@ -4,6 +4,8 @@ class PostsSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
+  # TODO: jbuilder
+  #
   def call
     definition = search do
 
