@@ -10,7 +10,7 @@ module Tables
     layout 'backoffice'
 
     def index
-      get_index(%w[id], filter_ids: (current_user.id if current_user.role == 'user'))
+      get_index(%w[id])
     end
 
     private
