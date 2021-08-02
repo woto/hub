@@ -4,6 +4,8 @@ class FeedsSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
+  # jbuilder
+  #
   def call
     definition = search do
 
