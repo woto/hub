@@ -4,6 +4,8 @@ class ArticlesSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
+  # TODO jbuilder
+  #
   def call
     definition = search do
       query do
