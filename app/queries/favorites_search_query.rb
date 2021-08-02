@@ -4,6 +4,8 @@ class FavoritesSearchQuery
   include ApplicationInteractor
   include Elasticsearch::DSL
 
+  # TODO jbuilder
+
   def call
     definition = search do
 
@@ -39,6 +41,7 @@ class FavoritesSearchQuery
       h[:index] = ::Elastic::IndexName.favorites
       h[:from] = context.from
       h[:size] = context.size
+      h[:_source] = context._source
     end
   end
 end
