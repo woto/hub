@@ -24,7 +24,7 @@ describe AccountsSearchQuery do
         size: 10,
         index: Elastic::IndexName.accounts,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               filter: contain_exactly(
@@ -49,7 +49,7 @@ describe AccountsSearchQuery do
         size: 10,
         index: Elastic::IndexName.accounts,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               must: [{ query_string: { query: q } }]
@@ -70,17 +70,33 @@ describe AccountsSearchQuery do
         size: 10,
         index: Elastic::IndexName.accounts,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               filter: contain_exactly(
                 { term: { subjectable_id: filter_ids } },
-                { term: { 'subjectable_type.keyword'.to_sym => 'User' } },
-                {:match_all=>{} }
+                { term: { 'subjectable_type.keyword'.to_sym => 'User' } }
               )
             }
           },
-          sort: [sort: { order: 'order' }]
+          sort: [{ sort: { order: 'order' } }]
+        )
+      )
+    end
+  end
+
+  context 'when `filter_ids` and `q` are empty' do
+    let(:filter_ids) { nil }
+    let(:q) { nil }
+
+    it 'builds correct query' do
+      expect(subject.object).to include(
+        from: 0,
+        size: 10,
+        index: Elastic::IndexName.accounts,
+        _source: [column],
+        body: match(
+          sort: [{ sort: { order: 'order' } }]
         )
       )
     end
