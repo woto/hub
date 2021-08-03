@@ -5,7 +5,8 @@ class TransactionsSearchQuery
 
   contract do
     params do
-      config.validate_keys = true
+      # TODO: make it later?
+      # config.validate_keys = true
       required(:q).maybe(:string)
       required(:from).filled(:integer)
       required(:size).filled(:integer)
@@ -20,9 +21,16 @@ class TransactionsSearchQuery
   def call
     body = Jbuilder.new do |json|
       json.query do
-        if context.filter_ids
-          json.bool do
-            json.must do
+
+        Tables::Filters.call(
+          json: json,
+          model: context.model,
+          filters: context.filters
+        ).object
+
+        json.bool do
+          json.must do
+            if context.filter_ids.present?
               json.array! ['fuck!'] do
                 json.bool do
                   json.set! :should do
@@ -40,13 +48,23 @@ class TransactionsSearchQuery
                 end
               end
             end
+
+            if context.q.present?
+              json.array! ['fuck'] do
+                json.query_string do
+                  json.query context.q
+                end
+              end
+            end
           end
         end
       end
 
       json.sort do
-        json.set! context.sort do
-          json.order context.order
+        json.array! ['fuck'] do
+          json.set! context.sort do
+            json.order context.order
+          end
         end
       end
     end

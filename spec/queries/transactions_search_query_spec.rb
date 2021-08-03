@@ -30,11 +30,9 @@ describe TransactionsSearchQuery do
       expect(subject.object).to eq(
         _source: _source,
         body: {
-          sort: {
-            sort.to_sym => {
-              order: order
-            }
-          }
+          sort: [
+            { sort.to_sym => { order: order } }
+          ]
         },
         from: from,
         index: Elastic::IndexName.transactions,
@@ -72,9 +70,7 @@ describe TransactionsSearchQuery do
               ]
             }
           },
-          sort: {
-            sort.to_sym => { order: order }
-          }
+          sort: [{ sort.to_sym => { order: order } }]
         },
         from: from,
         index: Elastic::IndexName.transactions,
