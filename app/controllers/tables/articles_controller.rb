@@ -12,24 +12,28 @@ module Tables
 
     # GET /news
     def index
-      get_index([])
+      get_index(required_fields)
     end
 
     def by_month
       month = Time.use_zone('UTC') { Time.zone.parse("#{params[:month]}-01") }
-      get_index([], month: month)
+      get_index(required_fields, month: month)
     end
 
     def by_tag
-      get_index([], tag: params[:tag])
+      get_index(required_fields, tag: params[:tag])
     end
 
     def by_category
       @post_category = PostCategory.find_by(id: params[:category_id])
-      get_index([], post_category_id: params[:category_id])
+      get_index(required_fields, post_category_id: params[:category_id])
     end
 
     private
+
+    def required_fields
+      %w[id intro published_at tags]
+    end
 
     def set_settings
       @settings = GlobalHelper.class_configurator('article')
@@ -37,6 +41,7 @@ module Tables
 
     def system_default_workspace
       url_for(**workspace_params,
+              columns: @settings[:form_class]::DEFAULTS,
               per: @pagination_rule.per,
               sort: :published_at,
               order: :desc)

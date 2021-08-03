@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class ArticleForm < BaseForm
+  class ArticleForm < PostForm
     DEFAULTS = %w[].freeze
-
-    self.all_columns = []
   end
 end

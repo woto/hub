@@ -2,74 +2,108 @@
 
 class ArticlesSearchQuery
   include ApplicationInteractor
-  include Elasticsearch::DSL
 
-  # TODO jbuilder
-  #
+  contract do
+    params do
+      # TODO: make it later?
+      # config.validate_keys = true
+      required(:q).maybe(:string)
+      required(:from).filled(:integer)
+      required(:size).filled(:integer)
+      required(:sort).maybe(:string)
+      required(:order).maybe(:string)
+      required(:locale).maybe(:symbol)
+      required(:_source).filled { array? { each { string? } } }
+    end
+  end
+
   def call
-    definition = search do
-      query do
-        bool do
-          filter do
-            term 'realm_id.keyword' => Current.realm.id
-          end
+    body = Jbuilder.new do |json|
+      json.query do
+        Tables::Filters.call(
+          json: json,
+          model: context.model,
+          filters: context.filters
+        ).object
 
-          filter do
-            term 'status.keyword' => 'accrued_post'
-          end
-
-          filter do
-            range :published_at do
-              lte Time.current.utc
+        json.bool do
+          json.filter do
+            json.array! ['fuck!'] do
+              json.term do
+                json.set! "realm_id.keyword", Current.realm.id
+              end
             end
-          end
 
-          if context.tag.present?
-            filter do
-              term 'tags.keyword' => context.tag
+            json.array! ['fuck!'] do
+              json.term do
+                json.set! 'status.keyword', 'accrued_post'
+              end
             end
-          end
 
-          if context.post_category_id.present?
-            post_category = PostCategory.find(context.post_category_id)
-            filter do
-              term "post_category_id_#{post_category.ancestry_depth}" => context.post_category_id.to_i
+            json.array! ['fuck!'] do
+              json.range do
+                json.published_at do
+                  json.lte Time.current.utc
+                end
+              end
             end
-          end
 
-          if context.month.present?
-            filter do
-              range :published_at do
-                gte context.month.beginning_of_month.utc
-                lte context.month.end_of_month.utc
+            if context.tag.present?
+              json.array! ['fuck'] do
+                json.term do
+                  json.set! 'tags.keyword', context.tag
+                end
+              end
+            end
+
+            json.array! ['fuck!'] do
+              json.term do
+                if context.post_category_id.present?
+                  post_category = PostCategory.find(context.post_category_id)
+                  json.set! "post_category_id_#{post_category.ancestry_depth}", context.post_category_id.to_i
+                end
+              end
+            end
+
+            if context.month.present?
+              json.array! ['fuck!'] do
+                json.range do
+                  json.published_at do
+                    json.gte context.month.beginning_of_month.utc
+                    json.lte context.month.end_of_month.utc
+                  end
+                end
               end
             end
           end
 
           if context.q.present?
-            must do
-              query_string do
-                query context.q
+            json.must do
+              json.array! ['fuck!'] do
+                json.query_string do
+                  json.query context.q
+                end
               end
             end
-          else
-            filter do
-              match_all {}
-            end
           end
+
         end
       end
 
-      sort do
-        by context.sort, order: context.order
+      json.sort do
+        json.array! ['fuck'] do
+          json.set! context.sort do
+            json.order context.order
+          end
+        end
       end
     end
 
     context.object = {}.tap do |h|
-      h[:body] = definition.to_hash.deep_symbolize_keys
+      h[:body] = body.attributes!.deep_symbolize_keys
       h[:index] = ::Elastic::IndexName.posts
-      h[:from] = context.from
       h[:size] = context.size
+      h[:from] = context.from
       h[:_source] = context._source
     end
   end
