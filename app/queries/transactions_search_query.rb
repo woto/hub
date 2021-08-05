@@ -21,14 +21,15 @@ class TransactionsSearchQuery
   def call
     body = Jbuilder.new do |json|
       json.query do
-
-        Tables::Filters.call(
-          json: json,
-          model: context.model,
-          filters: context.filters
-        ).object
-
         json.bool do
+          json.filter do
+            Tables::Filters.call(
+              json: json,
+              model: context.model,
+              filters: context.filters
+            ).object
+          end
+
           json.must do
             if context.filter_ids.present?
               json.array! ['fuck!'] do
