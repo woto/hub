@@ -2,7 +2,6 @@
 
 class UsersSearchQuery
   include ApplicationInteractor
-  include Elasticsearch::DSL
 
   contract do
     params do

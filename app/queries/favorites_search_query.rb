@@ -2,7 +2,6 @@
 
 class FavoritesSearchQuery
   include ApplicationInteractor
-  include Elasticsearch::DSL
 
   def call
     body = Jbuilder.new do |json|

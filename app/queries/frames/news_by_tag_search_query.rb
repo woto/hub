@@ -3,7 +3,6 @@
 module Frames
   class NewsByTagSearchQuery
     include ApplicationInteractor
-    # include Elasticsearch::DSL
 
     def call
       body = Jbuilder.new do |json|
