@@ -19,16 +19,16 @@ describe PostsSearchQuery do
 
   context 'when `filter_ids` is present' do
     it 'builds correct query' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.posts,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               filter: contain_exactly(
-                { term: { user_id: filter_ids } },
+                { terms: { user_id: filter_ids } },
               ),
               must: [{ query_string: { query: q } }]
             }
@@ -43,12 +43,12 @@ describe PostsSearchQuery do
     let(:filter_ids) { nil }
 
     it 'does not include filter_ids scope' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.posts,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               must: [{ query_string: { query: q } }]
@@ -64,17 +64,16 @@ describe PostsSearchQuery do
     let(:q) { nil }
 
     it 'builds correct query' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.posts,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               filter: contain_exactly(
-                { term: { user_id: filter_ids } },
-                { match_all: {} }
+                { terms: { user_id: filter_ids } },
               )
             }
           },
