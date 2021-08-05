@@ -21,7 +21,6 @@ class AccountsSearchQuery
   def call
     body = Jbuilder.new do |json|
       json.query do
-
         json.bool do
           json.filter do
             Tables::Filters.call(
@@ -36,6 +35,7 @@ class AccountsSearchQuery
                   json.subjectable_id context.filter_ids
                 end
               end
+
               json.array! ['fuck'] do
                 json.term do
                   json.set! 'subjectable_type.keyword'.to_sym, 'User'

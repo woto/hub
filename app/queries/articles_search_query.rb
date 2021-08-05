@@ -20,17 +20,17 @@ class ArticlesSearchQuery
   def call
     body = Jbuilder.new do |json|
       json.query do
-        Tables::Filters.call(
-          json: json,
-          model: context.model,
-          filters: context.filters
-        ).object
-
         json.bool do
           json.filter do
+            Tables::Filters.call(
+              json: json,
+              model: context.model,
+              filters: context.filters
+            ).object
+
             json.array! ['fuck!'] do
               json.term do
-                json.set! "realm_id.keyword", Current.realm.id
+                json.set! 'realm_id.keyword', Current.realm.id
               end
             end
 
@@ -86,7 +86,6 @@ class ArticlesSearchQuery
               end
             end
           end
-
         end
       end
 
