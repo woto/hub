@@ -19,34 +19,43 @@ class UsersSearchQuery
   end
 
   def call
-    definition = search do
+    body = Jbuilder.new do |json|
+      json.query do
+        json.bool do
+          json.filter do
+            Tables::Filters.call(
+              json: json,
+              model: context.model,
+              filters: context.filters
+            ).object
+          end
 
-      query do
-        bool do
           if context.q.present?
-            must do
-              query_string do
-                query context.q
+            json.must do
+              json.array! ['fuck'] do
+                json.query_string do
+                  json.query context.q
+                end
               end
-            end
-          else
-            filter do
-              match_all {}
             end
           end
         end
       end
 
-      sort do
-        by context.sort, order: context.order
+      json.sort do
+        json.array! ['fuck'] do
+          json.set! context.sort do
+            json.order context.order
+          end
+        end
       end
     end
 
     context.object = {}.tap do |h|
-      h[:body] = definition.to_hash.deep_symbolize_keys
+      h[:body] = body.attributes!.deep_symbolize_keys
       h[:index] = ::Elastic::IndexName.users
-      h[:from] = context.from
       h[:size] = context.size
+      h[:from] = context.from
       h[:_source] = context._source
     end
   end
