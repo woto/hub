@@ -18,12 +18,12 @@ describe FeedsSearchQuery do
 
   context 'when `q` is present' do
     it 'includes `q` filter' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.feeds,
         _source: [column],
-        body: include(
+        body: match(
           query: {
             bool: {
               must: [{ query_string: { query: q } }]
@@ -39,19 +39,12 @@ describe FeedsSearchQuery do
     let(:q) { nil }
 
     it 'builds correct query' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.feeds,
         _source: [column],
-        body: include(
-          query: {
-            bool: {
-              filter: [
-                { match_all: {} }
-              ]
-            }
-          },
+        body: match(
           sort: [sort: { order: 'order' }]
         )
       )
