@@ -28,7 +28,7 @@ describe AccountsSearchQuery do
           query: {
             bool: {
               filter: contain_exactly(
-                { term: { subjectable_id: filter_ids } },
+                { terms: { subjectable_id: filter_ids } },
                 { term: { 'subjectable_type.keyword'.to_sym => 'User' } }
               ),
               must: [{ query_string: { query: q } }]
@@ -44,7 +44,7 @@ describe AccountsSearchQuery do
     let(:filter_ids) { nil }
 
     it 'does not include filter_ids scope' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.accounts,
@@ -65,7 +65,7 @@ describe AccountsSearchQuery do
     let(:q) { nil }
 
     it 'builds correct query' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.accounts,
@@ -74,7 +74,7 @@ describe AccountsSearchQuery do
           query: {
             bool: {
               filter: contain_exactly(
-                { term: { subjectable_id: filter_ids } },
+                { terms: { subjectable_id: filter_ids } },
                 { term: { 'subjectable_type.keyword'.to_sym => 'User' } }
               )
             }
@@ -90,7 +90,7 @@ describe AccountsSearchQuery do
     let(:q) { nil }
 
     it 'builds correct query' do
-      expect(subject.object).to include(
+      expect(subject.object).to match(
         from: 0,
         size: 10,
         index: Elastic::IndexName.accounts,

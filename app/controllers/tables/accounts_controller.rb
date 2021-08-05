@@ -11,7 +11,7 @@ module Tables
 
     # GET /accounts
     def index
-      get_index(%w[id currency], filter_ids: (current_user.id if current_user && current_user.role == 'user'))
+      get_index(%w[id currency], filter_ids: ([current_user.id] if current_user && current_user.role == 'user'))
     end
 
     private
