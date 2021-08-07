@@ -3,6 +3,7 @@
 module TableComponent
   class HeaderComponent < ViewComponent::Base
     def initialize(col_name:, settings:)
+      super
       @col_name = col_name
       @settings = settings
 

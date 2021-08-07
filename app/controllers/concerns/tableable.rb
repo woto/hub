@@ -7,6 +7,7 @@ module Tableable
     def get_index(additional_columns, **query_class_params)
       authorize(@settings[:singular])
 
+      # TODO: security check filters
       context = {
         q: params[:q],
         locale: I18n.locale,
@@ -14,6 +15,8 @@ module Tableable
         order: params[:order],
         from: (@pagination_rule.page - 1) * @pagination_rule.per,
         size: @pagination_rule.per,
+        filters: params[:filters] && params[:filters].permit!.to_h,
+        model: @settings[:singular],
         _source: @settings[:form_class].parsed_columns_for(request, current_user && current_user.role) + additional_columns,
       }.merge(query_class_params)
 

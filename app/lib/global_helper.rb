@@ -8,14 +8,14 @@ class GlobalHelper
 
   class << self
     def class_configurator(model)
-      { singular: model.singularize.to_sym,
-        plural: model.pluralize.to_sym,
-        model_class: model.singularize.camelize.safe_constantize,
-        form_class: "Columns::#{model.singularize.camelize}Form".constantize,
-        query_class: "#{model.pluralize.camelize}SearchQuery".constantize,
-        decorator_class: "#{model.singularize.camelize}Decorator".constantize,
-        favorites_kind: model.pluralize.to_sym,
-        favorites_items_kind: model.pluralize.to_sym }
+      { singular: model.to_s.singularize.to_sym,
+        plural: model.to_s.pluralize.to_sym,
+        model_class: model.to_s.singularize.camelize.safe_constantize,
+        form_class: "Columns::#{model.to_s.singularize.camelize}Form".constantize,
+        query_class: "#{model.to_s.pluralize.camelize}SearchQuery".constantize,
+        decorator_class: "#{model.to_s.singularize.camelize}Decorator".constantize,
+        favorites_kind: model.to_s.pluralize.to_sym,
+        favorites_items_kind: model.to_s.pluralize.to_sym }
     end
 
     def currencies_table

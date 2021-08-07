@@ -2,7 +2,7 @@
 
 module Tables
   class OffersController < ApplicationController
-    ALLOWED_PARAMS = %i[q per page sort order cols category_id favorite_id].freeze
+    ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, :favorite_id, { filters: {} }, { columns: [] }].freeze
     REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
@@ -223,12 +223,7 @@ module Tables
     end
 
     def set_settings
-      @settings = { singular: :offer,
-                    plural: :offers,
-                    # model_class: Offer,
-                    form_class: Columns::OfferForm,
-                    favorites_kind: :offers,
-                    favorites_items_kind: :offers }
+      @settings = GlobalHelper.class_configurator('offer')
     end
 
     def set_pagination_rule
@@ -263,7 +258,7 @@ module Tables
     end
 
     def preserved_params
-      request.params.slice(:order, :per, :sort, :cols, :favorite_id)
+      request.params.slice(:order, :per, :sort, :columns, :favorite_id)
     end
   end
 end

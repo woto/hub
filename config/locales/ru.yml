@@ -1,4 +1,17 @@
 ru:
+  activemodel:
+    attributes:
+      filters/text_form:
+        value: Текстовое значение
+      filters/long_form:
+        min: Минимальное значение
+        max: Максимальное значение
+      filters/double_form:
+        min: Минимальное значение
+        max: Максимальное значение
+      filters/date_form:
+        min: С даты
+        max: По дату
   dashboard:
     index:
       accounts: Счета
@@ -260,6 +273,8 @@ ru:
 
   helpers:
     submit:
+      filter_form:
+        create: Применить фильтр
       columns_form:
         create: Сохранить
       workspace_form:

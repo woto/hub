@@ -3,6 +3,9 @@ ru:
     error_notification:
       default_message: Невозможно сохранить. Пожалуйста заполните поля
     labels:
+#      filter_form:
+#        min: Минимальное значение
+#        max: Минимальное значение
       columns_form:
         displayed_columns: Отображаемые столбцы
       workspace_form:

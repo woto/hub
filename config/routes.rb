@@ -26,10 +26,6 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  namespace :filters do
-    resources :dates
-  end
-
   devise_scope :user do
     Rails.configuration.oauth_providers.each do |provider|
       get "/users/auth/#{provider}/callback" => 'users/omniauth_callbacks#callback', defaults: { provider: provider }
@@ -136,9 +132,8 @@ Rails.application.routes.draw do
     namespace :table do
       resources :columns
       resources :workspaces
+      resource :filters, only: %i[create update], path_names: { create: '' }
     end
-
-    resources :autocompletes
 
     namespace 'settings' do
       devise_scope :user do

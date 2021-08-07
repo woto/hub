@@ -3,6 +3,8 @@ import ApexCharts from 'apexcharts'
 
 export default class extends Controller {
     connect() {
+        alert('TODO: It seems it is not used');
+
         let dates = JSON.parse(this.data.get('dates'));
         let values = JSON.parse(this.data.get('values'));
 
