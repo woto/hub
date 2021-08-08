@@ -32,7 +32,7 @@ module Tables
     private
 
     def required_fields
-      %w[id intro published_at tags]
+      %w[id title intro published_at tags]
     end
 
     def set_settings
