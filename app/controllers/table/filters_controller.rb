@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # TODO: to test isolated
+# TODO: rewrite it to be more clearer
 
 module Table
   class FiltersController < ApplicationController
@@ -20,15 +21,27 @@ module Table
     end
 
     def update
-      @settings = GlobalHelper.class_configurator(filter_form_params[:model])
-      @elastic_column = @settings[:form_class].elastic_column(filter_form_params[:column])
-      filter_form_class = "Filters::#{@elastic_column[:type].to_s.camelize}Form".constantize
-
-      @filter_form = filter_form_class.new(filter_form_params)
-      if @filter_form.valid?
-        redirect_to url_for(params_for_url), status: :see_other
+      if params[:reset_filter]
+        state = JSON.parse(filter_form_params[:state])
+        state['filters']&.delete(filter_form_params[:column])
+        redirect_to(
+          url_for(
+            'controller' => "/tables/#{filter_form_params[:model]}",
+            **state,
+            only_path: true
+          )
+        )
       else
-        render :create, status: :unprocessable_entity
+        @settings = GlobalHelper.class_configurator(filter_form_params[:model])
+        @elastic_column = @settings[:form_class].elastic_column(filter_form_params[:column])
+        filter_form_class = "Filters::#{@elastic_column[:type].to_s.camelize}Form".constantize
+
+        @filter_form = filter_form_class.new(filter_form_params)
+        if @filter_form.valid?
+          redirect_to url_for(params_for_url), status: :see_other
+        else
+          render :create, status: :unprocessable_entity
+        end
       end
     end
 
@@ -51,5 +64,3 @@ module Table
     end
   end
 end
-
-

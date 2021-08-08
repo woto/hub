@@ -2,8 +2,6 @@
                     method: :patch,
                     url: table_filters_path do |f| %>
 
-  <p><%= @elastic_column[:type] %></p>
-
   <%= render "table/filters/types/#{@elastic_column[:type]}", f: f %>
 
   <%= f.input :model, as: :hidden %>
@@ -12,7 +10,8 @@
 
   <%= f.input :column, as: :hidden %>
 
-  <div class="form-footer">
-    <%= f.button :submit, class: 'btn btn-primary mt-2' %>
+  <div class="form-footer mt-4">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= f.button :submit, t('.reset_filter'), name: 'reset_filter', class: 'ms-2'%>
   </div>
 <% end %>

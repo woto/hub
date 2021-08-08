@@ -1,4 +1,8 @@
 ru:
+  table:
+    filters:
+      form:
+        reset_filter: Сбросить фильтр
   activemodel:
     attributes:
       filters/text_form:

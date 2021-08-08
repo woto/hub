@@ -105,9 +105,6 @@ Rails.application.routes.draw do
 
     # sign_out_via: [*::Devise.sign_out_via, ActiveAdmin.application.logout_link_method].uniq
 
-    # resources :advertiser_filter_forms
-    # resources :feed_filter_forms
-
     resources :feeds do
       member do
         get :logs
