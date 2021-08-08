@@ -918,7 +918,7 @@ CREATE TABLE public.profiles (
     id bigint NOT NULL,
     name character varying,
     bio text,
-    messengers jsonb,
+    messengers jsonb DEFAULT '[]'::jsonb,
     languages jsonb,
     time_zone character varying,
     user_id bigint NOT NULL,
@@ -2158,6 +2158,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210301234512'),
 ('20210301235012'),
 ('20210328042112'),
-('20210328055745');
+('20210328055745'),
+('20210808221850');
 
 
