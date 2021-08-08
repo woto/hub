@@ -7,6 +7,19 @@ export default class extends ApplicationController {
     connect() {
         const that = this;
 
+        document.onpaste = function(event){
+            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            const url = that.inputFileTarget.dataset.directUploadUrl;
+            for (const index in items) {
+                let item = items[index];
+                if (item.kind === 'file') {
+                    // adds the file to your dropzone instance
+                    that._uploadFile(item.getAsFile(), url, 'widgets_simple[pictures][]');
+                    that._notify_success(that);
+                }
+            }
+        }
+
         Array.from(this.inputFileTargets).forEach(inputFile => {
             inputFile.addEventListener('change', (event) => {
                 const url = inputFile.dataset.directUploadUrl
@@ -14,9 +27,13 @@ export default class extends ApplicationController {
                 Array.from(inputFile.files).forEach(file => this._uploadFile(file, url, name))
                 // you might clear the selected files from the input
                 inputFile.value = null
-                that.dispatch('showToast', {detail: {title: '', body: 'Файлы успешно загружены'}});
+                that._notify_success(that);
             })
         })
+    }
+
+    _notify_success(that) {
+        that.dispatch('showToast', {detail: {title: '', body: 'Файлы успешно загружены'}});
     }
 
     _uploadFile(file, url, name) {
