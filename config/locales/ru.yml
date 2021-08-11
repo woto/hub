@@ -66,6 +66,8 @@ ru:
       selecting_widget_type: Выбор типа создаваемого виджета
       new_simple_widget: Простой виджет
     simples:
+      form:
+        pictures: Изображения
       create:
         simple_was_successfully_created: Виджет успешно создан
       update:

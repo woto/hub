@@ -18,9 +18,9 @@
     <div class="carousel-inner">
 
       <% if widget.widgetable.pictures.many? %>
-        <% widget.widgetable.pictures.each_with_index do |picture, index| %>
+        <% widget.widgetable.pictures.to_a.sort_by { |picture| picture.order || 1000 }.each_with_index do |picture, index| %>
           <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-            <%= image_tag picture,
+            <%= image_tag picture.picture,
                           loading: 'lazy',
                           class: 'd-block mx-auto max-height-300',
                           alt: widget.widgetable.title,
@@ -28,7 +28,7 @@
           </div>
         <% end %>
       <% elsif widget.widgetable.pictures.one? %>
-        <%= image_tag widget.widgetable.pictures.first,
+        <%= image_tag widget.widgetable.pictures.first.picture,
                       loading: 'lazy',
                       class: 'd-block mx-auto max-height-300',
                       alt: widget.widgetable.title,

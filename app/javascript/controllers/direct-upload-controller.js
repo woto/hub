@@ -14,7 +14,7 @@ export default class extends ApplicationController {
                 let item = items[index];
                 if (item.kind === 'file') {
                     // adds the file to your dropzone instance
-                    that._uploadFile(item.getAsFile(), url, 'widgets_simple[pictures][]');
+                    that._uploadFile(item.getAsFile(), url, `widgets_simple[pictures_attributes][${Date.now()}][picture]`);
                     that._notify_success(that);
                 }
             }
@@ -24,7 +24,7 @@ export default class extends ApplicationController {
             inputFile.addEventListener('change', (event) => {
                 const url = inputFile.dataset.directUploadUrl
                 const name = inputFile.name
-                Array.from(inputFile.files).forEach(file => this._uploadFile(file, url, name))
+                Array.from(inputFile.files).forEach(file => this._uploadFile(file, url, `widgets_simple[pictures_attributes][${Date.now()}][picture]`))
                 // you might clear the selected files from the input
                 inputFile.value = null
                 that._notify_success(that);

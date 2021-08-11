@@ -5,8 +5,8 @@ require 'rails_helper'
 describe WidgetsController, type: :system do
   context 'with user' do
     let(:user) { create(:user) }
-    let!(:widget1) { create(:widget, user: user) }
-    let!(:widget2) { create(:widget) }
+    let!(:widget1) { create(:widget, user: user, widgetable: zzzzz) }
+    let!(:widget2) { create(:widget, widgetable: zzzzz) }
 
     it 'displays only user widgets list' do
       login_as(user, scope: :user)
@@ -40,7 +40,7 @@ describe WidgetsController, type: :system do
     let!(:widget) do
       create(:widget,
              user: Current.responsible,
-             widgetable: create(:widgets_simple, title: 'widget title'))
+             widgetable: zzzzz)
     end
 
     before do
@@ -65,7 +65,7 @@ describe WidgetsController, type: :system do
         find("#widget-cover-#{widget.id}").click
         click_on('Вставить виджет в статью')
 
-        expect(page).to have_field('post[intro]', with: /widget title/, type: :hidden)
+        expect(page).to have_field('post[intro]', with: Regexp.new(widget.widgetable.title), type: :hidden)
       end
     end
 

@@ -17,13 +17,15 @@ RSpec.describe Widgets::Simple, type: :model do
   it { is_expected.to validate_presence_of(:body) }
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:url) }
-  it { is_expected.to have_many_attached(:pictures) }
+  it { is_expected.to have_many(:pictures) }
   it { is_expected.to have_one(:widget).touch(true) }
 
   describe '#url_valid?' do
     subject do
       described_class.new(url: url, title: 'title', body: 'body',
-                          pictures: [Rack::Test::UploadedFile.new(file_fixture('adriana_chechik.jpg'))])
+                          pictures: [Widgets::Simples::Picture.new(
+                            picture: Rack::Test::UploadedFile.new(file_fixture('adriana_chechik.jpg'))
+                          )])
     end
 
     let!(:offer) { OfferCreator.call(feed_category: create(:feed_category)) }

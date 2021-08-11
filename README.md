@@ -72,10 +72,11 @@ skueye.com
 
 ### Localization
 
-https://www.transifex.com/pricing/  
-https://phrase.com/ru/pricing/  
-https://weblate.org/ru/hosting/  
-https://webtranslateit.com/en  
-https://www.langapi.co/pricing  
-https://www.oneskyapp.com/pricing/  
-https://crowdin.com/pricing#annual
+- https://www.transifex.com/pricing/
+- https://phrase.com/ru/pricing/
+- https://weblate.org/ru/hosting/
+- https://webtranslateit.com/en
+- https://www.langapi.co/pricing 
+- https://www.oneskyapp.com/pricing/
+- https://crowdin.com/pricing#annual
+- https://translation.io/rails/pricing

@@ -45,6 +45,7 @@ describe Widgets::SimplesController, type: :system do
       end.to(
         change(Widget, :count)
           .and(change(Widgets::Simple, :count))
+          .and(change(Widgets::Simples::Picture, :count))
           .and(change(ActiveStorage::Attachment, :count))
       )
 
@@ -53,9 +54,13 @@ describe Widgets::SimplesController, type: :system do
       expect(widgetable).to have_attributes(
         url: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY],
         title: 'Название товара',
-        body: 'Описание товара',
-        pictures: be_attached
+        body: 'Описание товара'
       )
+
+      # TODO: How to move this validation in one line higher? Somehow like:
+      # have_attributes(...., pictures: Widgets::Simples::Picture association)
+      expect(widgetable.pictures.last).to be_attached
+      expect(widgetable.pictures.last.picture.blob.filename).to eq('jessa_rhodes.jpg')
     end
   end
 

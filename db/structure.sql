@@ -1183,6 +1183,39 @@ ALTER SEQUENCE public.widgets_id_seq OWNED BY public.widgets.id;
 
 
 --
+-- Name: widgets_pictures; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.widgets_pictures (
+    id bigint NOT NULL,
+    widgetable_type character varying NOT NULL,
+    widgetable_id bigint NOT NULL,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: widgets_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.widgets_pictures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: widgets_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.widgets_pictures_id_seq OWNED BY public.widgets_pictures.id;
+
+
+--
 -- Name: widgets_simples; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1213,6 +1246,38 @@ CREATE SEQUENCE public.widgets_simples_id_seq
 --
 
 ALTER SEQUENCE public.widgets_simples_id_seq OWNED BY public.widgets_simples.id;
+
+
+--
+-- Name: widgets_simples_pictures; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.widgets_simples_pictures (
+    id bigint NOT NULL,
+    widgets_simple_id bigint NOT NULL,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: widgets_simples_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.widgets_simples_pictures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: widgets_simples_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.widgets_simples_pictures_id_seq OWNED BY public.widgets_simples_pictures.id;
 
 
 --
@@ -1412,10 +1477,24 @@ ALTER TABLE ONLY public.widgets ALTER COLUMN id SET DEFAULT nextval('public.widg
 
 
 --
+-- Name: widgets_pictures id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_pictures ALTER COLUMN id SET DEFAULT nextval('public.widgets_pictures_id_seq'::regclass);
+
+
+--
 -- Name: widgets_simples id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.widgets_simples ALTER COLUMN id SET DEFAULT nextval('public.widgets_simples_id_seq'::regclass);
+
+
+--
+-- Name: widgets_simples_pictures id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_simples_pictures ALTER COLUMN id SET DEFAULT nextval('public.widgets_simples_pictures_id_seq'::regclass);
 
 
 --
@@ -1618,11 +1697,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: widgets_pictures widgets_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_pictures
+    ADD CONSTRAINT widgets_pictures_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: widgets widgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.widgets
     ADD CONSTRAINT widgets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: widgets_simples_pictures widgets_simples_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_simples_pictures
+    ADD CONSTRAINT widgets_simples_pictures_pkey PRIMARY KEY (id);
 
 
 --
@@ -1915,6 +2010,20 @@ CREATE INDEX index_widgets_on_widgetable ON public.widgets USING btree (widgetab
 
 
 --
+-- Name: index_widgets_pictures_on_widgetable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_widgets_pictures_on_widgetable ON public.widgets_pictures USING btree (widgetable_type, widgetable_id);
+
+
+--
+-- Name: index_widgets_simples_pictures_on_widgets_simple_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_widgets_simples_pictures_on_widgets_simple_id ON public.widgets_simples_pictures USING btree (widgets_simple_id);
+
+
+--
 -- Name: index_workspaces_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2034,6 +2143,14 @@ ALTER TABLE ONLY public.posts
 
 ALTER TABLE ONLY public.widgets
     ADD CONSTRAINT fk_rails_8d886df757 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: widgets_simples_pictures fk_rails_95a3f81c3d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.widgets_simples_pictures
+    ADD CONSTRAINT fk_rails_95a3f81c3d FOREIGN KEY (widgets_simple_id) REFERENCES public.widgets_simples(id);
 
 
 --
@@ -2159,6 +2276,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210301235012'),
 ('20210328042112'),
 ('20210328055745'),
-('20210808221850');
+('20210808221850'),
+('20210810003323'),
+('20210810011556');
 
 

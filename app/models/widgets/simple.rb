@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: widgets_simples
@@ -9,21 +11,27 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Widgets::Simple < ApplicationRecord
-  include Widgetable
+module Widgets
+  class Simple < ApplicationRecord
+    include Widgetable
 
-  has_many_attached :pictures
+    has_many :pictures, class_name: 'Widgets::Simples::Picture',
+                        foreign_key: :widgets_simple_id,
+                        inverse_of: :widgets_simple
 
-  validates :body, :title, :url, presence: true
-  validates :pictures, length: { minimum: 1 }
-  validate :url_valid?
+    accepts_nested_attributes_for :pictures, allow_destroy: true
 
-  private
+    validates :body, :title, :url, presence: true
+    validates :pictures, length: { minimum: 1 }
+    validate :url_valid?
 
-  def url_valid?
-    return if errors.details[:url].any?
+    private
 
-    result = GlobalHelper.elastic_client.search(Widgets::SearchOfferByUrlQuery.call(url: url).object)
-    errors.add(:url, :invalid) if result['hits']['hits'].empty?
+    def url_valid?
+      return if errors.details[:url].any?
+
+      result = GlobalHelper.elastic_client.search(Widgets::SearchOfferByUrlQuery.call(url: url).object)
+      errors.add(:url, :invalid) if result['hits']['hits'].empty?
+    end
   end
 end

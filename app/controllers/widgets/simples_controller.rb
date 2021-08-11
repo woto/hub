@@ -2,7 +2,7 @@
 
 module Widgets
   class SimplesController < ApplicationController
-    before_action :set_widgets_simple, only: %i[ show edit update destroy ]
+    before_action :set_widgets_simple, only: %i[show edit update destroy]
     layout false
 
     def new
@@ -24,7 +24,9 @@ module Widgets
 
       respond_to do |format|
         if @widgets_simple.save
-          format.html { redirect_to edit_widgets_simple_path(@widgets_simple), notice: t('.simple_was_successfully_created') }
+          format.html do
+            redirect_to edit_widgets_simple_path(@widgets_simple), notice: t('.simple_was_successfully_created')
+          end
           format.json { render :show, status: :created, location: @widgets_simple }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,9 @@ module Widgets
       authorize(@widgets_simple)
       respond_to do |format|
         if @widgets_simple.update(widgets_simple_params)
-          format.html { redirect_to edit_widgets_simple_path(@widgets_simple), notice: t('.simple_was_successfully_updated') }
+          format.html do
+            redirect_to edit_widgets_simple_path(@widgets_simple), notice: t('.simple_was_successfully_updated')
+          end
           format.json { render :show, status: :ok, location: @widgets_simple }
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +60,8 @@ module Widgets
 
     # Only allow a list of trusted parameters through.
     def widgets_simple_params
-      params.require(:widgets_simple).permit(:title, :url, :body, pictures: [])
+      params.require(:widgets_simple).permit(:title, :url, :body,
+                                             pictures_attributes: %i[id picture order _destroy])
     end
   end
 end

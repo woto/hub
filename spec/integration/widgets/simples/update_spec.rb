@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Widgets::SimplesController, type: :system do
   let(:user) { create(:user) }
   let(:offer) { OfferCreator.call(feed_category: create(:feed_category)) }
-  let!(:widget) { create(:widget, widgetable: create(:widgets_simple), user: user) }
+  let!(:widget) { create(:widget, widgetable: zzzzz, user: user) }
 
   before do
     login_as(user, scope: :user)
@@ -60,9 +60,13 @@ describe Widgets::SimplesController, type: :system do
       expect(widget.widgetable.reload).to have_attributes(
         url: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY],
         title: 'Название товара',
-        body: 'Описание товара',
-        pictures: be_attached
+        body: 'Описание товара'
       )
+
+      # TODO: How to move this validation in one line higher? Somehow like:
+      # have_attributes(...., pictures: Widgets::Simples::Picture association)
+      expect(widget.widgetable.pictures.last).to be_attached
+      expect(widget.widgetable.pictures.last.picture.blob.filename).to eq('jessa_rhodes.jpg')
     end
   end
 
