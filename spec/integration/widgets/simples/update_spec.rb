@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Widgets::SimplesController, type: :system do
   let(:user) { create(:user) }
   let(:offer) { OfferCreator.call(feed_category: create(:feed_category)) }
-  let!(:widget) { create(:widget, widgetable: zzzzz, user: user) }
+  let!(:widget) { create(:simple_widget, user: user) }
 
   before do
     login_as(user, scope: :user)

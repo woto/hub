@@ -21,6 +21,9 @@
 FactoryBot.define do
   factory :widget do
     user
-    widgetable { association :widgets_simple }
+
+    factory :simple_widget do
+      widgetable { association :widgets_simple }
+    end
   end
 end

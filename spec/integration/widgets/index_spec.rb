@@ -5,8 +5,8 @@ require 'rails_helper'
 describe WidgetsController, type: :system do
   context 'with user' do
     let(:user) { create(:user) }
-    let!(:widget1) { create(:widget, user: user, widgetable: zzzzz) }
-    let!(:widget2) { create(:widget, widgetable: zzzzz) }
+    let!(:widget1) { create(:simple_widget, user: user) }
+    let!(:widget2) { create(:simple_widget) }
 
     it 'displays only user widgets list' do
       login_as(user, scope: :user)
@@ -37,11 +37,7 @@ describe WidgetsController, type: :system do
   end
 
   context 'when widgets modal is open', responsible: :admin do
-    let!(:widget) do
-      create(:widget,
-             user: Current.responsible,
-             widgetable: zzzzz)
-    end
+    let!(:widget) { create(:simple_widget, user: Current.responsible) }
 
     before do
       login_as(Current.responsible, scope: :user)

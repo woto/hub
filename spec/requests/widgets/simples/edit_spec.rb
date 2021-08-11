@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Widgets::SimplesController, type: :request do
   let(:user) { create(:user) }
-  let(:widget) { create(:widget, widgetable: zzzzz, user: user) }
+  let(:widget) { create(:simple_widget, user: user) }
 
   context 'with user' do
     it 'responds with :ok and uses correct template' do

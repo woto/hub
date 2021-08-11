@@ -22,12 +22,12 @@ require 'rails_helper'
 
 RSpec.describe Widget, type: :model do
   it 'has valid factory' do
-    create(:widget, widgetable: zzzzz)
+    create(:simple_widget)
   end
 
   it 'creates valid widget' do
     user = create(:user)
-    create(:widget, user: user, widgetable: zzzzz)
+    create(:simple_widget, user: user)
   end
 
   it 'includes `GlobalID::Identification`' do
@@ -39,7 +39,7 @@ RSpec.describe Widget, type: :model do
   end
 
   it 'overrides `to_trix_content_attachment_partial_path`' do
-    widget = create(:widget, widgetable: zzzzz)
+    widget = create(:simple_widget)
     expect(widget.to_trix_content_attachment_partial_path).to eq('widgets/preview')
   end
 end

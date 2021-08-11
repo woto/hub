@@ -20,12 +20,13 @@ FactoryBot.define do
   factory :widgets_simples_picture, class: 'Widgets::Simples::Picture' do
     # widgets_simple
     order { Faker::Number.number(digits: 3) }
+    picture { Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg') }
     # see comments in spec/requests/settings/avatars_controller_spec.rb
-    picture do
-      [
-        Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg'),
-        Rack::Test::UploadedFile.new('spec/fixtures/files/jessa_rhodes.jpg')
-      ].sample
-    end
+    # picture do
+    #   [
+    #     Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg'),
+    #     Rack::Test::UploadedFile.new('spec/fixtures/files/jessa_rhodes.jpg')
+    #   ].sample
+    # end
   end
 end

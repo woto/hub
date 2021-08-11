@@ -21,15 +21,12 @@ FactoryBot.define do
       OfferCreator.call(url: url, feed_category: create(:feed_category))
       url
     end
-    # widgets_simples_picture
     body { Faker::Lorem.paragraph(sentence_count: 10) }
-  end
-end
+    # TODO: don't know why this doesn't work
+    # pictures { [association(:widgets_simples_picture)] }
 
-# TODO: could we replace it somehow only by using factory bot? Without defining method?
-# By the way it is one of the recommended ways:
-# https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#has_many-associations
-# At least, it should be renamed.
-def zzzzz
-  FactoryBot.create(:widgets_simple, pictures: [FactoryBot.build(:widgets_simples_picture)])
+    after(:build) do |widgets_simple, evaluator|
+      widgets_simple.pictures = [FactoryBot.build(:widgets_simples_picture)]
+    end
+  end
 end
