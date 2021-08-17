@@ -69,11 +69,11 @@ group :test do
   # Also fixes problem with comparing arrays in query string (ex. foo[]=1&foo[]=2)
   # by replacing Addressable with Rack query string parser
   gem 'capybara', github: 'woto/capybara', branch: 'order_independent_compare'
+  gem 'capybara-chromedriver-logger'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'webdrivers'
-  gem 'capybara-chromedriver-logger'
 end
 
 # Application monitoring
@@ -113,9 +113,9 @@ gem 'after_commit_everywhere'
 # gem 'typhoeus'
 # gem 'piperator'
 # gem 'ransack'
+gem 'i18n-tasks'
 gem 'mobility', github: 'shioyama/mobility'
 gem 'spreadsheet'
-gem 'i18n-tasks'
 
 # Sidekiq
 gem 'sidekiq'
