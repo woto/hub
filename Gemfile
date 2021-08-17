@@ -115,6 +115,7 @@ gem 'after_commit_everywhere'
 # gem 'ransack'
 gem 'mobility', github: 'shioyama/mobility'
 gem 'spreadsheet'
+gem 'i18n-tasks'
 
 # Sidekiq
 gem 'sidekiq'

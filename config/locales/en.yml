@@ -1,2 +1,820 @@
+---
 en:
+  activemodel:
+    attributes:
+      filters/date_form:
+        max: To date
+        min: From date
+      filters/double_form:
+        max: Max value
+        min: Min value
+      filters/long_form:
+        max: Max value
+        min: Min value
+      filters/text_form:
+        value: Text value
+      profile_form:
+        bio: Bio
+        languages: Languages
+        name: Full name
+        time_zone: Time zone
+      profile_form/messenger:
+        type: Messenger type
+        value: Messenger address
+  activerecord:
+    attributes:
+      widgets/simple:
+        body: Description
+        pictures: Pictures
+        title: Title
+        url: URL
+    errors:
+      messages:
+        select language: Select language
+        select_language: must be selected
+        select_messenger_type: must be selected
+        select_messengers: Select messengers
+      models:
+        post:
+          attributes:
+            currency:
+              no_rate: "'%{currency}' does not have a course on the date '%{date}', please contact support to use this currency"
+    models:
+      widgets/simple: widget
+  advertiser: Advertiser
+  advertisers/admitad: Advertiser
+  all: All
+  application:
+    desktop_header:
+      no_favorites: The favorites list is empty for now
+  application_helper:
+    data_attributes_for_navbar_favorite:
+      no_favorites: No favorites
+  are_you_sure: Are you sure?
+  articles: News
+  attributes:
+    name: Name
+  back: Back
+  back_to_articles: Back to news
+  breadcrumbs:
+    accounts: Accounts
+    advertisers: Advertisers
+    checks: Checks
+    danger_zone: Danger zone
+    dashboard: Dashboard
+    edit_check: Edit check
+    edit_post: Edit post
+    email: Email
+    favorites: Favorites
+    feeds: Feeds
+    help: Help
+    homepage: Homepage
+    new_advertiser: New advertiser
+    new_check: New check
+    new_post: New post
+    news: News
+    offers: Offers
+    password: Password
+    post_categories: Post categories
+    posts: Posts
+    profile: Profile
+    show_check: Show check
+    show_post: Show post
+    transactions: transactions
+    users: users
+  buttons:
+    advertiser: Advertiser
+    checks: Checks
+    controls: Controls
+    debug: Debut
+    delete: Delete
+    edit: Edit
+    feed: Feed
+    feed_logs: Feed logs
+    impersonate: Impersonate
+    new_advertiser: New advertiser
+    new_check: New check
+    new_feed: New feed
+    new_post: New post
+    offer: Offer
+    offers: Offers
+    offers_count: Offers count
+    prioritize: Prioritize
+    save: Save
+    show: Show
+    update_displayed_columns: Update
+  cancel: Cancel
+  checks:
+    create:
+      check_was_successfully_created: Check was successfully created
+    destroy:
+      check_was_successfully_destroyed: Check was successfully destroyed
+    update:
+      check_was_successfully_updated: Check was successfully updated
+  clear_search: Clear search
+  close: Close
+  columns: Columns
+  continue: Continue
+  continue_reading: Continue reading
+  created_at: Created at
+  currently_waiting_confirmation_for_email: Currently waiting confirmation for email
+  dashboard:
+    index:
+      accounts: Accounts
+      posts_statuses: Posts statuses
+      today_rates: Today rates
+      under_construction: Under construction
+  default: Default
+  devise:
+    confirmations:
+      confirmed: Your email address has been successfully confirmed.
+      new:
+        resend_confirmation_instructions: Resend confirmation instructions
+      send_instructions: You will receive an email with instructions for how to confirm your email address in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes.
+    failure:
+      already_authenticated: You are already signed in.
+      inactive: Your account is not activated yet.
+      invalid: Invalid %{authentication_keys} or password.
+      last_attempt: You have one more attempt before your account is locked.
+      locked: Your account is locked.
+      not_found_in_database: Invalid %{authentication_keys} or password.
+      timeout: Your session expired. Please sign in again to continue.
+      unauthenticated: You need to sign in or sign up before continuing.
+      unconfirmed: You have to confirm your email address before continuing.
+    mailer:
+      confirmation_instructions:
+        action: Action
+        greeting: Greeting
+        instruction: Instruction
+        subject: Confirmation instructions
+      email_changed:
+        greeting: Greeting
+        message: Message
+        subject: Email Changed
+      password_change:
+        greeting: Greeting
+        message: Message
+        subject: Password Changed
+      reset_password_instructions:
+        action: Action
+        greeting: Greeting
+        instruction: Instruction
+        instruction_2: Instruction 2
+        instruction_3: Instruction 3
+        subject: Reset password instructions
+      unlock_instructions:
+        action: Action
+        greeting: Greeting
+        instruction: Instruction
+        message: Message
+        subject: Unlock instructions
+    passwords:
+      edit:
+        change_my_password: Change my password
+        change_your_password: Change your password
+        confirm_new_password: Confirm new password
+        new_password: New password
+      new:
+        forgot_your_password: Forgot your password
+        send_me_reset_password_instructions: Send me reset password instructions
+      no_token: You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided.
+      send_instructions: You will receive an email with instructions on how to reset your password in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
+      updated: Your password has been changed successfully. You are now signed in.
+      updated_not_active: Your password has been changed successfully.
+    registrations:
+      destroyed: Bye! Your account has been successfully cancelled. We hope to see you again soon.
+      edit:
+        are_you_sure: Are you sure
+        cancel_my_account: Cancel my account
+        currently_waiting_confirmation_for_email: Currently waiting confirmation for email
+        leave_blank_if_you_don_t_want_to_change_it: Leave blank if you don t want to change it
+        title: Title
+        unhappy: Unhappy
+        update: Update
+        we_need_your_current_password_to_confirm_your_changes: We need your current password to confirm your changes
+      new:
+        sign_up: Sign up
+      signed_up: Welcome! You have signed up successfully.
+      signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
+      signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
+      signed_up_but_unconfirmed: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+      update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address.
+      updated: Your account has been updated successfully.
+      updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again
+    sessions:
+      already_signed_out: Signed out successfully.
+      new:
+        sign_in: Sign in
+      signed_in: Signed in successfully.
+      signed_out: Signed out successfully.
+    shared:
+      links:
+        didn_t_receive_confirmation_instructions: Didn t receive confirmation instructions
+        didn_t_receive_unlock_instructions: Didn t receive unlock instructions
+        forgot_your_password: Forgot your password
+        sign_in: Sign in
+        sign_in_with_provider: Sign in with provider
+        sign_up: Sign up
+      minimum_password_length: Minimum password length
+    unlocks:
+      new:
+        resend_unlock_instructions: Resend unlock instructions
+      send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
+      send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
+      unlocked: Your account has been unlocked successfully. Please sign in to continue.
+  displaying: Displaying
+  drop_image_here_or_click: Drop image here or click
+  edit: Edit
+  errors:
+    attributes:
+      user:
+        login: Handle
+    messages:
+      already_confirmed: was already confirmed, please try signing in
+      confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
+      expired: has expired, please request a new one
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+    models:
+      user: Customer
+  'false': false
+  favorites:
+    create:
+      successfully_added: Successfully added to favorites %{favorite_name}
+      successfully_removed: Successfully removed from favorites %{favorite_name}
+    placeholder: Enter the name...
+    titles:
+      _id: Favorites
+      accounts: Favorites accounts
+      advertiser_id: Favorites
+      checks: Favorites checks
+      feed_categories: Favorites feed categories
+      feed_category_id: Favorites
+      feed_id: Favorites
+      feeds: Favorites feeds
+      offers: Favorites offers
+      post_categories: Favorites post categories
+      posts: Favorites posts
+      transactions: Favorites transactions
+      users: Favorites users
+  feed: Feed
+  feed_categories: Feed categories
+  feed_category: Feed category
+  feeds: Feeds
+  frames:
+    articles:
+      category:
+        index:
+          up: Homepage
+      latest:
+        index:
+          details: Details...
+          latest_news: News
+          no_news_yet: There are no news
+          no_news_yet_in_your_language: There are no news on your language
+  header:
+    language_component:
+      title: Language
+    menu:
+      login: Login
+      logout: Logout
+      restore_permissions: Restore permissions
+      settings: Settings
+    news_component:
+      title: News
+  helpers:
+    page_entries_info:
+      entry:
+        one: entry
+        other: entries
+        zero: entries
+      more_pages:
+        display_entries: Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total
+      one_page:
+        display_entries:
+          one: Displaying <b>1</b> %{entry_name}
+          other: Displaying <b>all %{count}</b> %{entry_name}
+          zero: No %{entry_name} found
+    submit:
+      columns_form:
+        create: Save
+      filter_form:
+        create: Apply filter
+      workspace_form:
+        create: Save
+  homepage: Homepage
+  i18n:
+    transliterate:
+      rule:
+        Ё: Ye
+        А: A
+        Б: B
+        В: V
+        Г: G
+        Д: D
+        Е: E
+        Ж: Zh
+        З: Z
+        И: I
+        Й: Y
+        К: K
+        Л: L
+        М: M
+        Н: N
+        О: O
+        П: P
+        Р: R
+        С: S
+        Т: T
+        У: U
+        Ф: F
+        Х: H
+        Ц: Ts
+        Ч: Ch
+        Ш: Sh
+        Щ: Shch
+        Ъ: ʺ
+        Ь: ʹ
+        Э: E
+        Ю: Yu
+        Я: Ya
+        а: a
+        б: b
+        в: v
+        г: g
+        д: d
+        е: e
+        ж: zh
+        з: z
+        и: i
+        й: y
+        к: k
+        л: l
+        м: m
+        н: n
+        о: o
+        п: p
+        р: r
+        с: s
+        т: t
+        у: u
+        ф: f
+        х: h
+        ц: ts
+        ч: ch
+        ш: sh
+        щ: Shch
+        ъ: "\""
+        ы: y
+        ь: "'"
+        э: e
+        ю: yu
+        я: ya
+        ё: ye
+  inputs:
+    profiles:
+      messengers_collection:
+        add_messenger: Add messenger
+  layouts:
+    homepage:
+      dashboard: Dashboard
+      link: Choose offer
+      tagline: Content platform through which authors earn money for reviews of products that online stores need to advertise.
+      title: Only good reviews ;)
+  left_menu:
+    accounts: Accounts
+    advertisers: Advertisers
+    categories: Categories
+    checks: Checks
+    danger_zone: Danger_zone
+    dashboard: dashboard
+    email: Email
+    favorites: Favorites
+    feed_categories: Feed categories
+    feeds: Feeds
+    finances: Finances
+    help: Help
+    offers: Offers
+    password: Password
+    post_categories: Post categories
+    posts: Posts
+    profile: Profile
+    promotions: Promotions
+    settings: Settings
+    transactions: Transactions
+    users: Users
+    workspaces: Workspaces
+  link: Link
+  navbar_favorite_component:
+    title: Favorits
   no_results_found: No results found
+  offers:
+    address_for_widget:
+      address_for_widget: Link to the widget
+      address_for_widget_help: Use this link for widget form
+    modal_card_body:
+      description: Description
+      name: Name
+      price: Price
+      read_less: Read less
+      read_more: Read more
+      visit_advertiser: Visit advertiser
+    modal_card_wrapper:
+      description: Description
+      modal_title: 'Offer information: %{ext_id}'
+      name: Name
+      price: Price
+      read_less: Less
+      read_more: More
+      visit_advertiser: Visit advertiser
+  post_categories: Post categoris
+  posts:
+    create:
+      post_was_successfully_created: Post was successfully created
+    destroy:
+      post_was_successfully_destroyed: Post was successfully destroyed
+    extra_options:
+      extra_options: Extra options
+      extra_options_hint: This extra options are not required. But they can have a positive impact on the amount of remuneration in the form of an extra bonus.
+      hints:
+        images_type: Images type
+        moderator_bonus: Moderator bonus
+        overview_type: Overview type
+        post_type: A rewrite is a retelling of a publicly available text on the Internet. Copyright is the author's work.
+        product_comparison: Product comparison
+        product_type: Product type
+        uniqueness_checked: Uniqueness checked
+      labels:
+        images_type:
+          do_not_found_in_google: Images are processed and are not found in search engines by image
+          does_not_include_images: The article does not contain pictures
+          found_in_google: Images are copies and are found in search engines by image
+          unique_images: Own and unique images
+        moderator_bonus:
+          plus_10_percent: "+ 10%"
+          plus_15_percent: "+ 15%"
+          plus_20_percent: "+ 20%"
+          plus_5_percent: "+ 5%"
+        overview_type:
+          not_specific_knowledge: The article contains a superficial text, without going into details
+          specific_knowledge: The article reviews the specific narrow characteristics of the product
+        post_type:
+          copywrite: Copywrite
+          rewrite: Rewrite
+        product_comparison:
+          product_comparison: The article contains an overview and comparison of several products grouped thematically
+        product_type:
+          brand_new_product: The product has recently gone on sale
+          product_popular: The product can be purchased in different stores
+          searchable: The product is easily found in search engines by name
+        uniqueness_checked:
+          advego_ru: on the website advego.ru
+          etxt_ru: on the website etxt.ru
+          text_ru: on the website text.ru
+    form:
+      are_you_sure: Do you really want to change the site? Then the category and tag settings will be reset
+      editorial: Editorial
+    show:
+      badge:
+        status: Article status
+        statuses:
+          accrued_post: accrued post
+          approved_check: approved check
+          approved_post: approved post
+          canceled_post: canceled post
+          draft_post: draft post
+          payed_check: payed check
+          pending_check: pending check
+          pending_post: pending post
+          rejected_post: rejected post
+          removed_check: removed check
+          removed_post: removed post
+      language: Article language
+    update:
+      post_was_successfully_updated: Post was successfully updated
+  products: Products
+  save: Save
+  search: Search
+  search_placeholder: Enters text to search...
+  settings:
+    danger_zones:
+      edit:
+        are_you_sure: Are you sure?
+        cancel_my_account: Cancel my account
+    profiles:
+      form:
+        update: Update
+      update:
+        saved: Profile was successfully updated
+  shared:
+    balance:
+      account:
+        details: Details
+      account_wrapper:
+        balance: Balance
+        user_balance: 'User accounts: %{user}'
+  simple_form:
+    error_notification:
+      default_message: 'Please review the problems below:'
+    hints:
+      advertiser_filter_form:
+        displayed_columns: The order in which columns are added affects the display
+      columns_form:
+        displayed_columns: Manage the displayed columns in the table by adding or removing column names. By the way, their order affects the order in which they will be displayed in the table.
+      defaults:
+        example: example
+      feed_filter_form:
+        displayed_columns: The order in which columns are added affects the display
+      post:
+        currency: Select the national currency of your country
+        post_category: Check out the full list of available categories for posting an article <a href="/post_categories" target="_blank">at this link</a>
+        published_at: The material will not be published if the publication date has not yet arrived
+        realm: Check out the full list of available sites for posting an article <a href="/realms" target="_blank"> using this link </a>
+        status: Set the status to "pending" when you complete the article. Moderation takes no more than 48 hours.
+        tags: Check out the complete list of available tags for posting <a href="/tags" target="_blank"> this link </a>. <br/> Use a comma as a tag separator or the Enter key
+      widgets_simple:
+        url: Use the product address copied from the product card
+      workspace_form:
+        is_default: Make the workspace the default and it will open when you enter the section.
+        name: Give a name to the new work area. Switch between work areas by loading filter and sorting settings.
+    labels:
+      advertiser_filter_form:
+        displayed_columns: Displayed columns
+      check:
+        amount: Amount
+        currency: Currency
+        status: Status
+        user: User
+      columns_form:
+        displayed_columns: Displayed columns
+      feed_filter_form:
+        displayed_columns: Displayed columns
+      post:
+        amount: Amount
+        body: Body
+        currency: Currency
+        extra_options:
+          images_type: Images
+          moderator_bonus: Moderator bonus
+          overview_type: Completeness of the review
+          post_type: Post type
+          product_comparison: Comparative article
+          product_type: Reviewed item
+          uniqueness_checked: Uniqueness verified
+        intro: Intro
+        post_category: Category
+        published_at: Published at
+        realm: Website
+        status: Status
+        tags: Tags
+        title: Title
+        user: User
+      profile_form:
+        bio: About
+        languages: Languages
+        messengers: Messengers
+        name: Name
+        time_zone: Time zone
+      widgets_simple:
+        pictures:
+          _destroy: Destroy
+          order: Display order
+      workspace_form:
+        is_default: Set as default
+        name: Workspace name
+    'no': 'No'
+    placeholders:
+      post:
+        body: Start writing your post here
+        intro: Short introduction. You can use the first paragraph from the post
+        post_category: Start writing so that a menu appears with a choice of article category
+        realm: Choose the most suitable site to host your article
+        tags: Start writing to select an existing tag or add a new one
+      workspace_form:
+        name: Enter your name
+    required:
+      mark: "*"
+      text: required
+    'yes': 'Yes'
+  table:
+    filters:
+      form:
+        reset_filter: Reset filter
+    long:
+      account:
+        currency: Currency
+      favorite:
+        created_at: Created at
+      feed:
+        advertiser_created_at: Advertiser created at
+        advertiser_ext_id: Advertiser external id
+        advertiser_id: Advertiser id
+        advertiser_is_active: Advertiser is active
+        advertiser_name: Advertiser name
+        advertiser_network: Advertiser network
+        advertiser_raw: Advertiser raw data
+        advertiser_synced_at: Advertiser synced at
+        advertiser_updated_at: Advertiser updated at
+        attempt_uuid: Attempt UUID
+        categories_count: Feed categories count
+        created_at: Created at
+        downloaded_file_size: Downloaded file size
+        downloaded_file_type: Downloaded file type
+        error_class: Error class
+        error_text: Error text
+        ext_id: External feed id
+        favorite: Favorite
+        id: Feed id
+        is_active: Is feed active
+        language: Feed language
+        locked_by_pid: Feed locked by PID
+        name: Feed name
+        offers_count: Feed offers count
+        operation: Current operation
+        priority: Priority
+        processing_finished_at: Procssing finished at
+        processing_started_at: Processing started at
+        raw: Feed raw data
+        succeeded_at: Feed processing succeeded at
+        synced_at: Feed synced at
+        updated_at: Feed updated at
+        url: Feed URL
+        xml_file_path: Feed local path
+      post:
+        amount: Amoun
+        created_at: Created at
+        favorite: Favorite
+        id: ID
+        status: Status
+        title: Title
+        updated_at: Updated at
+        user_id: User id
+      transaction:
+        transaction_group_id: Transaction group ID
+    short:
+      account:
+        amount: Amount
+        currency: Currency
+        subjectable_id: Subject
+      favorite:
+        created_at: Created at
+      feed:
+        advertiser_created_at: Adv. created at
+        advertiser_ext_id: Adv. ext. id
+        advertiser_id: Adv. ID
+        advertiser_is_active: Adv. is active
+        advertiser_name: Adv. name
+        advertiser_network: Adv. netw.
+        advertiser_raw: Adv. raw data
+        advertiser_synced_at: Adv. sync. at
+        advertiser_updated_at: Adv. upd. at
+        attempt_uuid: UUID
+        categories_count: Cat count
+        created_at: Created at
+        downloaded_file_size: Downl. f. size
+        downloaded_file_type: Downl. f. type
+        error_class: Error class
+        error_text: Error text
+        ext_id: Ext. ID
+        favorite: Fav.
+        id: ID
+        is_active: Is active
+        language: Lang.
+        locked_by_pid: Proc ID.
+        name: Name
+        offers_count: Offers cnt
+        operation: Operation
+        priority: Priority
+        processing_finished_at: Proc. fin. at
+        processing_started_at: Proc. start. at
+        raw: Raw data
+        succeeded_at: Succ. at
+        synced_at: Sync. at
+        updated_at: Updated at
+        url: URL
+        xml_file_path: Xml file path
+      post:
+        amount: Amount
+        created_at: Created at
+        favorite: Fav.
+        id: ID
+        status: Status
+        title: Title
+        updated_at: Updated at
+        user_id: User id
+      transaction:
+        transaction_group_id: Trans. group id
+  tables:
+    offers:
+      card_wrapper:
+        follow_link: Follow link
+        offers_in_group: Offers in group
+      group_more:
+        follow_link: Follow link
+        offers_in_group: Offers in group
+      search:
+        button:
+          search_everywhere: Search everywhere
+          search_inside_advertiser: 'At the advertiser: "%{name}"'
+          search_inside_feed: 'In the price list: "%{name}"'
+          search_inside_feed_category: 'In the category: "%{name}"'
+  title: Title
+  titles:
+    accounts: Accounts
+    advertiser: Advertiser
+    advertisers: Advertisers
+    checks: Checks
+    dashboard: Dashboard
+    favorite: Favorite
+    favorites: Favorites
+    feed: Feed
+    feed_categories: Categories
+    feed_category: Category
+    feeds: Feeds
+    help: Help
+    news: News
+    offers: Offers
+    post_categories: Post categories
+    posts: Posts
+    settings: Settings
+    transactions: Transactions
+    users: Users
+    without_name: Without name
+  trix:
+    GB: GB
+    KB: KB
+    MB: MB
+    PB: PB
+    TB: TB
+    attachFiles: Attach Files
+    bold: Bold
+    bullets: Bullets
+    byte: Byte
+    bytes: Bytes
+    captionPlaceholder: Add a caption…
+    code: Code
+    embedWidget: Embed widget
+    heading1: Heading
+    indent: Increase Level
+    italic: Italic
+    link: Link
+    numbers: Numbers
+    outdent: Decrease Level
+    quote: Quote
+    redo: Redo
+    remove: Remove
+    strike: Strikethrough
+    undo: Undo
+    unlink: Unlink
+    url: URL
+    urlPlaceholder: Enter a URL…
+  'true': true
+  try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Try clearing your search bar or applied filters. Or create a new item.
+  updated_at: Updated at
+  view: View
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: Last &raquo;
+      next: Next &rsaquo;
+      previous: "&lsaquo; Prev"
+      truncate: "&hellip;"
+  widgets:
+    empty_wrapper:
+      create_new_widget: Create a new widget
+    index:
+      create_new_widget: Create new widget
+      edit: Edit widget
+      insert: Insert widget into article
+      widget_setup: Widget setup
+    new:
+      new_simple_widget: New widget
+      selecting_widget_type: Selecting widget type
+    simples:
+      content:
+        widget_form: Widget form
+        widget_preview: Widget preview
+      create:
+        simple_was_successfully_created: Widget was successfully created
+      edit:
+        editing_widget: Editing widget
+        insert: Embed widget in the article
+      form:
+        pictures: Pictures
+      new:
+        creating_widget: Widget creating
+        insert: Embed widget in the article
+      update:
+        simple_was_successfully_updated: Widget was successfully updated
+      widget:
+        body: A vivid and informative example of a description containing the main characteristics of the product
+        next: Next
+        previous: Previous
+        title: Product name example
+        visit_advertiser: Go to shop
+  workspaces: Workspaces

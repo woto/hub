@@ -1,115 +1,271 @@
+---
 ru:
-  table:
-    filters:
-      form:
-        reset_filter: Сбросить фильтр
   activemodel:
     attributes:
+      filters/date_form:
+        max: По дату
+        min: С даты
+      filters/double_form:
+        max: Максимальное значение
+        min: Минимальное значение
+      filters/long_form:
+        max: Максимальное значение
+        min: Минимальное значение
       filters/text_form:
         value: Текстовое значение
-      filters/long_form:
-        min: Минимальное значение
-        max: Максимальное значение
-      filters/double_form:
-        min: Минимальное значение
-        max: Максимальное значение
-      filters/date_form:
-        min: С даты
-        max: По дату
+      profile_form:
+        bio: О себе
+        languages: Язык
+        name: Полное имя (ФИО)
+        time_zone: Часовой пояс
+      profile_form/messenger:
+        type: Тип мессенджера
+        value: Адрес мессенджера
+  activerecord:
+    attributes:
+      widgets/simple:
+        body: Описание
+        pictures: Изображения
+        title: Название
+        url: URL
+    errors:
+      messages:
+        select language: Select language
+        select_language: должен быть выбран
+        select_messenger_type: должен быть выбран
+        select_messengers: Select messengers
+      models:
+        post:
+          attributes:
+            currency:
+              no_rate: "'%{currency}' не имеет курса на дату '%{date}', пожалуйста свяжитесь со службой поддержки чтобы использовать эту валюту"
+    models:
+      widgets/simple: виджет
+  advertiser: Рекламодатель
+  advertisers/admitad: Рекламодатель
+  all: Все
+  application:
+    desktop_header:
+      no_favorites: Список избранного пока что пуст.
+  application_helper:
+    data_attributes_for_navbar_favorite:
+      no_favorites: No favorites
+  are_you_sure: Уверены, что хотите удалить?
+  articles: Новости
+  attributes:
+    name: Название
+  back: Назад
+  back_to_articles: Назад к новостям
+  breadcrumbs:
+    accounts: Счета
+    advertisers: Рекламодатели
+    checks: Выплаты
+    danger_zone: Опасная зона
+    dashboard: Личн. кабинет
+    edit_check: Редактирование выплаты
+    edit_post: Редактирование статьи
+    email: Почта
+    favorites: Избранное
+    feeds: Прайс листы
+    help: Справка
+    homepage: Главная
+    new_advertiser: Создание рекламодателя
+    new_check: Новая выплата
+    new_post: Новая статья
+    news: Новости
+    offers: Все товары
+    password: Password
+    post_categories: Категории
+    posts: Статьи
+    profile: Профиль
+    show_check: Просмотр выплаты
+    show_post: Просмотр статьи
+    transactions: Транзакции
+    users: Пользователи
+  buttons:
+    advertiser: Рекламодатель
+    checks: Выплаты
+    controls: Управление
+    debug: Служ. данные
+    delete: Удалить
+    edit: Редактировать
+    feed: Прайс лист
+    feed_logs: История прайс листа
+    impersonate: Impersonate
+    new_advertiser: Создать рекламодателя
+    new_check: Запросить выплату
+    new_feed: Создать прайс
+    new_post: Новая статья
+    offer: Товар
+    offers: Товары
+    offers_count: Количество товаров
+    prioritize: Приоритизировать
+    save: Сохранить
+    show: Просмотреть
+    update_displayed_columns: Обновить
+  cancel: Отмена
+  checks:
+    create:
+      check_was_successfully_created: Выплата была успешно создана
+    destroy:
+      check_was_successfully_destroyed: Выплата была успешно удалена
+    update:
+      check_was_successfully_updated: Выплата была успешно изменена
+  clear_search: Clear search
+  close: Закрыть
+  columns: Колонки
+  continue: Продолжить
+  continue_reading: Продолжить чтение
+  created_at: Дата создания
+  currently_waiting_confirmation_for_email: Currently waiting confirmation for email
   dashboard:
     index:
       accounts: Счета
       posts_statuses: Статусы статей
       today_rates: Курс на сегодня
       under_construction: В разработке
-  shared:
-    balance:
-      account_wrapper:
-        user_balance: "Счета пользователя: %{user}"
-      account:
-        details: Подробности
-
-  advertiser: Рекламодатель
-  feed: Прайс
-  feed_category: Категория
-  products: Товары
-  feeds: Прайсы
-  feed_categories: Категории товаров
-  post_categories: Категории статей
-  advertisers/admitad: Рекламодатель
-  link: Ссылка
-  true: Да
-  false: Нет
-  continue: Продолжить
-  back: Назад
+  default: По-умолчанию
+  devise:
+    confirmations:
+      confirmed: Your email address has been successfully confirmed.
+      new:
+        resend_confirmation_instructions: Resend confirmation instructions
+      send_instructions: You will receive an email with instructions for how to confirm your email address in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes.
+    failure:
+      already_authenticated: You are already signed in.
+      inactive: Your account is not activated yet.
+      invalid: Invalid %{authentication_keys} or password.
+      last_attempt: You have one more attempt before your account is locked.
+      locked: Your account is locked.
+      not_found_in_database: Invalid %{authentication_keys} or password.
+      timeout: Your session expired. Please sign in again to continue.
+      unauthenticated: You need to sign in or sign up before continuing.
+      unconfirmed: You have to confirm your email address before continuing.
+    mailer:
+      confirmation_instructions:
+        action: Action
+        greeting: Greeting
+        instruction: Instruction
+        subject: Confirmation instructions
+      email_changed:
+        greeting: Greeting
+        message: Message
+        subject: Email Changed
+      password_change:
+        greeting: Greeting
+        message: Message
+        subject: Password Changed
+      reset_password_instructions:
+        action: Action
+        greeting: Greeting
+        instruction: Instruction
+        instruction_2: Instruction 2
+        instruction_3: Instruction 3
+        subject: Reset password instructions
+      unlock_instructions:
+        action: Action
+        greeting: Greeting
+        instruction: Instruction
+        message: Message
+        subject: Unlock instructions
+    passwords:
+      edit:
+        change_my_password: Change my password
+        change_your_password: Change your password
+        confirm_new_password: Confirm new password
+        new_password: New password
+      new:
+        forgot_your_password: Forgot your password
+        send_me_reset_password_instructions: Send me reset password instructions
+      no_token: You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided.
+      send_instructions: You will receive an email with instructions on how to reset your password in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
+      updated: Your password has been changed successfully. You are now signed in.
+      updated_not_active: Your password has been changed successfully.
+    registrations:
+      destroyed: Bye! Your account has been successfully cancelled. We hope to see you again soon.
+      edit:
+        are_you_sure: Are you sure
+        cancel_my_account: Cancel my account
+        currently_waiting_confirmation_for_email: Currently waiting confirmation for email
+        leave_blank_if_you_don_t_want_to_change_it: Leave blank if you don t want to change it
+        title: Title
+        unhappy: Unhappy
+        update: Update
+        we_need_your_current_password_to_confirm_your_changes: We need your current password to confirm your changes
+      new:
+        sign_up: Sign up
+      signed_up: Welcome! You have signed up successfully.
+      signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
+      signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
+      signed_up_but_unconfirmed: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+      update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address.
+      updated: Your account has been updated successfully.
+      updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again
+    sessions:
+      already_signed_out: Signed out successfully.
+      new:
+        sign_in: Sign in
+      signed_in: Signed in successfully.
+      signed_out: Signed out successfully.
+    shared:
+      links:
+        didn_t_receive_confirmation_instructions: Didn t receive confirmation instructions
+        didn_t_receive_unlock_instructions: Didn t receive unlock instructions
+        forgot_your_password: Forgot your password
+        sign_in: Sign in
+        sign_in_with_provider: Sign in with provider
+        sign_up: Sign up
+      minimum_password_length: Minimum password length
+    unlocks:
+      new:
+        resend_unlock_instructions: Resend unlock instructions
+      send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
+      send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
+      unlocked: Your account has been unlocked successfully. Please sign in to continue.
+  displaying: Отображается
+  drop_image_here_or_click: Drop image here or click
   edit: Изменить
-
-#  accounting/posts/transit_to_draft_post: posts/draft_post
-#  accounting/posts/transit_to_pending_post: posts/pending_post
-#  accounting/posts/transit_to_approved_post: posts/approved_post
-#  accounting/posts/transit_to_rejected_post: posts/rejected_post
-#  accounting/posts/transit_to_accrued_post: posts/accrued_post
-#  accounting/posts/transit_to_canceled_post: posts/canceled_post
-#  accounting/posts/change_status: Статьи
-
-#  accounting/checks/transit_to_pending_check: checks/pending_check
-#  accounting/checks/transit_to_payed_check: checks/payed_check
-#  accounting/checks/change_status: Выплаты
-
+  errors:
+    attributes:
+      user:
+        login: Handle
+    messages:
+      already_confirmed: was already confirmed, please try signing in
+      confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
+      expired: has expired, please request a new one
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+    models:
+      user: Customer
+  'false': Нет
   favorites:
     create:
-      successfully_added: 'Успешно добавлено в избранное %{favorite_name}'
-      successfully_removed: 'Успешно удалено из избранного %{favorite_name}'
-
-  widgets:
-    new:
-      selecting_widget_type: Выбор типа создаваемого виджета
-      new_simple_widget: Простой виджет
-    simples:
-      form:
-        pictures: Изображения
-      create:
-        simple_was_successfully_created: Виджет успешно создан
-      update:
-        simple_was_successfully_updated: Виджет успешно изменен
-      content:
-        widget_preview: Предпросмотр виджета
-        widget_form: Форма редактирования виджета
-      new:
-        creating_widget: Создание виджета
-        insert: Вставить виджет в статью
-      edit:
-        editing_widget: Редактирование виджета
-        insert: Вставить виджет в статью
-      widget:
-        visit_advertiser: Перейти в магазин
-        title: Пример названия товара
-        body: Яркий и информативный пример описания, содержащий основные характеристики товара
-    empty_wrapper:
-      create_new_widget: Создать новый виджет
-    index:
-      widget_setup: Управление виджетами
-      edit: Редактировать виджет
-      insert: Вставить виджет в статью
-#    modal_list_wrapper:
-#      insert: ыВставить виджет
-#      edit: Редыактировать виджет
-#      modal_title: Ныастройка виджета
-#      create_new_widget: Соыздать новый виджет
-
-  offers:
-    address_for_widget:
-      address_for_widget: Ссылка для виджета
-      address_for_widget_help: Используйте данную ссылку для вставки в виджет
-    modal_card_wrapper:
-      modal_title: "Информация о товаре: %{ext_id}"
-      name: Название
-      description: Описание
-      price: Цена
-      visit_advertiser: Перейти в магазин
-      read_more: Развернуть
-      read_less: Свернуть
-
+      successfully_added: Успешно добавлено в избранное %{favorite_name}
+      successfully_removed: Успешно удалено из избранного %{favorite_name}
+    placeholder: Введите название...
+    titles:
+      _id: Избранное
+      accounts: Избранные счета
+      advertiser_id: Избранное
+      checks: Избранные выплаты
+      feed_categories: Избранные категории товаров
+      feed_category_id: Избранное
+      feed_id: Избранное
+      feeds: Избранные прайсы
+      offers: Избранные товары
+      post_categories: Избранные категории статей
+      posts: Избранные статьи
+      transactions: Избранные транзакции
+      users: Избранные пользователи
+  feed: Прайс
+  feed_categories: Категории товаров
+  feed_category: Категория
+  feeds: Прайсы
   frames:
     articles:
       category:
@@ -117,171 +273,546 @@ ru:
           up: Главная
       latest:
         index:
+          details: Подробнее...
           latest_news: Новости
           no_news_yet: Нет новостей
           no_news_yet_in_your_language: Новости на вашем языке пока что отсутствуют
-          details: Подробнее...
-
-  attributes:
-    name: Название
+  header:
+    language_component:
+      title: Язык
+    menu:
+      login: Вход
+      logout: Выход
+      restore_permissions: Восстановить полномочия
+      settings: Настройки
+    news_component:
+      title: Новости
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: Отображение %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> из <b>%{total}</b> всего
+      one_page:
+        display_entries:
+          few: Отображение <b>все %{count}</b> %{entry_name}
+          many: Отображение <b>все %{count}</b> %{entry_name}
+          one: Отображение <b>все %{count}</b> %{entry_name}
+          other: Отображение <b>все %{count}</b> %{entry_name}
+          zero: не найдено
+    submit:
+      columns_form:
+        create: Сохранить
+      filter_form:
+        create: Применить фильтр
+      workspace_form:
+        create: Сохранить
   homepage: Главная
-  articles: Новости
-  back_to_articles: Назад к новостям
-  continue_reading: Продолжить чтение
-  search: Искать
-  close: Закрыть
-  columns: Колонки
-  workspaces: Области
-  save: Сохранить
-  displaying: Отображается
-  are_you_sure: Уверены, что хотите удалить?
-  default: По-умолчанию
-  all: Все
-  cancel: Отмена
-  created_at: Дата создания
-  updated_at: Дата изменения
-  search_placeholder: Введите текст для поиска...
-  no_results_found: Ничего не найдено
-  try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Попробуйте очистить строку поиска или примененные фильтры. Или создайте новый элемент.
-  view: Просмотр
-
-  layouts:
-    homepage:
-      title: Only good reviews ;)
-      tagline: Контент платформа, с помощью которой авторы зарабатывают деньги за обзоры и отзывы на товары, в рекламе которых нуждаются интернет магазины.
-      link: Выбрать товар
-      dashboard: Личный кабинет
-
+  i18n:
+    transliterate:
+      rule:
+        Ё: Ye
+        А: A
+        Б: B
+        В: V
+        Г: G
+        Д: D
+        Е: E
+        Ж: Zh
+        З: Z
+        И: I
+        Й: Y
+        К: K
+        Л: L
+        М: M
+        Н: N
+        О: O
+        П: P
+        Р: R
+        С: S
+        Т: T
+        У: U
+        Ф: F
+        Х: H
+        Ц: Ts
+        Ч: Ch
+        Ш: Sh
+        Щ: Shch
+        Ъ: ʺ
+        Ь: ʹ
+        Э: E
+        Ю: Yu
+        Я: Ya
+        а: a
+        б: b
+        в: v
+        г: g
+        д: d
+        е: e
+        ж: zh
+        з: z
+        и: i
+        й: y
+        к: k
+        л: l
+        м: m
+        н: n
+        о: o
+        п: p
+        р: r
+        с: s
+        т: t
+        у: u
+        ф: f
+        х: h
+        ц: ts
+        ч: ch
+        ш: sh
+        щ: Shch
+        ъ: "\""
+        ы: y
+        ь: "'"
+        э: e
+        ю: yu
+        я: ya
+        ё: ye
   inputs:
     profiles:
       messengers_collection:
         add_messenger: Добавить мессенджер
-
-  checks:
-    create:
-      check_was_successfully_created: Выплата была успешно создана
-    update:
-      check_was_successfully_updated: Выплата была успешно изменена
-    destroy:
-      check_was_successfully_destroyed: Выплата была успешно удалена
-
+  layouts:
+    homepage:
+      dashboard: Личный кабинет
+      link: Выбрать товар
+      tagline: Контент платформа, с помощью которой авторы зарабатывают деньги за обзоры и отзывы на товары, в рекламе которых нуждаются интернет магазины.
+      title: Only good reviews ;)
+  left_menu:
+    accounts: Счета
+    advertisers: Рекламодатели
+    categories: Категории
+    checks: Выплаты
+    danger_zone: Опасная зона
+    dashboard: Личный кабинет
+    email: Почта
+    favorites: Избранное
+    feed_categories: Категории товаров
+    feeds: Прайс листы
+    finances: Финансы
+    help: Справка
+    offers: Товары
+    password: Пароль
+    post_categories: Категории статей
+    posts: Статьи
+    profile: Профиль
+    promotions: Продвижение
+    settings: Настройки
+    transactions: Транзакции
+    users: Пользователи
+    workspaces: Рабочие области
+  link: Ссылка
+  navbar_favorite_component:
+    title: Избранное
+  no_results_found: Ничего не найдено
+  offers:
+    address_for_widget:
+      address_for_widget: Ссылка для виджета
+      address_for_widget_help: Используйте данную ссылку для вставки в виджет
+    modal_card_body:
+      description: Description
+      name: Name
+      price: Price
+      read_less: Read less
+      read_more: Read more
+      visit_advertiser: Visit advertiser
+    modal_card_wrapper:
+      description: Описание
+      modal_title: 'Информация о товаре: %{ext_id}'
+      name: Название
+      price: Цена
+      read_less: Свернуть
+      read_more: Развернуть
+      visit_advertiser: Перейти в магазин
+  post_categories: Категории статей
   posts:
     create:
       post_was_successfully_created: Статья была успешно создана
-    update:
-      post_was_successfully_updated: Статья была успешно изменена
     destroy:
       post_was_successfully_destroyed: Статья была успешно удалена
-    # Do not remove old keys from extra_options. The reason is in that old extra_options
-    # could be stored in the old records of Post.
     extra_options:
       extra_options: Экстра опции
       extra_options_hint: Данные опции не обязательны для заполнения. Но могут положительно отразиться на величине вознаграждения в виде экстра бонуса.
       hints:
-        post_type: 'Рерайт - пересказ общедоступного текста в интернете. Копирайт - авторская работа.'
-        product_type: ''
         images_type: ''
-        overview_type: ''
-        product_comparison: ''
-        uniqueness_checked: ''
         moderator_bonus: ''
+        overview_type: ''
+        post_type: Рерайт - пересказ общедоступного текста в интернете. Копирайт - авторская работа.
+        product_comparison: ''
+        product_type: ''
+        uniqueness_checked: ''
       labels:
+        images_type:
+          do_not_found_in_google: Изображения обработаны и не находятся в поисковых системах по изображению
+          does_not_include_images: Статья не содержит картинок
+          found_in_google: Изображения являются копиями и находятся в поисковых системах по изображению
+          unique_images: Изображения собственные и уникальные
+        moderator_bonus:
+          plus_10_percent: "+ 10%"
+          plus_15_percent: "+ 15%"
+          plus_20_percent: "+ 20%"
+          plus_5_percent: "+ 5%"
+        overview_type:
+          not_specific_knowledge: Статья содержит поверхностный текст, без углублений в подробности
+          specific_knowledge: Статья обозревает специфические узкие характеристики товара
         post_type:
-          rewrite: Рерайт
           copywrite: Копирайт
+          rewrite: Рерайт
+        product_comparison:
+          product_comparison: Статья содержит обзор и сравнение нескольких товаров сгруппированных тематически
         product_type:
           brand_new_product: Товар недавно поступил в продажу
           product_popular: Товар можно приобрести в разных магазинах
           searchable: Товар легко находится в поисковых системах по названию
-        images_type:
-          unique_images: Изображения собственные и уникальные
-          do_not_found_in_google: Изображения обработаны и не находятся в поисковых системах по изображению
-          found_in_google: Изображения являются копиями и находятся в поисковых системах по изображению
-          does_not_include_images: Статья не содержит картинок
-        overview_type:
-          specific_knowledge: Статья обозревает специфические узкие характеристики товара
-          not_specific_knowledge: Статья содержит поверхностный текст, без углублений в подробности
-        product_comparison:
-          product_comparison: Статья содержит обзор и сравнение нескольких товаров сгруппированных тематически
         uniqueness_checked:
           advego_ru: на сайте advego.ru
-          text_ru: на сайте text.ru
           etxt_ru: на сайте etxt.ru
-        moderator_bonus:
-          plus_5_percent: + 5%
-          plus_10_percent: + 10%
-          plus_15_percent: + 15%
-          plus_20_percent: + 20%
+          text_ru: на сайте text.ru
     form:
-      editorial: Редактура
       are_you_sure: Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены
+      editorial: Редактура
     show:
-      language: Язык статьи
       badge:
         status: Статус статьи
         statuses:
-          draft_post: черновик
-          pending_post: модерация
-          approved_post: принято
-          rejected_post: доработка
           accrued_post: зачислено
-          canceled_post: отменено
-          removed_post: удалено
-
-          pending_check: запрошено
           approved_check: обрабатывается
+          approved_post: принято
+          canceled_post: отменено
+          draft_post: черновик
           payed_check: выплачено
+          pending_check: запрошено
+          pending_post: модерация
+          rejected_post: доработка
           removed_check: удалено
-
-#  omni-buttons:
-#    search: 'Поиск'
-#    filter: 'Фильтр'
-#    view: 'Вид'
-
+          removed_post: удалено
+      language: Язык статьи
+    update:
+      post_was_successfully_updated: Статья была успешно изменена
+  products: Товары
+  save: Сохранить
+  search: Искать
+  search_placeholder: Введите текст для поиска...
   settings:
+    danger_zones:
+      edit:
+        are_you_sure: Are you sure
+        cancel_my_account: Cancel my account
     profiles:
       form:
         update: Обновить
       update:
         saved: Профиль успешно сохранен
-
-  navbar_favorite_component:
-    title: Избранное
-
-  header:
-    language_component:
-      title: Язык
-
-    news_component:
-      title: Новости
-
-    menu:
-      login: Вход
-      logout: Выход
-      settings: Настройки
-      restore_permissions: Восстановить полномочия
-
+  shared:
+    balance:
+      account:
+        details: Подробности
+      account_wrapper:
+        balance: Balance
+        user_balance: 'Счета пользователя: %{user}'
+  simple_form:
+    error_notification:
+      default_message: Невозможно сохранить. Пожалуйста заполните поля
+    hints:
+      advertiser_filter_form:
+        displayed_columns: Порядок добавления столбцов влияет на отображение
+      columns_form:
+        displayed_columns: Управляйте отобажаемыми столбцами в таблице добавляя или удаляя названия столбцов. Кстати их порядок влияет на то в каком порядке они будут отображены в таблице.
+      defaults:
+        example: example
+      feed_filter_form:
+        displayed_columns: Порядок добавления столбцов влияет на отображение
+      post:
+        currency: Выберите национальную валюту вашей страны
+        post_category: Ознакомьтесь с полным списком доступных категорий для размещения статьи <a href="/post_categories" target="_blank">по этой ссылке</a>
+        published_at: Материал не будет опубликован, если дата публикации еще не наступила
+        realm: Ознакомьтесь с полным списком доступных сайтов для размещения статьи <a href="/realms" target="_blank">по этой ссылке</a>
+        status: Поставьте статус "На модерацию", когда завершите статью. Модерация занимает не более 48 часов.
+        tags: Ознакомьтесь с полным списком доступных тегов для размещения статьи <a href="/tags" target="_blank">по этой ссылке</a>.<br/>Используйте запятую в качестве разделителя тегов или клавишу Enter
+      widgets_simple:
+        url: Используйте адрес товара скопированный из карточки товара
+      workspace_form:
+        is_default: Сделайте рабочую область по-умолчанию и она будет открываться при заходе в раздел.
+        name: Дайте имя новой рабочей области. Переключайтесь между рабочими областями загружая настройки фильтров и сортировок.
+    labels:
+      advertiser_filter_form:
+        displayed_columns: Отображаемые столбцы
+      check:
+        amount: Сумма
+        currency: Валюта
+        status: Статус
+        user: Пользователь
+      columns_form:
+        displayed_columns: Отображаемые столбцы
+      feed_filter_form:
+        displayed_columns: Отображаемые столбцы
+      post:
+        amount: Цена
+        body: Статья
+        currency: Валюта
+        extra_options:
+          images_type: Изображения
+          moderator_bonus: Бонус от модератора
+          overview_type: Полнота обзора
+          post_type: Тип статьи
+          product_comparison: Сравнительная статья
+          product_type: Обозреваемый товар
+          uniqueness_checked: Уникальность проверена
+        intro: Вступление
+        post_category: Категория
+        published_at: Дата публикации
+        realm: Сайт
+        status: Статус
+        tags: Теги
+        title: Заголовок
+        user: Пользователь
+      profile_form:
+        bio: О себе
+        languages: Владеемые языки
+        messengers: Мессенджеры
+        name: Имя
+        time_zone: Часовой пояс
+      widgets_simple:
+        pictures:
+          _destroy: Удалить
+          order: Порядок отображения
+      workspace_form:
+        is_default: По-умолчанию
+        name: Имя рабочей области
+    'no': 'No'
+    placeholders:
+      post:
+        body: Начните писать свою статью тут
+        intro: Короткое вступление. Можно использовать первый параграф из статьи
+        post_category: Начните писать чтобы появилось меню с выбором категории статьи
+        realm: Выберите наиболее подходящий сайт для размещения вашей статьи
+        tags: Начните писать чтобы выбрать имеющийся тег или добавить новый
+      workspace_form:
+        name: Введите имя
+    required:
+      mark: "*"
+      text: required
+    'yes': 'Yes'
+  table:
+    filters:
+      form:
+        reset_filter: Сбросить фильтр
+    long:
+      account:
+        currency: Валюта
+      favorite:
+        created_at: Создано
+      feed:
+        advertiser_created_at: Дата создания рекламодеталя
+        advertiser_ext_id: Внешний ID рекламодателя
+        advertiser_id: ID рекламодателя
+        advertiser_is_active: Флаг активности рекламодателя
+        advertiser_name: Название рекламодателя
+        advertiser_network: Партнерская сеть рекламодателя
+        advertiser_raw: Сырые данные рекламодателя
+        advertiser_synced_at: Дата синхронизации настроек рекламодателя
+        advertiser_updated_at: Дата изменения рекламодателя
+        attempt_uuid: UUID операции обработки
+        categories_count: Количество категорий прайса
+        created_at: Дата создания прайса
+        downloaded_file_size: Размер скачанного файла
+        downloaded_file_type: Тип скачанного файла
+        error_class: Тип ошибки
+        error_text: Текст ошибки
+        ext_id: Внешний идентификационный номер прайса
+        favorite: Избранное
+        id: Идентификационный номер прайса
+        is_active: Флаг активности прайса
+        language: Язык прайса
+        locked_by_pid: Заблокировано процессом PID
+        name: Название прайса
+        offers_count: Количество товаров прайса
+        operation: Тип операции
+        priority: Приоритет
+        processing_finished_at: Дата завершения обработки
+        processing_started_at: Дата начала обработки
+        raw: Сырые данные прайса
+        succeeded_at: Дата успешной обработки прайса
+        synced_at: Дата синхронизации настроек прайса
+        updated_at: Дата изменения прайса
+        url: URL прайса
+        xml_file_path: Путь до прайса
+      post:
+        amount: Цена
+        created_at: Создана
+        favorite: Избр.
+        id: ID
+        status: Статус
+        title: Название
+        updated_at: Изменена
+        user_id: Пользователь
+      transaction:
+        transaction_group_id: ID группы транзакций
+    short:
+      account:
+        amount: Баланс
+        currency: Валюта
+        subjectable_id: Субъект
+      favorite:
+        created_at: Создано
+      feed:
+        advertiser_created_at: Дата созд. рекл.
+        advertiser_ext_id: Внешн. ID рекл.
+        advertiser_id: ID рекл.
+        advertiser_is_active: Рекл. акт.
+        advertiser_name: Назв. рекл.
+        advertiser_network: Партн. сеть
+        advertiser_raw: Сыр. дан. рекл.
+        advertiser_synced_at: Дана синхр. рекл.
+        advertiser_updated_at: Дата обновл. рекл.
+        attempt_uuid: UUID
+        categories_count: Категорий
+        created_at: Создан
+        downloaded_file_size: Разм. файл
+        downloaded_file_type: Тип файл
+        error_class: Класс ошибки
+        error_text: Текст ошибки
+        ext_id: Внешн. ID
+        favorite: Избр.
+        id: ID
+        is_active: Прайс акт.
+        language: Язык
+        locked_by_pid: PID проц.
+        name: Назв. прайса
+        offers_count: Товаров
+        operation: Операция
+        priority: Приоритет
+        processing_finished_at: Дата оконч. обр.
+        processing_started_at: Дата нач. обр.
+        raw: Сыр. дан. прайса
+        succeeded_at: Дата усп. обр.
+        synced_at: Дата синхр.
+        updated_at: Изменен
+        url: URL
+        xml_file_path: Путь прайса
+      post:
+        amount: Цена
+        created_at: Создана
+        favorite: Избр.
+        id: ID
+        status: Статус
+        title: Название
+        updated_at: Изменена
+        user_id: Пользователь
+      transaction:
+        transaction_group_id: ID Гр. тр.
   tables:
     offers:
       card_wrapper:
         follow_link: Перейти
         offers_in_group: Товаров в категории
+      group_more:
+        follow_link: Follow link
+        offers_in_group: Offers in group
       search:
         button:
           search_everywhere: Искать везде
           search_inside_advertiser: 'У рекламодателя: "%{name}"'
           search_inside_feed: 'В прайс листе: "%{name}"'
           search_inside_feed_category: 'В категории: "%{name}"'
-
-  application:
-    desktop_header:
-      no_favorites: Список избранного пока что пуст.
-
-  helpers:
-    submit:
-      filter_form:
-        create: Применить фильтр
-      columns_form:
-        create: Сохранить
-      workspace_form:
-        create: Сохранить
+  title: Title
+  titles:
+    accounts: Счета
+    advertiser: Рекламодатель
+    advertisers: Рекламодатели
+    checks: Выплаты
+    dashboard: Личный кабинет
+    favorite: Избранное
+    favorites: Избранное
+    feed: Прайс лист
+    feed_categories: Категории
+    feed_category: Категория
+    feeds: Прайс листы
+    help: Справка
+    news: Новости
+    offers: Все товары
+    post_categories: Категории статей
+    posts: Статьи
+    settings: Настройки
+    transactions: Транзакции
+    users: Пользователи
+    without_name: Без названия
+  trix:
+    GB: GB
+    KB: KB
+    MB: MB
+    PB: PB
+    TB: TB
+    attachFiles: Attach Files
+    bold: Жирный
+    bullets: Bullets
+    byte: Byte
+    bytes: Bytes
+    captionPlaceholder: Add a caption…
+    code: Code
+    embedWidget: Вставить виджет
+    heading1: Heading
+    indent: Increase Level
+    italic: Курсив
+    link: Link
+    numbers: Numbers
+    outdent: Decrease Level
+    quote: Quote
+    redo: Повторить
+    remove: Remove
+    strike: Strikethrough
+    undo: Отменить
+    unlink: Unlink
+    url: URL
+    urlPlaceholder: Enter a URL…
+  'true': Да
+  try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Попробуйте очистить строку поиска или примененные фильтры. Или создайте новый элемент.
+  updated_at: Дата изменения
+  view: Просмотр
+  views:
+    pagination:
+      first: "&laquo; Первая"
+      last: Последняя &raquo;
+      next: След. &rsaquo;
+      previous: "&lsaquo; Пред."
+      truncate: "&hellip;"
+  widgets:
+    empty_wrapper:
+      create_new_widget: Создать новый виджет
+    index:
+      create_new_widget: Create new widget
+      edit: Редактировать виджет
+      insert: Вставить виджет в статью
+      widget_setup: Управление виджетами
+    new:
+      new_simple_widget: Простой виджет
+      selecting_widget_type: Выбор типа создаваемого виджета
+    simples:
+      content:
+        widget_form: Форма редактирования виджета
+        widget_preview: Предпросмотр виджета
+      create:
+        simple_was_successfully_created: Виджет успешно создан
+      edit:
+        editing_widget: Редактирование виджета
+        insert: Вставить виджет в статью
+      form:
+        pictures: Изображения
+      new:
+        creating_widget: Создание виджета
+        insert: Вставить виджет в статью
+      update:
+        simple_was_successfully_updated: Виджет успешно изменен
+      widget:
+        body: Яркий и информативный пример описания, содержащий основные характеристики товара
+        next: Next
+        previous: Previous
+        title: Пример названия товара
+        visit_advertiser: Перейти в магазин
+  workspaces: Области
