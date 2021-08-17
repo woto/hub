@@ -86,7 +86,7 @@ en:
     advertiser: Advertiser
     checks: Checks
     controls: Controls
-    debug: Debut
+    debug: Debug
     delete: Delete
     edit: Edit
     feed: Feed
@@ -392,7 +392,7 @@ en:
     categories: Categories
     checks: Checks
     danger_zone: Danger_zone
-    dashboard: dashboard
+    dashboard: Dashboard
     email: Email
     favorites: Favorites
     feed_categories: Feed categories
