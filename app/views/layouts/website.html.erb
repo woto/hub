@@ -1,11 +1,10 @@
 <% content_for :body do %>
-
-  <%= content_for :prefix_inline_css %>
-  <%= content_for :prefix_inline_js %>
-
-  <%= render 'websites/google_analytics' %>
-
   <body class="antialiased">
+
+    <%= render 'tawk' %>
+    <%= content_for :prefix_inline_css %>
+    <%= content_for :prefix_inline_js %>
+
     <div class="wrapper">
       <aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent">
         <div class="container-fluid">

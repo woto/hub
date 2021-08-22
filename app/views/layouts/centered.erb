@@ -1,13 +1,10 @@
-<% content_for :prefix_inline_js do %>
-  <%= render TawkComponent.new %>
-<% end %>
-
 <% content_for :body do %>
 
   <%= tag.body class: 'antialiased border-top-wide border-primary d-flex flex-column',
                'data-controller': "global",
                **data_attributes_for_body do  %>
 
+    <%= render 'tawk' %>
     <%= content_for :prefix_inline_css %>
     <%= content_for :prefix_inline_js %>
 

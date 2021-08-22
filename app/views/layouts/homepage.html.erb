@@ -1,7 +1,3 @@
-<% content_for :prefix_inline_js do %>
-  <%= render TawkComponent.new %>
-<% end %>
-
 <% content_for :body do %>
 
   <%= tag.body class: "d-flex h-100 text-white bg-dark",
@@ -30,6 +26,7 @@
     </style>
   <% end %>
 
+  <%= render 'tawk' %>
   <%= content_for :prefix_inline_css %>
   <%= content_for :prefix_inline_js %>
 

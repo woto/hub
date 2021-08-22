@@ -1,7 +1,3 @@
-<% content_for :prefix_inline_js do %>
-  <%= render TawkComponent.new %>
-<% end %>
-
 <% content_for(:body) do %>
 
   <%= tag.body class: "antialiased",
@@ -20,6 +16,7 @@
     </div>
   </div>
 
+  <%= render 'tawk' %>
   <%= content_for :prefix_inline_css %>
   <%= content_for :prefix_inline_js %>
 
