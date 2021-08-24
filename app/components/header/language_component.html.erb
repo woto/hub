@@ -11,9 +11,16 @@
   <% I18n.available_locales.each do |locale| %>
     <% css_class = 'dropdown-item' %>
     <%= link_to helpers.system_locale_to_human(locale),
-                helpers.path_for_switch_language(locale) || helpers.smart_change_locale_url(locale),
+                helpers.path_for_switch_language(locale) ||
+                  url_for(
+                    Tools::SwitchLanguage.call(
+                      subdomains: request.subdomains,
+                      host: request.host,
+                      locale: locale).object
+                  ),
                 helpers.test_class => 'link',
                 'data-turbo': false,
                 class: css_class %>
   <% end %>
 <% end %>
+
