@@ -180,4 +180,12 @@ module ApplicationHelper
   #     scalar
   #   end
   # end
+
+  def smart_change_locale_url(new_locale)
+    if I18n.available_locales.map(&:to_s).include?(request.subdomains.first)
+      url_for(host: request.host.sub(request.subdomains.first, new_locale.to_s))
+    else
+      url_for(locale: new_locale)
+    end
+  end
 end
