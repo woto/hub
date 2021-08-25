@@ -32,7 +32,7 @@ class PostCategory < ApplicationRecord
   belongs_to :realm, counter_cache: true, touch: true
 
   has_ancestry cache_depth: true
-  has_many :posts
+  has_many :posts, dependent: :restrict_with_error
 
   validates :title, presence: true
   validate :check_same_realms

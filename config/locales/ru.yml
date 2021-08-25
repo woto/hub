@@ -72,6 +72,7 @@ ru:
     new_advertiser: Создание рекламодателя
     new_check: Новая выплата
     new_post: Новая статья
+    new_post_category: Новая категория статей
     news: Новости
     offers: Все товары
     password: Password
@@ -96,6 +97,7 @@ ru:
     new_check: Запросить выплату
     new_feed: Создать прайс
     new_post: Новая статья
+    new_post_category: Новая категория статей
     offer: Товар
     offers: Товары
     offers_count: Количество товаров
@@ -445,7 +447,9 @@ ru:
       read_less: Свернуть
       read_more: Развернуть
       visit_advertiser: Перейти в магазин
-  post_categories: Категории статей
+  post_categories:
+    destroy:
+      post_category_was_successfully_destroyed: Категория статей была успешно удалена
   posts:
     create:
       post_was_successfully_created: Статья была успешно создана

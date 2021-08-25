@@ -72,6 +72,7 @@ en:
     new_advertiser: New advertiser
     new_check: New check
     new_post: New post
+    new_post_category: New post category
     news: News
     offers: Offers
     password: Password
@@ -96,6 +97,7 @@ en:
     new_check: New check
     new_feed: New feed
     new_post: New post
+    new_post_category: New post category
     offer: Offer
     offers: Offers
     offers_count: Offers count
@@ -437,7 +439,9 @@ en:
       read_less: Less
       read_more: More
       visit_advertiser: Visit advertiser
-  post_categories: Post categoris
+  post_categories:
+    destroy:
+      post_category_was_successfully_destroyed: Post category was successfully destroyed
   posts:
     create:
       post_was_successfully_created: Post was successfully created
