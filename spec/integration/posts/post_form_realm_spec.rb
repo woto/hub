@@ -71,7 +71,7 @@ describe PostsController, type: :system, responsible: :admin do
   end
 
   context 'when realm changes at the post which is saved (category and tags are filled)' do
-    let!(:realm) { create(:realm) }
+    let!(:realm) { create(:realm, title: 'iiiii') }
 
     before do
       visit edit_post_path(post, locale: :ru)
