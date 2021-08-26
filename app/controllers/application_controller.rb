@@ -2,8 +2,8 @@
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
-  rescue_from Pundit::NotAuthorizedError, with: :render_403
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404 unless Rails.env.development?
+  rescue_from Pundit::NotAuthorizedError, with: :render_403 unless Rails.env.development?
 
   helper ActionText::Engine.helpers
 
