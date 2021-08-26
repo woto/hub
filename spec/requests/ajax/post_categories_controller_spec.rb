@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-describe Ajax::PostCategoriesController, type: :request do
-  subject { get ajax_categories_path(q: 'кат', realm_id: realm.id), xhr: true }
+describe Ajax::PostCategories::LeavesController, type: :request do
+  subject { get ajax_post_categories_leaves_path(q: 'кат', realm_id: realm.id), xhr: true }
 
   let(:user) { create(:user) }
   let(:realm) { Realm.pick(locale: :ru, kind: :post) }

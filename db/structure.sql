@@ -1183,39 +1183,6 @@ ALTER SEQUENCE public.widgets_id_seq OWNED BY public.widgets.id;
 
 
 --
--- Name: widgets_pictures; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.widgets_pictures (
-    id bigint NOT NULL,
-    widgetable_type character varying NOT NULL,
-    widgetable_id bigint NOT NULL,
-    "order" integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: widgets_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.widgets_pictures_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: widgets_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.widgets_pictures_id_seq OWNED BY public.widgets_pictures.id;
-
-
---
 -- Name: widgets_simples; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1477,13 +1444,6 @@ ALTER TABLE ONLY public.widgets ALTER COLUMN id SET DEFAULT nextval('public.widg
 
 
 --
--- Name: widgets_pictures id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_pictures ALTER COLUMN id SET DEFAULT nextval('public.widgets_pictures_id_seq'::regclass);
-
-
---
 -- Name: widgets_simples id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1694,14 +1654,6 @@ ALTER TABLE ONLY public.transactions
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: widgets_pictures widgets_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.widgets_pictures
-    ADD CONSTRAINT widgets_pictures_pkey PRIMARY KEY (id);
 
 
 --
@@ -2010,13 +1962,6 @@ CREATE INDEX index_widgets_on_widgetable ON public.widgets USING btree (widgetab
 
 
 --
--- Name: index_widgets_pictures_on_widgetable; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_widgets_pictures_on_widgetable ON public.widgets_pictures USING btree (widgetable_type, widgetable_id);
-
-
---
 -- Name: index_widgets_simples_pictures_on_widgets_simple_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2277,7 +2222,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210328042112'),
 ('20210328055745'),
 ('20210808221850'),
-('20210810003323'),
 ('20210810011556');
 
 

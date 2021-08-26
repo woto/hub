@@ -34,7 +34,7 @@ export default class extends ApplicationController {
     }
 
     #shouldAskConfirmation() {
-        return this.#dirtyness['posts-category:setDirty'].isDirty || this.#dirtyness['posts-tags:setDirty'].isDirty;
+        return this.#dirtyness['posts-form-leaves:setDirty'].isDirty || this.#dirtyness['posts-tags:setDirty'].isDirty;
     }
 
     #sendPostRealmChangeEvent(realmId) {

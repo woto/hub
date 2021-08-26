@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     resources :accounts
     resources :advertisers
     resources :checks
+    resources :post_categories
     resources :favorites do
       collection do
         get :navbar_favorite_list
@@ -145,7 +146,10 @@ Rails.application.routes.draw do
     end
 
     namespace :ajax do
-      resources :categories, controller: 'post_categories', only: %i[index]
+      namespace :post_categories do
+        resources :empties, only: %i[index]
+        resources :leaves, only: %i[index]
+      end
       resources :tags, controller: 'post_tags', only: %i[index]
       resources :users, controller: 'users', only: %i[index]
     end

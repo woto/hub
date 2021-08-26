@@ -66,7 +66,7 @@
                                 input_html: {
                                   "data-controller": 'posts-realm',
                                   "data-posts-realm-realm-change-question": t('.are_you_sure'),
-                                  "data-action": 'posts-category:setDirty@window->posts-realm#setDirty
+                                  "data-action": 'posts-form-leaves:setDirty@window->posts-realm#setDirty
                                                   posts-tags:setDirty@window->posts-realm#setDirty'
                                 },
                                 include_blank: true,
@@ -76,10 +76,10 @@
 
               <%= f.association :post_category, as: :select,
                                 input_html: {
-                                  "data-controller": 'posts-category',
-                                  "data-posts-category-realm-id-value": @post.realm_id,
-                                  "data-posts-category-is-dirty-value": !f.object.post_category_id.nil?,
-                                  "data-action": 'posts-realm:postRealmIdChange@window->posts-category#postRealmIdChange'
+                                  "data-controller": 'posts-form-leaves',
+                                  "data-posts-form-leaves-realm-id-value": @post.realm_id,
+                                  "data-posts-form-leaves-is-dirty-value": !f.object.post_category_id.nil?,
+                                  "data-action": 'posts-realm:postRealmIdChange@window->posts-form-leaves#postRealmIdChange'
                                 },
                                 wrapper_html: {class: 'mb-3'},
                                 label_html: { class: "mb-2" },

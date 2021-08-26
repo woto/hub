@@ -45,7 +45,7 @@ export default class extends ApplicationController {
                 this.clearOptions();
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/ajax/categories',
+                    url: '/ajax/post_categories/leaves',
                     type: 'GET',
                     error: function() {
                         callback();

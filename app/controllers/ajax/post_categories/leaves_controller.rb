@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ajax::PostCategoriesController < ApplicationController
+class Ajax::PostCategories::LeavesController < ApplicationController
   def index
     authorize %i[ajax post_categories]
 
