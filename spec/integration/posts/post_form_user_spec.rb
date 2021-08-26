@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe PostsController, type: :system, responsible: :admin do
   let(:post) { create(:post, user: Current.responsible) }
-  let(:another_user) { create(:user) }
+  let(:another_user) { create(:user, email: 'aaaaa@aaaaa.aa') }
 
   it 'changes `post[user_id]` correctly' do
     login_as(Current.responsible, scope: :user)
