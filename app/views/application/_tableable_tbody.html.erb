@@ -18,7 +18,10 @@
       <% end %>
     <% end %>
 
-    <% if policy(@settings[:model_class]).new? %>
+    <% if policy(@settings[:model_class]).new? ||
+      policy(@settings[:model_class]).edit? ||
+      policy(@settings[:model_class]).show? ||
+      policy(@settings[:model_class]).destroy? %>
       <td>
         <%= render 'member_controls', row: row %>
       </td>

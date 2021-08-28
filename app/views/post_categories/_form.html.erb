@@ -1,0 +1,71 @@
+<%= simple_form_for(post_category,
+                    html: {
+                      'data-turbo': false
+                    }) do |f| %>
+
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="row">
+    <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-inputs">
+
+            <%= f.association :realm, as: :select,
+                              wrapper_html: {
+                                test_id => 'realm',
+                                class: 'mb-3',
+                              },
+                              label_html: { :class => "mb-2" },
+                              input_html: {
+                                "data-controller": 'post-categories-form-realm',
+                                "data-post-categories-form-realm-realm-change-question": t('.are_you_sure'),
+                                "data-action": 'post-categories-form-empties:setDirty@window->post-categories-form-realm#setDirty'
+                              },
+                              include_blank: true,
+                              placeholder: true,
+                              collection: current_user.staff? ? Realm.all : Realm.post
+
+              %>
+
+            <%= f.input :title,
+                        wrapper_html: {class: 'mb-3'},
+                        required: true,
+                        label_html: { :class => "mb-2" } %>
+
+            <%= f.input :parent_id, as: :select,
+                              input_html: {
+                                "data-controller": 'post-categories-form-empties',
+                                "data-post-categories-form-empties-realm-id-value": @post_category.realm_id,
+                                "data-post-categories-form-empties-is-dirty-value": !f.object.parent_id.nil?,
+                                "data-action": 'post-categories-form-realm:postRealmIdChange@window->post-categories-form-empties#postRealmIdChange'
+                              },
+                              wrapper_html: {class: 'mb-3'},
+                              label_html: { class: "mb-2" },
+                              placeholder: true,
+                              collection: PostCategory.where(id: f.object.parent_id).map { |post|
+                                [
+                                  post.title,
+                                  post.id,
+                                  data: {
+                                    data: {
+                                      title: post.title,
+                                      path: post.path.pluck(:title).join(' > ')
+                                    }
+                                  }
+                                ]
+                              },
+                              selected: f.object.parent_id
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to t('back'), post_categories_path, class: "btn btn-white" %>
+  </div>
+<% end %>

@@ -1,0 +1,100 @@
+<% content_for :title do %>
+  <%= t("titles.post_categories") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.post_categories'), post_categories_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_post_category'), post_category_path(@post_category) %>
+  </li>
+<% end %>
+
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <dl class="row">
+                <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9"> <%= @post_category.id %> </dd>
+
+                <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9"> <%= @post_category.title %> </dd>
+
+                <dt class="col-sm-3"> <%= t('realm', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9"> <%= @post_category.realm.title %> </dd>
+
+                <dt class="col-sm-3"> <%= t('path', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9">
+                  <ol class="breadcrumb breadcrumb-arrows d-block d-lg-flex" aria-label="breadcrumbs">
+                    <% @post_category.path.each do |slice| %>
+                      <li class="breadcrumb-item">
+                        <%= slice.title %>
+                      </li>
+                    <% end %>
+                  </ol>
+                </dd>
+
+                <% if false %>
+                <dt class="col-sm-3">TODO <%= t('children', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9">
+                  <ul class="d-block">
+                    <% @post_category.children.each do |slice| %>
+                      <li>
+                        <%= "id: #{slice.id} - #{slice.title}" %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </dd>
+                <% end %>
+
+                <% if false %>
+                <dt class="col-sm-3">TODO <%= t('posts', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9">
+                  <ul class="d-block">
+                    <% @post_category.posts.each do |slice| %>
+                      <li>
+                        <%= "id: #{slice.id} - #{slice.title}" %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </dd>
+                <% end %>
+
+                <dt class="col-sm-3"> <%= t('posts_count', scope: ['simple_form', 'labels', 'post_category']) %> </dt>
+                <dd class="col-sm-9"> <%= @post_category.posts_count %> </dd>
+
+                <dt class="col-sm-3"> <%= t('created_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post_category.created_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post_category.updated_at) %> </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= link_to t('edit'), edit_post_category_path(@post_category),
+                  class: "btn btn-primary #{'disabled' unless policy(@post_category).edit?}",
+                  'data-turbo': false %>
+      <%= link_to t('delete'), post_category_path(@post_category.id), class: "btn btn-danger #{'disabled' unless policy(@post_category).destroy?}", method: :delete, data: { confirm: t('are_you_sure') } %>
+      <%= link_to t('back'), post_categories_path, class: "btn btn-white" %>
+    </div>
+  </div>
+</div>
+

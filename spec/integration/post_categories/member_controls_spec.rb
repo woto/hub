@@ -15,7 +15,7 @@ describe Tables::PostCategoriesController, type: :system do
     context 'when role is user', responsible: :user do
 
       it 'does not show controls buttons' do
-        expect(page).to have_no_text title
+        expect(page).to have_text title
       end
     end
 
@@ -26,7 +26,27 @@ describe Tables::PostCategoriesController, type: :system do
     end
   end
 
-  describe "member controls buttons' urls", responsible: :admin do
+  describe "member controls buttons' urls", responsible: :user do
+    before do
+      login_as(Current.responsible, scope: :user)
+      visit post_categories_path(locale: 'ru')
+      click_on(title)
+    end
+
+    it 'shows `show` button with correct url' do
+      expect(page).to have_link('Просмотреть', href: post_category_path(post_category.id, locale: :ru))
+    end
+
+    it 'does not show `edit` button' do
+      expect(page).to have_no_link('Редактировать')
+    end
+
+    it 'does not show `destroy` button' do
+      expect(page).to have_no_link('Удалить')
+    end
+  end
+
+  describe "admin member controls buttons' urls", responsible: :admin do
     before do
       login_as(Current.responsible, scope: :user)
       visit post_categories_path(locale: 'ru')

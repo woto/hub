@@ -130,4 +130,20 @@ describe PostCategory, type: :model, responsible: :admin do
 
     it { is_expected.to contain_exactly(post_category3) }
   end
+
+  describe '#validate_childless' do
+    let!(:parent_category) { create(:post_category) }
+
+    before do
+      create(:post_category, parent: parent_category, realm: parent_category.realm)
+    end
+
+    it 'does not allow to remove post category with child post category' do
+      expect do
+        parent_category.destroy
+      end.not_to change(described_class, :count)
+
+      expect(parent_category.errors.details).to eq({ base: [{ error: :must_be_childless }] })
+    end
+  end
 end

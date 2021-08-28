@@ -39,7 +39,12 @@ ru:
           attributes:
             currency:
               no_rate: "'%{currency}' не имеет курса на дату '%{date}', пожалуйста свяжитесь со службой поддержки чтобы использовать эту валюту"
+        post_category:
+          attributes:
+            base:
+              must_be_childless: Удаляемая категория не должна иметь дочерних категорий
     models:
+      post_category: категория статей
       widgets/simple: виджет
   advertiser: Рекламодатель
   advertisers/admitad: Рекламодатель
@@ -50,7 +55,7 @@ ru:
   application_helper:
     data_attributes_for_navbar_favorite:
       no_favorites: No favorites
-  are_you_sure: Уверены, что хотите удалить?
+  are_you_sure: Вы уверены?
   articles: Новости
   attributes:
     name: Название
@@ -64,6 +69,7 @@ ru:
     dashboard: Личн. кабинет
     edit_check: Редактирование выплаты
     edit_post: Редактирование статьи
+    edit_post_category: Редактирование категории статей
     email: Почта
     favorites: Избранное
     feeds: Прайс листы
@@ -81,6 +87,7 @@ ru:
     profile: Профиль
     show_check: Просмотр выплаты
     show_post: Просмотр статьи
+    show_post_category: Просмотр категории статей
     transactions: Транзакции
     users: Пользователи
   buttons:
@@ -127,6 +134,7 @@ ru:
       today_rates: Курс на сегодня
       under_construction: В разработке
   default: По-умолчанию
+  delete: Delete
   devise:
     confirmations:
       confirmed: Ваш адрес эл. почты успешно подтвержден.
@@ -320,6 +328,9 @@ ru:
         create: Сохранить
       filter_form:
         create: Применить фильтр
+      post_category:
+        create: Сохранить категорию статей
+        update: Сохранить категорию статей
       workspace_form:
         create: Сохранить
   homepage: Главная
@@ -448,8 +459,14 @@ ru:
       read_more: Развернуть
       visit_advertiser: Перейти в магазин
   post_categories:
+    create:
+      post_category_was_successfully_created: Категори статей была успешно создана
     destroy:
       post_category_was_successfully_destroyed: Категория статей была успешно удалена
+    form:
+      are_you_sure: Вы уверены? Настройки родительской категории будут сброшены
+    update:
+      post_category_was_successfully_updated: Категори статей была успешно изменена
   posts:
     create:
       post_was_successfully_created: Статья была успешно создана
@@ -494,7 +511,7 @@ ru:
           etxt_ru: на сайте etxt.ru
           text_ru: на сайте text.ru
     form:
-      are_you_sure: Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены
+      are_you_sure: Вы уверены? Настройки категории и тегов будут сброшены
       editorial: Редактура
     show:
       badge:
@@ -521,8 +538,8 @@ ru:
   settings:
     danger_zones:
       edit:
-        are_you_sure: Are you sure
-        cancel_my_account: Cancel my account
+        are_you_sure: Вы уверены? После удаления аккаунта вы не сможете его восстановить
+        cancel_my_account: Удалить мой аккаунт
     profiles:
       form:
         update: Обновить
@@ -549,11 +566,13 @@ ru:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       post:
         currency: Выберите национальную валюту вашей страны
-        post_category: Ознакомьтесь с полным списком доступных категорий для размещения статьи <a href="/post_categories" target="_blank">по этой ссылке</a>
+        post_category: Ознакомьтесь с полным списком доступных категорий для размещения статьи <a href="/post_categories" target="_blank">по этой ссылке</a><br/>Если категория имеет дочерние категории, то она не может содержать статьи.
         published_at: Материал не будет опубликован, если дата публикации еще не наступила
         realm: Ознакомьтесь с полным списком доступных сайтов для размещения статьи <a href="/realms" target="_blank">по этой ссылке</a>
         status: Поставьте статус "На модерацию", когда завершите статью. Модерация занимает не более 48 часов.
         tags: Ознакомьтесь с полным списком доступных тегов для размещения статьи <a href="/tags" target="_blank">по этой ссылке</a>.<br/>Используйте запятую в качестве разделителя тегов или клавишу Enter
+      post_category:
+        parent_id: Если категория содержит статьи, то она не может быть использована в качестве родительской
       widgets_simple:
         url: Используйте адрес товара скопированный из карточки товара
       workspace_form:
@@ -591,6 +610,15 @@ ru:
         tags: Теги
         title: Заголовок
         user: Пользователь
+      post_category:
+        children: Дочерние категории
+        id: ID
+        parent_id: Родительская категория
+        path: Полный путь категории
+        posts: Дочерние Статьи
+        posts_count: Статей в категории
+        realm: Сайт категории
+        title: Название категории
       profile_form:
         bio: О себе
         languages: Владеемые языки

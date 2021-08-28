@@ -39,7 +39,12 @@ en:
           attributes:
             currency:
               no_rate: "'%{currency}' does not have a course on the date '%{date}', please contact support to use this currency"
+        post_category:
+          attributes:
+            base:
+              must_be_childless: The category to be deleted must not have child categories
     models:
+      post_category: категория статей
       widgets/simple: widget
   advertiser: Advertiser
   advertisers/admitad: Advertiser
@@ -64,6 +69,7 @@ en:
     dashboard: Dashboard
     edit_check: Edit check
     edit_post: Edit post
+    edit_post_category: Edit post category
     email: Email
     favorites: Favorites
     feeds: Feeds
@@ -81,6 +87,7 @@ en:
     profile: Profile
     show_check: Show check
     show_post: Show post
+    show_post_category: Show post category
     transactions: transactions
     users: users
   buttons:
@@ -127,6 +134,7 @@ en:
       today_rates: Today rates
       under_construction: Under construction
   default: Default
+  delete: Delete
   devise:
     confirmations:
       confirmed: Your email address has been successfully confirmed.
@@ -312,6 +320,9 @@ en:
         create: Save
       filter_form:
         create: Apply filter
+      post_category:
+        create: Create post category
+        update: Update post category
       workspace_form:
         create: Save
   homepage: Homepage
@@ -440,8 +451,14 @@ en:
       read_more: More
       visit_advertiser: Visit advertiser
   post_categories:
+    create:
+      post_category_was_successfully_created: Post category was successfully created
     destroy:
       post_category_was_successfully_destroyed: Post category was successfully destroyed
+    form:
+      are_you_sure: Are you sure? The parent category will be reset
+    update:
+      post_category_was_successfully_updated: Post category was successfully updated
   posts:
     create:
       post_was_successfully_created: Post was successfully created
@@ -486,7 +503,7 @@ en:
           etxt_ru: on the website etxt.ru
           text_ru: on the website text.ru
     form:
-      are_you_sure: Do you really want to change the site? Then the category and tag settings will be reset
+      are_you_sure: Are you sure? The category and tag will be reset
       editorial: Editorial
     show:
       badge:
@@ -513,7 +530,7 @@ en:
   settings:
     danger_zones:
       edit:
-        are_you_sure: Are you sure?
+        are_you_sure: Are you sure? After deleting your account, you will not be able to restore it
         cancel_my_account: Cancel my account
     profiles:
       form:
@@ -541,11 +558,13 @@ en:
         displayed_columns: The order in which columns are added affects the display
       post:
         currency: Select the national currency of your country
-        post_category: Check out the full list of available categories for posting an article <a href="/post_categories" target="_blank">at this link</a>
+        post_category: Check out the full list of available categories for posting an article <a href="/post_categories" target="_blank">at this link</a><br>If a category has child categories, it cannot contain articles.
         published_at: The material will not be published if the publication date has not yet arrived
         realm: Check out the full list of available sites for posting an article <a href="/realms" target="_blank"> using this link </a>
         status: Set the status to "pending" when you complete the article. Moderation takes no more than 48 hours.
         tags: Check out the complete list of available tags for posting <a href="/tags" target="_blank"> this link </a>. <br/> Use a comma as a tag separator or the Enter key
+      post_category:
+        parent_id: If a category contains articles, it cannot be used as a parent category
       widgets_simple:
         url: Use the product address copied from the product card
       workspace_form:
@@ -583,6 +602,15 @@ en:
         tags: Tags
         title: Title
         user: User
+      post_category:
+        children: Children
+        id: ID
+        parent_id: Parent category
+        path: Path
+        posts: Posts
+        posts_count: Number of articles
+        realm: Website
+        title: Category title
       profile_form:
         bio: About
         languages: Languages

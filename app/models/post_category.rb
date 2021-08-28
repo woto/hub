@@ -39,6 +39,7 @@ class PostCategory < ApplicationRecord
   validate :check_parent_does_not_have_posts
 
   after_save :touch_parent
+  before_destroy :validate_childless, prepend: true
 
   scope :leaves, lambda { joins("LEFT JOIN #{table_name} AS c ON c.#{ancestry_column} = CAST(#{table_name}.id AS char(50)) OR c.#{ancestry_column} = concat(#{table_name}.#{ancestry_column}, '/', #{table_name}.id)").group("#{table_name}.id").having('COUNT(c.id) = 0') }
 
@@ -89,5 +90,12 @@ class PostCategory < ApplicationRecord
 
   def touch_parent
     parent&.touch
+  end
+
+  def validate_childless
+    unless is_childless?
+      errors.add(:base, :must_be_childless)
+      throw(:abort)
+    end
   end
 end
