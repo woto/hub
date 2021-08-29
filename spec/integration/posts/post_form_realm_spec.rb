@@ -59,7 +59,7 @@ describe PostsController, type: :system, responsible: :admin do
 
       within('.post_realm') do
         find('.selectize-input').click
-        dismiss_confirm('Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены') do
+        dismiss_confirm('Вы уверены? Настройки категории и тегов будут сброшены') do
           sleep(0.3)
           find('input').native.send_key(:backspace)
           sleep(0.3)
@@ -84,7 +84,7 @@ describe PostsController, type: :system, responsible: :admin do
 
       within('.post_realm') do
         find('.selectize-input').click
-        accept_confirm('Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены') do
+        accept_confirm('Вы уверены? Настройки категории и тегов будут сброшены') do
           sleep(0.3)
           find('input').native.send_key(:backspace)
           sleep(0.3)
@@ -126,7 +126,7 @@ describe PostsController, type: :system, responsible: :admin do
 
       within '.post_realm' do
         find('.selectize-input').click
-        accept_confirm('Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены') do
+        accept_confirm('Вы уверены? Настройки категории и тегов будут сброшены') do
           sleep(0.3)
           find('input').native.send_key(:backspace)
           sleep(0.3)
@@ -166,7 +166,7 @@ describe PostsController, type: :system, responsible: :admin do
 
       within '.post_realm' do
         find('.selectize-input').click
-        accept_confirm('Действительно хотите изменить сайт? Тогда настройки категории и тегов будут сброшены') do
+        accept_confirm('Вы уверены? Настройки категории и тегов будут сброшены') do
           sleep(0.3)
           find('input').native.send_key(:backspace)
           sleep(0.3)
