@@ -62,21 +62,3 @@ To generate database schema use following snippet:
   require 'rails_erd/diagram/graphviz';
   RailsERD::Diagram::Graphviz.create
 ```
-
-### Domain Names
-
-skunote.com  
-shopregard.com  
-skuseeker.com  
-skueye.com  
-
-### Localization
-
-- https://www.transifex.com/pricing/
-- https://phrase.com/ru/pricing/
-- https://weblate.org/ru/hosting/
-- https://webtranslateit.com/en
-- https://www.langapi.co/pricing 
-- https://www.oneskyapp.com/pricing/
-- https://crowdin.com/pricing#annual
-- https://translation.io/rails/pricing
