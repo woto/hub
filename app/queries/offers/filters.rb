@@ -14,8 +14,6 @@ module Offers
       end
     end
 
-
-
     def call
       context.object = _filter
     end

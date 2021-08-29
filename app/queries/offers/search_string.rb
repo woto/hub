@@ -13,8 +13,6 @@ module Offers
       end
     end
 
-
-
     def call
       context.object = _search_string
     end
