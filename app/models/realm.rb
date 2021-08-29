@@ -52,7 +52,7 @@ class Realm < ApplicationRecord
   def self.pick(kind:,
                 locale:,
                 title: "Website: { kind: #{kind}, locale: #{locale} }",
-                domain: "#{kind}.#{locale}.lvh.me")
+                domain: "#{kind}-#{locale}.lvh.me")
     Realm.find_or_create_by!(locale: locale, kind: kind) do |realm|
       realm.title = title
       realm.domain = domain.downcase
