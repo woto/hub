@@ -3,6 +3,7 @@ default: &default
     short: select ...
     long: Select ...
 
+  # https://util.unicode.org/UnicodeJsps/languageid.jsp
   locales:
     -
       locale: 'en-GB'
@@ -12,7 +13,7 @@ default: &default
       title: 'English US'
     -
       locale: 'en'
-      title: 'English General'
+      title: 'English'
     -
       locale: 'zh-CN'
       title: '中文'
@@ -40,6 +41,39 @@ default: &default
     -
       locale: 'ru'
       title: 'Русский'
+    -
+      locale: 'nl'
+      title: 'Nederlands'
+    -
+      locale: 'tr'
+      title: 'Türk'
+    -
+      locale: 'fi'
+      title: 'Suomalainen'
+    -
+      locale: 'uk'
+      title: 'Українська'
+    -
+      locale: 'ar'
+      title: 'عربي'
+    -
+      locale: 'he'
+      title: 'עִברִית'
+    -
+      locale: 'th'
+      title: 'ไทย'
+    -
+      locale: 'cs'
+      title: 'Čeština'
+    -
+      locale: 'pl'
+      title: 'Polskie'
+    -
+      locale: 'sv'
+      title: 'Svenska'
+    -
+      locale: 'da'
+      title: 'Dansk'
 
   messengers:
     -
