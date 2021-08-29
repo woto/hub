@@ -51,6 +51,7 @@ module Table
       {
         'controller' => "/tables/#{filter_form_params[:model]}",
         **JSON.parse(filter_form_params[:state]).deep_merge(
+          'page' => 1,
           'filters' => {
             filter_form_params[:column] => filter_form_params.except('state', 'model', 'column')
           }

@@ -59,7 +59,7 @@ describe 'Table Header', type: :system do
         end
 
         expect(page).to have_current_path(
-          feeds_path({ q: 'a', per: 5, page: 10, sort: 'id', order: 'asc', columns: %w[id],
+          feeds_path({ q: 'a', per: 5, page: 1, sort: 'id', order: 'asc', columns: %w[id],
                        filters: { id: { max: 3, min: 2 } }, locale: 'ru' })
         )
       end
@@ -81,7 +81,7 @@ describe 'Table Header', type: :system do
         end
 
         expect(page).to have_current_path(
-          feeds_path({ q: 'a', per: 5, page: 10, sort: 'id', order: 'asc', columns: %w[id],
+          feeds_path({ q: 'a', per: 5, page: 1, sort: 'id', order: 'asc', columns: %w[id],
                        filters: { id: { max: 3, min: 2 } }, locale: 'ru' })
         )
       end
