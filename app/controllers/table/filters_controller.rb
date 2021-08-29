@@ -27,7 +27,7 @@ module Table
         redirect_to(
           url_for(
             'controller' => "/tables/#{filter_form_params[:model]}",
-            **state,
+            **state.merge('page' => '1'),
             only_path: true
           )
         )
