@@ -311,6 +311,8 @@ ru:
   helpers:
     page_entries_info:
       entry:
+        few: few
+        many: many
         one: entry
         other: entries
         zero: entries
