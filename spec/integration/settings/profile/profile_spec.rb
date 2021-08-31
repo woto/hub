@@ -26,7 +26,7 @@ describe Settings::ProfilesController, type: :system do
       end
       within find('.profile_form_languages') do
         find('.selectize-input').click
-        find('div.option', text: 'English General').click
+        find('div.option', text: 'Deutsch').click
         find('div.option', text: 'Русский').click
       end
       find('footer').click
@@ -38,7 +38,7 @@ describe Settings::ProfilesController, type: :system do
         'bio' => bio,
         'time_zone' => 'American Samoa',
         'messengers' => [{ 'type' => 'WhatsApp', 'value' => phone }],
-        'languages' => ['', 'en', 'ru']
+        'languages' => ['', 'de', 'ru']
       )
     end
   end

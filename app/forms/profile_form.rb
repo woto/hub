@@ -52,7 +52,7 @@ class ProfileForm
 
   # validates inclusion
   validate do
-    unless (languages - (I18n.available_locales.map(&:to_s)) - ['']).empty?
+    unless (languages.to_a - (Rails.application.config.global[:locales].pluck(:locale)) - ['']).empty?
       errors.add(:languages, I18n.t('select language', scope: %i[activerecord errors messages]))
     end
   end
