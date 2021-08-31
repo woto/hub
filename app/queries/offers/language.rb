@@ -20,11 +20,11 @@ module Offers
     private
 
     def _filter
-      if context.languages.any? { |el| el.present? }
+      if context.languages.to_a.any?(&:present?)
         json.set! :filter do
           json.array! ['fuck'] do
             json.terms do
-              json.set! "detected_language.code", context.languages
+              json.set! 'detected_language.code', context.languages
             end
           end
         end
