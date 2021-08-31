@@ -13,6 +13,7 @@ class OffersSearchQuery
       required(:filter_id).maybe { array? { each { string? } } }
       required(:include).maybe { array? { each { string? } } }
       required(:filter_by).maybe(:string)
+      required(:languages).maybe { array? { each { string? } } }
     end
   end
 
@@ -25,6 +26,11 @@ class OffersSearchQuery
             filter_by: context.filter_by,
             filter_id: context.filter_id
           ).object
+
+          Offers::Language.call(
+            json: json,
+            languages: context.languages
+          )
 
           Offers::SearchString.call(
             json: json,

@@ -460,6 +460,7 @@ ru:
       read_less: Свернуть
       read_more: Развернуть
       visit_advertiser: Перейти в магазин
+  ok: Ок
   post_categories:
     create:
       post_category_was_successfully_created: Категори статей была успешно создана

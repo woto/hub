@@ -185,6 +185,7 @@ module Tables
         group_by: filter[:group_by],
         filter_by: filter[:filter_by],
         filter_id: filter[:filter_id],
+        languages: params[:languages],
         include: filter[:include]
       }
 
