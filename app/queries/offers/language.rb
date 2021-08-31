@@ -20,11 +20,13 @@ module Offers
     private
 
     def _filter
-      if context.languages.to_a.any?(&:present?)
+      codes = context.languages&.compact_blank
+      if codes.present?
+        feed_ids = Feed.where(language: codes).pluck(:id)
         json.set! :filter do
           json.array! ['fuck'] do
             json.terms do
-              json.set! 'detected_language.code', context.languages
+              json.set! 'feed_id', feed_ids
             end
           end
         end

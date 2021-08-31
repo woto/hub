@@ -2,7 +2,7 @@
   <div class="mb-3">
     <div class="form-selectgroup form-selectgroup-pills">
       <%= hidden_field_tag('languages[]', '') %>
-      <% Rails.application.config.global[:locales].each do |locale| %>
+      <% feeds_languages_for_filter.each do |locale| %>
         <label class="form-selectgroup-item">
           <%= check_box_tag('languages[]', locale[:locale], params[:languages]&.include?(locale[:locale]), class: 'form-selectgroup-input') %>
           <span class="form-selectgroup-label"><%= locale[:title] %></span>

@@ -96,6 +96,15 @@ module ApplicationHelper
     Rails.application.config.global[:locales].find { |item| item[:locale] == locale.to_s }[:title]
   end
 
+  def feeds_languages_for_filter
+    Feed.distinct(:language).pluck(:language).without(nil).map do |code|
+      Rails.application.config.global[:locales].find do |locale|
+        locale[:locale] == code
+      end || { title: t('unknown'), locale: 'unknown' }
+      # TODO: replace with dry-struct
+    end
+  end
+
   # TODO: find a better place
   def trix_translations
     locales = {}
