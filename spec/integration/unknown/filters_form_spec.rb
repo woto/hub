@@ -100,7 +100,7 @@ describe 'Table Header', type: :system do
         click_on('Сбросить фильтр')
 
         expect(page).to have_current_path(
-          feeds_path(q: 'a', per: 5, page: 10, sort: 'id', order: 'asc', columns: %w[id], locale: 'ru')
+          feeds_path(q: 'a', per: 5, page: 1, sort: 'id', order: 'asc', columns: %w[id], locale: 'ru')
         )
       end
     end
@@ -117,7 +117,7 @@ describe 'Table Header', type: :system do
         click_on('Сбросить фильтр')
 
         expect(page).to have_current_path(
-          feeds_path(q: 'a', per: 5, page: 10, sort: 'id', order: 'asc', columns: %w[id advertiser_name],
+          feeds_path(q: 'a', per: 5, page: 1, sort: 'id', order: 'asc', columns: %w[id advertiser_name],
                      filters: { advertiser_name: { value: 'test' } }, locale: 'ru')
         )
       end

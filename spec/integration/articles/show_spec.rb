@@ -67,7 +67,7 @@ describe 'ArticlesController#show', type: :system, responsible: :admin do
 
   it 'has correct switch to english language link' do
     click_on('Язык')
-    expect(page).to have_link('English General', href: articles_url(host: en_realm.domain,
+    expect(page).to have_link('English', href: articles_url(host: en_realm.domain,
                                                                     port: Capybara.current_session.server.port))
   end
 
