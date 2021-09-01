@@ -44,8 +44,8 @@ describe Widgets::SimplesController, type: :system do
       pictures_count = ActiveStorage::Attachment.count
 
       fill_in 'URL', with: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY]
-      fill_in 'Название', with: 'Название товара'
-      fill_in 'Описание', with: 'Описание товара'
+      fill_in 'Название', with: 'Название оффера'
+      fill_in 'Описание', with: 'Описание оффера'
       page.attach_file(file_fixture('jessa_rhodes.jpg')) do
         find('input[type="file"]').click
       end
@@ -59,8 +59,8 @@ describe Widgets::SimplesController, type: :system do
 
       expect(widget.widgetable.reload).to have_attributes(
         url: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY],
-        title: 'Название товара',
-        body: 'Описание товара'
+        title: 'Название оффера',
+        body: 'Описание оффера'
       )
 
       # TODO: How to move this validation in one line higher? Somehow like:

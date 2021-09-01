@@ -41,13 +41,13 @@ class PrometheusJob < ApplicationJob
 
     indices = GlobalHelper.elastic_client.cat.indices(format: 'json', index: Elastic::IndexName.offers)
 
-    docstring = 'Количество индексов прайсов в Elasticsearch'
+    docstring = 'Количество индексов фидов в Elasticsearch'
     metric = pusher.metric(:feeds, :gauge,
                            docstring: docstring,
                            labels: [:service])
     metric.set(indices.size, labels: { service: 'elastic' })
 
-    docstring = 'Количество товаров в Elasticsearch'
+    docstring = 'Количество офферов в Elasticsearch'
     metric = pusher.metric(:offers, :gauge,
                            labels: [:index],
                            docstring: docstring)
@@ -55,13 +55,13 @@ class PrometheusJob < ApplicationJob
       metric.set(index['docs.count'].to_i, labels: { index: index['index'] })
     end
 
-    docstring = 'Количество прайсов в Postgres'
+    docstring = 'Количество фидов в Postgres'
     metric = pusher.metric(:feeds, :gauge,
                            docstring: docstring,
                            labels: [:service])
     metric.set(Feed.count, labels: { service: 'postgres' })
 
-    docstring = 'Статусы операций прайсов'
+    docstring = 'Статусы операций фидов'
     metric = pusher.metric(:feeds_operations, :gauge,
                            labels: [:operation],
                            docstring: docstring)
@@ -69,7 +69,7 @@ class PrometheusJob < ApplicationJob
       metric.set(count, labels: { operation: operation })
     end
 
-    docstring = 'Группировки ошибок прайсов'
+    docstring = 'Группировки ошибок фидов'
     metric = pusher.metric(:feeds_error_classes, :gauge,
                            labels: [:error_class],
                            docstring: docstring)

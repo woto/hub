@@ -32,7 +32,7 @@ describe WidgetsController, type: :system do
         click_on('Вставить виджет')
       end
 
-      expect(page).to have_text('Пока что в вашей коллекции нет ни одного виджета с товарами. Создайте новый!')
+      expect(page).to have_text('Пока что в вашей коллекции нет ни одного виджета с офферами. Создайте новый!')
     end
   end
 

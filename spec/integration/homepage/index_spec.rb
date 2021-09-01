@@ -4,9 +4,9 @@ require 'rails_helper'
 
 describe HomepageController, type: :system do
   context 'when user authenticated' do
-    it 'shows `Выбрать товар`' do
+    it 'shows `Выбрать оффер`' do
       visit root_path(locale: :ru)
-      expect(page).to have_link('Выбрать товар', href: offers_path(locale: :ru))
+      expect(page).to have_link('Выбрать оффер', href: offers_path(locale: :ru))
     end
   end
 

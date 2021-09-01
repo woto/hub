@@ -12,8 +12,8 @@ describe Tables::OffersController, type: :system do
   describe 'GET /offers' do
     specify do
       visit offers_path(locale: :ru)
-      expect(page).to have_title 'Все товары'
-      expect(page).to have_css('h1', text: 'Все товары')
+      expect(page).to have_title 'Все офферы'
+      expect(page).to have_css('h1', text: 'Все офферы')
     end
   end
 
@@ -28,8 +28,8 @@ describe Tables::OffersController, type: :system do
   describe 'GET /feeds/:feed_id/offers' do
     specify do
       visit feed_offers_path(feed_id: feed.id, locale: :ru)
-      expect(page).to have_title("Прайс лист: #{feed.to_label}")
-      expect(page).to have_css('h1', text: "Прайс лист: #{feed.to_label}")
+      expect(page).to have_title("Фид: #{feed.to_label}")
+      expect(page).to have_css('h1', text: "Фид: #{feed.to_label}")
     end
   end
 

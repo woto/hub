@@ -25,7 +25,7 @@ describe 'group title', type: :system do
   describe 'GET /advertisers/:advertiser_id/offers' do
     specify do
       visit advertiser_offers_path(advertiser_id: advertiser, per: 2, locale: :ru)
-      expect(page).to have_link("Прайс: #{feed.to_label}",
+      expect(page).to have_link("Фид: #{feed.to_label}",
                                 href: feed_offers_path(feed_id: feed,
                                                        per: 2,
                                                        locale: :ru))

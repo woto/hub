@@ -72,7 +72,7 @@ ru:
     edit_post_category: Редактирование категории статей
     email: Почта
     favorites: Избранное
-    feeds: Прайс листы
+    feeds: Фиды
     help: Справка
     homepage: Главная
     new_advertiser: Создание рекламодателя
@@ -80,7 +80,7 @@ ru:
     new_post: Новая статья
     new_post_category: Новая категория статей
     news: Новости
-    offers: Все товары
+    offers: Все офферы
     password: Password
     post_categories: Категории
     posts: Статьи
@@ -97,17 +97,17 @@ ru:
     debug: Служ. данные
     delete: Удалить
     edit: Редактировать
-    feed: Прайс лист
-    feed_logs: История прайс листа
+    feed: Фид
+    feed_logs: История фида
     impersonate: Impersonate
     new_advertiser: Создать рекламодателя
     new_check: Запросить выплату
-    new_feed: Создать прайс
+    new_feed: Создать фид
     new_post: Новая статья
     new_post_category: Новая категория статей
-    offer: Товар
-    offers: Товары
-    offers_count: Количество товаров
+    offer: Оффер
+    offers: Офферы
+    offers_count: Количество офферов
     prioritize: Приоритизировать
     save: Сохранить
     show: Просмотреть
@@ -274,19 +274,19 @@ ru:
       accounts: Избранные счета
       advertiser_id: Избранное
       checks: Избранные выплаты
-      feed_categories: Избранные категории товаров
+      feed_categories: Избранные категории офферов
       feed_category_id: Избранное
       feed_id: Избранное
-      feeds: Избранные прайсы
-      offers: Избранные товары
+      feeds: Избранные фиды
+      offers: Избранные офферы
       post_categories: Избранные категории статей
       posts: Избранные статьи
       transactions: Избранные транзакции
       users: Избранные пользователи
-  feed: Прайс
-  feed_categories: Категории товаров
+  feed: Фид
+  feed_categories: Категории офферов
   feed_category: Категория
-  feeds: Прайсы
+  feeds: Фиды
   frames:
     articles:
       category:
@@ -411,8 +411,8 @@ ru:
   layouts:
     homepage:
       dashboard: Личный кабинет
-      link: Выбрать товар
-      tagline: Контент платформа, с помощью которой авторы зарабатывают деньги за обзоры и отзывы на товары, в рекламе которых нуждаются интернет магазины.
+      link: Выбрать оффер
+      tagline: Контент платформа, с помощью которой авторы зарабатывают деньги за обзоры и отзывы на офферы, в рекламе которых нуждаются интернет магазины.
       title: Only good reviews ;)
   left_menu:
     accounts: Счета
@@ -423,11 +423,11 @@ ru:
     dashboard: Личный кабинет
     email: Почта
     favorites: Избранное
-    feed_categories: Категории товаров
-    feeds: Прайс листы
+    feed_categories: Категории офферов
+    feeds: Фиды
     finances: Финансы
     help: Справка
-    offers: Товары
+    offers: Офферы
     password: Пароль
     post_categories: Категории статей
     posts: Статьи
@@ -454,7 +454,7 @@ ru:
       visit_advertiser: Visit advertiser
     modal_card_wrapper:
       description: Описание
-      modal_title: 'Информация о товаре: %{ext_id}'
+      modal_title: 'Информация об оффере: %{ext_id}'
       name: Название
       price: Цена
       read_less: Свернуть
@@ -499,16 +499,16 @@ ru:
           plus_5_percent: "+ 5%"
         overview_type:
           not_specific_knowledge: Статья содержит поверхностный текст, без углублений в подробности
-          specific_knowledge: Статья обозревает специфические узкие характеристики товара
+          specific_knowledge: Статья обозревает специфические узкие характеристики оффера
         post_type:
           copywrite: Копирайт
           rewrite: Рерайт
         product_comparison:
-          product_comparison: Статья содержит обзор и сравнение нескольких товаров сгруппированных тематически
+          product_comparison: Статья содержит обзор и сравнение нескольких офферов сгруппированных тематически
         product_type:
-          brand_new_product: Товар недавно поступил в продажу
-          product_popular: Товар можно приобрести в разных магазинах
-          searchable: Товар легко находится в поисковых системах по названию
+          brand_new_product: Оффер недавно поступил в продажу
+          product_popular: Оффер можно приобрести в разных магазинах
+          searchable: Оффер легко находится в поисковых системах по названию
         uniqueness_checked:
           advego_ru: на сайте advego.ru
           etxt_ru: на сайте etxt.ru
@@ -534,7 +534,7 @@ ru:
       language: Язык статьи
     update:
       post_was_successfully_updated: Статья была успешно изменена
-  products: Товары
+  products: Офферы
   save: Сохранить
   search: Искать
   search_placeholder: Введите текст для поиска...
@@ -577,7 +577,7 @@ ru:
       post_category:
         parent_id: Если категория содержит статьи, то она не может быть использована в качестве родительской
       widgets_simple:
-        url: Используйте адрес товара скопированный из карточки товара
+        url: Используйте адрес оффера скопированный из карточки оффера
       workspace_form:
         is_default: Сделайте рабочую область по-умолчанию и она будет открываться при заходе в раздел.
         name: Дайте имя новой рабочей области. Переключайтесь между рабочими областями загружая настройки фильтров и сортировок.
@@ -603,7 +603,7 @@ ru:
           overview_type: Полнота обзора
           post_type: Тип статьи
           product_comparison: Сравнительная статья
-          product_type: Обозреваемый товар
+          product_type: Обозреваемый оффер
           uniqueness_checked: Уникальность проверена
         intro: Вступление
         post_category: Категория
@@ -669,30 +669,30 @@ ru:
         advertiser_synced_at: Дата синхронизации настроек рекламодателя
         advertiser_updated_at: Дата изменения рекламодателя
         attempt_uuid: UUID операции обработки
-        categories_count: Количество категорий прайса
-        created_at: Дата создания прайса
+        categories_count: Количество категорий фида
+        created_at: Дата создания фида
         downloaded_file_size: Размер скачанного файла
         downloaded_file_type: Тип скачанного файла
         error_class: Тип ошибки
         error_text: Текст ошибки
-        ext_id: Внешний идентификационный номер прайса
+        ext_id: Внешний идентификационный номер фида
         favorite: Избранное
-        id: Идентификационный номер прайса
-        is_active: Флаг активности прайса
-        language: Язык прайса
+        id: Идентификационный номер фида
+        is_active: Флаг активности фида
+        language: Язык фида
         locked_by_pid: Заблокировано процессом PID
-        name: Название прайса
-        offers_count: Количество товаров прайса
+        name: Название фида
+        offers_count: Количество офферов фида
         operation: Тип операции
         priority: Приоритет
         processing_finished_at: Дата завершения обработки
         processing_started_at: Дата начала обработки
-        raw: Сырые данные прайса
-        succeeded_at: Дата успешной обработки прайса
-        synced_at: Дата синхронизации настроек прайса
-        updated_at: Дата изменения прайса
-        url: URL прайса
-        xml_file_path: Путь до прайса
+        raw: Сырые данные фида
+        succeeded_at: Дата успешной обработки фида
+        synced_at: Дата синхронизации настроек фида
+        updated_at: Дата изменения фида
+        url: URL фида
+        xml_file_path: Путь до фида
       post:
         amount: Цена
         created_at: Создана
@@ -731,21 +731,21 @@ ru:
         ext_id: Внешн. ID
         favorite: Избр.
         id: ID
-        is_active: Прайс акт.
+        is_active: Фид акт.
         language: Язык
         locked_by_pid: PID проц.
-        name: Назв. прайса
-        offers_count: Товаров
+        name: Назв. фида
+        offers_count: Офферов
         operation: Операция
         priority: Приоритет
         processing_finished_at: Дата оконч. обр.
         processing_started_at: Дата нач. обр.
-        raw: Сыр. дан. прайса
+        raw: Сыр. дан. фида
         succeeded_at: Дата усп. обр.
         synced_at: Дата синхр.
         updated_at: Изменен
         url: URL
-        xml_file_path: Путь прайса
+        xml_file_path: Путь фида
       post:
         amount: Цена
         created_at: Создана
@@ -761,7 +761,7 @@ ru:
     offers:
       card_wrapper:
         follow_link: Перейти
-        offers_in_group: Товаров в категории
+        offers_in_group: Офферов в категории
       group_more:
         follow_link: Follow link
         offers_in_group: Offers in group
@@ -769,7 +769,7 @@ ru:
         button:
           search_everywhere: Искать везде
           search_inside_advertiser: 'У рекламодателя: "%{name}"'
-          search_inside_feed: 'В прайс листе: "%{name}"'
+          search_inside_feed: 'В фиде: "%{name}"'
           search_inside_feed_category: 'В категории: "%{name}"'
   title: Title
   titles:
@@ -780,13 +780,13 @@ ru:
     dashboard: Личный кабинет
     favorite: Избранное
     favorites: Избранное
-    feed: Прайс лист
+    feed: Фид
     feed_categories: Категории
     feed_category: Категория
-    feeds: Прайс листы
+    feeds: Фиды
     help: Справка
     news: Новости
-    offers: Все товары
+    offers: Все офферы
     post_categories: Категории статей
     posts: Статьи
     settings: Настройки
@@ -823,6 +823,7 @@ ru:
     urlPlaceholder: Enter a URL…
   'true': Да
   try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Попробуйте очистить строку поиска или примененные фильтры. Или создайте новый элемент.
+  unknown: Неизвестно
   updated_at: Дата изменения
   view: Просмотр
   views:
@@ -860,9 +861,9 @@ ru:
       update:
         simple_was_successfully_updated: Виджет успешно изменен
       widget:
-        body: Яркий и информативный пример описания, содержащий основные характеристики товара
+        body: Яркий и информативный пример описания, содержащий основные характеристики оффера
         next: Next
         previous: Previous
-        title: Пример названия товара
+        title: Пример названия оффера
         visit_advertiser: Перейти в магазин
   workspaces: Области

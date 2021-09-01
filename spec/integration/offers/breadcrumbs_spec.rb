@@ -38,7 +38,7 @@ describe 'Offers breadcrumbs', type: :system do
     specify do
       active_class = param == :active ? 'active' : '!active'
       link = find_link(
-        'Все товары',
+        'Все офферы',
         href: offers_path(per: 12, q: name, locale: :ru)
       )
       link.ancestor(class: ['breadcrumb-item', active_class])

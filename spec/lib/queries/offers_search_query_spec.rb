@@ -17,13 +17,18 @@ describe OffersSearchQuery do
       group_by: 'group_by',
       filter_by: 'filter_by',
       filter_id: ['filter_id'],
-      include: ['include']
+      include: ['include'],
+      languages: ['language']
     }
   end
 
   specify do
     expect(Offers::Filters).to(
       receive(:call).with(json: anything, filter_by: 'filter_by', filter_id: ['filter_id']).and_call_original
+    )
+
+    expect(Offers::Language).to(
+      receive(:call).with(json: anything, languages: ['language'])
     )
 
     expect(Offers::SearchString).to(
