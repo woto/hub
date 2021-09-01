@@ -51,10 +51,10 @@ describe Realm, type: :model do
   end
 
   describe '#domain' do
-    before { create(:realm, domain: 'domain') }
+    before { create(:realm, domain: 'domain', kind: :post) }
 
     context 'when domain is not unique' do
-      let(:realm) { build(:realm, domain: 'domain') }
+      let(:realm) { build(:realm, domain: 'domain', kind: :post) }
 
       it 'raises error' do
         expect { realm.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
@@ -62,7 +62,7 @@ describe Realm, type: :model do
     end
 
     context 'when domain is unique' do
-      let(:realm) { build(:realm) }
+      let(:realm) { build(:realm, kind: :post) }
 
       it 'saves realm' do
         expect { realm.save(validate: false) }.not_to raise_error
@@ -112,7 +112,7 @@ describe Realm, type: :model do
     let(:locale) { I18n.available_locales.sample.to_s }
     let(:kind) { described_class.kinds.keys.sample }
 
-    context 'when only :kind and :locale are passed', pending: true do
+    context 'when only :kind and :locale are passed' do
       subject { described_class.pick(locale: locale, kind: kind) }
 
       it 'calls .find_or_create_by!' do
@@ -121,7 +121,7 @@ describe Realm, type: :model do
           locale: locale,
           kind: kind,
           title: "Website: { kind: #{kind}, locale: #{locale} }",
-          domain: "#{kind}.#{locale.downcase}.lvh.me"
+          domain: "#{kind}-#{locale.downcase}.lvh.me"
         )
       end
     end
