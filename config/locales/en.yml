@@ -813,6 +813,7 @@ en:
     urlPlaceholder: Enter a URL…
   'true': true
   try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Try clearing your search bar or applied filters. Or create a new item.
+  unknown: Unknown
   updated_at: Updated at
   view: View
   views:

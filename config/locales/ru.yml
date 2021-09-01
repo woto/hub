@@ -823,6 +823,7 @@ ru:
     urlPlaceholder: Enter a URL…
   'true': Да
   try_adjusting_your_search_or_filter_to_find_what_you_are_looking_for: Попробуйте очистить строку поиска или примененные фильтры. Или создайте новый элемент.
+  unknown: Неизвестно
   updated_at: Дата изменения
   view: Просмотр
   views:
