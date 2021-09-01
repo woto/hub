@@ -24,8 +24,8 @@ describe Widgets::SimplesController, type: :system do
 
   context 'when page initially loaded' do
     it 'shows widget preview' do
-      expect(page).to have_text('Пример названия товара')
-      expect(page).to have_text('Яркий и информативный пример описания, содержащий основные характеристики товара')
+      expect(page).to have_text('Пример названия оффера')
+      expect(page).to have_text('Яркий и информативный пример описания, содержащий основные характеристики оффера')
       expect(page).to have_css('img[src*="placeholder"]')
     end
   end
@@ -33,8 +33,8 @@ describe Widgets::SimplesController, type: :system do
   context 'when form filled correctly' do
     it 'creates widget' do
       fill_in 'URL', with: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY]
-      fill_in 'Название', with: 'Название товара'
-      fill_in 'Описание', with: 'Описание товара'
+      fill_in 'Название', with: 'Название оффера'
+      fill_in 'Описание', with: 'Описание оффера'
       page.attach_file(file_fixture('jessa_rhodes.jpg')) do
         find('input[type="file"]').click
       end
@@ -53,8 +53,8 @@ describe Widgets::SimplesController, type: :system do
 
       expect(widgetable).to have_attributes(
         url: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY],
-        title: 'Название товара',
-        body: 'Описание товара'
+        title: 'Название оффера',
+        body: 'Описание оффера'
       )
 
       # TODO: How to move this validation in one line higher? Somehow like:

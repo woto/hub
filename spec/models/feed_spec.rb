@@ -85,10 +85,10 @@ describe Feed, type: :model do
   end
 
   describe '#slug' do
-    subject { create(:feed, name: 'Прайс') }
+    subject { create(:feed, name: 'Фид') }
 
     specify do
-      expect(subject.slug).to eq('1-prays')
+      expect(subject.slug).to eq("#{subject.id}-fid")
     end
   end
 
@@ -98,7 +98,7 @@ describe Feed, type: :model do
     let(:advertiser) { create(:advertiser, name: 'Advertiser') }
 
     specify do
-      expect(subject.slug_with_advertiser).to eq('1-advertiser+1-feed')
+      expect(subject.slug_with_advertiser).to eq("#{advertiser.id}-advertiser+#{subject.id}-feed")
     end
   end
 

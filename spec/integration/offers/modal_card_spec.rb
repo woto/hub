@@ -25,7 +25,7 @@ describe Tables::OffersController, type: :system do
   it 'shows correct data on modal card' do
     within('.modal-content') do
       within('.modal-title') do
-        expect(page).to have_text("Информация о товаре: #{offer['_id']}")
+        expect(page).to have_text("Информация об оффере: #{offer['_id']}")
       end
 
       within('.modal-body') do
@@ -34,7 +34,7 @@ describe Tables::OffersController, type: :system do
         expect(page).to have_text("Описание:\n#{offer['description'][0][Import::Offers::Hashify::HASH_BANG_KEY]}")
         expect(page).to have_text("Цена: #{offer['price'][0][Import::Offers::Hashify::HASH_BANG_KEY]}")
         expect(page).to have_text("Рекламодатель: #{Advertiser.find(offer['advertiser_id']).name}")
-        expect(page).to have_text("Прайс: #{Feed.find(offer['advertiser_id']).name}")
+        expect(page).to have_text("Фид: #{Feed.find(offer['advertiser_id']).name}")
         expect(page).to have_text("Категория: #{FeedCategory.find(offer['advertiser_id']).name}")
         expect(page).to have_link('Перейти в магазин', href: offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY])
       end

@@ -34,7 +34,7 @@ describe Tables::OffersController, type: :system do
         fill_search_input(feed.to_label)
         click_button 'Искать'
 
-        click_button %(В прайс листе: "#{feed.to_label}")
+        click_button %(В фиде: "#{feed.to_label}")
         expect(page).to have_current_path(path)
       end
     end

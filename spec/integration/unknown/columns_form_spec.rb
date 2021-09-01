@@ -27,7 +27,7 @@ describe Tables::FeedsController, type: :system do
       click_on('Колонки')
 
       expect(page).to have_select('columns_form[displayed_columns][]',
-                                  visible: :hidden, selected: ['Идентификационный номер прайса', 'Название прайса'])
+                                  visible: :hidden, selected: ['Идентификационный номер фида', 'Название фида'])
 
       expect(page).not_to have_text('недостаточной длины')
 
@@ -65,7 +65,7 @@ describe Tables::FeedsController, type: :system do
         within('.selectize-input') do
           find('input').click
         end
-        find('div.option', text: 'Дата изменения прайса').click
+        find('div.option', text: 'Дата изменения фида').click
       end
 
       # collapse selectize

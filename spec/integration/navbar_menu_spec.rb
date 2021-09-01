@@ -54,20 +54,20 @@ describe DashboardController, type: :system do
     end
   end
 
-  describe 'highlight "Прайс листы"' do
+  describe 'highlight "Фиды"' do
     it_behaves_like 'highlight active' do
       let(:url) { '/ru/feeds' }
       let(:href) { '/ru/feeds' }
-      let(:title) { 'Прайс листы' }
+      let(:title) { 'Фиды' }
       let(:checker) { :flat }
     end
   end
 
-  describe 'highlight "Товары"' do
+  describe 'highlight "Офферы"' do
     it_behaves_like 'highlight active' do
       let(:url) { '/ru/offers' }
       let(:href) { '/ru/offers' }
-      let(:title) { 'Товары' }
+      let(:title) { 'Офферы' }
       let(:checker) { :flat }
     end
   end

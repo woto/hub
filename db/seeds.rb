@@ -72,7 +72,7 @@ if Rails.env.development?
   feed1 = advertiser.feeds.create!(
     attempt_uuid: SecureRandom.uuid,
     url: 'http://example.com',
-    name: 'Прайс 1',
+    name: 'Фид 1',
     operation: 'manual',
     xml_file_path: 'spec/fixtures/files/feeds/yml-custom.xml'
   )
@@ -81,7 +81,7 @@ if Rails.env.development?
   feed2 = advertiser.feeds.create!(
     attempt_uuid: SecureRandom.uuid,
     url: 'http://example.com',
-    name: 'Прайс 2',
+    name: 'Фид 2',
     operation: 'manual',
     xml_file_path: 'spec/fixtures/files/feeds/yml-simplified.xml'
   )
@@ -92,7 +92,7 @@ if Rails.env.development?
   feed3 = advertiser.feeds.create!(
     attempt_uuid: SecureRandom.uuid,
     url: 'http://example.com',
-    name: 'Прайс 3',
+    name: 'Фид 3',
     operation: 'manual',
     xml_file_path: 'spec/fixtures/files/feeds/776-petshop+678-taganrog.xml'
   )
