@@ -851,7 +851,6 @@ en:
       update:
         simple_was_successfully_updated: Widget was successfully updated
       widget:
-        body: A vivid and informative example of a description containing the main characteristics of the product
         next: Next
         previous: Previous
         title: Product name example

@@ -25,7 +25,6 @@ describe Widgets::SimplesController, type: :system do
   context 'when page initially loaded' do
     it 'shows widget preview' do
       expect(page).to have_text('Пример названия оффера')
-      expect(page).to have_text('Яркий и информативный пример описания, содержащий основные характеристики оффера')
       expect(page).to have_css('img[src*="placeholder"]')
     end
   end
@@ -70,7 +69,6 @@ describe Widgets::SimplesController, type: :system do
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       expect(page).to have_css('#widgets_simple_url ~ .invalid-feedback', text: 'URL не может быть пустым')
       expect(page).to have_css('#widgets_simple_title ~ .invalid-feedback', text: 'Название не может быть пустым')
-      expect(page).to have_css('#widgets_simple_body ~ .invalid-feedback', text: 'Описание не может быть пустым')
       expect(page).to have_css('#widgets_simple_pictures ~ .invalid-feedback', text: 'Изображения недостаточной длины')
     end
   end

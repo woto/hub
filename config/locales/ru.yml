@@ -861,7 +861,6 @@ ru:
       update:
         simple_was_successfully_updated: Виджет успешно изменен
       widget:
-        body: Яркий и информативный пример описания, содержащий основные характеристики оффера
         next: Next
         previous: Previous
         title: Пример названия оффера

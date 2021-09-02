@@ -67,7 +67,7 @@
       <% end %>
     </h3>
 
-    <%= simple_format((widget.widgetable.body.presence || t('.body')), {}, { wrapper_tag: 'small' }) %>
+    <%= simple_format((widget.widgetable.body.presence), {}, { wrapper_tag: 'small' }) %>
 
     <%= link_to widget.widgetable.url.presence || 'https://example.com', target: '_blank', class: 'd-block mt-3 btn btn-primary' do %>
       <%= t('.visit_advertiser') %>

@@ -21,7 +21,7 @@ module Widgets
 
     accepts_nested_attributes_for :pictures, allow_destroy: true
 
-    validates :body, :title, :url, presence: true
+    validates :title, :url, presence: true
     validates :pictures, length: { minimum: 1 }
     validate :url_valid?
 
