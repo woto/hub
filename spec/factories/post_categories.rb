@@ -23,7 +23,7 @@
 #
 FactoryBot.define do
   factory :post_category do
-    title { Faker::Commerce.department(max: 2) }
+    sequence(:title) { |n| "#{n} title" }
     realm do
       Realm.pick(kind: realm_kind,
                  locale: realm_locale,
