@@ -131,7 +131,7 @@ describe Tables::OffersController, type: :system, responsible: :admin do
       let!(:favorite_kind) { :offers }
       let!(:feed_category) { create(:feed_category) }
       let!(:ext_id) { feed_category.id }
-      let(:visit_path) { feed_category_offers_path(feed_category_id: feed_category.feed.id, locale: :ru) }
+      let(:visit_path) { feed_category_offers_path(feed_category_id: feed_category.id, locale: :ru) }
 
       before do
         OfferCreator.call(feed_category: feed_category)
@@ -150,7 +150,7 @@ describe Tables::OffersController, type: :system, responsible: :admin do
         create(:feed_category, feed: feed, parent: create(:feed_category, feed: feed))
       end
       let!(:ext_id) { feed_category.id }
-      let(:visit_path) { feed_category_offers_path(feed_category_id: feed_category.feed.id, locale: :ru) }
+      let(:visit_path) { feed_category_offers_path(feed_category_id: feed_category.id, locale: :ru) }
 
       before do
         OfferCreator.call(feed_category: feed_category)
@@ -166,7 +166,7 @@ describe Tables::OffersController, type: :system, responsible: :admin do
       let!(:favorite_kind) { :offers }
       let!(:feed_category) { create(:feed_category) }
       let!(:ext_id) { OfferCreator.call(feed_category: feed_category).fetch('_id') }
-      let(:visit_path) { feed_category_offers_path(feed_category_id: feed_category.feed.id, locale: :ru) }
+      let(:visit_path) { feed_category_offers_path(feed_category_id: feed_category.id, locale: :ru) }
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
