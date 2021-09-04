@@ -148,7 +148,9 @@ shared_examples 'shared workspace authenticated' do
             click_button 'Сохранить'
           end
 
-          expect(page).to have_text(name)
+          within('.left_workspace') do
+            expect(page).to have_text(name)
+          end
         end.to change(user.workspaces, :count)
       end
     end
