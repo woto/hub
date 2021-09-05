@@ -66,4 +66,4 @@ RSpec.configure do |config|
   end
 end
 
-Capybara::Chromedriver::Logger::TestHooks.for_rspec!
+# Capybara::Chromedriver::Logger::TestHooks.for_rspec!
