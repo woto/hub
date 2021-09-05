@@ -13,9 +13,11 @@
     <% end %>
   <% end %>
 
+  <% if false %>
   <li class="breadcrumb-item active">
     <%= link_to @article.title, articles_path(id: @article.id) %>
   </li>
+  <% end %>
 <% end %>
 
 <%= render 'card' %>
