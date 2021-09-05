@@ -141,8 +141,8 @@ describe PostsController, type: :system, responsible: :admin do
   end
 
   context 'when realm changes at the new post, but the tags of the post has been changed' do
-    let!(:realm) { create(:realm) }
-    let!(:another_realm) { create(:realm) }
+    let!(:realm) { create(:realm, kind: :news) }
+    let!(:another_realm) { create(:realm, kind: :post) }
 
     it 'asks confirmation and clears post tags' do
       visit new_post_path(locale: :ru)

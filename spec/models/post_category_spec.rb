@@ -42,10 +42,10 @@ describe PostCategory, type: :model, responsible: :admin do
   it { is_expected.to have_db_column(:ancestry_depth) }
 
   describe '#check_same_realms' do
-    let(:parent) { create(:post_category) }
+    let(:parent) { create(:post_category, realm_kind: :news) }
 
     context 'when child belongs to another realm' do
-      subject { build(:post_category, parent: parent) }
+      subject { build(:post_category, parent: parent, realm_kind: :news) }
 
       it 'is invalid' do
         expect(subject).to be_invalid
