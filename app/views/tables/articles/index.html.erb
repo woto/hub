@@ -11,8 +11,10 @@
       <% css_class = 'active' %>
     <% end %>
 
-    <%= tag.li class: "breadcrumb-item #{css_class}" do %>
-      <%= link_to t('breadcrumbs.homepage'), root_path %>
+    <% unless current_page?(root_url) %>
+      <%= tag.li class: "breadcrumb-item #{css_class}" do %>
+        <%= link_to t('breadcrumbs.homepage'), root_path %>
+      <% end %>
     <% end %>
 
     <% @post_category && @post_category.path.each do |post_category| %>
