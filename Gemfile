@@ -60,7 +60,7 @@ group :development do
   # gem 'rack-mini-profiler', '~> 2.0'
 end
 
-group :test do
+group :development, :test do
   # TODO: check answer
   # https://github.com/teamcapybara/capybara/issues/2432
   # https://github.com/teamcapybara/capybara/compare/master...woto:order_independent_compare
