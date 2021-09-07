@@ -33,6 +33,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'fantaskspec'
+  gem 'liquid'
   gem 'rspec-rails'
   gem 'rspec-sqlimit'
   gem 'rubocop', require: false
