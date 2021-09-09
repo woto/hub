@@ -73,13 +73,14 @@ class Post < ApplicationRecord
   validate :check_post_category_is_leaf
   validate :check_post_category_realm
   validate :check_currency_value
-  with_options if: :accrued_post? do |accrued_post|
-    accrued_post.validates :published_at, presence: true
-    accrued_post.validate :check_min_intro_length
+  with_options if: :accrued_post? do
+    validates :published_at, presence: true
+    validate :check_min_intro_length
   end
   # validates :amount, numericality: { greater_than: 0 }
 
   after_save :create_transactions
+  after_save :update_widgets_posts
   before_destroy :stop_destroy
 
   scope :news, -> { joins(:realm).where(realms: { kind: :news }) }
@@ -179,6 +180,23 @@ class Post < ApplicationRecord
                             .gsub(/\[\d+x\d+\.\w{,5}\]/, '')
                             .delete("\n")
                             .strip
+    end
+  end
+
+  # TODO: refactor
+  def update_widgets_posts
+    Widget.where(['? = ANY (posts)', id]).find_each do |widget|
+      widget.posts -= [id]
+      widget.save
+    end
+
+    body.body.attachments.each do |attachment|
+      next unless attachment.attachable.is_a?(Widget)
+
+      attachment.attachable.tap do |widget|
+        widget.posts += [id]
+        widget.save
+      end
     end
   end
 end

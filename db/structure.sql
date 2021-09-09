@@ -1159,7 +1159,8 @@ CREATE TABLE public.widgets (
     widgetable_type character varying NOT NULL,
     widgetable_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    posts integer[] DEFAULT '{}'::integer[]
 );
 
 
@@ -2222,6 +2223,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210328042112'),
 ('20210328055745'),
 ('20210808221850'),
-('20210810011556');
+('20210810011556'),
+('20210909045616');
 
 

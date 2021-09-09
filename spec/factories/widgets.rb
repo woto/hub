@@ -3,6 +3,7 @@
 # Table name: widgets
 #
 #  id              :bigint           not null, primary key
+#  posts           :integer          default([]), is an Array
 #  widgetable_type :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

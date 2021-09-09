@@ -330,4 +330,25 @@ describe Post, type: :model do
       expect { create(:post) }.to raise_error(Pundit::NotAuthorizedError, 'responsible is not set')
     end
   end
+
+  describe '#update_widgets_posts', responsible: :user do
+    let(:simple_widget) { create(:simple_widget) }
+    let!(:another_post1) { create(:post, body: ActionText::Attachment.from_attachable(simple_widget)) }
+    let!(:post) { create(:post, body: ActionText::Attachment.from_attachable(simple_widget)) }
+    let!(:another_post2) { create(:post, body: ActionText::Attachment.from_attachable(simple_widget)) }
+
+    context 'when simple_widget adds to different posts' do
+      it 'stores posts ids to simple_widget.posts' do
+        expect(simple_widget.reload.posts).to contain_exactly(another_post1.id, post.id, another_post2.id)
+      end
+    end
+
+    context 'when widget removes from post' do
+      before { post.update!(body: '🖖') }
+
+      it 'also removes post.id from widget.posts' do
+        expect(simple_widget.reload.posts).to contain_exactly(another_post1.id, another_post2.id)
+      end
+    end
+  end
 end
