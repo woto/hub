@@ -156,5 +156,7 @@ Rails.application.routes.draw do
 
     get 'dashboard', to: 'dashboard#index'
     root to: 'homepage#index'
+
+    get 'landing1', to: 'landing1#index'
   end
 end
