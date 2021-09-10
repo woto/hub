@@ -31,7 +31,7 @@ describe Realm, type: :model do
   end
 
   describe '#title' do
-    before { create(:realm, title: 'title') }
+    before { create(:realm, title: 'title', kind: :post) }
 
     context 'when title is not unique' do
       let(:realm) { build(:realm, title: 'title') }
@@ -42,7 +42,7 @@ describe Realm, type: :model do
     end
 
     context 'when title is unique' do
-      let(:realm) { build(:realm) }
+      let(:realm) { build(:realm, kind: :post) }
 
       it 'saves realm' do
         expect { realm.save(validate: false) }.not_to raise_error
