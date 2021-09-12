@@ -23,6 +23,7 @@ https://webpacker.nv6.ru
 ### Useful commands
 
 ```shell
+docker-compose exec postgres pg_dump -d hub_production -U hub > /backup/2021-09-12
 docker-compose run -l "traefik.enable=false" --rm rails ./bin/rails c
 docker-compose run -l "traefik.enable=false" --rm rails ./bin/setup
 docker-compose up -d rails; docker attach hub_rails_1
