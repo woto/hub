@@ -23,7 +23,12 @@ module Sync
         conn = Faraday.new(
           url: 'https://api.admitad.com/',
           params: { limit: LIMIT, website: ENV['ADMITAD_WEBSITE'], has_tool: 'products' },
-          headers: { 'Authorization' => "Bearer #{context.token}" }
+          headers: { 'Authorization' => "Bearer #{context.token}" },
+          request: {
+            # timeout: ,
+            # open_timeout: ,
+            read_timeout: 180
+          }
         ) do |conn|
           conn.response :json, content_type: 'application/json'
         end
