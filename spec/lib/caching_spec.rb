@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Caching' do
+describe 'Caching', focus: true do
   let(:key) { 'persistent' }
   let(:value) { Faker::Lorem.word }
 
