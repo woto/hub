@@ -98,4 +98,13 @@ if Rails.env.development?
   )
   Feeds::Parse.call(feed: feed3)
   Elastic::RefreshOffersIndex.call
+
+
+
+  simple_widget = FactoryBot.create(:simple_widget, user: admin)
+  attachment = ActionText::Attachment.from_attachable(simple_widget)
+  Current.set(responsible: admin) do
+    FactoryBot.create(:post, realm_kind: :post, user: admin, body: "<p>some text</p> #{attachment}")
+    FactoryBot.create(:post, realm_kind: :post, user: admin, body: "<p>some text</p> #{attachment}")
+  end
 end
