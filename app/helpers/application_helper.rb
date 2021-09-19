@@ -100,7 +100,7 @@ module ApplicationHelper
     Feed.distinct(:language).pluck(:language).without(nil).map do |code|
       Rails.application.config.global[:locales].find do |locale|
         locale[:locale] == code
-      end || { title: t('unknown'), locale: 'unknown' }
+      end || { title: code, locale: code }
       # TODO: replace with dry-struct
     end
   end

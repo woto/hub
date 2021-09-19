@@ -7,73 +7,91 @@ default: &default
   locales:
     -
       locale: 'en-GB'
-      title: 'English GB'
+      title: 'English-United Kingdom'
     -
       locale: 'en-US'
-      title: 'English US'
+      title: 'United States'
     -
       locale: 'en'
       title: 'English'
     -
+      locale: 'zh'
+      title: 'Chinese'
+    -
       locale: 'zh-CN'
-      title: '中文'
+      title: 'Chinese-China'
+    -
+      locale: 'zh-TW'
+      title: 'Chinese-Taiwan'
     -
       locale: 'ja'
-      title: '日本語'
+      title: 'Japanese'
     -
       locale: 'es'
-      title: 'Español'
+      title: 'Spanish'
     -
       locale: 'de'
-      title: 'Deutsch'
+      title: 'German'
     -
       locale: 'fr'
-      title: 'Français'
+      title: 'French'
     -
       locale: 'ko'
-      title: '한국어'
+      title: 'Korean'
     -
       locale: 'pt'
-      title: 'Português'
+      title: 'Portuguese'
     -
       locale: 'it'
-      title: 'Italiano'
+      title: 'Italian'
     -
       locale: 'ru'
-      title: 'Русский'
+      title: 'Russian'
     -
       locale: 'nl'
-      title: 'Nederlands'
+      title: 'Dutch'
     -
       locale: 'tr'
-      title: 'Türk'
+      title: 'Turkish'
     -
       locale: 'fi'
-      title: 'Suomalainen'
+      title: 'Finnish'
     -
       locale: 'uk'
-      title: 'Українська'
+      title: 'Ukrainian'
     -
       locale: 'ar'
-      title: 'عربي'
+      title: 'Arabic'
     -
       locale: 'he'
-      title: 'עִברִית'
+      title: 'Hebrew'
     -
       locale: 'th'
-      title: 'ไทย'
+      title: 'Thai'
     -
       locale: 'cs'
-      title: 'Čeština'
+      title: 'Czech'
     -
       locale: 'pl'
-      title: 'Polskie'
+      title: 'Polish'
     -
       locale: 'sv'
-      title: 'Svenska'
+      title: 'Swedish'
     -
       locale: 'da'
-      title: 'Dansk'
+      title: 'Danish'
+    -
+      locale: 'mk'
+      title: 'Macedonian'
+    -
+      locale: 'sl'
+      title: 'Slovenian'
+    -
+      locale: 'bg'
+      title: 'Bulgarian'
+    -
+      locale: 'be'
+      title: 'Belarusian'
 
   messengers:
     -
