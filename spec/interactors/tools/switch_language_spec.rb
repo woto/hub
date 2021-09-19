@@ -34,31 +34,31 @@ describe Tools::SwitchLanguage do
     it { is_expected.to match({locale: 'ru'}) }
   end
 
-  context 'when url is http://ru.192.168.31.80.nip.io:3000' do
-    let(:host) { 'ru.192.168.31.80.nip.io:3000' }
+  context 'when url is http://ru.192.168.0.1.nip.io:3000' do
+    let(:host) { 'ru.192.168.0.1.nip.io:3000' }
     let(:path) { '/' }
 
-    it { is_expected.to match({ host: 'ru.192.168.31.80.nip.io' }) }
+    it { is_expected.to match({ host: 'ru.192.168.0.1.nip.io' }) }
   end
 
-  context 'when url is http://192.168.31.80.nip.io:3000' do
-    let(:host) { '192.168.31.80.nip.io:3000' }
-    let(:path) { '/' }
-
-    it { is_expected.to match({ locale: 'ru' }) }
-  end
-
-  context 'when url is http://foo.192.168.31.80.nip.io:3000' do
-    let(:host) { 'foo.192.168.31.80.nip.io:3000' }
+  context 'when url is http://192.168.0.1.nip.io:3000' do
+    let(:host) { '192.168.0.1.nip.io:3000' }
     let(:path) { '/' }
 
     it { is_expected.to match({ locale: 'ru' }) }
   end
 
-  context 'when url is http://ru.192.168.31.80.nip.io:3000/ru' do
-    let(:host) { 'ru.192.168.31.80.nip.io:3000' }
+  context 'when url is http://foo.192.168.0.1.nip.io:3000' do
+    let(:host) { 'foo.192.168.0.1.nip.io:3000' }
+    let(:path) { '/' }
+
+    it { is_expected.to match({ locale: 'ru' }) }
+  end
+
+  context 'when url is http://ru.192.168.0.1.nip.io:3000/ru' do
+    let(:host) { 'ru.192.168.0.1.nip.io:3000' }
     let(:path) { '/ru' }
 
-    it { is_expected.to match({host: 'ru.192.168.31.80.nip.io'}) }
+    it { is_expected.to match({host: 'ru.192.168.0.1.nip.io'}) }
   end
 end
