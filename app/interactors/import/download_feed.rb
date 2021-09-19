@@ -9,31 +9,38 @@ module Import
                         feed_id: context.feed.id,
                         downloaded_file_size: context.feed.downloaded_file_size)
       url = context.feed.url
-      uri = URI(url)
-      req = Net::HTTP::Get.new(uri.request_uri)
+
+      conn = Faraday.new do |faraday|
+        faraday.response :logger # log requests and responses to $stdout
+        faraday.request :json # encode req bodies as JSON
+        faraday.request :retry # retry transient failures
+        faraday.response :follow_redirects # follow redirects
+        faraday.response :json # decode response bodies as JSON
+      end
 
       File.open(context.feed.file.path, 'wb') do |f|
-        Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
-          file_size = 0
+        file_size = 0
 
-          http.request(req) do |response|
-            response.value # raise error when response is not successful
-            response.read_body do |chunk|
+        begin
+          conn.get(url) do |req|
+            # Set a callback which will receive tuples of chunk Strings
+            # and the sum of characters received so far
+            req.options.on_data = proc do |chunk, overall_received_bytes|
               f.write(chunk)
-              file_size += chunk.size
+              file_size = overall_received_bytes
+              Rails.logger.info "Received #{overall_received_bytes} characters"
             end
           end
-
-          Rails.logger.info(message: 'Downloading complete',
-                            feed_id: context.feed.id,
-                            downloaded_file_size: file_size)
-          context.feed.update!(operation: 'download', downloaded_file_size: file_size)
-
-        rescue Net::HTTPServerException => e
+        rescue Faraday::ConnectionFailed => e
           raise Import::Process::HTTPServerException, e
-        rescue Net::ReadTimeout => e
+        rescue Faraday::TimeoutError => e
           raise Import::Process::ReadTimeout, e
         end
+
+        Rails.logger.info(message: 'Downloading complete',
+                          feed_id: context.feed.id,
+                          downloaded_file_size: file_size)
+        context.feed.update!(operation: 'download', downloaded_file_size: file_size)
       end
     end
   end
