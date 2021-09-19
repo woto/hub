@@ -34,6 +34,12 @@ docker-compose run -l "traefik.enable=false" --rm postgres psql -U hub -d postgr
 docker exec -i -t hub_postgres_1 psql -U hub -d postgres
 ```
 
+```ruby
+Sync::AdmitadJob.perform_later
+Feed.find_each { |feed| Import::ProcessJob.perform_later(feed) }
+Feed.count.times { Import::ProcessJob.perform_later }
+```
+
 ### Testing
 
 ```shell
