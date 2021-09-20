@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
     Current.responsible = true_user
   end
 
-  def path_for_switch_language(_locale)
+  def path_for_switch_language(_locale, _kind)
     nil
   end
 

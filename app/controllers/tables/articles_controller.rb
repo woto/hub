@@ -47,8 +47,8 @@ module Tables
               order: :desc)
     end
 
-    def path_for_switch_language(locale)
-      realm = Realm.news.find_by(locale: locale)
+    def path_for_switch_language(locale, kind)
+      realm = Realm.find_by(locale: locale, kind: kind)
       if realm
         articles_url(host: realm.domain)
       else

@@ -11,7 +11,7 @@
   <% I18n.available_locales.each do |locale| %>
     <% css_class = 'dropdown-item' %>
     <%= link_to helpers.system_locale_to_human(locale),
-                helpers.path_for_switch_language(locale) ||
+                helpers.path_for_switch_language(locale, Current.realm&.kind) ||
                   url_for(
                     Tools::SwitchLanguage.call(
                       subdomains: request.subdomains,
