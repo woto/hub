@@ -32,7 +32,8 @@
               input_html: {data: {controller: 'profile-language'}, multiple: true},
               wrapper_html: {class: 'mb-3'},
               as: :select,
-              collection: Rails.application.config.global[:locales].map { |locale| [locale[:title], locale[:locale]] }
+              collection: Rails.application.config.global[:locales].map { |locale| [locale[:title], locale[:locale]] }.
+                sort { |left, right| left.first <=> right.first }
   %>
 
   <div class="form-footer">
