@@ -7,7 +7,7 @@
         path: { controller: '/dashboard', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('dashboard') },
         icon: '<i class="fas fa-solar-panel"></i>',
-        disabled: false
+        disabled: !user_signed_in?
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
@@ -31,7 +31,7 @@
         path: { controller: '/tables/posts', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('posts') },
         icon: '<i class="fas fa-pen"></i>',
-        disabled: false
+        disabled: !user_signed_in?
     ) %>
 
 
@@ -65,7 +65,7 @@
         title: t('left_menu.finances'),
         current_page: request.path.yield_self { |p| p.include?('accounts') || p.include?('checks') || p.include?('transactions') },
         icon: '<i class="fas fa-wallet"></i>',
-        disabled: false
+        disabled: !user_signed_in?
     ) do |component| %>
 
       <% component.items do %>
@@ -74,21 +74,21 @@
             title: t('left_menu.transactions'),
             path: { controller: '/tables/transactions', action: 'index' },
             current_page: request.path.yield_self { |p| p.include?('transactions') },
-            disabled: false
+            disabled: !user_signed_in?
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
             title: t('left_menu.accounts'),
             path: { controller: '/tables/accounts', action: 'index' },
             current_page: request.path.yield_self { |p| p.include?('accounts') },
-            disabled: false
+            disabled: !user_signed_in?
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
             title: t('left_menu.checks'),
             path: { controller: '/tables/checks', action: 'index' },
             current_page: request.path.yield_self { |p| p.include?('checks') },
-            disabled: false
+            disabled: !user_signed_in?
         ) %>
 
       <% end %>
@@ -99,7 +99,7 @@
         path: { controller: '/settings/profiles', action: 'edit' },
         current_page: request.path.yield_self { |p| p.include?('profile') || p.include?('password') || p.include?('email') || p.include?('danger_zone') },
         icon: '<i class="fas fa-cog"></i>',
-        disabled: false
+        disabled: !user_signed_in?
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
@@ -109,7 +109,7 @@
         (p.include?('offers') && params[:favorite_id]) || p.include?('favorites')
       end,
       icon: '<i class="far fa-star"></i>',
-      disabled: false
+      disabled: !user_signed_in?
     ) %>
   </ul>
 </div>
