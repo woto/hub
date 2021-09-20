@@ -7,10 +7,10 @@ default: &default
   locales:
     -
       locale: 'en-GB'
-      title: 'English-United Kingdom'
+      title: 'English United Kingdom'
     -
       locale: 'en-US'
-      title: 'United States'
+      title: 'English United States'
     -
       locale: 'en'
       title: 'English'
@@ -19,10 +19,10 @@ default: &default
       title: 'Chinese'
     -
       locale: 'zh-CN'
-      title: 'Chinese-China'
+      title: 'Chinese China'
     -
       locale: 'zh-TW'
-      title: 'Chinese-Taiwan'
+      title: 'Chinese Taiwan'
     -
       locale: 'ja'
       title: 'Japanese'
