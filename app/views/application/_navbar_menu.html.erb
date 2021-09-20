@@ -111,5 +111,17 @@
       icon: '<i class="far fa-star"></i>',
       disabled: !user_signed_in?
     ) %>
+
+    <% help_realm = Realm.help.find_by(locale: locale) %>
+
+    <% if help_realm %>
+      <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.help'),
+        path: articles_url({ host: help_realm.domain, locale: nil }),
+        current_page: nil,
+        icon: '<i class="fas fa-question-circle"></i>',
+        disabled: false
+      ) %>
+    <% end %>
   </ul>
 </div>
