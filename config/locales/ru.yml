@@ -595,6 +595,7 @@ ru:
         displayed_columns: Отображаемые столбцы
       post:
         amount: Цена
+        article_link: Ссылка на статью
         body: Статья
         currency: Валюта
         extra_options:

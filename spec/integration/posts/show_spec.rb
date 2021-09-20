@@ -21,6 +21,10 @@ describe PostsController, type: :system, responsible: :user do
            })
   end
 
+  def article_check_link
+    article_url(id: post.id, host: post.realm.domain, port: Capybara.current_session.server.port)
+  end
+
   context 'with user' do
     it 'shows Post model attributes correctly' do
       login_as(Current.responsible, scope: :user)
@@ -49,6 +53,7 @@ describe PostsController, type: :system, responsible: :user do
         expect(page).to have_no_text('Intro. Post introduction')
         expect(page).to have_no_text(post.user.to_label)
         expect(page).to have_no_text('час назад')
+        expect(page).to have_no_text(article_check_link)
       end
     end
   end
@@ -71,6 +76,7 @@ describe PostsController, type: :system, responsible: :user do
         expect(page).to have_text('Intro. Post introduction')
         expect(page).to have_text(post.user.to_label)
         expect(page).to have_text('час назад')
+        expect(page).to have_text(article_check_link)
       end
     end
   end

@@ -585,6 +585,7 @@ en:
         displayed_columns: Displayed columns
       post:
         amount: Amount
+        article_link: Link to the article
         body: Body
         currency: Currency
         extra_options:

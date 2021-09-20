@@ -71,6 +71,12 @@
 
                 <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'post']) %> </dt>
                 <dd class="col-sm-9"> <%= @post.user.to_label %> </dd>
+
+                <dt class="col-sm-3"> <%= t('article_link', scope: ['simple_form', 'labels', 'post']) %> </dt>
+                <dd class="col-sm-9">
+                  <% url = article_url(id: @post.id, host: @post.realm.domain, locale: nil) %>
+                  <%= link_to(url, url) %>
+                </dd>
               <% end %>
             </dl>
           </div>
