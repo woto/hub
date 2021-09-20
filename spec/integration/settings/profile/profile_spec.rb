@@ -26,8 +26,8 @@ describe Settings::ProfilesController, type: :system do
       end
       within find('.profile_form_languages') do
         find('.selectize-input').click
-        find('div.option', text: 'Deutsch').click
-        find('div.option', text: 'Русский').click
+        find('div.option', text: 'German').click
+        find('div.option', text: 'Russian').click
       end
       find('footer').click
       click_button('Обновить')
@@ -64,7 +64,7 @@ describe Settings::ProfilesController, type: :system do
         expect(page).to have_field 'profile_form[messengers_attributes][0][type]', type: :hidden, with: 'WhatsApp'
         expect(page).to have_field('profile_form[messengers_attributes][0][value]', with: '+7 (919) 988-37-22')
       end
-      expect(page).to have_select('profile_form[languages][]', visible: :hidden, selected: ['English US'])
+      expect(page).to have_select('profile_form[languages][]', visible: :hidden, selected: ['English United States'])
     end
   end
 
@@ -94,7 +94,7 @@ describe Settings::ProfilesController, type: :system do
     it 'reinitializes selectize and allows to select items' do
       within find('.profile_form_languages') do
         find('.selectize-input').click
-        find('div.option', text: 'Русский').click
+        find('div.option', text: 'Russian').click
       end
     end
   end
