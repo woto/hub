@@ -463,13 +463,13 @@ ru:
   ok: Ок
   post_categories:
     create:
-      post_category_was_successfully_created: Категори статей была успешно создана
+      post_category_was_successfully_created: Категория статей была успешно создана
     destroy:
       post_category_was_successfully_destroyed: Категория статей была успешно удалена
     form:
       are_you_sure: Вы уверены? Настройки родительской категории будут сброшены
     update:
-      post_category_was_successfully_updated: Категори статей была успешно изменена
+      post_category_was_successfully_updated: Категория статей была успешно изменена
   posts:
     create:
       post_was_successfully_created: Статья была успешно создана
