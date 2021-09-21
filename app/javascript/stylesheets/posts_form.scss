@@ -337,14 +337,20 @@ trix-editor .attachment__metadata .attachment__size {
   height: auto; }
 .trix-content .attachment {
   position: relative;
-  max-width: 100%; }
+  max-width: 100%;
+}
+.trix-content figure.attachment--preview {
+  @extend .img-thumbnail;
+}
 //.trix-content .attachment a {
 //  color: inherit;
 //  text-decoration: none; }
 .trix-content .attachment a:hover, .trix-content .attachment a:visited:hover {
   color: inherit; }
 .trix-content .attachment__caption {
-  text-align: center; }
+  text-align: center;
+  @extend .mt-1;
+}
 .trix-content .attachment__caption .attachment__name + .attachment__size::before {
   content: ' · '; }
 .trix-content .attachment--preview {
