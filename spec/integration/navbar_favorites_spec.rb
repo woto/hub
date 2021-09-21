@@ -3,21 +3,28 @@
 require 'rails_helper'
 
 describe 'Navbar favorites', type: :system do
-  subject do
-    visit '/ru/offers'
-    within 'header' do
-      click_on 'Избранное'
-    end
+
+  def favorite_link_text
+    'Избранное'
   end
 
   context 'when user is not authenticated' do
-    it 'shows toast with error' do
-      subject
-      expect(page).to have_text('Вам необходимо войти в систему или зарегистрироваться.')
+    it 'does not show favorites link' do
+      visit '/ru/offers'
+      within 'header' do
+        expect(page).not_to have_link(favorite_link_text)
+      end
     end
   end
 
   context 'when user is authenticated' do
+    subject do
+      visit '/ru/offers'
+      within 'header' do
+        click_on favorite_link_text
+      end
+    end
+
     let(:user) { create(:user) }
 
     before do
