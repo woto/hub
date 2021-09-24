@@ -1,0 +1,232 @@
+version: "3.7"
+services:
+
+  rails:
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - RAILS_ENV=${HUB_ENV}
+        - NODE_ENV=${HUB_ENV}
+        - SECRET_KEY_BASE
+        - PUSHGATEWAY_HOST
+        - PUSHGATEWAY_PORT
+        - DOMAIN_NAME
+    image: app
+    command:
+      [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+    volumes:
+      - "rails_storage:/app/storage"
+    expose:
+      - 9394
+    ports:
+      - 19395:9394
+      - ${RAILS_PORT}:3000
+    labels:
+      - "traefik.enable=true"
+      # - "traefik.http.routers.rails.rule=PathPrefix(`/`)"
+      # - "traefik.http.routers.rails.rule=HostRegexp(`{host:.+}`)"
+      - "traefik.http.routers.goodreviews_ru.rule=Host(`goodreviews.ru`)"
+      - "traefik.http.routers.goodreviews_ru.entrypoints=websecure"
+      - "traefik.http.routers.goodreviews_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.routers.news_russia_goodreviews_ru.rule=Host(`news-russia.goodreviews.ru`)"
+      - "traefik.http.routers.news_russia_goodreviews_ru.entrypoints=websecure"
+      - "traefik.http.routers.news_russia_goodreviews_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.routers.help_russia_goodreviews_ru.rule=Host(`help-russia.goodreviews.ru`)"
+      - "traefik.http.routers.help_russia_goodreviews_ru.entrypoints=websecure"
+      - "traefik.http.routers.help_russia_goodreviews_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.routers.ru_goodreviews_ru.rule=Host(`ru.goodreviews.ru`)"
+      - "traefik.http.routers.ru_goodreviews_ru.entrypoints=websecure"
+      - "traefik.http.routers.ru_goodreviews_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.routers.en_goodreviews_ru.rule=Host(`en.goodreviews.ru`)"
+      - "traefik.http.routers.en_goodreviews_ru.entrypoints=websecure"
+      - "traefik.http.routers.en_goodreviews_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.routers.cpafun_ru.rule=Host(`cpafun.ru`)"
+      - "traefik.http.routers.cpafun_ru.entrypoints=websecure"
+      - "traefik.http.routers.cpafun_ru.tls.certresolver=myresolver"
+
+  sidekiq:
+    env_file:
+      - .env
+    image: app
+    command:
+      [ "bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml" ]
+    volumes:
+      - "rails_storage:/app/storage"
+    expose:
+      - 9394
+    ports:
+      - 19394:9394
+
+  elastic:
+    env_file:
+      - .env
+    image: elasticsearch:7.10.1
+    # ports:
+    #   - ${ELASTIC_REST_PORT}:9200
+    #   - ${ELASTIC_CLUSTER_PORT}:9300
+    environment:
+      - discovery.type=single-node
+      - path.repo=/tmp
+      - "ES_JAVA_OPTS=-Xms32767m -Xmx32767m"
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+
+#  es01:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+#    container_name: es01
+#    environment:
+#      - node.name=es01
+#      - cluster.name=es-docker-cluster
+#      - discovery.seed_hosts=192.168.1.10
+#      - cluster.initial_master_nodes=es01,es02
+#      - bootstrap.memory_lock=true
+#      - network.host=0.0.0.0
+#      - network.bind_host=0.0.0.0
+#      - network.publish_host=192.168.1.2
+#      - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - data01:/usr/share/elasticsearch/data
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+
+  kibana:
+    env_file:
+      - .env
+    image: kibana:7.9.2
+    ports:
+      - ${KIBANA_PORT}
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
+
+  postgres:
+    env_file:
+      - .env
+    build:
+      context: ./docker/postgres
+      dockerfile: Dockerfile
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+
+  redis:
+    env_file:
+      - .env
+    image: redis
+    volumes:
+      - "redis:/data"
+
+  mailcatcher:
+    env_file:
+      - .env
+    image: schickling/mailcatcher
+    ports:
+      - ${MAILCATCHER_WEB_PORT}:1080
+      - ${MAILCATCHER_SMTP_PORT}:1025
+
+  # To get into docker-compose network and for example
+  # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
+  # domain name passes from .env* files
+
+#  alpine:
+#    env_file:
+#      - .env
+#    build:
+#      context: ./docker/alpine
+#      dockerfile: Dockerfile
+#    command: echo "Alpine image is used for debugging purposes only. Run it as `docker-compose run --rm alpine sh` to get network access to other containers."
+#    stdin_open: true
+#    tty: true
+
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    environment:
+      - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
+      - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/volume/
+    volumes:
+      - ./docker/imgproxy:/volume/
+    # ports:
+    #   - ${IMGPROXY_PORT}:8080
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.imgproxy.rule=PathPrefix(`/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM`)"
+      - "traefik.http.routers.imgproxy.entrypoints=websecure"
+      - "traefik.http.routers.imgproxy.tls.certresolver=myresolver"
+
+
+  prometheus:
+    image: prom/prometheus:v2.16.0
+    volumes:
+      - ./docker/prometheus:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - ${PROMETHEUS_PORT}:9090
+
+  alertmanager:
+    image: prom/alertmanager:v0.12.0
+    ports:
+      - 9093:9093
+    volumes:
+      - ./docker/alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - '-config.file=/etc/alertmanager/config.yml'
+      - '-storage.path=/alertmanager'
+    deploy:
+      mode: global
+
+  grafana:
+    image: grafana/grafana:7.1.5
+    ports:
+      - ${GRAFANA_PORT}:3000
+
+  pushgateway:
+    image: prom/pushgateway
+    ports:
+      - ${PUSHGATEWAY_PORT}:9091
+
+  traefik:
+    image: traefik:v2.4
+    command: 
+      - "--accesslog=true"
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=oganer@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+volumes:
+  rails_storage:
+  redis:
+  postgres:
+  elastic:
