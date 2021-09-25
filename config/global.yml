@@ -92,6 +92,12 @@ default: &default
     -
       locale: 'be'
       title: 'Belarusian'
+    -
+      locale: 'sr'
+      title: 'Serbian'
+    -
+      locale: 'un'
+      title: 'Unknown'
 
   messengers:
     -
