@@ -60,7 +60,7 @@ ru:
   attributes:
     name: Название
   back: Назад
-  back_to_articles: Назад к новостям
+  back_to_articles: Назад
   breadcrumbs:
     accounts: Счета
     advertisers: Рекламодатели

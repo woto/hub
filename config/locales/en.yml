@@ -60,7 +60,7 @@ en:
   attributes:
     name: Name
   back: Back
-  back_to_articles: Back to news
+  back_to_articles: Back
   breadcrumbs:
     accounts: Accounts
     advertisers: Advertisers
