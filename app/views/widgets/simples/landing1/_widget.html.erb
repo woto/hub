@@ -1,0 +1,21 @@
+<% post = Post.find(widget.post_id) %>
+
+<%= link_to article_url(id: post.id, host: post.realm.domain, locale: nil),
+            target: '_blank',
+            class: 'd-block p-3 text-reset text-decoration-none' do %>
+  <div class="d-md-flex d-lg-block align-items-center">
+    <div class="flex-shrink-0">
+      <%= image_tag widget.widgetable.pictures.first.picture.variant(resize_to_limit: [150, 150]),
+                    loading: 'lazy',
+                    class: 'rounded img-fluid mx-auto d-block mb-3 mb-md-0 mb-lg-3',
+                    alt: widget.widgetable.title %>
+    </div>
+
+    <div class="flex-grow-1 ms-md-3 ms-lg-0 text-1000">
+      <div class="text-center mb-2">
+        <%= post.title %>
+      </div>
+      <%= simple_format((widget.widgetable.body.presence), { }, { wrapper_tag: 'small' }) %>
+    </div>
+  </div>
+<% end %>

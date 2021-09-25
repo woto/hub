@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*
-Trix 1.3.0
+Trix 1.3.1
 Copyright © 2020 Basecamp, LLC
 http://trix-editor.org/*/
 trix-editor {
@@ -298,62 +298,29 @@ trix-editor .attachment__metadata .attachment__size {
   margin-left: 0.2em;
   white-space: nowrap; }
 @charset "UTF-8";
-//.trix-content {
-//  line-height: 1.5; }
-//.trix-content * {
-//  box-sizing: border-box;
-//  margin: 0;
-//  padding: 0; }
 .trix-content h1 {
-  font-size: 1.2em;
+  font-size: 1.6em;
   line-height: 1.2; }
-.trix-content blockquote {
-  border: 0 solid #ccc;
-  border-left-width: 0.3em;
-  margin-left: 0.3em;
-  padding-left: 0.6em; }
-.trix-content [dir=rtl] blockquote,
-.trix-content blockquote[dir=rtl] {
-  border-width: 0;
-  border-right-width: 0.3em;
-  margin-right: 0.3em;
-  padding-right: 0.6em; }
-.trix-content li {
-  margin-left: 1em; }
-.trix-content [dir=rtl] li {
-  margin-right: 1em; }
-.trix-content pre {
-  display: inline-block;
-  width: 100%;
-  vertical-align: top;
-  font-family: monospace;
-  font-size: 0.9em;
-  padding: 0.5em;
-  white-space: pre;
-  background-color: #eee;
-  overflow-x: auto; }
 .trix-content img {
   max-width: 100%;
   height: auto; }
 .trix-content .attachment {
+  display: inline-block;
   position: relative;
-  max-width: 100%;
-}
+  max-width: 100%; }
 .trix-content figure.attachment--preview {
   @extend .img-thumbnail;
-}
-//.trix-content .attachment a {
-//  color: inherit;
-//  text-decoration: none; }
-.trix-content .attachment a:hover, .trix-content .attachment a:visited:hover {
-  color: inherit; }
+  @extend .bg-cyan-lt; }
 .trix-content .attachment__caption {
   text-align: center;
-  @extend .mt-1;
-}
+  &:not(:empty) {
+    @extend .mt-1; } }
 .trix-content .attachment__caption .attachment__name + .attachment__size::before {
   content: ' · '; }
 .trix-content .attachment--preview {
+  width: 100%;
+  text-align: center; }
+.trix-content .attachment--content {
   width: 100%;
   text-align: center; }
 .trix-content .attachment--preview .attachment__caption {
@@ -367,41 +334,10 @@ trix-editor .attachment__metadata .attachment__size {
   padding: 0.4em 1em;
   border: 1px solid #bbb;
   border-radius: 5px; }
-
 trix-editor {
   min-height: 320px !important;
   padding: 1rem !important;
-  margin-top: 5px !important;
-}
-
-//.trix-content {
-//  // font-size: 1rem !important;
-//  // line-height: 1.7rem !important;
-//  // max-width: 600px !important;
-//
-//  & img {
-//    flex: 1 0 300px;
-//    margin: 10px 0;
-//    padding: 5px;
-//    //max-width: 300px;
-//    //max-height: 300px;
-//    //width: 300px;
-//    @extend .rounded;
-//    @extend .img-thumbnail;
-//
-//    max-width: 300px;
-//    max-height: 300px;
-//    object-fit: contain;
-//    //position: relative;
-//    //top: 50%;
-//    //transform: translateY(-50%);
-//  }
-//  figure {
-//    margin-bottom: 1.3rem;
-//    margin-top: 1.5rem;
-//  }
-//}
-
+  margin-top: 5px !important; }
 trix-toolbar {
   position: sticky;
   top: 0px;
@@ -409,5 +345,6 @@ trix-toolbar {
   background-color: white;
   margin-left: 3px !important;
   margin-right: 3px !important;
-  padding-top: 10px !important;
-}
+  padding-top: 10px !important; }
+figure {
+  margin: 0 !important; }

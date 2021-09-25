@@ -656,6 +656,7 @@ en:
         advertiser_is_active: Advertiser is active
         advertiser_name: Advertiser name
         advertiser_network: Advertiser network
+        advertiser_picture: Логотип рекламодателя
         advertiser_raw: Advertiser raw data
         advertiser_synced_at: Advertiser synced at
         advertiser_updated_at: Advertiser updated at
@@ -709,6 +710,7 @@ en:
         advertiser_is_active: Adv. is active
         advertiser_name: Adv. name
         advertiser_network: Adv. netw.
+        advertiser_picture: Лого рекл.
         advertiser_raw: Adv. raw data
         advertiser_synced_at: Adv. sync. at
         advertiser_updated_at: Adv. upd. at
@@ -836,6 +838,12 @@ en:
       new_simple_widget: New widget
       selecting_widget_type: Selecting widget type
     simples:
+      articles:
+        widget:
+          next: Next
+          previous: Previous
+          title: Title
+          visit_advertiser: Visit advertiser
       content:
         widget_form: Widget form
         widget_preview: Widget preview
@@ -851,9 +859,4 @@ en:
         insert: Embed widget in the article
       update:
         simple_was_successfully_updated: Widget was successfully updated
-      widget:
-        next: Next
-        previous: Previous
-        title: Product name example
-        visit_advertiser: Go to shop
   workspaces: Workspaces

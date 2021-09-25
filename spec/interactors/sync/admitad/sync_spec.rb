@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_context 'compare advertiser' do |name:, ext_id:|
+shared_examples 'compare advertiser' do |name:, ext_id:|
   before do
     run_sync
   end
@@ -11,6 +11,7 @@ shared_context 'compare advertiser' do |name:, ext_id:|
     advertiser = Advertiser.find_by!(ext_id: ext_id)
 
     expect(advertiser).to have_attributes(
+      picture: be_attached,
       is_active: true,
       name: name,
       network: 'admitad',
@@ -87,6 +88,11 @@ describe Sync::Admitad::Sync do
             headers: { content_type: 'application/json' }
           )
       end
+
+      stub_request(:get, 'http://cdn.admitad.com/campaign/images/2017/10/3/fffe92da99b37d46b356b84ea1a6b270.jpg')
+        .to_return(status: 200, body: 'some image data', headers: {})
+      stub_request(:get, 'http://cdn.admitad.com/campaign/images/2010/10/15/778ecb9bfc0b3b85e223f68facb070c4.jpg')
+        .to_return(status: 200, body: 'some image data', headers: {})
     end
 
     context 'when one of the advertisers is exists' do

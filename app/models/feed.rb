@@ -57,7 +57,7 @@ class Feed < ApplicationRecord
   scope :active, -> { where(is_active: true).joins(:advertiser).where(advertisers: { is_active: true }) }
 
   def as_indexed_json(_options = {})
-    adv = advertiser.as_json
+    adv = advertiser.as_indexed_json
     adv.transform_keys! { |k| "advertiser_#{k}" }
     as_json.merge(adv)
   end

@@ -666,6 +666,7 @@ ru:
         advertiser_is_active: Флаг активности рекламодателя
         advertiser_name: Название рекламодателя
         advertiser_network: Партнерская сеть рекламодателя
+        advertiser_picture: Логотип рекламодателя
         advertiser_raw: Сырые данные рекламодателя
         advertiser_synced_at: Дата синхронизации настроек рекламодателя
         advertiser_updated_at: Дата изменения рекламодателя
@@ -719,6 +720,7 @@ ru:
         advertiser_is_active: Рекл. акт.
         advertiser_name: Назв. рекл.
         advertiser_network: Партн. сеть
+        advertiser_picture: Лого рекл.
         advertiser_raw: Сыр. дан. рекл.
         advertiser_synced_at: Дана синхр. рекл.
         advertiser_updated_at: Дата обновл. рекл.
@@ -846,6 +848,12 @@ ru:
       new_simple_widget: Простой виджет
       selecting_widget_type: Выбор типа создаваемого виджета
     simples:
+      articles:
+        widget:
+          next: Вперед
+          previous: Назад
+          title: Пример названия оффера
+          visit_advertiser: Перейти в магазин
       content:
         widget_form: Форма редактирования виджета
         widget_preview: Предпросмотр виджета
@@ -861,9 +869,4 @@ ru:
         insert: Вставить виджет в статью
       update:
         simple_was_successfully_updated: Виджет успешно изменен
-      widget:
-        next: Next
-        previous: Previous
-        title: Пример названия оффера
-        visit_advertiser: Перейти в магазин
   workspaces: Области

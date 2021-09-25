@@ -1,1 +1,9 @@
-<%= render resolve_widgetable_partial(widget), widget: widget %>
+<% if defined?(purpose) %>
+  <% opts = { purpose: purpose } %>
+<% else %>
+  <% opts = {} %>
+<% end %>
+
+<figure class="attachment w-100">
+  <%= render resolve_widgetable_partial(widget, opts), widget: widget %>
+</figure>

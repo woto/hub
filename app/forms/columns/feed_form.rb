@@ -2,7 +2,7 @@
 
 module Columns
   class FeedForm < BaseForm
-    DEFAULTS = %w[id advertiser_name name offers_count succeeded_at created_at].freeze
+    DEFAULTS = %w[id advertiser_name advertiser_picture name offers_count succeeded_at created_at].freeze
 
     self.all_columns = [
       { key: 'id'                                              , pg: Feed.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
@@ -31,6 +31,7 @@ module Columns
       { key: 'created_at'                                      , pg: Feed.columns_hash['created_at'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'updated_at'                                      , pg: Feed.columns_hash['updated_at'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'advertiser_id'                                   , pg: Advertiser.columns_hash['id'], roles: ['admin'] },
+      { key: 'advertiser_picture'                              , pg: ActiveStorage::Blob.columns_hash['filename'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'advertiser_is_active'                            , pg: Advertiser.columns_hash['is_active'], roles: ['admin'] },
       { key: 'advertiser_name'                                 , pg: Advertiser.columns_hash['name'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'advertiser_network'                              , pg: Advertiser.columns_hash['network'], as: :string, roles: ['admin'] },

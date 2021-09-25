@@ -71,10 +71,16 @@ module Sync
             end
           end
           advertiser.raw = adv
+          attach_picture(advertiser, adv['image'])
           advertiser.synced_at = Time.current
           advertiser.save!
           yield(advertiser, adv['feeds_info'])
         end
+      end
+
+      def attach_picture(advertiser, picture_url)
+        io = URI.parse(picture_url).open
+        advertiser.picture.attach(io: io, filename: SecureRandom.uuid)
       end
 
       def create_or_update_feed(advertiser, feeds_info)

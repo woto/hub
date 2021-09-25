@@ -53,6 +53,12 @@ class FeedDecorator < ApplicationDecorator
     helpers.link_to(super, helpers.advertiser_offers_path(advertiser_id: object['_source']['advertiser_id']))
   end
 
+  def advertiser_picture
+    helpers.link_to(helpers.advertiser_offers_path(advertiser_id: object['_source']['advertiser_id'])) do
+      super.html_safe if super.present?
+    end
+  end
+
   def name
     helpers.link_to(super, helpers.feed_offers_path(feed_id: object['_source']['id']))
   end

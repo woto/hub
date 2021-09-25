@@ -45,10 +45,10 @@ module ApplicationHelper
     )
   end
 
-  def resolve_widgetable_partial(widget)
+  def resolve_widgetable_partial(widget, purpose: 'articles')
     case widget.widgetable.class.name.underscore
     when 'widgets/simple'
-      'widgets/simples/widget'
+      "widgets/simples/#{purpose}/widget"
     else
       raise 'Unexpected widgetable class'
     end
@@ -168,6 +168,17 @@ module ApplicationHelper
     tag.span class: "badge bg-#{color}" do
       t(status, scope: 'posts.show.badge.statuses')
     end
+  end
+
+  def landing1_widgets
+    sql = <<~SQL
+      SELECT widgets.*
+      FROM (SELECT *, unnest(posts) post_id FROM widgets) widgets
+               JOIN posts ON posts.id = post_id AND posts.status = '4'
+      ORDER BY id DESC
+      LIMIT 4;
+    SQL
+    Widget.find_by_sql(sql)
   end
 
   # def tree_item(parent, children)
