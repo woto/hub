@@ -59,7 +59,7 @@ describe 'ArticlesController#show', type: :system, responsible: :admin do
 
   it 'shows "Back to articles" link with correct href' do
     within("[data-test-id='articles-card-#{article.id}']") do
-      expect(page).to have_link('Назад к новостям', href: articles_path(
+      expect(page).to have_link('Назад', href: articles_path(
         per: 1, sort: :created_at, order: :asc
       ))
     end

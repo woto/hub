@@ -13,7 +13,7 @@ describe 'Feeds shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/feeds', q: q, columns: %w[id advertiser_name name offers_count succeeded_at created_at],
+        { controller: 'tables/feeds', q: q, columns: %w[id advertiser_name advertiser_picture name offers_count succeeded_at created_at],
           locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
       end
     end
