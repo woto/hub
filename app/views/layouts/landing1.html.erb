@@ -260,7 +260,7 @@
 
     <!-- ============================================-->
     <!-- <section> begin ============================-->
-    <% help_realm = Realm.help.find_by(locale: locale) %>
+    <% help_realm = Realm.help.find_by(locale: :ru) %>
     <% if help_realm %>
       <section class="py-8" id="faq">
         <div class="container">
@@ -276,7 +276,7 @@
             <div class="col-lg-9">
               <div class="accordion" id="faq-accordion">
                 <% post_category = help_realm.post_categories.find_by(title: 'Частые вопросы') %>
-                <% post_category.posts.each_with_index do |post, index| %>
+                <% post_category.posts.accrued_post.each_with_index do |post, index| %>
                   <div class="accordion-item mb-2">
                     <%= tag.h2 class: 'accordion-header', id: "heading#{index}" do %>
                       <%= tag.button class: "accordion-button #{'collapsed' unless index == 0}", type: 'button',
