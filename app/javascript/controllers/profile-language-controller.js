@@ -11,7 +11,8 @@ export default class extends Controller {
     connect() {
         // console.log('profile-language-controller connect');
         this.#selectize = $(this.element).selectize({
-            delimiter: ',',
+            plugins: ["remove_button"],
+            delimiter: ','
         });
     }
 }

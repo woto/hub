@@ -6,7 +6,8 @@ export default class extends Controller {
 
     connect() {
         this.selectize = $(this.element).selectize({
-            delimiter: ',',
+            plugins: ["remove_button"],
+            delimiter: ','
         });
     }
     disconnect() {
