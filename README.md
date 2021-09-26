@@ -40,6 +40,11 @@ Feed.find_each { |feed| Import::ProcessJob.perform_later(feed) }
 Feed.count.times { Import::ProcessJob.perform_later }
 ```
 
+#### Load yandex market categories:
+```ruby
+PostCategories::YandexMarketJob.perform_now
+```
+
 ### Testing
 
 ```shell

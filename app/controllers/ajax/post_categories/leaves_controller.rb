@@ -17,6 +17,9 @@ module Ajax
                     title.autocomplete
                     title.autocomplete._2gram
                     title.autocomplete._3gram
+                    path.autocomplete
+                    path.autocomplete._2gram
+                    path.autocomplete._3gram
                   ]
                 }
               },

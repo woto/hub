@@ -14,7 +14,7 @@ export default class extends ApplicationController {
         this.#selectize = $(this.element).selectize({
             valueField: 'id',
             labelField: 'title',
-            searchField: 'title',
+            searchField: ['path', 'title'],
             create: false,
             render: {
                 option: function(item, escape) {
