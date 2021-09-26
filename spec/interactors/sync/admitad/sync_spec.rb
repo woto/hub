@@ -37,7 +37,7 @@ shared_examples 'compare feed' do |name:, ext_id:, url:|
       url: url,
       error_class: nil,
       error_text: nil,
-      locked_by_pid: 0,
+      locked_by_tid: '',
       language: nil,
       attempt_uuid: nil,
       raw: match(Regexp.new(name)),

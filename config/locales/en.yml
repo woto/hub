@@ -672,7 +672,7 @@ en:
         id: Feed id
         is_active: Is feed active
         language: Feed language
-        locked_by_pid: Feed locked by PID
+        locked_by_tid: Sidekiq TID
         name: Feed name
         offers_count: Feed offers count
         operation: Current operation
@@ -726,7 +726,7 @@ en:
         id: ID
         is_active: Is active
         language: Lang.
-        locked_by_pid: Proc ID.
+        locked_by_tid: Sidekiq TID
         name: Name
         offers_count: Offers cnt
         operation: Operation

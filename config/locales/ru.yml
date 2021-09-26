@@ -682,7 +682,7 @@ ru:
         id: Идентификационный номер фида
         is_active: Флаг активности фида
         language: Язык фида
-        locked_by_pid: Заблокировано процессом PID
+        locked_by_tid: Sidekiq TID
         name: Название фида
         offers_count: Количество офферов фида
         operation: Тип операции
@@ -736,7 +736,7 @@ ru:
         id: ID
         is_active: Фид акт.
         language: Язык
-        locked_by_pid: PID проц.
+        locked_by_tid: Sidekiq TID
         name: Назв. фида
         offers_count: Офферов
         operation: Операция

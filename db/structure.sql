@@ -756,7 +756,6 @@ CREATE TABLE public.feeds (
     url character varying NOT NULL,
     error_class character varying,
     error_text text,
-    locked_by_pid integer DEFAULT 0 NOT NULL,
     language character varying,
     attempt_uuid uuid,
     raw text,
@@ -774,7 +773,8 @@ CREATE TABLE public.feeds (
     downloaded_file_size bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    locked_by_tid character varying DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -2224,6 +2224,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210328055745'),
 ('20210808221850'),
 ('20210810011556'),
-('20210909045616');
+('20210909045616'),
+('20210926170012');
 
 

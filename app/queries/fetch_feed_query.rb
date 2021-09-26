@@ -6,7 +6,7 @@ class FetchFeedQuery
   def call
     ActiveRecord::Base.connection.execute("SET LOCAL lock_timeout = '5s'")
 
-    scope = Feed.where(locked_by_pid: 0)
+    scope = Feed.where(locked_by_tid: '')
                 .order('priority DESC, processing_finished_at ASC NULLS FIRST')
 
     if context.feed

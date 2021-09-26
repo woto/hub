@@ -3,6 +3,7 @@
 module Import
   class LockFeed
     include ApplicationInteractor
+    include Sidekiq::Util
 
     def call
       ActiveRecord::Base.transaction do
@@ -37,7 +38,7 @@ module Import
 
       context.object.update!(
         operation: 'lock feed',
-        locked_by_pid: ::Process.pid,
+        locked_by_tid: tid,
         attempt_uuid: SecureRandom.uuid,
         processing_started_at: Time.current,
         error_class: nil,

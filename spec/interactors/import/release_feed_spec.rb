@@ -8,7 +8,7 @@ describe Import::ReleaseFeed do
   let(:feed) do
     create(:feed,
            operation: 'manual',
-           locked_by_pid: Faker::Number.number(digits: 5),
+           locked_by_tid: Faker::Lorem.word,
            processing_finished_at: 1.hour.ago,
            error_class: Faker::Lorem.word,
            error_text: Faker::Lorem.word)
@@ -21,7 +21,7 @@ describe Import::ReleaseFeed do
       freeze_time do
         subject
         expect(feed).to have_attributes(operation: 'release feed',
-                                        locked_by_pid: 0,
+                                        locked_by_tid: '',
                                         processing_finished_at: Time.current,
                                         error_class: nil,
                                         error_text: nil)
@@ -36,7 +36,7 @@ describe Import::ReleaseFeed do
       freeze_time do
         subject
         expect(feed).to have_attributes(operation: 'release feed',
-                                        locked_by_pid: 0,
+                                        locked_by_tid: '',
                                         processing_finished_at: Time.current,
                                         error_class: 'StandardError',
                                         error_text: /for test purposes/)

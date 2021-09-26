@@ -30,7 +30,7 @@ describe Import::LockFeed do
     let(:feed) do
       create(:feed,
              operation: 'manual',
-             locked_by_pid: 0,
+             locked_by_tid: '',
              attempt_uuid: SecureRandom.uuid,
              processing_started_at: 2.hours.ago,
              error_class: Faker::Lorem.word,
@@ -46,7 +46,7 @@ describe Import::LockFeed do
       freeze_time do
         expect(subject.object).to have_attributes(
           operation: 'lock feed',
-          locked_by_pid: match(a_value > 0),
+          locked_by_tid: match(/.+/),
           attempt_uuid: match(/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/),
           processing_started_at: Time.current,
           error_class: nil,
@@ -60,7 +60,7 @@ describe Import::LockFeed do
 
   context 'when there are no available feeds' do
     let(:params) { { feed: nil } }
-    let(:feed) { create(:feed, locked_by_pid: Faker::Number.number(digits: 5)) }
+    let(:feed) { create(:feed, locked_by_tid: Faker::Lorem.word) }
 
     it 'does not lock anyone' do
       allow(Rails).to receive_message_chain('logger.info')
@@ -71,10 +71,10 @@ describe Import::LockFeed do
 
   context 'when feed is inactive' do
     let(:params) { { feed: nil } }
-    let!(:feed) { create(:feed, locked_by_pid: 0, is_active: false) }
+    let!(:feed) { create(:feed, locked_by_tid: '', is_active: false) }
 
     it 'does not lock feed' do
-      expect(subject.object.locked_by_pid).to eq(0)
+      expect(subject.object.locked_by_tid).to eq('')
       expect(subject).to be_a_failure
     end
 
@@ -91,11 +91,11 @@ describe Import::LockFeed do
     let(:advertiser) { create(:advertiser, is_active: false) }
 
     before do
-      create(:feed, advertiser: advertiser, locked_by_pid: 0)
+      create(:feed, advertiser: advertiser, locked_by_tid: '')
     end
 
     it 'does not lock feed' do
-      expect(subject.object.locked_by_pid).to eq(0)
+      expect(subject.object.locked_by_tid).to eq('')
       expect(subject).to be_a_failure
     end
 

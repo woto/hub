@@ -12,7 +12,7 @@ module Import
 
       result = context.feed.update(
         operation: 'release feed',
-        locked_by_pid: 0,
+        locked_by_tid: '',
         processing_finished_at: Time.current,
         error_class: context.error&.class,
         error_text: context.error&.full_message
