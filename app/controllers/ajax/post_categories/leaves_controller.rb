@@ -14,9 +14,9 @@ module Ajax
                   query: params[:q],
                   type: 'bool_prefix',
                   fields: %w[
-                    title.autocomplete
-                    title.autocomplete._2gram
-                    title.autocomplete._3gram
+                    title.autocomplete^2
+                    title.autocomplete._2gram^2
+                    title.autocomplete._3gram^2
                     path.autocomplete
                     path.autocomplete._2gram
                     path.autocomplete._3gram

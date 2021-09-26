@@ -15,6 +15,13 @@ export default class extends ApplicationController {
             valueField: 'id',
             labelField: 'title',
             searchField: ['path', 'title'],
+            // score: function() { return function() { return 1; }; },
+            score: function(search) {
+                var score = this.getScoreFunction(search);
+                return function(item) {
+                    return 1 + score(item);
+                };
+            },
             create: false,
             render: {
                 option: function(item, escape) {
