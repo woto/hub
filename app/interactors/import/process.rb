@@ -9,6 +9,7 @@ class Import::Process
   class ElasticUnexpectedNestingError < SkipJobError; end
   class HTTPServerException < SkipJobError; end
   class ReadTimeout < SkipJobError; end
+  class BadRequestError < SkipJobError; end
   class DetectFileTypeError < SkipJobError; end
   class UnzipError < SkipJobError; end
   class UnknownFileType < SkipJobError; end

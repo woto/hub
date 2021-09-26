@@ -16,6 +16,7 @@ module Import
         faraday.request :retry # retry transient failures
         faraday.response :follow_redirects # follow redirects
         faraday.response :json # decode response bodies as JSON
+        faraday.response :raise_error # raises an exception if response is a 4xx or 5xx code
       end
 
       File.open(context.feed.file.path, 'wb') do |f|
@@ -35,6 +36,8 @@ module Import
           raise Import::Process::HTTPServerException, e
         rescue Faraday::TimeoutError => e
           raise Import::Process::ReadTimeout, e
+        rescue Faraday::BadRequestError => e
+          raise Import::Process::BadRequestError, e
         end
 
         Rails.logger.info(message: 'Downloading complete',
