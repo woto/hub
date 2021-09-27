@@ -10,6 +10,11 @@ describe Tables::PostCategoriesController, type: :system do
       end
       let(:plural) { 'post_categories' }
       let(:singular) { 'post_category' }
+      let!(:user) { create(:user, role: :admin) }
+
+      before do
+        login_as(user, scope: :user)
+      end
     end
   end
 end

@@ -15,7 +15,7 @@ describe Tables::PostCategoriesController, type: :system do
     context 'when role is user', responsible: :user do
 
       it 'does not show controls buttons' do
-        expect(page).to have_text title
+        expect(page).not_to have_text(title)
       end
     end
 
@@ -30,19 +30,18 @@ describe Tables::PostCategoriesController, type: :system do
     before do
       login_as(Current.responsible, scope: :user)
       visit post_categories_path(locale: 'ru')
-      click_on(title)
     end
 
     it 'shows `show` button with correct url' do
-      expect(page).to have_link('Просмотреть', href: post_category_path(post_category.id, locale: :ru))
+      expect(page).to have_no_link('Просмотреть', visible: :all)
     end
 
     it 'does not show `edit` button' do
-      expect(page).to have_no_link('Редактировать')
+      expect(page).to have_no_link('Редактировать', visible: :all)
     end
 
     it 'does not show `destroy` button' do
-      expect(page).to have_no_link('Удалить')
+      expect(page).to have_no_link('Удалить', visible: :all)
     end
   end
 

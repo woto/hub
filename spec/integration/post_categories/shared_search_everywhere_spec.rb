@@ -22,7 +22,9 @@ describe 'Post categories shared search everywhere', type: :system do
   describe 'GET /post_categories' do
     it_behaves_like 'shared_search_everywhere' do
       before do
+        user = create(:user)
         create(:post_category)
+        login_as(user, scope: :user)
         visit '/ru/post_categories'
       end
 

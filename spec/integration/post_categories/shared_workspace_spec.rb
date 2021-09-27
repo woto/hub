@@ -8,11 +8,4 @@ describe 'PostCategories shared workspace', type: :system do
     let(:plural) { 'post_categories' }
     let(:user) { create(:user) }
   end
-
-  it_behaves_like 'shared workspace unauthenticated' do
-    before do
-      create(:post_category)
-      visit '/ru/post_categories'
-    end
-  end
 end

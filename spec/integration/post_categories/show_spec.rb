@@ -13,6 +13,8 @@ describe PostCategoriesController, type: :system do
   end
 
   it 'shows PostCategory model attributes correctly' do
+    user = create(:user, role: :admin)
+    login_as(user, scope: :user)
     visit post_category_path(post_category, locale: :ru)
 
     within('main') do

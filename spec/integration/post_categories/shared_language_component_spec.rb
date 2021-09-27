@@ -19,9 +19,11 @@ describe Tables::PostCategoriesController, type: :system do
   describe 'GET /post_categories' do
     it_behaves_like 'shared_language_component' do
       before do
+        login_as(user, scope: :user)
         visit post_categories_path
       end
 
+      let(:user) { create(:user) }
       let(:link) { post_categories_path(locale: 'en') }
     end
   end
