@@ -38,7 +38,7 @@ module Import
 
       context.object.update!(
         operation: 'lock feed',
-        locked_by_tid: "#{identity}:#{tid}",
+        locked_by_tid: GlobalHelper.tid_helper(identity, tid),
         attempt_uuid: SecureRandom.uuid,
         processing_started_at: Time.current,
         error_class: nil,

@@ -18,6 +18,10 @@ class GlobalHelper
         favorites_items_kind: model.to_s.pluralize.to_sym }
     end
 
+    def tid_helper(identity, tid)
+      "#{identity}:#{tid}"
+    end
+
     def currencies_table
       Money::Currency.table.map { |key, value| { key => value[:iso_numeric].to_i } }
                      .reduce(&:merge)
