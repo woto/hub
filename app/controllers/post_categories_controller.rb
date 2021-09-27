@@ -3,7 +3,6 @@
 class PostCategoriesController < ApplicationController
   layout 'backoffice'
   before_action :set_post_category, only: %i[show edit update destroy]
-  skip_before_action :authenticate_user!
 
   # GET /post_categories/new
   def new

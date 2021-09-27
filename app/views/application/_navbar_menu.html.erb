@@ -40,7 +40,7 @@
       path: { controller: '/tables/post_categories', action: 'index' },
       current_page: request.path.yield_self { |p| p.include?('post_categories') },
       icon: '<i class="fas fa-stream"></i>',
-      disabled: false
+      disabled: !user_signed_in?
     ) %>
 
     <% if policy(:user).index? %>

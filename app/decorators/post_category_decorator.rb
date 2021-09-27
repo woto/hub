@@ -8,7 +8,11 @@ class PostCategoryDecorator < ApplicationDecorator
       link_options['data-bs-toggle'] = 'tooltip'
       link_options['title'] = super
     end
-    h.link_to(truncated, h.post_category_path(_id), **link_options)
+    if h.policy(:post_category).show?
+      h.link_to(truncated, h.post_category_path(_id), **link_options)
+    else
+      h.link_to(truncated, '#', **link_options)
+    end
   end
 
   def path

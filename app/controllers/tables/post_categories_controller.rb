@@ -8,7 +8,6 @@ module Tables
     include Workspaceable
     include Tableable
     layout 'backoffice'
-    skip_before_action :authenticate_user!
 
     # GET /post_categories
     def index
