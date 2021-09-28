@@ -65,4 +65,11 @@ describe Import::DownloadFeed, :cleanup_feeds do
       expect { subject }.to raise_error(Import::Process::ReadTimeout)
     end
   end
+
+  context 'when got Faraday::BadRequestError' do
+    it 'raises Import::Process::BadRequestError' do
+      stub_request(:get, 'http://example.com').to_raise(Faraday::BadRequestError)
+      expect { subject }.to raise_error(Import::Process::BadRequestError)
+    end
+  end
 end
