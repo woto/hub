@@ -13,20 +13,24 @@ module Tables
     # GET /news
     def index
       get_index(required_fields)
+      response.headers['X-Robots-Tag'] = 'noindex'
     end
 
     def by_month
       month = Time.use_zone('UTC') { Time.zone.parse("#{params[:month]}-01") }
       get_index(required_fields, month: month)
+      response.headers['X-Robots-Tag'] = 'noindex'
     end
 
     def by_tag
       get_index(required_fields, tag: params[:tag])
+      response.headers['X-Robots-Tag'] = 'noindex'
     end
 
     def by_category
       @post_category = PostCategory.find_by(id: params[:category_id])
       get_index(required_fields, post_category_id: params[:category_id])
+      response.headers['X-Robots-Tag'] = 'noindex'
     end
 
     private
