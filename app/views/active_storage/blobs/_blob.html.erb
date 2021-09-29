@@ -1,6 +1,16 @@
 <figure class="img-thumbnail attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.representable? %>
-    <%= link_to blob.representation(resize_to_limit: [ 2560, 1600 ]), target: '_blank' do %>
+
+    <% max_width = 2560 %>
+    <% max_height = 1600 %>
+
+    <% width, height = new_size_for_lightbox(max_width, max_height, blob.metadata['width'], blob.metadata['height']) %>
+
+    <%= link_to blob.representation(resize_to_limit: [ max_width, max_height ] ),
+                'data-pswp-width': width ? width : max_width ,
+                'data-pswp-height': height ? height : max_height,
+                'target': '_blank',
+                class: 'photo-swipe' do %>
       <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
     <% end %>
   <% end %>

@@ -21,6 +21,7 @@
     "flatpickr": "^4.6.6",
     "jquery": "^3.5.0",
     "lodash": "^4.17.15",
+    "photoswipe": "git://github.com/dimsemenov/photoswipe#v5-beta",
     "rails-erb-loader": "^5.5.2",
     "selectize": "^0.12.6",
     "stimulus": "^2.0.0",

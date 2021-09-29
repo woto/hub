@@ -17,6 +17,8 @@ $google-font: false;
 @import '@tabler/core/src/scss/tabler';
 @import '@tabler/core/src/scss/tabler-vendors';
 
+@import 'photoswipe/dist/photoswipe.css';
+
 //@import 'tabler/scss/tabler-buttons';
 //@import 'tabler/scss/tabler-flags';
 @import 'dropzone_avatar';

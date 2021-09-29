@@ -181,6 +181,29 @@ module ApplicationHelper
     Widget.find_by_sql(sql)
   end
 
+  # TODO: add proposal on adding this feature. The problem is that the blobs may be not attached to records.
+  # https://stackoverflow.com/questions/61893089/get-metadata-of-active-storage-variant
+  # https://stackoverflow.com/questions/3332237/image-resizing-algorithm
+  def new_size_for_lightbox(max_width, max_height, metadata_width, metadata_height)
+    max_width = max_width.to_f
+    max_height = max_height.to_f
+    metadata_width = metadata_width.to_f
+    metadata_height = metadata_height.to_f
+
+    # TODO: add sending error to sentry or grafana
+    return [nil, nil] if metadata_width.zero? || metadata_height.zero?
+
+    w_ratio = metadata_width / max_width
+    h_ratio = metadata_height / max_height
+
+    max_ratio = [w_ratio, h_ratio].max
+
+    new_width = metadata_width / max_ratio
+    new_height = metadata_height / max_ratio
+
+    [new_width, new_height]
+  end
+
   # def tree_item(parent, children)
   #   concat render('feed_category_checkbox', name: parent.name, style: "margin-left: #{parent.depth * 20}px")
   #   children.each { |k, v| tree_item(k, v) } && nil

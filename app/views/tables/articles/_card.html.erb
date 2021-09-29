@@ -13,9 +13,9 @@
       </span>
     </div>
 
-    <div class="fs-6 lh-lg articles-preview">
+    <%= tag.div class: 'fs-6 lh-lg articles-preview', 'data-controller': 'lightbox' do %>
       <%== row.intro %>
-    </div>
+    <% end %>
 
     <div class="mt-4">
       <%= link_to t(:continue_reading), article_link(row.id), class: 'btn btn-pink' %>

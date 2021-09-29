@@ -7,5 +7,7 @@ ActionText::ContentHelper.allowed_attributes.add 'data-bs-slide'
 ActionText::ContentHelper.allowed_attributes.add 'data-bs-slide-to'
 ActionText::ContentHelper.allowed_attributes.add 'data-bs-target'
 ActionText::ContentHelper.allowed_attributes.add 'target'
+ActionText::ContentHelper.allowed_attributes.add 'data-pswp-width'
+ActionText::ContentHelper.allowed_attributes.add 'data-pswp-height'
 # ActionText::ContentHelper.allowed_attributes.add "style"
 # end

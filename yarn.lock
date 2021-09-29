@@ -5340,6 +5340,10 @@ perf-regexes@^1.0.1:
   resolved "https://registry.yarnpkg.com/perf-regexes/-/perf-regexes-1.0.1.tgz#6da1d62f5a94bf9353a0451bccacf69068b75d0b"
   integrity sha512-L7MXxUDtqr4PUaLFCDCXBfGV/6KLIuSEccizDI7JxT+c9x1G1v04BQ4+4oag84SHaCdrBgQAIs/Cqn+flwFPng==
 
+"photoswipe@git://github.com/dimsemenov/photoswipe#v5-beta":
+  version "5.1.5"
+  resolved "git://github.com/dimsemenov/photoswipe#3dc098effd0ff0a8c49777beee5481f8d4960eb1"
+
 picomatch@^2.0.4, picomatch@^2.2.1:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.0.tgz#f1f061de8f6a4bf022892e2d128234fb98302972"

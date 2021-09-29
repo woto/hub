@@ -11,9 +11,9 @@
       </span>
     </div>
 
-    <div class="fs-6 lh-lg articles-body">
+    <%= tag.div class: 'fs-6 lh-lg articles-body', 'data-controller': 'lightbox' do %>
       <%==  @article.body %>
-    </div>
+    <% end %>
 
     <div class="mt-4">
       <%= link_to t('back_to_articles'),
