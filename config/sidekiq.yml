@@ -15,3 +15,6 @@ production:
   prometheus:
     cron: '0 * * * * *'   # Runs once per minute
     class: PrometheusJob
+  active_storage_purge:
+    cron: '* 0 * * * *'   # Runs once per hour
+    class:
