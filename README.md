@@ -1,4 +1,6 @@
-# goodreviews.ru
+# [goodreviews.ru](https://goodreviews.ru)
+
+### Setup
 
 ```shell
 docker-compose up -d
@@ -13,6 +15,7 @@ The following addresses available after project start up:
 - Mailcatcher http://localhost:1080
 - Kibana http://localhost:5601
 
+
 Sign in using `admin@example.com` / `password`
 
 If things works right then you could seed some test data for development purposes:
@@ -21,34 +24,37 @@ If things works right then you could seed some test data for development purpose
 rake hub:tests:seed
 ```
 
-That's it. More docs available at `/docs`
+That's it. More docs available at [docs](/docs).
+
+### Screenshots
+
+Dashboard page  
 
 ![Dashboard page](./docs/images/dashboard_page.png)
-Dashboard page
 
-![Feeds page](./docs/images/feeds_page.png)
-Feeds page
+Feeds page  
+![Feeds page](./docs/images/feeds_page.png)  
 
+Filter results  
 ![Filter results](./docs/images/filter_results.png)
-Filter results
 
+Offers page  
 ![Filter results](./docs/images/offers_page.png)
-Offers page
 
+Profile edit  
 ![Profile edit](./docs/images/profile_edit.png)
-Profile edit
 
+Realm  
 ![Realm](./docs/images/realm.png)
-Realm
 
+Widget  
 ![Widget](./docs/images/widget.png)
-Widget
 
+Widget modal  
 ![Widget modal](./docs/images/widget_modal.png)
-Widget modal
 
+Workspaces  
 ![Workspaces](./docs/images/workspaces.png)
-Workspaces
 
+Writing article  
 ![Writing article](./docs/images/writing_article.png)
-Writing article
