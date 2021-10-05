@@ -24,7 +24,7 @@
       <% end %>
 
       <h2><%= t('.today_rates') %></h2>
-      <div class="row">
+      <div class="row row-cols-1 row-cols-xl-3">
         <% ExchangeRate.pick.currencies.each do |excchange_rate| %>
           <%= render 'exchange_rate_card', currency_code: excchange_rate['key'], currency_value: excchange_rate['value']  %>
         <% end %>
