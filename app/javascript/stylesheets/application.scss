@@ -12,7 +12,8 @@ $assets-base: '../images/tabler/flags';
 $enable-extra-colors: true;
 $enable-negative-margins: true;
 // NOTE: required for the situations without access to the Internet
-$google-font: false;
+// $google-font: false;
+$google-font: "Open Sans";
 
 @import '@tabler/core/src/scss/tabler';
 @import '@tabler/core/src/scss/tabler-vendors';
