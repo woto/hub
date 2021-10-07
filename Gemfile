@@ -118,6 +118,11 @@ gem 'i18n-tasks'
 gem 'mobility', github: 'shioyama/mobility'
 gem 'spreadsheet'
 
+# Grape
+gem 'grape'
+# gem 'grape-entity'
+# gem 'grape-swagger'
+
 # Sidekiq
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
