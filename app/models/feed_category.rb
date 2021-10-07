@@ -31,7 +31,7 @@ class FeedCategory < ApplicationRecord
   index_name "#{Rails.env}.feed_categories"
 
   has_ancestry cache_depth: true
-  belongs_to :feed, counter_cache: true, touch: true
+  belongs_to :feed, counter_cache: true
 
   validate :same_feed, if: -> { parent_id }
 

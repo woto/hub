@@ -23,5 +23,5 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Profile < ApplicationRecord
-  belongs_to :user, counter_cache: true, touch: true
+  belongs_to :user, counter_cache: true
 end

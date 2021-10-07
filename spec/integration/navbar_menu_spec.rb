@@ -77,7 +77,25 @@ describe DashboardController, type: :system do
       let(:url) { '/ru/posts' }
       let(:href) { '/ru/posts' }
       let(:title) { 'Статьи' }
-      let(:checker) { :flat }
+      let(:checker) { :nested }
+    end
+  end
+
+  describe 'highlight "Площадки"' do
+    it_behaves_like 'highlight active' do
+      let(:url) { '/ru/realms' }
+      let(:href) { '/ru/realms' }
+      let(:title) { 'Площадки' }
+      let(:checker) { :nested }
+    end
+  end
+
+  describe 'highlight "Категории статей"' do
+    it_behaves_like 'highlight active' do
+      let(:url) { '/ru/post_categories' }
+      let(:href) { '/ru/post_categories' }
+      let(:title) { 'Категории статей' }
+      let(:checker) { :nested }
     end
   end
 

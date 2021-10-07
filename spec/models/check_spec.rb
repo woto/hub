@@ -33,7 +33,7 @@ describe Check, type: :model do
     it_behaves_like 'elasticable'
   end
 
-  it { is_expected.to belong_to(:user).counter_cache(true).touch(true) }
+  it { is_expected.to belong_to(:user).counter_cache(true) }
   it { is_expected.to define_enum_for(:currency).with_values(GlobalHelper.currencies_table) }
   it { is_expected.to define_enum_for(:status).with_values(%w[pending_check approved_check payed_check removed_check]) }
   it { is_expected.to have_many(:transactions) }

@@ -52,10 +52,10 @@ class Post < ApplicationRecord
     removed_post: 6
   }
 
-  belongs_to :realm, counter_cache: true, touch: true
-  belongs_to :user, counter_cache: true, touch: true
-  belongs_to :post_category, counter_cache: true, touch: true
-  belongs_to :exchange_rate, counter_cache: true, touch: true
+  belongs_to :post_category, counter_cache: true
+  belongs_to :realm, counter_cache: true
+  belongs_to :user, counter_cache: true
+  belongs_to :exchange_rate, counter_cache: true
 
   has_many_attached :images
   has_rich_text :body

@@ -70,6 +70,7 @@ ru:
     edit_check: Редактирование выплаты
     edit_post: Редактирование статьи
     edit_post_category: Редактирование категории статей
+    edit_realm: Редактирование площадки
     email: Почта
     favorites: Избранное
     feeds: Фиды
@@ -79,15 +80,18 @@ ru:
     new_check: Новая выплата
     new_post: Новая статья
     new_post_category: Новая категория статей
+    new_realm: Новая площадка
     news: Новости
     offers: Все офферы
-    password: Password
+    password: Пароль
     post_categories: Категории
     posts: Статьи
     profile: Профиль
+    realms: Площадки
     show_check: Просмотр выплаты
     show_post: Просмотр статьи
     show_post_category: Просмотр категории статей
+    show_realm: Просмотр площадки
     transactions: Транзакции
     users: Пользователи
   buttons:
@@ -105,6 +109,7 @@ ru:
     new_feed: Создать фид
     new_post: Новая статья
     new_post_category: Новая категория статей
+    new_realm: Новая площадка
     offer: Оффер
     offers: Офферы
     offers_count: Количество офферов
@@ -281,6 +286,7 @@ ru:
       offers: Избранные офферы
       post_categories: Избранные категории статей
       posts: Избранные статьи
+      realms: Площадки
       transactions: Избранные транзакции
       users: Избранные пользователи
   feed: Фид
@@ -433,6 +439,8 @@ ru:
     posts: Статьи
     profile: Профиль
     promotions: Продвижение
+    publishing: Издательство
+    realms: Площадки
     settings: Настройки
     transactions: Транзакции
     users: Пользователи
@@ -470,6 +478,12 @@ ru:
       are_you_sure: Вы уверены? Настройки родительской категории будут сброшены
     update:
       post_category_was_successfully_updated: Категория статей была успешно изменена
+  post_categories_count:
+    few: "%{count} категории статей"
+    many: "%{count} категорий статей"
+    one: "%{count} категория статей"
+    other: "%{count} категорий статей"
+    zero: 0 категорий статей
   posts:
     create:
       post_was_successfully_created: Статья была успешно создана
@@ -534,7 +548,20 @@ ru:
       language: Язык статьи
     update:
       post_was_successfully_updated: Статья была успешно изменена
+  posts_count:
+    few: "%{count} статьи"
+    many: "%{count} статей"
+    one: "%{count} статья"
+    other: "%{count} статей"
+    zero: 0 статей
   products: Офферы
+  realms:
+    create:
+      realm_was_successfully_created: Площадка была успешно создана
+    destroy:
+      realm_was_successfully_destroyed: Площадка была успешно удалена
+    update:
+      realm_was_successfully_updated: Площадка была успешно изменена
   save: Сохранить
   search: Искать
   search_placeholder: Введите текст для поиска...
@@ -609,7 +636,7 @@ ru:
         intro: Вступление
         post_category: Категория
         published_at: Дата публикации
-        realm: Сайт
+        realm: Площадка
         status: Статус
         tags: Теги
         title: Заголовок
@@ -621,7 +648,7 @@ ru:
         path: Полный путь категории
         posts: Дочерние Статьи
         posts_count: Статей в категории
-        realm: Сайт категории
+        realm: Площадка категории
         title: Название категории
       profile_form:
         bio: О себе
@@ -629,6 +656,12 @@ ru:
         messengers: Мессенджеры
         name: Имя
         time_zone: Часовой пояс
+      realm:
+        domain: Домен
+        id: Id
+        kind: Тип
+        locale: Локаль
+        title: Название
       widgets_simple:
         pictures:
           _destroy: Удалить
@@ -792,6 +825,7 @@ ru:
     offers: Все офферы
     post_categories: Категории статей
     posts: Статьи
+    realms: Площадки
     settings: Настройки
     transactions: Транзакции
     users: Пользователи

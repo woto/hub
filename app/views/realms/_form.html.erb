@@ -1,0 +1,53 @@
+<%= simple_form_for(realm,
+                    html: {
+                      'data-turbo': false
+                    }) do |f| %>
+
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="row">
+    <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-inputs">
+
+            <%= f.input :domain,
+                        wrapper_html: {class: 'mb-3'},
+                        required: true,
+                        label_html: { :class => "mb-2" } %>
+
+            <%= f.input :title,
+                        wrapper_html: {class: 'mb-3'},
+                        required: true,
+                        label_html: { :class => "mb-2" } %>
+
+            <%= f.input :kind,
+                        wrapper_html: {class: 'mb-3'},
+                        required: true,
+                        label_html: { :class => "mb-2" },
+                        input_html: { class: 'form-select'},
+                        collection: Realm.kinds.keys
+            %>
+
+            <%= f.input :locale,
+                        required: true,
+                        wrapper_html: {class: 'mb-3'},
+                        input_html: { class: 'form-select'},
+                        as: :select,
+                        collection: Rails.application.config.global[:locales].map { |locale| [locale[:title], locale[:locale]] }.
+                          sort { |left, right| left.first <=> right.first }
+            %>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to t('back'), realms_path, class: "btn btn-white" %>
+  </div>
+<% end %>

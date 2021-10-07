@@ -26,13 +26,13 @@ describe FavoritesItem, type: :model do
 
   let(:favorite) { create(:favorite, kind: :offers) }
 
-  it { is_expected.to belong_to(:favorite).counter_cache(true).touch(true) }
+  it { is_expected.to belong_to(:favorite).counter_cache(true) }
   it { is_expected.to validate_presence_of(:kind) }
   it { is_expected.to validate_presence_of(:ext_id) }
 
   it {
     expect(subject).to define_enum_for(:kind).with_values(
-      %i[users posts transactions accounts checks feeds post_categories advertiser_id feed_id feed_category_id _id]
+      %i[users posts transactions accounts checks feeds post_categories advertiser_id feed_id feed_category_id _id realms]
     )
   }
 

@@ -51,13 +51,13 @@ describe User, type: :model do
   it { is_expected.to have_db_index(:unlock_token).unique }
   it { expect(subject).to define_enum_for(:role).with_values(%i[user manager admin]) }
   it { is_expected.to have_one_attached(:avatar) }
-  it { is_expected.to have_one(:profile).dependent(:destroy) }
-  it { is_expected.to have_many(:posts).dependent(:destroy) }
-  it { is_expected.to have_many(:identities).dependent(:destroy) }
-  it { is_expected.to have_many(:workspaces).dependent(:destroy) }
-  it { is_expected.to have_many(:accounts) }
-  it { is_expected.to have_many(:checks) }
-  it { is_expected.to have_many(:favorites) }
+  it { is_expected.to have_one(:profile).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:posts).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:identities).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:workspaces).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:accounts).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:checks).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:favorites).dependent(:restrict_with_exception) }
 
   describe '#set_default_role' do
     subject { user.role }

@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         resources :offers, only: [:index]
       end
       resources :post_categories, only: [:index]
+      resources :realms, only: [:index]
       # TODO: remove
       resources :categories, only: [:index] do
         resources :offers, only: [:index]
@@ -92,6 +93,7 @@ Rails.application.routes.draw do
     resources :advertisers
     resources :checks
     resources :post_categories
+    resources :realms
     resources :favorites do
       collection do
         get :navbar_favorite_list
@@ -121,6 +123,7 @@ Rails.application.routes.draw do
       end
     end
     resources :post_categories, only: [:index]
+    resources :realms, only: [:index]
     resources :feed_categories, only: [:index]
     resources :transactions, only: [:index]
 

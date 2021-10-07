@@ -28,6 +28,10 @@ module Elastic
         pick('post_categories')
       end
 
+      def realms
+        pick('realms')
+      end
+
       def feeds
         pick('feeds')
       end

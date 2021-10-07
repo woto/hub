@@ -26,31 +26,39 @@
         disabled: false
     ) %>
 
-    <%= render Left::Menu::ItemComponent.new(
-        title: t('left_menu.posts'),
-        path: { controller: '/tables/posts', action: 'index' },
-        current_page: request.path.yield_self { |p| p.include?('posts') },
-        icon: '<i class="fas fa-pen"></i>',
-        disabled: !user_signed_in?
-    ) %>
-
-
-    <%= render Left::Menu::ItemComponent.new(
-      title: t('left_menu.post_categories'),
-      path: { controller: '/tables/post_categories', action: 'index' },
-      current_page: request.path.yield_self { |p| p.include?('post_categories') },
-      icon: '<i class="fas fa-stream"></i>',
+    <%= render Left::Menu::DropdownComponent.new(
+      title: t("left_menu.publishing"),
+      current_page: request.path.yield_self { |p| p.include?('posts') || p.include?('realms') || p.include?('post_categories') },
+      icon: '<i class="fas fa-pen"></i>',
       disabled: !user_signed_in?
-    ) %>
+    ) do |component| %>
 
-    <% if policy(:user).index? %>
-      <%= render Left::Menu::ItemComponent.new(
-          title: t('left_menu.users'),
-          path: { controller: '/tables/users', action: 'index' },
-          current_page: request.path.yield_self { |p| p.include?('users') },
-          icon: '<i class="far fa-user"></i>',
-          disabled: false
-      ) %>
+      <% component.items do %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+          title: t('left_menu.posts'),
+          path: { controller: '/tables/posts', action: 'index' },
+          current_page: request.path.yield_self { |p| p.include?('posts') },
+          # icon: '<i class="fas fa-pen"></i>',
+          disabled: !user_signed_in?
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+          title: t('left_menu.realms'),
+          path: { controller: '/tables/realms', action: 'index' },
+          current_page: request.path.yield_self { |p| p.include?('realms') },
+          # icon: '<i class="fas fa-window-restore"></i>',
+          disabled: !user_signed_in?
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+          title: t('left_menu.post_categories'),
+          path: { controller: '/tables/post_categories', action: 'index' },
+          current_page: request.path.yield_self { |p| p.include?('post_categories') },
+          # icon: '<i class="fas fa-stream"></i>',
+          disabled: !user_signed_in?
+        ) %>
+      <% end %>
     <% end %>
 
     <%# render Left::Menu::ItemComponent.new(
@@ -92,6 +100,16 @@
         ) %>
 
       <% end %>
+    <% end %>
+
+    <% if policy(:user).index? %>
+      <%= render Left::Menu::ItemComponent.new(
+        title: t('left_menu.users'),
+        path: { controller: '/tables/users', action: 'index' },
+        current_page: request.path.yield_self { |p| p.include?('users') },
+        icon: '<i class="far fa-user"></i>',
+        disabled: false
+      ) %>
     <% end %>
 
     <%= render Left::Menu::ItemComponent.new(

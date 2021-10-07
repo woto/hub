@@ -45,7 +45,7 @@ class Feed < ApplicationRecord
   # include Elasticsearch::Model::Callbacks
   index_name "#{Rails.env}.feeds"
 
-  belongs_to :advertiser, counter_cache: true, touch: true
+  belongs_to :advertiser, counter_cache: true
   has_many :feed_categories, dependent: :destroy
 
   validates :url, :name, :operation, presence: true

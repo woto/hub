@@ -32,6 +32,7 @@ class Realm < ApplicationRecord
 
   validates :kind, :locale, :title, :domain, presence: true
   validates :kind, uniqueness: { scope: :locale }, unless: :post?
+  validates :title, :domain, uniqueness: true
 
   def to_label
     title
@@ -45,7 +46,9 @@ class Realm < ApplicationRecord
       locale: locale,
       post_categories_count: post_categories_count,
       posts_count: posts_count,
-      title: title
+      title: title,
+      created_at: created_at.utc,
+      updated_at: updated_at.utc
     }
   end
 

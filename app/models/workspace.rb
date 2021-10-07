@@ -22,7 +22,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Workspace < ApplicationRecord
-  belongs_to :user, counter_cache: true, touch: true
+  belongs_to :user, counter_cache: true
 
   validates :name, presence: true
   validates :controller, inclusion: { in: %w[tables/accounts tables/checks tables/favorites tables/feeds tables/help

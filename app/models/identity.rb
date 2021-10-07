@@ -23,5 +23,5 @@
 
 # https://github.com/omniauth/omniauth/wiki/Managing-Multiple-Providers
 class Identity < ApplicationRecord
-  belongs_to :user, counter_cache: true, touch: true
+  belongs_to :user, counter_cache: true
 end

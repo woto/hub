@@ -30,7 +30,7 @@ describe PostCategory, type: :model, responsible: :admin do
   it_behaves_like 'logidzable'
 
   describe 'associations' do
-    it { is_expected.to belong_to(:realm).counter_cache(true).touch(true) }
+    it { is_expected.to belong_to(:realm).counter_cache(true) }
     it { is_expected.to have_many(:posts) }
   end
 

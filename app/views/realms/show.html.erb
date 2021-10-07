@@ -1,0 +1,66 @@
+<% content_for :title do %>
+  <%= t("titles.post_categories") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.realms'), realms_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_realm'), realm_path(@realm) %>
+  </li>
+<% end %>
+
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <dl class="row">
+                <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'realm']) %> </dt>
+                <dd class="col-sm-9"> <%= @realm.id %> </dd>
+
+                <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'realm']) %> </dt>
+                <dd class="col-sm-9"> <%= @realm.title %> </dd>
+
+                <dt class="col-sm-3"> <%= t('domain', scope: ['simple_form', 'labels', 'realm']) %> </dt>
+                <dd class="col-sm-9"> <%= @realm.domain %> </dd>
+
+                <dt class="col-sm-3"> <%= t('locale', scope: ['simple_form', 'labels', 'realm']) %> </dt>
+                <dd class="col-sm-9"> <%= @realm.locale %> </dd>
+
+                <dt class="col-sm-3"> <%= t('kind', scope: ['simple_form', 'labels', 'realm']) %> </dt>
+                <dd class="col-sm-9"> <%= @realm.kind %> </dd>
+
+                <dt class="col-sm-3"> <%= t('created_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@realm.created_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@realm.updated_at) %> </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= link_to t('edit'), edit_realm_path(@realm),
+                  class: "btn btn-primary #{'disabled' unless policy(@realm).edit?}",
+                  'data-turbo': false %>
+      <%= link_to t('delete'), realm_path(@realm.id), class: "btn btn-danger #{'disabled' unless policy(@realm).destroy?}", method: :delete, data: { confirm: t('are_you_sure') } %>
+      <%= link_to t('back'), realms_path, class: "btn btn-white" %>
+    </div>
+  </div>
+</div>
+

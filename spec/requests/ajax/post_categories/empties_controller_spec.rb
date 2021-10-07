@@ -13,8 +13,7 @@ describe Ajax::PostCategories::EmptiesController, responsible: :admin, type: :re
     another_realm = Realm.pick(locale: :en, kind: :post)
     create(:post_category, title: 'Другая категория', realm: another_realm)
 
-    post_category_with_post = create(:post_category, title: 'Другая категория', realm: realm)
-    create(:post, post_category: post_category_with_post)
+    post_category_with_post = create(:post_category, title: 'Другая категория', realm: realm, posts_count: 1)
   end
 
   it 'requires authentication' do

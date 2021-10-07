@@ -76,7 +76,7 @@ class GlobalHelper
       PostCategory.setup_index(Columns::ExchangeRateForm)
       create_index(elastic_client, ExchangeRate)
 
-      PostCategory.setup_index(Columns::RealmForm)
+      Realm.setup_index(Columns::RealmForm)
       create_index(elastic_client, Realm)
 
       elastic_client.indices.refresh index: Elastic::IndexName.wildcard

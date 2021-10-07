@@ -52,13 +52,14 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  has_one :profile, dependent: :destroy
-  has_many :posts, dependent: :destroy
-  has_many :identities, dependent: :destroy
-  has_many :workspaces, dependent: :destroy
-  has_many :accounts, as: :subjectable
-  has_many :checks
-  has_many :favorites
+  # TODO: decide later how to implement "cancel my account"
+  has_one :profile, dependent: :restrict_with_exception
+  has_many :posts, dependent: :restrict_with_exception
+  has_many :identities, dependent: :restrict_with_exception
+  has_many :workspaces, dependent: :restrict_with_exception
+  has_many :accounts, as: :subjectable, dependent: :restrict_with_exception
+  has_many :checks, dependent: :restrict_with_exception
+  has_many :favorites, dependent: :restrict_with_exception
 
   def as_indexed_json(options={})
     {

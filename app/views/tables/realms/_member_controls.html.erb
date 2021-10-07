@@ -1,0 +1,21 @@
+<div class="dropdown">
+
+  <button type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown">
+    <%= t('buttons.controls') %>
+  </button>
+
+  <div class="dropdown-menu">
+    <%# TODO: eliminate n+1 %>
+    <% realm = Realm.find(row.id) %>
+    <% if policy(realm).show? %>
+      <%= link_to t('buttons.show'), realm_path(row.id), class: 'dropdown-item' %>
+    <% end %>
+    <% if policy(realm).edit? %>
+      <%= link_to t('buttons.edit'), edit_realm_path(row.id), class: 'dropdown-item' %>
+    <% end %>
+    <% if policy(realm).destroy? %>
+      <%= link_to t('buttons.delete'), realm_path(row.id), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
+    <% end %>
+
+  </div>
+</div>

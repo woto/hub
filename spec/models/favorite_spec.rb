@@ -28,11 +28,11 @@ describe Favorite, type: :model do
 
   it {
     expect(subject).to define_enum_for(:kind).with_values(
-      %i[users posts transactions accounts checks feeds post_categories offers]
+      %i[users posts transactions accounts checks feeds post_categories offers realms]
     )
   }
 
-  it { is_expected.to belong_to(:user).counter_cache(true).touch(true) }
+  it { is_expected.to belong_to(:user).counter_cache(true) }
   it { is_expected.to have_many(:favorites_items).dependent(:destroy) }
   it { is_expected.to validate_presence_of(:kind) }
   it { is_expected.to validate_presence_of(:name) }

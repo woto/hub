@@ -20,10 +20,10 @@
 #  fk_rails_...  (favorite_id => favorites.id)
 #
 class FavoritesItem < ApplicationRecord
-  belongs_to :favorite, counter_cache: true, touch: true
+  belongs_to :favorite, counter_cache: true
 
   enum kind: { users: 0, posts: 1, transactions: 2, accounts: 3, checks: 4, feeds: 5, post_categories: 6,
-               advertiser_id: 7, feed_id: 8, feed_category_id: 9, _id: 10 }
+               advertiser_id: 7, feed_id: 8, feed_category_id: 9, _id: 10, realms: 11 }
 
   validates :ext_id, :kind, presence: true
   validate :kind, :check_kind_matching

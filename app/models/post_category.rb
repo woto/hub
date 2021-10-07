@@ -29,7 +29,7 @@ class PostCategory < ApplicationRecord
   include Elasticable
   index_name "#{Rails.env}.post_categories"
 
-  belongs_to :realm, counter_cache: true, touch: true
+  belongs_to :realm, counter_cache: true
 
   has_ancestry cache_depth: true
   has_many :posts, dependent: :restrict_with_error

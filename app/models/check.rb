@@ -23,7 +23,7 @@
 #
 class Check < ApplicationRecord
   has_logidze ignore_log_data: true
-  belongs_to :user, counter_cache: true, touch: true
+  belongs_to :user, counter_cache: true
 
   include Elasticable
   # include Elasticsearch::Model::Callbacks

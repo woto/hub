@@ -70,6 +70,7 @@ en:
     edit_check: Edit check
     edit_post: Edit post
     edit_post_category: Edit post category
+    edit_realm: Edit realm
     email: Email
     favorites: Favorites
     feeds: Feeds
@@ -79,15 +80,18 @@ en:
     new_check: New check
     new_post: New post
     new_post_category: New post category
+    new_realm: New realm
     news: News
     offers: Offers
     password: Password
     post_categories: Post categories
     posts: Posts
     profile: Profile
+    realms: Realms
     show_check: Show check
     show_post: Show post
     show_post_category: Show post category
+    show_realm: Show realm
     transactions: transactions
     users: users
   buttons:
@@ -105,6 +109,7 @@ en:
     new_feed: New feed
     new_post: New post
     new_post_category: New post category
+    new_realm: New realm
     offer: Offer
     offers: Offers
     offers_count: Offers count
@@ -275,6 +280,7 @@ en:
       offers: Favorites offers
       post_categories: Favorites post categories
       posts: Favorites posts
+      realms: Realms
       transactions: Favorites transactions
       users: Favorites users
   feed: Feed
@@ -423,6 +429,8 @@ en:
     posts: Posts
     profile: Profile
     promotions: Promotions
+    publishing: Publishing
+    realms: Realms
     settings: Settings
     transactions: Transactions
     users: Users
@@ -460,6 +468,12 @@ en:
       are_you_sure: Are you sure? The parent category will be reset
     update:
       post_category_was_successfully_updated: Post category was successfully updated
+  post_categories_count:
+    few: "%{count} post categories"
+    many: "%{count} post categories"
+    one: "%{count} post category"
+    other: "%{count} post categories"
+    zero: 0 post categories
   posts:
     create:
       post_was_successfully_created: Post was successfully created
@@ -524,7 +538,20 @@ en:
       language: Article language
     update:
       post_was_successfully_updated: Post was successfully updated
+  posts_count:
+    few: "%{count} posts"
+    many: "%{count} posts"
+    one: "%{count} post"
+    other: "%{count} posts"
+    zero: 0 posts
   products: Products
+  realms:
+    create:
+      realm_was_successfully_created: Realm was successfully created
+    destroy:
+      realm_was_successfully_destroyed: Realm was successfully destroyed
+    update:
+      realm_was_successfully_updated: Realm was successfully updated
   save: Save
   search: Search
   search_placeholder: Enters text to search...
@@ -619,6 +646,12 @@ en:
         messengers: Messengers
         name: Name
         time_zone: Time zone
+      realm:
+        domain: Domain
+        id: Id
+        kind: Kind
+        locale: Locale
+        title: Title
       widgets_simple:
         pictures:
           _destroy: Destroy
@@ -782,6 +815,7 @@ en:
     offers: Offers
     post_categories: Post categories
     posts: Posts
+    realms: Realms
     settings: Settings
     transactions: Transactions
     users: Users
