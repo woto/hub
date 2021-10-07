@@ -2,7 +2,7 @@
 
 module Columns
   class PostCategoryForm < BaseForm
-    DEFAULTS = %w[id title realm_id path].freeze
+    DEFAULTS = %w[id title realm_id posts_count path].freeze
 
     self.all_columns = [
       { key: 'id',                       pg: PostCategory.columns_hash['id'], roles: %w[guest user manager admin] },

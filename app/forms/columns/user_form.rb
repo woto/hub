@@ -2,7 +2,7 @@
 
 module Columns
   class UserForm < BaseForm
-    DEFAULTS = %w[id email].freeze
+    DEFAULTS = %w[id email posts_count].freeze
 
     self.all_columns = [
       { key: 'id'                               , pg: User.columns_hash['id'], roles: ['manager', 'admin'] },
