@@ -10,7 +10,10 @@
 
   <%= f.input :bio,
               required: true,
-              input_html: {rows: 4},
+              input_html: {
+                rows: 4,
+                'data-controller': 'textarea-autogrow'
+              },
               wrapper_html: {class: 'mb-3'},
               as: :text
   %>
