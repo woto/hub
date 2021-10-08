@@ -102,9 +102,9 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div style="max-width: 600px" class="fs-6 lh-lg" data-turbo="false">
+                <%= tag.div class: 'fs-6 lh-lg', style: 'max-width: 600px', 'data-controller': 'lightbox', 'data-turbo':'false' do %>
                   <%= @post.intro %>
-                </div>
+                <% end %>
               </div>
             </div>
           </div>

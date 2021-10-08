@@ -5,7 +5,7 @@
       <%= l Time.zone.parse(@article['published_at']), format: :short if @article %>
     </div>
 
-    <div class="card-body">
+    <%= tag.div class: 'card-body', 'data-controller': 'lightbox', 'data-turbo':'false' do %>
       <% if @article %>
         <%== @article['intro'] %>
       <% else %>
@@ -16,7 +16,7 @@
           </p>
         </div>
       <% end %>
-    </div>
+    <% end %>
 
     <% if @article %>
       <div class="d-flex card-header justify-content-between">
