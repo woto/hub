@@ -1,9 +1,27 @@
+<%= content_for(:after_body_open) do %>
+  <%= render 'trackers_tawk' %>
+<% end %>
+
+<%= content_for(:after_head_open) do %>
+  <%== Current.realm.after_head_open %>
+<% end %>
+
+<%= content_for(:before_head_close) do %>
+  <%== Current.realm.before_head_close %>
+<% end %>
+
+<% content_for(:after_body_open) do %>
+  <%== Current.realm.after_body_open %>
+<% end %>
+
+<% content_for(:before_body_close) do %>
+  <%== Current.realm.before_body_close %>
+<% end %>
+
 <% content_for :body do %>
   <body class="antialiased">
 
-    <%= render 'tawk' %>
-    <%= content_for :prefix_inline_css %>
-    <%= content_for :prefix_inline_js %>
+    <%= content_for(:after_body_open) %>
 
     <div class="wrapper">
       <aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent">
@@ -76,8 +94,7 @@
       </section>
     </div>
 
-    <%= content_for :postfix_inline_css %>
-    <%= content_for :postfix_inline_js %>
+    <%= content_for :before_body_close %>
 
   </body>
 <% end %>

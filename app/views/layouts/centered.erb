@@ -1,12 +1,19 @@
+<%= content_for(:after_body_open) do %>
+  <%= render 'trackers_tawk' %>
+<% end %>
+
+<% content_for(:before_head_close) do %>
+  <%= render 'trackers_google' %>
+  <%= render 'trackers_yandex' %>
+<% end %>
+
 <% content_for :body do %>
 
   <%= tag.body class: 'antialiased border-top-wide border-primary d-flex flex-column',
                'data-controller': "global",
                **data_attributes_for_body do  %>
 
-    <%= render 'tawk' %>
-    <%= content_for :prefix_inline_css %>
-    <%= content_for :prefix_inline_js %>
+    <%= content_for(:after_body_open) %>
 
     <div class="flex-fill d-flex flex-column justify-content-center">
       <div class="container-tight py-6">
@@ -14,8 +21,7 @@
       </div>
     </div>
 
-    <%= content_for :postfix_inline_css %>
-    <%= content_for :postfix_inline_js %>
+    <%= content_for :before_body_close %>
 
   <% end %>
 <% end %>

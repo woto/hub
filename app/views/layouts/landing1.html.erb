@@ -1,7 +1,18 @@
+<%= content_for(:after_body_open) do %>
+  <%= render 'trackers_tawk' %>
+<% end %>
+
+<% content_for(:before_head_close) do %>
+  <%= render 'trackers_google' %>
+  <%= render 'trackers_yandex' %>
+<% end %>
+
 <!DOCTYPE html>
   <html lang="ru-RU" dir="ltr">
 
   <head>
+    <%= content_for(:after_head_open) %>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,10 +41,13 @@
     <!-- ===============================================-->
     <link href="/landing1/assets/css/theme.css" rel="stylesheet" />
 
+    <%= content_for(:before_head_close) %>
   </head>
 
 
   <body>
+
+  <%= content_for(:after_body_open) %>
 
   <!-- ===============================================-->
   <!--    Main Content-->
@@ -417,6 +431,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!--  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">-->
+  <%= content_for :before_body_close %>
   </body>
 
 </html>

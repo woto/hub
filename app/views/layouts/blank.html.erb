@@ -1,6 +1,8 @@
 <!doctype html>
 <%= tag.html lang: I18n.locale.downcase do %>
 <head>
+  <%= content_for(:after_head_open) %>
+
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <title><%= content_for :title %></title>
@@ -13,8 +15,7 @@
   <%= stylesheet_packs_with_chunks_tag 'application' %>
   <%= javascript_packs_with_chunks_tag 'application' %>
 
-  <%= render 'google_analytics' %>
-  <%= render 'yandex_metrica' %>
+  <%= content_for(:before_head_close) %>
 </head>
 
 <%= content_for(:body) %>

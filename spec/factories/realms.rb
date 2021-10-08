@@ -3,6 +3,10 @@
 # Table name: realms
 #
 #  id                    :bigint           not null, primary key
+#  after_body_open       :text
+#  after_head_open       :text
+#  before_body_close     :text
+#  before_head_close     :text
 #  domain                :string           not null
 #  kind                  :integer          not null
 #  locale                :string           not null

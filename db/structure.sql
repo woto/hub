@@ -960,7 +960,11 @@ CREATE TABLE public.realms (
     domain character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    after_head_open text,
+    before_head_close text,
+    after_body_open text,
+    before_body_close text
 );
 
 
@@ -2225,6 +2229,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210808221850'),
 ('20210810011556'),
 ('20210909045616'),
-('20210926170012');
+('20210926170012'),
+('20211008220422');
 
 

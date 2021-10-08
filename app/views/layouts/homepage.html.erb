@@ -1,34 +1,41 @@
+<%= content_for(:after_body_open) do %>
+  <%= render 'trackers_tawk' %>
+<% end %>
+
+<% content_for(:before_head_close) do %>
+  <%= render 'trackers_google' %>
+  <%= render 'trackers_yandex' %>
+<% end %>
+
+<% content_for :after_body_open do %>
+  <style>
+      body {
+          background: url(<%= asset_pack_path 'media/images/world_map.png' %>) no-repeat left !important;
+          text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+          box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+      }
+
+      .noshadow {
+          text-shadow: none;
+      }
+
+      .nav-link {
+          color: white;
+      }
+
+      .nav-link:hover {
+          color: rgba(255, 255, 255, 0.7);
+      }
+  </style>
+<% end %>
+
 <% content_for :body do %>
 
   <%= tag.body class: "d-flex h-100 text-white bg-dark",
                'data-controller': "global",
                **data_attributes_for_body do %>
 
-  <% content_for :prefix_inline_css do %>
-    <style>
-        body {
-            background: url(<%= asset_pack_path 'media/images/world_map.png' %>) no-repeat left !important;
-            text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-            box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-        }
-
-        .noshadow {
-            text-shadow: none;
-        }
-
-        .nav-link {
-            color: white;
-        }
-
-        .nav-link:hover {
-            color: rgba(255, 255, 255, 0.7);
-        }
-    </style>
-  <% end %>
-
-  <%= render 'tawk' %>
-  <%= content_for :prefix_inline_css %>
-  <%= content_for :prefix_inline_js %>
+  <%= content_for(:after_body_open) %>
 
   <div class="container-lg d-flex w-100 h-100 p-3 mx-auto flex-column" style="max-width: 90em">
 
@@ -77,8 +84,7 @@
     </footer>
   </div>
 
-  <%= content_for :postfix_inline_css %>
-  <%= content_for :postfix_inline_js %>
+  <%= content_for :before_body_close %>
 
   <% end %>
 

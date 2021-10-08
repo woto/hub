@@ -1,3 +1,12 @@
+<% content_for(:before_head_close) do %>
+  <%= render 'trackers_google' %>
+  <%= render 'trackers_yandex' %>
+<% end %>
+
+<%= content_for(:after_body_open) do %>
+  <%= render 'trackers_tawk' %>
+<% end %>
+
 <% content_for(:body) do %>
 
   <%= tag.body class: "antialiased",
@@ -11,14 +20,12 @@
                                posts-widgets:showToast->global#showToast",
                **data_attributes_for_body do %>
 
+  <%= content_for(:after_body_open) %>
+
   <div class="position-absolute" style="z-index: 10000">
     <div data-global-target="toastPlaceholder" class="position-fixed" style="top: 0; right: 0;">
     </div>
   </div>
-
-  <%= render 'tawk' %>
-  <%= content_for :prefix_inline_css %>
-  <%= content_for :prefix_inline_js %>
 
   <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
 
@@ -96,11 +103,10 @@
     </main>
   </section>
 
-  <%= content_for :postfix_inline_css %>
-  <%= content_for :postfix_inline_js %>
-  <%= content_for :before_body_close %>
+    <div data-controller="modal-singleton"></div>
 
-  <div data-controller="modal-singleton"></div>
+    <%= content_for :before_body_close %>
+
   <% end %>
 <% end %>
 

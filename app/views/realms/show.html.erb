@@ -32,7 +32,7 @@
                 <dd class="col-sm-9"> <%= @realm.title %> </dd>
 
                 <dt class="col-sm-3"> <%= t('domain', scope: ['simple_form', 'labels', 'realm']) %> </dt>
-                <dd class="col-sm-9"> <%= @realm.domain %> </dd>
+                <dd class="col-sm-9"> <%= link_to @realm.domain, articles_url(host: @realm.domain, locale: nil) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('locale', scope: ['simple_form', 'labels', 'realm']) %> </dt>
                 <dd class="col-sm-9"> <%= @realm.locale %> </dd>

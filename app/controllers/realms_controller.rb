@@ -66,6 +66,6 @@ class RealmsController < ApplicationController
   end
 
   def realm_params
-    params.require(:realm).permit(:title, :domain, :locale, :kind)
+    params.require(:realm).permit(:title, :domain, :locale, :kind, :after_head_open, :before_head_close, :after_body_open, :before_body_close)
   end
 end
