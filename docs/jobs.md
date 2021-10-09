@@ -26,3 +26,4 @@ or
 Feed.count.times { Import::ProcessJob.perform_later }
 ```
 
+Synchronize all feeds
