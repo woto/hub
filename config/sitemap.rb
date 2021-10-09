@@ -1,9 +1,9 @@
 Realm.find_each do |realm|
-  SitemapGenerator::Sitemap.default_host = "https://#{realm.domain}"
-  SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{realm.domain}"
+  SitemapGenerator::Sitemap.default_host = root_url(host: realm.domain, protocol: 'https')
+  SitemapGenerator::Sitemap.sitemaps_path = File.join("sitemaps", realm.domain)
   SitemapGenerator::Sitemap.create do
     realm.posts.find_each do |post|
-      add articles_url(article: post, host: realm.domain), lastmod: post.updated_at
+      add article_path(id: post.id, locale: nil), lastmod: post.updated_at
     end
 
     SitemapGenerator::Sitemap.ping_search_engines
