@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
   scope constraints: WebsiteConstraint.new do
     root to: 'tables/articles#index', as: :articles
+    get '/robots.txt', to: 'robots#index', as: :robots
+
     scope controller: 'tables/articles', as: :articles do
       get 'month/:month', action: :by_month, as: :by_month
       get 'tag/:tag', action: :by_tag, as: :by_tag, constraints: { tag: %r{[^/]*} }

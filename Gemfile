@@ -116,6 +116,7 @@ gem 'after_commit_everywhere'
 # gem 'ransack'
 gem 'i18n-tasks'
 gem 'mobility', github: 'shioyama/mobility'
+gem 'sitemap_generator'
 gem 'spreadsheet'
 
 # Grape

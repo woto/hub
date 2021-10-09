@@ -36,5 +36,6 @@ __pycache__/
 *.py[cod]
 
 /data/feeds
+/public/sitemaps
 /config/master.key
 /.idea
