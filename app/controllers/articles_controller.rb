@@ -5,8 +5,10 @@ class ArticlesController < ApplicationController
   layout 'website'
 
   def show
-    @article = Post.find(params[:id])
+    realm = Current.realm
+    @article = realm.posts.find(params[:id])
     @article_category = @article.post_category
+    response.headers['Link'] = %(<#{article_url(id: @article, host: realm.domain, locale: nil)}>; rel="canonical")
   end
 
   private
