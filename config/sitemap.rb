@@ -1,38 +1,15 @@
-# Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.example.com"
-
-SitemapGenerator::Sitemap.create do
-
-  Realm.find_each do |realm|
-    SitemapGenerator::Sitemap.default_host = "https://#{realm.domain}"
-    SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{realm.domain}"
-    SitemapGenerator::Sitemap.create do
-      realm.posts.find_each do |post|
-        add articles_url(article: post, host: realm.domain)
-      end
+Realm.find_each do |realm|
+  SitemapGenerator::Sitemap.default_host = "https://#{realm.domain}"
+  SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/#{realm.domain}"
+  SitemapGenerator::Sitemap.create do
+    realm.posts.find_each do |post|
+      add articles_url(article: post, host: realm.domain), lastmod: post.updated_at
     end
-  end
 
-  # Put links creation logic here.
-  #
-  # The root path '/' and sitemap index file are added automatically for you.
-  # Links are added to the Sitemap in the order they are specified.
-  #
-  # Usage: add(path, options={})
-  #        (default options are used if you don't specify)
-  #
-  # Defaults: :priority => 0.5, :changefreq => 'weekly',
-  #           :lastmod => Time.now, :host => default_host
-  #
-  # Examples:
-  #
-  # Add '/articles'
-  #
-  #   add articles_path, :priority => 0.7, :changefreq => 'daily'
-  #
-  # Add all articles:
-  #
-  #   Article.find_each do |article|
-  #     add article_path(article), :lastmod => article.updated_at
-  #   end
+    SitemapGenerator::Sitemap.ping_search_engines
+    # The official docs says: "Not needed if you use the rake tasks"
+    # But I see pinging only on last website. So I added this line.
+    # There is some drawbacks. It seems that last domain pinging twice.
+    # TODO: check this.
+  end
 end
