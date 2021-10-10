@@ -51,6 +51,10 @@ services:
       - "traefik.http.routers.cpafun_ru.entrypoints=websecure"
       - "traefik.http.routers.cpafun_ru.tls.certresolver=myresolver"
 
+      - "traefik.http.routers.checkshop_site.rule=Host(`checkshop.site`)"
+      - "traefik.http.routers.checkshop_site.entrypoints=websecure"
+      - "traefik.http.routers.checkshop_site.tls.certresolver=myresolver"
+
   sidekiq:
     env_file:
       - .env
