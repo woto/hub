@@ -1,4 +1,4 @@
-class AddLogidzeToRealms < ActiveRecord::Migration[5.0]
+class AddLogidzeToRealms < ActiveRecord::Migration[6.1]
   def change
     add_column :realms, :log_data, :jsonb
 
@@ -10,7 +10,7 @@ class AddLogidzeToRealms < ActiveRecord::Migration[5.0]
           WHEN (coalesce(current_setting('logidze.disabled', true), '') <> 'on')
           -- Parameters: history_size_limit (integer), timestamp_column (text), filtered_columns (text[]),
           -- include_columns (boolean), debounce_time_ms (integer)
-          EXECUTE PROCEDURE logidze_logger(null, 'updated_at');
+          EXECUTE PROCEDURE logidze_logger(10, 'updated_at');
 
         SQL
       end

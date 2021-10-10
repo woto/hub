@@ -1,12 +1,12 @@
-class AddLogidzeToChecks < ActiveRecord::Migration[6.1]
+class AddLogidzeToAccounts < ActiveRecord::Migration[6.1]
   def change
-    add_column :checks, :log_data, :jsonb
+    add_column :accounts, :log_data, :jsonb
 
     reversible do |dir|
       dir.up do
         execute <<~SQL
-          CREATE TRIGGER logidze_on_checks
-          BEFORE UPDATE OR INSERT ON checks FOR EACH ROW
+          CREATE TRIGGER logidze_on_accounts
+          BEFORE UPDATE OR INSERT ON accounts FOR EACH ROW
           WHEN (coalesce(current_setting('logidze.disabled', true), '') <> 'on')
           -- Parameters: history_size_limit (integer), timestamp_column (text), filtered_columns (text[]),
           -- include_columns (boolean), debounce_time_ms (integer)
@@ -16,7 +16,7 @@ class AddLogidzeToChecks < ActiveRecord::Migration[6.1]
       end
 
       dir.down do
-        execute "DROP TRIGGER IF EXISTS logidze_on_checks on checks;"
+        execute "DROP TRIGGER IF EXISTS logidze_on_accounts on accounts;"
       end
     end
   end

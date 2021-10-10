@@ -328,7 +328,8 @@ CREATE TABLE public.accounts (
     subjectable_id bigint NOT NULL,
     currency integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -614,7 +615,8 @@ CREATE TABLE public.exchange_rates (
     extra_options jsonb NOT NULL,
     posts_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
 );
 
 
@@ -773,8 +775,8 @@ CREATE TABLE public.feeds (
     downloaded_file_size bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
-    locked_by_tid character varying DEFAULT ''::character varying NOT NULL
+    locked_by_tid character varying DEFAULT ''::character varying NOT NULL,
+    log_data jsonb
 );
 
 
@@ -844,7 +846,8 @@ CREATE TABLE public.post_categories (
     ancestry_depth integer DEFAULT 0,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    ancestry character varying
+    ancestry character varying,
+    log_data jsonb
 );
 
 
@@ -960,11 +963,11 @@ CREATE TABLE public.realms (
     domain character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     after_head_open text,
     before_head_close text,
     after_body_open text,
-    before_body_close text
+    before_body_close text,
+    log_data jsonb
 );
 
 
@@ -1130,7 +1133,8 @@ CREATE TABLE public.users (
     favorites_count integer DEFAULT 0 NOT NULL,
     workspaces_count integer DEFAULT 0 NOT NULL,
     profiles_count integer DEFAULT 0 NOT NULL,
-    identities_count integer DEFAULT 0 NOT NULL
+    identities_count integer DEFAULT 0 NOT NULL,
+    log_data jsonb
 );
 
 
@@ -1981,38 +1985,66 @@ CREATE INDEX index_workspaces_on_user_id ON public.workspaces USING btree (user_
 
 
 --
+-- Name: accounts logidze_on_accounts; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
 -- Name: advertisers logidze_on_advertisers; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_advertisers BEFORE INSERT OR UPDATE ON public.advertisers FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+CREATE TRIGGER logidze_on_advertisers BEFORE INSERT OR UPDATE ON public.advertisers FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
 
 
 --
 -- Name: checks logidze_on_checks; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_checks BEFORE INSERT OR UPDATE ON public.checks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+CREATE TRIGGER logidze_on_checks BEFORE INSERT OR UPDATE ON public.checks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
+-- Name: exchange_rates logidze_on_exchange_rates; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_exchange_rates BEFORE INSERT OR UPDATE ON public.exchange_rates FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
 
 
 --
 -- Name: feeds logidze_on_feeds; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_feeds BEFORE INSERT OR UPDATE ON public.feeds FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+CREATE TRIGGER logidze_on_feeds BEFORE INSERT OR UPDATE ON public.feeds FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
+-- Name: post_categories logidze_on_post_categories; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_post_categories BEFORE INSERT OR UPDATE ON public.post_categories FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
 
 
 --
 -- Name: posts logidze_on_posts; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
 
 
 --
 -- Name: realms logidze_on_realms; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER logidze_on_realms BEFORE INSERT OR UPDATE ON public.realms FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('null', 'updated_at');
+CREATE TRIGGER logidze_on_realms BEFORE INSERT OR UPDATE ON public.realms FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
+-- Name: users logidze_on_users; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
 
 
 --
@@ -2230,6 +2262,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210810011556'),
 ('20210909045616'),
 ('20210926170012'),
-('20211008220422');
+('20211008220422'),
+('20211010185159'),
+('20211010185208'),
+('20211010185217'),
+('20211010185222');
 
 
