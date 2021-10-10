@@ -128,6 +128,7 @@ gem 'grape'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 # gem 'sidekiq-failures'
+gem 'activejob-uniqueness'
 
 # Views
 gem 'kaminari'
