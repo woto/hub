@@ -35,7 +35,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     end
 
     it 'partially uses params in new location path' do
-      expect(page).to have_current_path(articles_path(host: realm.domain, order: :desc, per: 1, sort: :published_at))
+      expect(page).to have_current_path(articles_path(host: realm.domain, per: 1))
     end
   end
 
@@ -47,7 +47,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     end
 
     it 'redirects to system workspace' do
-      expect(page).to have_current_path(articles_path(order: :desc, per: 20, sort: :published_at))
+      expect(page).to have_current_path(articles_path)
     end
   end
 

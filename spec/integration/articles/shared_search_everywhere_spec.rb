@@ -13,7 +13,7 @@ describe 'Articles shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/articles', q: q, per: 20, sort: :published_at, order: :desc, only_path: true }
+        { controller: 'tables/articles', q: q, only_path: true }
       end
     end
   end
@@ -27,7 +27,7 @@ describe 'Articles shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/articles', q: q, per: 20, sort: :published_at, order: :desc, only_path: true }
+        { controller: 'tables/articles', q: q, only_path: true }
       end
     end
   end
@@ -41,7 +41,7 @@ describe 'Articles shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/articles', q: q, per: 20, sort: :published_at, order: :desc, only_path: true }
+        { controller: 'tables/articles', q: q, only_path: true }
       end
     end
   end
@@ -58,7 +58,7 @@ describe 'Articles shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/articles', q: q, per: 20, sort: :published_at, order: :desc, only_path: true }
+        { controller: 'tables/articles', q: q, only_path: true }
       end
     end
   end

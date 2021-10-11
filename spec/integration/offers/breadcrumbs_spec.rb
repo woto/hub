@@ -39,7 +39,7 @@ describe 'Offers breadcrumbs', type: :system do
       active_class = param == :active ? 'active' : '!active'
       link = find_link(
         'Все офферы',
-        href: offers_path(per: 12, q: name, locale: :ru)
+        href: offers_path(q: name, locale: :ru)
       )
       link.ancestor(class: ['breadcrumb-item', active_class])
     end
@@ -50,7 +50,7 @@ describe 'Offers breadcrumbs', type: :system do
       active_class = param == :active ? 'active' : '!active'
       link = find_link(
         advertiser.to_label,
-        href: advertiser_offers_path(advertiser_id: advertiser, per: 12, q: name, locale: :ru)
+        href: advertiser_offers_path(advertiser_id: advertiser, q: name, locale: :ru)
       )
       link.ancestor(class: ['breadcrumb-item', active_class])
     end
@@ -61,7 +61,7 @@ describe 'Offers breadcrumbs', type: :system do
       active_class = param == :active ? 'active' : '!active'
       link = find_link(
         feed.to_label,
-        href: feed_offers_path(feed_id: feed, per: 12, q: name, locale: :ru)
+        href: feed_offers_path(feed_id: feed, q: name, locale: :ru)
       )
       link.ancestor(class: ['breadcrumb-item', active_class])
     end
@@ -72,7 +72,7 @@ describe 'Offers breadcrumbs', type: :system do
       active_class = param == :active ? 'active' : '!active'
       link = find_link(
         parent_feed_category.to_label,
-        href: feed_category_offers_path(feed_category_id: parent_feed_category, per: 12, q: name, locale: :ru)
+        href: feed_category_offers_path(feed_category_id: parent_feed_category, q: name, locale: :ru)
       )
       link.ancestor(class: ['breadcrumb-item', active_class])
     end
@@ -83,7 +83,7 @@ describe 'Offers breadcrumbs', type: :system do
       active_class = param == :active ? 'active' : '!active'
       link = find_link(
         child_feed_category.to_label,
-        href: feed_category_offers_path(feed_category_id: child_feed_category, per: 12, q: name, locale: :ru)
+        href: feed_category_offers_path(feed_category_id: child_feed_category, q: name, locale: :ru)
       )
       link.ancestor(class: ['breadcrumb-item', active_class])
     end
@@ -159,7 +159,7 @@ describe 'Offers breadcrumbs', type: :system do
 
       link = find_link(
         favorite.to_label,
-        href: offers_path(favorite_id: favorite.id, per: 12, q: name, locale: :ru)
+        href: offers_path(favorite_id: favorite.id, q: name, locale: :ru)
       )
       link.ancestor(class: %w[breadcrumb-item active])
     end

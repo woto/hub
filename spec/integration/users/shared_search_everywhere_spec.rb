@@ -12,8 +12,7 @@ describe 'Users shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/users', q: q, columns: %w[id email posts_count], locale: 'ru',
-          per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/users', q: q, locale: 'ru', only_path: true }
       end
     end
   end

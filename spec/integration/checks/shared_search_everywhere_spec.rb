@@ -17,8 +17,7 @@ describe 'Checks shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/checks', q: q, columns: %w[id user_id amount status created_at updated_at],
-          locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/checks', q: q, locale: 'ru', only_path: true }
       end
     end
   end

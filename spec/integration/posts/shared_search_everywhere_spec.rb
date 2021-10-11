@@ -15,8 +15,7 @@ describe 'Posts shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'posts', q: q, columns: %w[id title post_category status amount user_id created_at updated_at],
-          locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'posts', q: q, locale: 'ru', only_path: true }
       end
     end
   end
@@ -33,9 +32,7 @@ describe 'Posts shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/posts', q: q,
-          columns: %w[id title post_category status amount user_id created_at updated_at], locale: 'ru',
-          per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/posts', q: q, locale: 'ru', only_path: true }
       end
     end
   end

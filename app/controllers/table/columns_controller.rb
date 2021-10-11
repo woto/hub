@@ -13,6 +13,13 @@ module Table
       redirect_to url_for(params_for_url)
     end
 
+    # TODO: action?!
+    def workspace
+      OpenStruct.new(
+        columns: nil
+      )
+    end
+
     private
 
     # TODO: to secure

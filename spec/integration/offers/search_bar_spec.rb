@@ -73,7 +73,7 @@ describe Tables::OffersController, type: :system do
       it_behaves_like 'includes item to search inside feed_category' do
         let(:path) do
           feed_category_offers_path(feed_category_id: feed_category.id, q: feed_category.to_label, locale: 'ru',
-                                    per: 12, sort: :id, order: 'desc', only_path: true)
+                                    only_path: true)
         end
       end
     end
@@ -81,8 +81,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search inside feed' do
       it_behaves_like 'includes item to search inside feed' do
         let(:path) do
-          feed_offers_path(feed_id: feed.id, q: feed.to_label, locale: 'ru', per: 12, sort: :id, order: 'desc',
-                           only_path: true)
+          feed_offers_path(feed_id: feed.id, q: feed.to_label, locale: 'ru', only_path: true)
         end
       end
     end
@@ -90,8 +89,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search inside advertiser' do
       it_behaves_like 'includes item to search inside advertiser' do
         let(:path) do
-          advertiser_offers_path(advertiser_id: advertiser.id, q: advertiser.to_label, locale: 'ru', per: 12,
-                                 sort: :id, order: 'desc', only_path: true)
+          advertiser_offers_path(advertiser_id: advertiser.id, q: advertiser.to_label, locale: 'ru', only_path: true)
         end
       end
     end
@@ -99,7 +97,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search everywhere' do
       it_behaves_like 'includes item to search everywhere' do
         let(:path) do
-          offers_path(q: 'everywhere', locale: 'ru', per: 12, sort: :id, order: 'desc', only_path: true)
+          offers_path(q: 'everywhere', locale: 'ru', only_path: true)
         end
       end
     end
@@ -113,8 +111,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search inside feed' do
       it_behaves_like 'includes item to search inside feed' do
         let(:path) do
-          feed_offers_path(feed_id: feed.id, q: feed.to_label, locale: 'ru', per: 12, sort: :id, order: 'desc',
-                           only_path: true)
+          feed_offers_path(feed_id: feed.id, q: feed.to_label, locale: 'ru', only_path: true)
         end
       end
     end
@@ -122,8 +119,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search inside advertiser' do
       it_behaves_like 'includes item to search inside advertiser' do
         let(:path) do
-          advertiser_offers_path(advertiser_id: advertiser.id, q: advertiser.to_label, locale: 'ru', per: 12,
-                                 sort: :id, order: 'desc', only_path: true)
+          advertiser_offers_path(advertiser_id: advertiser.id, q: advertiser.to_label, locale: 'ru', only_path: true)
         end
       end
     end
@@ -131,7 +127,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search everywhere' do
       it_behaves_like 'includes item to search everywhere' do
         let(:path) do
-          offers_path(q: 'everywhere', locale: 'ru', per: 12, sort: :id, order: 'desc', only_path: true)
+          offers_path(q: 'everywhere', locale: 'ru', only_path: true)
         end
       end
     end
@@ -145,8 +141,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search inside advertiser' do
       it_behaves_like 'includes item to search inside advertiser' do
         let(:path) do
-          advertiser_offers_path(advertiser_id: advertiser.id, q: advertiser.to_label, locale: 'ru', per: 12,
-                                 sort: :id, order: 'desc', only_path: true)
+          advertiser_offers_path(advertiser_id: advertiser.id, q: advertiser.to_label, locale: 'ru', only_path: true)
         end
       end
     end
@@ -154,7 +149,7 @@ describe Tables::OffersController, type: :system do
     describe 'includes item to search everywhere' do
       it_behaves_like 'includes item to search everywhere' do
         let(:path) do
-          offers_path(q: 'everywhere', locale: 'ru', per: 12, sort: :id, order: 'desc', only_path: true)
+          offers_path(q: 'everywhere', locale: 'ru', only_path: true)
         end
       end
     end
@@ -166,7 +161,7 @@ describe Tables::OffersController, type: :system do
         before { visit '/ru/offers' }
 
         let(:params) do
-          { controller: 'tables/offers', q: q, locale: 'ru', per: 12, sort: :id, order: :desc, only_path: true }
+          { controller: 'tables/offers', q: q, locale: 'ru', only_path: true }
         end
       end
     end
