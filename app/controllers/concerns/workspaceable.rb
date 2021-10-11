@@ -21,8 +21,6 @@ module Workspaceable
 
       if user_default_workspace
         redirect_to user_default_workspace.path
-      else
-        redirect_to system_default_workspace
       end
     end
 

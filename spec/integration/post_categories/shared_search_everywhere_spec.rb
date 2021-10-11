@@ -13,8 +13,7 @@ describe 'Post categories shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'post_categories', q: q, columns: %w[id title realm_id posts_count path],
-          locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'post_categories', q: q, locale: 'ru', only_path: true }
       end
     end
   end
@@ -29,9 +28,7 @@ describe 'Post categories shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/post_categories', q: q,
-          columns: %w[id title realm_id posts_count path], locale: 'ru',
-          per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/post_categories', q: q, locale: 'ru', only_path: true }
       end
     end
   end

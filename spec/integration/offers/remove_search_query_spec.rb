@@ -9,14 +9,14 @@ describe Tables::OffersController, type: :system do
   context 'when no offers are found' do
     it 'shows remove search query advice' do
       visit offers_path(q: Faker::Alphanumeric.alphanumeric, locale: :ru)
-      expect(page).to have_link(link_text, href: '/ru/offers?per=12')
+      expect(page).to have_link(link_text, href: '/ru/offers')
     end
   end
 
   context 'when at least one offer found' do
-    it 'does not show remove search query advice' do
-      visit offers_path(q: offer['name'], locale: :ru)
-      expect(page).to have_no_link(link_text)
+    it 'shows remove search query advice' do
+      visit offers_path(q: offer['name'].first['#'], locale: :ru)
+      expect(page).to have_link(link_text, href: '/ru/offers')
     end
 
   end

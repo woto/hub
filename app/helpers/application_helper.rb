@@ -64,7 +64,7 @@ module ApplicationHelper
   end
 
   def collection_for_columns
-    keys = @settings[:form_class].parsed_columns_for(request, current_user&.role) |
+    keys = @settings[:form_class].parsed_columns_for(controller, request, current_user&.role) |
            @settings[:form_class]
            .all_columns
            .reject { _1[:roles].exclude?(current_user&.role || 'guest') }

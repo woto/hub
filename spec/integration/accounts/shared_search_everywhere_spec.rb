@@ -13,9 +13,7 @@ describe 'Accounts shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/accounts', q: q,
-          columns: %w[id subjectable_label code amount subjectable_id subjectable_type created_at updated_at],
-          locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/accounts', q: q, locale: 'ru', only_path: true }
       end
     end
   end

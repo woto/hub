@@ -175,6 +175,16 @@ module Tables
                  .per(@pagination_rule.per)
     end
 
+    # TODO: action?!
+    def workspace
+      OpenStruct.new(
+        **workspace_params,
+        per: @pagination_rule.per,
+        sort: 'id',
+        order: 'desc'
+      )
+    end
+
     private
 
     def exec_query(filter)
@@ -229,14 +239,8 @@ module Tables
 
     def set_pagination_rule
       @pagination_rule = PaginationRules.new(
-        request, 12, 80, [2, 3, 4, 6, 8, 9, 10, 12, 21, 30, 33, 42, 80])
-    end
-
-    def system_default_workspace
-      url_for(**workspace_params,
-              per: @pagination_rule.per,
-              sort: :id,
-              order: :desc)
+        request, 12, 80, [2, 3, 4, 6, 8, 9, 10, 12, 21, 30, 33, 42, 80]
+      )
     end
 
     def url_for_search_everywhere

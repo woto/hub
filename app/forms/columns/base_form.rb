@@ -35,10 +35,10 @@ class Columns::BaseForm
       PG2ES[pg_type] || raise("Unable to find mapping for `#{key}` with column type `#{pg_type}`")
     end
 
-    def parsed_columns_for(request, role)
+    def parsed_columns_for(controller, request, role)
       role = 'guest' if role.nil?
 
-      (request[:columns] || []).select do |column_name|
+      (request[:columns] || controller.workspace.columns || []).select do |column_name|
         all_columns.find do |settings_column|
           settings_column[:key] == column_name &&
             settings_column[:roles].include?(role)

@@ -15,9 +15,7 @@ describe 'Transactions shared search everywhere', type: :system do
       end
 
       let(:params) do
-        { controller: 'tables/transactions', q: q,
-          columns: %w[id transaction_group_id code credit_label credit_amount debit_label debit_amount created_at updated_at],
-          locale: 'ru', per: 20, sort: :id, order: :desc, only_path: true }
+        { controller: 'tables/transactions', q: q, locale: 'ru', only_path: true }
       end
     end
   end
