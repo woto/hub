@@ -3,6 +3,20 @@
 class FeedsSearchQuery
   include ApplicationInteractor
 
+  contract do
+    params do
+      # TODO: make it later?
+      # config.validate_keys = true
+      required(:q).maybe(:string)
+      required(:from).filled(:integer)
+      required(:size).filled(:integer)
+      required(:sort).maybe(:string)
+      required(:order).maybe(:string)
+      required(:locale).maybe(:symbol)
+      required(:_source).filled { array? { each { string? } } }
+    end
+  end
+
   def call
     body = Jbuilder.new do |json|
       json.query do

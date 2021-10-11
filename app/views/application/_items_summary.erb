@@ -14,7 +14,7 @@
                      data: {
                          controller: 'table-per',
                          action: 'change->table-per#visit',
-                         table_per_select_value: params[:per]
+                         table_per_select_value: params[:per] || controller.workspace.per
                      } %>
     </div>
   </div>

@@ -5,7 +5,7 @@
     %>
   <% end %>
 
-  <% @settings[:form_class].parsed_columns_for(request, current_user && current_user.role).each do |col_name| %>
+  <% @settings[:form_class].parsed_columns_for(controller, request, current_user && current_user.role).each do |col_name| %>
     <%= render TableComponent::HeaderComponent.new col_name: col_name,
                                                    settings: @settings
     %>

@@ -33,6 +33,18 @@ module Tables
       response.headers['X-Robots-Tag'] = 'noindex'
     end
 
+
+    # TODO: action?!
+    def workspace
+      OpenStruct.new(
+        **workspace_params,
+        columns: @settings[:form_class]::DEFAULTS,
+        per: @pagination_rule.per,
+        sort: 'published_at',
+        order: 'desc'
+      )
+    end
+
     private
 
     def required_fields
@@ -41,14 +53,6 @@ module Tables
 
     def set_settings
       @settings = GlobalHelper.class_configurator('article')
-    end
-
-    def system_default_workspace
-      url_for(**workspace_params,
-              columns: @settings[:form_class]::DEFAULTS,
-              per: @pagination_rule.per,
-              sort: :published_at,
-              order: :desc)
     end
 
     def path_for_switch_language(locale, kind)

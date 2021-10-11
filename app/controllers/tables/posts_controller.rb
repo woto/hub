@@ -18,12 +18,15 @@ module Tables
       @settings = GlobalHelper.class_configurator('post')
     end
 
-    def system_default_workspace
-      url_for(**workspace_params,
-              columns: @settings[:form_class]::DEFAULTS,
-              per: @pagination_rule.per,
-              sort: :id,
-              order: :desc)
+    # TODO: action?!
+    def workspace
+      OpenStruct.new(
+        **workspace_params,
+        columns: @settings[:form_class]::DEFAULTS,
+        per: @pagination_rule.per,
+        sort: 'id',
+        order: 'desc'
+      )
     end
   end
 end
