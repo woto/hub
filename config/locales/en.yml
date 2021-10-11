@@ -586,6 +586,7 @@ en:
         displayed_columns: The order in which columns are added affects the display
       post:
         currency: Select the national currency of your country
+        description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>
         post_category: Check out the full list of available categories for posting an article <a href="/post_categories" target="_blank">at this link</a><br>If a category has child categories, it cannot contain articles.
         published_at: The material will not be published if the publication date has not yet arrived
         realm: Check out the full list of available sites for posting an article <a href="/realms" target="_blank"> using this link </a>
@@ -615,6 +616,7 @@ en:
         article_link: Link to the article
         body: Body
         currency: Currency
+        description: SEO meta tag "description"
         extra_options:
           images_type: Images
           moderator_bonus: Moderator bonus

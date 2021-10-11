@@ -52,5 +52,6 @@ FactoryBot.define do
     post_category do
       association :post_category, realm: Realm.pick(kind: realm_kind, locale: realm_locale)
     end
+    description { Faker::Lorem.sentence }
   end
 end

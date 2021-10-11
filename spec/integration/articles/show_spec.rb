@@ -23,6 +23,15 @@ describe 'ArticlesController#show', type: :system, responsible: :admin do
     expect(page).to have_css('h1', text: article.title)
   end
 
+  it 'includes correct seo meta title tag' do
+    expect(page).to have_css('title', text: article.title, visible: :hidden)
+  end
+
+  it 'includes correct seo description meta tag' do
+    tag = find('meta[name="description"]', visible: :hidden)
+    expect(tag['content']).to eq(article.description)
+  end
+
   it 'has correct breadcrumbs' do
     expect(page).to have_link(parent_post_category.to_label,
                               href: articles_by_category_path(

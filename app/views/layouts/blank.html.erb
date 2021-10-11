@@ -5,7 +5,11 @@
 
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <title><%= content_for :title %></title>
+  <%= tag.title content_for(:seo_title)&.strip %>
+  <% if content_for?(:seo_description) %>
+    <%= tag.meta name: :description, content: content_for(:seo_description)&.strip %>
+  <% end %>
+
   <!--  <meta name="robots" content="noindex,nofollow,noarchive"/>-->
   <!--  <meta name="turbo-visit-control" content="reload">-->
 

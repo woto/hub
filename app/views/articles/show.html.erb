@@ -1,5 +1,9 @@
-<% content_for :title do %>
+<% content_for(:seo_title) do %>
   <%= @article.title %>
+<% end %>
+
+<% content_for :seo_description do %>
+  <%= @article.description %>
 <% end %>
 
 <% content_for :breadcrumbs do %>

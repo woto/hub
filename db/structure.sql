@@ -890,7 +890,8 @@ CREATE TABLE public.posts (
     priority integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    description text
 );
 
 
@@ -2266,6 +2267,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211010185159'),
 ('20211010185208'),
 ('20211010185217'),
-('20211010185222');
+('20211010185222'),
+('20211011134016');
 
 

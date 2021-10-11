@@ -156,6 +156,7 @@
 
                 <%= f.input :intro,
                             as: :rich_text_area,
+                            required: true,
                             input_html: {
                               class: 'trix-content fs-6 lh-lg',
                               'data-controller': 'posts-trix',
@@ -167,7 +168,6 @@
                 %>
 
                 <%= f.input :description,
-                            required: true,
                             wrapper_html: {class: 'mb-3'},
                             input_html: {
                               rows: 4,

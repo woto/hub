@@ -18,7 +18,7 @@ class PostPolicy < ApplicationPolicy
       :title, :status, :body, :post_category_id, :realm_id, :currency,
       { tags: [], extra_options: {} }
     ]
-    attributes.append(:user_id, :published_at, :intro) if user.staff?
+    attributes.append(:description, :user_id, :published_at, :intro) if user.staff?
     attributes
   end
 

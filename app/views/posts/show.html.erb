@@ -1,4 +1,4 @@
-<% content_for :title do %>
+<% content_for(:seo_title) do %>
   <%= t("titles.posts") %>
 <% end %>
 
@@ -77,7 +77,11 @@
                   <% url = article_url(id: @post.id, host: @post.realm.domain, locale: nil) %>
                   <%= link_to(url, url) %>
                 </dd>
-              <% end %>
+
+                <dt class="col-sm-3"> <%= t('description', scope: ['simple_form', 'labels', 'post']) %> </dt>
+                <dd class="col-sm-9"> <%= simple_format strip_tags(@post.description) %> </dd>
+
+            <% end %>
             </dl>
           </div>
         </div>

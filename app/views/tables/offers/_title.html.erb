@@ -2,13 +2,13 @@
 
 <% if @favorite %>
 
-  <% content_for :title do %>
+  <% content_for(:seo_title) do %>
     <%= t('titles.favorite') %>: <%= @favorite.to_label %>
   <% end %>
 
 <% elsif current_feed_category %>
 
-  <% content_for :title do %>
+  <% content_for(:seo_title) do %>
     <%= t('titles.feed_category') %>: <%= current_feed_category.to_label %>
   <% end %>
 
@@ -23,7 +23,7 @@
 
 <% elsif current_feed %>
 
-  <% content_for :title do %>
+  <% content_for(:seo_title) do %>
     <%= t('titles.feed') %>: <%= current_feed.to_label %>
   <% end %>
 
@@ -38,7 +38,7 @@
 
 <% elsif current_advertiser %>
 
-  <% content_for :title do %>
+  <% content_for(:seo_title) do %>
     <%= t('titles.advertiser') %>: <%= current_advertiser.to_label %>
   <% end %>
 
@@ -51,7 +51,7 @@
       bobber: { class: 'z-index-decreased' }) %>
   <% end %>
 <% else %>
-  <% content_for :title do %>
+  <% content_for(:seo_title) do %>
     <%= t('titles.offers') %>
   <% end %>
 <% end %>
