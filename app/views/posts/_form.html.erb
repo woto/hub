@@ -165,6 +165,17 @@
                             placeholder: true,
                             wrapper_html: { class: 'mb-3' }
                 %>
+
+                <%= f.input :description,
+                            required: true,
+                            wrapper_html: {class: 'mb-3'},
+                            input_html: {
+                              rows: 4,
+                              'data-controller': 'textarea-autogrow',
+                              style: 'max-width: 600px'
+                            }
+                %>
+
               </div>
             </div>
           </div>
