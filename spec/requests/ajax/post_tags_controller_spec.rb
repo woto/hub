@@ -6,14 +6,14 @@ describe Ajax::PostTagsController, type: :request, responsible: :user do
   subject { get ajax_tags_path(q: 'тег', realm_id: realm.id), xhr: true }
 
   let(:user) { create(:user) }
-  let(:realm) { create(:realm, kind: :post) }
+  let(:realm) { create(:realm, kind: :post, locale: :ru) }
   let(:post_category) { create(:post_category, realm: realm) }
 
   before do
     create(:post, tags: ['', 'первый тег', 'some tag'], realm: realm, post_category: post_category)
     create(:post, tags: ['', 'тег в этом же realm'], realm: realm, post_category: post_category)
     create(:post, tags: ['', 'mismatch'], realm: realm, post_category: post_category)
-    create(:post, tags: ['', 'тег в другом realm'], realm_kind: :post)
+    create(:post, tags: ['', 'тег в другом realm'], realm_kind: :post, realm_locale: :en)
   end
 
   it 'requires authentication' do
