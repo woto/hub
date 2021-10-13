@@ -26,6 +26,13 @@ rake hub:tests:seed
 
 That's it. More docs available at [docs](/docs).
 
+
+### Project status
+
+[![CircleCI](https://circleci.com/gh/woto/hub/tree/master.svg?style=svg&circle-token=db99ca9e55207f4ea1863521ff51039be0d485c9)](https://circleci.com/gh/woto/hub/tree/master)
+
+[![Github](https://github.com/woto/hub/actions/workflows/main.yml/badge.svg)](https://github.com/woto/hub/actions)
+
 ### Screenshots
 
 Dashboard page  
