@@ -29,3 +29,9 @@ docker-compose run -l "traefik.enable=false" --rm postgres psql -U hub -d postgr
 ```shell
 ssh -R 80:localhost:80 -R 443:localhost:443 root@goodreviews.ru
 ```
+
+#### Delete github workflows
+
+```shell
+gh api repos/woto/hub/actions/runs | jq -r '.workflow_runs[] | "\(.id)"' | xargs -n1 -I % gh api repos/woto/hub/actions/runs/% -X DELETE
+```
