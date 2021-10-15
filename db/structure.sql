@@ -776,7 +776,7 @@ CREATE TABLE public.feeds (
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
     locked_by_tid character varying DEFAULT ''::character varying NOT NULL,
-    languages jsonb
+    languages jsonb DEFAULT '{}'::jsonb
 );
 
 
