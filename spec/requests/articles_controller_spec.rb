@@ -4,9 +4,10 @@ require 'rails_helper'
 
 describe ArticlesController, responsible: :admin do
   describe 'GET /articles/:id' do
-    let!(:post) { create(:post, status: :accrued_post, published_at: '2020-01-01', user: Current.responsible) }
+    let!(:post) { create(:post, status: status, published_at: '2020-01-01', user: Current.responsible) }
     let(:path) { article_url(id: post, host: host) }
     let(:host) { post.realm.domain }
+    let(:status) { :accrued_post }
 
     it_behaves_like 'not_to_includes_noindex'
 
@@ -26,6 +27,22 @@ describe ArticlesController, responsible: :admin do
       let(:host) { create(:realm).domain }
 
       it 'shows not_found error' do
+        get path
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'with article status equals to :accrued_post' do
+      it 'returns :ok status code' do
+        get path
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with article status not in :accrued_post' do
+      let(:status) { Post.statuses.keys.without('accrued_post').sample }
+
+      it 'returns :not_found status code' do
         get path
         expect(response).to have_http_status(:not_found)
       end

@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
 
   def show
     realm = Current.realm
-    @article = realm.posts.find(params[:id])
+    @article = realm.posts.accrued_post.find(params[:id])
     @article_category = @article.post_category
     response.headers['Link'] = %(<#{article_url(id: @article, host: realm.domain, locale: nil)}>; rel="canonical")
   end
