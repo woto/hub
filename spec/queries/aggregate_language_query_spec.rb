@@ -15,10 +15,11 @@ describe AggregateLanguageQuery do
         object: {
           body: {
             "query": {
-              "term": {
-                "feed_id": {
-                  "value": feed.id
-                }
+              "bool": {
+                "filter": [
+                  { "term": { "feed_id": feed.id } },
+                  { "term": { "detected_language.reliable": true } }
+                ]
               }
             },
             "aggs": {

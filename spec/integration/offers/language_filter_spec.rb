@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Tables::OffersController, type: :system do
   it 'simply shows language filter' do
     feed_category = create(:feed_category)
-    OfferCreator.call(feed_category: feed_category, name: 'Товар', description: 'Описание')
+    OfferCreator.call(feed_category: feed_category, name: 'Название товара', description: 'Это просто описание товара')
     Import::AggregateLanguage.call(feed: feed_category.feed)
     visit offers_path
 
@@ -23,19 +23,19 @@ describe Tables::OffersController, type: :system do
 
     before do
       data = [
-        { name: 'Товар',
-          description: 'Описание',
+        { name: 'Название товара',
+          description: 'Это просто описание товара',
           feed_category: russian_feed_category },
-        { name: 'Προϊόν',
+        { name: 'Ονομασία Προϊόντος',
           description: 'Αυτή είναι μια απλή περιγραφή του προϊόντος',
           feed_category: greek_feed_category },
-        { name: 'Product',
+        { name: 'Product name',
           description: 'This is a simple product description',
           feed_category: english_feed_category },
-        { name: '产品',
+        { name: '产品名称',
           description: '这是一个简单的产品描述',
           feed_category: chinese_feed_category },
-        { name: 'Merce',
+        { name: "Nome dell'articolo",
           description: 'Questa è una semplice descrizione del prodotto',
           feed_category: italian_feed_category }
       ]
@@ -47,7 +47,7 @@ describe Tables::OffersController, type: :system do
         end
       end
 
-      OfferCreator.call(name: 'Mercancía',
+      OfferCreator.call(name: 'Nombre del artículo',
                         feed_category: spanish_feed_category,
                         description: 'Esta es una descripción simple del producto')
       visit offers_path

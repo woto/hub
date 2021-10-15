@@ -13,9 +13,19 @@ class AggregateLanguageQuery
   def call
     body = Jbuilder.new do |json|
       json.query do
-        json.term do
-          json.feed_id do
-            json.value context.feed.id
+        json.bool do
+          json.filter do
+            json.array! ['fuck'] do
+              json.term do
+                json.feed_id context.feed.id
+              end
+            end
+
+            json.array! ['fuck'] do
+              json.term do
+                json.set! 'detected_language.reliable', true
+              end
+            end
           end
         end
       end
