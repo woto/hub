@@ -9,8 +9,7 @@ class OfferCreator
                 name: Faker::Commerce.product_name,
                 price: Faker::Commerce.price,
                 currency_id: Faker::Currency.code,
-                pictures: %w[megan_vale.jpg sasha_rose.jpeg angel_rivas.jpg],
-                detected_language: { 'code' => 'ru', 'name' => 'RUSSIAN' })
+                pictures: %w[megan_vale.jpg sasha_rose.jpeg angel_rivas.jpg])
     feed = feed_category.feed
     advertiser = feed.advertiser
     offer = {}.tap do |h|
@@ -26,7 +25,7 @@ class OfferCreator
       h['feed_category_id'] = feed_category.id
       h['feed_category_ids'] = feed_category.path_ids
       h['picture'] = pictures.map { |pic| { Import::Offers::Hashify::HASH_BANG_KEY => "local:///fixtures/#{pic}" } }
-      h['detected_language'] = detected_language
+      h['detected_language'] = Import::Offers::DetectLanguage.call(h)
 
       feed_category.path.each_with_index do |fc, i|
         h["feed_category_id_#{i}"] = fc.id
@@ -40,7 +39,9 @@ class OfferCreator
         end
       end
     end
-    FactoryBot.create(:offer, offer)
+    offer = FactoryBot.create(:offer, offer)
+    Import::AggregateLanguage.call(feed: feed)
+    offer
   end
 end
 # rubocop:enable Metrics/ParameterLists

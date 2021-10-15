@@ -2,12 +2,14 @@
   <div class="mb-3">
     <div class="form-selectgroup form-selectgroup-pills">
       <%= hidden_field_tag('languages[]', '') %>
-      <% feeds_languages_for_filter.each do |locale| %>
-        <label class="form-selectgroup-item">
-          <%= check_box_tag('languages[]', locale[:locale], params[:languages]&.include?(locale[:locale]), class: 'form-selectgroup-input') %>
-          <span class="form-selectgroup-label"><%= locale[:title] %></span>
-        </label>
-      <% end %>
+        <% feeds_languages_for_filter.take(20).each_with_index do |obj, idx| %>
+          <%= tag.label id: "feeds-language-filter-#{obj[:locale]}", class: "form-selectgroup-item #{ "collapse collapse-feeds-language-filters" if idx >= 5 }" do %>
+              <%= check_box_tag('languages[]', obj[:locale], params[:languages]&.include?(obj[:locale]), class: 'form-selectgroup-input') %>
+              <span class="form-selectgroup-label"><%= obj[:title] %></span>
+          <% end %>
+        <% end %>
+
+      <a href='#' class="btn btn-outline btn-pill me-2" data-bs-toggle="collapse" data-bs-target=".collapse-feeds-language-filters">...</a>
       <button type="submit" class="btn btn-pink btn-pill"><%= t('ok') %></button>
     </div>
   </div>

@@ -22,7 +22,8 @@ module Offers
     def _filter
       codes = context.languages&.compact_blank
       if codes.present?
-        feed_ids = Feed.where(language: codes).pluck(:id)
+        codes_array = codes.map { |code| "'#{code}'" }.join(', ')
+        feed_ids = Feed.where(%(languages ?| array[#{codes_array}])).pluck(:id)
         json.set! :filter do
           json.array! ['fuck'] do
             json.terms do

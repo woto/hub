@@ -7,6 +7,7 @@
 #  id               :bigint           not null, primary key
 #  amount           :decimal(, )      not null
 #  currency         :integer          not null
+#  description      :text
 #  extra_options    :jsonb
 #  priority         :integer          default(0), not null
 #  published_at     :datetime

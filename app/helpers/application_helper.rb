@@ -97,11 +97,28 @@ module ApplicationHelper
   end
 
   def feeds_languages_for_filter
-    Feed.distinct(:language).pluck(:language).without(nil).map do |code|
-      Rails.application.config.global[:locales].find do |locale|
-        locale[:locale] == code
-      end || { title: code, locale: code }
-      # TODO: replace with dry-struct
+    return @feeds_languages_for_filter if defined?(@feeds_languages_for_filter)
+
+    hsh = Hash.new(0)
+
+    Feed.where.not(languages: {})
+        .pluck(:languages)
+        .each do |languages|
+      languages.each { |k, v| hsh[k] += v }
+    end
+
+    arr = hsh.sort { |a, b| -a.second <=> -b.second }
+
+    @feeds_languages_for_filter = arr.map do |obj1|
+      title = Rails.application.config.global[:locales].find do |obj2|
+        break obj2[:title] if obj1.first == obj2[:locale]
+      end
+
+      LocaleStruct.new(
+        locale: obj1.first,
+        count: obj1.second,
+        title: title || obj1.first
+      )
     end
   end
 

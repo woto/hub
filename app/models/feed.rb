@@ -13,7 +13,7 @@
 #  error_text             :text
 #  feed_categories_count  :integer          default(0), not null
 #  is_active              :boolean          default(TRUE), not null
-#  language               :string
+#  languages              :jsonb
 #  locked_by_tid          :string           default(""), not null
 #  name                   :string           not null
 #  offers_count           :integer          default(0), not null

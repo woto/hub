@@ -16,8 +16,9 @@ module Import
 
       query = AggregateLanguageQuery.call(feed: context.feed).object
       result = GlobalHelper.elastic_client.search(query)
-      language = result['aggregations'][GlobalHelper::GROUP_NAME.to_s]['buckets'].dig(0, 'key')
-      context.feed.update!(operation: 'detect language', language: language)
+      languages = result['aggregations'][GlobalHelper::GROUP_NAME.to_s]['buckets']
+                  .map { |obj| [ obj['key'], obj['doc_count']] }.to_h
+      context.feed.update!(operation: 'detect language', languages: languages)
     end
   end
 end

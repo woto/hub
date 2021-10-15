@@ -13,7 +13,7 @@ module Columns
       { key: 'error_class'                                     , pg: Feed.columns_hash['error_class'], roles: ['admin'] },
       { key: 'error_text'                                      , pg: Feed.columns_hash['error_text'], roles: ['admin'] },
       { key: 'locked_by_tid'                                   , pg: Feed.columns_hash['locked_by_tid'], roles: ['admin'] },
-      { key: 'language'                                        , pg: Feed.columns_hash['language'], roles: ['guest', 'user', 'manager', 'admin']  },
+      { key: 'languages'                                       , pg: Feed.columns_hash['languages'], roles: ['guest', 'user', 'manager', 'admin']  },
       { key: 'attempt_uuid'                                    , pg: Feed.columns_hash['attempt_uuid'], roles: ['admin'] },
       { key: 'raw'                                             , pg: Feed.columns_hash['raw'], roles: ['admin'] },
       { key: 'processing_started_at'                           , pg: Feed.columns_hash['processing_started_at'], roles: ['admin'] },

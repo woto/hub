@@ -24,7 +24,7 @@ class AggregateLanguageQuery
         json.group do
           json.terms do
             json.field "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword"
-            json.size 1
+            json.size 3
           end
         end
       end
