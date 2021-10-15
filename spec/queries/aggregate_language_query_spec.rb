@@ -25,7 +25,7 @@ describe AggregateLanguageQuery do
               "group": {
                 "terms": {
                   "field": "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword",
-                  "size": 1
+                  "size": 3
                 }
               }
             }

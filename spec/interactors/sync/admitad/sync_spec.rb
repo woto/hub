@@ -38,7 +38,7 @@ shared_examples 'compare feed' do |name:, ext_id:, url:|
       error_class: nil,
       error_text: nil,
       locked_by_tid: '',
-      language: nil,
+      languages: {},
       attempt_uuid: nil,
       raw: match(Regexp.new(name)),
       processing_started_at: nil,
