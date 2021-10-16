@@ -173,6 +173,8 @@ module Tables
                  .paginate_array(results, total_count: total_count)
                  .page(@pagination_rule.page)
                  .per(@pagination_rule.per)
+
+      self.status = :not_found if @results.empty?
     end
 
     # TODO: action?!
