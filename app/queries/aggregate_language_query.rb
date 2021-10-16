@@ -21,11 +21,11 @@ class AggregateLanguageQuery
               end
             end
 
-            json.array! ['fuck'] do
-              json.term do
-                json.set! 'detected_language.reliable', true
-              end
-            end
+            # json.array! ['fuck'] do
+            #   json.term do
+            #     json.set! 'detected_language.reliable', true
+            #   end
+            # end
           end
         end
       end
@@ -34,7 +34,7 @@ class AggregateLanguageQuery
         json.group do
           json.terms do
             json.field "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword"
-            json.size 3
+            json.size 1
           end
         end
       end
