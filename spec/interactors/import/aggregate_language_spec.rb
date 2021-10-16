@@ -23,7 +23,7 @@ describe Import::AggregateLanguage do
     it 'calls AggregateLanguageQuery.call and sets feed language' do
       expect(AggregateLanguageQuery).to receive(:call).and_call_original
       subject
-      expect(feed_category.feed).to have_attributes(languages: { 'en' => 1, 'ru' => 2 })
+      expect(feed_category.feed).to have_attributes(languages: { 'ru' => 3 })
     end
   end
 

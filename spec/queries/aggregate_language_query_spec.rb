@@ -17,8 +17,8 @@ describe AggregateLanguageQuery do
             "query": {
               "bool": {
                 "filter": [
-                  { "term": { "feed_id": feed.id } },
-                  { "term": { "detected_language.reliable": true } }
+                  { "term": { "feed_id": feed.id } }
+                  # { "term": { "detected_language.reliable": true } }
                 ]
               }
             },
@@ -26,7 +26,7 @@ describe AggregateLanguageQuery do
               "group": {
                 "terms": {
                   "field": "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword",
-                  "size": 3
+                  "size": 1
                 }
               }
             }
