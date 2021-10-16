@@ -6,6 +6,8 @@ module Tables
     REQUIRED_PARAMS = %i[per order sort].freeze
 
     include Workspaceable
+    include Indexable
+
     layout 'backoffice'
     skip_before_action :authenticate_user!
     before_action { prepend_view_path "#{Rails.root}appviews/offers" }
@@ -19,6 +21,8 @@ module Tables
     helper_method :current_feed_category
 
     def index
+      noindex { params.keys & %w[q per sort order favorite_id filters columns] }
+
       @favorites_store = FavoritesStore.new(current_user)
       @groups_store = GroupsStore.new
       filters = {}
@@ -141,7 +145,7 @@ module Tables
         from = [from - total_count, 0].max
         to = @pagination_rule.per - actual_count
         sliced = result['aggregations'][GlobalHelper::GROUP_NAME.to_s]['buckets'].slice(from, to)
-        sliced.each do |group|
+        sliced&.each do |group|
           products = group['offers']['hits']['hits']
 
           if filters[:b][:favorite_item_kind]
