@@ -6,7 +6,8 @@ describe 'ArticlesController#show', type: :system, responsible: :admin do
   let!(:article) do
     create(:post,
            post_category: child_post_category,
-           published_at: Time.zone.parse('2020-04-07 02:00'), tags: %w[tag1 tag2])
+           published_at: Time.zone.parse('2020-04-07 02:00'), tags: %w[tag1 tag2],
+           status: :accrued_post)
   end
   let(:ru_realm) { Realm.pick(kind: :news, locale: :ru, domain: 'realm-ru.lvh.me') }
   let!(:en_realm) { Realm.pick(kind: :news, locale: :en) }

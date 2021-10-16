@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe 'Articles shared search everywhere', type: :system do
-
   describe 'GET /articles/month/:month' do
     it_behaves_like 'shared_search_everywhere' do
       before do
@@ -49,7 +48,9 @@ describe 'Articles shared search everywhere', type: :system do
   describe 'GET /articles/:id' do
     it_behaves_like 'shared_search_everywhere' do
       let(:realm) { create(:realm, locale: :ru) }
-      let(:article) { create(:post, realm: realm, post_category: create(:post_category, realm: realm)) }
+      let(:article) do
+        create(:post, realm: realm, post_category: create(:post_category, realm: realm), status: :accrued_post)
+      end
 
       before do
         switch_realm(realm) do
