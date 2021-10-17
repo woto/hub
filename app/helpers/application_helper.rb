@@ -126,7 +126,7 @@ module ApplicationHelper
   def trix_translations
     locales = {}
     Rails.configuration.i18n.available_locales.each do |locale|
-      locales[locale] = {
+      locales[locale.downcase] = {
         attachFiles: I18n.t(:attachFiles, scope: 'trix', locale: locale),
         bold: I18n.t(:bold, scope: 'trix', locale: locale),
         bullets: I18n.t(:bullets, scope: 'trix', locale: locale),
