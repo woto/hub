@@ -2,7 +2,7 @@
 
 class FeedsController < ApplicationController
   layout 'backoffice'
-  before_action :set_feed, only: %i[show edit update destroy]
+  before_action :set_feed, only: %i[show edit update destroy shinked]
   skip_before_action :authenticate_user!
 
   def new
@@ -18,6 +18,24 @@ class FeedsController < ApplicationController
     else
       render :new
     end
+  end
+
+  # NOTE: not tested
+  def shrinked
+    result = []
+
+    Production::ShrinkedFeed.call(feed: Feed.find(params[:id]), size: 100).object['hits']['hits'].each do |category|
+      category['inner_hits']['fuck']['hits']['hits'].each do |offer|
+        result << {
+          feed_category_id: offer['_source']['feed_category_id'],
+          pictures: offer['_source']['picture'].map { |picture| picture['#'] },
+          name: offer['_source']['name'].first['#'],
+          description: offer['_source']['description'].first['#'],
+          url: offer['_source']['url'].first['#']
+        }
+      end
+    end
+    render json: result
   end
 
   def prioritize

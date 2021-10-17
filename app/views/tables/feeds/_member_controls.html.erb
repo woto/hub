@@ -34,6 +34,9 @@
     <%= link_to t('buttons.prioritize'), prioritize_feed_path(row.id),
                 class: 'dropdown-item', method: :patch %>
 
+    <%# # NOTE: not tested %>
+    <%= link_to t('buttons.shrinked'), shrinked_feed_path(row.id), class: 'dropdown-item' %>
+
     <%= link_to t('buttons.offers'), feed_offers_path(row.id), class: 'dropdown-item' %>
 
   </div>

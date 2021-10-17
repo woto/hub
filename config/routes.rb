@@ -114,6 +114,8 @@ Rails.application.routes.draw do
     resources :feeds do
       member do
         get :logs
+        # NOTE: not tested
+        get :shrinked
         patch :prioritize
       end
     end
