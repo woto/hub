@@ -7,8 +7,9 @@ module Import
         def self.call(offer, feed)
           return if feed.advertiser.name != 'AliExpress WW'
 
-          offer['name'] = offer.delete('title')
-          offer['picture'] = offer.delete('image')
+          # NOTE: seems not actual anymore
+          offer['name'] = offer['name'].presence || offer.delete('title')
+          offer['picture'] = offer['picture'].presence || offer.delete('image')
         end
       end
     end
