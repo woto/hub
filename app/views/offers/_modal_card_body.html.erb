@@ -11,7 +11,7 @@
   <% end %>
 
   <div class="my-3">
-    <b><%= @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY) %></b>
+    <strong><%= @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY) %></strong>
   </div>
 
   <%= tag.div class: 'my-3',
@@ -21,9 +21,9 @@
 
     <% description = @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY).to_s %>
 
-    <p data-read-more-target="content">
+    <div data-read-more-target="content">
       <%= simple_format truncate(description, length: 200) %>
-    </p>
+    </div>
 
     <% if description.size > 200 %>
       <button data-action="read-more#toggle" class="btn btn-light btn-sm">

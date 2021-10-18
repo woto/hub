@@ -30,8 +30,8 @@ describe Tables::OffersController, type: :system do
 
       within('.modal-body') do
         expect(page).to have_field(with: offer_url)
-        expect(page).to have_text("Название: #{offer['name'][0][Import::Offers::Hashify::HASH_BANG_KEY]}")
-        expect(page).to have_text("Описание:\n#{offer['description'][0][Import::Offers::Hashify::HASH_BANG_KEY]}")
+        expect(page).to have_text(offer['name'][0][Import::Offers::Hashify::HASH_BANG_KEY])
+        expect(page).to have_text(offer['description'][0][Import::Offers::Hashify::HASH_BANG_KEY])
         expect(page).to have_text("Цена: #{offer['price'][0][Import::Offers::Hashify::HASH_BANG_KEY]}")
         expect(page).to have_text("Рекламодатель: #{Advertiser.find(offer['advertiser_id']).name}")
         expect(page).to have_text("Фид: #{Feed.find(offer['advertiser_id']).name}")

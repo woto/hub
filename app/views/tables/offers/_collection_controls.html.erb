@@ -24,6 +24,9 @@
                    'data-modal-dynamic-opener-url-value': logs_feed_path(@current_feed) do %>
       <%= t('feed_logs', scope: ['buttons']) %>
     <% end %>
+
+    <%# # NOTE: not tested %>
+    <%= link_to t('buttons.shrinked'), shrinked_feed_path(@current_feed), class: 'mb-4 btn btn-warning' %>
   <% end %>
 
   <% if @feed %>
