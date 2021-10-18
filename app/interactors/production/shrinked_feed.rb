@@ -14,7 +14,7 @@ module Production
     end
 
     def call
-      query = Production::ShrinkedFeedQuery.call(feed: context.feed, size: 2).object
+      query = Production::ShrinkedFeedQuery.call(feed: context.feed, size: context.size).object
       context.object = GlobalHelper.elastic_client.search(query)
     end
   end

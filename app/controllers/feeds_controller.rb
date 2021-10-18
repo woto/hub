@@ -27,11 +27,12 @@ class FeedsController < ApplicationController
     Production::ShrinkedFeed.call(feed: Feed.find(params[:id]), size: 100).object['hits']['hits'].each do |category|
       category['inner_hits']['fuck']['hits']['hits'].each do |offer|
         result << {
-          feed_category_id: offer['_source']['feed_category_id'],
-          pictures: offer['_source']['picture'].map { |picture| picture['#'] },
-          name: offer['_source']['name'].first['#'],
-          description: offer['_source']['description'].first['#'],
-          url: offer['_source']['url'].first['#']
+          id: offer['_id'],
+          category_id: offer['_source']['feed_category_id'],
+          images: offer['_source']['picture']&.map { |picture| picture['#'] },
+          title: offer['_source'].dig('name', 0, '#'),
+          description: offer['_source'].dig('description', 0, '#'),
+          url: offer['_source'].dig('url', 0, '#')
         }
       end
     end

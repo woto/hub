@@ -11,8 +11,7 @@
   <% end %>
 
   <div class="my-3">
-    <strong><%= t('.name') %>:</strong>
-    <%= @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+    <b><%= @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY) %></b>
   </div>
 
   <%= tag.div class: 'my-3',
@@ -20,11 +19,10 @@
               'data-read-more-more-text-value': t('.read_more'),
               'data-read-more-less-text-value': t('.read_less') do %>
 
-    <strong><%= t('.description') %>:</strong>
     <% description = @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY).to_s %>
 
     <p data-read-more-target="content">
-      <%= truncate(description, length: 200) %>
+      <%= simple_format truncate(description, length: 200) %>
     </p>
 
     <% if description.size > 200 %>
@@ -34,7 +32,7 @@
     <% end %>
 
     <template data-read-more-target="full">
-      <%= @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+      <%= simple_format @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
     </template>
   <% end %>
 

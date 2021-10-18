@@ -12,6 +12,81 @@ describe Feeds::Offers do
   let(:feed) { create(:feed, advertiser: advertiser) }
   let!(:feed_category) { create(:feed_category, feed: feed, ext_id: 'category 1') }
 
+  describe 'special characters' do
+
+    describe 'unsafe tags' do
+      let(:xml) do
+        %(
+        <offer id="12346">
+          <categoryId>category 1</categoryId>
+          <description>
+            <![CDATA[
+              test <script>script</script> test
+            ]]>
+          </description>
+        </offer>
+        )
+      end
+
+      specify do
+        expect(subject.append(doc).first['description'][0]['#']).to eq("test script test")
+      end
+    end
+
+    describe 'stripping leading and trailing spaces' do
+      let(:xml) do
+        %(
+        <offer id="12346">
+          <categoryId>category 1</categoryId>
+          <description>
+            <![CDATA[
+              <h3>Мороженица Brand 3811</h3>
+              <p>Это...</p>
+            ]]>
+          </description>
+        </offer>
+        )
+      end
+
+      specify do
+        expect(subject.append(doc).first['description'][0]['#']).to eq("Мороженица Brand 3811\n\nЭто...")
+      end
+    end
+
+    describe 'unsafe characters' do
+      # https://yandex.ru/support/marketplace/catalog/yml-requirements.html#requirements
+      let(:xml) do
+        %(
+        <offer id="12346">
+          <categoryId>category 1</categoryId>
+          <description>
+            <![CDATA[ " & > < ' ]]>
+          </description>
+        </offer>
+        )
+      end
+
+      specify do
+        expect(subject.append(doc).first['description'].first['#']).to eq("\" & > < '")
+      end
+    end
+
+    describe 'loofah replaces tags with newlines' do
+      let(:xml) do
+        %(
+        <offer id="12346">
+          <categoryId>category 1</categoryId>
+          <description><![CDATA[<span>one</span> <span>two</span><h1>three</h1><div>four</div>]]></description>
+        </offer>
+        )
+      end
+
+      specify do
+        expect(subject.append(doc).first['description'].first['#']).to eq("one two\nthree\n\nfour")
+      end
+    end
+  end
+
   describe 'minimal xml offer structure' do
     let(:xml) do
       %(
