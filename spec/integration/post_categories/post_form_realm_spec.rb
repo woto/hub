@@ -100,8 +100,8 @@ describe PostCategoriesController, type: :system do
   end
 
   context 'when realm changes at the new post category, but the parent category of the category has been changed' do
-    let!(:realm) { create(:realm) }
-    let!(:another_realm) { create(:realm) }
+    let!(:realm) { create(:realm, locale: 'ru') }
+    let!(:another_realm) { create(:realm, locale: 'en') }
     let!(:post_category) { create(:post_category, realm: realm) }
 
     it 'asks confirmation and clears parent post category' do

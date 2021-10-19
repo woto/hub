@@ -93,7 +93,7 @@ describe PostsController, type: :request do
       end
 
       context 'when passed new realm_id' do
-        let(:post) { create(:post, user: Current.responsible) }
+        let(:post) { create(:post, user: Current.responsible, status: :pending_post) }
         let(:params) { { realm_id: post_category.realm.id, post_category_id: post_category.id } }
         let(:post_category) { create(:post_category) }
 
