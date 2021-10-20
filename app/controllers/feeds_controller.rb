@@ -24,19 +24,7 @@ class FeedsController < ApplicationController
   def shrinked
     result = []
 
-    Production::ShrinkedFeed.call(feed: Feed.find(params[:id]), size: 100).object['hits']['hits'].each do |category|
-      category['inner_hits']['fuck']['hits']['hits'].each do |offer|
-        result << {
-          id: offer['_id'],
-          category_id: offer['_source']['feed_category_id'],
-          images: offer['_source']['picture']&.map { |picture| picture['#'] },
-          title: offer['_source'].dig('name', 0, '#'),
-          description: offer['_source'].dig('description', 0, '#'),
-          url: offer['_source'].dig('url', 0, '#')
-        }
-      end
-    end
-    render json: result
+    render json: Production::ShrinkedFeed.call(feed: Feed.find(params[:id]), size: 10_000).object
   end
 
   def prioritize

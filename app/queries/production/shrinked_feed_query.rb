@@ -21,18 +21,15 @@ module Production
           end
         end
         json.collapse do
-          json.field "feed_category_id"
-          json.inner_hits do
-            json.name 'fuck'
-            json.size context.size
-          end
+          json.field 'feed_category_id'
         end
+        json.track_total_hits false
       end
 
       context.object = {
         body: body.attributes!.deep_symbolize_keys,
         index: Elastic::IndexName.offers,
-        # size: 0,
+        size: context.size,
         routing: context.feed.id
       }
     end
