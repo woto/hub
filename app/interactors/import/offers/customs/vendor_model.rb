@@ -7,7 +7,8 @@ module Import
         def self.call(offer)
           return if offer[Import::Offers::Hashify::SELF_NAME_KEY]['type'] != 'vendor.model'
 
-          offer['name'] = [
+          # https://yandex.ru/support/partnermarket-dsbs/elements/vendor-name-model.html
+          offer['name'] ||= [
             {
               Import::Offers::Hashify::HASH_BANG_KEY => [
                 offer.dig('typePrefix', 0, Import::Offers::Hashify::HASH_BANG_KEY),

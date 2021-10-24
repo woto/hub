@@ -12,6 +12,34 @@ describe Feeds::Offers do
   let(:feed) { create(:feed, advertiser: advertiser) }
   let!(:feed_category) { create(:feed_category, feed: feed, ext_id: 'category 1') }
 
+  describe 'FloryDay (does not meet standard)' do
+    let(:xml) do
+      %(
+      <offer available="true" id="FDcDEldeg5727985" type="vendor.model">
+        <categoryId>164</categoryId>
+        <currencyId>EUR</currencyId>
+        <description>Lässige Kleidung Polyester V-Ausschnitt Lange Ärmel Grau Geometrisch Blusen im H-Linien-Schnitt Normal
+          Knöpfe Stück S M L XL XXL Blusen
+        </description>
+        <modified_time>1635027334</modified_time>
+        <name>Lange Ärmel Geometrisch V-Ausschnitt Blusen (1645727985)</name>
+        <old_price>30.02</old_price>
+        <param name="color">Gray</param>
+        <param name="size">S,M,L,XL,XXL</param>
+        <picture>http://d3sej37t1mx5mv.cloudfront.net/image/600_600/ed/d6/edd6d0aa19581b22d7389c570f6d719b.jpg</picture>
+        <price>17.66</price>
+        <typePrefix>Apparel &amp; Accessories &gt; Clothing</typePrefix>
+        <url>https://example.com</url>
+        <vendor>FloryDay</vendor>
+      </offer>
+      )
+    end
+
+    specify do
+      expect(subject.append(doc).first['name'][0]['#']).to eq('Lange Ärmel Geometrisch V-Ausschnitt Blusen (1645727985)')
+    end
+  end
+
   describe 'special characters' do
     describe 'unquoted tags without CDATA (does not meet standard)' do
       let(:xml) do
