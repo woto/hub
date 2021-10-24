@@ -11,7 +11,8 @@
   <% end %>
 
   <div class="my-3">
-    <strong><%= @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY) %></strong>
+    <% name = @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY).to_s %>
+    <strong><%= simple_format name %></strong>
   </div>
 
   <%= tag.div class: 'my-3',
@@ -32,7 +33,7 @@
     <% end %>
 
     <template data-read-more-target="full">
-      <%= simple_format @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+      <%= simple_format description %>
     </template>
   <% end %>
 
