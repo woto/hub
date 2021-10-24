@@ -18,7 +18,6 @@ class OfferDecorator < ApplicationDecorator
   def name
     (super.presence || [])
       .pluck(Import::Offers::Hashify::HASH_BANG_KEY)
-      .map { |name| h.strip_tags(name) }
       .join(', ')
       .yield_self { |names| h.truncate(names.to_s, length: 100) }
   end
