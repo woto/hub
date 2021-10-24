@@ -131,7 +131,11 @@ class GlobalHelper
     end
 
     def hashify(child)
-      child.to_h.transform_keys { |k| "@#{k}" }.merge('#' => child.text)
+      child.to_h.transform_keys { |k| "@#{k}" }.merge('#' => sanitize(child.text))
+    end
+
+    def sanitize(text)
+      Loofah.fragment(text).to_text(encode_special_chars: false).strip
     end
   end
 end

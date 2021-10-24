@@ -13,6 +13,35 @@ describe Feeds::Offers do
   let!(:feed_category) { create(:feed_category, feed: feed, ext_id: 'category 1') }
 
   describe 'special characters' do
+    describe 'unquoted tags without CDATA (does not meet standard)' do
+      let(:xml) do
+        %(
+        <offer id="12346">
+          <categoryId>category 1</categoryId>
+          <name>" & > < '</name>
+        </offer>
+        )
+      end
+
+      specify do
+        expect(subject.append(doc).first['name'][0]['#']).to eq('"  >  \'')
+      end
+    end
+
+    describe 'quoted tags without CDATA' do
+      let(:xml) do
+        %(
+        <offer id="12346">
+          <categoryId>category 1</categoryId>
+          <name>&quot; &amp; &gt; &lt; &apos;</name>
+        </offer>
+        )
+      end
+
+      specify do
+        expect(subject.append(doc).first['name'][0]['#']).to eq('" & > < \'')
+      end
+    end
 
     describe 'unsafe tags' do
       let(:xml) do
@@ -29,7 +58,7 @@ describe Feeds::Offers do
       end
 
       specify do
-        expect(subject.append(doc).first['description'][0]['#']).to eq("test script test")
+        expect(subject.append(doc).first['description'][0]['#']).to eq('test script test')
       end
     end
 
