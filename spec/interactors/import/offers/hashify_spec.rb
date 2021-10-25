@@ -30,7 +30,7 @@ describe Import::Offers::Hashify do
             'attribute2' => 'abc'
           },
           'categoryId' => [{ Import::Offers::Hashify::HASH_BANG_KEY => 'category 1' }],
-          'description' => [{ '#' => '<p>Description</p>' }],
+          'description' => [{ '#' => 'Description' }],
           'param' => [
             {
               Import::Offers::Hashify::HASH_BANG_KEY => 'white',
