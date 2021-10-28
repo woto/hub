@@ -25,7 +25,7 @@ describe ArticlesController, responsible: :admin do
     end
 
     context 'when article not belongs to the requested domain' do
-      let(:host) { create(:realm).domain }
+      let(:host) { create(:realm, kind: :post).domain }
 
       it 'shows not_found error' do
         get send(path.first, path.second[:params].merge(params))
