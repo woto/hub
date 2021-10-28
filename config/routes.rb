@@ -67,10 +67,6 @@ Rails.application.routes.draw do
       end
       resources :post_categories, only: [:index]
       resources :realms, only: [:index]
-      # TODO: remove
-      resources :categories, only: [:index] do
-        resources :offers, only: [:index]
-      end
       resources :feed_categories, only: [:index] do
         resources :offers, only: [:index]
       end
@@ -91,12 +87,13 @@ Rails.application.routes.draw do
     end
     resources :widgets
 
-    # TODO
     resources :accounts
     resources :advertisers
     resources :checks
     resources :post_categories
     resources :realms
+    resources :posts
+
     resources :favorites do
       collection do
         get :navbar_favorite_list
@@ -104,6 +101,7 @@ Rails.application.routes.draw do
         get :update_star
       end
     end
+
     resources :users do
       post :impersonate, on: :member
       post :stop_impersonating, on: :collection
@@ -120,21 +118,13 @@ Rails.application.routes.draw do
       end
     end
 
-    # NOTE: temporary workaround for "shared_search_everywhere" passing tests.
-    # It's not needed for working application. Just for tests.
     resources :offers, only: [:index] do
       member do
         get :modal_card
       end
     end
-    resources :post_categories, only: [:index]
-    resources :realms, only: [:index]
-    resources :feed_categories, only: [:index]
-    resources :transactions, only: [:index]
 
-    resources :posts
-
-    resources :promotions
+    # resources :promotions
     namespace :table do
       resources :columns
       resources :workspaces

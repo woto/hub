@@ -121,7 +121,7 @@ shared_examples 'shared_table' do |_class_name|
 
     def has_correct_search_path(plural:, q:)
       expect(page).to have_current_path(
-        url_for(controller: plural, action: :index, locale: 'ru', only_path: true),
+        url_for(controller: "/tables/#{plural}", action: :index, locale: 'ru', only_path: true),
         url: false, ignore_query: true
       )
       expect(::Addressable::URI.parse(current_url).query_values).to include('q' => q.to_s)
