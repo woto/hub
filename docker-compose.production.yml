@@ -19,6 +19,7 @@ services:
     volumes:
       - "rails_storage:/app/storage"
       - "rails_sitemaps:/app/public/sitemaps"
+      - "./data:/app/data"
     expose:
       - 9394
     ports:
@@ -65,6 +66,7 @@ services:
     volumes:
       - "rails_storage:/app/storage"
       - "rails_sitemaps:/app/public/sitemaps"
+      - "./data:/app/data"
     expose:
       - 9394
     ports:
