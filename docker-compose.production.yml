@@ -113,10 +113,21 @@ services:
     env_file:
       - .env
     image: kibana:7.9.2
-    ports:
-      - ${KIBANA_PORT}
+    # ports:
+    #   - ${KIBANA_PORT}
     environment:
       - ELASTICSEARCH_HOSTS=http://elastic:9200
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.kibana_goodreviews_ru.rule=Host(`kibana.goodreviews.ru`)"
+      - "traefik.http.routers.kibana_goodreviews_ru.entrypoints=websecure"
+      - "traefik.http.routers.kibana_goodreviews_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.middlewares.kibana-basicauth.basicauth.users=woto:$$2y$$05$$HqJi.DKUM2u10LSnEsCakuB9gjFt/CedJKDv9xG46y7RgUiuZe4bC"
+      - "traefik.http.middlewares.kibana-https-chain.chain.middlewares=kibana-basicauth"
+      - "traefik.http.routers.kibana_goodreviews_ru.middlewares=kibana-https-chain"
+
 
   postgres:
     env_file:
