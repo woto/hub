@@ -79,7 +79,8 @@ end
 
 # Application monitoring
 gem 'newrelic_rpm'
-gem 'sentry-raven'
+gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'yabeda-http_requests'
 gem 'yabeda-prometheus'
 gem 'yabeda-puma-plugin'
@@ -114,11 +115,11 @@ gem 'after_commit_everywhere'
 # gem 'typhoeus'
 # gem 'piperator'
 # gem 'ransack'
+gem 'active_interaction'
 gem 'i18n-tasks'
 gem 'mobility', github: 'shioyama/mobility'
 gem 'sitemap_generator'
 gem 'spreadsheet'
-gem 'active_interaction'
 
 # Grape
 gem 'grape'
