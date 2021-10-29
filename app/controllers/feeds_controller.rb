@@ -6,10 +6,12 @@ class FeedsController < ApplicationController
   skip_before_action :authenticate_user!
 
   def new
+    # TODO: authorize
     @feed = Feed.new
   end
 
   def create
+    # TODO: authorize
     @feed = Feed.new(feed_params)
     @feed.operation = 'manual'
 
@@ -21,12 +23,14 @@ class FeedsController < ApplicationController
   end
 
   # NOTE: not tested
+  # TODO: authorize
   def shrinked
     result = []
 
     render json: Production::ShrinkedFeed.call(feed: Feed.find(params[:id]), size: 10_000).object
   end
 
+  # TODO: rewrite. (start new job Import::ProcessJob)
   def prioritize
     Feed.increment_counter(:priority, params[:id])
   end
@@ -39,6 +43,7 @@ class FeedsController < ApplicationController
     end
   end
 
+  # TODO: revise
   def logs
     render json: Feed.with_log_data.find(params[:id]).log_data
   end

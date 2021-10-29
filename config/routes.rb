@@ -90,7 +90,11 @@ Rails.application.routes.draw do
     resources :accounts
     resources :advertisers
     resources :checks
-    resources :post_categories
+    resources :post_categories do
+    end
+    namespace :post_categories do
+      resource :import, only: %i[create new]
+    end
     resources :realms
     resources :posts
 

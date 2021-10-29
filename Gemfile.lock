@@ -75,6 +75,9 @@ GEM
       actionpack (>= 3.0.2, < 7.0)
       activemodel (>= 3.0.2, < 7.0)
       activesupport (>= 3.0.2, < 7.0)
+    active_interaction (4.0.6)
+      activemodel (>= 5, < 7)
+      activesupport (>= 5, < 7)
     activejob (6.1.4.1)
       activesupport (= 6.1.4.1)
       globalid (>= 0.3.6)
@@ -628,6 +631,7 @@ PLATFORMS
 
 DEPENDENCIES
   action-cable-testing
+  active_interaction
   activejob-uniqueness
   after_commit_everywhere
   ancestry!

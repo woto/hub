@@ -1,5 +1,10 @@
 ---
 ru:
+  active_interaction:
+    attributes:
+      post_categories/create_post_category_import:
+        realm_id: Площадка
+        url: URL
   activemodel:
     attributes:
       filters/date_form:
@@ -79,12 +84,13 @@ ru:
     new_advertiser: Создание рекламодателя
     new_check: Новая выплата
     new_post: Новая статья
+    new_post_categories_import: Импорт категорий
     new_post_category: Новая категория статей
     new_realm: Новая площадка
     news: Новости
     offers: Все офферы
     password: Пароль
-    post_categories: Категории
+    post_categories: Категории статей
     posts: Статьи
     profile: Профиль
     realms: Площадки
@@ -104,6 +110,7 @@ ru:
     feed: Фид
     feed_logs: История фида
     impersonate: Impersonate
+    import_post_categories: Импорт категорий
     new_advertiser: Создать рекламодателя
     new_check: Запросить выплату
     new_feed: Создать фид
@@ -337,6 +344,8 @@ ru:
         create: Сохранить
       filter_form:
         create: Применить фильтр
+      post_categories_import:
+        create: Импортировать
       post_category:
         create: Сохранить категорию статей
         update: Сохранить категорию статей
@@ -477,6 +486,9 @@ ru:
       post_category_was_successfully_destroyed: Категория статей была успешно удалена
     form:
       are_you_sure: Вы уверены? Настройки родительской категории будут сброшены
+    imports:
+      form:
+        available_urls: 'Доступны следующие адреса:'
     update:
       post_category_was_successfully_updated: Категория статей была успешно изменена
   post_categories_count:
@@ -485,6 +497,7 @@ ru:
     one: "%{count} категория статей"
     other: "%{count} категорий статей"
     zero: 0 категорий статей
+  post_categories_import_job_successfully_queued: Задача импорта категорий успешно поставлена в очередь
   posts:
     create:
       post_was_successfully_created: Статья была успешно создана
@@ -827,6 +840,7 @@ ru:
     news: Новости
     offers: Все офферы
     post_categories: Категории статей
+    post_categories_import: Импорт категорий
     posts: Статьи
     realms: Площадки
     settings: Настройки

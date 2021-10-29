@@ -118,6 +118,7 @@ gem 'i18n-tasks'
 gem 'mobility', github: 'shioyama/mobility'
 gem 'sitemap_generator'
 gem 'spreadsheet'
+gem 'active_interaction'
 
 # Grape
 gem 'grape'

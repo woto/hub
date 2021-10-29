@@ -1,5 +1,10 @@
 ---
 en:
+  active_interaction:
+    attributes:
+      post_categories/create_post_category_import:
+        realm_id: Website
+        url: URL
   activemodel:
     attributes:
       filters/date_form:
@@ -79,6 +84,7 @@ en:
     new_advertiser: New advertiser
     new_check: New check
     new_post: New post
+    new_post_categories_import: Post categories import
     new_post_category: New post category
     new_realm: New realm
     news: News
@@ -104,6 +110,7 @@ en:
     feed: Feed
     feed_logs: Feed logs
     impersonate: Impersonate
+    import_post_categories: Import categories
     new_advertiser: New advertiser
     new_check: New check
     new_feed: New feed
@@ -327,6 +334,8 @@ en:
         create: Save
       filter_form:
         create: Apply filter
+      post_categories_import:
+        create: Import
       post_category:
         create: Create post category
         update: Update post category
@@ -467,6 +476,9 @@ en:
       post_category_was_successfully_destroyed: Post category was successfully destroyed
     form:
       are_you_sure: Are you sure? The parent category will be reset
+    imports:
+      form:
+        available_urls: 'Available urls are:'
     update:
       post_category_was_successfully_updated: Post category was successfully updated
   post_categories_count:
@@ -475,6 +487,7 @@ en:
     one: "%{count} post category"
     other: "%{count} post categories"
     zero: 0 post categories
+  post_categories_import_job_successfully_queued: Post categories import job successfully queued
   posts:
     create:
       post_was_successfully_created: Post was successfully created
@@ -817,6 +830,7 @@ en:
     news: News
     offers: Offers
     post_categories: Post categories
+    post_categories_import: Categories import
     posts: Posts
     realms: Realms
     settings: Settings

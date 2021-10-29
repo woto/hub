@@ -2,11 +2,13 @@
 
 require 'rails_helper'
 
-describe PostCategories::YandexMarketJob, type: :job do
-  subject { described_class.perform_now }
+describe PostCategories::YandexMarketImportJob, type: :job do
+  subject do
+    described_class.perform_now(create(:realm), 'https://download.cdn.yandex.net/market/market_categories.xls')
+  end
 
   before do
-    stub_request(:get, 'http://download.cdn.yandex.net/market/market_categories.xls')
+    stub_request(:get, 'https://download.cdn.yandex.net/market/market_categories.xls')
       .to_return(status: 200, body: file_fixture('market_categories.xls'))
   end
 
@@ -15,17 +17,6 @@ describe PostCategories::YandexMarketJob, type: :job do
 
     expect(PostCategory.last.path.map(&:title)).to(
       eq(['Авто', 'Автомобильные инструменты', 'Прочие инструменты'])
-    )
-  end
-
-  it 'creates one realm' do
-    expect { subject }.to change(Realm, :count).by(1)
-
-    expect(Realm.last).to have_attributes(
-      kind: 'post',
-      locale: 'ru',
-      domain: 'yandex',
-      title: 'Яндекс Маркет'
     )
   end
 end
