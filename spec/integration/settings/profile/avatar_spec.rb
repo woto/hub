@@ -10,7 +10,7 @@ describe Settings::AvatarsController, type: :system do
 
   RSpec.shared_examples 'uploadable avatar' do |avatar_name|
     it 'uploads avatar' do
-      page.attach_file(Rails.root.join('spec/fixtures/files', avatar_name)) do
+      page.attach_file(file_fixture(avatar_name)) do
         find('#avatar-clickable').click
       end
 
