@@ -19,6 +19,12 @@
       ) %>
 
   <%= render ProfileList::ItemComponent.new(
+    title: t('left_menu.api_key'),
+    path: edit_settings_api_key_path,
+    current_page: params['controller'] == 'settings/api_keys',
+    ) %>
+
+  <%= render ProfileList::ItemComponent.new(
       title: t('left_menu.danger_zone'),
       path: edit_settings_danger_zone_path,
       current_page: params['controller'] == 'settings/danger_zones',

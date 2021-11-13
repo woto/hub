@@ -143,6 +143,7 @@ Rails.application.routes.draw do
           resource 'password'
           resource 'avatar'
           resource 'danger_zone'
+          resource 'api_key'
         end
       end
     end
