@@ -1,0 +1,38 @@
+<% content_for(:seo_title) do %>
+  <%= t("titles.settings") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.api_key'), edit_settings_api_key_path %>
+  </li>
+<% end %>
+
+<div class="col">
+  <div class="card card-md">
+
+    <div class="card-body">
+
+      <div class="row">
+
+        <div class="col-md-3 me-3">
+          <%= render ProfileListComponent.new %>
+        </div>
+
+        <div class="col-md-5">
+
+          <h2 class="mb-4"><%= t('.api_key') %></h2>
+
+          <%= render 'form' %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

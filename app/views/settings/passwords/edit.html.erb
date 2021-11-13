@@ -29,11 +29,9 @@
 
       <div class="col-md-5">
 
-        <%= render InpageTitleComponent.new(
-            title: t("title", resource: 'password', scope: scope)
-        ) %>
+        <h2 class="mb-4"><%= t('.password') %></h2>
 
-        <%= simple_form_for(resource, as: resource_name, url: settings_password_path, html: { method: :put }) do |f| %>
+        <%= simple_form_for(resource, as: resource_name, url: settings_password_path, html: { method: :put, 'data-turbo': false }) do |f| %>
 
           <%= f.error_notification %>
 

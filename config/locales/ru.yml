@@ -69,20 +69,27 @@ ru:
   breadcrumbs:
     accounts: Счета
     advertisers: Рекламодатели
+    api_key: API ключ
     checks: Выплаты
     danger_zone: Опасная зона
     dashboard: Личн. кабинет
     edit_check: Редактирование выплаты
+    edit_entity: Редактирование объекта
+    edit_mention: Редактирование упоминания
     edit_post: Редактирование статьи
     edit_post_category: Редактирование категории статей
     edit_realm: Редактирование площадки
     email: Почта
+    entities: Объекты упоминания
     favorites: Избранное
     feeds: Фиды
     help: Справка
     homepage: Главная
+    mentions: Упоминания
     new_advertiser: Создание рекламодателя
     new_check: Новая выплата
+    new_entity: Новый объект
+    new_mention: Новое упоминание
     new_post: Новая статья
     new_post_categories_import: Импорт категорий
     new_post_category: Новая категория статей
@@ -95,6 +102,8 @@ ru:
     profile: Профиль
     realms: Площадки
     show_check: Просмотр выплаты
+    show_entity: Просмотр объекта упоминания
+    show_mention: Просмотр упоминания
     show_post: Просмотр статьи
     show_post_category: Просмотр категории статей
     show_realm: Просмотр площадки
@@ -113,7 +122,9 @@ ru:
     import_post_categories: Импорт категорий
     new_advertiser: Создать рекламодателя
     new_check: Запросить выплату
+    new_entity: Новый объект
     new_feed: Создать фид
+    new_mention: Новое упоминание
     new_post: Новая статья
     new_post_category: Новая категория статей
     new_realm: Новая площадка
@@ -259,6 +270,13 @@ ru:
   displaying: Отображается
   drop_image_here_or_click: Drop image here or click
   edit: Изменить
+  entities:
+    create:
+      entity_was_successfully_created: Объект упоминания был успешно создан
+    destroy:
+      entity_was_successfully_destroyed: Объект упоминания был успешно удален
+    update:
+      entity_was_successfully_updated: Объект упоминания был успешно изменен
   errors:
     attributes:
       user:
@@ -433,16 +451,21 @@ ru:
   left_menu:
     accounts: Счета
     advertisers: Рекламодатели
+    api_docs: API документация
+    api_key: API ключ
+    authors: Авторы
     categories: Категории
     checks: Выплаты
     danger_zone: Опасная зона
     dashboard: Личный кабинет
     email: Почта
+    entities: Объекты
     favorites: Избранное
     feed_categories: Категории офферов
     feeds: Фиды
     finances: Финансы
     help: Справка
+    mentions: Упоминания
     offers: Офферы
     password: Пароль
     post_categories: Категории статей
@@ -456,8 +479,16 @@ ru:
     users: Пользователи
     workspaces: Рабочие области
   link: Ссылка
+  mentions:
+    create:
+      mention_was_successfully_created: Упоминание было успешно создано
+    destroy:
+      mention_was_successfully_destroyed: Упоминание было успешно удалено
+    update:
+      mention_was_successfully_updated: Упоминание было успешно изменено
   navbar_favorite_component:
     title: Избранное
+  new: New
   no_results_found: Ничего не найдено
   offers:
     address_for_widget:
@@ -580,11 +611,27 @@ ru:
   search: Искать
   search_placeholder: Введите текст для поиска...
   settings:
+    api_keys:
+      edit:
+        api_key: API ключ
+      form:
+        generate: Перегенерировать
+      update:
+        success: API ключ был успешно перегенерирован
     danger_zones:
       edit:
         are_you_sure: Вы уверены? После удаления аккаунта вы не сможете его восстановить
         cancel_my_account: Удалить мой аккаунт
+        danger_zone: Опасная зона
+    emails:
+      edit:
+        email: Смена e-mail
+    passwords:
+      edit:
+        password: Смена пароля
     profiles:
+      edit:
+        profile: Настройки профиля
       form:
         update: Обновить
       update:
@@ -608,6 +655,8 @@ ru:
         example: example
       feed_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
+      mention:
+        entities: Управление объектами рекламы производится <a href="/entities" target="_blank">на отдельной странице</a>
       post:
         currency: Выберите национальную валюту вашей страны
         description: Подробнее про метатег description читайте на <a href="https://yandex.ru/support/webmaster/indexing-options/description.html">Яндекс</a> или <a href="https://developers.google.com/search/docs/advanced/appearance/good-titles-snippets?hl=ru#meta-descriptions">Google</a>
@@ -633,8 +682,29 @@ ru:
         user: Пользователь
       columns_form:
         displayed_columns: Отображаемые столбцы
+      entity:
+        aliases: Синонимы
+        id: ID
+        mentions_count: Количество упоминаний
+        title: Название
       feed_filter_form:
         displayed_columns: Отображаемые столбцы
+      mention:
+        advertiser_ext_ids: Advertiser ext ids
+        city: Город
+        entities: Объекты рекламы
+        entities_count: Entities count
+        entity_ids: Объекты рекламы
+        id: ID
+        kind: Тип упоминания
+        published_at: Опубликовано
+        publisher_ext_id: Автор
+        screenshot: Скриншот
+        sentiment: Настроение
+        status: Статус
+        tags: Теги
+        url: URL
+        user: Пользователь
       post:
         amount: Цена
         article_link: Ссылка на статью
@@ -830,6 +900,7 @@ ru:
     advertisers: Рекламодатели
     checks: Выплаты
     dashboard: Личный кабинет
+    entities: Объекты упоминания
     favorite: Избранное
     favorites: Избранное
     feed: Фид
@@ -837,6 +908,7 @@ ru:
     feed_category: Категория
     feeds: Фиды
     help: Справка
+    mentions: Упоминания
     news: Новости
     offers: Все офферы
     post_categories: Категории статей

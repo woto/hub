@@ -29,13 +29,11 @@
 
       <div class="col-md-5">
 
-        <%= render InpageTitleComponent.new(
-            title: t("title", resource: 'danger_zone', scope: scope)
-        ) %>
+        <h2 class="mb-4"><%= t('.danger_zone') %></h2>
 
         <h3><%= t("cancel_my_account", scope: scope) %></h3>
 
-        <p><%= t(".unhappy", scope: scope) %>
+        <p><%= t("unhappy", scope: scope) %>
           <%= link_to t(".cancel_my_account"), registration_path(:user), data: { confirm: t(".are_you_sure") }, method: :delete %>
         </p>
 

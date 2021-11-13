@@ -1135,7 +1135,8 @@ CREATE TABLE public.users (
     workspaces_count integer DEFAULT 0 NOT NULL,
     profiles_count integer DEFAULT 0 NOT NULL,
     identities_count integer DEFAULT 0 NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    api_key character varying
 );
 
 
@@ -1930,6 +1931,13 @@ CREATE INDEX index_transactions_on_transaction_group_id ON public.transactions U
 
 
 --
+-- Name: index_users_on_api_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_api_key ON public.users USING btree (api_key);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2270,6 +2278,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211010185222'),
 ('20211011134016'),
 ('20211014184742'),
-('20211014185110');
+('20211014185110'),
+('20211016174121');
 
 

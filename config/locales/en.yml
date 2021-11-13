@@ -69,20 +69,27 @@ en:
   breadcrumbs:
     accounts: Accounts
     advertisers: Advertisers
+    api_key: API key
     checks: Checks
     danger_zone: Danger zone
     dashboard: Dashboard
     edit_check: Edit check
+    edit_entity: Edit entity
+    edit_mention: Edit mention
     edit_post: Edit post
     edit_post_category: Edit post category
     edit_realm: Edit realm
     email: Email
+    entities: Entities
     favorites: Favorites
     feeds: Feeds
     help: Help
     homepage: Homepage
+    mentions: Mentions
     new_advertiser: New advertiser
     new_check: New check
+    new_entity: New entity
+    new_mention: New mention
     new_post: New post
     new_post_categories_import: Post categories import
     new_post_category: New post category
@@ -95,6 +102,8 @@ en:
     profile: Profile
     realms: Realms
     show_check: Show check
+    show_entity: Show entity
+    show_mention: Show mention
     show_post: Show post
     show_post_category: Show post category
     show_realm: Show realm
@@ -113,7 +122,9 @@ en:
     import_post_categories: Import categories
     new_advertiser: New advertiser
     new_check: New check
+    new_entity: New entity
     new_feed: New feed
+    new_mention: New mention
     new_post: New post
     new_post_category: New post category
     new_realm: New realm
@@ -255,6 +266,13 @@ en:
   displaying: Displaying
   drop_image_here_or_click: Drop image here or click
   edit: Edit
+  entities:
+    create:
+      entity_was_successfully_created: Entity was successfully created
+    destroy:
+      entity_was_successfully_destroyed: Entity was successfully destroyed
+    update:
+      entity_was_successfully_updated: Entity was successfully updated
   errors:
     attributes:
       user:
@@ -423,16 +441,21 @@ en:
   left_menu:
     accounts: Accounts
     advertisers: Advertisers
+    api_docs: API docs
+    api_key: API key
+    authors: Authors
     categories: Categories
     checks: Checks
-    danger_zone: Danger_zone
+    danger_zone: Danger zone
     dashboard: Dashboard
     email: Email
+    entities: Entities
     favorites: Favorites
     feed_categories: Feed categories
     feeds: Feeds
     finances: Finances
     help: Help
+    mentions: Mentions
     offers: Offers
     password: Password
     post_categories: Post categories
@@ -446,8 +469,16 @@ en:
     users: Users
     workspaces: Workspaces
   link: Link
+  mentions:
+    create:
+      mention_was_successfully_created: Mention was successfully created
+    destroy:
+      mention_was_successfully_destroyed: Mention was successfully destroyed
+    update:
+      mention_was_successfully_updated: Mention was successfully updated
   navbar_favorite_component:
     title: Favorits
+  new: New
   no_results_found: No results found
   offers:
     address_for_widget:
@@ -570,11 +601,27 @@ en:
   search: Search
   search_placeholder: Enters text to search...
   settings:
+    api_keys:
+      edit:
+        api_key: API key
+      form:
+        generate: Regenerate
+      update:
+        success: API key successfully regenerated
     danger_zones:
       edit:
         are_you_sure: Are you sure? After deleting your account, you will not be able to restore it
         cancel_my_account: Cancel my account
+        danger_zone: Danger zone
+    emails:
+      edit:
+        email: Email change
+    passwords:
+      edit:
+        password: Password change
     profiles:
+      edit:
+        profile: Profile Settings
       form:
         update: Update
       update:
@@ -598,6 +645,8 @@ en:
         example: example
       feed_filter_form:
         displayed_columns: The order in which columns are added affects the display
+      mention:
+        entities: Управление объектами рекламы производится <a href="/entities" target="_blank">на отдельной странице</a>
       post:
         currency: Select the national currency of your country
         description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>
@@ -623,8 +672,29 @@ en:
         user: User
       columns_form:
         displayed_columns: Displayed columns
+      entity:
+        aliases: Aliases
+        id: Id
+        mentions_count: Mentions count
+        title: Title
       feed_filter_form:
         displayed_columns: Displayed columns
+      mention:
+        advertiser_ext_ids: Advertiser ext ids
+        city: City
+        entities: Объекты рекламы
+        entities_count: Entities count
+        entity_ids: Объекты рекламы
+        id: Id
+        kind: Kind
+        published_at: Published at
+        publisher_ext_id: Publisher ext
+        screenshot: Screenshot
+        sentiment: Sentiment
+        status: Status
+        tags: Tags
+        url: Url
+        user: User
       post:
         amount: Amount
         article_link: Link to the article
@@ -820,6 +890,7 @@ en:
     advertisers: Advertisers
     checks: Checks
     dashboard: Dashboard
+    entities: Объекты упоминания
     favorite: Favorite
     favorites: Favorites
     feed: Feed
@@ -827,6 +898,7 @@ en:
     feed_category: Category
     feeds: Feeds
     help: Help
+    mentions: Mentions
     news: News
     offers: Offers
     post_categories: Post categories

@@ -115,7 +115,7 @@
     <%= render Left::Menu::ItemComponent.new(
         title: t('left_menu.settings'),
         path: { controller: '/settings/profiles', action: 'edit' },
-        current_page: request.path.yield_self { |p| p.include?('profile') || p.include?('password') || p.include?('email') || p.include?('danger_zone') },
+        current_page: request.path.yield_self { |p| p.include?('profile') || p.include?('password') || p.include?('email') || p.include?('danger_zone') || p.include?('api_key') },
         icon: '<i class="fas fa-cog"></i>',
         disabled: !user_signed_in?
     ) %>

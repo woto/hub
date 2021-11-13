@@ -5,6 +5,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  api_key                :string
 #  checks_count           :integer          default(0), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
@@ -34,6 +35,7 @@
 #
 # Indexes
 #
+#  index_users_on_api_key               (api_key) UNIQUE
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
