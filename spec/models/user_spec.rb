@@ -89,10 +89,11 @@ describe User, type: :model do
 
   describe '#as_indexed_json' do
     subject { user.as_indexed_json }
+
     let(:user) { create(:user) }
 
     # TODO: add more attributes later
-    it { is_expected.to include(id: user.id)}
+    it { is_expected.to include(id: user.id) }
   end
 
   context 'with confirmed email' do
@@ -111,6 +112,30 @@ describe User, type: :model do
 
       content = ActionMailer::Base.deliveries.first.body.encoded
       expect(content).to include("/auth/password/edit?reset_password_token=#{reset_password_token}")
+    end
+
+    context 'when creates user' do
+      it 'generates api_key to him' do
+        user = nil
+        expect do
+          user = described_class.create(email: 'foo@bar.com', password: '123123123')
+        end.to change(described_class, :count)
+
+        expect(user.api_key).to be_a(String)
+        expect(user.api_key).not_to be_empty
+      end
+    end
+
+    context 'when saved user saves' do
+      let!(:user) { create(:user, role: :user) }
+
+      it 'does not regenerate his api_key' do
+        expect do
+          expect do
+            user.update(role: :manager)
+          end.to change(user, :updated_at)
+        end.not_to change(user, :api_key)
+      end
     end
   end
 end
