@@ -44,15 +44,15 @@ describe API::Tools, type: :request, focus: true do
   end
 
   describe 'GET /api/tools/scrape_webpage' do
-    # TODO: rewrite with webmock
     # TODO: create separate test file with separate services' tests
     it 'returns scrapped data' do
+      stub_request(:get, 'http://scrapper:4000/screenshot?url=https://ya.ru')
+        .to_return(status: 200, body: { key: 'value' }.to_json, headers: {})
+
       get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://ya.ru' }
 
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to match(
-        'image' => start_with('data:image/png;base64, '), 'publisher' => nil
-      )
+      expect(JSON.parse(response.body)).to eq('key' => 'value')
     end
 
     context 'when user is not authorized' do
