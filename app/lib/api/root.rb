@@ -12,7 +12,14 @@ module API
     # end
 
     format :json
-    # rescue_from :all
+    rescue_from :grape_exceptions
+    # TODO: use ActionDispatch::ExceptionWrapper (for logging like it does Rails)
+    # TODO: also must send to Sentry
+    rescue_from :all do |e|
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.join("\n")
+      error!(e)
+    end
 
     helpers do
       def current_user

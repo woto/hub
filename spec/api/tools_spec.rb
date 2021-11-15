@@ -84,5 +84,18 @@ describe API::Tools, type: :request do
         expect(JSON.parse(response.body)).to eq({ 'error' => 'url must be url, e.g. https://ya.ru' })
       end
     end
+
+    context 'when faraday timed out' do
+      it 'returns json response' do
+        faraday = Faraday.new
+        expect(faraday).to receive(:get).and_raise(Faraday::TimeoutError)
+        expect_any_instance_of(Interactors::Tools::ScrapeWebpage).to receive(:connection).and_return(faraday)
+
+        get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'http://ya.ru' }
+        expect(JSON.parse(response.body)).to eq({ 'error' => 'timeout' })
+        # TODO: should be not 5XX status code
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
   end
 end

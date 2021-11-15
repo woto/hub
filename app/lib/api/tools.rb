@@ -4,8 +4,6 @@ require_relative 'validations/url'
 
 module API
   class Tools < ::Grape::API
-    version 'v1', using: :header, vendor: 'hub'
-    format :json
     prefix :api
 
     resource :tools do
@@ -26,20 +24,9 @@ module API
       end
 
       get :scrape_webpage do
-        url = URI::HTTP.build([nil, ENV.fetch('SCRAPPER_HOST'), ENV.fetch('SCRAPPER_PORT'),
-                               '/screenshot', "url=#{params[:url]}", nil])
-
-        connection = Faraday.new(url: url) do |faraday|
-          faraday.use FaradayMiddleware::FollowRedirects
-          faraday.adapter Faraday.default_adapter
-          faraday.response :json
-
-          faraday.options.open_timeout = 2
-          faraday.options.timeout = 5
-        end
-
-        result = connection.get(url)
-        result.body
+        result = Interactors::Tools::ScrapeWebpage.call(url: params[:url]).object
+        status result[:status]
+        body result[:body]
       end
     end
   end
