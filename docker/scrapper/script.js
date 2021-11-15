@@ -80,9 +80,23 @@ let rules = [
   }
 ]
 
+function delay(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function takeScreenshotWithDelay(page) {
+  await delay(2000)
+  try {
+    return await page.screenshot({encoding: "base64"})
+  } catch (e) {
+    throw Error('failed to take a screenshot')
+  }
+}
+
 app.get('/screenshot', async (request, response) => {
-  console.log('started');
-  const urlString = request.query.url
+
   // const browser = await puppeteer.launch();
   // const browser = await puppeteer.launch({defaultViewport: {width: 1600, height: 900}});
   const browser = await puppeteer.launch({
@@ -95,24 +109,30 @@ app.get('/screenshot', async (request, response) => {
       '--disable-dev-shm-usage'
     ]
   })
-  const page = await browser.newPage();
-  const url = new URL(urlString);
 
-  await page.goto(urlString);
+  try {
+    console.log('started');
+    const urlString = request.query.url
 
-  function takeScreenshotWithDelay() {
-    const promise = new Promise(function(resolve, reject) {
-      setTimeout(async function() {
-        resolve(await page.screenshot({ encoding: "base64" }));
-      }, 2000);
-    });
-    return promise;
+    const page = await browser.newPage();
+    const url = new URL(urlString);
+
+    try {
+      await page.goto(urlString);
+    } catch (e) {
+      throw Error('unable to goto to the url')
+    }
+
+    const image = await takeScreenshotWithDelay(page);
+    const publisher = await getPublisher(urlString, page);
+    response.send({ image: `data:image/png;base64, ${image}`, publisher: publisher })
+  } catch (e) {
+    console.error(e);
+    response.status(400);
+    response.send({ error: e.message })
+  } finally {
+    await browser.close();
   }
-
-  const image = await takeScreenshotWithDelay();
-  const publisher = await getPublisher(urlString, page);
-  await browser.close();
-  response.send({ image: `data:image/png;base64, ${image}`, publisher: publisher })
 })
 
 async function getPublisher(url, page) {
