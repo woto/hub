@@ -4,6 +4,8 @@ require 'sidekiq/web'
 require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
+  mount API::Root => '/'
+
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
   scope constraints: WebsiteConstraint.new do
@@ -158,6 +160,8 @@ Rails.application.routes.draw do
     end
 
     get 'dashboard', to: 'dashboard#index'
+    get 'api_docs', to: 'api_docs#index'
+
     root to: 'homepage#index'
 
     get 'landing1', to: 'landing1#index'

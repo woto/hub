@@ -130,6 +130,16 @@
       disabled: !user_signed_in?
     ) %>
 
+    <%= render Left::Menu::ItemComponent.new(
+      title: t('left_menu.api_docs'),
+      path: { controller: '/api_docs', action: 'index' },
+      current_page: request.path.yield_self do |p|
+        (p.include?('offers') && params[:favorite_id]) || p.include?('api_docs')
+      end,
+      icon: '<i class="fas fa-code"></i>',
+      disabled: false # !user_signed_in?
+    ) %>
+
     <% help_realm = Realm.help.find_by(locale: locale) %>
 
     <% if help_realm %>

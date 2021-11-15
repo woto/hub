@@ -123,6 +123,7 @@ gem 'spreadsheet'
 
 # Grape
 gem 'grape'
+gem 'grape-swagger'
 # gem 'grape-entity'
 # gem 'grape-swagger'
 

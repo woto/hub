@@ -34,6 +34,17 @@ services:
 #    ports:
 #      - 19394:9394
 
+  scrapper:
+    env_file:
+      - .env
+    build:
+      context: ./docker/scrapper
+      dockerfile: Dockerfile
+    ports:
+      - ${SCRAPPER_PORT}:3000
+    volumes:
+      - "./docker/scrapper:/app"
+
   elastic:
     env_file:
       - .env
