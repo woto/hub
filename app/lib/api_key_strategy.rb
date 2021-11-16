@@ -1,4 +1,4 @@
-class ApiKeyStrategy < Warden::Strategies::Base
+class APIKeyStrategy < Warden::Strategies::Base
   def valid?
     api_key.present?
   end
