@@ -116,14 +116,14 @@ describe Post, type: :model do
     end
   end
 
-  describe '#as_indexed_json' do
-    around(:each) do |example|
+  describe '#as_indexed_json', responsible: :user do
+    subject { post.as_indexed_json }
+
+    around do |example|
       freeze_time do
         example.run
       end
     end
-
-    subject { Current.set(responsible: create(:user)) { post.as_indexed_json } }
 
     let(:realm) { create(:realm) }
     let(:parent_category) { create(:post_category, realm: realm) }
@@ -159,11 +159,9 @@ describe Post, type: :model do
     end
   end
 
-  describe '#set_exchange_rate' do
-    let(:responsible) { create(:user) }
-
+  describe '#set_exchange_rate', responsible: :user do
     context 'when post is not persisted' do
-      let(:post) { Current.set(responsible: responsible) { build(:post) } }
+      let(:post) { build(:post) }
 
       it 'picks new ExchangeRate with today date and assign it to the post' do
         expect(ExchangeRate).to receive(:pick).with(nil).and_call_original
@@ -174,7 +172,7 @@ describe Post, type: :model do
     end
 
     context 'when post is persisted' do
-      let(:post) { Current.set(responsible: responsible) { create(:post) } }
+      let(:post) { create(:post) }
 
       it 'picks same ExchangeRate according to `created_at` and assign it to the post' do
         expect(ExchangeRate).to receive(:pick).with(post.created_at).and_call_original
@@ -284,7 +282,7 @@ describe Post, type: :model do
 
   describe '#create_transactions' do
     context 'when post is not persisted yet' do
-      subject { build(:post, status: described_class.statuses.keys.sample) }
+      subject { build(:post) }
 
       it 'calls `Accounting::Main::ChangeStatus` with correct params' do
         expect(Accounting::Main::ChangeStatus).to receive(:call).with(record: subject)
@@ -292,10 +290,9 @@ describe Post, type: :model do
       end
     end
 
-    context 'when post already persisted' do
-      subject! { Current.set(responsible: user) { create(:post, user: user) } }
+    context 'when post already persisted', responsible: :user do
+      subject! { create(:post) }
 
-      let(:user) { create(:user) }
       let(:status) { described_class.statuses.keys.sample }
 
       it 'calls `Accounting::Main::ChangeStatus` with correct params' do
