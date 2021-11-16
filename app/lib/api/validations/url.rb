@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Url < Grape::Validations::Base
+class API::Validations::Url < Grape::Validations::Base
   def validate_param!(attr_name, params)
     url = params[attr_name]
     URI.parse(url).tap { |uri| raise 'wrong url' unless uri.host && %w[http https].include?(uri.scheme) }
