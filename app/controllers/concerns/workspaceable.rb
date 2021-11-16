@@ -19,7 +19,8 @@ module Workspaceable
         controller: "tables/#{@settings[:plural]}", is_default: true
       )
 
-      if user_default_workspace
+      # NOTE: hotfix
+      if user_default_workspace && user_default_workspace.path != request.path && request.fullpath == request.path
         redirect_to user_default_workspace.path
       end
     end
