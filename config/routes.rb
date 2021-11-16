@@ -153,7 +153,6 @@ Rails.application.routes.draw do
     namespace :ajax do
       namespace :post_categories do
         resources :empties, only: %i[index]
-        resources :leaves, only: %i[index]
       end
       resources :tags, controller: 'post_tags', only: %i[index]
       resources :users, controller: 'users', only: %i[index]

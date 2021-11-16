@@ -21,4 +21,21 @@ describe PostsController, type: :system, responsible: :admin do
 
     expect(page).to have_select('post[post_category_id]', visible: :hidden, selected: another_post_category.to_label)
   end
+
+  context 'when realm is not selected' do
+    it 'shows error' do
+      login_as(Current.responsible, scope: :user)
+      visit new_post_path(locale: :ru)
+
+      expect(page).to have_select('post[post_category_id]', visible: :hidden)
+
+      within '.post_post_category' do
+        find('.selectize-input').click
+        find('input').native.send_key(:backspace)
+        find('input').native.send_key('category name')
+      end
+
+      expect(page).to have_text('realm_id is empty')
+    end
+  end
 end
