@@ -20,13 +20,14 @@
 #  index_advertisers_on_network_and_ext_id  (network,ext_id) UNIQUE
 #
 class Advertiser < ApplicationRecord
-  has_one_attached :picture
   has_logidze ignore_log_data: true
 
   enum network: { admitad: 0, gdeslon: 1 }
 
   has_many :feeds, dependent: :destroy
   has_many :accounts, as: :subjectable
+
+  has_one_attached :picture
 
   validates :name, presence: true
 

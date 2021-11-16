@@ -49,12 +49,12 @@ class Mention < ApplicationRecord
   belongs_to :user, counter_cache: true
   belongs_to :exchange_rate, counter_cache: true
 
-  has_one_attached :screenshot
-
   # has_and_belongs_to_many :entities
   has_many :entities_mentions
   has_many :entities, through: :entities_mentions, counter_cache: :entities_count
   has_many :transactions, as: :obj
+
+  has_one_attached :screenshot
 
   before_validation :set_exchange_rate
 

@@ -23,8 +23,8 @@ module Widgets
     class Picture < ApplicationRecord
       belongs_to :widgets_simple, class_name: 'Widgets::Simple'
 
-      has_one_attached :picture
       delegate_missing_to :picture
+      has_one_attached :picture
     end
   end
 end

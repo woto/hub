@@ -54,8 +54,6 @@ class User < ApplicationRecord
 
   before_save :assign_api_key
 
-  has_one_attached :avatar
-
   # TODO: decide later how to implement "cancel my account"
   has_one :profile, dependent: :restrict_with_exception
   has_many :posts, dependent: :restrict_with_exception
@@ -65,7 +63,9 @@ class User < ApplicationRecord
   has_many :checks, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
 
-  def as_indexed_json(options={})
+  has_one_attached :avatar
+
+  def as_indexed_json(_options = {})
     {
       id: id,
       confirmation_sent_at: confirmation_sent_at,
