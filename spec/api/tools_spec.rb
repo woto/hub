@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe API::Tools, type: :request, focus: true do
+describe API::Tools, type: :request do
   let!(:user) { create(:user) }
 
   describe 'GET /api/tools/detect_language' do

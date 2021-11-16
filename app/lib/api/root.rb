@@ -5,12 +5,7 @@ require 'grape-swagger'
 
 module API
   class Root < Grape::API
-
-    # use Warden::Manager do |manager|
-    #   manager.default_strategies :api_key
-    #   manager.failure_app = ->(_env) { [401, {}, ['Not authorized']] }
-    # end
-
+    version 'v1', using: :header, vendor: 'hub'
     format :json
     rescue_from :grape_exceptions
     # TODO: use ActionDispatch::ExceptionWrapper (for logging like it does Rails)
@@ -31,6 +26,7 @@ module API
     auth :api_key
 
     mount Tools
+    mount Mentions
 
     add_swagger_documentation(
       {
