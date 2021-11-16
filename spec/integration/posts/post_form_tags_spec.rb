@@ -40,4 +40,22 @@ describe PostsController, type: :system, responsible: :admin do
 
     expect(page).to have_select('post[tags][]', visible: :hidden, selected: %w[first fourth])
   end
+
+  context 'when realm is not selected' do
+    it 'shows error' do
+      login_as(Current.responsible, scope: :user)
+      visit new_post_path(locale: :ru)
+
+      expect(page).to have_select('post[tags][]', visible: :hidden)
+
+      within '.post_tags' do
+        find('.selectize-input').click
+        find('input').native.send_key(:backspace)
+        find('input').native.send_key('test')
+        find('input').native.send_key(:enter)
+      end
+
+      expect(page).to have_text('realm_id is empty')
+    end
+  end
 end

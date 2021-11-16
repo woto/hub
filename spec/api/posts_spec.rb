@@ -2,8 +2,12 @@
 
 require 'rails_helper'
 
-describe Ajax::PostTagsController, type: :request, responsible: :user do
-  subject { get ajax_tags_path(q: 'тег', realm_id: realm.id), xhr: true }
+describe API::Posts, type: :request, responsible: :user do
+  subject do
+    get '/api/posts/tags',
+        headers: headers.merge('ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'),
+        params: { q: 'тег', realm_id: realm.id }
+  end
 
   let(:user) { create(:user) }
   let(:realm) { create(:realm, kind: :post, locale: :ru) }
@@ -16,14 +20,18 @@ describe Ajax::PostTagsController, type: :request, responsible: :user do
     create(:post, tags: ['', 'тег в другом realm'], realm_kind: :post, realm_locale: :en)
   end
 
-  it 'requires authentication' do
-    subject
-    expect(response).to have_http_status(:unauthorized)
-    expect(response.body).to eq('You need to sign in or sign up before continuing.')
+  context 'when is not authenticated' do
+    let(:headers) { {} }
+
+    it 'requires authentication' do
+      subject
+      expect(response).to have_http_status(:unauthorized)
+      expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+    end
   end
 
   context 'when user is authenticated' do
-    before { sign_in(user) }
+    let(:headers) { { 'HTTP_API_KEY' => user.api_key } }
 
     # TODO: The code of Ajax::PostTagsController should be written better.
     # We do not want to see here non matching tags - "some tag".
@@ -32,7 +40,7 @@ describe Ajax::PostTagsController, type: :request, responsible: :user do
     it 'returns tags' do
       subject
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body).to contain_exactly(
+      expect(JSON.parse(response.body)).to contain_exactly(
         { 'title' => '' },
         { 'title' => 'some tag' },
         { 'title' => 'первый тег' },

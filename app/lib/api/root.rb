@@ -27,6 +27,7 @@ module API
 
     mount Tools
     mount Mentions
+    mount Posts
 
     add_swagger_documentation(
       {

@@ -24,13 +24,14 @@ export default class extends ApplicationController {
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/ajax/tags',
+                    url: '/api/posts/tags',
                     type: 'GET',
                     data: {
                         q: query,
                         realm_id: that.realmIdValue
                     },
-                    error: function() {
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
                         callback();
                     },
                     success: function(res) {
