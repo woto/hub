@@ -50,7 +50,6 @@ describe PostsController, type: :system, responsible: :admin do
 
       within '.post_tags' do
         find('.selectize-input').click
-        find('input').native.send_key(:backspace)
         find('input').native.send_key('tag')
       end
 

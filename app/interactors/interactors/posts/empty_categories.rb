@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module Ajax
-  module PostCategories
-    class EmptiesController < ApplicationController
-      def index
-        authorize %i[ajax post_categories]
+module Interactors
+  module Posts
+    class EmptyCategories
+      include ApplicationInteractor
 
+      def call
         body = {
           query: {
             bool: {
               must: {
                 multi_match: {
-                  query: params[:q],
+                  query: context.q,
                   type: 'bool_prefix',
                   fields: %w[
                     title.autocomplete
@@ -28,7 +28,7 @@ module Ajax
                 },
                 {
                   term: {
-                    realm_id: params[:realm_id]
+                    realm_id: context.realm_id
                   }
                 }
               ]
@@ -37,10 +37,14 @@ module Ajax
           size: 30
         }
 
-        @categories = PostCategory.__elasticsearch__.search(body)
+        categories = PostCategory.__elasticsearch__.search(body)
 
-        respond_to do |format|
-          format.json
+        context.object = categories.map do |category|
+          {
+            id: category.id,
+            path: category.path.join(' > '),
+            title: category.title
+          }
         end
       end
     end

@@ -59,6 +59,55 @@ describe API::Posts, type: :request, responsible: :user do
     end
   end
 
+  describe 'GET /api/posts/empty_categories' do
+    subject do
+      get '/api/posts/empty_categories',
+          headers: headers.merge('ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'),
+          params: params
+    end
+
+    let(:realm) { Realm.pick(locale: :ru, kind: :post) }
+    let!(:parent) { create(:post_category, title: 'Родительская категория', realm: realm) }
+    let!(:child) { create(:post_category, title: 'Дочерняя категория', realm: realm, parent: parent) }
+
+    before do
+      another_realm = Realm.pick(locale: :en, kind: :post)
+      create(:post_category, title: 'Другая категория', realm: another_realm)
+
+      post_category_with_post = create(:post_category, title: 'Другая категория', realm: realm, posts_count: 1)
+    end
+
+    context 'when user is not authorized' do
+      let(:params) { {q: 'кат', realm_id: realm.id} }
+      let(:headers) { {} }
+
+      it 'requires authentication' do
+        subject
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+      end
+    end
+
+    context 'when user is authenticated' do
+      let(:params) { {q: 'кат', realm_id: realm.id} }
+      let(:headers) { { 'HTTP_API_KEY' => user.api_key } }
+
+      it 'returns only categories without posts categories' do
+        subject
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body).to(
+          match_array(
+            [
+              { 'id' => child.id.to_s, 'path' => 'Родительская категория', 'title' => 'Дочерняя категория' },
+              { 'id' => parent.id.to_s, 'path' => '', 'title' => 'Родительская категория' }
+            ]
+          )
+        )
+      end
+    end
+  end
+
+
   describe 'GET /api/posts/tags' do
     subject do
       get '/api/posts/tags',

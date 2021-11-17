@@ -45,9 +45,10 @@ export default class extends ApplicationController {
                 this.clearOptions();
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/ajax/post_categories/empties',
+                    url: '/api/posts/empty_categories',
                     type: 'GET',
-                    error: function() {
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
                         callback();
                     },
                     data: {
