@@ -2,6 +2,8 @@
 
 module Table
   class WorkspacesController < ApplicationController
+    before_action :set_workspace, only: %i[destroy]
+
     def create
       @workspace_form = WorkspaceForm.new(workspace_form_params)
       return unless @workspace_form.valid?
@@ -11,8 +13,15 @@ module Table
     end
 
     def destroy
-      policy_scope(Workspace).find(params[:id]).destroy!
-      redirect_back(fallback_location: root_path)
+      GlobalHelper.retryable do
+        authorize(@workspace)
+
+        if @workspace.destroy
+          redirect_back fallback_location: dashboard_path, notice: t('.workspace_was_successfully_destroyed')
+        else
+          redirect_back fallback_location: dashboard_path, alert: @workspace.errors.full_messages.join
+        end
+      end
     end
 
     private
@@ -37,6 +46,12 @@ module Table
         controller: "tables/#{workspace_form.model}",
         path: url_for(params_for_url)
       )
+    end
+
+    private
+
+    def set_workspace
+      @workspace = Workspace.find(params[:id])
     end
   end
 end

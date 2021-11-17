@@ -6,4 +6,10 @@ class WorkspacePolicy < ApplicationPolicy
       scope.where(user: user)
     end
   end
+
+  def destroy?
+    return true if super
+
+    true if context.user == user
+  end
 end

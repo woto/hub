@@ -101,6 +101,8 @@ shared_examples 'shared workspace authenticated' do
             end
             expect(page).to have_none_of_selectors(:link, "delete-workspace-#{workspace.id}")
           end.to change(user.workspaces, :count).from(1).to(0)
+
+          expect(page).to have_text('Рабочая область была успешно удалена')
         end
       end
 
