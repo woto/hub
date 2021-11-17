@@ -5,9 +5,9 @@ require 'rails_helper'
 describe API::Posts, type: :request, responsible: :user do
   let(:user) { create(:user) }
 
-  describe 'GET /api/posts/leaves_categories' do
+  describe 'GET /api/posts/leaf_categories' do
     subject do
-      get '/api/posts/leaves_categories',
+      get '/api/posts/leaf_categories',
           headers: headers.merge('ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'),
           params: params
     end

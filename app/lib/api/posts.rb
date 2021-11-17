@@ -23,7 +23,7 @@ module API
         requires :realm_id, type: Integer, desc: 'Realm id', allow_blank: false
       end
 
-      get :leaves_categories do
+      get :leaf_categories do
         Interactors::Posts::LeavesCategories.call(q: params[:q], realm_id: params[:realm_id]).object
       end
 

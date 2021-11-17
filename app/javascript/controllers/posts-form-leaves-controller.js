@@ -52,7 +52,7 @@ export default class extends ApplicationController {
                 this.clearOptions();
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/api/posts/leaves_categories',
+                    url: '/api/posts/leaf_categories',
                     type: 'GET',
                     error: (jqXHR, textStatus, errorThrown) => {
                         that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
