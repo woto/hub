@@ -16,7 +16,7 @@ module API
         Interactors::Posts::Tags.call(q: params[:q], realm_id: params[:realm_id]).object
       end
 
-      desc 'Leaves categories'
+      desc 'Autocomplete leaf categories'
 
       params do
         requires :q, type: String, desc: 'Search string'
@@ -27,7 +27,7 @@ module API
         Interactors::Posts::LeavesCategories.call(q: params[:q], realm_id: params[:realm_id]).object
       end
 
-      desc 'Empty categories'
+      desc 'Autocomplete empty categories'
 
       params do
         requires :q, type: String, desc: 'Search string'

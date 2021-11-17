@@ -31,8 +31,8 @@ class Realm < ApplicationRecord
   index_name "#{Rails.env}.realms"
 
   enum kind: { post: 0, news: 1, help: 2 }
-  has_many :post_categories
-  has_many :posts
+  has_many :post_categories, dependent: :restrict_with_error
+  has_many :posts, dependent: :restrict_with_error
 
   validates :kind, :locale, :title, :domain, presence: true
   validates :kind, uniqueness: { scope: :locale }, unless: :post?

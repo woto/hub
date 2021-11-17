@@ -43,18 +43,13 @@ class RealmsController < ApplicationController
 
   # DELETE /realms/:id
   def destroy
-    authorize(@realm)
+    GlobalHelper.retryable do
+      authorize(@realm)
 
-    respond_to do |format|
       if @realm.destroy
-        format.html do
-          redirect_back fallback_location: realms_url, notice: t('.realm_was_successfully_destroyed')
-        end
+        redirect_back fallback_location: realms_url, notice: t('.realm_was_successfully_destroyed')
       else
-        format.html do
-          # TODO: Bullshit. If I add `status: :unprocessable_entity` then redirect doesn't work
-          redirect_back fallback_location: realms_url, alert: @realm.errors.full_messages.join
-        end
+        redirect_back fallback_location: realms_url, alert: @realm.errors.full_messages.join
       end
     end
   end
