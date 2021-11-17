@@ -64,35 +64,4 @@ describe Tables::PostCategoriesController, type: :system do
       expect(page).to have_link('Удалить', href: post_category_path(post_category.id, locale: :ru))
     end
   end
-
-  describe 'destroy', responsible: :admin do
-    before do
-      login_as(Current.responsible, scope: :user)
-      visit post_categories_path(locale: 'ru')
-    end
-
-    context 'when post_category has posts' do
-      before do
-        create(:post, post_category: post_category)
-      end
-
-      it "can't be destroyed" do
-        expect do
-          click_on('Управление')
-          accept_confirm { click_on('Удалить') }
-          expect(page).to have_text('Невозможно удалить запись, так как существуют зависимости: posts')
-        end.not_to change(PostCategory, :count)
-      end
-    end
-
-    context 'when post_category does not have posts' do
-      it 'can be destroyed' do
-        expect do
-          click_on('Управление')
-          accept_confirm { click_on('Удалить') }
-          expect(page).to have_text('Категория статей была успешно удалена')
-        end.to change(PostCategory, :count).by(-1)
-      end
-    end
-  end
 end

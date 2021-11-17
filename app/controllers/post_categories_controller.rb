@@ -43,18 +43,13 @@ class PostCategoriesController < ApplicationController
 
   # DELETE /post_categories/:id
   def destroy
-    authorize(@post_category)
+    GlobalHelper.retryable do
+      authorize(@post_category)
 
-    respond_to do |format|
       if @post_category.destroy
-        format.html do
-          redirect_back fallback_location: post_categories_url, notice: t('.post_category_was_successfully_destroyed')
-        end
+        redirect_back fallback_location: post_categories_url, notice: t('.post_category_was_successfully_destroyed')
       else
-        format.html do
-          # TODO: Bullshit. If I add `status: :unprocessable_entity` then redirect doesn't work
-          redirect_back fallback_location: post_categories_url, alert: @post_category.errors.full_messages.join
-        end
+        redirect_back fallback_location: post_categories_url, alert: @post_category.errors.full_messages.join
       end
     end
   end
