@@ -12,7 +12,9 @@ module Accounting
         end
 
         rule(:record) do
-          key.failure('must be instance of Check or Post') unless value.is_a?(Check) || value.is_a?(Post)
+          unless value.is_a?(Check) || value.is_a?(Post) || value.is_a?(Mention)
+            key.failure('must be instance of Check, Post or Mention')
+          end
         end
       end
 
@@ -60,6 +62,10 @@ module Accounting
           PostStatusPolicy
         when Check
           CheckStatusPolicy
+        when Mention
+          MentionStatusPolicy
+        else
+          raise 'unexpected policy_class'
         end
       end
 
