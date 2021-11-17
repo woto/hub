@@ -605,6 +605,72 @@ ALTER SEQUENCE public.checks_id_seq OWNED BY public.checks.id;
 
 
 --
+-- Name: entities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entities (
+    id bigint NOT NULL,
+    title character varying,
+    aliases jsonb DEFAULT '[]'::jsonb,
+    mentions_count integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
+);
+
+
+--
+-- Name: entities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entities_id_seq OWNED BY public.entities.id;
+
+
+--
+-- Name: entities_mentions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entities_mentions (
+    id bigint NOT NULL,
+    entity_id bigint NOT NULL,
+    mention_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: entities_mentions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entities_mentions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entities_mentions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entities_mentions_id_seq OWNED BY public.entities_mentions.id;
+
+
+--
 -- Name: exchange_rates; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -616,7 +682,8 @@ CREATE TABLE public.exchange_rates (
     posts_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    mentions_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -831,6 +898,48 @@ CREATE SEQUENCE public.identities_id_seq
 --
 
 ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
+
+
+--
+-- Name: mentions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mentions (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    exchange_rate_id bigint NOT NULL,
+    url text,
+    tags jsonb DEFAULT '[]'::jsonb,
+    status integer NOT NULL,
+    published_at timestamp without time zone,
+    currency integer NOT NULL,
+    amount numeric NOT NULL,
+    kind integer NOT NULL,
+    sentiment integer NOT NULL,
+    entities_count integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    log_data jsonb
+);
+
+
+--
+-- Name: mentions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mentions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mentions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mentions_id_seq OWNED BY public.mentions.id;
 
 
 --
@@ -1136,7 +1245,8 @@ CREATE TABLE public.users (
     profiles_count integer DEFAULT 0 NOT NULL,
     identities_count integer DEFAULT 0 NOT NULL,
     log_data jsonb,
-    api_key character varying
+    api_key character varying,
+    mentions_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1350,6 +1460,20 @@ ALTER TABLE ONLY public.checks ALTER COLUMN id SET DEFAULT nextval('public.check
 
 
 --
+-- Name: entities id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities ALTER COLUMN id SET DEFAULT nextval('public.entities_id_seq'::regclass);
+
+
+--
+-- Name: entities_mentions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_mentions ALTER COLUMN id SET DEFAULT nextval('public.entities_mentions_id_seq'::regclass);
+
+
+--
 -- Name: exchange_rates id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1389,6 +1513,13 @@ ALTER TABLE ONLY public.feeds ALTER COLUMN id SET DEFAULT nextval('public.feeds_
 --
 
 ALTER TABLE ONLY public.identities ALTER COLUMN id SET DEFAULT nextval('public.identities_id_seq'::regclass);
+
+
+--
+-- Name: mentions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions ALTER COLUMN id SET DEFAULT nextval('public.mentions_id_seq'::regclass);
 
 
 --
@@ -1548,6 +1679,22 @@ ALTER TABLE ONLY public.checks
 
 
 --
+-- Name: entities_mentions entities_mentions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_mentions
+    ADD CONSTRAINT entities_mentions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entities entities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities
+    ADD CONSTRAINT entities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: exchange_rates exchange_rates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1593,6 +1740,14 @@ ALTER TABLE ONLY public.feeds
 
 ALTER TABLE ONLY public.identities
     ADD CONSTRAINT identities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mentions mentions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions
+    ADD CONSTRAINT mentions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1770,6 +1925,20 @@ CREATE INDEX index_checks_on_user_id ON public.checks USING btree (user_id);
 
 
 --
+-- Name: index_entities_mentions_on_entity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_mentions_on_entity_id ON public.entities_mentions USING btree (entity_id);
+
+
+--
+-- Name: index_entities_mentions_on_mention_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_mentions_on_mention_id ON public.entities_mentions USING btree (mention_id);
+
+
+--
 -- Name: index_favorites_items_on_favorite_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1816,6 +1985,20 @@ CREATE INDEX index_feeds_on_advertiser_id ON public.feeds USING btree (advertise
 --
 
 CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_id);
+
+
+--
+-- Name: index_mentions_on_exchange_rate_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentions_on_exchange_rate_id ON public.mentions USING btree (exchange_rate_id);
+
+
+--
+-- Name: index_mentions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentions_on_user_id ON public.mentions USING btree (user_id);
 
 
 --
@@ -2015,6 +2198,13 @@ CREATE TRIGGER logidze_on_checks BEFORE INSERT OR UPDATE ON public.checks FOR EA
 
 
 --
+-- Name: entities logidze_on_entities; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_entities BEFORE INSERT OR UPDATE ON public.entities FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
 -- Name: exchange_rates logidze_on_exchange_rates; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -2026,6 +2216,13 @@ CREATE TRIGGER logidze_on_exchange_rates BEFORE INSERT OR UPDATE ON public.excha
 --
 
 CREATE TRIGGER logidze_on_feeds BEFORE INSERT OR UPDATE ON public.feeds FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
+-- Name: mentions logidze_on_mentions; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER logidze_on_mentions BEFORE INSERT OR UPDATE ON public.mentions FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
 
 
 --
@@ -2054,6 +2251,22 @@ CREATE TRIGGER logidze_on_realms BEFORE INSERT OR UPDATE ON public.realms FOR EA
 --
 
 CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION public.logidze_logger('10', 'updated_at');
+
+
+--
+-- Name: mentions fk_rails_1b711e94aa; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions
+    ADD CONSTRAINT fk_rails_1b711e94aa FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: entities_mentions fk_rails_36ceb638bf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_mentions
+    ADD CONSTRAINT fk_rails_36ceb638bf FOREIGN KEY (entity_id) REFERENCES public.entities(id);
 
 
 --
@@ -2129,6 +2342,14 @@ ALTER TABLE ONLY public.posts
 
 
 --
+-- Name: entities_mentions fk_rails_8012d8e285; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_mentions
+    ADD CONSTRAINT fk_rails_8012d8e285 FOREIGN KEY (mention_id) REFERENCES public.mentions(id);
+
+
+--
 -- Name: widgets fk_rails_8d886df757; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2198,6 +2419,14 @@ ALTER TABLE ONLY public.checks
 
 ALTER TABLE ONLY public.favorites
     ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: mentions fk_rails_d2acae2094; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions
+    ADD CONSTRAINT fk_rails_d2acae2094 FOREIGN KEY (exchange_rate_id) REFERENCES public.exchange_rates(id);
 
 
 --
@@ -2279,6 +2508,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211011134016'),
 ('20211014184742'),
 ('20211014185110'),
-('20211016174121');
+('20211016174121'),
+('20211031103025'),
+('20211031162817'),
+('20211109160012'),
+('20211110225859'),
+('20211116023902'),
+('20211116073100'),
+('20211116073106');
 
 
