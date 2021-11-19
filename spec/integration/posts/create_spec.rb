@@ -50,7 +50,7 @@ describe PostsController, type: :system do
       choose 'модерация'
 
       expect do
-        click_button('Создать Post')
+        click_button('Сохранить')
         expect(page).to have_text('Статья была успешно создана')
       end.to change(user.posts, :count)
     end

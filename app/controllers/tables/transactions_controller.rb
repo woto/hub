@@ -12,7 +12,7 @@ module Tables
     # GET /transactions
     def index
       get_index(%w[id currency debit_id credit_id amount],
-                filter_ids: (current_user.account_ids if current_user.role == 'user'))
+                filter_ids: (current_user.account_ids  unless current_user.staff?))
     end
 
     # TODO: action?!

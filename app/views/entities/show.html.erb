@@ -1,0 +1,83 @@
+<% content_for(:seo_title) do %>
+  <%= t("titles.entities") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.entities'), entities_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_entity'), entity_path(@entity) %>
+  </li>
+<% end %>
+
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <dl class="row">
+                <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= @entity.id %> </dd>
+
+                <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= link_to @entity.title, @entity.title %> </dd>
+
+                <dt class="col-sm-3"> <%= t('mentions_count', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= @entity.mentions_count %> </dd>
+
+                <dt class="col-sm-3"> <%= t('aliases', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= tags(@entity.aliases) || raw('&nbsp;') %> </dd>
+
+                <dt class="col-sm-3"> <%= t('version', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= @entity.log_version %> </dd>
+
+                <dt class="col-sm-3"> <%= t('created_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@entity.created_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@entity.updated_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('image') %> </dt>
+                <dd class="col-sm-9">
+                  <% options = { class: 'img-thumbnail width-200 max-height-500' } %>
+                  <% if @entity.image_url %>
+                    <%= image_tag @entity.image_url, options %>
+                  <% else %>
+                    <%= image_pack_tag('media/images/icon-404.png', options) %>
+                  <% end %>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+      <%= link_to t('new'), new_entity_path,
+                  class: "btn btn-success #{'disabled' unless policy(@entity).new? }",
+                  'data-turbo': false %>
+      <%= link_to t('edit'), edit_entity_path(@entity),
+                  class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }",
+                  'data-turbo': false %>
+      <%= link_to t('delete'), entity_path(@entity.id),
+                  class: "btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
+                  method: :delete,
+                  data: { confirm: t('are_you_sure') } %>
+      <%= link_to t('back'), entities_path, class: "btn btn-white" %>
+    </div>
+  </div>
+</div>
+

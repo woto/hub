@@ -27,7 +27,7 @@ class Workspace < ApplicationRecord
   validates :name, presence: true
   validates :controller, inclusion: { in: %w[tables/accounts tables/checks tables/favorites tables/feeds tables/help
                                              tables/news tables/offers tables/post_categories tables/posts
-                                             tables/transactions tables/users] }
+                                             tables/transactions tables/users tables/mentions tables/entities] }
 
   before_save do
     self.class.where(user: user, controller: controller, is_default: true).update_all(is_default: false) if is_default

@@ -80,7 +80,7 @@ en:
     edit_post_category: Edit post category
     edit_realm: Edit realm
     email: Email
-    entities: Entities
+    entities: Mentioned entities
     favorites: Favorites
     feeds: Feeds
     help: Help
@@ -293,16 +293,20 @@ en:
     create:
       successfully_added: Successfully added to favorites %{favorite_name}
       successfully_removed: Successfully removed from favorites %{favorite_name}
+    destroy:
+      favorite_was_successfully_destroyed: Favorite was successfully destroyed
     placeholder: Enter the name...
     titles:
       _id: Favorites
       accounts: Favorites accounts
       advertiser_id: Favorites
       checks: Favorites checks
+      entities: Mentioned entities
       feed_categories: Favorites feed categories
       feed_category_id: Favorites
       feed_id: Favorites
       feeds: Favorites feeds
+      mentions: Mentions
       offers: Favorites offers
       post_categories: Favorites post categories
       posts: Favorites posts
@@ -348,15 +352,29 @@ en:
           other: Displaying <b>all %{count}</b> %{entry_name}
           zero: No %{entry_name} found
     submit:
+      check:
+        create: Request check
       columns_form:
         create: Save
+      entity:
+        create: Create entity
+        update: Update entity
       filter_form:
         create: Apply filter
+      mention:
+        create: Create mention
+        update: Update mention
+      post:
+        create: Create post
+        update: Update post
       post_categories_import:
         create: Import
       post_category:
-        create: Create post category
-        update: Update post category
+        create: Create category
+        update: Update category
+      realm:
+        create: Create realm
+        update: Update realm
       workspace_form:
         create: Save
   homepage: Homepage
@@ -428,6 +446,7 @@ en:
         ю: yu
         я: ya
         ё: ye
+  image: Image
   inputs:
     profiles:
       messengers_collection:
@@ -474,6 +493,8 @@ en:
       mention_was_successfully_created: Mention was successfully created
     destroy:
       mention_was_successfully_destroyed: Mention was successfully destroyed
+    form:
+      editorial: Editorial
     update:
       mention_was_successfully_updated: Mention was successfully updated
   navbar_favorite_component:
@@ -646,7 +667,10 @@ en:
       feed_filter_form:
         displayed_columns: The order in which columns are added affects the display
       mention:
-        entities: Управление объектами рекламы производится <a href="/entities" target="_blank">на отдельной странице</a>
+        entities: Mentioned entities are managed <a href="/entities" target="_blank">on a separate page</a>
+        kind: Текст на картинке является картинкой. Если картинка двигается, значит это видео.
+        published_at: Указывайте, если в источнике указана дата публикации контента.
+        sentiment: В случае двояких настроений выбирайте знак вопроса.
       post:
         currency: Select the national currency of your country
         description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>
@@ -675,16 +699,17 @@ en:
       entity:
         aliases: Aliases
         id: Id
-        mentions_count: Mentions count
+        mentions_count: Mentions
+        picture: Picture
         title: Title
+        version: Version
       feed_filter_form:
         displayed_columns: Displayed columns
       mention:
         advertiser_ext_ids: Advertiser ext ids
         city: City
-        entities: Объекты рекламы
+        entities: Mentioned entities
         entities_count: Entities count
-        entity_ids: Объекты рекламы
         id: Id
         kind: Kind
         published_at: Published at
@@ -869,6 +894,9 @@ en:
         user_id: User id
       transaction:
         transaction_group_id: Trans. group id
+    workspaces:
+      destroy:
+        workspace_was_successfully_destroyed: Workspace was successfully destroyed
   tables:
     offers:
       card_wrapper:
@@ -890,7 +918,7 @@ en:
     advertisers: Advertisers
     checks: Checks
     dashboard: Dashboard
-    entities: Объекты упоминания
+    entities: Mentioned entities
     favorite: Favorite
     favorites: Favorites
     feed: Feed

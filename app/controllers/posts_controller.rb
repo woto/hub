@@ -49,7 +49,9 @@ class PostsController < ApplicationController
   def destroy
     GlobalHelper.retryable do
       authorize(@post)
-      redirect_to posts_url, notice: t('.post_was_successfully_destroyed') if @post.update(status: :removed_post)
+      if @post.update(status: :removed_post)
+        redirect_to posts_url, notice: t('.post_was_successfully_destroyed')
+      end
     end
   end
 

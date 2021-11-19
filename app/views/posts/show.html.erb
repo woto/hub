@@ -43,13 +43,7 @@
               </dd>
 
               <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'post']) %> </dt>
-              <dd class="col-sm-9">
-                <% @post.tags.each do |item| %>
-                  <% next if item.blank? %>
-
-                  <%= tag.span item, class: 'badge bg-blue-lt' %>
-                <% end %>
-              </dd>
+              <dd class="col-sm-9"> <%= tags(@post.tags) %> </dd>
 
               <dt class="col-sm-3"> <%= t('created_at') %> </dt>
               <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.created_at) %> </dd>

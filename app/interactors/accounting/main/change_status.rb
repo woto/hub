@@ -12,8 +12,8 @@ module Accounting
         end
 
         rule(:record) do
-          unless value.is_a?(Check) || value.is_a?(Post) || value.is_a?(Mention)
-            key.failure('must be instance of Check, Post or Mention')
+          unless value.is_a?(Check) || value.is_a?(Post)
+            key.failure('must be instance of Check or Post')
           end
         end
       end

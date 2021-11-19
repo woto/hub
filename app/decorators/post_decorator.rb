@@ -29,6 +29,10 @@ class PostDecorator < ApplicationDecorator
     decorate_text(h.strip_tags(super))
   end
 
+  def tags
+    h.tags(super)
+  end
+
   def published_at
     decorate_datetime(super)
   end

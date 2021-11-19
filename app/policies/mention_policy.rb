@@ -15,21 +15,11 @@ class MentionPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = [
-      :kind, :published_at, :sentiment, :status, :url, :screenshot, :currency, :amount,
+      :kind, :published_at, :sentiment, :url, :image,
       { entity_ids: [], tags: [], advertiser_ext_ids: [] }
     ]
     attributes.append(:user_id) if user.staff?
     attributes
-  end
-
-  def update?
-    return true if super
-
-    true if context.user == user && (context.draft_mention? || context.pending_mention? || context.rejected_mention?)
-  end
-
-  def create?
-    true
   end
 
   def index?
@@ -42,9 +32,19 @@ class MentionPolicy < ApplicationPolicy
     true if context.user == user
   end
 
+  def create?
+    true
+  end
+
+  def update?
+    return true if super
+
+    true if context.user == user
+  end
+
   def destroy?
     return true if super
 
-    true if context.user == user && (context.draft_mention? || context.pending_mention? || context.rejected_mention?)
+    true if context.user == user
   end
 end

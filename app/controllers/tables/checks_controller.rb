@@ -11,7 +11,7 @@ module Tables
 
     # GET /checks
     def index
-      get_index(%w[id currency], filter_ids: ([current_user.id] if current_user.role == 'user'))
+      get_index(%w[id currency], filter_ids: ([current_user.id]  unless current_user.staff?))
     end
 
     # TODO: action?!

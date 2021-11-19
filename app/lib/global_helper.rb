@@ -79,6 +79,12 @@ class GlobalHelper
       Realm.setup_index(Columns::RealmForm)
       create_index(elastic_client, Realm)
 
+      Mention.setup_index(Columns::MentionForm)
+      create_index(elastic_client, Mention)
+
+      Entity.setup_index(Columns::EntityForm)
+      create_index(elastic_client, Entity)
+
       elastic_client.indices.refresh index: Elastic::IndexName.wildcard
     end
 

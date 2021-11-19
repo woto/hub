@@ -48,6 +48,10 @@ module Elastic
         pick('checks')
       end
 
+      def entities
+        pick('entities')
+      end
+
       def favorites
         pick('favorites')
       end
@@ -58,6 +62,10 @@ module Elastic
 
       def users
         pick('users')
+      end
+
+      def mentions
+        pick('mentions')
       end
 
       def pick(name)

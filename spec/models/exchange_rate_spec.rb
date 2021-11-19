@@ -27,7 +27,6 @@ describe ExchangeRate, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:posts).dependent(:restrict_with_error) }
-    it { is_expected.to have_many(:mentions).dependent(:restrict_with_error) }
   end
 
   describe 'factory' do

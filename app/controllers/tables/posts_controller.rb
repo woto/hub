@@ -14,10 +14,6 @@ module Tables
       get_index(%w[id currency], filter_ids: ([current_user.id] unless current_user.staff?))
     end
 
-    def set_settings
-      @settings = GlobalHelper.class_configurator('post')
-    end
-
     # TODO: action?!
     def workspace
       OpenStruct.new(
@@ -27,6 +23,12 @@ module Tables
         sort: 'id',
         order: 'desc'
       )
+    end
+
+    private
+
+    def set_settings
+      @settings = GlobalHelper.class_configurator('post')
     end
   end
 end

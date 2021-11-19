@@ -4,7 +4,7 @@
   <% end %>
 </div>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'card card-md'}) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'card card-md', 'data-turbo': false }) do |f| %>
 
   <div class="card-body">
 

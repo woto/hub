@@ -5,7 +5,7 @@
 </div>
 
 <%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name),
-                    html: { class: 'card card-md', method: :post }) do |f| %>
+                    html: { class: 'card card-md', method: :post, 'data-turbo': false }) do |f| %>
 
   <div class="card-body">
 

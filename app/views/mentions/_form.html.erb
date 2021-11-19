@@ -1,0 +1,143 @@
+<%= simple_form_for(mention,
+                    wrapper: :input_group,
+                    html: {
+                      'data-turbo': false
+                    }) do |f| %>
+
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <%= tag.div 'data-controller': "mentions-url", class: 'row' do %>
+    <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="form-inputs">
+
+
+              <%= f.input :url,
+                          as: :string,
+                          input_html: {
+                            "data-mentions-url-target": 'url',
+                            "data-action": "input->mentions-url#input"
+                          } %>
+
+              <%= tag.div 'data-controller': 'shrine-upload', class: 'mb-3' do %>
+
+                <%= f.hidden_field :image,
+                                   id: nil,
+                                   value: f.object.cached_image_data %>
+
+                <%= f.label :image,
+                            class: 'width-200 min-height-200 img-thumbnail d-flex align-items-center position-relative',
+                            role: 'button' do %>
+
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                      <div data-mentions-url-target="spinner" class="spinner-border text-indigo my-3 d-none"></div>
+                    </div>
+
+                    <%= image_tag f.object.image_url || asset_pack_path('media/images/icon-upload.png'),
+                                  class: 'mx-auto d-block',
+                                  'data-mentions-url-target': 'imagePreview',
+                                  'data-shrine-upload-target': 'imagePreview' %>
+
+                <% end %>
+
+                <%= f.file_field :image,
+                                 'data-mentions-url-target': 'inputFile',
+                                 'data-shrine-upload-target': 'inputFile',
+                                 class: "d-none #{'is-invalid' unless f.object.errors[:image].empty?}" %>
+
+                <%= f.full_error :image, class: 'invalid-feedback' %>
+
+              <% end %>
+
+            <%= tag.div 'data-controller': 'mentions-entities' do %>
+
+              <%= f.association :entities, as: :select,
+                          input_html: {
+                            multiple: true,
+                            'data-mentions-entities-target': 'entities'
+                          },
+                          collection: (f.object.entities.map do |entity|
+                            [
+                              entity.title, entity.id, 'data-data': {
+                                  aliases: entity.aliases.reject(&:empty?),
+                                  image: entity.image&.derivation_url(:thumbnail, 50, 50) || ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png')
+                                }.to_json,
+                            ]
+                          end),
+                          placeholder: true %>
+
+              <% end %>
+
+            <%= f.input :tags, as: :select,
+                        input_html: {
+                          multiple: true,
+                          "data-controller": 'mentions-tags'
+                        },
+                        collection: f.object.tags,
+                        placeholder: true %>
+
+            <%= f.input :sentiment,
+                        as: :radio_buttons,
+                        # collection: Mention.sentiments.keys,
+                        collection: [
+                          [raw('<i class="far fa-fw fa-lg fa-thumbs-up"></i>'), 'positive'],
+                          [raw('<i class="far fa-question-circle"></i>'), 'unknown'],
+                          [raw('<i class="far fa-fw fa-lg fa-thumbs-down"></i>'), 'negative'],
+                        ].compact,
+                        wrapper: :radio_button_group %>
+
+            <%= f.input :kind,
+                        as: :radio_buttons,
+                        collection: [
+                          ['<i class="fas fa-fw fa-lg fa-file-alt"></i>'.html_safe, 'text'],
+                          ['<i class="fas fa-fw fa-lg fa-image"></i>'.html_safe, 'image'],
+                          ['<i class="fas fa-fw fa-lg fa-volume-down"></i>'.html_safe, 'audio'],
+                          ['<i class="fas fa-fw fa-lg fa-video"></i>'.html_safe, 'video']
+                        ].compact,
+                        wrapper: :radio_button_group %>
+
+            <%= f.input :published_at, as: :string,
+                        input_html: {
+                          "data-controller": "flatpickr"
+                        } %>
+
+          </div>
+        </div>
+      </div>
+
+      <% if current_user.staff? %>
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="card-title align-items-center d-flex">
+              <%= t('.editorial') %>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-inputs">
+
+              <%= f.association :user, as: :select,
+                                input_html: {
+                                  "data-controller": 'ajax-user',
+                                },
+                                placeholder: true,
+                                collection: User.where(id: f.object.user_id).map { |user|
+                                  [user.email, user.id]
+                                },
+                                selected: f.object.user_id %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col">
+      <div class="d-flex flex-wrap bg-white" data-mentions-url-target="similarUrls"></div>
+    </div>
+  <% end %>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
+  </div>
+<% end %>

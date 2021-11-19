@@ -107,7 +107,7 @@ class Account < ApplicationRecord
   end
 
   def restrict_change_fields
-    changed_attributes.keys.each do |field|
+    changed_attributes.each_key do |field|
       errors.add(field, :readonly)
     end
   end

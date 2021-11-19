@@ -96,3 +96,15 @@ aside.navbar {
 legend ~ div.form-check:first-of-type {
   clear: left;
 }
+
+.form-label {
+  display: block;
+
+  &.required {
+    &:after {
+      content: "";
+      margin-left: .25rem;
+      color: $red;
+    }
+  }
+}

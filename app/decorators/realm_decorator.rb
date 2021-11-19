@@ -2,7 +2,7 @@
 
 class RealmDecorator < ApplicationDecorator
   def domain
-    h.link_to(super, h.articles_url(host: super, locale: nil))
+    h.link_to(super, h.realm_path(id: _id))
   end
 
   def posts_count

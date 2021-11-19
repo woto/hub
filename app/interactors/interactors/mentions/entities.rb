@@ -34,7 +34,7 @@ module Interactors
             title: entity.title,
             aliases: entity.aliases.reject(&:empty?),
             score: entity._score,
-            picture: entity.picture
+            image: entity.image.present? ? entity.image : ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png')
           }
         end
       end

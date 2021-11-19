@@ -14,7 +14,7 @@ describe PostCategoriesController, type: :system do
     end
 
     it 'shows errors' do
-      click_on('Сохранить категорию статей')
+      click_on('Сохранить')
 
       expect(page).to have_text('Realm не может отсутствовать')
       expect(page).to have_text('Title не может быть пустым')

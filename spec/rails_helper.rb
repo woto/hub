@@ -13,6 +13,7 @@ require 'view_component/test_helpers'
 require 'devise'
 require 'fantaskspec'
 require 'test_prof/recipes/rspec/let_it_be'
+require "shrine/storage/memory"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -47,6 +48,11 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
+  Shrine.storages = {
+    cache: Shrine::Storage::Memory.new,
+    store: Shrine::Storage::Memory.new
+  }
+
   # # Aruba https://relishapp.com/cucumber/aruba
   # config.include Aruba::Api
 

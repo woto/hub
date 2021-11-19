@@ -122,9 +122,11 @@ class FavoritesController < ApplicationController
 
   # DELETE /favorites/1
   def destroy
-    raise 'TODO'
-    @favorite.destroy
-    redirect_to favorites_url, notice: 'Favorite was successfully destroyed.'
+    if @favorite.destroy
+      redirect_back(fallback_location: root_path, notice: t('.favorite_was_successfully_destroyed'))
+    else
+      redirect_back(fallback_location: root_path, alert: @entity.errors.full_messages.join)
+    end
   end
 
   private

@@ -25,7 +25,6 @@ class ExchangeRate < ApplicationRecord
   validate :currencies_contract
 
   has_many :posts, dependent: :restrict_with_error
-  has_many :mentions, dependent: :restrict_with_error
 
   before_validation :set_currencies_and_extra_options, on: :create
 

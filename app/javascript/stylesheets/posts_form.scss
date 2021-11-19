@@ -310,7 +310,8 @@ trix-editor .attachment__metadata .attachment__size {
   max-width: 100%; }
 .trix-content figure.attachment--preview {
   @extend .img-thumbnail;
-  @extend .bg-cyan-lt; }
+//   @extend .bg-cyan-lt;
+}
 .trix-content .attachment__caption {
   text-align: center;
   &:not(:empty) {

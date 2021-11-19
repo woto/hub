@@ -5,6 +5,7 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
   mount API::Root => '/'
+  mount ImageUploader.derivation_endpoint => '/derivations/image'
 
   # mount Yabeda::Prometheus::Exporter => "/metrics"
 
@@ -60,6 +61,8 @@ Rails.application.routes.draw do
     scope module: 'tables' do
       resources :accounts, only: [:index]
       resources :checks, only: [:index]
+      resources :entities, only: [:index]
+      resources :mentions, only: [:index]
       resources :favorites, only: [:index]
       resources :advertisers, only: [:index] do
         resources :offers, only: [:index]
@@ -92,6 +95,8 @@ Rails.application.routes.draw do
     resources :accounts
     resources :advertisers
     resources :checks
+    resources :entities
+    resources :mentions
     resources :post_categories do
     end
     namespace :post_categories do
@@ -154,7 +159,6 @@ Rails.application.routes.draw do
       namespace :post_categories do
         resources :empties, only: %i[index]
       end
-      resources :tags, controller: 'post_tags', only: %i[index]
       resources :users, controller: 'users', only: %i[index]
     end
 

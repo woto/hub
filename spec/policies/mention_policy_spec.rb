@@ -11,7 +11,7 @@ describe MentionPolicy, responsible: :admin do
     subject { described_class.new(user, nil).permitted_attributes }
 
     let(:permitted_attributes) do
-      [:kind, :published_at, :sentiment, :status, :url, :screenshot, :currency, :amount,
+      [:kind, :published_at, :sentiment, :url, :image,
        { entity_ids: [], tags: [], advertiser_ext_ids: [] }]
     end
 
@@ -30,13 +30,6 @@ describe MentionPolicy, responsible: :admin do
     end
   end
 
-  # everybody can create mentions
-  describe 'create?' do
-    permissions :create? do
-      it { is_expected.to permit(nil, nil) }
-    end
-  end
-
   # everybody can index mentions
   describe 'index?' do
     permissions :index? do
@@ -44,176 +37,38 @@ describe MentionPolicy, responsible: :admin do
     end
   end
 
-  context 'with user' do
-    let(:user) { create(:user) }
-    let(:policy_context) { create(:mention, user: user, status: status) }
-
-    context 'when `status` is `draft_mention`' do
-      let(:status) { :draft_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
-    end
-
-    context 'when `status` is `pending_mention`' do
-      let(:status) { :pending_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
-    end
-
-    context 'when `status` is `approved_mention`' do
-      let(:status) { :approved_mention }
-
-      permissions :show? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      permissions :update?, :destroy? do
-        it { is_expected.not_to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
-    end
-
-    context 'when `status` is `rejected_mention`' do
-      let(:status) { :rejected_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
-    end
-
-    context 'when `status` is `accrued_mention`' do
-      let(:status) { :accrued_mention }
-
-      permissions :show? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      permissions :update?, :destroy? do
-        it { is_expected.not_to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
-    end
-
-    context 'when `status` is `canceled_mention`' do
-      let(:status) { :canceled_mention }
-
-      permissions :show? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      permissions :update?, :destroy? do
-        it { is_expected.not_to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
-    end
-
-    context 'when `status` is `removed_mention`' do
-      let(:status) { :removed_mention }
-
-      permissions :show? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-
-      permissions :update?, :destroy? do
-        it { is_expected.not_to permit(user, policy_context) }
-      end
-
-      # another user can not get access
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.not_to permit(create(:user), policy_context) }
-      end
+  # everybody can create mentions
+  describe 'create?' do
+    permissions :create? do
+      it { is_expected.to permit(nil, nil) }
     end
   end
 
+  context 'with user' do
+    let(:user) { create(:user) }
+    let(:policy_context) { create(:mention, user: user) }
+
+    permissions :update?, :show?, :destroy? do
+      it { is_expected.to permit(user, policy_context) }
+    end
+  end
+
+  context 'with another user' do
+    let(:user) { create(:user) }
+    let(:policy_context) { create(:mention, user: user) }
+
+    permissions :update?, :show?, :destroy? do
+      it { is_expected.not_to permit(create(:user), policy_context) }
+    end
+  end
+
+
   context 'with admin' do
-    let(:user) { create(:user, role: :admin) }
-    let(:policy_context) { create(:mention, user: user, status: status) }
+    let(:user) { create(:user) }
+    let(:policy_context) { create(:mention, user: user) }
 
-    context 'when `status` is `draft_mention`' do
-      let(:status) { :draft_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-    end
-
-    context 'when `status` is `pending_mention`' do
-      let(:status) { :pending_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-    end
-
-    context 'when `status` is `approved_mention`' do
-      let(:status) { :approved_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-    end
-
-    context 'when `status` is `rejected_mention`' do
-      let(:status) { :rejected_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-    end
-
-    context 'when `status` is `accrued_mention`' do
-      let(:status) { :accrued_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-    end
-
-    context 'when `status` is `canceled_mention`' do
-      let(:status) { :canceled_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
-    end
-
-    context 'when `status` is `removed_mention`' do
-      let(:status) { :removed_mention }
-
-      permissions :update?, :show?, :destroy? do
-        it { is_expected.to permit(user, policy_context) }
-      end
+    permissions :update?, :show?, :destroy? do
+      it { is_expected.to permit(create(:user, role: :admin), policy_context) }
     end
   end
 end

@@ -1,5 +1,10 @@
-# # frozen_string_literal: true
-# #
+# frozen_string_literal: true
+
+# Assuming you have not yet modified this file, each configuration option below
+# is set to its default value. Note that some are commented out while others
+# are not: uncommented lines are intended to protect your configuration from
+# breaking changes in upgrades (i.e., in the event that future versions of
+# Devise change the default values for those options).
 # # NOTE: taken from https://gorails.com/episodes/devise-hotwire-turbo?autoplay=1
 class TurboFailureApp < Devise::FailureApp
   def skip_format?
@@ -34,7 +39,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'f108ab3069f33285f2534462f4b93b4c15ad2895341d3070b0174fba3e210d7c6b57e08be30c05d13cd2a49c402b42c799d88aa3edb9117e831869d6170320fa'
+  # config.secret_key = '3b3c96e34ad3142f4bca5c1302080047c3abfe139f26e3d856ea13859aae900afa5ee7cdf1eec7d0797f1ae6e16372ef848c59ad83353d57835375b643b1d162'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -94,7 +99,10 @@ Devise.setup do |config|
   # Tell if authentication through HTTP Auth is enabled. False by default.
   # It can be set to an array that will enable http authentication only for the
   # given strategies, for example, `config.http_authenticatable = [:database]` will
-  # enable it only for database authentication. The supported strategies are:
+  # enable it only for database authentication.
+  # For API-only applications to support authentication "out-of-the-box", you will likely want to
+  # enable this with :database unless you are using a custom strategy.
+  # The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
   # config.http_authenticatable = false
 
@@ -129,18 +137,21 @@ Devise.setup do |config|
   # config.reload_routes = true
 
   # ==> Configuration for :database_authenticatable
-  # For bcrypt, this is the cost for hashing the password and defaults to 11. If
+  # For bcrypt, this is the cost for hashing the password and defaults to 12. If
   # using other algorithms, it sets how many times you want the password to be hashed.
+  # The number of stretches used for generating the hashed password are stored
+  # with the hashed password. This allows you to change the stretches without
+  # invalidating existing passwords.
   #
   # Limiting the stretches to just one in testing will increase the performance of
   # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  config.stretches = Rails.env.test? ? 1 : 11
+  config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'bd37e85e707f0266e437e70f5fcdeb420d5e52305ac6017e72a26c4e5a24d5c6eff3d6449463169b9d000c391dc34ab921a22be3e90caa0633c37ac40cdf3fc0'
+  # config.pepper = '5f0f4a149099c31db37017224dad514729bd7d9bccf622b366a5ddd3a81deecd42653536bd34c07803c696296a870c4c9241d7ff9949d265e8988029f1653b69'
 
   # Send a notification to the original email when the user's email is changed.
   config.send_email_changed_notification = true
@@ -293,8 +304,8 @@ Devise.setup do |config|
   #
   config.warden do |manager|
     manager.failure_app = TurboFailureApp
-    # manager.intercept_401 = false
-    # manager.default_strategies(scope: :user).unshift :some_external_strategy
+  #   manager.intercept_401 = false
+  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   end
 
   # ==> Mountable engine configurations
@@ -313,7 +324,7 @@ Devise.setup do |config|
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  # TODO: check this feature
+  #
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end

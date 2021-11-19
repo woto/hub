@@ -20,6 +20,7 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  locked_at              :datetime
+#  mentions_count         :integer          default(0), not null
 #  posts_count            :integer          default(0), not null
 #  profiles_count         :integer          default(0), not null
 #  remember_created_at    :datetime
@@ -62,6 +63,7 @@ class User < ApplicationRecord
   has_many :accounts, as: :subjectable, dependent: :restrict_with_exception
   has_many :checks, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
+  has_many :mentions, dependent: :restrict_with_exception
 
   has_one_attached :avatar
 

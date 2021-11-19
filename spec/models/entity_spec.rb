@@ -6,10 +6,15 @@
 #
 #  id             :bigint           not null, primary key
 #  aliases        :jsonb
+#  image_data     :jsonb
 #  mentions_count :integer          default(0), not null
 #  title          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#
+# Indexes
+#
+#  index_entities_on_image_data  (image_data) USING gin
 #
 require 'rails_helper'
 
@@ -20,11 +25,18 @@ RSpec.describe Entity, type: :model do
   describe 'associations' do
     it { is_expected.to have_many(:entities_mentions) }
     it { is_expected.to have_many(:mentions).through(:entities_mentions) }
-    it { is_expected.to have_one_attached(:picture) }
   end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
+  end
+
+  describe '#image' do
+    subject { create(:entity, image: ShrineImage.uploaded_image) }
+
+    it 'processes image' do
+      expect(subject.image).to be_a(ImageUploader::UploadedFile)
+    end
   end
 
   describe '#as_indexed_json', responsible: :user do
@@ -39,7 +51,7 @@ RSpec.describe Entity, type: :model do
     let(:entity) do
       create(:entity,
              mentions: [create(:mention)],
-             picture: Rack::Test::UploadedFile.new(file_fixture('avatar.png')))
+             image: ShrineImage.uploaded_image)
     end
 
     it 'returns correct result' do
@@ -47,7 +59,7 @@ RSpec.describe Entity, type: :model do
         id: entity.id,
         aliases: entity.aliases,
         title: entity.title,
-        picture: be_a(String),
+        image: be_a(String),
         mentions_count: entity.mentions_count,
         created_at: Time.current,
         updated_at: Time.current

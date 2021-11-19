@@ -1,0 +1,21 @@
+<div class="dropdown">
+
+  <button type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown">
+    <%= t('buttons.controls') %>
+  </button>
+
+  <div class="dropdown-menu">
+
+    <%= link_to t('buttons.show'), mention_path(row.id), class: 'dropdown-item' %>
+
+    <% mention = Mention.find(row.id) %>
+
+    <% if policy(mention).edit? %>
+      <%= link_to t('buttons.edit'), edit_mention_path(row.id), class: 'dropdown-item' %>
+    <% end %>
+    <% if policy(mention).destroy? %>
+      <%= link_to t('buttons.delete'), mention_path(row.id), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
+    <% end %>
+
+  </div>
+</div>

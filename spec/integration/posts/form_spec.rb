@@ -13,7 +13,7 @@ describe PostsController, type: :system, responsible: :admin do
     end
 
     it 'shows errors' do
-      click_on('Создать Post')
+      click_on('Сохранить')
 
       expect(page).to have_text('Title не может быть пустым')
       expect(page).to have_text('Body недостаточной длины (не может быть меньше 1 символа)')
@@ -28,7 +28,7 @@ describe PostsController, type: :system, responsible: :admin do
       it 'shows errors inherent in this status' do
         choose 'зачислено'
 
-        click_on('Создать Post')
+        click_on('Сохранить')
 
         expect(page).to have_text('Published at не может быть пустым')
         # expect(page).to have_text('User не может отсутствовать')

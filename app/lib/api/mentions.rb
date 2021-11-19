@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# require_relative 'validations/url'
-
 module API
   class Mentions < ::Grape::API
     prefix :api

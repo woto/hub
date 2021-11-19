@@ -1,0 +1,60 @@
+<%= simple_form_for(entity,
+                    html: {
+                      'data-turbo': false
+                    }) do |f| %>
+
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="row">
+    <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-inputs">
+
+            <%= f.input :title,
+                        wrapper_html: {class: 'mb-3'},
+                        label_html: { :class => "mb-2" } %>
+
+            <%= f.input :aliases,
+                        as: :select,
+                        input_html: {
+                          multiple: true,
+                          "data-controller": 'entities-aliases'
+                        }, collection: f.object.aliases %>
+
+            <%= tag.div 'data-controller': 'shrine-upload', class: 'mb-3' do %>
+
+              <%= f.hidden_field :image,
+                                 id: nil,
+                                 value: f.object.cached_image_data %>
+
+              <%= f.label :image,
+                          class: 'width-100 min-height-100 img-thumbnail d-flex align-items-center',
+                          role: 'button' do %>
+
+                <%= image_tag f.object.image_url || asset_pack_path('media/images/icon-upload.png'),
+                              class: 'mx-auto d-block',
+                              'data-shrine-upload-target': 'imagePreview' %>
+
+              <% end %>
+
+              <%= f.file_field :image,
+                               'data-shrine-upload-target': 'inputFile',
+                               class: "d-none #{'is-invalid' unless f.object.errors[:image].empty?}" %>
+
+              <%= f.full_error :image, class: 'invalid-feedback' %>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to t('back'), entities_path, class: "btn btn-white" %>
+  </div>
+<% end %>

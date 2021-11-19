@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../support/shrine_image'
 
 describe API::Mentions, type: :request, responsible: :admin do
   let!(:user) { create(:user) }
@@ -9,7 +10,7 @@ describe API::Mentions, type: :request, responsible: :admin do
     context 'with entity which includes only title' do
       let!(:entity) do
         create(:entity, title: 'test another word', aliases: [],
-                        picture: Rack::Test::UploadedFile.new(file_fixture('avatar.png')))
+               image_data: ShrineImage.image_data)
       end
 
       it 'autocompletes entities by title' do
@@ -18,7 +19,7 @@ describe API::Mentions, type: :request, responsible: :admin do
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to match([{ 'aliases' => [],
                                                       'id' => entity.id.to_s,
-                                                      'picture' => be_a(String),
+                                                      'image' => be_a(String),
                                                       'score' => 1.0,
                                                       'title' => 'test another word' }])
       end
@@ -27,7 +28,7 @@ describe API::Mentions, type: :request, responsible: :admin do
     context 'with entity which includes aliases' do
       let!(:entity) do
         create(:entity, title: 'word', aliases: %w[first second],
-                        picture: Rack::Test::UploadedFile.new(file_fixture('avatar.png')))
+               image_data: ShrineImage.image_data)
       end
 
       it 'autocompletes entities by aliases' do
@@ -36,7 +37,7 @@ describe API::Mentions, type: :request, responsible: :admin do
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to match([{ 'aliases' => %w[first second],
                                                       'id' => entity.id.to_s,
-                                                      'picture' => be_a(String),
+                                                      'image' => be_a(String),
                                                       'score' => be_a(Numeric),
                                                       'title' => 'word' }])
       end
@@ -45,8 +46,7 @@ describe API::Mentions, type: :request, responsible: :admin do
 
   describe 'GET /api/mentions/urls' do
     let!(:mention) do
-      create(:mention, url: 'https://example.com?foo=bar',
-                       screenshot: Rack::Test::UploadedFile.new(file_fixture('avatar.png')))
+      create(:mention, url: 'https://example.com?foo=bar')
     end
 
     it 'autocompletes mentions by url' do
@@ -54,7 +54,7 @@ describe API::Mentions, type: :request, responsible: :admin do
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to match([{ 'score' => be_a(Numeric),
-                                                    'screenshot' => be_a(String),
+                                                    'image' => be_a(String),
                                                     'url' => 'https://example.com?foo=bar' }])
     end
   end

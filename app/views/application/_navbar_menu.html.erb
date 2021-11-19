@@ -70,6 +70,34 @@
     ) %>
 
     <%= render Left::Menu::DropdownComponent.new(
+      title: t("left_menu.mentions"),
+      current_page: request.path.yield_self { |p| p.include?('mentions') || p.include?('entities') },
+      icon: '<i class="fas fa-at"></i>',
+      disabled: !user_signed_in?
+    ) do |component| %>
+
+      <% component.items do %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+          title: t('left_menu.mentions'),
+          path: { controller: '/tables/mentions', action: 'index' },
+          current_page: request.path.yield_self { |p| p.include?('mentions') },
+          # icon: '<i class="fas fa-pen"></i>',
+          disabled: !user_signed_in?
+        ) %>
+
+        <%= render Left::Menu::Dropdown::ItemComponent.new(
+          title: t('left_menu.entities'),
+          path: { controller: '/tables/entities', action: 'index' },
+          current_page: request.path.yield_self { |p| p.include?('entities') },
+          # icon: '<i class="fas fa-pen"></i>',
+          disabled: !user_signed_in?
+        ) %>
+
+      <% end %>
+    <% end %>
+
+    <%= render Left::Menu::DropdownComponent.new(
         title: t('left_menu.finances'),
         current_page: request.path.yield_self { |p| p.include?('accounts') || p.include?('checks') || p.include?('transactions') },
         icon: '<i class="fas fa-wallet"></i>',

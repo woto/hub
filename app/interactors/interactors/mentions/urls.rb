@@ -24,14 +24,14 @@ module Interactors
               }
             }
           },
-          size: 4
+          size: 5
         }
 
         urls = Mention.__elasticsearch__.search(body)
 
         context.object = urls.map do |url|
           {
-            screenshot: url.screenshot,
+            image: url.image,
             score: url._score,
             url: url.url
           }

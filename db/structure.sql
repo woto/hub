@@ -615,7 +615,8 @@ CREATE TABLE public.entities (
     mentions_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    image_data jsonb
 );
 
 
@@ -682,8 +683,7 @@ CREATE TABLE public.exchange_rates (
     posts_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
-    mentions_count integer DEFAULT 0 NOT NULL
+    log_data jsonb
 );
 
 
@@ -907,19 +907,16 @@ ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
 CREATE TABLE public.mentions (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
-    exchange_rate_id bigint NOT NULL,
     url text,
     tags jsonb DEFAULT '[]'::jsonb,
-    status integer NOT NULL,
     published_at timestamp without time zone,
-    currency integer NOT NULL,
-    amount numeric NOT NULL,
     kind integer NOT NULL,
     sentiment integer NOT NULL,
     entities_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    image_data jsonb
 );
 
 
@@ -1939,6 +1936,13 @@ CREATE INDEX index_entities_mentions_on_mention_id ON public.entities_mentions U
 
 
 --
+-- Name: index_entities_on_image_data; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_on_image_data ON public.entities USING gin (image_data);
+
+
+--
 -- Name: index_favorites_items_on_favorite_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1988,10 +1992,10 @@ CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_
 
 
 --
--- Name: index_mentions_on_exchange_rate_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_mentions_on_image_data; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_mentions_on_exchange_rate_id ON public.mentions USING btree (exchange_rate_id);
+CREATE INDEX index_mentions_on_image_data ON public.mentions USING gin (image_data);
 
 
 --
@@ -2422,14 +2426,6 @@ ALTER TABLE ONLY public.favorites
 
 
 --
--- Name: mentions fk_rails_d2acae2094; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.mentions
-    ADD CONSTRAINT fk_rails_d2acae2094 FOREIGN KEY (exchange_rate_id) REFERENCES public.exchange_rates(id);
-
-
---
 -- Name: feeds fk_rails_e26c6f0250; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2513,8 +2509,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211031162817'),
 ('20211109160012'),
 ('20211110225859'),
-('20211116023902'),
 ('20211116073100'),
-('20211116073106');
+('20211116073106'),
+('20211117091409'),
+('20211118021657');
 
 

@@ -3,9 +3,11 @@ import SwaggerUI from 'swagger-ui'
 // const SwaggerUI = require('swagger-ui')
 
 document.addEventListener('DOMContentLoaded', function() {
-    SwaggerUI({
-        dom_id: '#swagger-ui',
-        url: '/swagger_doc',
-        // layout: "StandaloneLayout"
-    })
+    if(document.querySelector('#swagger-ui')) {
+        SwaggerUI({
+            dom_id: '#swagger-ui',
+            url: '/swagger_doc',
+            // layout: "StandaloneLayout"
+        })
+    }
 })

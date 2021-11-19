@@ -131,6 +131,7 @@ GEM
       ffi
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
+    content_disposition (1.0.0)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -154,6 +155,8 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
+    down (5.2.4)
+      addressable (~> 2.8)
     draper (4.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -532,6 +535,9 @@ GEM
       faraday
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
+    shrine (3.4.0)
+      content_disposition (~> 1.0)
+      down (~> 5.1)
     sidekiq (6.2.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -674,6 +680,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   grape
+  grape-swagger
   i18n-debug
   i18n-tasks
   image_processing (~> 1.11)
@@ -718,6 +725,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   shoulda-matchers
+  shrine
   sidekiq
   sidekiq-scheduler
   simple_form

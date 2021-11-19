@@ -187,6 +187,17 @@ module ApplicationHelper
     end
   end
 
+  def tags(tags)
+    capture do
+      tags.map do |item|
+        next if item.blank?
+
+        concat tag.span item, class: 'badge bg-blue-lt'
+        concat ' '
+      end
+    end
+  end
+
   def landing1_widgets
     sql = <<~SQL
       SELECT widgets.*

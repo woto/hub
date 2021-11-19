@@ -1,0 +1,95 @@
+<% content_for(:seo_title) do %>
+  <%= t("titles.mentions") %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.homepage'), root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%=link_to t('breadcrumbs.mentions'), mentions_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%=link_to t('breadcrumbs.show_mention'), mention_path(@mention) %>
+  </li>
+<% end %>
+
+<div class="col">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <dl class="row">
+                <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @mention.id %> </dd>
+
+                <dt class="col-sm-3"> <%= t('url', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= link_to @mention.url, @mention.url, rel: 'noreferrer' %> </dd>
+
+                <% if false %>
+                <dt class="col-sm-3"> <%= t('publisher_ext_id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @mention.publisher_ext_id %> </dd>
+                <% end %>
+
+                <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= tags(@mention.entities.map(&:to_label)) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= tags(@mention.tags) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('sentiment', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @mention.sentiment %> </dd>
+
+                <dt class="col-sm-3"> <%= t('kind', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @mention.kind %> </dd>
+
+                <dt class="col-sm-3"> <%= t('entities_count', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @mention.entities_count %> </dd>
+
+                <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.published_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('created_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.created_at) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
+                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.updated_at) %> </dd>
+
+                <%= image_tag @mention.image_url, class: 'my-3 img-thumbnail max-width-800' if @mention.image_url %>
+
+                <% if current_user.staff? %>
+                  <hr class="my-2">
+                  <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                  <dd class="col-sm-9"> <%= @mention.user.to_label %> </dd>
+                <% end %>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+      <%= link_to t('new'), new_mention_path,
+                  class: "btn btn-success #{'disabled' unless policy(@mention).new? }",
+                  'data-turbo': false %>
+      <%= link_to t('edit'), edit_mention_path(@mention),
+                  class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }",
+                  'data-turbo': false %>
+      <%= link_to t('delete'), mention_path(@mention.id),
+                  class: "btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
+                  method: :delete,
+                  data: { confirm: t('are_you_sure') } %>
+      <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
+    </div>
+  </div>
+</div>
+

@@ -32,7 +32,8 @@ describe FavoritesItem, type: :model do
 
   it {
     expect(subject).to define_enum_for(:kind).with_values(
-      %i[users posts transactions accounts checks feeds post_categories advertiser_id feed_id feed_category_id _id realms]
+      %i[users posts transactions accounts checks feeds post_categories advertiser_id feed_id feed_category_id _id
+      realms mentions entities]
     )
   }
 

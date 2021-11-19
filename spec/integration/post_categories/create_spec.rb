@@ -26,7 +26,7 @@ describe PostCategoriesController, responsible: :admin, type: :system do
       end
 
       expect do
-        click_button('Создать категорию')
+        click_button('Сохранить')
         expect(page).to have_text('Категория статей была успешно создана')
       end.to change(PostCategory, :count)
     end

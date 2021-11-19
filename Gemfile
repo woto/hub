@@ -41,6 +41,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'shoulda-matchers'
+  gem 'shrine'
   gem 'standard'
   gem 'test-prof'
   gem 'webmock'

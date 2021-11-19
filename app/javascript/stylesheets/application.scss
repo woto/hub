@@ -1,4 +1,4 @@
-$assets-base: '../images/tabler/flags';
+// $assets-base: '../images/tabler/flags';
 
 // TODO: Check double import of bootstrap.
 // Because it's already should be imported from tabler
@@ -14,6 +14,8 @@ $enable-negative-margins: true;
 // NOTE: required for the situations without access to the Internet
 // $google-font: false;
 $google-font: "Open Sans";
+
+$form-check-margin-bottom: .125rem !default;
 
 @import '@tabler/core/src/scss/tabler';
 @import '@tabler/core/src/scss/tabler-vendors';
@@ -32,3 +34,4 @@ $google-font: "Open Sans";
 @import 'elastic';
 @import 'bootstrap_extracts';
 @import 'widget';
+@import 'swagger-ui/dist/swagger-ui';
