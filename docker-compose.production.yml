@@ -80,6 +80,11 @@ services:
     build:
       context: ./docker/scrapper
       dockerfile: Dockerfile
+    ports:
+      - ${SCRAPPER_PORT}:3000
+    volumes:
+      - "./docker/scrapper:/app"
+
 
   elastic:
     env_file:
