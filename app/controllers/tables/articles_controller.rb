@@ -15,7 +15,7 @@ module Tables
     # GET /news
     def index
       get_index(required_fields)
-      noindex { params[:page].to_i > 1 }
+      noindex { params[:page].to_i > 1 || params.keys & %w[q per sort order favorite_id filters columns] }
     end
 
     def by_month
