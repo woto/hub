@@ -8,7 +8,7 @@ export default class extends Controller {
 
         document.onpaste = function(event){
             const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-            for (const index in Array(items)) {
+            for (const index in items) {
                 let item = items[index];
                 if (item.kind === 'file') {
                     that._uploadFile(item.getAsFile());
