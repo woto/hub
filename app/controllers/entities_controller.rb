@@ -43,7 +43,11 @@ class EntitiesController < ApplicationController
     GlobalHelper.retryable do
       authorize(@entity)
       if @entity.update(permitted_attributes(Entity))
-        redirect_to @entity, notice: t('.entity_was_successfully_updated')
+        if params['commit'] == t('entities.form.submit_and_new')
+          redirect_to new_entity_path, notice: t('.entity_was_successfully_updated')
+        else
+          redirect_to @entity, notice: t('.entity_was_successfully_updated')
+        end
       else
         render :edit, status: :unprocessable_entity
       end
