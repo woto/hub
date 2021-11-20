@@ -27,7 +27,11 @@ class EntitiesController < ApplicationController
       @entity = policy_scope(Entity).new(permitted_attributes(Entity))
       authorize(@entity)
       if @entity.save
-        redirect_to @entity, notice: t('.entity_was_successfully_created')
+        if params['commit'] == t('entities.form.submit_and_new')
+          redirect_to new_entity_path, notice: t('.entity_was_successfully_created')
+        else
+          redirect_to @entity, notice: t('.entity_was_successfully_created')
+        end
       else
         render :new, status: :unprocessable_entity
       end

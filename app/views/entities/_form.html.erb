@@ -59,6 +59,7 @@
   <% end %>
 
   <div class="form-actions">
+    <%= f.button :submit, t('.submit_and_new'), class: 'btn btn-success' %>
     <%= f.button :submit, class: 'btn btn-primary' %>
     <%= link_to t('back'), entities_path, class: "btn btn-white" %>
   </div>

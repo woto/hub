@@ -275,6 +275,8 @@ ru:
       entity_was_successfully_created: Объект упоминания был успешно создан
     destroy:
       entity_was_successfully_destroyed: Объект упоминания был успешно удален
+    form:
+      submit_and_new: Сохранить и новый
     update:
       entity_was_successfully_updated: Объект упоминания был успешно изменен
   errors:
