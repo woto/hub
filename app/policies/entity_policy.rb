@@ -36,7 +36,7 @@ class EntityPolicy < ApplicationPolicy
   end
 
   def destroy?
-    true
+    false
   end
 
 end
