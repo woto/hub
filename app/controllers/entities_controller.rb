@@ -12,7 +12,7 @@ class EntitiesController < ApplicationController
 
   # GET /entities/new
   def new
-    @entity = Entity.new
+    @entity = current_user.entities.new
     authorize(@entity)
   end
 
