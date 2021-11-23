@@ -15,6 +15,6 @@ class EntityDecorator < ApplicationDecorator
   end
 
   def aliases
-    h.tags(super)
+    h.render(Entities::AliasComponent.with_collection(super))
   end
 end
