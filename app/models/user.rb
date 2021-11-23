@@ -14,6 +14,7 @@
 #  current_sign_in_ip     :inet
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
+#  entities_count         :integer          default(0), not null
 #  failed_attempts        :integer          default(0), not null
 #  favorites_count        :integer          default(0), not null
 #  identities_count       :integer          default(0), not null
@@ -64,6 +65,7 @@ class User < ApplicationRecord
   has_many :checks, dependent: :restrict_with_exception
   has_many :favorites, dependent: :restrict_with_exception
   has_many :mentions, dependent: :restrict_with_exception
+  has_many :entities, dependent: :restrict_with_exception
 
   has_one_attached :avatar
 

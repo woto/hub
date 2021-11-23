@@ -62,7 +62,6 @@ describe MentionPolicy, responsible: :admin do
     end
   end
 
-
   context 'with admin' do
     let(:user) { create(:user) }
     let(:policy_context) { create(:mention, user: user) }

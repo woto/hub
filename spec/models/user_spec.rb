@@ -14,6 +14,7 @@
 #  current_sign_in_ip     :inet
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
+#  entities_count         :integer          default(0), not null
 #  failed_attempts        :integer          default(0), not null
 #  favorites_count        :integer          default(0), not null
 #  identities_count       :integer          default(0), not null
@@ -61,6 +62,7 @@ describe User, type: :model do
   it { is_expected.to have_many(:accounts).dependent(:restrict_with_exception) }
   it { is_expected.to have_many(:checks).dependent(:restrict_with_exception) }
   it { is_expected.to have_many(:favorites).dependent(:restrict_with_exception) }
+  it { is_expected.to have_many(:entities).dependent(:restrict_with_exception) }
 
   describe '#set_default_role' do
     subject { user.role }

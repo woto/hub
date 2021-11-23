@@ -11,10 +11,16 @@
 #  title          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
 #  index_entities_on_image_data  (image_data) USING gin
+#  index_entities_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 require 'rails_helper'
 
@@ -23,6 +29,7 @@ RSpec.describe Entity, type: :model do
   it_behaves_like 'logidzable'
 
   describe 'associations' do
+    it { is_expected.to belong_to(:user).counter_cache(true) }
     it { is_expected.to have_many(:entities_mentions) }
     it { is_expected.to have_many(:mentions).through(:entities_mentions) }
   end
@@ -60,6 +67,7 @@ RSpec.describe Entity, type: :model do
         aliases: entity.aliases,
         title: entity.title,
         image: be_a(String),
+        user_id: entity.user_id,
         mentions_count: entity.mentions_count,
         created_at: Time.current,
         updated_at: Time.current

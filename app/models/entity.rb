@@ -9,10 +9,16 @@
 #  title          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
 #  index_entities_on_image_data  (image_data) USING gin
+#  index_entities_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 class Entity < ApplicationRecord
   has_logidze ignore_log_data: true
@@ -21,6 +27,8 @@ class Entity < ApplicationRecord
   index_name "#{Rails.env}.entities"
 
   include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
+
+  belongs_to :user, counter_cache: true
 
   has_many :entities_mentions, dependent: :restrict_with_error
   has_many :mentions, through: :entities_mentions, counter_cache: :mentions_count
@@ -32,7 +40,8 @@ class Entity < ApplicationRecord
       id: id,
       title: title,
       aliases: aliases,
-      image: image ? image.derivation_url(:thumbnail, 100, 100) : '',
+      image: image ? image.derivation_url(:thumbnail, 50, 50) : '',
+      user_id: user_id,
       created_at: created_at,
       updated_at: updated_at,
       mentions_count: mentions_count

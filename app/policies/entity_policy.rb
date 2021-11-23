@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
 class EntityPolicy < ApplicationPolicy
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(_user, scope)
-      @scope = scope
-    end
-
+  class Scope < Scope
     def resolve
-      scope
+      raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
+
+      if user.staff?
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 
   def permitted_attributes
-    [
+    attributes = [
       :title, :picture, :image, { aliases: [] }
     ]
+    attributes.append(:user_id) if user.staff?
+    attributes
   end
 
   def index?
@@ -32,11 +34,14 @@ class EntityPolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    return true if super
+
+    true if context.user == user
   end
 
   def destroy?
-    false
-  end
+    return true if super
 
+    true if context.user == user
+  end
 end

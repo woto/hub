@@ -616,7 +616,8 @@ CREATE TABLE public.entities (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
-    image_data jsonb
+    image_data jsonb,
+    user_id bigint NOT NULL
 );
 
 
@@ -1243,7 +1244,8 @@ CREATE TABLE public.users (
     identities_count integer DEFAULT 0 NOT NULL,
     log_data jsonb,
     api_key character varying,
-    mentions_count integer DEFAULT 0 NOT NULL
+    mentions_count integer DEFAULT 0 NOT NULL,
+    entities_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1943,6 +1945,13 @@ CREATE INDEX index_entities_on_image_data ON public.entities USING gin (image_da
 
 
 --
+-- Name: index_entities_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_on_user_id ON public.entities USING btree (user_id);
+
+
+--
 -- Name: index_favorites_items_on_favorite_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2330,6 +2339,14 @@ ALTER TABLE ONLY public.transactions
 
 
 --
+-- Name: entities fk_rails_71e168c975; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities
+    ADD CONSTRAINT fk_rails_71e168c975 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: feed_categories fk_rails_7224939a4f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2512,6 +2529,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211116073100'),
 ('20211116073106'),
 ('20211117091409'),
-('20211118021657');
+('20211118021657'),
+('20211122133902'),
+('20211122141402');
 
 
