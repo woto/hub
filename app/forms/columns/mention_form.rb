@@ -2,7 +2,7 @@
 
 module Columns
   class MentionForm < BaseForm
-    DEFAULTS = %w[id image url status created_at updated_at].freeze
+    DEFAULTS = %w[id image url entities tags created_at].freeze
 
     self.all_columns = [
         { key: 'id',                  pg: Mention.columns_hash['id'], roles: ['user', 'manager', 'admin'] },

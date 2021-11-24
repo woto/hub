@@ -37,7 +37,9 @@
                 <% end %>
 
                 <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= tags(@mention.entities.map(&:to_label)) %> </dd>
+                <dd class="col-sm-9">
+                  <%= render(Mentions::EntityComponent.with_collection(@mention.entities.map(&:to_label).zip(@mention.entity_ids))) %>
+                </dd>
 
                 <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= tags(@mention.tags) %> </dd>

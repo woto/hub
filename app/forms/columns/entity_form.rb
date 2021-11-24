@@ -2,7 +2,7 @@
 
 module Columns
   class EntityForm < BaseForm
-    DEFAULTS = %w[id image title mentions_count aliases created_at updated_at].freeze
+    DEFAULTS = %w[id image title aliases created_at].freeze
 
     self.all_columns = [
       { key: 'id',                  pg: Entity.columns_hash['id'], roles: ['user', 'manager', 'admin'] },

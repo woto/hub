@@ -24,7 +24,7 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def entities
-    h.tags(super)
+    h.render(Mentions::EntityComponent.with_collection(super.zip(object['_source']['entity_ids'])))
   end
 
   def published_at
