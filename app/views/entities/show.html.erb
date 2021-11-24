@@ -35,7 +35,7 @@
                 <dd class="col-sm-9"> <%= @entity.mentions_count %> </dd>
 
                 <dt class="col-sm-3"> <%= t('aliases', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= render(Entities::AliasComponent.with_collection(@entity.aliases)) %> </dd>
+                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.aliases)) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('version', scope: ['simple_form', 'labels', 'entity']) %> </dt>
                 <dd class="col-sm-9"> <%= @entity.log_version %> </dd>

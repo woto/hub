@@ -20,7 +20,7 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def tags
-    h.tags(super)
+    h.render(TextTagComponent.with_collection(super))
   end
 
   def entities

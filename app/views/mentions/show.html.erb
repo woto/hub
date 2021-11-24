@@ -42,7 +42,7 @@
                 </dd>
 
                 <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= tags(@mention.tags) %> </dd>
+                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@mention.tags)) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('sentiment', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= @mention.sentiment %> </dd>

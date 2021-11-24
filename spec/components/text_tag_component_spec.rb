@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Entities::AliasComponent, type: :component do
+RSpec.describe TextTagComponent, type: :component do
   context 'when alias looks like url' do
     it 'renders badge with link' do
       expect(
-        render_inline(described_class.new(alias: 'https://example.com')).to_html
+        render_inline(described_class.new(text_tag: 'https://example.com')).to_html
       ).to eq <<~HERE
-        <span class="badge bg-cyan user-select-all">
+        <span class="badge bg-cyan user-select-all me-1 mb-1">
           <a class="text-white" rel="noreferrer" href="https://example.com">https://example.com</a>
         </span>
       HERE
@@ -18,9 +18,9 @@ RSpec.describe Entities::AliasComponent, type: :component do
   context 'when alias does not look like url' do
     it 'renders badge without link' do
       expect(
-        render_inline(described_class.new(alias: 'example')).to_html
+        render_inline(described_class.new(text_tag: 'example')).to_html
       ).to eq <<~HERE
-        <span class="badge bg-cyan user-select-all">
+        <span class="badge bg-cyan user-select-all me-1 mb-1">
           example
         </span>
       HERE

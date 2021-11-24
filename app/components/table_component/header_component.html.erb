@@ -1,4 +1,5 @@
-<%= tag.th 'data-controller': 'table-modal-filter',
+<%= tag.th class: 'text-nowrap',
+           'data-controller': 'table-modal-filter',
            'data-table-modal-filter-url-value': (
              polymorphic_path([:table, :filters])
            ),
