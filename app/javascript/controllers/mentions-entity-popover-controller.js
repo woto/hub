@@ -14,7 +14,6 @@ export default class extends Controller {
     }
 
     mouseEnter(event) {
-        console.log('mouseEnter');
         let that = this;
 
         this.#requests.push($.ajax({
@@ -45,12 +44,10 @@ export default class extends Controller {
     }
 
     mouseLeave() {
-        console.log('mouseLeaver');
-
         for(let request of this.#requests) {
             request.abort();
         }
-        bootstrap.Popover.getOrCreateInstance(this.entityButtonTarget).hide();
+        bootstrap.Popover.getInstance(this.entityButtonTarget).hide();
     }
 
 }
