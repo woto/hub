@@ -3,11 +3,11 @@
 default: &default
   currencies:
     - key: 'rub'
-      value: 0.0500100
+      value: 0.0100100
     - key: 'eur'
-      value: 0.0005551
+      value: 0.000117765
     - key: 'usd'
-      value: 0.0007001
+      value: 0.000133467
 
   extra_options:
     - key: 'post_type'
