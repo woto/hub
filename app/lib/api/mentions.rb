@@ -5,7 +5,7 @@ module API
     prefix :api
 
     resource :mentions do
-      desc 'Autocompletes entities'
+      desc 'Autocomplete entities'
 
       params do
         requires :q, type: String, desc: 'Search string'
@@ -15,7 +15,7 @@ module API
         Interactors::Mentions::Entities.call(q: params[:q]).object
       end
 
-      desc 'Autocompletes urls'
+      desc 'Autocomplete urls'
 
       params do
         requires :q, type: String, desc: 'Search string'
@@ -25,7 +25,7 @@ module API
         Interactors::Mentions::Urls.call(q: params[:q]).object
       end
 
-      desc 'Autocompletes tags'
+      desc 'Autocomplete tags'
 
       params do
         requires :q, type: String, desc: 'Search string'

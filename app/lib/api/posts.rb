@@ -5,7 +5,7 @@ module API
     prefix :api
 
     resource :posts do
-      desc 'Autocompletes tags'
+      desc 'Autocomplete tags'
 
       params do
         requires :q, type: String, desc: 'Search string'
