@@ -97,6 +97,12 @@ async function takeScreenshotWithDelay(page) {
 
 app.get('/screenshot', async (request, response) => {
 
+  // const browser = await puppeteer.launch(
+  //     {
+  //       headless: false
+  //     }
+  // );
+
   const browser = await puppeteer.launch({
     defaultViewport: { width: 1280, height: 1024 },
     args: [
