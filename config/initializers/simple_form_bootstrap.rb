@@ -100,14 +100,16 @@ SimpleForm.setup do |config|
   end
 
   # vertical input for inline radio buttons and check boxes
-  config.wrappers :radio_button_group, item_wrapper_class: 'form-selectgroup-item', item_label_class: 'form-selectgroup-label', tag: 'div', class: 'mb-3 form-selectgroup' do |b|
+  config.wrappers :radio_button_group, item_wrapper_class: 'form-selectgroup-item', item_label_class: 'form-selectgroup-label', tag: 'div', class: 'mb-3' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
-    b.use :input, class: 'form-selectgroup-input', error_class: 'is-invalid'
-    b.use :full_error, wrap_with: { class: 'invalid-feedback d-block' }
+    b.wrapper :form_check_wrapper, tag: 'div', class: 'form-selectgroup' do |bb|
+      bb.use :input, class: 'form-selectgroup-input', error_class: 'is-invalid'
+      bb.use :full_error, wrap_with: { class: 'invalid-feedback d-block' }
+    end
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 
