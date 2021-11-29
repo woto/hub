@@ -191,6 +191,7 @@ gem 'dry-validation'
 # Image processing
 gem 'image_processing', '~> 1.11'
 gem 'mini_magick', '~> 4.10'
+gem "fastimage", "~> 2.2"
 
 # Graph visualization
 gem 'ruby-graphviz'

@@ -261,6 +261,7 @@ GEM
     faraday-patron (1.0.0)
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
+    fastimage (2.2.5)
     ffi (1.15.3)
     fugit (1.5.0)
       et-orbi (~> 1.1, >= 1.1.8)
@@ -679,6 +680,7 @@ DEPENDENCIES
   fantaskspec
   faraday
   faraday_middleware
+  fastimage (~> 2.2)
   grape
   grape-swagger
   i18n-debug
