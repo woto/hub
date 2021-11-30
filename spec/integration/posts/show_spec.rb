@@ -39,12 +39,12 @@ describe PostsController, type: :system, responsible: :user do
         expect(page).to have_text('3 часа назад')
         expect(page).to have_text('несколько секунд назад')
         expect(page).to have_text('черновик')
-        expect(page).to have_text('₽1,00')
+        expect(page).to have_text('₽0,20')
 
         # extra options block
-        expect(page).to have_field('Копирайт', checked: true, disabled: true)
-        expect(page).to have_field('на сайте advego.ru', checked: true, disabled: true)
-        expect(page).to have_text('Рерайт - пересказ общедоступного текста в интернете')
+        expect(page).to have_field('Копирайт', checked: true, disabled: true, visible: :all)
+        expect(page).to have_field('на сайте advego.ru', checked: true, disabled: true, visible: :all)
+        expect(page).to have_text(:all, 'Рерайт - пересказ общедоступного текста в интернете')
 
         # content block
         expect(page).to have_text('Body. Some long text')
