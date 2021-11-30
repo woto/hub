@@ -5,8 +5,8 @@
 # Table name: entities
 #
 #  id             :bigint           not null, primary key
-#  aliases        :jsonb
 #  image_data     :jsonb
+#  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string
 #  created_at     :datetime         not null
@@ -30,13 +30,16 @@ RSpec.describe Entity, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user).counter_cache(true) }
-    it { is_expected.to have_many(:entities_mentions) }
-    it { is_expected.to have_many(:mentions).through(:entities_mentions) }
+    it { is_expected.to have_many(:entities_mentions).dependent(:restrict_with_error) }
+    it { is_expected.to have_many(:mentions).through(:entities_mentions).counter_cache(:mentions_count) }
+    it { is_expected.to have_many(:lookups).dependent(:destroy) }
   end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
   end
+
+  it { is_expected.to accept_nested_attributes_for(:lookups).allow_destroy(true) }
 
   describe '#image' do
     subject { create(:entity, image: ShrineImage.uploaded_image) }
@@ -64,7 +67,8 @@ RSpec.describe Entity, type: :model do
     it 'returns correct result' do
       expect(subject).to match(
         id: entity.id,
-        aliases: entity.aliases,
+        lookups: entity.lookups.map(&:to_label),
+        lookups_count: entity.lookups_count,
         title: entity.title,
         image: be_a(String),
         user_id: entity.user_id,

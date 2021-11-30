@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: entities
 #
 #  id             :bigint           not null, primary key
-#  aliases        :jsonb
 #  image_data     :jsonb
+#  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string
 #  created_at     :datetime         not null
@@ -33,14 +35,20 @@ class Entity < ApplicationRecord
   has_many :entities_mentions, dependent: :restrict_with_error
   has_many :mentions, through: :entities_mentions, counter_cache: :mentions_count
 
+  has_many :lookups, dependent: :destroy
+
   validates :title, presence: true
+
+  accepts_nested_attributes_for :lookups, allow_destroy: true,
+                                          reject_if: proc { |attributes| attributes['title'].blank? }
 
   def as_indexed_json(_options = {})
     {
       id: id,
       title: title,
-      aliases: aliases,
-      image: image ? image.derivation_url(:thumbnail, 50, 50) : '',
+      lookups: lookups.map(&:to_label),
+      lookups_count: lookups_count,
+      image: image ? image.derivation_url(:thumbnail, 100, 100) : '',
       user_id: user_id,
       created_at: created_at,
       updated_at: updated_at,

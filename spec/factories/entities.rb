@@ -5,8 +5,8 @@
 # Table name: entities
 #
 #  id             :bigint           not null, primary key
-#  aliases        :jsonb
 #  image_data     :jsonb
+#  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string
 #  created_at     :datetime         not null
