@@ -1,30 +1,34 @@
-<div class="card bg-dark-lt">
-  <div class="card-header">
-    <div class="card-title align-items-center d-flex">
-      <%= t('.extra_options') %>
-    </div>
-  </div>
-  <div class="card-body">
-    <small class="text-muted"><%= t('.extra_options_hint') %></small>
+<%= render AccordionComponent.new(accordion_id: 'extra-options-accordion', css_class: 'bg-white') do |accordion_component| %>
 
     <% f.object.exchange_rate.extra_options.sort { |obj| -obj['priority'] }.each do |extra_option| %>
-      <%= f.simple_fields_for :extra_options do |extra| %>
 
-        <%
-          collection = extra_option['values'].pluck('title').map do |a|
-            [t(a, scope: ['posts', 'extra_options', 'labels', extra_option['key']]), a]
-          end
-        %>
+      <%= accordion_component.item(item_id: "extra-options-#{extra_option['key']}") do |item_component| %>
 
-        <%= extra.input extra_option['key'],
-                        as: extra_option['type'],
-                        hint: t(extra_option['hint'], scope: %w[posts extra_options hints]),
-                        checked: f.object.extra_options&.dig(extra_option['key']),
-                        item_wrapper_class: 'form-check',
-                        wrapper_html: {class: 'my-3'},
-                        collection: collection,
-                        disabled: disabled || extra_option['disabled'] %>
+        <%= f.simple_fields_for :extra_options do |extra| %>
+
+          <%= item_component.header do %>
+            <%= extra.label extra_option['key'], required: false %>
+          <% end %>
+
+          <%= item_component.body(css_class: 'pt-0') do %>
+
+            <% collection = extra_option['values'].pluck('title').map { |a|
+              [t(a, scope: ['posts', 'extra_options', 'labels', extra_option['key']]), a]
+            } %>
+
+            <%= extra.input extra_option['key'],
+                            as: extra_option['type'],
+                            hint: t(extra_option['hint'], scope: %w[posts extra_options hints]),
+                            checked: f.object.extra_options&.dig(extra_option['key']),
+                            item_wrapper_class: 'form-check',
+                            collection: collection,
+                            required: false,
+                            disabled: disabled || extra_option['disabled'],
+                            label_text: false %>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>
+
+<small class="d-inline-block mt-3 text-muted"><%= t('.extra_options_hint') %></small>
