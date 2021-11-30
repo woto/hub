@@ -13,7 +13,7 @@ module Columns
         { key: 'entity_ids',          pg: Mention.columns_hash['id'], as: :integer, roles: ['user', 'manager', 'admin'] },
         { key: 'tags',                pg: Mention.columns_hash['tags'], as: :string, roles: ['user', 'manager', 'admin'] },
         { key: 'published_at',        pg: Mention.columns_hash['published_at'], roles: ['user', 'manager', 'admin'] },
-        { key: 'kind',                pg: Mention.columns_hash['kind'], as: :string, roles: %w[guest user manager admin] },
+        { key: 'kinds',               pg: Mention.columns_hash['kinds'], as: :string, roles: %w[guest user manager admin] },
         { key: 'sentiment',           pg: Mention.columns_hash['sentiment'], as: :string, roles: %w[guest user manager admin] },
         { key: 'entities_count',      pg: Mention.columns_hash['entities_count'], roles: ['user', 'manager', 'admin'] },
         { key: 'created_at',          pg: Mention.columns_hash['created_at'], roles: ['user', 'manager', 'admin'] },

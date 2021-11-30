@@ -11,8 +11,8 @@ describe MentionPolicy, responsible: :admin do
     subject { described_class.new(user, nil).permitted_attributes }
 
     let(:permitted_attributes) do
-      [:kind, :published_at, :sentiment, :url, :image,
-       { entity_ids: [], tags: [], advertiser_ext_ids: [] }]
+      [:published_at, :sentiment, :url, :image,
+       { kinds: [], entity_ids: [], tags: [], advertiser_ext_ids: [] }]
     end
 
     context 'with user' do

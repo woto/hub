@@ -911,13 +911,13 @@ CREATE TABLE public.mentions (
     url text,
     tags jsonb DEFAULT '[]'::jsonb,
     published_at timestamp without time zone,
-    kind integer NOT NULL,
     sentiment integer NOT NULL,
     entities_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
-    image_data jsonb
+    image_data jsonb,
+    kinds jsonb DEFAULT '[]'::jsonb NOT NULL
 );
 
 
@@ -2532,6 +2532,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211118021657'),
 ('20211122133902'),
 ('20211122141402'),
-('20211123163619');
+('20211123163619'),
+('20211123171513'),
+('20211123185427'),
+('20211123190815'),
+('20211123194815');
 
 

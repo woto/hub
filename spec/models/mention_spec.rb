@@ -7,7 +7,7 @@
 #  id             :bigint           not null, primary key
 #  entities_count :integer          default(0), not null
 #  image_data     :jsonb
-#  kind           :integer          not null
+#  kinds          :jsonb            not null
 #  published_at   :datetime
 #  sentiment      :integer          not null
 #  tags           :jsonb
@@ -31,7 +31,6 @@ RSpec.describe Mention, type: :model do
   it_behaves_like 'elasticable'
   it_behaves_like 'logidzable'
 
-  it { is_expected.to define_enum_for(:kind).with_values(%w[text image audio video]) }
   it { is_expected.to define_enum_for(:sentiment).with_values(%w[positive negative unknown]) }
 
   describe 'associations' do
@@ -45,9 +44,25 @@ RSpec.describe Mention, type: :model do
     it { is_expected.to validate_presence_of(:url) }
     it { is_expected.to validate_presence_of(:tags) }
     it { is_expected.to validate_presence_of(:sentiment) }
-    it { is_expected.to validate_presence_of(:kind) }
+    it { is_expected.to validate_presence_of(:kinds) }
     it { is_expected.to validate_length_of(:tags).is_at_least(2) }
     xit { is_expected.to validate_length_of(:entities).is_at_least(1) }
+
+    describe '#validate_kinds' do
+      subject { build(:mention, kinds: kinds) }
+
+      context 'when kinds is valid' do
+        let(:kinds) { %w[text image video] }
+
+        it { is_expected.to be_valid }
+      end
+
+      context 'when kinds is not valid' do
+        let(:kinds) { %w[fake] }
+
+        it { is_expected.to be_invalid }
+      end
+    end
 
     context 'with responsible', responsible: :user do
       subject { build(:mention) }
@@ -79,7 +94,7 @@ RSpec.describe Mention, type: :model do
       expect(subject).to match(
         id: mention.id,
         entities_count: mention.entities_count,
-        kind: mention.kind,
+        kinds: mention.kinds,
         published_at: mention.published_at&.utc,
         sentiment: mention.sentiment,
         tags: mention.tags,

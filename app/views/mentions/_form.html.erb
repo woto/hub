@@ -88,14 +88,11 @@
                         ].compact,
                         wrapper: :radio_button_group %>
 
-            <%= f.input :kind,
-                        as: :radio_buttons,
-                        collection: [
-                          ['<i class="fas fa-fw fa-lg fa-file-alt"></i>'.html_safe, 'text'],
-                          ['<i class="fas fa-fw fa-lg fa-image"></i>'.html_safe, 'image'],
-                          ['<i class="fas fa-fw fa-lg fa-volume-down"></i>'.html_safe, 'audio'],
-                          ['<i class="fas fa-fw fa-lg fa-video"></i>'.html_safe, 'video']
-                        ].compact,
+            <%= f.input :kinds,
+                        as: :check_boxes,
+                        collection: Mention::KINDS.map { |kind|
+                          [render(Mentions::KindIconComponent.new(kind: kind, hint: true)), kind]
+                        },
                         wrapper: :radio_button_group %>
 
             <%= f.input :published_at, as: :string,

@@ -1,0 +1,4 @@
+<%= tag.span 'data-bs-toggle': 'tooltip', 'data-bs-offset': "10,20", 'data-bs-container': 'body', 'data-bs-placement': 'left', 'title': t(".hints.#{@kind}") do %>
+  <i class="<%= kind_to_icon %>"></i>
+  <%= t(".titles.#{@kind}") %>
+<% end %>

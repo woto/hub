@@ -718,6 +718,7 @@ en:
         entities_count: Entities count
         id: Id
         kind: Kind
+        kinds: Kinds
         published_at: Published at
         publisher_ext_id: Publisher ext
         screenshot: Screenshot

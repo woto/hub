@@ -47,8 +47,8 @@
                 <dt class="col-sm-3"> <%= t('sentiment', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= @mention.sentiment %> </dd>
 
-                <dt class="col-sm-3"> <%= t('kind', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @mention.kind %> </dd>
+                <dt class="col-sm-3"> <%= t('kinds', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= render(Mentions::KindTextComponent.with_collection(@mention.kinds)) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('entities_count', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= @mention.entities_count %> </dd>

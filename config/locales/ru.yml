@@ -728,6 +728,7 @@ ru:
         entities_count: Entities count
         id: ID
         kind: Тип упоминания
+        kinds: Kinds
         published_at: Опубликовано
         publisher_ext_id: Автор
         screenshot: Скриншот
