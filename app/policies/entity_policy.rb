@@ -3,19 +3,13 @@
 class EntityPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
-
-      if user.staff?
-        scope.all
-      else
-        scope.where(user: user)
-      end
+      scope.all
     end
   end
 
   def permitted_attributes
     attributes = [
-      :title, :picture, :image, { aliases: [] }
+      :title, :picture, :image, { lookups_attributes: %i[id title _destroy] }
     ]
     attributes.append(:user_id) if user.staff?
     attributes
