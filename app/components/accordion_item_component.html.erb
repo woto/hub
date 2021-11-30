@@ -1,0 +1,10 @@
+<%= tag.div class: ['accordion-item', @css_class].join(' ') do %>
+  <h2 class="accordion-header" id="<%= ['heading', @item_id].join('-') %>">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%= @item_id %>" aria-expanded="false">
+      <%= header %>
+    </button>
+  </h2>
+  <div id="<%= @item_id %>" class="accordion-collapse collapse" data-bs-parent="#<%= @accordion_id %>">
+    <%= body %>
+  </div>
+<% end %>

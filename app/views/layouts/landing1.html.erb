@@ -288,29 +288,25 @@
           </div>
           <div class="row flex-center">
             <div class="col-lg-9">
-              <div class="accordion" id="faq-accordion">
+
+              <%= render AccordionComponent.new(accordion_id: 'faq-accordion') do |accordion_component| %>
                 <% post_category = help_realm.post_categories.find_by(title: 'Частые вопросы') %>
                 <% post_category.posts.accrued_post.each_with_index do |post, index| %>
-                  <div class="accordion-item mb-2">
-                    <%= tag.h2 class: 'accordion-header', id: "heading#{index}" do %>
-                      <%= tag.button class: "accordion-button #{'collapsed' unless index == 0}", type: 'button',
-                                     'data-bs-toggle': "collapse",
-                                     'data-bs-target': "#collapse#{index}" do %>
-                        <span class="mb-0 fw-bold text-start fs-1 text-1000">
-                           <%= post.title %>
-                        </span>
+
+                  <%= accordion_component.item(item_id: "item-#{index}", css_class: 'mb-2') do |item_component| %>
+                    <%= item_component.header do %>
+                      <%= tag.span class: 'mb-0 fw-bold text-start fs-1 text-1000' do %>
+                        <%= post.title %>
                       <% end %>
                     <% end %>
-                    <%= tag.div class: "accordion-collapse collapse #{'show' if index == 0}",
-                                id: "collapse#{index}",
-                                'data-bs-parent': "#faq-accordion" do %>
-                      <div class="accordion-body bg-100">
-                        <%==  post.body %>
-                      </div>
+
+                    <%= item_component.body(css_class: 'bg-100') do %>
+                      <%==  post.body %>
                     <% end %>
-                  </div>
+                  <% end %>
                 <% end %>
-              </div>
+              <% end %>
+
             </div>
           </div>
         </div><!-- end of .container-->
