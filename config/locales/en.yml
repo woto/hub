@@ -271,6 +271,8 @@ en:
       entity_was_successfully_created: Entity was successfully created
     destroy:
       entity_was_successfully_destroyed: Entity was successfully destroyed
+    editorial:
+      editorial: Editorial
     form:
       submit_and_new: Submit and new
     update:
@@ -495,6 +497,8 @@ en:
       mention_was_successfully_created: Mention was successfully created
     destroy:
       mention_was_successfully_destroyed: Mention was successfully destroyed
+    editorial:
+      editorial: Editorial
     form:
       editorial: Editorial
     update:

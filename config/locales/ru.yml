@@ -275,6 +275,8 @@ ru:
       entity_was_successfully_created: Объект упоминания был успешно создан
     destroy:
       entity_was_successfully_destroyed: Объект упоминания был успешно удален
+    editorial:
+      editorial: Редактура
     form:
       submit_and_new: Сохранить и новый
     update:
@@ -505,8 +507,10 @@ ru:
       mention_was_successfully_created: Упоминание было успешно создано
     destroy:
       mention_was_successfully_destroyed: Упоминание было успешно удалено
+    editorial:
+      editorial: Редактура
     form:
-      editorial: Editorial
+      editorial: Редактура
     update:
       mention_was_successfully_updated: Упоминание было успешно изменено
   navbar_favorite_component:
