@@ -53,6 +53,7 @@ describe PostsController, type: :system, responsible: :user do
     end
 
     it 'fills `Дата публикации` correctly' do
+      find('#heading-post-item').click
       expect(page).to have_field('post[published_at]', with: post.published_at.strftime('%F %H:%M'))
     end
 

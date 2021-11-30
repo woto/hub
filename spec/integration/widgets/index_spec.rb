@@ -42,6 +42,9 @@ describe WidgetsController, type: :system do
     before do
       login_as(Current.responsible, scope: :user)
       visit new_post_path(locale: :ru)
+
+      find('#heading-post-item').click
+
       within '.post_intro' do
         click_on('Вставить виджет')
       end

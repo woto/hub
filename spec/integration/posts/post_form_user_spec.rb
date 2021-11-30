@@ -12,6 +12,8 @@ describe PostsController, type: :system, responsible: :admin do
 
     expect(page).to have_select('post[user_id]', visible: :hidden, selected: post.user.to_label)
 
+    find('#heading-post-item').click
+
     within '.post_user' do
       find('.selectize-input').click
       find('input').native.send_key(:backspace)

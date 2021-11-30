@@ -29,6 +29,7 @@ describe PostsController, type: :system, responsible: :admin do
         choose 'зачислено'
 
         click_on('Сохранить')
+        find('#heading-post-item').click
 
         expect(page).to have_text('Published at не может быть пустым')
         # expect(page).to have_text('User не может отсутствовать')
