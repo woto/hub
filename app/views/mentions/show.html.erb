@@ -62,7 +62,17 @@
                 <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
                 <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.updated_at) %> </dd>
 
-                <%= image_tag @mention.image_url, class: 'my-3 img-thumbnail max-width-800' if @mention.image_url %>
+                <dt class="col-sm-3"> <%= t('image') %> </dt>
+                <dd class="col-sm-9" data-controller="lightbox">
+                  <% options = { class: 'img-thumbnail width-200 max-height-500' } %>
+                  <%= link_to @mention.image_url,
+                              'data-pswp-width': @mention.image.metadata['width'],
+                              'data-pswp-height': @mention.image.metadata['height'],
+                              'target': '_blank',
+                              class: 'photo-swipe' do %>
+                    <%= image_tag @mention.image_url, options %>
+                  <% end %>
+                </dd>
 
                 <% if current_user.staff? %>
                   <hr class="my-2">

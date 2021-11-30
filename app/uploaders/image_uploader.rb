@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class ImageUploader < Shrine
+  plugin :store_dimensions
   plugin :keep_files
+  # plugin :refresh_metadata
+  # plugin :atomic_helpers
 
   plugin :validation_helpers
 
