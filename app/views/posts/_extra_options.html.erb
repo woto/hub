@@ -7,7 +7,7 @@
         <%= f.simple_fields_for :extra_options do |extra| %>
 
           <%= item_component.header do %>
-            <%= extra.label extra_option['key'], required: false %>
+            <%= t(extra_option['key'], scope: %w[simple_form labels post extra_options]) %>
           <% end %>
 
           <%= item_component.body(css_class: 'pt-0') do %>
