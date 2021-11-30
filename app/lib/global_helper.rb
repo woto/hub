@@ -29,16 +29,6 @@ class GlobalHelper
                      .reject { |_, v| v.zero? }
     end
 
-    def create_index(client, model)
-      elastic_client.indices.create(
-        index: model.index_name,
-        body: {
-          settings: model.settings.to_hash,
-          mappings: model.mappings.to_hash
-        }
-      )
-    end
-
     def elastic_client
       Elasticsearch::Client.new(Rails.application.config.elastic)
     end
@@ -49,41 +39,18 @@ class GlobalHelper
       Elastic::CreateOffersIndex.call
       Elastic::CreateTokenizerIndex.call
 
-      User.setup_index(Columns::UserForm)
-      create_index(elastic_client, User)
-
-      Feed.setup_index(Columns::FeedForm)
-      create_index(elastic_client, Feed)
-
-      Post.setup_index(Columns::PostForm)
-      create_index(elastic_client, Post)
-
-      Favorite.setup_index(Columns::FavoriteForm)
-      create_index(elastic_client, Favorite)
-
-      Account.setup_index(Columns::AccountForm)
-      create_index(elastic_client, Account)
-
-      Transaction.setup_index(Columns::TransactionForm)
-      create_index(elastic_client, Transaction)
-
-      Check.setup_index(Columns::CheckForm)
-      create_index(elastic_client, Check)
-
-      PostCategory.setup_index(Columns::PostCategoryForm)
-      create_index(elastic_client, PostCategory)
-
-      PostCategory.setup_index(Columns::ExchangeRateForm)
-      create_index(elastic_client, ExchangeRate)
-
-      Realm.setup_index(Columns::RealmForm)
-      create_index(elastic_client, Realm)
-
-      Mention.setup_index(Columns::MentionForm)
-      create_index(elastic_client, Mention)
-
-      Entity.setup_index(Columns::EntityForm)
-      create_index(elastic_client, Entity)
+      Elastic::CreateIndex.call(index_name: 'user')
+      Elastic::CreateIndex.call(index_name: 'feed')
+      Elastic::CreateIndex.call(index_name: 'post')
+      Elastic::CreateIndex.call(index_name: 'favorite')
+      Elastic::CreateIndex.call(index_name: 'account')
+      Elastic::CreateIndex.call(index_name: 'transaction')
+      Elastic::CreateIndex.call(index_name: 'check')
+      Elastic::CreateIndex.call(index_name: 'post_category')
+      Elastic::CreateIndex.call(index_name: 'exchange_rate')
+      Elastic::CreateIndex.call(index_name: 'realm')
+      Elastic::CreateIndex.call(index_name: 'mention')
+      Elastic::CreateIndex.call(index_name: 'entity')
 
       elastic_client.indices.refresh index: Elastic::IndexName.wildcard
     end
