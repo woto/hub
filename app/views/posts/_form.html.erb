@@ -124,60 +124,61 @@
         </div>
 
         <% if current_user.staff? %>
-          <div class="card mb-3">
-            <div class="card-header">
-              <div class="card-title align-items-center d-flex">
-                <%= t('.editorial') %>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-inputs">
+          <div class="mb-3">
 
-                <%= f.input :published_at, as: :string,
-                            wrapper_html: { class: 'mb-3' },
-                            required: true,
-                            input_html: {
-                              "data-controller": "flatpickr"
-                            }
-                %>
+            <%= render AccordionComponent.new(
+              accordion_id: 'post-accordion',
+              css_class: 'bg-white') do |accordion_component|
+            %>
 
-                <%= f.association :user, as: :select,
-                                  input_html: {
-                                    "data-controller": 'ajax-user',
-                                  },
-                                  wrapper_html: {class: 'mb-3'},
-                                  label_html: { class: "mb-2" },
-                                  placeholder: true,
-                                  collection: User.where(id: f.object.user_id).map { |user|
-                                    [user.email, user.id]
-                                  },
-                                  selected: f.object.user_id
-                %>
+              <%= accordion_component.item(item_id: 'post-item') do |item_component| %>
 
-                <%= f.input :intro,
-                            as: :rich_text_area,
-                            required: true,
-                            input_html: {
-                              class: 'trix-content fs-6 lh-lg',
-                              'data-controller': 'posts-trix',
-                              'data-posts-trix-translations-value': trix_translations.to_json,
-                              style: 'max-width: 600px'
-                            },
-                            placeholder: true,
-                            wrapper_html: { class: 'mb-3' }
-                %>
+                <%= item_component.header do %>
+                  <%= t('.editorial') %>
+                <% end %>
 
-                <%= f.input :description,
-                            wrapper_html: {class: 'mb-3'},
-                            input_html: {
-                              rows: 4,
-                              'data-controller': 'textarea-autogrow',
-                              style: 'max-width: 600px'
-                            }
-                %>
+                <%= item_component.body(css_class: 'pt-0') do %>
 
-              </div>
-            </div>
+                  <%= f.input :published_at, as: :string,
+                              required: true,
+                              input_html: {
+                                "data-controller": "flatpickr"
+                              }
+                  %>
+
+                  <%= f.association :user, as: :select,
+                                    input_html: {
+                                      "data-controller": 'ajax-user',
+                                    },
+                                    placeholder: true,
+                                    collection: User.where(id: f.object.user_id).map { |user|
+                                      [user.email, user.id]
+                                    },
+                                    selected: f.object.user_id
+                  %>
+
+                  <%= f.input :intro,
+                              as: :rich_text_area,
+                              required: true,
+                              input_html: {
+                                class: 'trix-content fs-6 lh-lg',
+                                'data-controller': 'posts-trix',
+                                'data-posts-trix-translations-value': trix_translations.to_json,
+                                style: 'max-width: 600px'
+                              },
+                              placeholder: true
+                  %>
+
+                  <%= f.input :description,
+                              input_html: {
+                                rows: 4,
+                                'data-controller': 'textarea-autogrow',
+                                style: 'max-width: 600px'
+                              }
+                  %>
+                <% end %>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
 
