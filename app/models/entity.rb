@@ -39,8 +39,7 @@ class Entity < ApplicationRecord
 
   validates :title, presence: true
 
-  accepts_nested_attributes_for :lookups, allow_destroy: true,
-                                          reject_if: proc { |attributes| attributes['title'].blank? }
+  accepts_nested_attributes_for :lookups, allow_destroy: true
 
   def as_indexed_json(_options = {})
     {
