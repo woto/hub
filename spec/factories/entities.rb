@@ -27,6 +27,5 @@ FactoryBot.define do
   factory :entity do
     user
     title { Faker::Lorem.word }
-    # aliases { 5.times.map { Faker::Lorem.word } }
   end
 end

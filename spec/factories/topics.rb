@@ -8,6 +8,10 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
+# Indexes
+#
+#  index_topics_on_title  (title) UNIQUE
+#
 FactoryBot.define do
   factory :topic do
     title { Faker::Lorem.unique.word }
