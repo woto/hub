@@ -29,13 +29,10 @@
                 <dd class="col-sm-9"> <%= @entity.id %> </dd>
 
                 <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= link_to @entity.title, @entity.title %> </dd>
+                <dd class="col-sm-9"> <%= @entity.title %> </dd>
 
-                <dt class="col-sm-3"> <%= t('mentions_count', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= @entity.mentions_count %> </dd>
-
-                <dt class="col-sm-3"> <%= t('aliases', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.aliases)) %> </dd>
+                <dt class="col-sm-3"> <%= t('lookups', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.lookups.map(&:to_label))) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('version', scope: ['simple_form', 'labels', 'entity']) %> </dt>
                 <dd class="col-sm-9"> <%= @entity.log_version %> </dd>
@@ -67,11 +64,9 @@
     <div class="col">
 
       <%= link_to t('new'), new_entity_path,
-                  class: "btn btn-success #{'disabled' unless policy(@entity).new? }",
-                  'data-turbo': false %>
+                  class: "btn btn-primary #{'disabled' unless policy(@entity).new? }" %>
       <%= link_to t('edit'), edit_entity_path(@entity),
-                  class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }",
-                  'data-turbo': false %>
+                  class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }" %>
       <%= link_to t('delete'), entity_path(@entity.id),
                   class: "btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
                   method: :delete,

@@ -28,6 +28,10 @@ ru:
         value: Адрес мессенджера
   activerecord:
     attributes:
+      lookup:
+        title: Название синонима
+      entity:
+        title: Название объекта
       widgets/simple:
         body: Описание
         pictures: Изображения
@@ -279,6 +283,8 @@ ru:
       editorial: Редактура
     form:
       submit_and_new: Сохранить и новый
+    lookups:
+      add_lookup: Добавить синоним
     update:
       entity_was_successfully_updated: Объект упоминания был успешно изменен
   errors:
@@ -515,7 +521,7 @@ ru:
       mention_was_successfully_updated: Упоминание было успешно изменено
   navbar_favorite_component:
     title: Избранное
-  new: New
+  new: Новый
   no_results_found: Ничего не найдено
   offers:
     address_for_widget:
@@ -674,6 +680,8 @@ ru:
     error_notification:
       default_message: Невозможно сохранить. Пожалуйста заполните поля
     hints:
+      entity:
+        lookups: Например адрес сайта, адрес профиля в соцсетях, расшифровка аббревиатуры, название на русском языке, кличка, телефон, e-mail.
       advertiser_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       columns_form:

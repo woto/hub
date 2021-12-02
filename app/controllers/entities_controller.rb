@@ -13,18 +13,20 @@ class EntitiesController < ApplicationController
   # GET /entities/new
   def new
     @entity = current_user.entities.new
+    @url = url_for(@entity)
     authorize(@entity)
   end
 
   # GET /entities/:id/edit
   def edit
+    @url = url_for(@entity)
     authorize(@entity)
   end
 
   # POST /entities
   def create
     GlobalHelper.retryable do
-      @entity = policy_scope(Entity).new(permitted_attributes(Entity))
+      @entity = current_user.entities.new(permitted_attributes(Entity))
       authorize(@entity)
       if @entity.save
         if params['commit'] == t('entities.form.submit_and_new')

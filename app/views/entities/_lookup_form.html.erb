@@ -1,0 +1,32 @@
+<%= tag.div id: dom_id(f.object),
+            class: "row g-2 mb-3#{' d-none' if f.object.marked_for_destruction?}",
+            'data-controller': 'nested-form-item',
+            'data-nested-form-item-new-value': f.object.new_record? do %>
+
+  <div class="col">
+    <div class="btn-group w-100">
+      <%= f.input :title,
+                  wrapper: false,
+                  label: false,
+                  error: false %>
+    </div>
+    <%= f.full_error :title, class: 'invalid-feedback d-block' %>
+  </div>
+
+  <div class="col-auto">
+    <%= tag.button class: 'btn btn-ghost-danger btn-icon',
+                   type: 'button',
+                   'data-action': 'nested-form-item#remove' do %>
+      <i class="fas fa-times icon"></i>
+    <% end %>
+  </div>
+
+  <%= f.input :_destroy,
+              as: :hidden,
+              wrapper: false,
+              label: false,
+              input_html: {
+                'data-nested-form-item-target': 'destroy',
+              } %>
+
+<% end %>
