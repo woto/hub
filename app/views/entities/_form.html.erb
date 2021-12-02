@@ -17,37 +17,7 @@
 
             <%= render 'entities/lookups', f: f %>
 
-            <%= tag.div class: 'mb-3',
-                        'data-controller': 'shrine-upload',
-                        'data-action': 'pushEventStack@window->shrine-upload#pushEventStack
-                                        popEventStack@window->shrine-upload#popEventStack' do %>
-
-              <%= f.input :image,
-                          as: :hidden,
-                          wrapper: false,
-                          error: false,
-                          input_html: {
-                            id: nil,
-                            value: f.object.cached_image_data
-                          } %>
-
-              <%= f.label :image,
-                          class: 'width-100 min-height-100 img-thumbnail d-flex align-items-center',
-                          role: 'button' do %>
-
-                <%= image_tag f.object.image_url || asset_pack_path('media/images/icon-upload.png'),
-                              class: 'mx-auto d-block',
-                              'data-shrine-upload-target': 'imagePreview' %>
-              <% end %>
-
-              <%= f.input :image,
-                          wrapper: false,
-                          label: false,
-                          input_html: {
-                            'data-shrine-upload-target': 'inputFile',
-                            class: "d-none"
-                          } %>
-            <% end %>
+            <%= render 'image', f: f %>
 
           </div>
         </div>
@@ -57,7 +27,7 @@
 
       <div class="form-actions">
         <% if @is_modal %>
-          <%= f.button :submit, t(".submit_and_bind"), class: 'btn btn-light' %>
+          <%= f.button :submit, t(".submit_and_bind"), class: 'btn btn-primary' %>
         <% else %>
           <%= f.button :submit, t('.submit_and_new'), class: 'btn btn-primary' %>
           <%= f.button :submit, class: 'btn btn-primary' %>
