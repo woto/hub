@@ -8,11 +8,16 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
+# Indexes
+#
+#  index_topics_on_title  (title) UNIQUE
+#
 class Topic < ApplicationRecord
   has_many :mentions_topics, dependent: :destroy
   has_many :mentions, through: :mentions_topics, counter_cache: :mentions_count
 
   validates :title, presence: true
+  validates :title, uniqueness: true
 
   def to_label
     title
