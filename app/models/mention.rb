@@ -48,15 +48,27 @@ class Mention < ApplicationRecord
   validates :topics, :image, :entities, :url, :sentiment, :kinds, presence: true
   validates :entities, :topics, length: { minimum: 1 }
   validates :url, uniqueness: true
-  validate :validate_kinds
+  validate :validate_kinds_keys, :validate_kinds_length
 
   # before_destroy :stop_destroy
 
   accepts_nested_attributes_for :topics, allow_destroy: true
 
-  # def topics_attributes=(val)
-  #   TODO: old or new topics
-  # end
+  def topics_attributes=(arr)
+    arr.each do |_, hash|
+      topic = Topic.find_by(title: hash['title'])
+
+      if ActiveModel::Type::Boolean.new.cast(hash['_destroy'])
+        topics.each do |t|
+          t.mark_for_destruction if t.id == topic&.id
+        end
+      elsif topic
+        self.topic_ids += [topic.id] unless topic_ids.include?(topic.id)
+      else
+        topics.build(title: hash['title'])
+      end
+    end
+  end
 
   def as_indexed_json(_options = {})
     {
@@ -84,9 +96,13 @@ class Mention < ApplicationRecord
   # end
 
   # TODO: find gem to avoid manual validation
-  def validate_kinds
+  def validate_kinds_keys
     return if errors.include?(:kinds)
 
     errors.add(:kinds, :inclusion) unless (kinds - ['', *KINDS]).empty?
+  end
+
+  def validate_kinds_length
+    errors.add(:kinds, :inclusion) if Array(kinds).compact_blank.empty?
   end
 end

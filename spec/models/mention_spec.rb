@@ -64,19 +64,39 @@ RSpec.describe Mention, type: :model do
       it { is_expected.to eq({ entities: [{ error: :blank }, { count: 1, error: :too_short }] }) }
     end
 
-    describe '#validate_kinds' do
+    describe '#validate_kinds_length' do
       subject { build(:mention, kinds: kinds) }
 
-      context 'when kinds is valid' do
-        let(:kinds) { %w[text image video] }
+      context 'when kinds is empty' do
+        let(:kinds) { [] }
 
-        it { is_expected.to be_valid }
+        specify do
+          expect(subject).to be_invalid
+          expect(subject.errors.details).to eq({ kinds: [{ error: :blank }, { error: :inclusion }] })
+        end
       end
+    end
 
-      context 'when kinds is not valid' do
+    describe '#kinds' do
+      context 'when kinds is valid' do
+        subject { build(:mention, kinds: %w[text image video]) }
+
+        specify do
+          expect(subject).to be_valid
+        end
+      end
+    end
+
+    describe '#validate_kinds_keys' do
+      subject { build(:mention, kinds: kinds) }
+
+      context 'when kinds includes wrong key' do
         let(:kinds) { %w[fake] }
 
-        it { is_expected.to be_invalid }
+        specify do
+          expect(subject).to be_invalid
+          expect(subject.errors.details).to eq({ kinds: [{ error: :inclusion }] })
+        end
       end
     end
 
@@ -173,6 +193,122 @@ RSpec.describe Mention, type: :model do
           subject.destroy
         end.to change(described_class, :count).from(1).to(0)
       end.not_to change(Topic, :count).from(1)
+    end
+  end
+
+  describe '#topics_attributes=' do
+    subject! { create(:mention, topics: [topic1, topic2]) }
+
+    let(:topic1) { create(:topic) }
+    let(:topic2) { create(:topic) }
+
+    before do
+      subject.update(topics_attributes: params)
+    end
+
+    context "when passes '_destroy' param and topic is linked to the mention" do
+      let(:params) do
+        {
+          '0' => {
+            'id' => '',
+            'title' => topic1.title,
+            '_destroy' => 'true'
+          }
+        }
+      end
+
+      it 'unlinks topic but not removes it' do
+        expect(subject.topics).to contain_exactly(topic2)
+        expect(topic1.reload).not_to be_nil
+      end
+    end
+
+    context "when passes '_destroy' param but topic does not linked" do
+      let(:topic) { create(:topic) }
+
+      let(:params) do
+        {
+          '0' => {
+            'id' => '',
+            'title' => topic.title,
+            '_destroy' => 'true'
+          }
+        }
+      end
+
+      it 'does not unlink topics and does not create the new one' do
+        expect do
+          expect(subject.topics).to contain_exactly(topic1, topic2)
+        end.not_to change(Topic, :count)
+      end
+    end
+
+    context "when passes '_destroy' param but topic with such title even does not exist" do
+      let(:params) do
+        {
+          '0' => {
+            'id' => '',
+            'title' => 'topic',
+            '_destroy' => 'true'
+          }
+        }
+      end
+
+      it 'does not unlink topics and does not create the new one' do
+        expect do
+          expect(subject.topics).to contain_exactly(topic1, topic2)
+        end.not_to change(Topic, :count)
+      end
+    end
+
+    context 'when passed new topic which is not exists yet' do
+      let(:params) do
+        {
+          '0' => {
+            'id' => '',
+            'title' => 'topic',
+            '_destroy' => 'false'
+          }
+        }
+      end
+
+      it 'creates new linked topic' do
+        expect(subject.topics).to contain_exactly(topic1, topic2, Topic.find_by(title: 'topic'))
+      end
+    end
+
+    context 'when passed topic is not liked yet to the mention' do
+      let(:topic) { create(:topic) }
+
+      let(:params) do
+        {
+          '0' => {
+            'id' => '',
+            'title' => topic.title,
+            '_destroy' => 'false'
+          }
+        }
+      end
+
+      it 'links topic to the mention' do
+        expect(subject.topics).to contain_exactly(topic1, topic2, topic)
+      end
+    end
+
+    context 'when passed topic already linked to the mention' do
+      let(:params) do
+        {
+          '0' => {
+            'id' => '',
+            'title' => topic1.title,
+            '_destroy' => 'false'
+          }
+        }
+      end
+
+      it 'does not relink it again' do
+        expect(subject.topics).to contain_exactly(topic1, topic2)
+      end
     end
   end
 end

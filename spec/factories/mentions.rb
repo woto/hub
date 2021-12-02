@@ -10,7 +10,7 @@
 #  kinds          :jsonb            not null
 #  published_at   :datetime
 #  sentiment      :integer          not null
-#  tags           :jsonb
+#  topics_count   :integer          default(0), not null
 #  url            :text
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -33,7 +33,7 @@ FactoryBot.define do
     user
     entities { [association(:entity)] }
     url { Faker::Internet.url }
-    tags { Faker::Lorem.sentences(number: rand(2..10)) }
+    topics { [association(:topic)] }
     sentiment { Mention.sentiments.keys.sample }
     kinds { Mention::KINDS.sample(rand(Mention::KINDS.size) + 1) }
     image_data { ShrineImage.image_data }
