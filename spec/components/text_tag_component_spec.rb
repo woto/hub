@@ -13,6 +13,18 @@ RSpec.describe TextTagComponent, type: :component do
         </span>
       HERE
     end
+
+    context 'when passes linkify: false' do
+      it 'does not linkifies urls' do
+        expect(
+          render_inline(described_class.new(text_tag: 'https://example.com', linkify: false)).to_html
+        ).to eq <<~HERE
+          <span class="badge bg-cyan user-select-all me-1 mb-1">
+            https://example.com
+          </span>
+        HERE
+      end
+    end
   end
 
   context 'when alias does not look like url' do
