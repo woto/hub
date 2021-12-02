@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :topic do
-    title { Faker::Lorem.word }
+    title { Faker::Lorem.unique.word }
 
     factory :topic_with_mentions do
       transient do
