@@ -2,7 +2,7 @@
 
 class EntitiesController < ApplicationController
   layout 'backoffice'
-  before_action :set_entity, only: %i[show edit update destroy]
+  before_action :set_entity, only: %i[show edit update destroy popover]
   around_action :use_logidze_responsible, only: %i[create update]
 
   # GET /entities/:id
@@ -65,6 +65,13 @@ class EntitiesController < ApplicationController
       else
         redirect_back(fallback_location: entities_url, alert: @entity.errors.full_messages.join)
       end
+    end
+  end
+
+  def popover
+    # TODO: authorize(@entity)
+    respond_to do |format|
+      format.json
     end
   end
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# NOTE: obsolete? was used in popover
 module API
   class Entities < ::Grape::API
     prefix :api

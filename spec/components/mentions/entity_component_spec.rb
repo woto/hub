@@ -7,8 +7,8 @@ RSpec.describe Mentions::EntityComponent, type: :component do
     expect(
       render_inline(described_class.new(entity: %w[title 555])).to_html
     ).to eq <<~HERE.strip
-      <div data-controller="mentions-entity-popover" class="d-inline-block" data-mentions-entity-popover-id-value="555">
-        <a tabindex="0" class="btn btn-sm btn-info mb-1 me-1" data-mentions-entity-popover-target="entityButton" href="#">
+      <div data-controller="popover" class="d-inline-block" data-popover-url-value="/en/entities/555/popover">
+        <a tabindex="0" class="btn btn-sm btn-info mb-1 me-1" data-popover-target="hoverableElement" href="/en/entities/555">
           title
       </a>
       </div>

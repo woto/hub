@@ -1,0 +1,8 @@
+<div class="text-center">
+  <%= image_tag(@entity.image ?
+                  @entity.image.derivation_url(:thumbnail, 100, 100) :
+                  asset_pack_path('media/images/icon-404-100.png')) %>
+  <div class="mt-3">
+    <%= render(TextTagComponent.with_collection(@entity.lookups.map(&:to_label))) %>
+  </div>
+</div>

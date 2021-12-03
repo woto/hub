@@ -1,10 +1,10 @@
-<%= tag.div 'data-controller': 'mentions-entity-popover',
+<%= tag.div 'data-controller': 'popover',
             class: 'd-inline-block',
-            'data-mentions-entity-popover-id-value': @entity.last do %>
-  <%= link_to '#',
+            'data-popover-url-value': popover_entity_path(id: @entity.last) do %>
+  <%= link_to entity_path(id: @entity.last),
             tabindex: "0",
             class: "btn btn-sm btn-info mb-1 me-1",
-            'data-mentions-entity-popover-target': 'entityButton' do %>
+            'data-popover-target': 'hoverableElement' do %>
     <%= @entity.first %>
   <% end %>
 <% end %>

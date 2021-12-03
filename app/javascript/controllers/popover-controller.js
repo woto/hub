@@ -4,38 +4,29 @@ import { useHover } from 'stimulus-use'
 
 export default class extends Controller {
     #requests = []
-    static targets = ["entityButton"]
+    static targets = ["hoverableElement"]
     static values = {
-        id: String
+        url: String
     }
 
     connect() {
-        useHover(this, { element: this.entityButtonTarget });
+        useHover(this, { element: this.hoverableElementTarget });
     }
 
     mouseEnter(event) {
         let that = this;
 
         this.#requests.push($.ajax({
-            url: `/api/entities/${that.idValue}`,
+            url: that.urlValue,
             type: 'GET',
             error: function() {
-                // callback();
+                console.log('popover#mouseEnter')
             },
             success: function(res) {
-                let content = ' ';
-
-                if(res.image) {
-                    content += `<img src=${res.image}>`
-                }
-                if(res.aliases.length > 0) {
-                    content += res.aliases.map((alias) => `<div>${alias}</div>`).join(' ')
-                }
-
-                let popover = bootstrap.Popover.getOrCreateInstance(that.entityButtonTarget, {
+                let popover = bootstrap.Popover.getOrCreateInstance(that.hoverableElementTarget, {
                     placement: 'top',
                     title: res.title,
-                    content: content ,
+                    content: res.content,
                     html: true
                 })
                 popover.show()
@@ -47,7 +38,18 @@ export default class extends Controller {
         for(let request of this.#requests) {
             request.abort();
         }
-        bootstrap.Popover.getInstance(this.entityButtonTarget).hide();
+        try {
+            bootstrap.Popover.getInstance(this.hoverableElementTarget).hide();
+        } catch (e) {
+
+        }
     }
 
+    disconnect() {
+        try {
+            bootstrap.Popover.getInstance(this.hoverableElementTarget).dispose();
+        } catch (e) {
+
+        }
+    }
 }
