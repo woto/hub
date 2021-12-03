@@ -19,9 +19,6 @@ export default class extends Controller {
         this.#requests.push($.ajax({
             url: that.urlValue,
             type: 'GET',
-            error: function() {
-                console.log('popover#mouseEnter')
-            },
             success: function(res) {
                 let popover = bootstrap.Popover.getOrCreateInstance(that.hoverableElementTarget, {
                     placement: 'top',

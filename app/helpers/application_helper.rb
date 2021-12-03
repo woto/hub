@@ -59,7 +59,9 @@ module ApplicationHelper
     {
       'data-is-authenticated': user_signed_in?,
       'data-role': current_user&.role || 'guest',
-      'data-current-time': Time.current
+      'data-current-time': Time.current,
+      'data-controller': 'global',
+      'data-action': 'showToast@window->global#showToast'
     }
   end
 

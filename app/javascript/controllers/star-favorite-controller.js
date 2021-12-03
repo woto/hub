@@ -1,6 +1,7 @@
 import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
 import * as bootstrap from 'bootstrap';
+import { useShowToast } from 'mixins/show-toast'
 
 export default class extends ApplicationController {
     static values = {
@@ -10,11 +11,12 @@ export default class extends ApplicationController {
         favoritesItemsKind: String,
         extId: String
     }
-    static targets = [ "newItemName", "createButton", "itemsList", "dropdownButton", "dropdownMenu", "errorPlaceholder"]
+    static targets = [ "newItemName", "createButton", "itemsList", "dropdownButton", "dropdownMenu"]
 
     // // TODO check target, currentTarget, this, etc...
     // // add on error handler
     connect() {
+        useShowToast(this)
         let that = this;
 
         this.element.addEventListener('show.bs.dropdown', function () {
@@ -44,7 +46,6 @@ export default class extends ApplicationController {
             },
             success: (data, textStatus, jqXHR) => {
                 that.itemsListTarget.innerHTML = '';
-                that.errorPlaceholderTarget.innerHTML = '';
 
                 data.forEach((item) => {
                     let is_checked = '';
@@ -69,18 +70,6 @@ export default class extends ApplicationController {
                 });
                 bootstrap.Dropdown.getInstance(this.dropdownButtonTarget).update();
             },
-            error: (jqXHR, textStatus, errorThrown) => {
-                bootstrap.Dropdown.getInstance(this.dropdownButtonTarget).hide();
-                that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-
-                // that.itemsListTarget.innerHTML = '';
-                // that.errorPlaceholderTarget.innerHTML = '';
-                // for(let item in jqXHR.responseJSON) {
-                //     that.errorPlaceholderTarget.innerHTML += jqXHR.responseJSON[item]
-                // }
-                // bootstrap.Dropdown.getInstance(this.dropdownButtonTarget).update();
-                // // that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
-            }
         })
     }
 
@@ -130,19 +119,12 @@ export default class extends ApplicationController {
             },
             success: (data, textStatus, jqXHR) => {
                 that.newItemNameTarget.value = '';
-                that.errorPlaceholderTarget.innerHTML = '';
                 that.updateList();
                 that.updateStarData();
 
                 // TODO Check. Added careless
                 bootstrap.Dropdown.getInstance(this.dropdownButtonTarget).hide();
-                that.dispatch('showToast', {detail: {title: textStatus, body: data.body}});
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                that.errorPlaceholderTarget.innerHTML = '';
-                that.errorPlaceholderTarget.innerHTML += jqXHR?.responseJSON?.join(', ') || jqXHR.responseText;
-                // that.errorPlaceholderTarget.innerHTML += jqXHR.responseText;
-                // that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
+                this.showToast({title: textStatus, body: data.body})
             }
         })
     }

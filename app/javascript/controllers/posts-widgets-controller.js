@@ -24,9 +24,6 @@ export default class extends ApplicationController {
             // dataType: 'html',
             url: `/${document.documentElement.lang}/widgets/${that.widgetCheckboxTargets[checkedId].value}`,
             type: 'get',
-            error: (jqXHR, textStatus, errorThrown) => {
-                that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
-            },
             success: (data, textStatus, jqXHR) => {
                 // var attachment = new Trix.Attachment({ content: '<span class="mention">@trix</span>' })
                 // this.editorTarget.editor.insertAttachment(attachment)
@@ -76,10 +73,6 @@ export default class extends ApplicationController {
                     const modal = that.modalPlaceholderTarget.firstElementChild
                     this.#bootstrapWidgetsModal = new bootstrap.Modal(modal);
                     this.#bootstrapWidgetsModal.show();
-                },
-                error: (jqXHR, textStatus, errorThrown) => {
-                    that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-                    // that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
                 }
             })
         }

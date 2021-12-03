@@ -1,10 +1,12 @@
 import { DirectUpload } from "@rails/activestorage"
 import { ApplicationController } from 'stimulus-use'
+import { useShowToast } from 'mixins/show-toast'
 
 export default class extends ApplicationController {
     static targets = ["inputFile"]
 
     connect() {
+        useShowToast(this)
         const that = this;
 
         document.onpaste = function(event){
@@ -33,7 +35,7 @@ export default class extends ApplicationController {
     }
 
     _notify_success(that) {
-        that.dispatch('showToast', {detail: {title: '', body: 'Файлы успешно загружены'}});
+        this.showToast({title: '', body: 'Файлы успешно загружены'})
     }
 
     _uploadFile(file, url, name) {

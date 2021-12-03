@@ -1,12 +1,14 @@
 import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
 import * as bootstrap from 'bootstrap';
+import { useShowToast } from 'mixins/show-toast'
 
 export default class extends ApplicationController {
     static targets = ["itemsList", "dropdown"]
     static values = { othersPath: String, dropdownListPath: String, noFavorites: String }
 
     connect() {
+        useShowToast(this)
         let that = this;
 
         this.element.addEventListener('show.bs.dropdown', function () {
@@ -36,19 +38,8 @@ export default class extends ApplicationController {
                     })
                 } else {
                     bootstrap.Dropdown.getInstance(that.dropdownTarget).hide();
-                    that.dispatch('showToast', {detail: {title: textStatus, body: this.noFavoritesValue }});
+                    this.showToast({title: '', body: this.noFavoritesValue })
                 }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                bootstrap.Dropdown.getInstance(that.dropdownTarget).hide();
-                that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-
-                // that.itemsListTarget.innerHTML = '';
-                // that.errorPlaceholderTarget.innerHTML = '';
-
-                //for(let item in jqXHR.responseJSON) {
-                //    that.errorPlaceholderTarget.innerHTML += jqXHR.responseJSON[item]
-                //}
             }
         })
     }

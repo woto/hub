@@ -54,10 +54,6 @@ export default class extends ApplicationController {
                 $.ajax({
                     url: '/api/posts/leaf_categories',
                     type: 'GET',
-                    error: (jqXHR, textStatus, errorThrown) => {
-                        that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-                        callback();
-                    },
                     data: {
                         q: query,
                         realm_id: that.realmIdValue

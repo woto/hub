@@ -33,9 +33,6 @@ export default class extends ApplicationController {
                 data: {
                     q: this.urlTarget.value
                 },
-                error: (jqXHR, textStatus, errorThrown) => {
-                    that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-                },
                 success: function(res) {
                     that.similarUrlsTarget.innerHTML = res.map( (item) => {
                         return `
@@ -55,19 +52,6 @@ export default class extends ApplicationController {
                 type: 'GET',
                 data: {
                     url: this.urlTarget.value
-                },
-                error: (jqXHR, textStatus, errorThrown) => {
-                    console.log(jqXHR)
-                    console.log(textStatus)
-                    console.log(errorThrown)
-                    if(jqXHR.responseJSON) {
-                        that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-                    }
-                    that.spinnerTarget.classList.add('d-none');
-                    that.spinnerTarget.classList.remove('d-block');
-                    // that.imagePreviewTarget.classList.add('d-none');
-                    // that.imagePreviewTarget.classList.remove('d-block');
-                    // that.screenshotTarget.value = '';
                 },
                 success: function(res) {
                     that.imagePreviewTarget.setAttribute('src', res.image)

@@ -1,8 +1,13 @@
 import { ApplicationController } from 'stimulus-use'
+import { useShowToast } from 'mixins/show-toast'
 
 export default class extends ApplicationController {
     static targets = [ "counterPlaceholder" ]
     static values = { extId: String, favoritesItemsKind: String, name: String }
+
+    connect() {
+        useShowToast(this)
+    }
 
     markCheckbox(element) {
         this.counterPlaceholderTarget.innerHTML = '<div class="ms-auto spinner-border spinner-border-sm" role="status"></div>'
@@ -17,14 +22,10 @@ export default class extends ApplicationController {
                 is_checked: element.target.checked
             },
             success: (data, textStatus, jqXHR) => {
-                that.dispatch('showToast', {detail: {title: textStatus, body: data.body}});
+                this.showToast({title: textStatus, body: data.body})
                 that.dispatch('updateStarData')
                 that.dispatch('updateList')
             },
-            error: (jqXHR, textStatus, errorThrown) => {
-                // debugger
-                that.dispatch('showToast', {detail: {title: textStatus, body: errorThrown}});
-            }
         })
     }
 }

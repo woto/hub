@@ -30,10 +30,6 @@ export default class extends ApplicationController {
                         q: query,
                         realm_id: that.realmIdValue
                     },
-                    error: (jqXHR, textStatus, errorThrown) => {
-                        that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-                        callback();
-                    },
                     success: function(res) {
                         callback(res);
                     }

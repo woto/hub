@@ -35,10 +35,35 @@ import 'jquery';
 import '../stylesheets/application.scss';
 
 import * as bootstrap from 'bootstrap'
+import { useShowToast } from 'mixins/show-toast'
+
+$(document).ajaxError(function(event, xhr, ajaxOptions, thrownError) {
+    if(xhr.statusText === 'abort')
+    {
+        return
+    }
+
+    console.log(event);
+    console.log(xhr);
+    console.log(ajaxOptions);
+    console.log(thrownError);
+
+    // NOTE: Legacy. I think the error should be always looks like { error: 'text' }
+    let body = xhr.responseJSON?.error ||
+        xhr?.responseJSON?.join(', ') ||
+        xhr.responseText
+        || thrownError;
+
+    let object = {};
+    useShowToast(object)
+    object.showToast({
+            title: 'error',
+            body: body
+        }
+    )
+});
 
 document.addEventListener("turbo:load", function() {
-    /**
-     */
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         let options = {
@@ -49,8 +74,6 @@ document.addEventListener("turbo:load", function() {
         return new bootstrap.Tooltip(tooltipTriggerEl, options);
     });
 
-    /**
-     */
     let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
     popoverTriggerList.map(function (popoverTriggerEl) {
         let options = {
@@ -81,47 +104,3 @@ document.addEventListener("turbo:load", function() {
         });
     });
 });
-
-// document.addEventListener('turbo:click', function() {
-//     console.log('turbo:click fires when you click a Turbo-enabled link. The clicked element is the event target. Access the requested location with event.detail.url. Cancel this event to let the click fall through to the browser as normal navigation.');
-// })
-//
-// document.addEventListener('turbo:before-visit', function() {
-//     console.log('turbo:before-visit fires before visiting a location, except when navigating by history. Access the requested location with event.detail.url. Cancel this event to prevent navigation.');
-// })
-//
-// document.addEventListener('turbo:visit', function() {
-//     console.log('turbo:visit fires immediately after a visit starts.');
-// })
-//
-// document.addEventListener('turbo:submit-start', function() {
-//     console.log('turbo:submit-start fires during a form submission. Access the FormSubmission object with event.detail.formSubmission.');
-// })
-//
-// document.addEventListener('turbo:before-fetch-request', function() {
-//     console.log('turbo:before-fetch-request fires before Turbo issues a network request to fetch the page. Access the fetch options object with event.detail.');
-// })
-//
-// document.addEventListener('turbo:before-fetch-response', function() {
-//     console.log('turbo:before-fetch-response fires after the network request completes. Access the fetch options object with event.detail.');
-// })
-//
-// document.addEventListener('turbo:submit-end', function() {
-//     console.log('turbo:submit-end fires after the form submission-initiated network request completes. Access the FormSubmission object with event.detail.formSubmission along with FormSubmissionResult properties included within event.detail.');
-// })
-//
-// document.addEventListener('turbo:before-cache', function() {
-//     console.log('turbo:before-cache fires before Turbo saves the current page to cache.');
-// })
-//
-// document.addEventListener('turbo:before-render', function() {
-//     console.log('turbo:before-render fires before rendering the page. Access the new <body> element with event.detail.newBody.');
-// })
-//
-// document.addEventListener('turbo:render', function() {
-//     console.log('turbo:render fires after Turbo renders the page. This event fires twice during an application visit to a cached location: once after rendering the cached version, and again after rendering the fresh version.');
-// })
-//
-// document.addEventListener('turbo:load', function() {
-//     console.log('turbo:load fires once after the initial page load, and again after every Turbo visit. Access visit timing metrics with the event.detail.timing object.');
-// })

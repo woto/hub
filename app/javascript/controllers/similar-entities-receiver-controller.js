@@ -21,9 +21,6 @@ export default class extends Controller {
                 data: {
                     q: requestString
                 },
-                error: (jqXHR, textStatus, errorThrown) => {
-                    that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
-                },
                 success: function (res) {
                     that.element.innerHTML = res.content
                 }

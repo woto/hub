@@ -10,19 +10,6 @@
 <% content_for(:body) do %>
 
   <%= tag.body class: "antialiased",
-               'data-controller': "global",
-               'data-action': "star-favorite-item:showToast->global#showToast
-                               star-favorite:showToast->global#showToast
-                               clipboard:showToast->global#showToast
-                               offer-modal-card:showToast->global#showToast
-                               navbar-favorite:showToast->global#showToast
-                               direct-upload:showToast->global#showToast
-                               posts-widgets:showToast->global#showToast,
-                               posts-tags:showToast->global#showToast
-                               mentions-url:showToast->global#showToast
-                               posts-form-leaves:showToast->global#showToast
-                               post-categories-form-empties:showToast->global#showToast
-                               entities-title:showToast->global#showToast",
                **data_attributes_for_body do %>
 
   <%= content_for(:after_body_open) %>

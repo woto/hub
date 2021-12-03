@@ -18,9 +18,6 @@ export default class extends ApplicationController {
                 const modalEl = that.modalPlaceholderTarget.firstElementChild
                 that.#bootstrapModal = new bootstrap.Modal(modalEl);
                 that.#bootstrapModal.show();
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                that.dispatch('showToast', {detail: {title: textStatus, body: jqXHR.responseJSON.error}});
             }
         })
     }
