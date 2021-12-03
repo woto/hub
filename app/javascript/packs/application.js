@@ -69,7 +69,7 @@ document.addEventListener("turbo:load", function() {
         let options = {
             delay: {show: 50, hide: 50},
             html: true,
-            placement: 'auto'
+            // placement: 'auto'
         };
         return new bootstrap.Tooltip(tooltipTriggerEl, options);
     });
@@ -79,7 +79,7 @@ document.addEventListener("turbo:load", function() {
         let options = {
             delay: {show: 50, hide: 50},
             html: true,
-            placement: 'auto'
+            // placement: 'auto'
         };
         return new bootstrap.Popover(popoverTriggerEl, options);
     });

@@ -1,6 +1,6 @@
 <%= tag.span 'data-bs-toggle': 'tooltip',
              'data-bs-container': 'body',
              'data-bs-placement': 'top',
-             'title': t(".hints.#{@kind}") do %>
-  <i class="<%= kind_to_icon %>"></i>
+             'title': t(".hints.#{@sentiment}") do %>
+  <i class="<%= sentiment_to_icon %>"></i>
 <% end %>

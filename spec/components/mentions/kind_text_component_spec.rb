@@ -3,14 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Mentions::KindTextComponent, type: :component do
-  it 'renders something useful' do
+  it 'renders kind text component' do
     expect(
       render_inline(described_class.new(kind_text: 'image')).to_html
-    ).to eq <<~HERE
-      <small class="text-nowrap bg-white text-secondary d-inline-block border-1 border p-1">
-        <span data-bs-toggle="tooltip" data-bs-offset="10,20" data-bs-container="body" data-bs-placement="left" title='&lt;span class="translation_missing" title="translation missing: en.mentions.kind_icon_component.hints.image"&gt;Image&lt;/span&gt;'>
-        <i class="fas fa-fw fa-image"></i>
-        <span class="translation_missing" title="translation missing: en.mentions.kind_icon_component.titles.image">Image</span>
+    ).to eq <<~HERE.strip
+      <small class="text-nowrap text-secondary d-inline-block rounded-1 bg-white border border-muted p-1 me-1 mb-1">
+        <span data-bs-toggle="tooltip" data-bs-container="body" data-bs-placement="top" title="Фотография или скриншот. Это так же может быть текст на картинке.">
+        <i class="fa-fw fa-lg fas fa-image"></i>
       </span>
       </small>
     HERE

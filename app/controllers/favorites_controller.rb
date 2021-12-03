@@ -8,6 +8,7 @@ class FavoritesController < ApplicationController
   # GET /favorites/navbar_favorite_list
   def navbar_favorite_list
     @navbar_favorite_items = policy_scope(Favorite).order(updated_at: :desc).limit(10)
+
     respond_to do |format|
       format.json { @navbar_favorite_items }
     end
