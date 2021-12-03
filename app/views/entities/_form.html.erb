@@ -3,21 +3,19 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= tag.div class: 'row',
-              'data-controller': "entities-title" do %>
+  <%= tag.div class: 'row' do %>
     <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
       <div class="card mb-3">
         <div class="card-body">
           <div class="form-inputs">
             <%= f.input :title,
                         input_html: {
-                          'data-action': 'input->entities-title#input',
-                          'data-entities-title-target': 'inputTitle'
-                        } %>
+                          'data-controller': "similar-entities-emitter",
+                          'data-action': 'input->similar-entities-emitter#inputChanged' } %>
 
             <%= render 'entities/lookups', f: f %>
 
-            <%= render 'image', f: f %>
+            <%= render 'entities/image', f: f %>
 
           </div>
         </div>
@@ -37,7 +35,8 @@
     </div>
 
     <div class="col">
-      <div data-entities-title-target="similarPlaceholder"></div>
+      <%= tag.div 'data-controller': "similar-entities-receiver",
+                  'data-action': 'similar-entities-emitter:invokeReceiver@window->similar-entities-receiver#sendRequest' %>
     </div>
 
   <% end %>

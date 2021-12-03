@@ -8,7 +8,10 @@
       <%= f.input :title,
                   wrapper: false,
                   label: false,
-                  error: false %>
+                  error: false,
+                  input_html: {
+                    'data-controller': "similar-entities-emitter",
+                    'data-action': 'input->similar-entities-emitter#inputChanged' } %>
     </div>
     <%= f.full_error :title, class: 'invalid-feedback d-block' %>
   </div>
