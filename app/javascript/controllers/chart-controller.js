@@ -1,9 +1,9 @@
 import { Controller } from "stimulus"
-import ApexCharts from 'apexcharts'
+// import ApexCharts from 'apexcharts'
 
 export default class extends Controller {
     connect() {
-        alert('TODO: It seems it is not used');
+        alert('chart-controller.js')
 
         let dates = JSON.parse(this.data.get('dates'));
         let values = JSON.parse(this.data.get('values'));
