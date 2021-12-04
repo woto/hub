@@ -5,46 +5,57 @@ module Interactors
     class Tags
       include ApplicationInteractor
 
+      contract do
+        params do
+          config.validate_keys = true
+          required(:q).maybe(:string)
+          required(:limit).maybe(:integer)
+          required(:sort).maybe(:string)
+          required(:order).maybe(:string)
+        end
+      end
+
       def call
-        body = {
-          size: 0,
-          aggregations: {
-            grouped_documents: {
-              filter: {
-                bool: {
-                  must: {
-                    multi_match: {
-                      query: context.q,
-                      type: 'bool_prefix',
-                      fields: %w[tags.autocomplete tags.autocomplete._2gram tags.autocomplete._3gram]
-                    }
-                  }
-                  # filter: [
-                  #   {
-                  #     term: {
-                  #       realm_id: params[:realm_id]
-                  #     }
-                  #   }
-                  # ]
-                }
-              },
-              aggregations: {
-                grouped_tags: {
-                  terms: {
-                    field: 'tags.keyword',
-                    size: 100
-                  }
-                }
-              }
-            }
-          }
-        }
+        # fields: %w[title.autocomplete title.autocomplete._2gram title.autocomplete._3gram]
+        body = Jbuilder.new do |json|
+          json.query do
+            if context.q.present?
+              json.bool do
+                json.must do
+                  json.multi_match do
+                    json.query context.q
+                    json.type 'bool_prefix'
+                    json.fields do
+                      json.array! %w[
+                        title.autocomplete
+                        title.autocomplete._2gram
+                        title.autocomplete._3gram
+                      ]
+                    end
+                  end
+                end
+              end
+            end
+          end
+          json.size context.limit
+          json.from 0
 
-        tags = Mention.__elasticsearch__.search(body)
+          json.sort do
+            json.array! ['fuck'] do
+              json.set! context.sort do
+                json.order context.order
+              end
+            end
+          end
+          # json._source %w[id title]
+        end
 
-        context.object = tags.aggregations.grouped_documents.grouped_tags.buckets.map do |tag|
+        query = body.attributes!.deep_symbolize_keys
+        topics = Topic.__elasticsearch__.search(query)
+
+        context.object = topics.map do |topic|
           {
-            title: tag['key']
+            title: topic['_source']['title'],
           }
         end
       end

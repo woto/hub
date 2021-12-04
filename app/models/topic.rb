@@ -13,6 +13,9 @@
 #  index_topics_on_title  (title) UNIQUE
 #
 class Topic < ApplicationRecord
+  include Elasticable
+  index_name "#{Rails.env}.topics"
+
   has_many :mentions_topics, dependent: :destroy
   has_many :mentions, through: :mentions_topics, counter_cache: :mentions_count
 

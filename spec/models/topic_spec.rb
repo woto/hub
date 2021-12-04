@@ -17,6 +17,8 @@
 require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
+  it_behaves_like 'elasticable'
+
   describe 'associations' do
     it { is_expected.to have_many(:mentions_topics).dependent(:destroy) }
     it { is_expected.to have_many(:mentions).through(:mentions_topics).counter_cache(:mentions_count) }

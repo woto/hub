@@ -61,16 +61,15 @@ describe API::Mentions, type: :request, responsible: :admin do
 
   describe 'GET /api/mentions/tags' do
     let!(:mention) do
-      create(:mention, tags: %w[first second])
-      create(:mention, tags: %w['', third])
+      create(:mention, topics: [create(:topic, title: 'first'), create(:topic, title: 'second')])
+      create(:mention, topics: [create(:topic, title: 'third')])
     end
 
     it 'autocompletes mentions by tags' do
       get '/api/mentions/tags', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'secon' }
 
       expect(response).to have_http_status(:ok)
-      # TODO: it should return only 'second' tag
-      expect(JSON.parse(response.body)).to match([{ 'title' => 'first' }, { 'title' => 'second' }])
+      expect(JSON.parse(response.body)).to match([{ 'title' => 'second' }])
     end
   end
 end
