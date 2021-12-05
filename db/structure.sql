@@ -611,13 +611,13 @@ ALTER SEQUENCE public.checks_id_seq OWNED BY public.checks.id;
 CREATE TABLE public.entities (
     id bigint NOT NULL,
     title character varying,
-    aliases jsonb DEFAULT '[]'::jsonb,
     mentions_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
     image_data jsonb,
-    user_id bigint NOT NULL
+    user_id bigint NOT NULL,
+    lookups_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -902,6 +902,38 @@ ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
 
 
 --
+-- Name: lookups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lookups (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    entity_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: lookups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.lookups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lookups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.lookups_id_seq OWNED BY public.lookups.id;
+
+
+--
 -- Name: mentions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -909,7 +941,6 @@ CREATE TABLE public.mentions (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
     url text,
-    tags jsonb DEFAULT '[]'::jsonb,
     published_at timestamp without time zone,
     sentiment integer NOT NULL,
     entities_count integer DEFAULT 0 NOT NULL,
@@ -917,7 +948,8 @@ CREATE TABLE public.mentions (
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
     image_data jsonb,
-    kinds jsonb DEFAULT '[]'::jsonb NOT NULL
+    kinds jsonb DEFAULT '[]'::jsonb NOT NULL,
+    topics_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -938,6 +970,38 @@ CREATE SEQUENCE public.mentions_id_seq
 --
 
 ALTER SEQUENCE public.mentions_id_seq OWNED BY public.mentions.id;
+
+
+--
+-- Name: mentions_topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mentions_topics (
+    id bigint NOT NULL,
+    mention_id bigint NOT NULL,
+    topic_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: mentions_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mentions_topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mentions_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mentions_topics_id_seq OWNED BY public.mentions_topics.id;
 
 
 --
@@ -1136,6 +1200,38 @@ CREATE SEQUENCE public.subjects_id_seq
 --
 
 ALTER SEQUENCE public.subjects_id_seq OWNED BY public.subjects.id;
+
+
+--
+-- Name: topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.topics (
+    id bigint NOT NULL,
+    title character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    mentions_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
 
 
 --
@@ -1515,10 +1611,24 @@ ALTER TABLE ONLY public.identities ALTER COLUMN id SET DEFAULT nextval('public.i
 
 
 --
+-- Name: lookups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups ALTER COLUMN id SET DEFAULT nextval('public.lookups_id_seq'::regclass);
+
+
+--
 -- Name: mentions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentions ALTER COLUMN id SET DEFAULT nextval('public.mentions_id_seq'::regclass);
+
+
+--
+-- Name: mentions_topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions_topics ALTER COLUMN id SET DEFAULT nextval('public.mentions_topics_id_seq'::regclass);
 
 
 --
@@ -1554,6 +1664,13 @@ ALTER TABLE ONLY public.realms ALTER COLUMN id SET DEFAULT nextval('public.realm
 --
 
 ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.subjects_id_seq'::regclass);
+
+
+--
+-- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topics_id_seq'::regclass);
 
 
 --
@@ -1742,11 +1859,27 @@ ALTER TABLE ONLY public.identities
 
 
 --
+-- Name: lookups lookups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups
+    ADD CONSTRAINT lookups_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: mentions mentions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentions
     ADD CONSTRAINT mentions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mentions_topics mentions_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions_topics
+    ADD CONSTRAINT mentions_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -1795,6 +1928,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT subjects_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics
+    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -2001,6 +2142,13 @@ CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_
 
 
 --
+-- Name: index_lookups_on_entity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lookups_on_entity_id ON public.lookups USING btree (entity_id);
+
+
+--
 -- Name: index_mentions_on_image_data; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2012,6 +2160,20 @@ CREATE INDEX index_mentions_on_image_data ON public.mentions USING gin (image_da
 --
 
 CREATE INDEX index_mentions_on_user_id ON public.mentions USING btree (user_id);
+
+
+--
+-- Name: index_mentions_topics_on_mention_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentions_topics_on_mention_id ON public.mentions_topics USING btree (mention_id);
+
+
+--
+-- Name: index_mentions_topics_on_topic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentions_topics_on_topic_id ON public.mentions_topics USING btree (topic_id);
 
 
 --
@@ -2089,6 +2251,13 @@ CREATE UNIQUE INDEX index_realms_on_title ON public.realms USING btree (title);
 --
 
 CREATE UNIQUE INDEX index_subjects_on_identifier ON public.subjects USING btree (identifier);
+
+
+--
+-- Name: index_topics_on_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_topics_on_title ON public.topics USING btree (title);
 
 
 --
@@ -2315,6 +2484,14 @@ ALTER TABLE ONLY public.posts
 
 
 --
+-- Name: lookups fk_rails_5d72fd5a14; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups
+    ADD CONSTRAINT fk_rails_5d72fd5a14 FOREIGN KEY (entity_id) REFERENCES public.entities(id);
+
+
+--
 -- Name: posts fk_rails_62c1a93a80; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2339,6 +2516,14 @@ ALTER TABLE ONLY public.transactions
 
 
 --
+-- Name: mentions_topics fk_rails_6984723261; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions_topics
+    ADD CONSTRAINT fk_rails_6984723261 FOREIGN KEY (mention_id) REFERENCES public.mentions(id);
+
+
+--
 -- Name: entities fk_rails_71e168c975; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2360,6 +2545,14 @@ ALTER TABLE ONLY public.feed_categories
 
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_743c91858d FOREIGN KEY (post_category_id) REFERENCES public.post_categories(id);
+
+
+--
+-- Name: mentions_topics fk_rails_7ca9edb5c4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions_topics
+    ADD CONSTRAINT fk_rails_7ca9edb5c4 FOREIGN KEY (topic_id) REFERENCES public.topics(id);
 
 
 --
@@ -2536,6 +2729,16 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211123171513'),
 ('20211123185427'),
 ('20211123190815'),
-('20211123194815');
+('20211123194815'),
+('20211126083813'),
+('20211126105427'),
+('20211126183417'),
+('20211127201623'),
+('20211128141402'),
+('20211128164812'),
+('20211201000905'),
+('20211201000937'),
+('20211201001238'),
+('20211201032640');
 
 

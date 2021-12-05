@@ -1,3 +1,11 @@
+.hoverable-entity {
+  cursor: pointer;
+
+  > :hover {
+    @extend .bg-light;
+  }
+}
+
 .left_advertiser, .left_feed, .left_feed_category, .left_workspace {
   @extend .flex-fill;
   @extend .list-group-item;

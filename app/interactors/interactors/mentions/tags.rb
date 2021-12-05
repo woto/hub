@@ -53,9 +53,11 @@ module Interactors
         query = body.attributes!.deep_symbolize_keys
         topics = Topic.__elasticsearch__.search(query)
 
+        topics = topics.sort_by { |topic| topic['_source']['title'] }
+
         context.object = topics.map do |topic|
           {
-            title: topic['_source']['title'],
+            title: topic['_source']['title']
           }
         end
       end

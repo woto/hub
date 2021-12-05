@@ -1,0 +1,49 @@
+<%= tag.div id: dom_id(f.object),
+            class: "row g-2 mb-3#{' d-none' if f.object.marked_for_destruction?}",
+            'data-controller': 'nested-form-item',
+            'data-nested-form-item-new-value': f.object.new_record? do %>
+
+  <div class="col">
+
+    <div class="btn-group w-100" data-controller="mention-topic">
+
+      <%= f.input :title,
+                  wrapper: false,
+                  label: false,
+                  error: false,
+                  input_html: {
+                    class: 'dropdown-toggle',
+                    'data-bs-toggle': 'dropdown',
+                    'data-bs-display': 'static',
+                    'data-action': 'input->mention-topic#showDropdown click->mention-topic#showDropdown focus->mention-topic#showDropdown',
+                    'data-mention-topic-target': 'input'
+                  } %>
+
+      <%= tag.ul class: 'dropdown-menu w-100 d-none',
+                 'data-mention-topic-target': 'dropdown' do %> <% end %>
+
+    </div>
+    <%= f.full_error :title, class: 'invalid-feedback d-block' %>
+  </div>
+
+  <div class="col-auto">
+    <%= tag.button class: 'btn btn-ghost-danger btn-icon',
+                   type: 'button',
+                   'data-action': 'nested-form-item#remove' do %>
+      <i class="fas fa-times icon"></i>
+    <% end %>
+  </div>
+
+  <%# TODO: write article %>
+  <%= f.input :id, as: :hidden,
+              wrapper: false,
+              label: false %>
+
+  <%= f.input :_destroy,
+              wrapper: false,
+              label: false,
+              as: :hidden,
+              input_html: {
+                'data-nested-form-item-target': 'destroy'
+              } %>
+<% end %>

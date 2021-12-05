@@ -28,10 +28,10 @@ ru:
         value: Адрес мессенджера
   activerecord:
     attributes:
-      lookup:
-        title: Название синонима
       entity:
         title: Название объекта
+      lookup:
+        title: Название синонима
       widgets/simple:
         body: Описание
         pictures: Изображения
@@ -515,8 +515,30 @@ ru:
       mention_was_successfully_destroyed: Упоминание было успешно удалено
     editorial:
       editorial: Редактура
+    entities:
+      add_entity: Добавить объект
+      assign:
+        entities: Поиск объекта упоминания
+        follow_to_creation: Создать новый
+      edit:
+        editing_entity: Редактирование объекта упоминания
+      new:
+        creating_new_entity: Создание нового объекта упоминания
     form:
       editorial: Редактура
+    kind_icon_component:
+      hints:
+        audio: Материал сопровождается звуком.
+        image: Фотография или скриншот. Это так же может быть текст на картинке.
+        text: Текст, который можно скопировать и вставить в текстовый редактор.
+        video: Видео или анимированная картинка.
+    sentiment_icon_component:
+      hints:
+        negative: Отрицательное
+        positive: Положительное
+        unknown: В случае если по одному объекту положительное, а по другому отрицательное.
+    topics:
+      add_topic: Добавить тему
     update:
       mention_was_successfully_updated: Упоминание было успешно изменено
   navbar_favorite_component:
@@ -680,21 +702,22 @@ ru:
     error_notification:
       default_message: Невозможно сохранить. Пожалуйста заполните поля
     hints:
-      entity:
-        lookups: Например адрес сайта, адрес профиля в соцсетях, расшифровка аббревиатуры, название на русском языке, кличка, телефон, e-mail.
       advertiser_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       columns_form:
         displayed_columns: Управляйте отобажаемыми столбцами в таблице добавляя или удаляя названия столбцов. Кстати их порядок влияет на то в каком порядке они будут отображены в таблице.
       defaults:
         example: example
+      entity:
+        image: Щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
+        lookups: Например адрес сайта, адрес профиля в соцсетях, расшифровка аббревиатуры, название на русском языке, кличка, телефон, e-mail.
       feed_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       mention:
-        entities: Управление объектами упоминаний производится <a href="/entities" target="_blank">на отдельной странице</a>
+        image: После ввода URL мы попытаемся сделать скриншот. Если не удастся, то щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
         kind: Текст на картинке является картинкой. Если картинка двигается, значит это видео.
+        kinds: Выберите один или несколько вариантов.
         published_at: Указывайте, если в источнике указана дата публикации контента.
-        sentiment: В случае двояких настроений выбирайте знак вопроса.
       post:
         currency: Выберите национальную валюту вашей страны
         description: Подробнее про метатег description читайте на <a href="https://yandex.ru/support/webmaster/indexing-options/description.html">Яндекс</a> или <a href="https://developers.google.com/search/docs/advanced/appearance/good-titles-snippets?hl=ru#meta-descriptions">Google</a>
@@ -723,6 +746,7 @@ ru:
       entity:
         aliases: Синонимы
         id: ID
+        lookups: Синонимы
         mentions_count: Упоминаний
         picture: Изображение
         title: Название
@@ -735,14 +759,15 @@ ru:
         entities: Объекты упоминания
         entities_count: Entities count
         id: ID
-        kind: Тип упоминания
-        kinds: Kinds
-        published_at: Опубликовано
+        kind: Kind
+        kinds: Тип упоминания
+        published_at: Дата публикации
         publisher_ext_id: Автор
         screenshot: Скриншот
         sentiment: Настроение
         status: Статус
         tags: Теги
+        topics: Темы
         url: URL
         user: Пользователь
       post:

@@ -3,12 +3,11 @@
 require 'rails_helper'
 
 describe MentionsController, type: :system, responsible: :admin do
+  let(:mention) { create(:mention, user: Current.responsible, image_data: image_data) }
+  let(:entity) { mention.entities.first }
   let(:image_data) do
     ImageUploader.upload(File.open('spec/fixtures/files/jessa_rhodes.jpg', 'rb'), :store).as_json
   end
-
-  let(:mention) { create(:mention, user: Current.responsible, image_data: image_data) }
-  let(:entity) { mention.entities.first }
 
   before do
     login_as(Current.responsible, scope: :user)

@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  # TODO: write article
+  def suppress_default_error_proc
+    default_field_error_proc = ::ActionView::Base.field_error_proc
+    begin
+      ::ActionView::Base.field_error_proc = SimpleForm.field_error_proc
+      yield
+    ensure
+      ::ActionView::Base.field_error_proc = default_field_error_proc
+    end
+  end
+
   def articles_by_month_link(month)
     articles_by_month_path(
       month: month,
@@ -186,17 +197,6 @@ module ApplicationHelper
             end
     tag.span class: "badge bg-#{color}" do
       t(status, scope: 'posts.show.badge.statuses')
-    end
-  end
-
-  def tags(tags)
-    capture do
-      tags.map do |item|
-        next if item.blank?
-
-        concat tag.span item, class: 'badge bg-blue-lt'
-        concat ' '
-      end
     end
   end
 

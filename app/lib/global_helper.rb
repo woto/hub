@@ -51,6 +51,7 @@ class GlobalHelper
       Elastic::CreateIndex.call(index_name: 'realm')
       Elastic::CreateIndex.call(index_name: 'mention')
       Elastic::CreateIndex.call(index_name: 'entity')
+      Elastic::CreateIndex.call(index_name: 'topic')
 
       elastic_client.indices.refresh index: Elastic::IndexName.wildcard
     end

@@ -28,6 +28,10 @@ en:
         value: Messenger address
   activerecord:
     attributes:
+      entity:
+        title: Название объекта
+      lookup:
+        title: Название синонима
       widgets/simple:
         body: Description
         pictures: Pictures
@@ -275,6 +279,8 @@ en:
       editorial: Editorial
     form:
       submit_and_new: Submit and new
+    lookups:
+      add_lookup: Add lookup
     update:
       entity_was_successfully_updated: Entity was successfully updated
   errors:
@@ -499,8 +505,30 @@ en:
       mention_was_successfully_destroyed: Mention was successfully destroyed
     editorial:
       editorial: Editorial
+    entities:
+      add_entity: Add entity
+      assign:
+        entities: Entities
+        follow_to_creation: Follow to creation
+      edit:
+        editing_entity: Editing entity
+      new:
+        creating_new_entity: Creating new entity
     form:
       editorial: Editorial
+    kind_icon_component:
+      hints:
+        audio: Материал сопровождается звуком.
+        image: Фотография или скриншот. Это так же может быть текст на картинке.
+        text: Текст, который можно скопировать и вставить в текстовый редактор.
+        video: Видео или анимированная картинка.
+    sentiment_icon_component:
+      hints:
+        negative: Отрицательное
+        positive: Положительное
+        unknown: В случае если по одному объекту положительное, а по другому отрицательное.
+    topics:
+      add_topic: Add topic
     update:
       mention_was_successfully_updated: Mention was successfully updated
   navbar_favorite_component:
@@ -670,13 +698,16 @@ en:
         displayed_columns: Manage the displayed columns in the table by adding or removing column names. By the way, their order affects the order in which they will be displayed in the table.
       defaults:
         example: example
+      entity:
+        image: Щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
+        lookups: Например адрес сайта, адрес профиля в соцсетях, расшифровка аббревиатуры, название на русском языке, кличка, телефон, e-mail.
       feed_filter_form:
         displayed_columns: The order in which columns are added affects the display
       mention:
-        entities: Mentioned entities are managed <a href="/entities" target="_blank">on a separate page</a>
+        image: После ввода URL мы попытаемся сделать скриншот. Если не удастся, то щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
         kind: Текст на картинке является картинкой. Если картинка двигается, значит это видео.
+        kinds: Выберите один или несколько вариантов.
         published_at: Указывайте, если в источнике указана дата публикации контента.
-        sentiment: В случае двояких настроений выбирайте знак вопроса.
       post:
         currency: Select the national currency of your country
         description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>
@@ -705,6 +736,7 @@ en:
       entity:
         aliases: Aliases
         id: Id
+        lookups: Lookups
         mentions_count: Mentions
         picture: Picture
         title: Title
@@ -725,6 +757,7 @@ en:
         sentiment: Sentiment
         status: Status
         tags: Tags
+        topics: Topics
         url: Url
         user: User
       post:

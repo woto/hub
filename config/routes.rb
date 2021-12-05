@@ -95,7 +95,22 @@ Rails.application.routes.draw do
     resources :accounts
     resources :advertisers
     resources :checks
-    resources :entities
+    resources :entities do
+      member do
+        get :popover
+      end
+    end
+    namespace :mentions do
+      resources :entities, only: %i[edit new create update] do
+        collection do
+          get :assign
+          get :search
+        end
+        member do
+          get :card
+        end
+      end
+    end
     resources :mentions
     resources :post_categories do
     end

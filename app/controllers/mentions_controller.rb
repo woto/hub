@@ -11,7 +11,7 @@ class MentionsController < ApplicationController
 
   # GET /mentions/new
   def new
-    @mention = current_user.mentions.new
+    @mention = current_user.mentions.new(topics: [Topic.new])
     authorize(@mention)
   end
 
@@ -22,39 +22,42 @@ class MentionsController < ApplicationController
 
   # POST /mentions
   def create
-    GlobalHelper.retryable do
-      @mention = policy_scope(Mention).new(permitted_attributes(Mention))
-      authorize(@mention)
-      if @mention.save
-        redirect_to @mention, notice: t('.mention_was_successfully_created')
-      else
-        render :new, status: :unprocessable_entity
-      end
+    # TODO: https://github.com/rails/rails/issues/43775
+    # GlobalHelper.retryable do
+    @mention = policy_scope(Mention).new(permitted_attributes(Mention))
+    authorize(@mention)
+    if @mention.save
+      redirect_to @mention, notice: t('.mention_was_successfully_created')
+    else
+      render :new, status: :unprocessable_entity
     end
+    # end
   end
 
   # PATCH/PUT /mentions/:id
   def update
-    GlobalHelper.retryable do
-      authorize(@mention)
-      if @mention.update(permitted_attributes(Mention))
-        redirect_to @mention, notice: t('.mention_was_successfully_updated')
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    # TODO: https://github.com/rails/rails/issues/43775
+    # GlobalHelper.retryable do
+    authorize(@mention)
+    if @mention.update(permitted_attributes(Mention))
+      redirect_to @mention, notice: t('.mention_was_successfully_updated')
+    else
+      render :edit, status: :unprocessable_entity
     end
+    # end
   end
 
   # DELETE /mentions/:id
   def destroy
-    GlobalHelper.retryable do
-      authorize(@mention)
-      if @mention.destroy
-        redirect_back fallback_location: mentions_url, notice: t('.mention_was_successfully_destroyed')
-      else
-        redirect_back(fallback_location: mentions_url, alert: @mention.errors.full_messages.join)
-      end
+    # TODO: https://github.com/rails/rails/issues/43775
+    # GlobalHelper.retryable do
+    authorize(@mention)
+    if @mention.destroy
+      redirect_back fallback_location: mentions_url, notice: t('.mention_was_successfully_destroyed')
+    else
+      redirect_back(fallback_location: mentions_url, alert: @mention.errors.full_messages.join)
     end
+    # end
   end
 
   private

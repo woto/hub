@@ -19,7 +19,7 @@ class MentionDecorator < ApplicationDecorator
     end
   end
 
-  def tags
+  def topics
     h.render(TextTagComponent.with_collection(super))
   end
 
@@ -33,5 +33,9 @@ class MentionDecorator < ApplicationDecorator
 
   def kinds
     h.render(Mentions::KindTextComponent.with_collection(super))
+  end
+
+  def sentiment
+    h.render Mentions::SentimentTextComponent.new(sentiment_text: super)
   end
 end

@@ -11,9 +11,11 @@
         <div class="modal-body">
           <%= yield :modal_body %>
         </div>
-        <div class="modal-footer">
-          <%= yield :modal_footer %>
-        </div>
+        <% if content_for?(:modal_footer) %>
+          <div class="modal-footer">
+            <%= yield :modal_footer %>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>

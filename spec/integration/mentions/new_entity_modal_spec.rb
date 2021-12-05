@@ -14,6 +14,10 @@ describe MentionsController, type: :system, responsible: :admin do
       click_on('Добавить объект')
       expect(page).to have_css('.modal')
       expect(page).to have_text('Поиск объекта упоминания')
+      expect(page).not_to have_text('Создать новый')
+      fill_in('Поиск объекта', with: 'New entity')
+      click_on('Создать новый')
+      expect(page).to have_text('Создание нового объекта упоминания')
     end
   end
 end

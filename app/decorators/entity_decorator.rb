@@ -5,7 +5,7 @@ class EntityDecorator < ApplicationDecorator
 
   def image
     h.link_to h.entity_path(_id) do
-      options = { class: 'width-100 max-height-300 img-thumbnail' }
+      options = { class: 'width-100 max-height-300 bg-white img-thumbnail' }
       if super.present?
         h.image_tag super, options
       else
@@ -14,7 +14,7 @@ class EntityDecorator < ApplicationDecorator
     end
   end
 
-  def aliases
+  def lookups
     h.render(TextTagComponent.with_collection(super))
   end
 end

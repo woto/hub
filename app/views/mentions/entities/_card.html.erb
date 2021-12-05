@@ -1,0 +1,12 @@
+<% entity = @entity %>
+
+<% image = entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?  %>
+<%= render Entities::CardComponent.new(
+  entity_id: entity.id,
+  image: image,
+  title: entity.title,
+  lookups: entity.lookups.map(&:to_label),
+  assignable: false,
+  controllable: true,
+  form_id: params[:form_id],
+) %>

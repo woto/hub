@@ -1,0 +1,31 @@
+<%= f.input :topics, wrapper_html: { 'data-controller': 'nested-form' } do %>
+
+  <%= tag.template 'data-nested-form-target': 'template' do %>
+    <%= f.simple_fields_for :topics, Topic.new, child_index: 'NEW_RECORD' do |topic_fields| %>
+      <%= render 'topic_form', f: topic_fields %>
+    <% end %>
+  <% end %>
+
+  <%= f.simple_fields_for :topics, form: f.options[:html][:id] do |topic_fields| %>
+    <%= render 'topic_form', f: topic_fields %>
+  <% end %>
+
+  <%= tag.div 'data-nested-form-target': 'target' %>
+
+  <%= tag.button class: 'btn btn-success', 'data-action': 'nested-form#add' do %>
+    <%= t('.add_topic') %>
+  <% end %>
+
+  <%= f.full_error :topics, class: 'invalid-feedback d-block' %>
+
+<% end %>
+
+<% if false %>
+  <%= f.input :tags, as: :select,
+              input_html: {
+                multiple: true,
+                "data-controller": 'mentions-tags'
+              },
+              collection: f.object.tags,
+              placeholder: true %>
+<% end %>

@@ -1,0 +1,38 @@
+<%= tag.div class: 'mb-3',
+            'data-controller': 'shrine-upload',
+            'data-action': 'pushEventStack@window->shrine-upload#pushEventStack
+                                          popEventStack@window->shrine-upload#popEventStack' do %>
+
+  <%= f.input :image,
+              as: :hidden,
+              wrapper: false,
+              error: false,
+              input_html: {
+                id: nil,
+                value: f.object.cached_image_data
+              } %>
+
+  <%= f.label :image,
+              class: 'width-200 min-height-200 img-thumbnail d-flex align-items-center position-relative',
+              role: 'button' do %>
+
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <div data-mention-url-target="spinner" class="spinner-border text-indigo my-3 d-none"></div>
+    </div>
+
+    <%= image_tag f.object.image_url || asset_pack_path('media/images/icon-upload.png'),
+                  class: 'mx-auto d-block',
+                  'data-mention-url-target': 'imagePreview',
+                  'data-shrine-upload-target': 'imagePreview' %>
+
+  <% end %>
+
+  <%= f.input :image,
+              wrapper: false,
+              label: false,
+              input_html: {
+                'data-mention-url-target': 'inputFile',
+                'data-shrine-upload-target': 'inputFile',
+                class: "d-none"
+              } %>
+<% end %>

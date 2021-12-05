@@ -17,26 +17,16 @@ module Interactors
                     title.autocomplete
                     title.autocomplete._2gram
                     title.autocomplete._3gram
-                    aliases
+                    lookups
                   ]
                 }
               }
             }
           },
-          size: 30
+          size: 3
         }
 
-        entities = Entity.__elasticsearch__.search(body)
-
-        context.object = entities.map do |entity|
-          {
-            id: entity.id,
-            title: entity.title,
-            aliases: entity.aliases.reject(&:empty?),
-            score: entity._score,
-            image: entity.image.present? ? entity.image : ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png')
-          }
-        end
+        context.object = Entity.__elasticsearch__.search(body)
       end
     end
   end

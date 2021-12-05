@@ -1,0 +1,22 @@
+<div class="modal modal-blur fade" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <%= turbo_frame_tag 'entities', 'autoscroll': 'top' do %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <%= yield :modal_title %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <%= yield :modal_body %>
+        </div>
+        <% if content_for?(:modal_footer) %>
+          <div class="modal-footer">
+            <%= yield :modal_footer %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

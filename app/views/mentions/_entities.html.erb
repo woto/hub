@@ -1,0 +1,44 @@
+<%= tag.div class: 'mb-3' do %>
+
+  <%# TODO: write article %>
+  <%= f.input :entity_ids, as: :check_boxes, collection: [''], checked: ['', true],
+              wrapper_html: { class: 'd-none'},
+              error: false,
+              label: false,
+              hint: false %>
+
+  <%= f.input :entities, error: false do %>
+
+    <% f.object.entities.each do |entity| %>
+      <% image = entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?  %>
+      <%= render Entities::CardComponent.new(
+        entity_id: entity.id,
+        image: image,
+        title: entity.title,
+        lookups: entity.lookups.map(&:to_label),
+        controllable: true,
+        assignable: false,
+        form_id: f.options[:html][:id]
+      ) %>
+    <% end %>
+
+  <% end %>
+
+  <%= tag.div 'data-controller': 'mention-new-entity' do %>
+
+    <%= tag.div 'data-mention-new-entity-target': 'cardPlaceholder' %>
+
+    <%= tag.a href: '#',
+              class: 'btn btn-success',
+              'data-action': 'mention-new-entity#openModal',
+              'data-mention-new-entity-url-param': assign_mentions_entities_path(form_id: f.options[:html][:id]) do %>
+      <%= t('.add_entity') %>
+    <% end %>
+
+    <%= tag.div 'data-mention-new-entity-target': 'modalPlaceholder' %>
+
+  <% end %>
+
+  <%= f.full_error :entities, class: 'invalid-feedback d-block' %>
+
+<% end %>

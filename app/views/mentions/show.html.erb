@@ -32,8 +32,8 @@
                 <dd class="col-sm-9"> <%= link_to @mention.url, @mention.url, rel: 'noreferrer' %> </dd>
 
                 <% if false %>
-                <dt class="col-sm-3"> <%= t('publisher_ext_id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @mention.publisher_ext_id %> </dd>
+                  <dt class="col-sm-3"> <%= t('publisher_ext_id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                  <dd class="col-sm-9"> <%= @mention.publisher_ext_id %> </dd>
                 <% end %>
 
                 <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
@@ -41,17 +41,14 @@
                   <%= render(Mentions::EntityComponent.with_collection(@mention.entities.map(&:to_label).zip(@mention.entity_ids))) %>
                 </dd>
 
-                <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@mention.tags)) %> </dd>
+                <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@mention.topics.map(&:to_label))) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('sentiment', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @mention.sentiment %> </dd>
+                <dd class="col-sm-9"> <%= render Mentions::SentimentTextComponent.new(sentiment_text: @mention.sentiment) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('kinds', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= render(Mentions::KindTextComponent.with_collection(@mention.kinds)) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('entities_count', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @mention.entities_count %> </dd>
 
                 <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.published_at) %> </dd>
@@ -91,11 +88,9 @@
     <div class="col">
 
       <%= link_to t('new'), new_mention_path,
-                  class: "btn btn-success #{'disabled' unless policy(@mention).new? }",
-                  'data-turbo': false %>
+                  class: "btn btn-success #{'disabled' unless policy(@mention).new? }" %>
       <%= link_to t('edit'), edit_mention_path(@mention),
-                  class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }",
-                  'data-turbo': false %>
+                  class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }" %>
       <%= link_to t('delete'), mention_path(@mention.id),
                   class: "btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
                   method: :delete,

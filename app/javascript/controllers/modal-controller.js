@@ -27,4 +27,8 @@ export default class extends Controller {
             }
         })
     }
+
+    closeModal() {
+        this.#bootstrapModal.hide();
+    }
 }
