@@ -9,7 +9,7 @@ describe API::Mentions, type: :request, responsible: :admin do
   describe 'GET /api/mentions/entities' do
     context 'with entity which includes only title' do
       let!(:entity) do
-        create(:entity, title: 'test another word', aliases: [],
+        create(:entity, title: 'test another word', lookups: [],
                image_data: ShrineImage.image_data)
       end
 
@@ -27,7 +27,7 @@ describe API::Mentions, type: :request, responsible: :admin do
 
     context 'with entity which includes aliases' do
       let!(:entity) do
-        create(:entity, title: 'word', aliases: %w[first second],
+        create(:entity, title: 'word', lookups: [create(:lookup, title: 'first'), create(:lookup, title: 'second')],
                image_data: ShrineImage.image_data)
       end
 
