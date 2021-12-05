@@ -17,7 +17,7 @@ describe API::Mentions, type: :request, responsible: :admin do
         get '/api/mentions/entities', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'anothe' }
 
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)).to match([{ 'aliases' => [],
+        expect(JSON.parse(response.body)).to match([{ 'lookups' => [],
                                                       'id' => entity.id.to_s,
                                                       'image' => be_a(String),
                                                       'score' => 1.0,
@@ -25,17 +25,17 @@ describe API::Mentions, type: :request, responsible: :admin do
       end
     end
 
-    context 'with entity which includes aliases' do
+    context 'with entity which includes lookups' do
       let!(:entity) do
         create(:entity, title: 'word', lookups: [create(:lookup, title: 'first'), create(:lookup, title: 'second')],
                image_data: ShrineImage.image_data)
       end
 
-      it 'autocompletes entities by aliases' do
+      it 'autocompletes entities by lookups' do
         get '/api/mentions/entities', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'secon' }
 
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)).to match([{ 'aliases' => %w[first second],
+        expect(JSON.parse(response.body)).to match([{ 'lookups' => %w[first second],
                                                       'id' => entity.id.to_s,
                                                       'image' => be_a(String),
                                                       'score' => be_a(Numeric),
