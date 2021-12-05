@@ -52,22 +52,19 @@ class Mention < ApplicationRecord
 
   # before_destroy :stop_destroy
 
-  accepts_nested_attributes_for :topics, allow_destroy: true
+  def topics_attributes=(titles)
+    topics = []
 
-  def topics_attributes=(arr)
-    arr.each do |_, hash|
-      topic = Topic.find_by(title: hash['title'])
+    titles.each do |title|
+      # TODO: write article
+      # If remove this line then you could not pass topic with empty title.
+      # The exception ActiveRecord::RecordInvalid will be raised
+      next if title.blank?
 
-      if ActiveModel::Type::Boolean.new.cast(hash['_destroy'])
-        topics.each do |t|
-          t.mark_for_destruction if t.id == topic&.id
-        end
-      elsif topic
-        self.topic_ids += [topic.id] unless topic_ids.include?(topic.id)
-      else
-        topics.build(title: hash['title'])
-      end
+      topics << Topic.find_or_create_by(title: title)
     end
+
+    self.topics = topics
   end
 
   def as_indexed_json(_options = {})

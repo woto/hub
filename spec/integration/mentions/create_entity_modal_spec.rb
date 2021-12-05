@@ -12,8 +12,6 @@ describe MentionsController, type: :system, responsible: :admin do
     click_on('Создать новый')
   end
 
-  context 'when saves '
-
   context 'when saves with wrong data' do
     it 'shows form error' do
       click_on('Добавить синоним')

@@ -1,54 +1,44 @@
 import { Controller } from "stimulus"
-import * as bootstrap from "bootstrap";
-import {useDebounce } from "stimulus-use";
+import { ApplicationController } from 'stimulus-use'
+import 'selectize/dist/js/selectize.min.js';
+import { useDispatch } from 'stimulus-use'
 
-export default class extends Controller {
-    static targets = [ 'dropdown', 'input' ]
-    static debounces = [{
-        name: 'showDropdown',
-        wait: 300
-    }]
+export default class extends ApplicationController {
+    #selectize;
+
+    disconnect() {
+        console.log('disconnected')
+        console.log(this.#selectize[0])
+        console.log(this.#selectize[0].selectize)
+        this.#selectize[0].selectize.destroy()
+    }
 
     connect() {
-        useDebounce(this);
-    }
+        useDispatch(this);
+        const that = this;
 
-    selectTopic(event) {
-        this.inputTarget.value = event.params.title;
-    }
-
-    showDropdown() {
-        bootstrap.Dropdown.getOrCreateInstance(this.inputTarget).show();
-        let that = this;
-
-        $.ajax({
-            url: '/api/mentions/tags',
-            type: 'GET',
-            data: {
-                q: that.inputTarget.value
+        this.#selectize = $(this.element).selectize({
+            plugins: ["remove_button"],
+            sortField: 'title',
+            valueField: 'title',
+            labelField: 'title',
+            searchField: 'title',
+            create: function(input, callback){
+                return callback({ title: input });
             },
-            success: function(res) {
-                console.log(res)
-                if (res.length > 0) {
-                    that.dropdownTarget.classList.remove('d-none');
-                    that.dropdownTarget.innerHTML = '';
-                    let content = '';
-                    for (let item of res) {
-                        content += `<li>
-                            <button data-action='click->mention-topic#selectTopic'
-                                    data-mention-topic-title-param='${item.title}' 
-                                    class='dropdown-item' 
-                                    type='button'
-                            >
-                                ${item.title}
-                            </button> 
-                        </li>`;
+            load: function(query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: '/api/mentions/tags',
+                    type: 'GET',
+                    data: {
+                        q: query
+                    },
+                    success: function(res) {
+                        callback(res);
                     }
-                    that.dropdownTarget.insertAdjacentHTML('beforeend', content);
-                } else {
-                    that.dropdownTarget.classList.add('d-none');
-                }
+                });
             }
-        });
+        })
     }
 }

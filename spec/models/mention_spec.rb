@@ -107,8 +107,6 @@ RSpec.describe Mention, type: :model do
     end
   end
 
-  it { is_expected.to accept_nested_attributes_for(:topics).allow_destroy(true) }
-
   describe '#image' do
     subject { create(:mention) }
 
@@ -202,112 +200,52 @@ RSpec.describe Mention, type: :model do
     let(:topic1) { create(:topic) }
     let(:topic2) { create(:topic) }
 
-    before do
+    def do_the_action
       subject.update(topics_attributes: params)
     end
 
-    context "when passes '_destroy' param and topic is linked to the mention" do
-      let(:params) do
-        {
-          '0' => {
-            'id' => '',
-            'title' => topic1.title,
-            '_destroy' => 'true'
-          }
-        }
-      end
+    context 'when does not pass topic1 and topic1 is linked to the mention' do
+      let(:params) { [topic2.title] }
 
-      it 'unlinks topic but not removes it' do
+      it 'unlinks topic1 but does not remove it' do
+        do_the_action
         expect(subject.topics).to contain_exactly(topic2)
         expect(topic1.reload).not_to be_nil
       end
     end
 
-    context "when passes '_destroy' param but topic does not linked" do
-      let(:topic) { create(:topic) }
-
-      let(:params) do
-        {
-          '0' => {
-            'id' => '',
-            'title' => topic.title,
-            '_destroy' => 'true'
-          }
-        }
-      end
-
-      it 'does not unlink topics and does not create the new one' do
-        expect do
-          expect(subject.topics).to contain_exactly(topic1, topic2)
-        end.not_to change(Topic, :count)
-      end
-    end
-
-    context "when passes '_destroy' param but topic with such title even does not exist" do
-      let(:params) do
-        {
-          '0' => {
-            'id' => '',
-            'title' => 'topic',
-            '_destroy' => 'true'
-          }
-        }
-      end
-
-      it 'does not unlink topics and does not create the new one' do
-        expect do
-          expect(subject.topics).to contain_exactly(topic1, topic2)
-        end.not_to change(Topic, :count)
-      end
-    end
-
     context 'when passed new topic which is not exists yet' do
-      let(:params) do
-        {
-          '0' => {
-            'id' => '',
-            'title' => 'topic',
-            '_destroy' => 'false'
-          }
-        }
-      end
+      let(:params) { [topic1.title, topic2.title, 'new topic'] }
 
       it 'creates new linked topic' do
-        expect(subject.topics).to contain_exactly(topic1, topic2, Topic.find_by(title: 'topic'))
+        expect do
+          do_the_action
+          expect(subject.topics).to contain_exactly(topic1, topic2, Topic.find_by(title: 'new topic'))
+        end.to change(Topic, :count).by(1)
       end
     end
 
     context 'when passed topic is not liked yet to the mention' do
-      let(:topic) { create(:topic) }
+      let!(:topic) { create(:topic) }
 
-      let(:params) do
-        {
-          '0' => {
-            'id' => '',
-            'title' => topic.title,
-            '_destroy' => 'false'
-          }
-        }
-      end
+      let(:params) { [topic1.title, topic2.title, topic.title] }
 
       it 'links topic to the mention' do
-        expect(subject.topics).to contain_exactly(topic1, topic2, topic)
+        expect do
+          do_the_action
+          expect(subject.topics).to contain_exactly(topic1, topic2, topic)
+        end.not_to change(Topic, :count)
       end
     end
 
-    context 'when passed topic already linked to the mention' do
-      let(:params) do
-        {
-          '0' => {
-            'id' => '',
-            'title' => topic1.title,
-            '_destroy' => 'false'
-          }
-        }
-      end
+    context 'when passed topics already linked to the mention' do
+      let(:params) { [topic1.title, topic2.title] }
 
       it 'does not relink it again' do
-        expect(subject.topics).to contain_exactly(topic1, topic2)
+        expect do
+          do_the_action
+          expect(subject.topics).to contain_exactly(topic1, topic2)
+        end.not_to change(Topic, :count)
       end
     end
   end
