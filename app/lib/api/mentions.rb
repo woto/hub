@@ -27,14 +27,14 @@ module API
         Interactors::Mentions::Urls.call(q: params[:q]).object
       end
 
-      desc 'Autocomplete tags'
+      desc 'Autocomplete topics'
 
       params do
         requires :q, type: String, desc: 'Search string'
       end
 
-      get :tags do
-        Interactors::Mentions::Tags.call(q: params[:q], sort: 'mentions_count', order: 'desc', limit: 10).object
+      get :topics do
+        Interactors::Mentions::Topics.call(q: params[:q], sort: 'mentions_count', order: 'desc', limit: 10).object
       end
 
     end

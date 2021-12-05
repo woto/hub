@@ -59,14 +59,14 @@ describe API::Mentions, type: :request, responsible: :admin do
     end
   end
 
-  describe 'GET /api/mentions/tags' do
+  describe 'GET /api/mentions/topics' do
     let!(:mention) do
       create(:mention, topics: [create(:topic, title: 'first'), create(:topic, title: 'second')])
       create(:mention, topics: [create(:topic, title: 'third')])
     end
 
-    it 'autocompletes mentions by tags' do
-      get '/api/mentions/tags', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'secon' }
+    it 'autocompletes mentions by topics' do
+      get '/api/mentions/topics', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'secon' }
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to match([{ 'title' => 'second' }])

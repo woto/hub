@@ -2,7 +2,7 @@
 
 module Interactors
   module Mentions
-    class Tags
+    class Topics
       include ApplicationInteractor
 
       contract do
