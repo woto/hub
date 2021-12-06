@@ -12,6 +12,7 @@
               form: f.options[:html][:id],
               multiple: true,
               "data-controller": 'mention-topic',
+              "data-mention-topic-placeholder-value": t('simple_form.placeholders.mention.topics.title'),
               name: 'mention[topics_attributes][]'
             },
             collection: f.object.topics.map(&:title),

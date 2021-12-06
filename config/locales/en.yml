@@ -514,6 +514,8 @@ en:
         editing_entity: Editing entity
       new:
         creating_new_entity: Creating new entity
+      search:
+        editing_entity: Editing entity
     form:
       editorial: Editorial
     kind_icon_component:
@@ -812,6 +814,13 @@ en:
         name: Workspace name
     'no': 'No'
     placeholders:
+      entity:
+        lookups:
+          title: Enter synonym
+        title: Enter title
+      mention:
+        topics:
+          title: Enter topics
       post:
         body: Start writing your post here
         intro: Short introduction. You can use the first paragraph from the post

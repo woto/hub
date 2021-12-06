@@ -4,6 +4,9 @@ import 'selectize/dist/js/selectize.min.js';
 import { useDispatch } from 'stimulus-use'
 
 export default class extends ApplicationController {
+    static values = {
+        placeholder: String
+    }
     #selectize;
 
     disconnect() {
@@ -23,6 +26,7 @@ export default class extends ApplicationController {
             valueField: 'title',
             labelField: 'title',
             searchField: 'title',
+            placeholder: that.placeholderValue,
             create: function(input, callback){
                 return callback({ title: input });
             },

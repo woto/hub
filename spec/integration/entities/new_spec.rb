@@ -3,9 +3,19 @@
 require 'rails_helper'
 
 describe EntitiesController, type: :system, responsible: :admin do
+  synonym_placeholder = 'Введите синоним'
+  title_placeholder = 'Введите название'
+
   before do
     login_as(Current.responsible, scope: :user)
     visit new_entity_path(locale: :ru)
+  end
+
+  context 'when form loads' do
+    it 'shows input fields' do
+      expect(page).to have_field(title_placeholder)
+      expect(page).to have_field(synonym_placeholder)
+    end
   end
 
   context 'when submits form without filling any input' do
@@ -14,6 +24,8 @@ describe EntitiesController, type: :system, responsible: :admin do
 
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       expect(page).to have_text('Название объекта не может быть пустым')
+      expect(page).to have_field(title_placeholder)
+      expect(page).not_to have_field(synonym_placeholder)
     end
   end
 
@@ -23,62 +35,8 @@ describe EntitiesController, type: :system, responsible: :admin do
       click_on('Сохранить')
 
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 1)
-    end
-  end
-
-  context 'when clicked on "Добавить синоним" twice and submits form' do
-    it 'shows lookups required error texts' do
-      click_on('Добавить синоним')
-      click_on('Добавить синоним')
-      click_on('Сохранить')
-
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 2)
-    end
-  end
-
-  context 'when clicked on "Добавить синоним" twice and then removed one' do
-    it 'shows lookups required error texts' do
-      click_on('Добавить синоним')
-      click_on('Добавить синоним')
-      click_on('Сохранить')
-
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 2)
-
-      first('[data-action="nested-form-item#remove"]').click
-      click_on('Сохранить')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 1)
-    end
-  end
-
-  context 'when added two lookups and one of them is filled and one is not' do
-    it 'shows lookup error only once' do
-      click_on('Добавить синоним')
-      click_on('Добавить синоним')
-
-      first('[data-controller="nested-form-item"] input[type="text"]').fill_in(with: 'foo')
-      click_on('Сохранить')
-
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 1)
-    end
-  end
-
-  context 'when removes empty lookup with error' do
-    it 'does not show that lookup error' do
-      click_on('Добавить синоним')
-      click_on('Добавить синоним')
-
-      all('[data-controller="nested-form-item"] input[type="text"]').first.fill_in(with: 'foo')
-      click_on('Сохранить')
-
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 1)
-
-      all('[data-controller="nested-form-item"] button[data-action="nested-form-item#remove"]').last.click
-      expect(page).not_to have_text('Название синонима не может быть пустым')
+      expect(page).to have_field(title_placeholder)
+      expect(page).not_to have_field(synonym_placeholder)
     end
   end
 

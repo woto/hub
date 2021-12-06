@@ -10,23 +10,6 @@ describe EntitiesController, type: :system, responsible: :admin do
     visit edit_entity_path(entity, locale: :ru)
   end
 
-  context 'when removes one lookup and adds new one with empty title and submits form' do
-    let(:lookup) { Lookup.first }
-
-    it 'does not show removed lookup' do
-      within("#lookup_#{lookup.id}") do
-        find('button[data-action="nested-form-item#remove"]').click
-      end
-
-      click_on('Добавить синоним')
-      click_on('Сохранить')
-
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 1)
-      expect(page).to have_css("#lookup_#{lookup.id}", visible: :hidden)
-    end
-  end
-
   context 'when removes one lookup, adds another and submits form' do
     let(:lookup) { Lookup.first }
 

@@ -20,7 +20,7 @@ describe API::Mentions, type: :request, responsible: :admin do
         expect(JSON.parse(response.body)).to match([{ 'lookups' => [],
                                                       'id' => entity.id.to_s,
                                                       'image' => be_a(String),
-                                                      'score' => 1.0,
+                                                      'score' => 2.0,
                                                       'title' => 'test another word' }])
       end
     end

@@ -524,6 +524,8 @@ ru:
         editing_entity: Редактирование объекта упоминания
       new:
         creating_new_entity: Создание нового объекта упоминания
+      search:
+        editing_entity: Editing entity
     form:
       editorial: Редактура
     kind_icon_component:
@@ -822,6 +824,13 @@ ru:
         name: Имя рабочей области
     'no': 'No'
     placeholders:
+      entity:
+        lookups:
+          title: Введите синоним
+        title: Введите название
+      mention:
+        topics:
+          title: Введите темы
       post:
         body: Начните писать свою статью тут
         intro: Короткое вступление. Можно использовать первый параграф из статьи

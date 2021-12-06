@@ -19,14 +19,4 @@ describe EntitiesController, type: :system, responsible: :admin do
       expect(page).to have_text('Название синонима не может быть пустым', count: 1)
     end
   end
-
-  context 'when adds new lookup with empty title and submits form' do
-    it 'shows lookup error text' do
-      click_on('Добавить синоним')
-      click_on('Сохранить')
-
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_text('Название синонима не может быть пустым', count: 1)
-    end
-  end
 end

@@ -12,7 +12,7 @@ class EntitiesController < ApplicationController
 
   # GET /entities/new
   def new
-    @entity = current_user.entities.new
+    @entity = current_user.entities.new(lookups: [Lookup.new])
     @url = url_for(@entity)
     authorize(@entity)
   end
