@@ -10,7 +10,7 @@
         <%= image_tag mention.image_url, options %>
       <% end %>
     </div>
-    <div class="card-body">
+    <div class="card-body overflow-auto">
       <h5 class="card-title">
         <%
           website = begin
@@ -24,7 +24,7 @@
       <p class="card-text">
         <%= render(Mentions::EntityComponent.with_collection(mention.entities.map(&:to_label).zip(mention.entity_ids))) %>
       </p>
-      <p class="card-text overflow-auto">
+      <p class="card-text">
         <%= render(TextTagComponent.with_collection(mention.topics.map(&:to_label))) %>
       </p>
       <p class="card-text">
