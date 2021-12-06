@@ -36,21 +36,50 @@ module Elasticable
 
   class_methods do
     def setup_index(form_class)
-      settings index: { number_of_shards: 1 } do
+      settings index: {
+        number_of_shards: 1,
+        analysis: {
+          "analyzer": {
+            "custom_edge_ngram_analyzer": {
+              "type": 'custom',
+              "tokenizer": 'customized_edge_tokenizer',
+              "filter": [
+                'lowercase'
+              ]
+            }
+          },
+          "tokenizer": {
+            "customized_edge_tokenizer": {
+              "type": 'edge_ngram',
+              "min_gram": 2,
+              "max_gram": 10,
+              "token_chars": %w[
+                letter
+                digit
+              ]
+            }
+          }
+        }
+      } do
         mapping dynamic: 'true' do
           form_class.all_columns.each do |column|
             es = form_class.elastic_column(column[:key])
 
             if es[:sort]
-              indexes column[:key], type: es[:type], fields: {
-                keyword: {
-                  ignore_above: 256,
-                  type: 'keyword'
-                },
-                autocomplete: {
-                  type: 'search_as_you_type'
-                }
-              }
+              indexes column[:key],
+                      type: es[:type],
+                      fields: {
+                        keyword: {
+                          ignore_above: 256,
+                          type: 'keyword'
+                        },
+                        autocomplete: {
+                          type: 'search_as_you_type',
+                          # type: "text",
+                          analyzer: 'custom_edge_ngram_analyzer',
+                          "search_analyzer": 'standard'
+                        }
+                      }
             else
               indexes column[:key], type: es[:type]
             end

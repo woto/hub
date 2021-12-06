@@ -1,0 +1,14 @@
+<% content_for :modal_title do %>
+  <%= t('.editing_entity') %>
+<% end %>
+
+<% content_for :modal_body do %>
+  <%= render(partial: '/mentions/entities/search', formats: :html) %>
+<% end %>
+
+<% if false %>
+  <% content_for :modal_footer do %>
+  <% end %>
+<% end %>
+
+<%= render template: 'mentions/entities/modal_wrapper' %>
