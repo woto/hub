@@ -17,7 +17,7 @@
   </li>
 <% end %>
 
-<div class="col">
+<div class="col-12">
   <div class="row">
     <div class="col">
       <div class="row">
@@ -76,3 +76,13 @@
   </div>
 </div>
 
+
+<div class="col-12 mt-5">
+  <h2 class="mb-4"><%= t('.mentions') %></h2>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @mentions.each do |mention| %>
+      <%= render mention %>
+    <% end %>
+  </div>
+</div>

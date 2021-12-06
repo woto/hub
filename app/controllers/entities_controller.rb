@@ -8,6 +8,8 @@ class EntitiesController < ApplicationController
   # GET /entities/:id
   def show
     authorize(@entity)
+
+    @mentions = @entity.mentions.order(id: :desc).includes(:topics, :entities)
   end
 
   # GET /entities/new
