@@ -29,7 +29,7 @@ export default class extends ApplicationController {
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/api/mentions/tags',
+                    url: '/api/mentions/topics',
                     type: 'GET',
                     data: {
                         q: query
