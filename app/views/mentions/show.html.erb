@@ -31,6 +31,9 @@
                 <dt class="col-sm-3"> <%= t('url', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= link_to @mention.url, @mention.url, rel: 'noreferrer' %> </dd>
 
+                <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @mention.title %> </dd>
+
                 <% if false %>
                   <dt class="col-sm-3"> <%= t('publisher_ext_id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                   <dd class="col-sm-9"> <%= @mention.publisher_ext_id %> </dd>
@@ -60,15 +63,13 @@
                 <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.updated_at) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('image') %> </dt>
-                <dd class="col-sm-9" data-controller="lightbox">
-                  <% options = { class: 'img-thumbnail width-200 max-height-500' } %>
-                  <%= link_to @mention.image_url,
-                              'data-pswp-width': @mention.image.metadata['width'],
-                              'data-pswp-height': @mention.image.metadata['height'],
-                              'target': '_blank',
-                              class: 'photo-swipe' do %>
-                    <%= image_tag @mention.image_url, options %>
-                  <% end %>
+                <dd class="col-sm-9">
+                  <%= render Mentions::ImageLightboxComponent.new(
+                    image_original: @mention.image_url,
+                    image_thumbnail: @mention.image.derivation_url(:thumbnail, 500, 500),
+                    image_width: @mention.image.metadata['width'] ,
+                    image_height: @mention.image.metadata['height'],
+                    image_class: 'img-thumbnail width-200 max-height-500') %>
                 </dd>
 
                 <% if current_user.staff? %>

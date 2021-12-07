@@ -10,6 +10,7 @@
 #  kinds          :jsonb            not null
 #  published_at   :datetime
 #  sentiment      :integer          not null
+#  title          :string
 #  topics_count   :integer          default(0), not null
 #  url            :text
 #  created_at     :datetime         not null
@@ -75,10 +76,17 @@ class Mention < ApplicationRecord
       sentiment: sentiment,
       topics: topics.map(&:to_label),
       url: url,
+      title: title,
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,
-      image: image.derivation_url(:thumbnail, 100, 100),
+      # TODO: could we just send image_data?
+      image: {
+        image_original: image_url,
+        image_thumbnail: image.derivation_url(:thumbnail, 300, 300),
+        width: image.metadata['width'],
+        height: image.metadata['height']
+      },
       entity_ids: entity_ids,
       entities: entities.map(&:title),
       entities_count: entities_count

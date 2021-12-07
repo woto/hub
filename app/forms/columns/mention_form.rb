@@ -2,13 +2,14 @@
 
 module Columns
   class MentionForm < BaseForm
-    DEFAULTS = %w[id image url entities tags created_at].freeze
+    DEFAULTS = %w[id image entities topics created_at].freeze
 
     self.all_columns = [
         { key: 'id',                  pg: Mention.columns_hash['id'], roles: ['user', 'manager', 'admin'] },
-        { key: 'image',               pg: Mention.columns_hash['image_data'], as: :string, roles: ['user', 'manager', 'admin'] },
+        { key: 'image',               pg: Mention.columns_hash['image_data'], roles: ['user', 'manager', 'admin'] },
         { key: 'user_id',             pg: Mention.columns_hash['user_id'], roles: ['manager', 'admin'] },
         { key: 'url',                 pg: Mention.columns_hash['url'], roles: ['user', 'manager', 'admin'] },
+        { key: 'title',               pg: Mention.columns_hash['title'], roles: ['user', 'manager', 'admin'] },
         { key: 'entities',            pg: Mention.columns_hash['id'], as: :string, roles: ['user', 'manager', 'admin'] },
         { key: 'entity_ids',          pg: Mention.columns_hash['id'], as: :integer, roles: ['user', 'manager', 'admin'] },
         { key: 'topics',              pg: Topic.columns_hash['title'], as: :string, roles: ['user', 'manager', 'admin'] },

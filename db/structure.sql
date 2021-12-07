@@ -842,8 +842,8 @@ CREATE TABLE public.feeds (
     downloaded_file_size bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     locked_by_tid character varying DEFAULT ''::character varying NOT NULL,
+    log_data jsonb,
     languages jsonb DEFAULT '{}'::jsonb
 );
 
@@ -949,7 +949,8 @@ CREATE TABLE public.mentions (
     log_data jsonb,
     image_data jsonb,
     kinds jsonb DEFAULT '[]'::jsonb NOT NULL,
-    topics_count integer DEFAULT 0 NOT NULL
+    topics_count integer DEFAULT 0 NOT NULL,
+    title character varying
 );
 
 
@@ -1135,11 +1136,11 @@ CREATE TABLE public.realms (
     domain character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     after_head_open text,
     before_head_close text,
     after_body_open text,
-    before_body_close text
+    before_body_close text,
+    log_data jsonb
 );
 
 
@@ -2739,6 +2740,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211201000905'),
 ('20211201000937'),
 ('20211201001238'),
-('20211201032640');
+('20211201032640'),
+('20211207005258');
 
 

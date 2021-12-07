@@ -1,0 +1,9 @@
+<div data-controller="lightbox">
+  <%= link_to @image_original,
+              'data-pswp-width': @image_width,
+              'data-pswp-height': @image_height,
+              'target': '_blank',
+              class: 'photo-swipe' do %>
+      <%= image_tag @image_thumbnail, class: @image_class %>
+  <% end %>
+</div>

@@ -31,9 +31,14 @@
                               "data-action": "input->mention-url#input"
                             } %>
 
+              <%= render 'entities', f: f %>
+
               <%= render 'image', f: f %>
 
-              <%= render 'entities', f: f %>
+              <%= f.input :title,
+                          input_html: {
+                            "data-mention-url-target": 'title'
+                          } %>
 
               <%= render 'topics', f: f %>
 

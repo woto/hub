@@ -281,6 +281,8 @@ en:
       submit_and_new: Submit and new
     lookups:
       add_lookup: Add lookup
+    show:
+      mentions: Mentions
     update:
       entity_was_successfully_updated: Entity was successfully updated
   errors:
@@ -759,6 +761,7 @@ en:
         sentiment: Sentiment
         status: Status
         tags: Tags
+        title: Page title
         topics: Topics
         url: Url
         user: User

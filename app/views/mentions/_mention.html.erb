@@ -1,15 +1,13 @@
 <div class="col">
   <div class="card">
-    <div data-controller="lightbox">
-      <% options = { class: 'card-img-top img-thumbnail' } %>
-      <%= link_to mention.image_url,
-                  'data-pswp-width': mention.image.metadata['width'],
-                  'data-pswp-height': mention.image.metadata['height'],
-                  'target': '_blank',
-                  class: 'photo-swipe' do %>
-        <%= image_tag mention.image_url, options %>
-      <% end %>
-    </div>
+
+    <%= render Mentions::ImageLightboxComponent.new(
+      image_original: mention.image_url,
+      image_thumbnail: mention.image.derivation_url(:thumbnail, 800, 800),
+      image_width: mention.image.metadata['width'],
+      image_height: mention.image.metadata['height'],
+      image_class: 'card-img-top img-thumbnail') %>
+
     <div class="card-body overflow-auto">
       <h5 class="card-title">
         <%
@@ -19,8 +17,17 @@
                       'сайт'
                     end
         %>
-        <%= link_to "Перейти на: #{website}", mention.url, rel: 'noreferrer', class: 'text-primary'  %>
+
+        <%= link_to mention.url, rel: 'noreferrer', class: 'text-decoration-none' do %>
+          <%= mention.title %>
+          <% if mention.title %>
+            /
+          <% end %>
+          Подробнее на
+          <%= "#{website}" %>
+        <% end %>
       </h5>
+
       <p class="card-text">
         <%= render(Mentions::EntityComponent.with_collection(mention.entities.map(&:to_label).zip(mention.entity_ids))) %>
       </p>

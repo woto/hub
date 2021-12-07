@@ -33,7 +33,8 @@ module Interactors
           {
             image: url.image,
             score: url._score,
-            url: url.url
+            url: url.url,
+            title: url.title
           }
         end
       end

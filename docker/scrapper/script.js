@@ -138,7 +138,13 @@ app.get('/screenshot', async (request, response) => {
 
     const image = await takeScreenshotWithDelay(page);
     const publisher = await getPublisher(urlString, page);
-    response.send({ image: `data:image/png;base64, ${image}`, publisher: publisher })
+    const title = await page.title();
+
+    response.send({
+          image: `data:image/png;base64, ${image}`,
+          publisher: publisher,
+          title: title
+    })
   } catch (e) {
     console.error(e);
     response.status(400);

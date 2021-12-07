@@ -14,9 +14,11 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def image
-    h.link_to h.mention_path(_id) do
-      h.image_tag super, class: 'max-height-100 img-thumbnail' if super
-    end
+    h.render Mentions::ImageLightboxComponent.new(image_original: super['image_original'],
+                                                  image_thumbnail: super['image_thumbnail'],
+                                                  image_width: object['_source']['image']['width'],
+                                                  image_height: object['_source']['image']['height'],
+                                                  image_class: 'max-height-100 img-thumbnail')
   end
 
   def topics

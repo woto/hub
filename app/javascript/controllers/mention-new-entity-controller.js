@@ -1,7 +1,16 @@
 import ModalController from "./modal-controller.js";
+import {useDebounce} from "stimulus-use";
 
 export default class extends ModalController {
     static targets = ['form', 'cardPlaceholder', "searchString", "entitiesSearchResult", "followToCreation", "spinner" ];
+    static debounces = [{
+        name: 'searchEntity',
+        wait: 300
+    }]
+
+    connect() {
+        useDebounce(this);
+    }
 
     submitForm(event) {
         event.preventDefault();

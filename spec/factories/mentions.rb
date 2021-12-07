@@ -10,6 +10,7 @@
 #  kinds          :jsonb            not null
 #  published_at   :datetime
 #  sentiment      :integer          not null
+#  title          :string
 #  topics_count   :integer          default(0), not null
 #  url            :text
 #  created_at     :datetime         not null
