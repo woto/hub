@@ -12,7 +12,7 @@ export default class extends ApplicationController {
         const that = this;
 
         this.#selectize = $(this.element).selectize({
-            plugins: ["remove_button"],
+            plugins: ["remove_button", "restore_on_backspace"],
             sortField: 'title',
             valueField: 'title',
             labelField: 'title',
