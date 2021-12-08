@@ -24,7 +24,6 @@ describe MentionsController, type: :system, responsible: :admin do
         find('label[for="entity_image"]').click
       end
       click_on('Сохранить')
-      expect(page).to have_text('Название синонима не может быть пустым')
       expect(page).to have_text('Название объекта не может быть пустым')
       expect(page).to have_text('Image type must be one of: image/jpeg, image/jpg, image/png, image/gif')
     end

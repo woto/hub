@@ -22,29 +22,45 @@ class MentionsController < ApplicationController
 
   # POST /mentions
   def create
-    # TODO: https://github.com/rails/rails/issues/43775
-    # GlobalHelper.retryable do
     @mention = policy_scope(Mention).new(permitted_attributes(Mention))
     authorize(@mention)
-    if @mention.save
+
+    # TODO: https://github.com/rails/rails/issues/43775
+    result = false
+    GlobalHelper.retryable do
+      result = @mention.save
+      raise ActiveRecord::RecordInvalid unless result
+    rescue ActiveRecord::RecordInvalid
+      @mention.errors.add(:entities, :check_items)
+      raise ActiveRecord::Rollback
+    end
+
+    if result
       redirect_to @mention, notice: t('.mention_was_successfully_created')
     else
       render :new, status: :unprocessable_entity
     end
-    # end
   end
 
   # PATCH/PUT /mentions/:id
   def update
-    # TODO: https://github.com/rails/rails/issues/43775
-    # GlobalHelper.retryable do
     authorize(@mention)
-    if @mention.update(permitted_attributes(Mention))
+
+    # TODO: https://github.com/rails/rails/issues/43775
+    result = false
+    GlobalHelper.retryable do
+      result = @mention.update(permitted_attributes(Mention))
+      raise ActiveRecord::RecordInvalid unless result
+    rescue ActiveRecord::RecordInvalid
+      @mention.errors.add(:entities, :check_items)
+      raise ActiveRecord::Rollback
+    end
+
+    if result
       redirect_to @mention, notice: t('.mention_was_successfully_updated')
     else
       render :edit, status: :unprocessable_entity
     end
-    # end
   end
 
   # DELETE /mentions/:id

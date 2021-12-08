@@ -44,6 +44,10 @@ en:
         select_messenger_type: must be selected
         select_messengers: Select messengers
       models:
+        mention:
+          attributes:
+            entities:
+              check_items: Проверьте список элементов на предмет дубликатов.
         post:
           attributes:
             currency:
@@ -712,6 +716,8 @@ en:
         kind: Текст на картинке является картинкой. Если картинка двигается, значит это видео.
         kinds: Выберите один или несколько вариантов.
         published_at: Указывайте, если в источнике указана дата публикации контента.
+        title: Если заголовок не удастся сделать автоматически, то введите его.
+        url: После ввода URL мы попытаемся сделать скриншот и получить заголовк страницы.
       post:
         currency: Select the national currency of your country
         description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>

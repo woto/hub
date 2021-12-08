@@ -21,6 +21,7 @@ class Topic < ApplicationRecord
 
   validates :title, presence: true
   validates :title, uniqueness: true
+  validates :title, length: { maximum: 50 }
 
   def to_label
     title

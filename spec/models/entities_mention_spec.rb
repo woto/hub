@@ -12,8 +12,9 @@
 #
 # Indexes
 #
-#  index_entities_mentions_on_entity_id   (entity_id)
-#  index_entities_mentions_on_mention_id  (mention_id)
+#  index_entities_mentions_on_entity_id                 (entity_id)
+#  index_entities_mentions_on_entity_id_and_mention_id  (entity_id,mention_id) UNIQUE
+#  index_entities_mentions_on_mention_id                (mention_id)
 #
 # Foreign Keys
 #

@@ -2073,6 +2073,13 @@ CREATE INDEX index_entities_mentions_on_entity_id ON public.entities_mentions US
 
 
 --
+-- Name: index_entities_mentions_on_entity_id_and_mention_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_entities_mentions_on_entity_id_and_mention_id ON public.entities_mentions USING btree (entity_id, mention_id);
+
+
+--
 -- Name: index_entities_mentions_on_mention_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2741,6 +2748,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211201000937'),
 ('20211201001238'),
 ('20211201032640'),
-('20211207005258');
+('20211207005258'),
+('20211207072249');
 
 
