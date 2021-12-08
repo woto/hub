@@ -10,7 +10,7 @@ describe API::Mentions, type: :request, responsible: :admin do
     context 'with entity which includes only title' do
       let!(:entity) do
         create(:entity, title: 'test another word', lookups: [],
-               image_data: ShrineImage.image_data)
+                        image_data: ShrineImage.image_data)
       end
 
       it 'autocompletes entities by title' do
@@ -28,7 +28,7 @@ describe API::Mentions, type: :request, responsible: :admin do
     context 'with entity which includes lookups' do
       let!(:entity) do
         create(:entity, title: 'word', lookups: [create(:lookup, title: 'first'), create(:lookup, title: 'second')],
-               image_data: ShrineImage.image_data)
+                        image_data: ShrineImage.image_data)
       end
 
       it 'autocompletes entities by lookups' do
@@ -54,8 +54,14 @@ describe API::Mentions, type: :request, responsible: :admin do
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to match([{ 'score' => be_a(Numeric),
-                                                    'image' => be_a(String),
-                                                    'url' => 'https://example.com?foo=bar' }])
+                                                    'image' => include(
+                                                      'width',
+                                                      'height',
+                                                      'image_original' => be_a(String),
+                                                      'image_thumbnail' => be_a(String)
+                                                    ),
+                                                    'url' => 'https://example.com?foo=bar',
+                                                    'title' => mention.title }])
     end
   end
 

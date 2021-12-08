@@ -24,7 +24,9 @@ module API
       end
 
       get :urls do
-        Interactors::Mentions::Urls.call(q: params[:q]).object
+        object = Interactors::Mentions::Urls.call(q: params[:q]).object
+        object = Decorators::Mentions::Urls.call(object: object).object
+        object
       end
 
       desc 'Autocomplete topics'

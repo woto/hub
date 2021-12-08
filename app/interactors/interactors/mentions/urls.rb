@@ -27,16 +27,7 @@ module Interactors
           size: 5
         }
 
-        urls = Mention.__elasticsearch__.search(body)
-
-        context.object = urls.map do |url|
-          {
-            image: url.image,
-            score: url._score,
-            url: url.url,
-            title: url.title
-          }
-        end
+        context.object = Mention.__elasticsearch__.search(body)
       end
     end
   end
