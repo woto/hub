@@ -136,8 +136,14 @@ RSpec.describe Mention, type: :model do
         sentiment: mention.sentiment,
         topics: mention.topics.map(&:to_label),
         url: mention.url,
+        title: nil,
         user_id: mention.user_id,
-        image: be_a(String),
+        image: include(
+          :height,
+          :width,
+          image_original: be_a(String),
+          image_thumbnail: be_a(String)
+        ),
         entity_ids: mention.entity_ids,
         entities: mention.entities.map(&:title),
         created_at: Time.current,
