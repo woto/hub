@@ -14,7 +14,7 @@ module Mentions
 
     def search
       authorize(%i[mentions entity], :search?)
-      @entities = Interactors::Mentions::Entities.call(q: params[:q], page: params[:page] || 0, limit: 10).object
+      @entities = Interactors::Mentions::Entities.call(q: params[:q], page: params[:page] || 0, limit: 3).object
 
       respond_to do |format|
         format.json

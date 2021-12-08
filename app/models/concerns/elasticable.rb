@@ -40,19 +40,17 @@ module Elasticable
         number_of_shards: 1,
         analysis: {
           "analyzer": {
-            "custom_edge_ngram_analyzer": {
+            "custom_edge_ngram_analyzer_v2_0_2": {
               "type": 'custom',
-              "tokenizer": 'customized_edge_tokenizer',
-              "filter": [
-                'lowercase'
-              ]
+              "tokenizer": 'customized_edge_tokenizer_v2_0_2',
+              "filter": %w[lowercase]
             }
           },
           "tokenizer": {
-            "customized_edge_tokenizer": {
+            "customized_edge_tokenizer_v2_0_2": {
               "type": 'edge_ngram',
               "min_gram": 2,
-              "max_gram": 10,
+              "max_gram": 2048,
               "token_chars": %w[
                 letter
                 digit
@@ -74,10 +72,8 @@ module Elasticable
                           type: 'keyword'
                         },
                         autocomplete: {
-                          type: 'search_as_you_type',
-                          # type: "text",
-                          analyzer: 'custom_edge_ngram_analyzer',
-                          "search_analyzer": 'standard'
+                          type: 'text',
+                          analyzer: 'custom_edge_ngram_analyzer_v2_0_2',
                         }
                       }
             else
