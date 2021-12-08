@@ -47,7 +47,7 @@ en:
         mention:
           attributes:
             entities:
-              check_items: Проверьте список элементов на предмет дубликатов.
+              check_items: список содержит дубликаты.
         post:
           attributes:
             currency:
