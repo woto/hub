@@ -12,17 +12,14 @@ module Interactors
               json.must do
                 json.multi_match do
                   json.query context.q
+                  json.tie_breaker 0
                   json.type 'bool_prefix'
                   json.fields do
                     json.array! %w[
                       title
                       title.autocomplete
-                      title.autocomplete._2gram
-                      title.autocomplete._3gram
                       lookups
                       lookups.autocomplete
-                      lookups.autocomplete._2gram
-                      lookups.autocomplete._3gram
                     ]
                   end
                 end

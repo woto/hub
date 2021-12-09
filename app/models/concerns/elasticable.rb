@@ -73,7 +73,7 @@ module Elasticable
                         },
                         autocomplete: {
                           type: 'text',
-                          analyzer: 'custom_edge_ngram_analyzer_v2_0_2',
+                          analyzer: 'custom_edge_ngram_analyzer_v2_0_2'
                         }
                       }
             else
