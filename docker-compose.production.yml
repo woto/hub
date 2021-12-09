@@ -81,7 +81,7 @@ services:
       context: ./docker/scrapper
       dockerfile: Dockerfile
     expose:
-      - 3000
+      - 4000
 
 
   elastic:

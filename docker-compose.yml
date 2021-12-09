@@ -41,7 +41,7 @@ services:
       context: ./docker/scrapper
       dockerfile: Dockerfile
     ports:
-      - ${SCRAPPER_PORT}:3000
+      - ${SCRAPPER_PORT}:4000
     volumes:
       - "./docker/scrapper:/app"
 
