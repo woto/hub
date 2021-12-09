@@ -7,7 +7,7 @@
               label: false,
               hint: false %>
 
-  <%= f.input :entity_form_ids, error: false do %>
+  <%= f.input :entity_form_ids, label: false, error: false do %>
 
     <% f.object.entities.each do |entity| %>
       <% image = entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?  %>

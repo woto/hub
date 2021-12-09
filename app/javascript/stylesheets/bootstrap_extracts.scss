@@ -1,3 +1,15 @@
+@include media-breakpoint-up(sm) {
+  .scrollable-mention-search {
+    position: absolute;
+  }
+
+  .scrollable-mention-search-parent {
+    overflow: auto!important;
+    position: relative;
+  }
+}
+
+
 .hoverable-entity {
   cursor: pointer;
 
