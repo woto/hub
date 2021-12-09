@@ -4,7 +4,6 @@ require 'rails_helper'
 
 describe MentionsController, type: :system, responsible: :admin do
   include_context 'shared mention fill helpers'
-  check_items_error = 'список содержит дубликаты'
 
   context 'when mention is new' do
     before do
@@ -15,7 +14,7 @@ describe MentionsController, type: :system, responsible: :admin do
     context 'when assigning two same entities' do
       let!(:entity) { create(:entity, title: 'some entity') }
 
-      it 'shows check_items error' do
+      it 'saves form with uniq entities' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
         fill_sentiment(sentiment: 'positive')
@@ -28,11 +27,10 @@ describe MentionsController, type: :system, responsible: :admin do
           expect do
             expect do
               click_on('Сохранить')
-              expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-              expect(page).to have_text(check_items_error)
-            end.not_to change(Mention, :count)
+              expect(page).to have_text('Упоминание было успешно создано')
+            end.to change(Mention, :count).by(1)
           end.not_to change(Entity, :count)
-        end.not_to change(EntitiesMention, :count)
+        end.to change(EntitiesMention, :count).by(1)
       end
     end
 
@@ -160,15 +158,14 @@ describe MentionsController, type: :system, responsible: :admin do
     end
 
     context 'when assigns same entity again' do
-      it 'does not store and shows error' do
+      it 'saves form with uniq entities' do
         assign_entity(title: mention.entities.first.title)
 
         expect do
           expect do
             expect do
               click_on('Сохранить')
-              expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-              expect(page).to have_text(check_items_error)
+              expect(page).to have_text('Упоминание было успешно изменено')
             end.not_to change(Mention, :count)
           end.not_to change(EntitiesMention, :count)
         end.not_to change(Entity, :count)
@@ -208,6 +205,29 @@ describe MentionsController, type: :system, responsible: :admin do
             end.to change(EntitiesMention, :count).by(1)
           end.not_to change(Entity, :count)
         end.not_to change(Mention, :count)
+      end
+    end
+
+    context 'when mention already has entity1 and entity2 and assigns entity1 and entity3' do
+      let!(:mention) { create(:mention, entities: [entity1, entity2], image_data: image_data) }
+      let!(:entity1) { create(:entity, title: 'entity 1') }
+      let!(:entity2) { create(:entity, title: 'entity 2') }
+      let!(:entity3) { create(:entity, title: 'entity 3') }
+
+      it 'saves form with uniq entities' do
+        assign_entity(title: entity1.title)
+        assign_entity(title: entity3.title)
+
+        expect do
+          expect do
+            expect do
+              click_on('Сохранить')
+              expect(page).to have_text('Упоминание было успешно изменено')
+            end.not_to change(Mention, :count)
+          end.to change(EntitiesMention, :count).by(1)
+        end.not_to change(Entity, :count)
+
+        expect(mention.reload.entities).to contain_exactly(entity1, entity2, entity3)
       end
     end
   end

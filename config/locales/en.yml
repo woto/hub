@@ -44,10 +44,6 @@ en:
         select_messenger_type: must be selected
         select_messengers: Select messengers
       models:
-        mention:
-          attributes:
-            entities:
-              check_items: список содержит дубликаты.
         post:
           attributes:
             currency:

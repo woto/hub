@@ -1,13 +1,13 @@
 <%= tag.div class: 'mb-3' do %>
 
   <%# TODO: write article %>
-  <%= f.input :entity_ids, as: :check_boxes, collection: [''], checked: ['', true],
+  <%= f.input :entity_form_ids, as: :check_boxes, collection: [''], checked: ['', true],
               wrapper_html: { class: 'd-none'},
               error: false,
               label: false,
               hint: false %>
 
-  <%= f.input :entities, error: false do %>
+  <%= f.input :entity_form_ids, error: false do %>
 
     <% f.object.entities.each do |entity| %>
       <% image = entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?  %>

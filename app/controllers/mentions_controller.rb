@@ -31,7 +31,6 @@ class MentionsController < ApplicationController
       result = @mention.save
       raise ActiveRecord::RecordInvalid unless result
     rescue ActiveRecord::RecordInvalid
-      @mention.errors.add(:entities, :check_items)
       raise ActiveRecord::Rollback
     end
 
@@ -52,7 +51,6 @@ class MentionsController < ApplicationController
       result = @mention.update(permitted_attributes(Mention))
       raise ActiveRecord::RecordInvalid unless result
     rescue ActiveRecord::RecordInvalid
-      @mention.errors.add(:entities, :check_items)
       raise ActiveRecord::Rollback
     end
 
@@ -66,14 +64,14 @@ class MentionsController < ApplicationController
   # DELETE /mentions/:id
   def destroy
     # TODO: https://github.com/rails/rails/issues/43775
-    # GlobalHelper.retryable do
-    authorize(@mention)
-    if @mention.destroy
-      redirect_back fallback_location: mentions_url, notice: t('.mention_was_successfully_destroyed')
-    else
-      redirect_back(fallback_location: mentions_url, alert: @mention.errors.full_messages.join)
+    GlobalHelper.retryable do
+      authorize(@mention)
+      if @mention.destroy
+        redirect_back fallback_location: mentions_url, notice: t('.mention_was_successfully_destroyed')
+      else
+        redirect_back(fallback_location: mentions_url, alert: @mention.errors.full_messages.join)
+      end
     end
-    # end
   end
 
   private

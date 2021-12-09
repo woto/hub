@@ -53,6 +53,13 @@ class Mention < ApplicationRecord
 
   # before_destroy :stop_destroy
 
+  # NOTE: it's used for mention form this life hack raised
+  # due to the problem described here https://github.com/rails/rails/issues/43775
+  def entity_form_ids=(ids)
+    entities = Entity.find(ids.compact_blank)
+    self.entities = entities
+  end
+
   def topics_attributes=(titles)
     topics = []
 
