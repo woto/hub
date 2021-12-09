@@ -3,7 +3,7 @@
 <% css_class << ' disabled' if @disabled %>
 
 <li>
-  <%= link_to @path, class: css_class, 'data-turbo': false do %>
+  <%= link_to @path, class: css_class, **@options do %>
     <%= @title %>
   <% end %>
 </li>
