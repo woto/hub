@@ -3,6 +3,7 @@
   <ul class="navbar-nav py-lg-2">
 
     <%= render Left::Menu::ItemComponent.new(
+        options: { 'data-turbo': false },
         title: t('left_menu.dashboard'),
         path: { controller: '/dashboard', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('dashboard') },
@@ -11,6 +12,7 @@
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
+        options: { 'data-turbo': false },
         title: t('left_menu.feeds'),
         path: { controller: '/tables/feeds', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('feeds') && p.exclude?('offers') },
@@ -19,6 +21,7 @@
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
+        options: { 'data-turbo': false },
         title: t('left_menu.offers'),
         path: { controller: '/tables/offers', action: 'index', feed_id: nil, advertiser_id: nil, feed_category_id: nil },
         current_page: request.path.yield_self { |p| p.include?('offers') && !params[:favorite_id] },
@@ -36,6 +39,7 @@
       <% component.items do %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+          options: { 'data-turbo': false },
           title: t('left_menu.posts'),
           path: { controller: '/tables/posts', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('posts') },
@@ -44,6 +48,7 @@
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+          options: { 'data-turbo': false },
           title: t('left_menu.realms'),
           path: { controller: '/tables/realms', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('realms') },
@@ -52,6 +57,7 @@
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+          options: { 'data-turbo': false },
           title: t('left_menu.post_categories'),
           path: { controller: '/tables/post_categories', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('post_categories') },
@@ -79,6 +85,7 @@
       <% component.items do %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+          options: {  },
           title: t('left_menu.mentions'),
           path: { controller: '/tables/mentions', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('mentions') },
@@ -87,6 +94,7 @@
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+          options: {  },
           title: t('left_menu.entities'),
           path: { controller: '/tables/entities', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('entities') },
@@ -107,6 +115,7 @@
       <% component.items do %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+          options: { 'data-turbo': false },
             title: t('left_menu.transactions'),
             path: { controller: '/tables/transactions', action: 'index' },
             current_page: request.path.yield_self { |p| p.include?('transactions') },
@@ -114,6 +123,7 @@
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+            options: { 'data-turbo': false },
             title: t('left_menu.accounts'),
             path: { controller: '/tables/accounts', action: 'index' },
             current_page: request.path.yield_self { |p| p.include?('accounts') },
@@ -121,6 +131,7 @@
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
+            options: { 'data-turbo': false },
             title: t('left_menu.checks'),
             path: { controller: '/tables/checks', action: 'index' },
             current_page: request.path.yield_self { |p| p.include?('checks') },
@@ -132,6 +143,7 @@
 
     <% if policy(:user).index? %>
       <%= render Left::Menu::ItemComponent.new(
+        options: { 'data-turbo': false },
         title: t('left_menu.users'),
         path: { controller: '/tables/users', action: 'index' },
         current_page: request.path.yield_self { |p| p.include?('users') },
@@ -141,6 +153,7 @@
     <% end %>
 
     <%= render Left::Menu::ItemComponent.new(
+        options: { 'data-turbo': false },
         title: t('left_menu.settings'),
         path: { controller: '/settings/profiles', action: 'edit' },
         current_page: request.path.yield_self { |p| p.include?('profile') || p.include?('password') || p.include?('email') || p.include?('danger_zone') || p.include?('api_key') },
@@ -149,6 +162,7 @@
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
+      options: { 'data-turbo': false },
       title: t('left_menu.favorites'),
       path: { controller: '/tables/favorites', action: 'index' },
       current_page: request.path.yield_self do |p|
@@ -159,6 +173,7 @@
     ) %>
 
     <%= render Left::Menu::ItemComponent.new(
+      options: { 'data-turbo': false },
       title: t('left_menu.api_docs'),
       path: { controller: '/api_docs', action: 'index' },
       current_page: request.path.yield_self do |p|
@@ -172,6 +187,7 @@
 
     <% if help_realm %>
       <%= render Left::Menu::ItemComponent.new(
+        options: { 'data-turbo': false },
         title: t('left_menu.help'),
         path: articles_url({ host: help_realm.domain, locale: nil }),
         current_page: nil,
