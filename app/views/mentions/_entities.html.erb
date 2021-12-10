@@ -10,10 +10,9 @@
   <%= f.input :entity_form_ids, label: false, error: false do %>
 
     <% f.object.entities.each do |entity| %>
-      <% image = entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?  %>
       <%= render Entities::CardComponent.new(
         entity_id: entity.id,
-        image: image,
+        image: (entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?),
         title: entity.title,
         lookups: entity.lookups.map(&:to_label),
         controllable: true,
