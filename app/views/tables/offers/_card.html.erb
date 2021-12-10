@@ -2,7 +2,7 @@
 
   <% kind = '_id' %>
   <%= render StarFavoriteComponent.new(
-    is_favorite: @favorites_store.find(row._id, '_id'),
+    is_favorite: @favorites_store.find(row._id, kind),
     ext_id: row._id,
     favorites_items_kind: kind,
     bobber: {

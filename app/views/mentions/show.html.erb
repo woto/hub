@@ -25,6 +25,22 @@
           <div class="card mb-3">
             <div class="card-body">
               <dl class="row">
+
+                <div class="position-relative">
+                  <% kind = 'mentions' %>
+                  <% favorites_store = FavoritesStore.new(current_user) %>
+                  <% favorites_store.append(@mention.id, kind) %>
+
+                  <%= render StarFavoriteComponent.new(
+                    is_favorite: favorites_store.find(@mention.id, kind),
+                    ext_id: @mention.id,
+                    favorites_items_kind: kind,
+                    bobber: {
+                      class: 'position-absolute z-index-decreased',
+                      style: 'top: -5px; right: 0px;'
+                    }) %>
+                </div>
+
                 <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= @mention.id %> </dd>
 
