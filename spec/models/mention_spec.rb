@@ -256,4 +256,23 @@ RSpec.describe Mention, type: :model do
       end
     end
   end
+
+
+  describe '#strip_title' do
+    subject { build(:mention, title: " hello \n ") }
+
+    it 'strips title' do
+      subject.save!
+      expect(subject.reload.title).to eq('hello')
+    end
+  end
+
+  describe '#strip_url' do
+    subject { build(:mention, url: " http://example.com \n ") }
+
+    it 'strips url' do
+      subject.save!
+      expect(subject.reload.url).to eq('http://example.com')
+    end
+  end
 end

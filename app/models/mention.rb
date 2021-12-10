@@ -46,6 +46,9 @@ class Mention < ApplicationRecord
   has_many :mentions_topics, dependent: :destroy
   has_many :topics, through: :mentions_topics, counter_cache: :topics_count
 
+  before_validation :strip_title
+  before_validation :strip_url
+
   validates :topics, :image, :entities, :url, :sentiment, :kinds, presence: true
   validates :entities, :topics, length: { minimum: 1 }
   validates :url, uniqueness: true
@@ -116,5 +119,13 @@ class Mention < ApplicationRecord
 
   def validate_kinds_length
     errors.add(:kinds, :inclusion) if Array(kinds).compact_blank.empty?
+  end
+
+  def strip_title
+    self.title = title&.strip
+  end
+
+  def strip_url
+    self.url = url&.strip
   end
 end

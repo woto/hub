@@ -86,4 +86,13 @@ RSpec.describe Entity, type: :model do
       expect(subject.to_label).to eq('entity')
     end
   end
+
+  describe '#strip_title' do
+    subject { build(:entity, title: " hello \n ") }
+
+    it 'strips title' do
+      subject.save!
+      expect(subject.reload.title).to eq('hello')
+    end
+  end
 end

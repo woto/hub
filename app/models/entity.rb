@@ -37,6 +37,8 @@ class Entity < ApplicationRecord
 
   has_many :lookups, dependent: :destroy
 
+  before_validation :strip_title
+
   validates :title, presence: true
 
   accepts_nested_attributes_for :lookups, allow_destroy: true, reject_if: :all_blank
@@ -57,5 +59,11 @@ class Entity < ApplicationRecord
 
   def to_label
     title
+  end
+
+  private
+
+  def strip_title
+    self.title = title&.strip
   end
 end

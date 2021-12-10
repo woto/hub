@@ -34,4 +34,13 @@ RSpec.describe Lookup, type: :model do
       expect(subject.to_label).to eq('title')
     end
   end
+
+  describe '#strip_title' do
+    subject { build(:lookup, title: " hello \n ") }
+
+    it 'strips title' do
+      subject.save!
+      expect(subject.reload.title).to eq('hello')
+    end
+  end
 end

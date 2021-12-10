@@ -19,9 +19,17 @@
 class Lookup < ApplicationRecord
   belongs_to :entity, counter_cache: true
 
+  before_validation :strip_title
+
   validates :title, presence: true
 
   def to_label
     title
+  end
+
+  private
+
+  def strip_title
+    self.title = title&.strip
   end
 end
