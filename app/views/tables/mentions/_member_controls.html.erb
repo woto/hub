@@ -9,6 +9,8 @@
 
     <%= link_to t('buttons.show'), mention_path(mention), class: 'dropdown-item' %>
 
+    <%= link_to t('.follow'), mention.url, class: 'dropdown-item', rel: 'noreferrer' %>
+
     <% if policy(mention).edit? %>
       <%= link_to t('buttons.edit'), edit_mention_path(mention), class: 'dropdown-item' %>
     <% end %>

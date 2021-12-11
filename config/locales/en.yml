@@ -958,6 +958,9 @@ en:
       destroy:
         workspace_was_successfully_destroyed: Workspace was successfully destroyed
   tables:
+    mentions:
+      member_controls:
+        follow: Follow
     offers:
       card_wrapper:
         follow_link: Follow link

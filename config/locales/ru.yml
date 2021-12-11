@@ -968,6 +968,9 @@ ru:
       destroy:
         workspace_was_successfully_destroyed: Рабочая область была успешно удалена
   tables:
+    mentions:
+      member_controls:
+        follow: Перейти
     offers:
       card_wrapper:
         follow_link: Перейти
