@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Entities::CardComponent < ViewComponent::Base
-  def initialize(entity_id:, image:, title:, lookups:, assignable:, controllable:, form_id:)
+  def initialize(entity_id:, image:, title:, intro:, lookups:, assignable:, controllable:, form_id:)
     super
     @entity_id = entity_id
     @image = image
     @title = title
+    @intro = intro
     @lookups = lookups
     @assignable = assignable
     @controllable = controllable

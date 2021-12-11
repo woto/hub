@@ -9,7 +9,7 @@ describe EntityPolicy do
     subject { described_class.new(user, nil).permitted_attributes }
 
     let(:permitted_attributes) do
-      [:title, :picture, :image, { lookups_attributes: %i[id title _destroy] }]
+      [:title, :picture, :image, :intro, :body, { lookups_attributes: %i[id title _destroy] }]
     end
 
     context 'with user' do
@@ -34,10 +34,12 @@ describe EntityPolicy do
     end
   end
 
-  # everybody can create entities
+  # authenticated users can create
   describe 'create?' do
+    let(:user) { create(:user) }
+
     permissions :create? do
-      it { is_expected.to permit(nil, nil) }
+      it { is_expected.to permit(user, nil) }
     end
   end
 

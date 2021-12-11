@@ -275,6 +275,8 @@ ru:
   drop_image_here_or_click: Drop image here or click
   edit: Изменить
   entities:
+    body:
+      body: Статья
     create:
       entity_was_successfully_created: Объект упоминания был успешно создан
     destroy:
@@ -283,6 +285,8 @@ ru:
       editorial: Редактура
     form:
       submit_and_new: Сохранить и новый
+    intro:
+      intro: Вступление
     lookups:
       add_lookup: Добавить синоним
     show:
@@ -761,10 +765,12 @@ ru:
         displayed_columns: Отображаемые столбцы
       mention:
         advertiser_ext_ids: Advertiser ext ids
+        body: Статья
         city: City
         entities: Объекты упоминания
         entities_count: Entities count
         id: ID
+        intro: Вступление
         kind: Kind
         kinds: Тип упоминания
         published_at: Дата публикации

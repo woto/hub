@@ -9,7 +9,7 @@ class EntityPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = [
-      :title, :picture, :image, { lookups_attributes: %i[id title _destroy] }
+      :title, :picture, :image, :intro, :body, { lookups_attributes: %i[id title _destroy] }
     ]
     attributes.append(:user_id) if user.staff?
     attributes
@@ -24,18 +24,22 @@ class EntityPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    true if user
   end
 
   def update?
     return true if super
 
-    true if context.user == user
+    true if user && context.user == user
   end
 
   def destroy?
     return true if super
 
-    true if context.user == user
+    true if user && context.user == user
+  end
+
+  def popover?
+    true
   end
 end

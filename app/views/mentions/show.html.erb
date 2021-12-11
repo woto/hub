@@ -88,7 +88,7 @@
                     image_class: 'img-thumbnail width-200 max-height-500') %>
                 </dd>
 
-                <% if current_user.staff? %>
+                <% if current_user&.staff? %>
                   <hr class="my-2">
                   <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                   <dd class="col-sm-9"> <%= @mention.user.to_label %> </dd>
@@ -110,8 +110,8 @@
                   class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }" %>
       <%= link_to t('delete'), mention_path(@mention.id),
                   class: "btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
-                  method: :delete,
-                  data: { confirm: t('are_you_sure') } %>
+                  'data-turbo-method': :delete,
+                  'data-turbo-confirm': t('are_you_sure') %>
       <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
     </div>
   </div>

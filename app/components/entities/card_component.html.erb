@@ -25,7 +25,9 @@
 
       <div class="flex-grow-1 m-2 overflow-auto d-flex flex-column justify-content-center">
         <div>
-          <%= tag.span @title, class: 'entity-title' %>
+          <%= tag.div @title, class: 'entity-title' %>
+
+          <%= tag.small @intro, class: 'entity-intro', class: 'text-secondary' %>
 
           <% if @lookups.present? %>
             <div class="entity-lookups mt-2">

@@ -3,13 +3,7 @@
 class MentionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      raise Pundit::NotAuthorizedError, 'responsible is not set' unless user
-
-      if user.staff?
-        scope.all
-      else
-        scope.where(user: user)
-      end
+      scope.all
     end
   end
 
@@ -27,24 +21,22 @@ class MentionPolicy < ApplicationPolicy
   end
 
   def show?
-    return true if super
-
-    true if context.user == user
+    true
   end
 
   def create?
-    true
+    true if user
   end
 
   def update?
     return true if super
 
-    true if context.user == user
+    true if user && context.user == user
   end
 
   def destroy?
     return true if super
 
-    true if context.user == user
+    true if user && context.user == user
   end
 end

@@ -4,6 +4,7 @@ class EntitiesController < ApplicationController
   layout 'backoffice'
   before_action :set_entity, only: %i[show edit update destroy popover]
   around_action :use_logidze_responsible, only: %i[create update]
+  skip_before_action :authenticate_user!, only: [:show, :popover]
 
   # GET /entities/:id
   def show
@@ -71,7 +72,7 @@ class EntitiesController < ApplicationController
   end
 
   def popover
-    # TODO: authorize(@entity)
+    authorize(@entity)
     respond_to do |format|
       format.json
     end

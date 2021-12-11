@@ -6,6 +6,7 @@
 #
 #  id             :bigint           not null, primary key
 #  image_data     :jsonb
+#  intro          :text
 #  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string

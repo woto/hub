@@ -12,7 +12,7 @@ describe MentionPolicy, responsible: :admin do
 
     let(:permitted_attributes) do
       [:published_at, :sentiment, :url, :image, :title,
-       { kinds: [], entity_ids: [], tags: [], advertiser_ext_ids: [], topics_attributes: [] }]
+       { kinds: [], entity_form_ids: [], tags: [], advertiser_ext_ids: [], topics_attributes: [] }]
     end
 
     context 'with user' do
@@ -37,10 +37,12 @@ describe MentionPolicy, responsible: :admin do
     end
   end
 
-  # everybody can create mentions
+  # authenticated users can create
   describe 'create?' do
+    let(:user) { create(:user) }
+
     permissions :create? do
-      it { is_expected.to permit(nil, nil) }
+      it { is_expected.to permit(user, nil) }
     end
   end
 
@@ -57,7 +59,7 @@ describe MentionPolicy, responsible: :admin do
     let(:user) { create(:user) }
     let(:policy_context) { create(:mention, user: user) }
 
-    permissions :update?, :show?, :destroy? do
+    permissions :update?, :destroy? do
       it { is_expected.not_to permit(create(:user), policy_context) }
     end
   end

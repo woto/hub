@@ -1,16 +1,14 @@
-import { Controller } from "stimulus"
-import { ApplicationController } from 'stimulus-use'
+import {Controller} from "stimulus"
+import {ApplicationController} from 'stimulus-use'
 import 'selectize/dist/js/selectize.min.js';
-import { useDispatch } from 'stimulus-use'
-
+import {useDispatch} from 'stimulus-use'
 export default class extends ApplicationController {
     static values = {
         placeholder: String
     }
     #selectize;
 
-    disconnect() {
-        console.log('disconnected')
+    teardown() {
         console.log(this.#selectize[0])
         console.log(this.#selectize[0].selectize)
         this.#selectize[0].selectize.destroy()
@@ -27,10 +25,10 @@ export default class extends ApplicationController {
             labelField: 'title',
             searchField: 'title',
             placeholder: that.placeholderValue,
-            create: function(input, callback){
-                return callback({ title: input });
+            create: function (input, callback) {
+                return callback({title: input});
             },
-            load: function(query, callback) {
+            load: function (query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
                     url: '/api/mentions/topics',
@@ -38,7 +36,7 @@ export default class extends ApplicationController {
                     data: {
                         q: query
                     },
-                    success: function(res) {
+                    success: function (res) {
                         callback(res);
                     }
                 });

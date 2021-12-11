@@ -1,0 +1,19 @@
+<%= render AccordionComponent.new(accordion_id: 'entity-intro-accordion', css_class: 'mb-3 bg-white') do |accordion_component| %>
+  <%= accordion_component.item(item_id: 'entity-intro-item') do |item_component| %>
+    <%= item_component.header do %>
+      <%= t('.intro') %>
+    <% end %>
+
+    <%= item_component.body(css_class: 'pt-0') do %>
+      <%= tag.div 'data-controller': "character-counter" do %>
+        <%= f.input :intro,
+                    label: false,
+                    input_html: {
+                      rows: 3,
+                      'data-character-counter-target': "input"
+                    } %>
+        <strong data-character-counter-target="counter"></strong> / 250
+    <% end %>
+    <% end %>
+  <% end %>
+<% end %>

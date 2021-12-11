@@ -271,6 +271,8 @@ en:
   drop_image_here_or_click: Drop image here or click
   edit: Edit
   entities:
+    body:
+      body: Body
     create:
       entity_was_successfully_created: Entity was successfully created
     destroy:
@@ -279,6 +281,8 @@ en:
       editorial: Editorial
     form:
       submit_and_new: Submit and new
+    intro:
+      intro: Intro
     lookups:
       add_lookup: Add lookup
     show:
@@ -751,10 +755,12 @@ en:
         displayed_columns: Displayed columns
       mention:
         advertiser_ext_ids: Advertiser ext ids
+        body: Body
         city: City
         entities: Mentioned entities
         entities_count: Entities count
         id: Id
+        intro: Intro
         kind: Kind
         kinds: Kinds
         published_at: Published at

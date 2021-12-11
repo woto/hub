@@ -87,7 +87,7 @@ function delay(ms) {
 }
 
 async function takeScreenshotWithDelay(page) {
-  await delay(2000)
+  await delay(1000)
   try {
     return await page.screenshot({encoding: "base64"})
   } catch (e) {
@@ -131,18 +131,21 @@ app.get('/screenshot', async (request, response) => {
     })
 
     try {
-      await page.goto(urlString);
+      // await page.goto(urlString);
+      await page.goto(urlString, {waitUntil: "domcontentloaded"});
     } catch (e) {
       throw Error('unable to goto to the url')
     }
 
     const image = await takeScreenshotWithDelay(page);
     const publisher = await getPublisher(urlString, page);
+    const html = await page.content();
     const title = await page.title();
 
     response.send({
           image: `data:image/png;base64, ${image}`,
           publisher: publisher,
+          html: html,
           title: title
     })
   } catch (e) {

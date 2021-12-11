@@ -617,7 +617,8 @@ CREATE TABLE public.entities (
     log_data jsonb,
     image_data jsonb,
     user_id bigint NOT NULL,
-    lookups_count integer DEFAULT 0 NOT NULL
+    lookups_count integer DEFAULT 0 NOT NULL,
+    intro text
 );
 
 
@@ -950,7 +951,9 @@ CREATE TABLE public.mentions (
     image_data jsonb,
     kinds jsonb DEFAULT '[]'::jsonb NOT NULL,
     topics_count integer DEFAULT 0 NOT NULL,
-    title character varying
+    title character varying,
+    html text,
+    text text
 );
 
 
@@ -2749,6 +2752,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211201001238'),
 ('20211201032640'),
 ('20211207005258'),
-('20211207072249');
+('20211207072249'),
+('20211210042253'),
+('20211210122043'),
+('20211210122413');
 
 

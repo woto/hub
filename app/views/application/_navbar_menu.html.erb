@@ -79,7 +79,7 @@
       title: t("left_menu.mentions"),
       current_page: request.path.yield_self { |p| p.include?('mentions') || p.include?('entities') },
       icon: '<i class="fas fa-at"></i>',
-      disabled: !user_signed_in?
+      disabled: false
     ) do |component| %>
 
       <% component.items do %>
@@ -90,7 +90,7 @@
           path: { controller: '/tables/mentions', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('mentions') },
           # icon: '<i class="fas fa-pen"></i>',
-          disabled: !user_signed_in?
+          disabled: false
         ) %>
 
         <%= render Left::Menu::Dropdown::ItemComponent.new(
@@ -99,7 +99,7 @@
           path: { controller: '/tables/entities', action: 'index' },
           current_page: request.path.yield_self { |p| p.include?('entities') },
           # icon: '<i class="fas fa-pen"></i>',
-          disabled: !user_signed_in?
+          disabled: false
         ) %>
 
       <% end %>

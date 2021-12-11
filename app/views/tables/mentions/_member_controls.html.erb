@@ -5,16 +5,15 @@
   </button>
 
   <div class="dropdown-menu">
-
-    <%= link_to t('buttons.show'), mention_path(row.id), class: 'dropdown-item' %>
-
     <% mention = Mention.find(row.id) %>
 
+    <%= link_to t('buttons.show'), mention_path(mention), class: 'dropdown-item' %>
+
     <% if policy(mention).edit? %>
-      <%= link_to t('buttons.edit'), edit_mention_path(row.id), class: 'dropdown-item' %>
+      <%= link_to t('buttons.edit'), edit_mention_path(mention), class: 'dropdown-item' %>
     <% end %>
     <% if policy(mention).destroy? %>
-      <%= link_to t('buttons.delete'), mention_path(row.id), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
+      <%= link_to t('buttons.delete'), mention_path(mention), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
     <% end %>
 
   </div>

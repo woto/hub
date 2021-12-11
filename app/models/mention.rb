@@ -6,10 +6,12 @@
 #
 #  id             :bigint           not null, primary key
 #  entities_count :integer          default(0), not null
+#  html           :text
 #  image_data     :jsonb
 #  kinds          :jsonb            not null
 #  published_at   :datetime
 #  sentiment      :integer          not null
+#  text           :text
 #  title          :string
 #  topics_count   :integer          default(0), not null
 #  url            :text
@@ -76,6 +78,10 @@ class Mention < ApplicationRecord
     end
 
     self.topics = topics
+  end
+
+  def to_param
+    [id, title&.parameterize].join('-')
   end
 
   def as_indexed_json(_options = {})

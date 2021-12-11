@@ -36,8 +36,15 @@
               <%= render 'image', f: f %>
 
               <%= f.input :title,
+                          as: :hidden,
                           input_html: {
                             "data-mention-url-target": 'title'
+                          } %>
+
+              <%= f.input :html,
+                          as: :hidden,
+                          input_html: {
+                            "data-mention-url-target": 'html'
                           } %>
 
               <%= render 'topics', f: f %>

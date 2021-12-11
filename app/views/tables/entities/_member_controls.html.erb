@@ -9,14 +9,14 @@
   <div class="dropdown-menu">
 
     <% if policy(entity).show? %>
-      <%= link_to t('buttons.show'), entity_path(row.id), class: 'dropdown-item' %>
+      <%= link_to t('buttons.show'), entity_path(entity), class: 'dropdown-item' %>
     <% end %>
 
     <% if policy(entity).edit? %>
-      <%= link_to t('buttons.edit'), edit_entity_path(row.id), class: 'dropdown-item' %>
+      <%= link_to t('buttons.edit'), edit_entity_path(entity), class: 'dropdown-item' %>
     <% end %>
     <% if policy(entity).destroy? %>
-      <%= link_to t('buttons.delete'), entity_path(row.id), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
+      <%= link_to t('buttons.delete'), entity_path(entity), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
     <% end %>
 
   </div>

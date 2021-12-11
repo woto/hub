@@ -4,6 +4,7 @@ module Tables
   class EntitiesController < ApplicationController
     ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
     REQUIRED_PARAMS = %i[per order sort columns].freeze
+    skip_before_action :authenticate_user!, only: [:index]
 
     include Workspaceable
     include Tableable

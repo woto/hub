@@ -4,6 +4,7 @@ module Tables
   class MentionsController < ApplicationController
     ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
     REQUIRED_PARAMS = %i[per order sort columns].freeze
+    skip_before_action :authenticate_user!, only: [:index]
 
     include Workspaceable
     include Tableable
@@ -11,7 +12,7 @@ module Tables
 
     # GET /checks
     def index
-      get_index(%w[id entity_ids], filter_ids: ([current_user.id]  unless current_user.staff?))
+      get_index(%w[id entity_ids])
     end
 
     # TODO: action?!

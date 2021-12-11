@@ -5,7 +5,7 @@ import { ApplicationController, useDebounce } from 'stimulus-use'
 import * as bootstrap from "bootstrap";
 
 export default class extends ApplicationController {
-    static targets = [ "inputFile", "imagePreview", "url", "title", "spinner", "similarUrls" ]
+    static targets = [ "inputFile", "imagePreview", "url", "title", "html", "spinner", "similarUrls" ]
     static debounces = [{
         name: 'input',
         wait: 1000
@@ -58,6 +58,7 @@ export default class extends ApplicationController {
                 },
                 success: function(res) {
                     that.titleTarget.value = res.title;
+                    that.htmlTarget.value = res.html;
                     that.imagePreviewTarget.setAttribute('src', res.image)
                     that.spinnerTarget.classList.add('d-none');
                     that.spinnerTarget.classList.remove('d-block');

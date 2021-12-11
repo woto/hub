@@ -68,6 +68,13 @@
                     <%= image_pack_tag('media/images/icon-404-100.png', options) %>
                   <% end %>
                 </dd>
+
+                <dt class="col-sm-3"> <%= t('intro', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @entity.intro %> </dd>
+
+                <dt class="col-sm-3"> <%= t('body', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+                <dd class="col-sm-9"> <%= @entity.body %> </dd>
+
               </dl>
             </div>
           </div>

@@ -6,6 +6,7 @@
 #
 #  id             :bigint           not null, primary key
 #  image_data     :jsonb
+#  intro          :text
 #  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string
@@ -32,14 +33,18 @@ class Entity < ApplicationRecord
 
   belongs_to :user, counter_cache: true
 
+  has_rich_text :body
+
   has_many :entities_mentions, dependent: :restrict_with_error
   has_many :mentions, through: :entities_mentions, counter_cache: :mentions_count
 
   has_many :lookups, dependent: :destroy
 
   before_validation :strip_title
+  before_validation :strip_intro
 
   validates :title, presence: true
+  validates :intro, length: { maximum: 250 }
 
   accepts_nested_attributes_for :lookups, allow_destroy: true, reject_if: :all_blank
 
@@ -47,6 +52,7 @@ class Entity < ApplicationRecord
     {
       id: id,
       title: title,
+      intro: intro,
       lookups: lookups.map(&:to_label),
       lookups_count: lookups_count,
       image: image ? image.derivation_url(:thumbnail, 100, 100) : '',
@@ -61,9 +67,17 @@ class Entity < ApplicationRecord
     title
   end
 
+  def to_param
+    [id, title&.parameterize].join('-')
+  end
+
   private
 
   def strip_title
     self.title = title&.strip
+  end
+
+  def strip_intro
+    self.intro = intro&.strip
   end
 end

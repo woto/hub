@@ -10,7 +10,6 @@ class MentionsSearchQuery
       required(:q).maybe(:string)
       required(:from).filled(:integer)
       required(:size).filled(:integer)
-      required(:filter_ids).maybe { array? { each { string? } } }
       required(:sort).maybe(:string)
       required(:order).maybe(:string)
       required(:locale).maybe(:symbol)
@@ -28,14 +27,6 @@ class MentionsSearchQuery
               model: context.model,
               filters: context.filters
             ).object
-
-            if context.filter_ids.present?
-              json.array! ['fuck!'] do
-                json.terms do
-                  json.user_id context.filter_ids
-                end
-              end
-            end
           end
 
           if context.q.present?
