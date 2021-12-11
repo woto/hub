@@ -13,7 +13,8 @@ describe DashboardController, type: :system do
 
   context 'articles-latest turbo-frame' do
     it 'renders articles-latest frame' do
-      expect(page).to have_css('turbo-frame#articles-latest[src="/ru/frames/articles/latest"]')
+      frame = find('turbo-frame#articles-latest')
+      expect(frame['src']).to end_with('/ru/frames/articles/latest')
     end
   end
 

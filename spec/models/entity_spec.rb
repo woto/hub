@@ -71,6 +71,7 @@ RSpec.describe Entity, type: :model do
         lookups: entity.lookups.map(&:to_label),
         lookups_count: entity.lookups_count,
         title: entity.title,
+        intro: nil,
         image: be_a(String),
         user_id: entity.user_id,
         mentions_count: entity.mentions_count,

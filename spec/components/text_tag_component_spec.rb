@@ -8,7 +8,7 @@ RSpec.describe TextTagComponent, type: :component do
       expect(
         render_inline(described_class.new(text_tag: 'https://example.com')).to_html
       ).to eq <<~HERE
-        <span class="badge bg-cyan user-select-all me-1 mb-1">
+        <span class="badge bg-cyan user-select-all me-1 mb-1 text-break d-inline-block">
           <a class="text-white" rel="noreferrer" href="https://example.com">https://example.com</a>
         </span>
       HERE
@@ -19,7 +19,7 @@ RSpec.describe TextTagComponent, type: :component do
         expect(
           render_inline(described_class.new(text_tag: 'https://example.com', linkify: false)).to_html
         ).to eq <<~HERE
-          <span class="badge bg-cyan user-select-all me-1 mb-1">
+          <span class="badge bg-cyan user-select-all me-1 mb-1 text-break d-inline-block">
             https://example.com
           </span>
         HERE
@@ -32,7 +32,7 @@ RSpec.describe TextTagComponent, type: :component do
       expect(
         render_inline(described_class.new(text_tag: 'example')).to_html
       ).to eq <<~HERE
-        <span class="badge bg-cyan user-select-all me-1 mb-1">
+        <span class="badge bg-cyan user-select-all me-1 mb-1 text-break d-inline-block">
           example
         </span>
       HERE

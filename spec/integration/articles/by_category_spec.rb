@@ -43,7 +43,8 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
 
     it 'passes query params to frame' do
       src = frames_articles_month_path(per: 5, sort: :created_at, order: :asc)
-      expect(page).to have_css("turbo-frame#articles-by-month[src='#{src}']")
+      frame = find('turbo-frame#articles-by-month')
+      expect(frame['src']).to end_with(src)
     end
   end
 
@@ -58,7 +59,8 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
 
     it 'passes query params to frame' do
       src = frames_articles_tag_path(per: 5, sort: :created_at, order: :asc)
-      expect(page).to have_css("turbo-frame#articles-by-tag[src='#{src}']")
+      frame = find('turbo-frame#articles-by-tag')
+      expect(frame['src']).to end_with(src)
     end
   end
 
@@ -73,7 +75,8 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
 
     it 'passes query params to frame' do
       src = frames_articles_category_path(category_id: post_category.id, per: 5, sort: :created_at, order: :asc)
-      expect(page).to have_css("turbo-frame#articles-by-category[src='#{src}']")
+      frame = find('turbo-frame#articles-by-category')
+      expect(frame['src']).to end_with(src)
     end
   end
 end
