@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class AccountForm < BaseForm
+  class AccountsMapping < BaseMapping
     DEFAULTS = %w[id subjectable_label code amount subjectable_id subjectable_type created_at updated_at].freeze
 
     self.all_columns = [

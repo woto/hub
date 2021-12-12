@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class CheckForm < BaseForm
+  class ChecksMapping < BaseMapping
     DEFAULTS = %w[id user_id amount status created_at updated_at].freeze
 
     self.all_columns = [

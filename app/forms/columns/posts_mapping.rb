@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class PostForm < BaseForm
+  class PostsMapping < BaseMapping
     DEFAULTS = %w[id title post_category status amount user_id created_at updated_at].freeze
 
     self.all_columns = [

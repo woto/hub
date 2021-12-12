@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class FeedForm < BaseForm
+  class FeedsMapping < BaseMapping
     DEFAULTS = %w[id advertiser_name advertiser_picture name offers_count succeeded_at created_at].freeze
 
     self.all_columns = [

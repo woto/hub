@@ -1,4 +1,4 @@
-class Columns::BaseForm
+class Columns::BaseMapping
   include ActiveModel::Serialization
   include ActiveModel::Model
   include ActiveModel::Attributes

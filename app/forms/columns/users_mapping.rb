@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class UserForm < BaseForm
+  class UsersMapping < BaseMapping
     DEFAULTS = %w[id email posts_count].freeze
 
     self.all_columns = [

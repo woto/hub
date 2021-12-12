@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class FavoriteForm < BaseForm
+  class FavoritesMapping < BaseMapping
     DEFAULTS = %w[id name kind is_default favorites_items_count].freeze
 
     self.all_columns = [

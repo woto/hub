@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class ExchangeRateForm < BaseForm
+  class ExchangeRatesMapping < BaseMapping
     DEFAULTS = %w[].freeze
 
     self.all_columns = [

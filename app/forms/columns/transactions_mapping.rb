@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class TransactionForm < BaseForm
+  class TransactionsMapping < BaseMapping
     DEFAULTS = %w[id transaction_group_id code credit_label credit_amount debit_label debit_amount created_at updated_at].freeze
 
     self.all_columns = [

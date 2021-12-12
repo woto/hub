@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class EntityForm < BaseForm
+  class EntitiesMapping < BaseMapping
     DEFAULTS = %w[id image title intro created_at].freeze
 
     self.all_columns = [

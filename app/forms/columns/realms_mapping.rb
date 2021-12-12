@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class RealmForm < BaseForm
+  class RealmsMapping < BaseMapping
     DEFAULTS = %w[id domain kind locale title post_categories_count posts_count].freeze
 
     self.all_columns = [

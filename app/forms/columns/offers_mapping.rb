@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class OfferForm < BaseForm
+  class OffersMapping < BaseMapping
     DEFAULTS = %w[].freeze
 
     self.all_columns = []

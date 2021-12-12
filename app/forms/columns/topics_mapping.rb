@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class TopicForm < BaseForm
+  class TopicsMapping < BaseMapping
     DEFAULTS = %w[id].freeze
 
     self.all_columns = [

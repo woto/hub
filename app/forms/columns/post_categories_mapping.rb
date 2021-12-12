@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Columns
-  class PostCategoryForm < BaseForm
+  class PostCategoriesMapping < BaseMapping
     DEFAULTS = %w[id title realm_id posts_count path].freeze
 
     self.all_columns = [
