@@ -651,7 +651,7 @@ CREATE TABLE public.entities_mentions (
     mention_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    is_main boolean
+    is_main boolean DEFAULT false NOT NULL
 );
 
 

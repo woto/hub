@@ -54,6 +54,7 @@
         <%= hidden_field_tag "mention[related_entities][#{@entity_id}][id]", @entity_id, form: @form_id %>
 
         <div class="form-check form-switch">
+          <%= hidden_field_tag "mention[related_entities][#{@entity_id}][is_main]", false, form: @form_id %>
           <%= check_box_tag "mention[related_entities][#{@entity_id}][is_main]", '1', @is_main, class: "form-check-input", form: @form_id %>
         </div>
 

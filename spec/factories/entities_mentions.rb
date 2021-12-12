@@ -3,7 +3,7 @@
 # Table name: entities_mentions
 #
 #  id         :bigint           not null, primary key
-#  is_main    :boolean
+#  is_main    :boolean          default(FALSE), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  entity_id  :bigint           not null
