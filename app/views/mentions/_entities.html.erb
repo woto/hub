@@ -9,13 +9,14 @@
 
   <%= f.input :entity_form_ids, label: false, error: false do %>
 
-    <% f.object.entities.each do |entity| %>
+    <% f.object.entities_mentions.each do |entity_mention| %>
       <%= render Entities::CardComponent.new(
-        entity_id: entity.id,
-        image: (entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?),
-        title: entity.title,
-        intro: entity.intro,
-        lookups: entity.lookups.map(&:to_label),
+        entity_id: entity_mention.entity.id,
+        is_main: entity_mention.is_main,
+        image: (entity_mention.entity.image.derivation_url(:thumbnail, 100, 100) if entity_mention.entity.image.present?),
+        title: entity_mention.entity.title,
+        intro: entity_mention.entity.intro,
+        lookups: entity_mention.entity.lookups.map(&:to_label),
         controllable: true,
         assignable: false,
         form_id: f.options[:html][:id]

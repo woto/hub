@@ -44,7 +44,7 @@ RSpec.describe Mention, type: :model do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:entities) }
+    it { is_expected.to validate_presence_of(:entities_mentions) }
     it { is_expected.to validate_presence_of(:url) }
     it { is_expected.to validate_presence_of(:topics) }
     it { is_expected.to validate_presence_of(:sentiment) }
@@ -63,7 +63,7 @@ RSpec.describe Mention, type: :model do
     describe '#entities minimal length' do
       subject { build(:mention, entities: []).tap(&:valid?).errors.details }
 
-      it { is_expected.to eq({ entities: [{ error: :blank }, { count: 1, error: :too_short }] }) }
+      it { is_expected.to eq({ entities_mentions: [{ error: :blank }, { count: 1, error: :too_short }] }) }
     end
 
     describe '#validate_kinds_length' do
@@ -146,7 +146,9 @@ RSpec.describe Mention, type: :model do
           image_thumbnail: be_a(String)
         ),
         entity_ids: mention.entity_ids,
-        entities: mention.entities.map(&:title),
+        entities: mention.entities_mentions.map do |entities_mention|
+                    { is_main: entities_mention.is_main, title: entities_mention.entity.title }
+                  end,
         created_at: Time.current,
         updated_at: Time.current
       )
@@ -257,7 +259,6 @@ RSpec.describe Mention, type: :model do
       end
     end
   end
-
 
   describe '#strip_title' do
     subject { build(:mention, title: " hello \n ") }

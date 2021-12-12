@@ -27,8 +27,10 @@ docker exec -i hub_postgres_1 psql -U hub -d hub_development < ~/backup/db.dump
 User.find_by(email: 'admin@example.com').update(role: 'admin')
 User.find_by(email: 'admin@example.com').update(password: 'password')
 
-reload! 
-Elastic::DeleteIndex.call(index_name: 'entities', ignore_unavailable: true) 
-Elastic::CreateIndex.call(index_name: 'entities') 
-Entity.__elasticsearch__.import && nil
+reload!
+['entities', 'mentions'].each do |index_name| 
+    Elastic::DeleteIndex.call(index: Elastic::IndexName.pick(index_name), ignore_unavailable: true) 
+    Elastic::CreateIndex.call(index: Elastic::IndexName.pick(index_name)) 
+    index_name.singularize.camelize.constantize.__elasticsearch__.import && nil
+end
 ```

@@ -24,6 +24,7 @@ module Mentions
 
     def card
       authorize([:mentions, @entity])
+
       respond_to do |format|
         format.json
       end

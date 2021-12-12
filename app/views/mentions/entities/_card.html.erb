@@ -2,6 +2,7 @@
 
 <%= render Entities::CardComponent.new(
   entity_id: entity.id,
+  is_main: false,
   image: (entity.image.derivation_url(:thumbnail, 100, 100) if entity.image.present?),
   title: entity.title,
   intro: entity.intro,

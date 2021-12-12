@@ -51,7 +51,12 @@
 
     <% if @controllable %>
       <div class="flex-shrink-1 m-1 d-flex align-items-center">
-        <%= hidden_field_tag 'mention[entity_form_ids][]', @entity_id, form: @form_id %>
+        <%= hidden_field_tag "mention[related_entities][#{@entity_id}][id]", @entity_id, form: @form_id %>
+
+        <div class="form-check form-switch">
+          <%= check_box_tag "mention[related_entities][#{@entity_id}][is_main]", '1', @is_main, class: "form-check-input", form: @form_id %>
+        </div>
+
 
         <%= link_to '#',
                     id: "edit_entity_#{@entity_id}",

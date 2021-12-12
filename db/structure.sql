@@ -650,7 +650,8 @@ CREATE TABLE public.entities_mentions (
     entity_id bigint NOT NULL,
     mention_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_main boolean
 );
 
 
@@ -2753,6 +2754,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211207005258'),
 ('20211207072249'),
 ('20211210042253'),
-('20211210122043');
+('20211210122043'),
+('20211212110247');
 
 

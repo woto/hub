@@ -5,6 +5,7 @@
 # Table name: entities_mentions
 #
 #  id         :bigint           not null, primary key
+#  is_main    :boolean
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  entity_id  :bigint           not null

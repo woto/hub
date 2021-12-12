@@ -41,7 +41,7 @@ class Mention < ApplicationRecord
 
   belongs_to :user, counter_cache: true
 
-  has_many :entities_mentions, dependent: :destroy
+  has_many :entities_mentions, dependent: :destroy, autosave: true
   has_many :entities, through: :entities_mentions, counter_cache: :entities_count
 
   has_many :mentions_topics, dependent: :destroy
@@ -50,8 +50,8 @@ class Mention < ApplicationRecord
   before_validation :strip_title
   before_validation :strip_url
 
-  validates :topics, :image, :entities, :url, :sentiment, :kinds, presence: true
-  validates :entities, :topics, length: { minimum: 1 }
+  validates :topics, :image, :entities_mentions, :url, :sentiment, :kinds, presence: true
+  validates :entities_mentions, :topics, length: { minimum: 1 }
   validates :url, uniqueness: true
   validate :validate_kinds_keys, :validate_kinds_length
 
@@ -59,9 +59,16 @@ class Mention < ApplicationRecord
 
   # NOTE: it's used for mention form this life hack raised
   # due to the problem described here https://github.com/rails/rails/issues/43775
-  def entity_form_ids=(ids)
-    entities = Entity.find(ids.compact_blank)
-    self.entities = entities
+  def related_entities=(hsh)
+    items = hsh.values
+    items = items.uniq { |obj| obj['id'] }
+    entities_mentions = []
+    items.each do |value|
+      entities_mention = EntitiesMention.find_or_initialize_by(mention_id: self.id.to_i, entity_id: value['id'].to_i)
+      entities_mention.is_main = ActiveModel::Type::Boolean.new.cast(value['is_main'])
+      entities_mentions << entities_mention
+    end
+    self.entities_mentions = entities_mentions
   end
 
   def topics_attributes=(titles)
@@ -103,7 +110,9 @@ class Mention < ApplicationRecord
         height: image.metadata['height']
       },
       entity_ids: entity_ids,
-      entities: entities.map(&:title),
+      entities: entities_mentions.includes(:entity).map do |entity_mention|
+        { is_main: entity_mention.is_main, title: entity_mention.entity.title }
+      end,
       entities_count: entities_count
     }
   end

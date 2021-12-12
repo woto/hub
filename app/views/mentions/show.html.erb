@@ -57,7 +57,7 @@
 
                 <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9">
-                  <%= render(Mentions::EntityComponent.with_collection(@mention.entities.map(&:to_label).zip(@mention.entity_ids))) %>
+                  <%= render(Mentions::EntityComponent.with_collection(@mention.entities_mentions.includes(:entity).map { |entity_mention| { 'title' => entity_mention.entity.to_label, 'is_main' => entity_mention.is_main } }.zip(@mention.entity_ids))) %>
                 </dd>
 
                 <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'mention']) %> </dt>
