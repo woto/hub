@@ -27,7 +27,7 @@ class DeleteOldOffersQuery
     end
 
     context.object = {
-      index: Elastic::IndexName.offers,
+      index: Elastic::IndexName.pick('offers').scoped,
       routing: context.feed.id,
       body: body.attributes!.deep_symbolize_keys
     }

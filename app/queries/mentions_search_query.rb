@@ -52,7 +52,7 @@ class MentionsSearchQuery
 
     context.object = {}.tap do |h|
       h[:body] = body.attributes!.deep_symbolize_keys
-      h[:index] = ::Elastic::IndexName.mentions
+      h[:index] = Elastic::IndexName.pick('mentions').scoped
       h[:size] = context.size
       h[:from] = context.from
       h[:_source] = context._source

@@ -72,7 +72,7 @@ class TransactionsSearchQuery
 
     context.object = {}.tap do |h|
       h[:body] = body.attributes!.deep_symbolize_keys
-      h[:index] = ::Elastic::IndexName.transactions
+      h[:index] = Elastic::IndexName.pick('transactions').scoped
       h[:size] = context.size
       h[:from] = context.from
       h[:_source] = context._source

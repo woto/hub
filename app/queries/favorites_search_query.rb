@@ -46,7 +46,7 @@ class FavoritesSearchQuery
 
     context.object = {}.tap do |h|
       h[:body] = body.attributes!.deep_symbolize_keys
-      h[:index] = ::Elastic::IndexName.favorites
+      h[:index] = Elastic::IndexName.pick('favorites').scoped
       h[:size] = context.size
       h[:from] = context.from
       h[:_source] = context._source
@@ -83,7 +83,7 @@ class FavoritesSearchQuery
     #
     # context.object = {}.tap do |h|
     #   h[:body] = definition.to_hash.deep_symbolize_keys
-    #   h[:index] = ::Elastic::IndexName.favorites
+    #   h[:index] = Elastic::IndexName.pick('favorites').scoped
     #   h[:from] = context.from
     #   h[:size] = context.size
     #   h[:_source] = context._source

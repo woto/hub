@@ -52,7 +52,7 @@ class UsersSearchQuery
 
     context.object = {}.tap do |h|
       h[:body] = body.attributes!.deep_symbolize_keys
-      h[:index] = ::Elastic::IndexName.users
+      h[:index] = Elastic::IndexName.pick('users').scoped
       h[:size] = context.size
       h[:from] = context.from
       h[:_source] = context._source

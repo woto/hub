@@ -41,7 +41,7 @@ module Frames
 
       context.object = {}.tap do |h|
         h[:body] = definition.to_hash.deep_symbolize_keys
-        h[:index] = ::Elastic::IndexName.posts
+        h[:index] = Elastic::IndexName.pick('posts').scoped
         h[:from] = context.from
         h[:size] = context.size
         h[:_source] = context._source

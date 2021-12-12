@@ -21,7 +21,7 @@ class FeedOffersCountQuery
 
     context.object = {
       body: body.attributes!.deep_symbolize_keys,
-      index: Elastic::IndexName.offers,
+      index: Elastic::IndexName.pick('offers').scoped,
       routing: context.feed.id
     }
   end

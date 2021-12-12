@@ -48,7 +48,7 @@ class OffersSearchQuery
 
     context.object = {}.tap do |h|
       h[:body] = body
-      h[:index] = ::Elastic::IndexName.offers
+      h[:index] = Elastic::IndexName.pick('offers').scoped
       h[:size] = context.size
       h[:from] = context.from
       # TODO: Change to advertiser? It does not work for now.

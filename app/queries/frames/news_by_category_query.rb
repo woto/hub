@@ -54,7 +54,7 @@ module Frames
       end
 
       context.object = {
-        index: Elastic::IndexName.posts,
+        index: Elastic::IndexName.pick('posts').scoped,
         body: body.attributes!.deep_symbolize_keys,
         size: 0
       }

@@ -67,7 +67,7 @@ class AccountsSearchQuery
 
     context.object = {}.tap do |h|
       h[:body] = body.attributes!.deep_symbolize_keys
-      h[:index] = ::Elastic::IndexName.accounts
+      h[:index] = Elastic::IndexName.pick('accounts').scoped
       h[:size] = context.size
       h[:from] = context.from
       h[:_source] = context._source
