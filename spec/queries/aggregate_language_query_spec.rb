@@ -31,7 +31,7 @@ describe AggregateLanguageQuery do
               }
             }
           },
-          index: Elastic::IndexName.offers,
+          index: Elastic::IndexName.pick('offers').scoped,
           routing: feed.id,
           size: 0
         }

@@ -30,7 +30,7 @@ describe Frames::NewsByCategoryQuery do
                 }
               }
             },
-            index: Elastic::IndexName.posts,
+            index: Elastic::IndexName.pick('posts').scoped,
             size: 0
           )
         end
@@ -66,7 +66,7 @@ describe Frames::NewsByCategoryQuery do
                 }
               }
             },
-            index: Elastic::IndexName.posts,
+            index: Elastic::IndexName.pick('posts').scoped,
             size: 0
           )
         end

@@ -35,7 +35,7 @@ describe TransactionsSearchQuery do
           ]
         },
         from: from,
-        index: Elastic::IndexName.transactions,
+        index: Elastic::IndexName.pick('transactions').scoped,
         size: size
       )
     end
@@ -73,7 +73,7 @@ describe TransactionsSearchQuery do
           sort: [{ sort.to_sym => { order: order } }]
         },
         from: from,
-        index: Elastic::IndexName.transactions,
+        index: Elastic::IndexName.pick('transactions').scoped,
         size: size,
         _source: _source
       )

@@ -22,7 +22,7 @@ describe AccountsSearchQuery do
       expect(subject.object).to include(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.accounts,
+        index: Elastic::IndexName.pick('accounts').scoped,
         _source: [column],
         body: match(
           query: {
@@ -47,7 +47,7 @@ describe AccountsSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.accounts,
+        index: Elastic::IndexName.pick('accounts').scoped,
         _source: [column],
         body: match(
           query: {
@@ -68,7 +68,7 @@ describe AccountsSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.accounts,
+        index: Elastic::IndexName.pick('accounts').scoped,
         _source: [column],
         body: match(
           query: {
@@ -93,7 +93,7 @@ describe AccountsSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.accounts,
+        index: Elastic::IndexName.pick('accounts').scoped,
         _source: [column],
         body: match(
           sort: [{ sort: { order: 'order' } }]

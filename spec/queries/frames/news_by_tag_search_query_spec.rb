@@ -31,7 +31,7 @@ describe Frames::NewsByTagSearchQuery do
                 }
               }
             },
-            index: Elastic::IndexName.posts,
+            index: Elastic::IndexName.pick('posts').scoped,
             size: 0
           }
         )

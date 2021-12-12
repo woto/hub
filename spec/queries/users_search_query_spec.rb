@@ -21,7 +21,7 @@ describe UsersSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.users,
+        index: Elastic::IndexName.pick('users').scoped,
         _source: [column],
         body: match(
           query: {
@@ -42,7 +42,7 @@ describe UsersSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.users,
+        index: Elastic::IndexName.pick('users').scoped,
         _source: [column],
         body: match(
           sort: [sort: { order: 'order' }]

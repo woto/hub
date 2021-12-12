@@ -21,7 +21,7 @@ describe FeedsSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.feeds,
+        index: Elastic::IndexName.pick('feeds').scoped,
         _source: [column],
         body: match(
           query: {
@@ -42,7 +42,7 @@ describe FeedsSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.feeds,
+        index: Elastic::IndexName.pick('feeds').scoped,
         _source: [column],
         body: match(
           sort: [sort: { order: 'order' }]

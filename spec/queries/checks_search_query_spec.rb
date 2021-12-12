@@ -22,7 +22,7 @@ describe ChecksSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.checks,
+        index: Elastic::IndexName.pick('checks').scoped,
         _source: [column],
         body: match(
           query: {
@@ -46,7 +46,7 @@ describe ChecksSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.checks,
+        index: Elastic::IndexName.pick('checks').scoped,
         _source: [column],
         body: match(
           query: {
@@ -67,7 +67,7 @@ describe ChecksSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.checks,
+        index: Elastic::IndexName.pick('checks').scoped,
         _source: [column],
         body: match(
           query: {

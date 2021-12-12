@@ -14,7 +14,7 @@ describe FeedOffersCountQuery do
           term: { feed_id: feed.id }
         }
       },
-      index: Elastic::IndexName.offers,
+      index: Elastic::IndexName.pick('offers').scoped,
       routing: feed.id
     )
   end

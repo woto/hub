@@ -21,7 +21,7 @@ describe PostCategoriesSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.post_categories,
+        index: Elastic::IndexName.pick('post_categories').scoped,
         _source: [column],
         body: match(
           query: {
@@ -42,7 +42,7 @@ describe PostCategoriesSearchQuery do
       expect(subject.object).to match(
         from: 0,
         size: 10,
-        index: Elastic::IndexName.post_categories,
+        index: Elastic::IndexName.pick('post_categories').scoped,
         _source: [column],
         body: match(
           sort: [sort: { order: 'order' }]

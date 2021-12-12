@@ -49,7 +49,7 @@ describe ArticlesSearchQuery do
           },
           from: 0,
           size: 100,
-          index: Elastic::IndexName.posts,
+          index: Elastic::IndexName.pick('posts').scoped,
           _source: ['_source']
         }
       )

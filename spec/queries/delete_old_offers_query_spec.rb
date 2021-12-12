@@ -9,7 +9,7 @@ describe DeleteOldOffersQuery do
 
   it 'builds correct query' do
     expect(subject.object).to eq(
-      index: Elastic::IndexName.offers,
+      index: Elastic::IndexName.pick('offers').scoped,
       routing: feed.id,
       body: {
         query: {
