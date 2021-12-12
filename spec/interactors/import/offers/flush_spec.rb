@@ -35,7 +35,7 @@ describe Import::Offers::Flush do
             }
           }
         }],
-        index: Elastic::IndexName.offers,
+        index: Elastic::IndexName.pick('offers').scoped,
         routing: feed.id
       )
     end

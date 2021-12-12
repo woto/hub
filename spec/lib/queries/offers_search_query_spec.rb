@@ -45,7 +45,7 @@ describe OffersSearchQuery do
         query: { bool: include(:filter, :should) }
       ),
       from: from,
-      index: Elastic::IndexName.offers,
+      index: Elastic::IndexName.pick('offers').scoped,
       size: size
     )
   end

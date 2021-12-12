@@ -9,7 +9,7 @@ class DashboardController < ApplicationController
     if current_user
       account_ids = current_user.accounts.pluck('id')
       @test = GlobalHelper.elastic_client.search(
-        index: ::Elastic::IndexName.transactions,
+        index: Elastic::IndexName.pick('transactions').scoped,
         body: {
           "size": 0,
           "aggs": {

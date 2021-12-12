@@ -7,7 +7,8 @@ module Elastic
     # TODO: move to CreateOffersIndex
 
     def call
-      index_name = Elastic::IndexName.offers
+      index = Elastic::IndexName.pick('offers')
+
       body = {
         "properties": {
           "url": {
@@ -26,7 +27,7 @@ module Elastic
         }
       }
 
-      context.object = GlobalHelper.elastic_client.indices.put_mapping(index: index_name, body: body)
+      context.object = GlobalHelper.elastic_client.indices.put_mapping(index: index.scoped, body: body)
     end
   end
 end

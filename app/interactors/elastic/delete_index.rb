@@ -6,15 +6,15 @@ module Elastic
 
     contract do
       params do
-        required(:index_name).filled(:string)
+        required(:index).filled(type?: IndexStruct)
         optional(:ignore_unavailable).maybe(:bool)
       end
     end
 
     def call
-      Rails.logger.info(message: 'Deleting elasticsearch index', index: context.index_name)
+      Rails.logger.info(message: 'Deleting elasticsearch index', index: context.index.scoped)
       GlobalHelper.elastic_client.indices.delete(
-        index: context.index_name, ignore_unavailable: context.ignore_unavailable
+        index: context.index.scoped, ignore_unavailable: context.ignore_unavailable
       )
     end
   end

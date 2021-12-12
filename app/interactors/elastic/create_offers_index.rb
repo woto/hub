@@ -5,7 +5,7 @@ module Elastic
     include ApplicationInteractor
 
     def call
-      GlobalHelper.elastic_client.indices.create index: Elastic::IndexName.offers, body: {
+      GlobalHelper.elastic_client.indices.create index: Elastic::IndexName.pick('offers').scoped, body: {
         "settings": {
           "index": {
             "refresh_interval": -1,

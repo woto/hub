@@ -14,10 +14,10 @@ module Elastic
 
 
     def call
-      index_name = Elastic::IndexName.tokenizer
+      index = Elastic::IndexName.pick('tokenizer')
 
       result = GlobalHelper.elastic_client.indices.analyze(
-        index: index_name,
+        index: index.scoped,
         body: {
           analyzer: 'default',
           text: context.q

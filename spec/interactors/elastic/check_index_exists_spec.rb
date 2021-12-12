@@ -12,22 +12,22 @@ describe Elastic::CheckIndexExists do
   end
 
   context 'when index does not exist' do
-    let(:params) { { index_name: rand.to_s } }
+    let(:params) { { index: Elastic::IndexName.pick(rand.to_s) } }
 
     it { is_expected.to have_attributes(object: false) }
     it { is_expected.to be_failure }
   end
 
   context 'when index exists' do
-    let(:params) { { index_name: Elastic::IndexName.wildcard } }
+    let(:params) { { index: Elastic::IndexName.pick('*') } }
 
     it { is_expected.to have_attributes(object: true) }
     it { is_expected.to be_success }
   end
 
   describe '#allow_no_indices' do
-    let(:params) { { index_name: index_name, allow_no_indices: allow_no_indices } }
-    let(:index_name) { Elastic::IndexName.pick("#{rand}*") }
+    let(:params) { { index: index, allow_no_indices: allow_no_indices } }
+    let(:index) { Elastic::IndexName.pick("#{rand}*") }
 
     # NOTE: I do not have idea why this feature needed. Because it erroneously
     # tells that there are indexes with some mask. But may be not not. See example at the end of file

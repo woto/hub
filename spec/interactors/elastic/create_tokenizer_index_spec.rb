@@ -4,7 +4,7 @@ describe Elastic::CreateTokenizerIndex do
   subject { described_class.call }
 
   def exists?
-    Elastic::CheckIndexExists.call(index_name: Elastic::IndexName.tokenizer).object
+    Elastic::CheckIndexExists.call(index: Elastic::IndexName.pick('tokenizer')).object
   end
 
   context 'when index already exists' do
@@ -19,7 +19,7 @@ describe Elastic::CreateTokenizerIndex do
   context 'when index does not exist' do
     it 'creates index' do
       # TODO: add meta tag for skip creating index
-      GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+      GlobalHelper.elastic_client.indices.delete index: Elastic::IndexName.pick('*').scoped
 
       expect(exists?).to eq(false)
       subject

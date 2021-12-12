@@ -5,9 +5,9 @@ module Elastic
     include ApplicationInteractor
 
     def call
-      index_name = Elastic::IndexName.offers
+      index = Elastic::IndexName.pick('offers')
       # GlobalHelper.elastic_client.indices.refresh
-      context.object = GlobalHelper.elastic_client.indices.refresh(index: index_name)
+      context.object = GlobalHelper.elastic_client.indices.refresh(index: index.scoped)
     end
   end
 end

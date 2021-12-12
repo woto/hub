@@ -5,11 +5,11 @@ module Elastic
     include ApplicationInteractor
 
     def call
-      index_name = Elastic::IndexName.tokenizer
+      index = Elastic::IndexName.pick('tokenizer')
 
-      Elastic::DeleteIndex.call(index_name: index_name, ignore_unavailable: true)
+      Elastic::DeleteIndex.call(index: index, ignore_unavailable: true)
 
-      GlobalHelper.elastic_client.indices.create index: index_name, body: {
+      GlobalHelper.elastic_client.indices.create index: index.scoped, body: {
         settings: {
           analysis: {
             filter: {

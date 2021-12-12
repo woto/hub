@@ -60,7 +60,7 @@ end
 
 RSpec.configure do |config|
   config.before do
-    GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.wildcard
+    GlobalHelper.elastic_client.indices.delete index: ::Elastic::IndexName.pick('*').scoped
     GlobalHelper.create_elastic_indexes
   end
 

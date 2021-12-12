@@ -3,73 +3,8 @@
 module Elastic
   class IndexName
     class << self
-
-      def wildcard
-        "#{Rails.env}.*"
-      end
-
-      def tokenizer
-        pick('tokenizer')
-      end
-
-      def news
-        pick('news')
-      end
-
-      def offers
-        pick('offers')
-      end
-
-      def feed_categories
-        pick('feed_categories')
-      end
-
-      def post_categories
-        pick('post_categories')
-      end
-
-      def realms
-        pick('realms')
-      end
-
-      def feeds
-        pick('feeds')
-      end
-
-      def posts
-        pick('posts')
-      end
-
-      def accounts
-        pick('accounts')
-      end
-
-      def checks
-        pick('checks')
-      end
-
-      def entities
-        pick('entities')
-      end
-
-      def favorites
-        pick('favorites')
-      end
-
-      def transactions
-        pick('transactions')
-      end
-
-      def users
-        pick('users')
-      end
-
-      def mentions
-        pick('mentions')
-      end
-
       def pick(name)
-        "#{Rails.env}.#{name}"
+        IndexStruct.new(name: name, scoped: "#{Rails.env}.#{name}")
       end
     end
   end

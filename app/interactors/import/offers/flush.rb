@@ -7,7 +7,7 @@ module Import
         return if offers.empty?
 
         res = GlobalHelper.elastic_client.bulk(
-          index: Elastic::IndexName.offers,
+          index: Elastic::IndexName.pick('offers').scoped,
           routing: feed.id,
           body: offers.map do |offer|
             {

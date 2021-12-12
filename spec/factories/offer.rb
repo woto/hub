@@ -14,7 +14,7 @@ FactoryBot.define do
         body: instance.without('_id'),
         routing: instance['feed_id'],
         refresh: evaluator.refresh,
-        index: Elastic::IndexName.offers
+        index: Elastic::IndexName.pick('offers').scoped
       )
       instance['_id'] ||= result['_id']
     end

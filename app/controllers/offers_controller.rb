@@ -6,7 +6,7 @@ class OffersController < ApplicationController
 
   def modal_card
     result = GlobalHelper.elastic_client.get(
-      index: Elastic::IndexName.offers, id: params[:id], routing: params[:id].split('-').last
+      index: Elastic::IndexName.pick('offers').scoped, id: params[:id], routing: params[:id].split('-').last
     )
     @offer = OfferDecorator.new(result)
 
