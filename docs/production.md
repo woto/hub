@@ -7,12 +7,6 @@ docker-compose run -l "traefik.enable=false" --rm rails rails c
 docker-compose run -l "traefik.enable=false" --rm rails -v /app:/app rails c
 ```
 
-#### Dump PostgreSQL
-
-```shell
-docker-compose exec postgres pg_dump -d hub_production -U hub > /backup/db.dump
-```
-
 #### PostgreSQL console
 
 From running container
