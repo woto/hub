@@ -35,7 +35,7 @@
       </h5>
 
       <p class="card-text">
-        <%= render(Mentions::EntityComponent.with_collection(mention.entities.map(&:to_label).zip(mention.entity_ids))) %>
+        <%= render(Mentions::EntityComponent.with_collection(mention.entities_mentions.includes(:entity).map { |entity_mention| { 'title' => entity_mention.entity.to_label, 'is_main' => entity_mention.is_main } }.zip(mention.entity_ids))) %>
       </p>
       <p class="card-text">
         <%= render(TextTagComponent.with_collection(mention.topics.map(&:to_label))) %>
