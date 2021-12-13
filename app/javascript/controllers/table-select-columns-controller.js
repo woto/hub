@@ -1,5 +1,5 @@
 import { Controller } from "stimulus"
-import 'selectize/dist/js/selectize.min.js';
+import 'selectize/dist/js/selectize.js';
 
 export default class extends Controller {
     #selectize;
@@ -10,6 +10,7 @@ export default class extends Controller {
             delimiter: ','
         });
     }
+
     disconnect() {
         this.selectize.destroy();
     }

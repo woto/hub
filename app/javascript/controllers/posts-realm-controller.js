@@ -1,6 +1,6 @@
 import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
-import 'selectize/dist/js/selectize.min.js';
+import 'selectize/dist/js/selectize.js';
 import { useDispatch } from 'stimulus-use'
 
 export default class extends ApplicationController {
@@ -13,7 +13,7 @@ export default class extends ApplicationController {
         const question = this.data.get('realmChangeQuestion');
         let previousValue = null;
 
-        this.#selectize = $(this.element).selectize({
+        this.selectize = $(this.element).selectize({
             create: false,
             onChange() {
                 if(!previousValue || !that.#shouldAskConfirmation() || confirm(question)) {
@@ -27,6 +27,18 @@ export default class extends ApplicationController {
                 previousValue = this.getValue();
             }
         })
+    }
+
+    disconnect() {
+        this.selectize.destroy();
+    }
+
+    get selectize() {
+        return this.#selectize[0].selectize;
+    }
+
+    set selectize(value) {
+        this.#selectize = value;
     }
 
     setDirty(event) {

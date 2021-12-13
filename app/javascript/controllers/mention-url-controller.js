@@ -1,5 +1,4 @@
 import { Controller } from "stimulus"
-import 'selectize/dist/js/selectize.min.js';
 import { useDispatch } from 'stimulus-use'
 import { ApplicationController, useDebounce } from 'stimulus-use'
 import * as bootstrap from "bootstrap";

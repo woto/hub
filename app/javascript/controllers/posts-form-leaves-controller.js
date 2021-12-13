@@ -1,6 +1,6 @@
 import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
-import 'selectize/dist/js/selectize.min.js';
+import 'selectize/dist/js/selectize.js';
 import { useDispatch } from 'stimulus-use'
 
 export default class extends ApplicationController {
@@ -11,7 +11,7 @@ export default class extends ApplicationController {
         useDispatch(this);
         const that = this;
 
-        this.#selectize = $(this.element).selectize({
+        this.selectize = $(this.element).selectize({
             valueField: 'id',
             labelField: 'title',
             searchField: ['path', 'title'],
@@ -68,6 +68,18 @@ export default class extends ApplicationController {
                 that.isDirtyValue = !!val
             }
         });
+    }
+
+    disconnect() {
+        this.selectize.destroy();
+    }
+
+    get selectize() {
+        return this.#selectize[0].selectize;
+    }
+
+    set selectize(value) {
+        this.#selectize = value;
     }
 
     isDirtyValueChanged() {
