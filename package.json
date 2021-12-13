@@ -23,7 +23,7 @@
     "lodash": "^4.17.15",
     "photoswipe": "git://github.com/dimsemenov/photoswipe#v5-beta",
     "rails-erb-loader": "^5.5.2",
-    "selectize": "./vendor/selectize",
+    "selectize": "woto/selectize.js#hack",
     "stimulus": "^3.0.1",
     "stimulus-character-counter": "^4.0.0",
     "stimulus-flatpickr": "^1.3.0",
