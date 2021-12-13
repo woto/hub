@@ -49,6 +49,13 @@ module.exports = function(config) {
 		'phantomjs': ['PhantomJS']
 	};
 
+	var reporters = ['mocha'];
+	if (process.env.TRAVIS_CI) {
+		reporters = process.env.TARGET === 'saucelabs'
+			? ['saucelabs', 'mocha']
+			: ['mocha', 'coverage', 'coveralls']
+	}
+
 	var browsers = targets[process.env.TARGET || 'phantomjs'];
 	if (process.env.BROWSERS) {
 		browsers = process.env.BROWSERS.split(',');
@@ -73,7 +80,20 @@ module.exports = function(config) {
 		preprocessors: {
 			'src/*.js': ['coverage']
 		},
+		coverageReporter: {
+			type: process.env.TRAVIS_CI && process.env.TARGET === 'phantomjs' ? 'lcov' : 'text-summary',
+			dir: 'coverage/'
+		},
+		sauceLabs: {
+			recordVideo: false,
+			startConnect: true,
+			tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+			build: process.env.TRAVIS_BUILD_NUMBER,
+			testName: process.env.COMMIT_MESSAGE,
+			tags: ['selectize', 'test']
+		},
 		customLaunchers: customLaunchers,
+		reporters: reporters,
 		port: 8888,
 		colors: true,
 		captureTimeout: 0,

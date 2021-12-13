@@ -37,7 +37,6 @@ var Selectize = function($input, settings) {
 		hasOptions       : false,
 		currentResults   : null,
 		lastValue        : '',
-		lastValidValue   : '',
 		caretPos         : 0,
 		loading          : 0,
 		loadedSearches   : {},
@@ -135,10 +134,10 @@ $.extend(Selectize.prototype, {
 
 		$wrapper          = $('<div>').addClass(settings.wrapperClass).addClass(classes).addClass(inputMode);
 		$control          = $('<div>').addClass(settings.inputClass).addClass('items').appendTo($wrapper);
-		$control_input    = $('<input type="text" autocomplete="new-password" autofill="no" />').appendTo($control).attr('tabindex', $input.is(':disabled') ? '-1' : self.tabIndex);
+		$control_input    = $('<input type="text" autocomplete="off" />').appendTo($control).attr('tabindex', $input.is(':disabled') ? '-1' : self.tabIndex);
 		$dropdown_parent  = $(settings.dropdownParent || $wrapper);
 		$dropdown         = $('<div>').addClass(settings.dropdownClass).addClass(inputMode).hide().appendTo($dropdown_parent);
-		$dropdown_content = $('<div>').addClass(settings.dropdownContentClass).attr('tabindex', '-1').appendTo($dropdown);
+		$dropdown_content = $('<div>').addClass(settings.dropdownContentClass).appendTo($dropdown);
 
 		if(inputId = $input.attr('id')) {
 			$control_input.attr('id', inputId + '-selectized');
@@ -254,7 +253,6 @@ $.extend(Selectize.prototype, {
 		$input.attr('tabindex', -1).hide().after(self.$wrapper);
 
 		if ($.isArray(settings.items)) {
-			self.lastValidValue = settings.items;
 			self.setValue(settings.items);
 			delete settings.items;
 		}
@@ -342,9 +340,7 @@ $.extend(Selectize.prototype, {
 			'type'            : 'onType',
 			'load'            : 'onLoad',
 			'focus'           : 'onFocus',
-			'blur'            : 'onBlur',
-			'dropdown_item_activate'        : 'onDropdownItemActivate',
-			'dropdown_item_deactivate'      : 'onDropdownItemDeactivate'
+			'blur'            : 'onBlur'
 		};
 
 		for (key in callbacks) {
@@ -416,11 +412,6 @@ $.extend(Selectize.prototype, {
 	 * input / select element.
 	 */
 	onChange: function() {
-		var self = this;
-		if (self.getValue() !== "") {
-			self.lastValidValue = self.getValue();
-		}
-		this.$input.trigger('input');
 		this.$input.trigger('change');
 	},
 
@@ -768,16 +759,6 @@ $.extend(Selectize.prototype, {
 	},
 
 	/**
-	 * Gets the value of input field of the control.
-	 *
-	 * @returns {string} value
-	 */
-	getTextboxValue: function() {
-		var $input = this.$control_input;
-		return $input.val();
-	},
-
-	/**
 	 * Sets the input field of the control to the specified value.
 	 *
 	 * @param {string} value
@@ -819,18 +800,6 @@ $.extend(Selectize.prototype, {
 			this.clear(silent);
 			this.addItems(value, silent);
 		});
-	},
-
-	/**
-	 * Resets the number of max items to the given value
-	 *
-	 * @param {number} value
-	 */
-	setMaxItems: function(value){
-		if(value === 0) value = null; //reset to unlimited items.
-		this.settings.maxItems = value;
-		this.settings.mode = this.settings.mode || (this.settings.maxItems === 1 ? 'single' : 'multi');
-		this.refreshState();
 	},
 
 	/**
@@ -911,17 +880,13 @@ $.extend(Selectize.prototype, {
 		var scroll_top, scroll_bottom;
 		var self = this;
 
-		if (self.$activeOption) {
-			self.$activeOption.removeClass('active');
-			self.trigger('dropdown_item_deactivate', self.$activeOption.attr('data-value'));
-		}
+		if (self.$activeOption) self.$activeOption.removeClass('active');
 		self.$activeOption = null;
 
 		$option = $($option);
 		if (!$option.length) return;
 
 		self.$activeOption = $option.addClass('active');
-		if (self.isOpen) self.trigger('dropdown_item_activate', self.$activeOption.attr('data-value'));
 
 		if (scroll || !isset(scroll)) {
 
@@ -981,7 +946,7 @@ $.extend(Selectize.prototype, {
 	 */
 	focus: function() {
 		var self = this;
-		if (self.isDisabled) return self;
+		if (self.isDisabled) return;
 
 		self.ignoreFocus = true;
 		self.$control_input[0].focus();
@@ -989,7 +954,6 @@ $.extend(Selectize.prototype, {
 			self.ignoreFocus = false;
 			self.onFocus();
 		}, 0);
-		return self;
 	},
 
 	/**
@@ -1000,7 +964,6 @@ $.extend(Selectize.prototype, {
 	blur: function(dest) {
 		this.$control_input[0].blur();
 		this.onBlur(null, dest);
-		return this;
 	},
 
 	/**
@@ -1179,9 +1142,6 @@ $.extend(Selectize.prototype, {
 
 		// add "selected" class to selected options
 		if (!self.settings.hideSelected) {
-			// clear selection on all previously selected elements first
-			self.$dropdown.find('.selected').removeClass('selected');
-
 			for (i = 0, n = self.items.length; i < n; i++) {
 				self.getOption(self.items[i]).addClass('selected');
 			}
@@ -1404,10 +1364,8 @@ $.extend(Selectize.prototype, {
 
 	/**
 	 * Clears all options.
-	 *
-	 * @param {boolean} silent
 	 */
-	clearOptions: function(silent) {
+	clearOptions: function() {
 		var self = this;
 
 		self.loadedSearches = {};
@@ -1422,7 +1380,6 @@ $.extend(Selectize.prototype, {
 		self.options = self.sifter.items = options;
 		self.lastQuery = null;
 		self.trigger('option_clear');
-		self.clear(silent);
 	},
 
 	/**
@@ -1472,34 +1429,6 @@ $.extend(Selectize.prototype, {
 
 		return $();
 	},
-	
-	/**
-	 * Finds the first element with a "textContent" property
-	 * that matches the given textContent value.
-	 *
-	 * @param {mixed} textContent
-	 * @param {boolean} ignoreCase
-	 * @param {object} $els
-	 * @return {object}
-	 */
-	getElementWithTextContent: function(textContent, ignoreCase ,$els) {
-		textContent = hash_key(textContent);
-
-		if (typeof textContent !== 'undefined' && textContent !== null) {
-			for (var i = 0, n = $els.length; i < n; i++) {
-				var eleTextContent = $els[i].textContent
-				if (ignoreCase == true) {
-					eleTextContent = (eleTextContent !== null) ? eleTextContent.toLowerCase() : null;
-					textContent = textContent.toLowerCase();
-				}
-				if (eleTextContent === textContent) {
-					return $($els[i]);
-				}
-			}
-		}
-
-		return $();
-	},
 
 	/**
 	 * Returns the jQuery element of the item
@@ -1510,19 +1439,6 @@ $.extend(Selectize.prototype, {
 	 */
 	getItem: function(value) {
 		return this.getElementWithValue(value, this.$control.children());
-	},
-
-	/**
-	 * Returns the jQuery element of the item
-	 * matching the given textContent.
-	 *
-	 * @param {string} value
-	 * @param {boolean} ignoreCase
-	 * @returns {object}
-	 */
-	getFirstItemMatchedByTextContent: function(textContent, ignoreCase) {
-		ignoreCase = (ignoreCase !== null && ignoreCase === true) ? true : false;
-		return this.getElementWithTextContent(textContent, ignoreCase, this.$dropdown_content.find('[data-selectable]'));
 	},
 
 	/**
@@ -1631,7 +1547,6 @@ $.extend(Selectize.prototype, {
 		i = self.items.indexOf(value);
 
 		if (i !== -1) {
-			self.trigger('item_before_remove', value, $item);
 			$item.remove();
 			if ($item.hasClass('active')) {
 				idx = self.$activeItems.indexOf($item[0]);
@@ -1871,7 +1786,7 @@ $.extend(Selectize.prototype, {
 			// Do not trigger blur while inside a blur event,
 			// this fixes some weird tabbing behavior in FF and IE.
 			// See #1164
-			if (self.isBlurring) {
+			if (!self.isBlurring) {
 				self.$control_input.blur(); // close keyboard on iOS
 			}
 		}
