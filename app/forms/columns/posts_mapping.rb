@@ -2,10 +2,9 @@
 
 module Columns
   class PostsMapping < BaseMapping
-    DEFAULTS = %w[id title post_category status amount user_id created_at updated_at].freeze
+    DEFAULTS = %w[title post_category status amount user_id created_at updated_at].freeze
 
     self.all_columns = [
-      { key: 'id',                  pg: Post.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'realm_id',            pg: Post.columns_hash['realm_id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'realm_title',         pg: Realm.columns_hash['title'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'realm_locale',        pg: Realm.columns_hash['locale'], roles: ['guest', 'user', 'manager', 'admin'] },
