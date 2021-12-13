@@ -7149,16 +7149,17 @@ select-hose@^2.0.0:
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
 
-selectize@./vendor/selectize:
-  version "0.12.6"
-  dependencies:
-    microplugin "0.0.3"
-    sifter "^0.5.1"
-
 selectize@^0.12.6:
   version "0.12.6"
   resolved "https://registry.yarnpkg.com/selectize/-/selectize-0.12.6.tgz#c2cf08cbaa4cb06c5e99bb452919d71b080690d6"
   integrity sha512-bWO5A7G+I8+QXyjLfQUgh31VI4WKYagUZQxAXlDyUmDDNrFxrASV0W9hxCOl0XJ/XQ1dZEu3G9HjXV4Wj0yb6w==
+  dependencies:
+    microplugin "0.0.3"
+    sifter "^0.5.1"
+
+selectize@woto/selectize.js#hack:
+  version "0.12.6"
+  resolved "https://codeload.github.com/woto/selectize.js/tar.gz/d139478d761f974ce591e05de88be78de831d8e4"
   dependencies:
     microplugin "0.0.3"
     sifter "^0.5.1"
