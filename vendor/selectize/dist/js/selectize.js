@@ -375,7 +375,7 @@
 			return 0;
 		}
 	
-		if (!Selectize.$testInput) {
+		// if (!Selectize.$testInput) {
 			Selectize.$testInput = $('<span />').css({
 				position: 'absolute',
 				top: -99999,
@@ -384,7 +384,7 @@
 				padding: 0,
 				whiteSpace: 'pre'
 			}).appendTo('body');
-		}
+		//}
 	
 		Selectize.$testInput.text(str);
 	
