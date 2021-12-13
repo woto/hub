@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[image title intro created_at].freeze
 
     self.all_columns = [
+      { key: 'id',                  pg: Entity.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'intro',               pg: Entity.columns_hash['intro'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'image',               pg: Entity.columns_hash['image_data'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'user_id',             pg: Entity.columns_hash['user_id'], roles: ['guest', 'user', 'manager', 'admin'] },

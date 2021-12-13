@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[email posts_count].freeze
 
     self.all_columns = [
+      { key: 'id'                               , pg: User.columns_hash['id'], roles: ['manager', 'admin'] },
       { key: 'confirmation_sent_at'             , pg: User.columns_hash['confirmation_sent_at'], roles: ['manager', 'admin'] },
       { key: 'confirmation_token'               , pg: User.columns_hash['confirmation_token'], roles: ['admin'] },
       { key: 'confirmed_at'                     , pg: User.columns_hash['confirmed_at'], roles: ['manager', 'admin'] },

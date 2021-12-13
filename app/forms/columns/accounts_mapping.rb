@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[subjectable_label code amount subjectable_id subjectable_type created_at updated_at].freeze
 
     self.all_columns = [
+      { key: 'id',                      pg: Account.columns_hash['id'], roles: ['user', 'manager', 'admin'] },
       { key: 'amount',                  pg: Account.columns_hash['amount'], roles: ['user', 'manager', 'admin'] },
       { key: 'currency',                pg: Account.columns_hash['currency'], as: :string, roles: ['user', 'manager', 'admin'] },
       { key: 'code',                    pg: Account.columns_hash['code'], as: :string, roles: ['user', 'manager', 'admin'] },

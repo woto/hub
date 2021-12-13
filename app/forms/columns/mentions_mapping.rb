@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[image title entities created_at].freeze
 
     self.all_columns = [
+        { key: 'id',                  pg: Mention.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'image',               pg: Mention.columns_hash['image_data'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'user_id',             pg: Mention.columns_hash['user_id'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'url',                 pg: Mention.columns_hash['url'], roles: ['guest', 'user', 'manager', 'admin'] },
