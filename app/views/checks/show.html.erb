@@ -21,6 +21,9 @@
   <div class="card mb-3">
     <div class="card-body">
       <dl class="row">
+        <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+        <dd class="col-sm-9"> <%= @check.id %> </dd>
+
         <dt class="col-sm-3"> <%= t('amount', scope: ['simple_form', 'labels', 'check']) %> </dt>
         <dd class="col-sm-9"> <%= GlobalHelper.decorate_money(@check.amount, @check.currency) %> </dd>
 

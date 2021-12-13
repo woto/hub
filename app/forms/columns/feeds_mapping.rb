@@ -2,10 +2,9 @@
 
 module Columns
   class FeedsMapping < BaseMapping
-    DEFAULTS = %w[id advertiser_name advertiser_picture name offers_count succeeded_at created_at].freeze
+    DEFAULTS = %w[advertiser_name advertiser_picture name offers_count succeeded_at created_at].freeze
 
     self.all_columns = [
-      { key: 'id'                                              , pg: Feed.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'operation'                                       , pg: Feed.columns_hash['operation'], roles: ['admin'] },
       { key: 'ext_id'                                          , pg: Feed.columns_hash['ext_id'], roles: ['admin'] },
       { key: 'name'                                            , pg: Feed.columns_hash['name'], roles: ['guest', 'user', 'manager', 'admin'] },

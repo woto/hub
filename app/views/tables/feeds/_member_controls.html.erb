@@ -1,43 +1,44 @@
-
 <div class="dropdown">
 
   <button type="button" class="btn btn-white dropdown-toggle" data-bs-toggle="dropdown">
-    <%= t('buttons.debug') %>
+    <%= row.id %>
   </button>
 
   <div class="dropdown-menu">
 
-    <%= link_to '#',
-                class: 'dropdown-item',
-                'data-controller': 'modal-dynamic-opener',
-                'data-action': 'modal-dynamic-opener#open',
-                'data-modal-dynamic-opener-url-value': advertiser_path(row.advertiser_id) do %>
-      <%= t('buttons.advertiser') %>
+    <% if current_user&.staff? %>
+
+      <%= link_to '#',
+                  class: 'dropdown-item',
+                  'data-controller': 'modal-dynamic-opener',
+                  'data-action': 'modal-dynamic-opener#open',
+                  'data-modal-dynamic-opener-url-value': advertiser_path(row.advertiser_id) do %>
+        <%= t('buttons.advertiser') %>
+      <% end %>
+
+      <%= link_to '#',
+                  class: 'dropdown-item',
+                  'data-controller': 'modal-dynamic-opener',
+                  'data-action': 'modal-dynamic-opener#open',
+                  'data-modal-dynamic-opener-url-value': feed_path(row.id) do %>
+        <%= t('buttons.feed') %>
+      <% end %>
+
+      <%= link_to '#',
+                  class: 'dropdown-item',
+                  'data-controller': 'modal-dynamic-opener',
+                  'data-action': 'modal-dynamic-opener#open',
+                  'data-modal-dynamic-opener-url-value': logs_feed_path(row.id) do %>
+        <%= t('buttons.feed_logs') %>
+      <% end %>
+
+      <%= link_to t('buttons.prioritize'), prioritize_feed_path(row.id),
+                  class: 'dropdown-item', method: :patch %>
+
+      <%# # NOTE: not tested %>
+      <%= link_to t('buttons.shrinked'), shrinked_feed_path(row.id), class: 'dropdown-item' %>
     <% end %>
-
-    <%= link_to '#',
-                class: 'dropdown-item',
-                'data-controller': 'modal-dynamic-opener',
-                'data-action': 'modal-dynamic-opener#open',
-                'data-modal-dynamic-opener-url-value': feed_path(row.id) do %>
-      <%= t('buttons.feed') %>
-    <% end %>
-
-    <%= link_to '#',
-                class: 'dropdown-item',
-                'data-controller': 'modal-dynamic-opener',
-                'data-action': 'modal-dynamic-opener#open',
-                'data-modal-dynamic-opener-url-value': logs_feed_path(row.id) do %>
-      <%= t('buttons.feed_logs') %>
-    <% end %>
-
-    <%= link_to t('buttons.prioritize'), prioritize_feed_path(row.id),
-                class: 'dropdown-item', method: :patch %>
-
-    <%# # NOTE: not tested %>
-    <%= link_to t('buttons.shrinked'), shrinked_feed_path(row.id), class: 'dropdown-item' %>
 
     <%= link_to t('buttons.offers'), feed_offers_path(row.id), class: 'dropdown-item' %>
-
   </div>
 </div>

@@ -2,10 +2,9 @@
 
 module Columns
   class TransactionsMapping < BaseMapping
-    DEFAULTS = %w[id transaction_group_id code credit_label credit_amount debit_label debit_amount created_at updated_at].freeze
+    DEFAULTS = %w[transaction_group_id code credit_label credit_amount debit_label debit_amount created_at updated_at].freeze
 
     self.all_columns = [
-      { key: 'id',                     pg: Transaction.columns_hash['id'], roles: ['user', 'manager', 'admin'] },
       { key: 'responsible_id',         pg: Account.columns_hash['id'], roles: ['user', 'manager', 'admin'] },
       { key: 'amount',                 pg: Transaction.columns_hash['amount'], roles: ['user', 'manager', 'admin'] },
 

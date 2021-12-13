@@ -2,10 +2,9 @@
 
 module Columns
   class RealmsMapping < BaseMapping
-    DEFAULTS = %w[id domain kind locale title post_categories_count posts_count].freeze
+    DEFAULTS = %w[domain kind locale title post_categories_count posts_count].freeze
 
     self.all_columns = [
-      { key: 'id',                    pg: Realm.columns_hash['id'], roles: %w[guest user manager admin] },
       { key: 'domain',                pg: Realm.columns_hash['domain'], as: :string, roles: %w[manager admin] },
       { key: 'kind',                  pg: Realm.columns_hash['kind'], as: :string, roles: %w[guest user manager admin] },
       { key: 'locale',                pg: Realm.columns_hash['locale'], roles: %w[guest user manager admin] },
