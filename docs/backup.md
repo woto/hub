@@ -1,6 +1,7 @@
 #### Server
 
 ```bash
+cd /app
 docker-compose exec postgres pg_dump -d hub_production -U hub > /backup/db.dump
 cp -R /var/lib/docker/volumes/app_rails_storage/ /backup/
 cp -R /var/lib/docker/volumes/app_rails_uploads/ /backup/
@@ -28,7 +29,9 @@ User.find_by(email: 'admin@example.com').update(role: 'admin')
 User.find_by(email: 'admin@example.com').update(password: 'password')
 
 reload!
-['entities', 'mentions'].each do |index_name| 
+indexes = %w[users feeds posts favorites accounts transactions checks post_categories
+             exchange_rates realms mentions entities topics]
+indexes.each do |index_name|
     Elastic::DeleteIndex.call(index: Elastic::IndexName.pick(index_name), ignore_unavailable: true) 
     Elastic::CreateIndex.call(index: Elastic::IndexName.pick(index_name)) 
     index_name.singularize.camelize.constantize.__elasticsearch__.import && nil

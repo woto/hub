@@ -1,6 +1,6 @@
 import { Controller } from "stimulus"
 import { ApplicationController } from 'stimulus-use'
-import 'selectize/dist/js/selectize.min.js';
+import 'selectize/dist/js/selectize.js';
 
 export default class extends ApplicationController {
     #selectize;
@@ -8,7 +8,7 @@ export default class extends ApplicationController {
     connect() {
         const that = this;
 
-        this.#selectize = $(this.element).selectize({
+        this.selectize = $(this.element).selectize({
             valueField: 'id',
             labelField: 'email',
             searchField: 'email',
@@ -31,5 +31,17 @@ export default class extends ApplicationController {
                 });
             }
         });
+    }
+
+    disconnect() {
+        this.selectize.destroy();
+    }
+
+    get selectize() {
+        return this.#selectize[0].selectize;
+    }
+
+    set selectize(value) {
+        this.#selectize = value;
     }
 }

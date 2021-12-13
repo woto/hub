@@ -1,18 +1,26 @@
 import { Controller } from "stimulus"
-import 'selectize/dist/js/selectize.min.js';
+import 'selectize/dist/js/selectize';
 
 export default class extends Controller {
     #selectize;
 
-    initialize() {
-        // console.log('profile-language-controller initialize');
-    }
-
     connect() {
         // console.log('profile-language-controller connect');
-        this.#selectize = $(this.element).selectize({
+        this.selectize = $(this.element).selectize({
             plugins: ["remove_button"],
             delimiter: ','
         });
+    }
+
+    disconnect() {
+        this.selectize.destroy();
+    }
+
+    get selectize() {
+        return this.#selectize[0].selectize;
+    }
+
+    set selectize(value) {
+        this.#selectize = value;
     }
 }

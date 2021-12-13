@@ -1,6 +1,6 @@
 import {Controller} from "stimulus"
 import {ApplicationController} from 'stimulus-use'
-import 'selectize/dist/js/selectize.min.js';
+import 'selectize/dist/js/selectize.js';
 import {useDispatch} from 'stimulus-use'
 export default class extends ApplicationController {
     static values = {
@@ -8,17 +8,11 @@ export default class extends ApplicationController {
     }
     #selectize;
 
-    teardown() {
-        console.log(this.#selectize[0])
-        console.log(this.#selectize[0].selectize)
-        this.#selectize[0].selectize.destroy()
-    }
-
     connect() {
         useDispatch(this);
         const that = this;
 
-        this.#selectize = $(this.element).selectize({
+        this.selectize = $(this.element).selectize({
             plugins: ["remove_button", "restore_on_backspace"],
             sortField: 'title',
             valueField: 'title',
@@ -42,5 +36,17 @@ export default class extends ApplicationController {
                 });
             }
         })
+    }
+
+    disconnect() {
+        this.selectize.destroy();
+    }
+
+    get selectize() {
+        return this.#selectize[0].selectize;
+    }
+
+    set selectize(value) {
+        this.#selectize = value;
     }
 }
