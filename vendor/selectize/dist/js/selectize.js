@@ -381,7 +381,8 @@
 			return 0;
 		}
 	
-		if (!Selectize.$testInput) {
+		// TODO: make an issue
+		// if (!Selectize.$testInput) {
 			Selectize.$testInput = $('<span />').css({
 				position: 'absolute',
 				width: 'auto',
@@ -395,7 +396,7 @@
 				height: 0,
 				overflow: 'hidden'
 			}).append(Selectize.$testInput).appendTo('body');
-		}
+		// }
 	
 		Selectize.$testInput.text(str);
 	
