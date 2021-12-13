@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[title realm_id posts_count path].freeze
 
     self.all_columns = [
+      { key: 'id',                       pg: PostCategory.columns_hash['id'], roles: %w[guest user manager admin] },
       { key: 'title',                    pg: PostCategory.columns_hash['title'], roles: %w[guest user manager admin] },
       { key: 'path',                     pg: PostCategory.columns_hash['ancestry'], roles: %w[guest user manager admin] },
       { key: 'realm_id',                 pg: PostCategory.columns_hash['realm_id'], roles: %w[guest user manager admin] },

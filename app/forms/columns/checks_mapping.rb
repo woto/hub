@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[user_id amount status created_at updated_at].freeze
 
     self.all_columns = [
+        { key: 'id',                  pg: Check.columns_hash['id'], roles: ['user', 'manager', 'admin'] },
         { key: 'amount',              pg: Check.columns_hash['amount'], roles: ['user', 'manager', 'admin'] },
         { key: 'status',              pg: Check.columns_hash['status'], as: :string, roles: ['user', 'manager', 'admin'] },
         { key: 'user_id',             pg: Check.columns_hash['user_id'], roles: ['manager', 'admin'] },

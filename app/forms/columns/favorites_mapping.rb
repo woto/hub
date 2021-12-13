@@ -5,6 +5,7 @@ module Columns
     DEFAULTS = %w[name kind is_default favorites_items_count].freeze
 
     self.all_columns = [
+      { key: 'id',                    pg: Favorite.columns_hash['id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'name',                  pg: Favorite.columns_hash['name'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'kind',                  pg: Favorite.columns_hash['kind'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'favorites_items_count', pg: Favorite.columns_hash['favorites_items_count'], roles: ['guest', 'user', 'manager', 'admin'] },
