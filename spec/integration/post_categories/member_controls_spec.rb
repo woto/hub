@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Tables::PostCategoriesController, type: :system do
   let!(:post_category) { create(:post_category) }
-  let(:title) { 'Управление' }
+  let(:title) { ("№ #{post_category.id}") }
 
   describe 'control button visibility' do
     before do
@@ -15,13 +15,13 @@ describe Tables::PostCategoriesController, type: :system do
     context 'when role is user', responsible: :user do
 
       it 'does not show controls buttons' do
-        expect(page).not_to have_text(title)
+        expect(page).to have_text(title)
       end
     end
 
     context 'when role is admin', responsible: :admin do
       it 'shows controls buttons' do
-        expect(page).to have_text title
+        expect(page).to have_text(title)
       end
     end
   end
