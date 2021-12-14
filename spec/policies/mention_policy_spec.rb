@@ -12,7 +12,7 @@ describe MentionPolicy, responsible: :admin do
 
     let(:permitted_attributes) do
       [:published_at, :sentiment, :url, :image, :title, :html,
-       { kinds: [], entity_form_ids: [], tags: [], advertiser_ext_ids: [], topics_attributes: [] }]
+       { kinds: [], related_entities: %i[id is_main], tags: [], advertiser_ext_ids: [], topics_attributes: [] }]
     end
 
     context 'with user' do
