@@ -1,27 +1,27 @@
 #### Server
 
 ```bash
-cd /app
-docker-compose exec postgres pg_dump -d hub_production -U hub > /backup/db.dump
-cp -R /var/lib/docker/volumes/app_rails_storage/ /backup/
+cd /app && \
+docker-compose exec postgres pg_dump -d hub_production -U hub > /backup/db.dump && \
+cp -R /var/lib/docker/volumes/app_rails_storage/ /backup/ && \
 cp -R /var/lib/docker/volumes/app_rails_uploads/ /backup/
 ```
 
 #### Developer machine
 
 ```bash
-cd ~/work/hub/public/uploads
+cd ~/work/hub/public/uploads && \
 rsync -avz root@116.202.134.96:/backup/app_rails_uploads/_data/ .
 
-cd /home/woto/work/hub/storage
+cd /home/woto/work/hub/storage && \
 rsync -avz root@116.202.134.96:/backup/app_rails_storage/_data/ .
 
-cd ~/backup
+cd ~/backup && \
 rsync -avz root@116.202.134.96:/backup/db.dump .
 
-cd ~/work/hub
-rake db:drop
-rake db:create
+cd ~/work/hub && \
+rake db:drop && \
+rake db:create && \
 docker exec -i hub_postgres_1 psql -U hub -d hub_development < ~/backup/db.dump
 
 ./bin/rails c
