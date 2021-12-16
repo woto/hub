@@ -38,7 +38,7 @@ export default class extends ApplicationController {
                     if(that.hasTitleTarget) {
                         that.titleTarget.value = res.title;
                     }
-                    if(this.hasHtmlTarget) {
+                    if(that.hasHtmlTarget) {
                         that.htmlTarget.value = res.html;
                     }
                     that.imagePreviewTarget.setAttribute('src', res.image)

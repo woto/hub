@@ -13,20 +13,22 @@ export default class extends ApplicationController {
         // TODO: js template
         let result = '';
         result += `            <div class='option'>`;
-        result += `              <div class="d-flex">`;
-        result += `                <div> <img src="${item.image.thumbnails['50']}" class="me-2"> </div>`;
+        result += `              <div class="d-flex align-items-center">`;
+        result += `                <div class="d-flex align-self-center img-thumbnail bg-white min-height-50 max-width-50 me-2">`;
+        result += `                  <img class=" align-self-center" src="${item.image.thumbnails['50']}">`;
+        result += `                </div>`;
         result += `                <div>`;
         result += `                    <div class="mb-1">`;
         result += `                        ${escape(item.title)}`;
         result += `                    </div>`;
         result += `                    <div>`;
         item.lookups.map(function (lookup) {
-            result += `<div class="badge bg-azure mb-1 me-1">${escape(lookup)}</div>`
+            result += `<div style='max-width: 200px' class="badge bg-azure text-truncate mb-1 me-1 text-break">${escape(lookup)}</div>`
         }).join(' ');
         result += `                    </div>`
         result += `                    <div>`
         item.topics.map(function (topic) {
-            result += `<div class="badge bg-cyan mb-1 me-1">${escape(topic)}</div>`
+            result += `<div style='max-width: 200px' class="badge bg-cyan text-truncate mb-1 me-1 text-break">${escape(topic)}</div>`
         }).join(' ');
         result += `                    </div>`;
         result += `                </div>`;

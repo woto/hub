@@ -15,7 +15,7 @@
                     entity.title, entity.id, 'data-data': {
                     lookups: entity.lookups.map(&:to_label),
                     topics: entity.topics.map(&:to_label),
-                    image: entity.image&.derivation_url(:thumbnail, 50, 50) || ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png')
+                    image: entity.image_hash
                   }.to_json,
                   ]
                 end) %>
