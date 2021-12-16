@@ -60,15 +60,22 @@
 
   <%= render 'entities/editorial', f: f %>
 
-  <div class="form-actions">
+  <div class="d-flex flex-column flex-sm-row gap-2">
     <% if @is_modal %>
       <%= f.button :submit, t("save"),
                    'data-turbo': false,
-                   class: 'btn btn-primary' %>
+                   class: 'btn btn-purple' %>
     <% else %>
-      <%= f.button :submit, t('.submit_and_new'), class: 'btn btn-primary' %>
-      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= f.button :submit, t('.submit_and_new'), class: 'btn btn-purple' %>
+      <%= f.button :submit, class: 'btn btn-purple' %>
       <%= link_to t('back'), entities_path, class: "btn btn-white" %>
+    <% end %>
+
+    <% if @entity.persisted? && !@is_modal %>
+      <%= link_to t('delete'), entity_path(@entity.id),
+                  class: "ms-auto btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
+                  method: :delete,
+                  data: { confirm: t('are_you_sure') } %>
     <% end %>
   </div>
 <% end %>

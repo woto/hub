@@ -72,15 +72,23 @@
 
         <%= render 'editorial', f: f %>
 
+        <div class="d-flex flex-column flex-sm-row gap-2">
+          <%= f.button :submit, class: 'btn btn-purple', form: f.options[:html][:id] %>
+          <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
+
+          <% if @mention.persisted? %>
+            <%= link_to t('delete'), mention_path(@mention.id),
+                        class: "ms-auto btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
+                        'data-turbo-method': :delete,
+                        'data-turbo-confirm': t('are_you_sure') %>
+          <% end %>
+        </div>
+
       </div>
       <div class="col mb-3 scrollable-mention-search-parent">
         <div class="d-flex flex-wrap bg-white scrollable-mention-search" data-mention-url-target="similarUrls"></div>
       </div>
     <% end %>
 
-    <div class="form-actions">
-      <%= f.button :submit, class: 'btn btn-primary', form: f.options[:html][:id] %>
-      <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
-    </div>
   <% end %>
 <% end %>

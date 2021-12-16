@@ -164,7 +164,7 @@ ru:
       today_rates: Курс на сегодня
       under_construction: В разработке
   default: По-умолчанию
-  delete: Delete
+  delete: Удалить
   devise:
     confirmations:
       confirmed: Ваш адрес эл. почты успешно подтвержден.

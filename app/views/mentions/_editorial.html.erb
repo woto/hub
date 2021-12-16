@@ -1,5 +1,5 @@
 <% if current_user.staff? %>
-  <%= render AccordionComponent.new(accordion_id: 'mention-accordion', css_class: 'bg-white') do |accordion_component| %>
+  <%= render AccordionComponent.new(accordion_id: 'mention-accordion', css_class: 'bg-white mb-3') do |accordion_component| %>
     <%= accordion_component.item(item_id: 'mention-item') do |item_component| %>
       <%= item_component.header do %>
         <%= t('.editorial') %>

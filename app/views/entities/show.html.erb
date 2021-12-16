@@ -106,23 +106,20 @@
               </dl>
             </div>
           </div>
+
+          <div class="d-flex flex-column flex-sm-row gap-2">
+            <%= link_to t('new'), new_entity_path,
+                        class: "btn btn-primary #{'disabled' unless policy(@entity).new? }" %>
+            <%= link_to t('edit'), edit_entity_path(@entity),
+                        class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }" %>
+            <%= link_to t('back'), entities_path, class: "btn btn-white" %>
+            <%= link_to t('delete'), entity_path(@entity.id),
+                        class: "ms-auto btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
+                        method: :delete,
+                        data: { confirm: t('are_you_sure') } %>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-
-      <%= link_to t('new'), new_entity_path,
-                  class: "btn btn-primary #{'disabled' unless policy(@entity).new? }" %>
-      <%= link_to t('edit'), edit_entity_path(@entity),
-                  class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }" %>
-      <%= link_to t('delete'), entity_path(@entity.id),
-                  class: "btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
-                  method: :delete,
-                  data: { confirm: t('are_you_sure') } %>
-      <%= link_to t('back'), entities_path, class: "btn btn-white" %>
     </div>
   </div>
 </div>
