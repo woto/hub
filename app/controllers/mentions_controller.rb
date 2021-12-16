@@ -24,6 +24,8 @@ class MentionsController < ApplicationController
   # POST /mentions
   def create
     @mention = policy_scope(Mention).new(permitted_attributes(Mention))
+    # TODO: hotfix
+    @mention.user = current_user unless @mention.user
     authorize(@mention)
 
     # TODO: https://github.com/rails/rails/issues/43775
