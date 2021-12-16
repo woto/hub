@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class TextTagComponent < ViewComponent::Base
-  def initialize(text_tag:, linkify: true)
+  def initialize(text_tag:, linkify: true, color: 'cyan')
+    super
     @text_tag = text_tag
     @linkify = linkify
+    @color = color
   end
 
   def render?
@@ -19,6 +21,6 @@ class TextTagComponent < ViewComponent::Base
   rescue StandardError
     text_tag
   else
-    link_to @text_tag, @text_tag, class: 'text-white', rel: 'noreferrer'
+    link_to @text_tag.gsub(/\A(https:\/\/|http:\/\/)/, '').gsub(/\Awww\./, '').gsub(/\/\z/, ''), @text_tag, class: 'text-white', rel: 'noreferrer'
   end
 end

@@ -10,6 +10,7 @@
 #  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string
+#  topics_count   :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  user_id        :bigint           not null

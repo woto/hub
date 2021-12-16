@@ -10,7 +10,7 @@
 #  image_data     :jsonb
 #  kinds          :jsonb            not null
 #  published_at   :datetime
-#  sentiment      :integer          not null
+#  sentiments     :jsonb
 #  title          :string
 #  topics_count   :integer          default(0), not null
 #  url            :text
@@ -29,6 +29,7 @@
 #
 class Mention < ApplicationRecord
   KINDS = %w[text image video audio].freeze
+  SENTIMENTS = %w[positive negative].freeze
 
   has_logidze ignore_log_data: true
 
@@ -36,8 +37,8 @@ class Mention < ApplicationRecord
   index_name "#{Rails.env}.mentions"
 
   include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
-
-  enum sentiment: { positive: 0, negative: 1, unknown: 2 }
+  include ImageHash
+  include Topicable
 
   belongs_to :user, counter_cache: true
 
@@ -50,10 +51,10 @@ class Mention < ApplicationRecord
   before_validation :strip_title
   before_validation :strip_url
 
-  validates :topics, :image, :entities_mentions, :url, :sentiment, :kinds, presence: true
-  validates :entities_mentions, :topics, length: { minimum: 1 }
+  validates :entities_mentions, :url, presence: true
   validates :url, uniqueness: true
-  validate :validate_kinds_keys, :validate_kinds_length
+  validate :validate_kinds_keys
+  validate :validate_sentiments_keys
 
   # before_destroy :stop_destroy
 
@@ -71,21 +72,6 @@ class Mention < ApplicationRecord
     self.entities_mentions = entities_mentions
   end
 
-  def topics_attributes=(titles)
-    topics = []
-
-    titles.each do |title|
-      # TODO: write article
-      # If remove this line then you could not pass topic with empty title.
-      # The exception ActiveRecord::RecordInvalid will be raised
-      next if title.blank?
-
-      topics << Topic.find_or_create_by(title: title)
-    end
-
-    self.topics = topics
-  end
-
   def to_param
     [id, title&.parameterize].join('-')
   end
@@ -95,23 +81,22 @@ class Mention < ApplicationRecord
       id: id,
       kinds: kinds,
       published_at: published_at,
-      sentiment: sentiment,
+      sentiments: sentiments,
       topics: topics.map(&:to_label),
+      topics_count: topics_count,
       url: url,
       title: title,
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,
-      # TODO: could we just send image_data?
-      image: {
-        image_original: image_url,
-        image_thumbnail: image.derivation_url(:thumbnail, 300, 300),
-        width: image.metadata['width'],
-        height: image.metadata['height']
-      },
+      image: image_hash,
       entity_ids: entity_ids,
       entities: entities_mentions.includes(:entity).map do |entity_mention|
-        { is_main: entity_mention.is_main, title: entity_mention.entity.title }
+        {
+          id: entity_mention.entity_id,
+          is_main: entity_mention.is_main,
+          title: entity_mention.entity.title
+        }
       end,
       entities_count: entities_count
     }
@@ -131,8 +116,11 @@ class Mention < ApplicationRecord
     errors.add(:kinds, :inclusion) unless (kinds - ['', *KINDS]).empty?
   end
 
-  def validate_kinds_length
-    errors.add(:kinds, :inclusion) if Array(kinds).compact_blank.empty?
+  # TODO: find gem to avoid manual validation
+  def validate_sentiments_keys
+    return if errors.include?(:sentiments)
+
+    errors.add(:sentiments, :inclusion) unless (sentiments - ['', *SENTIMENTS]).empty?
   end
 
   def strip_title

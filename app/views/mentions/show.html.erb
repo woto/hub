@@ -57,14 +57,21 @@
 
                 <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9">
-                  <%= render(Mentions::EntityComponent.with_collection(@mention.entities_mentions.includes(:entity).map { |entity_mention| { 'title' => entity_mention.entity.to_label, 'is_main' => entity_mention.is_main } }.zip(@mention.entity_ids))) %>
+                  <% collection = @mention.entities_mentions.includes(:entity).map do |entity_mention|
+                    {
+                      'id' => entity_mention.entity_id,
+                      'title' => entity_mention.entity.to_label,
+                      'is_main' => entity_mention.is_main
+                    }
+                  end %>
+                  <%= render(Mentions::EntityComponent.with_collection(collection)) %>
                 </dd>
 
                 <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@mention.topics.map(&:to_label))) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('sentiment', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= render Mentions::SentimentTextComponent.new(sentiment_text: @mention.sentiment) %> </dd>
+                <dd class="col-sm-9"> <%= render Mentions::SentimentTextComponent.with_collection(@mention.sentiments) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('kinds', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= render(Mentions::KindTextComponent.with_collection(@mention.kinds)) %> </dd>
@@ -81,11 +88,10 @@
                 <dt class="col-sm-3"> <%= t('image') %> </dt>
                 <dd class="col-sm-9">
                   <%= render Mentions::ImageLightboxComponent.new(
-                    image_original: @mention.image_url,
-                    image_thumbnail: @mention.image.derivation_url(:thumbnail, 500, 500),
-                    image_width: @mention.image.metadata['width'] ,
-                    image_height: @mention.image.metadata['height'],
-                    image_class: 'img-thumbnail width-200 max-height-500') %>
+                    **@mention.image_hash,
+                    class: 'img-thumbnail bg-white',
+                    size: '300'
+                  ) %>
                 </dd>
 
                 <% if current_user&.staff? %>

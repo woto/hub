@@ -3,11 +3,10 @@
 
     <div class="position-relative">
       <%= render Mentions::ImageLightboxComponent.new(
-        image_original: mention.image_url,
-        image_thumbnail: mention.image.derivation_url(:thumbnail, 800, 800),
-        image_width: mention.image.metadata['width'],
-        image_height: mention.image.metadata['height'],
-        image_class: 'card-img-top img-thumbnail') %>
+        **mention.image_hash,
+        class: 'card-img-top',
+        size: '500'
+      ) %>
 
       <%= link_to edit_mention_path(mention), class: 'btn btn-sm btn-warning btn-icon m-0 p-0 py-1 position-absolute top-0 end-0 m-2' do %>
         <i class="fas fa-pencil-alt"></i>
@@ -26,7 +25,7 @@
 
         <%= link_to mention.url, rel: 'noreferrer', class: 'text-decoration-none' do %>
           <%= mention.title %>
-          <% if mention.title %>
+          <% if mention.title.present? %>
             /
           <% end %>
           Подробнее на
@@ -35,14 +34,21 @@
       </h5>
 
       <p class="card-text">
-        <%= render(Mentions::EntityComponent.with_collection(mention.entities_mentions.includes(:entity).map { |entity_mention| { 'title' => entity_mention.entity.to_label, 'is_main' => entity_mention.is_main } }.zip(mention.entity_ids))) %>
+        <% collection = mention.entities_mentions.includes(:entity).map do |entity_mention|
+          {
+            'id' => entity_mention.entity_id,
+            'title' => entity_mention.entity.to_label,
+            'is_main' => entity_mention.is_main
+          }
+        end %>
+        <%= render(Mentions::EntityComponent.with_collection(collection)) %>
       </p>
       <p class="card-text">
         <%= render(TextTagComponent.with_collection(mention.topics.map(&:to_label))) %>
       </p>
       <p class="card-text">
-        <%= render Mentions::SentimentTextComponent.new(sentiment_text: mention.sentiment) %>
-        <%= render(Mentions::KindTextComponent.with_collection(mention.kinds)) %>
+        <%= render Mentions::SentimentTextComponent.with_collection(mention.sentiments) %>
+        <%= render Mentions::KindTextComponent.with_collection(mention.kinds) %>
       </p>
       <p class="card-text"><%= GlobalHelper.decorate_datetime(mention.published_at) %></p>
     </div>

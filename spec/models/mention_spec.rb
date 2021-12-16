@@ -10,7 +10,7 @@
 #  image_data     :jsonb
 #  kinds          :jsonb            not null
 #  published_at   :datetime
-#  sentiment      :integer          not null
+#  sentiments     :jsonb
 #  title          :string
 #  topics_count   :integer          default(0), not null
 #  url            :text
@@ -33,8 +33,6 @@ RSpec.describe Mention, type: :model do
   it_behaves_like 'elasticable'
   it_behaves_like 'logidzable'
 
-  it { is_expected.to define_enum_for(:sentiment).with_values(%w[positive negative unknown]) }
-
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to have_many(:entities_mentions).dependent(:destroy) }
@@ -46,42 +44,28 @@ RSpec.describe Mention, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:entities_mentions) }
     it { is_expected.to validate_presence_of(:url) }
-    it { is_expected.to validate_presence_of(:topics) }
-    it { is_expected.to validate_presence_of(:sentiment) }
-    it { is_expected.to validate_presence_of(:kinds) }
-
-    # https://github.com/thoughtbot/shoulda-matchers/issues/1007
-    # it { is_expected.to validate_length_of(:topics).is_at_least(1) }
-    describe '#topics minimal length' do
-      subject { build(:mention, topics: []).tap(&:valid?).errors.details }
-
-      it { is_expected.to eq({ topics: [{ error: :blank }, { count: 1, error: :too_short }] }) }
-    end
 
     # https://github.com/thoughtbot/shoulda-matchers/issues/1007
     # it { is_expected.to validate_length_of(:entities).is_at_least(1) }
     describe '#entities minimal length' do
       subject { build(:mention, entities: []).tap(&:valid?).errors.details }
 
-      it { is_expected.to eq({ entities_mentions: [{ error: :blank }, { count: 1, error: :too_short }] }) }
-    end
-
-    describe '#validate_kinds_length' do
-      subject { build(:mention, kinds: kinds) }
-
-      context 'when kinds is empty' do
-        let(:kinds) { [] }
-
-        specify do
-          expect(subject).to be_invalid
-          expect(subject.errors.details).to eq({ kinds: [{ error: :blank }, { error: :inclusion }] })
-        end
-      end
+      it { is_expected.to eq({ entities_mentions: [{ error: :blank }] }) }
     end
 
     describe '#kinds' do
       context 'when kinds is valid' do
         subject { build(:mention, kinds: %w[text image video]) }
+
+        specify do
+          expect(subject).to be_valid
+        end
+      end
+    end
+
+    describe '#sentiments' do
+      context 'when sentiments is valid' do
+        subject { build(:mention, sentiments: %w[positive]) }
 
         specify do
           expect(subject).to be_valid
@@ -98,6 +82,19 @@ RSpec.describe Mention, type: :model do
         specify do
           expect(subject).to be_invalid
           expect(subject.errors.details).to eq({ kinds: [{ error: :inclusion }] })
+        end
+      end
+    end
+
+    describe '#validate_sentiments_keys' do
+      subject { build(:mention, sentiments: sentiments) }
+
+      context 'when kinds includes wrong key' do
+        let(:sentiments) { %w[fake] }
+
+        specify do
+          expect(subject).to be_invalid
+          expect(subject.errors.details).to eq({ sentiments: [{ error: :inclusion }] })
         end
       end
     end
@@ -126,29 +123,29 @@ RSpec.describe Mention, type: :model do
       end
     end
 
-    let(:mention) { create(:mention) }
+    let(:mention) { create(:mention, title: 'mention title') }
 
     it 'returns correct result' do
       expect(subject).to match(
         id: mention.id,
-        entities_count: mention.entities_count,
         kinds: mention.kinds,
         published_at: mention.published_at&.utc,
-        sentiment: mention.sentiment,
+        sentiments: mention.sentiments,
         topics: mention.topics.map(&:to_label),
+        topics_count: mention.topics_count,
         url: mention.url,
-        title: nil,
+        title: 'mention title',
         user_id: mention.user_id,
-        image: include(
-          :height,
-          :width,
-          image_original: be_a(String),
-          image_thumbnail: be_a(String)
-        ),
+        image: be_a(Hash),
         entity_ids: mention.entity_ids,
         entities: mention.entities_mentions.map do |entities_mention|
-                    { is_main: entities_mention.is_main, title: entities_mention.entity.title }
-                  end,
+          {
+            id: entities_mention.entity.id,
+            is_main: entities_mention.is_main,
+            title: entities_mention.entity.title
+          }
+        end,
+        entities_count: mention.entities_count,
         created_at: Time.current,
         updated_at: Time.current
       )
@@ -210,53 +207,22 @@ RSpec.describe Mention, type: :model do
     let(:topic1) { create(:topic) }
     let(:topic2) { create(:topic) }
 
-    def do_the_action
-      subject.update(topics_attributes: params)
+    it_behaves_like '#topics_attributes='
+  end
+
+  describe '#image_hash' do
+    context 'when image is present' do
+      subject! { create(:mention, image_data: image_data) }
+
+      let(:image_data) do
+        ImageUploader.upload(File.open('spec/fixtures/files/jessa_rhodes.jpg', 'rb'), :store).as_json
+      end
+
+      it_behaves_like '#image_hash', width: 552, height: 552
     end
 
-    context 'when does not pass topic1 and topic1 is linked to the mention' do
-      let(:params) { [topic2.title] }
-
-      it 'unlinks topic1 but does not remove it' do
-        do_the_action
-        expect(subject.topics).to contain_exactly(topic2)
-        expect(topic1.reload).not_to be_nil
-      end
-    end
-
-    context 'when passed new topic which is not exists yet' do
-      let(:params) { [topic1.title, topic2.title, 'new topic'] }
-
-      it 'creates new linked topic' do
-        expect do
-          do_the_action
-          expect(subject.topics).to contain_exactly(topic1, topic2, Topic.find_by(title: 'new topic'))
-        end.to change(Topic, :count).by(1)
-      end
-    end
-
-    context 'when passed topic is not liked yet to the mention' do
-      let!(:topic) { create(:topic) }
-
-      let(:params) { [topic1.title, topic2.title, topic.title] }
-
-      it 'links topic to the mention' do
-        expect do
-          do_the_action
-          expect(subject.topics).to contain_exactly(topic1, topic2, topic)
-        end.not_to change(Topic, :count)
-      end
-    end
-
-    context 'when passed topics already linked to the mention' do
-      let(:params) { [topic1.title, topic2.title] }
-
-      it 'does not relink it again' do
-        expect do
-          do_the_action
-          expect(subject.topics).to contain_exactly(topic1, topic2)
-        end.not_to change(Topic, :count)
-      end
+    context 'when image is absent' do
+      it_behaves_like '#image_hash', width: 50, height: 50
     end
   end
 

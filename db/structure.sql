@@ -618,8 +618,41 @@ CREATE TABLE public.entities (
     image_data jsonb,
     user_id bigint NOT NULL,
     lookups_count integer DEFAULT 0 NOT NULL,
-    intro text
+    intro text,
+    topics_count integer DEFAULT 0 NOT NULL
 );
+
+
+--
+-- Name: entities_entities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entities_entities (
+    id bigint NOT NULL,
+    parent_id bigint NOT NULL,
+    child_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: entities_entities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entities_entities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entities_entities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entities_entities_id_seq OWNED BY public.entities_entities.id;
 
 
 --
@@ -672,6 +705,38 @@ CREATE SEQUENCE public.entities_mentions_id_seq
 --
 
 ALTER SEQUENCE public.entities_mentions_id_seq OWNED BY public.entities_mentions.id;
+
+
+--
+-- Name: entities_topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entities_topics (
+    id bigint NOT NULL,
+    entity_id bigint NOT NULL,
+    topic_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: entities_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entities_topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entities_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entities_topics_id_seq OWNED BY public.entities_topics.id;
 
 
 --
@@ -944,7 +1009,6 @@ CREATE TABLE public.mentions (
     user_id bigint NOT NULL,
     url text,
     published_at timestamp without time zone,
-    sentiment integer NOT NULL,
     entities_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -953,7 +1017,8 @@ CREATE TABLE public.mentions (
     kinds jsonb DEFAULT '[]'::jsonb NOT NULL,
     topics_count integer DEFAULT 0 NOT NULL,
     title character varying,
-    html text
+    html text,
+    sentiments jsonb DEFAULT '[]'::jsonb
 );
 
 
@@ -1215,7 +1280,8 @@ CREATE TABLE public.topics (
     title character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    mentions_count integer DEFAULT 0 NOT NULL
+    mentions_count integer DEFAULT 0 NOT NULL,
+    entities_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1566,10 +1632,24 @@ ALTER TABLE ONLY public.entities ALTER COLUMN id SET DEFAULT nextval('public.ent
 
 
 --
+-- Name: entities_entities id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_entities ALTER COLUMN id SET DEFAULT nextval('public.entities_entities_id_seq'::regclass);
+
+
+--
 -- Name: entities_mentions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.entities_mentions ALTER COLUMN id SET DEFAULT nextval('public.entities_mentions_id_seq'::regclass);
+
+
+--
+-- Name: entities_topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_topics ALTER COLUMN id SET DEFAULT nextval('public.entities_topics_id_seq'::regclass);
 
 
 --
@@ -1799,6 +1879,14 @@ ALTER TABLE ONLY public.checks
 
 
 --
+-- Name: entities_entities entities_entities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_entities
+    ADD CONSTRAINT entities_entities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: entities_mentions entities_mentions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1812,6 +1900,14 @@ ALTER TABLE ONLY public.entities_mentions
 
 ALTER TABLE ONLY public.entities
     ADD CONSTRAINT entities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entities_topics entities_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_topics
+    ADD CONSTRAINT entities_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -2069,6 +2165,20 @@ CREATE INDEX index_checks_on_user_id ON public.checks USING btree (user_id);
 
 
 --
+-- Name: index_entities_entities_on_child_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_entities_on_child_id ON public.entities_entities USING btree (child_id);
+
+
+--
+-- Name: index_entities_entities_on_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_entities_on_parent_id ON public.entities_entities USING btree (parent_id);
+
+
+--
 -- Name: index_entities_mentions_on_entity_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2101,6 +2211,20 @@ CREATE INDEX index_entities_on_image_data ON public.entities USING gin (image_da
 --
 
 CREATE INDEX index_entities_on_user_id ON public.entities USING btree (user_id);
+
+
+--
+-- Name: index_entities_topics_on_entity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_topics_on_entity_id ON public.entities_topics USING btree (entity_id);
+
+
+--
+-- Name: index_entities_topics_on_topic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_topics_on_topic_id ON public.entities_topics USING btree (topic_id);
 
 
 --
@@ -2447,6 +2571,14 @@ CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH
 
 
 --
+-- Name: entities_topics fk_rails_0edeb99da6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_topics
+    ADD CONSTRAINT fk_rails_0edeb99da6 FOREIGN KEY (entity_id) REFERENCES public.entities(id);
+
+
+--
 -- Name: mentions fk_rails_1b711e94aa; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2476,6 +2608,14 @@ ALTER TABLE ONLY public.transactions
 
 ALTER TABLE ONLY public.identities
     ADD CONSTRAINT fk_rails_5373344100 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: entities_topics fk_rails_596ddb687e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_topics
+    ADD CONSTRAINT fk_rails_596ddb687e FOREIGN KEY (topic_id) REFERENCES public.topics(id);
 
 
 --
@@ -2655,11 +2795,27 @@ ALTER TABLE ONLY public.feeds
 
 
 --
+-- Name: entities_entities fk_rails_e413fdbf31; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_entities
+    ADD CONSTRAINT fk_rails_e413fdbf31 FOREIGN KEY (parent_id) REFERENCES public.entities(id);
+
+
+--
 -- Name: profiles fk_rails_e424190865; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.profiles
     ADD CONSTRAINT fk_rails_e424190865 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: entities_entities fk_rails_ed209e6c5c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities_entities
+    ADD CONSTRAINT fk_rails_ed209e6c5c FOREIGN KEY (child_id) REFERENCES public.entities(id);
 
 
 --
@@ -2755,6 +2911,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211207072249'),
 ('20211210042253'),
 ('20211210122043'),
-('20211212110247');
+('20211212110247'),
+('20211212174925'),
+('20211213094908'),
+('20211214072816'),
+('20211214164352'),
+('20211214164505'),
+('20211214171330'),
+('20211215150926');
 
 

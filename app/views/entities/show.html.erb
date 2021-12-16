@@ -1,5 +1,5 @@
 <% content_for(:seo_title) do %>
-  <%= t("titles.entities") %>
+  <%= @entity.title %>
 <% end %>
 
 <% content_for :breadcrumbs do %>
@@ -48,7 +48,36 @@
                 <dd class="col-sm-9"> <%= @entity.title %> </dd>
 
                 <dt class="col-sm-3"> <%= t('lookups', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.lookups.map(&:to_label))) %> </dd>
+                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.lookups.map(&:to_label), color: 'azure')) %> </dd>
+
+                <dt class="col-sm-3"> <%= t('parents', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9">
+                  <% collection = @entity.parents.map do |entity|
+                    {
+                      'id' => entity.id,
+                      'title' => entity.to_label,
+                      'is_main' => false,
+                      'direction' => 'up'
+                    }
+                  end %>
+                  <%= render(Mentions::EntityComponent.with_collection(collection)) %>
+                </dd>
+
+                <dt class="col-sm-3"> <%= t('children', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9">
+                  <% collection = @entity.children.map do |entity|
+                    {
+                      'id' => entity.id,
+                      'title' => entity.to_label,
+                      'is_main' => false,
+                      'direction' => 'down'
+                    }
+                  end %>
+                  <%= render(Mentions::EntityComponent.with_collection(collection)) %>
+                </dd>
+
+                <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'entity']) %> </dt>
+                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.topics.map(&:to_label))) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('version', scope: ['simple_form', 'labels', 'entity']) %> </dt>
                 <dd class="col-sm-9"> <%= @entity.log_version %> </dd>
@@ -61,12 +90,11 @@
 
                 <dt class="col-sm-3"> <%= t('image') %> </dt>
                 <dd class="col-sm-9">
-                  <% options = { class: 'img-thumbnail width-200 max-height-500' } %>
-                  <% if @entity.image_url %>
-                    <%= image_tag @entity.image_url, options %>
-                  <% else %>
-                    <%= image_pack_tag('media/images/icon-404-100.png', options) %>
-                  <% end %>
+                  <%= render Mentions::ImageLightboxComponent.new(
+                    **@entity.image_hash,
+                    class: 'img-thumbnail bg-white',
+                    size: '100'
+                  ) %>
                 </dd>
 
                 <dt class="col-sm-3"> <%= t('intro', scope: ['simple_form', 'labels', 'mention']) %> </dt>

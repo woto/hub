@@ -1,22 +1,23 @@
-<%= turbo_frame_tag 'pagination', 'autoscroll': 'top' do %>
+<%= turbo_frame_tag 'pagination' do %>
   <% if @entities.size > 0 %>
-    <h4>Похожие объекты</h4>
+      <h4><%= t('similar_entities') %></h4>
 
-    <%= tag.div class: 'w-100 text-center text-lg-start' do %>
-      <% @entities.each do |entity| %>
-        <%= render Entities::CardComponent.new(
-          entity_id: entity.id,
-          image: entity.image,
-          title: entity.title,
-          is_main: false,
-          intro: entity.intro,
-          lookups: entity.lookups,
-          assignable: params[:assignable],
-          controllable: false,
-          form_id: params[:form_id],
-        ) %>
+      <%= tag.div class: 'w-100 text-center text-lg-start' do %>
+        <% @entities.each do |entity| %>
+          <%= render Entities::CardComponent.new(
+            entity_id: entity.id,
+            image: entity.image,
+            title: entity.title,
+            is_main: false,
+            intro: entity.intro,
+            lookups: entity.lookups,
+            topics: entity.topics,
+            assignable: params[:assignable],
+            controllable: false,
+            form_id: params[:form_id],
+          ) %>
+        <% end %>
       <% end %>
-    <% end %>
-    <%= paginate @entities %>
+      <%= paginate @entities %>
   <% end %>
 <% end %>

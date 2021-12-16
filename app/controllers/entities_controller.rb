@@ -15,7 +15,7 @@ class EntitiesController < ApplicationController
 
   # GET /entities/new
   def new
-    @entity = current_user.entities.new(lookups: [Lookup.new])
+    @entity = current_user.entities.new
     @url = url_for(@entity)
     authorize(@entity)
   end
@@ -28,34 +28,50 @@ class EntitiesController < ApplicationController
 
   # POST /entities
   def create
+    @entity = current_user.entities.new(permitted_attributes(Entity))
+    authorize(@entity)
+
+    # TODO: https://github.com/rails/rails/issues/43775
+    result = false
     GlobalHelper.retryable do
-      @entity = current_user.entities.new(permitted_attributes(Entity))
-      authorize(@entity)
-      if @entity.save
-        if params['commit'] == t('entities.form.submit_and_new')
-          redirect_to new_entity_path, notice: t('.entity_was_successfully_created')
-        else
-          redirect_to @entity, notice: t('.entity_was_successfully_created')
-        end
+      result = @entity.save
+      raise ActiveRecord::RecordInvalid unless result
+    rescue ActiveRecord::RecordInvalid
+      raise ActiveRecord::Rollback
+    end
+
+    if result
+      if params['commit'] == t('entities.form.submit_and_new')
+        redirect_to new_entity_path, notice: t('.entity_was_successfully_created')
       else
-        render :new, status: :unprocessable_entity
+        redirect_to @entity, notice: t('.entity_was_successfully_created')
       end
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /entities/:id
   def update
+    authorize(@entity)
+
+    # TODO: https://github.com/rails/rails/issues/43775
+    result = false
     GlobalHelper.retryable do
-      authorize(@entity)
-      if @entity.update(permitted_attributes(Entity))
-        if params['commit'] == t('entities.form.submit_and_new')
-          redirect_to new_entity_path, notice: t('.entity_was_successfully_updated')
-        else
-          redirect_to @entity, notice: t('.entity_was_successfully_updated')
-        end
+      result = @entity.update(permitted_attributes(Entity))
+      raise ActiveRecord::RecordInvalid unless result
+    rescue ActiveRecord::RecordInvalid
+      raise ActiveRecord::Rollback
+    end
+
+    if result
+      if params['commit'] == t('entities.form.submit_and_new')
+        redirect_to new_entity_path, notice: t('.entity_was_successfully_updated')
       else
-        render :edit, status: :unprocessable_entity
+        redirect_to @entity, notice: t('.entity_was_successfully_updated')
       end
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -27,9 +27,8 @@ module Interactors
                     json.type 'bool_prefix'
                     json.fields do
                       json.array! %w[
+                        title
                         title.autocomplete
-                        title.autocomplete._2gram
-                        title.autocomplete._3gram
                       ]
                     end
                   end

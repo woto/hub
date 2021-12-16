@@ -13,7 +13,7 @@ class ImageUploader < Shrine
     validate_mime_type %w[image/jpeg image/jpg image/png image/gif]
   end
 
-  plugin :derivation_endpoint, prefix: "derivations/image" # matches mount point
+  plugin :derivation_endpoint, upload: true, prefix: "derivations/image" # matches mount point
 
   derivation :thumbnail do |file, width, height|
     ImageProcessing::MiniMagick

@@ -1,29 +1,24 @@
 <%= tag.div class: 'mb-3' do %>
 
   <%# TODO: write article %>
-  <%= f.input :entity_form_ids, as: :check_boxes, collection: [''], checked: ['', true],
-              wrapper_html: { class: 'd-none'},
-              error: false,
-              label: false,
-              hint: false %>
+  <%= hidden_field_tag 'mention[related_entities][foo][id]', nil, form: f.options[:html][:id] %>
 
-  <%= f.input :entity_form_ids, label: false, error: false do %>
-
+  <%#= f.input :related_entities, label: false, error: false do %>
     <% f.object.entities_mentions.each do |entity_mention| %>
       <%= render Entities::CardComponent.new(
         entity_id: entity_mention.entity.id,
         is_main: entity_mention.is_main,
-        image: (entity_mention.entity.image.derivation_url(:thumbnail, 100, 100) if entity_mention.entity.image.present?),
+        image: entity_mention.entity.image_hash,
         title: entity_mention.entity.title,
         intro: entity_mention.entity.intro,
         lookups: entity_mention.entity.lookups.map(&:to_label),
+        topics: entity_mention.entity.topics.map(&:to_label),
         controllable: true,
         assignable: false,
         form_id: f.options[:html][:id]
       ) %>
     <% end %>
-
-  <% end %>
+  <%# end %>
 
   <%= tag.div 'data-controller': 'mention-new-entity' do %>
 
@@ -40,6 +35,6 @@
 
   <% end %>
 
-  <%= f.full_error :entities, class: 'invalid-feedback d-block' %>
+  <%= f.full_error :entities_mentions, class: 'invalid-feedback d-block' %>
 
 <% end %>

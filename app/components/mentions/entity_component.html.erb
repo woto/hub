@@ -1,10 +1,13 @@
 <%= tag.div 'data-controller': 'popover',
             class: 'd-inline-block',
-            'data-popover-url-value': popover_entity_path(id: @entity.last) do %>
-  <%= link_to entity_path(id: @entity.last),
+            'data-popover-url-value': popover_entity_path(id: @id) do %>
+  <%= link_to entity_path(id: @id),
             tabindex: "0",
-            class: "btn btn-sm mb-1 me-1 #{ @entity.first['is_main'] ? 'btn-blue' : 'btn-secondary' }",
+            class: "btn btn-sm mb-1 me-1 badge btn-#{@color}",
             'data-popover-target': 'hoverableElement' do %>
-    <%= @entity.first['title'] %>
+    <% if @direction %>
+      <%= tag.icon class: "fas fa-angle-double-#{@direction}" %>&nbsp;
+    <% end %>
+    <%= @title %>
   <% end %>
 <% end %>

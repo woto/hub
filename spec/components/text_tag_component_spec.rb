@@ -7,9 +7,9 @@ RSpec.describe TextTagComponent, type: :component do
     it 'renders badge with link' do
       expect(
         render_inline(described_class.new(text_tag: 'https://example.com')).to_html
-      ).to eq <<~HERE
-        <span class="badge bg-cyan user-select-all me-1 mb-1 text-break d-inline-block">
-          <a class="text-white" rel="noreferrer" href="https://example.com">https://example.com</a>
+      ).to eq <<~HERE.strip
+        <span style="max-width: 200px" class="badge bg-cyan text-truncate user-select-all me-1 mb-1 text-break d-inline-block">
+          <a class="text-white" rel="noreferrer" href="https://example.com">example.com</a>
         </span>
       HERE
     end
@@ -18,8 +18,8 @@ RSpec.describe TextTagComponent, type: :component do
       it 'does not linkifies urls' do
         expect(
           render_inline(described_class.new(text_tag: 'https://example.com', linkify: false)).to_html
-        ).to eq <<~HERE
-          <span class="badge bg-cyan user-select-all me-1 mb-1 text-break d-inline-block">
+        ).to eq <<~HERE.strip
+          <span style="max-width: 200px" class="badge bg-cyan text-truncate user-select-all me-1 mb-1 text-break d-inline-block">
             https://example.com
           </span>
         HERE
@@ -31,8 +31,20 @@ RSpec.describe TextTagComponent, type: :component do
     it 'renders badge without link' do
       expect(
         render_inline(described_class.new(text_tag: 'example')).to_html
-      ).to eq <<~HERE
-        <span class="badge bg-cyan user-select-all me-1 mb-1 text-break d-inline-block">
+      ).to eq <<~HERE.strip
+        <span style="max-width: 200px" class="badge bg-cyan text-truncate user-select-all me-1 mb-1 text-break d-inline-block">
+          example
+        </span>
+      HERE
+    end
+  end
+
+  context 'when passed "color" parameter' do
+    it 'renders badge without link' do
+      expect(
+        render_inline(described_class.new(text_tag: 'example', color: 'red')).to_html
+      ).to eq <<~HERE.strip
+        <span style="max-width: 200px" class="badge bg-red text-truncate user-select-all me-1 mb-1 text-break d-inline-block">
           example
         </span>
       HERE

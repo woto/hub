@@ -9,7 +9,8 @@ class EntityPolicy < ApplicationPolicy
 
   def permitted_attributes
     attributes = [
-      :title, :picture, :image, :intro, :body, { lookups_attributes: %i[id title _destroy] }
+      :title, :picture, :image, :intro, :body,
+      { child_ids: [], parent_ids: [], topics_attributes: [], lookups_attributes: %i[id title _destroy] }
     ]
     attributes.append(:user_id) if user.staff?
     attributes

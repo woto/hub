@@ -29,9 +29,11 @@ en:
   activerecord:
     attributes:
       entity:
-        title: Название объекта
+        title: Title
       lookup:
         title: Название синонима
+      mention:
+        entities_mentions: Список объектов упоминания
       widgets/simple:
         body: Description
         pictures: Pictures
@@ -273,6 +275,12 @@ en:
   entities:
     body:
       body: Body
+    body_field:
+      body: Body
+    children:
+      children: Children
+    children_field:
+      children: Children
     create:
       entity_was_successfully_created: Entity was successfully created
     destroy:
@@ -280,13 +288,29 @@ en:
     editorial:
       editorial: Editorial
     form:
+      body: Body
+      children: Children
+      intro: Intro
+      parents: Parents
       submit_and_new: Submit and new
+    image:
+      image: Image
     intro:
+      intro: Intro
+    intro_field:
       intro: Intro
     lookups:
       add_lookup: Add lookup
+    parents:
+      parents: Parents
+    parents_field:
+      parents: Parents
     show:
       mentions: Mentions
+    topics:
+      topics: Tags
+    topics_field:
+      topics: Tags
     update:
       entity_was_successfully_updated: Entity was successfully updated
   errors:
@@ -524,19 +548,34 @@ en:
         editing_entity: Editing entity
     form:
       editorial: Editorial
+    html_field:
+      html: Html
+    image:
+      image: Image
     kind_icon_component:
       hints:
         audio: Материал сопровождается звуком.
         image: Фотография или скриншот. Это так же может быть текст на картинке.
         text: Текст, который можно скопировать и вставить в текстовый редактор.
         video: Видео или анимированная картинка.
+    kinds_field:
+      kinds: Kinds
+    published_at_field:
+      published_at: Published at
     sentiment_icon_component:
       hints:
         negative: Отрицательное
         positive: Положительное
         unknown: В случае если по одному объекту положительное, а по другому отрицательное.
+    sentiments_field:
+      sentiments: Sentiments
+    title_field:
+      title: Title
     topics:
       add_topic: Add topic
+      topics: Tags
+    topics_field:
+      topics: Tags
     update:
       mention_was_successfully_updated: Mention was successfully updated
   navbar_favorite_component:
@@ -662,6 +701,8 @@ en:
       realm_was_successfully_updated: Realm was successfully updated
   save: Save
   search: Search
+  search_entity_hint: Find the object of interest or add a new one if it fails.
+  search_entity_title: Entity search
   search_placeholder: Enters text to search...
   settings:
     api_keys:
@@ -696,6 +737,7 @@ en:
       account_wrapper:
         balance: Balance
         user_balance: 'User accounts: %{user}'
+  similar_entities: Similar entities
   simple_form:
     error_notification:
       default_message: 'Please review the problems below:'
@@ -707,17 +749,18 @@ en:
       defaults:
         example: example
       entity:
-        image: Щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
-        lookups: Например адрес сайта, адрес профиля в соцсетях, расшифровка аббревиатуры, название на русском языке, кличка, телефон, e-mail.
+        image: Click on the image to download. You can also drag an image here from your computer, from another site, or paste an image from the clipboard.
+        lookups: The abbreviation, the name in Russian, nickname, other name.
+        title: The address of the page, the name of the person, the name of the company or product.
       feed_filter_form:
         displayed_columns: The order in which columns are added affects the display
       mention:
-        image: После ввода URL мы попытаемся сделать скриншот. Если не удастся, то щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
-        kind: Текст на картинке является картинкой. Если картинка двигается, значит это видео.
-        kinds: Выберите один или несколько вариантов.
-        published_at: Указывайте, если в источнике указана дата публикации контента.
-        title: Если заголовок не удастся сделать автоматически, то введите его.
-        url: После ввода URL мы попытаемся сделать скриншот и получить заголовк страницы.
+        image: After entering the URL, we will try to take a screenshot. If it fails, then click on the image to download. You can also drag an image here from your computer, from another site, or paste an image from the clipboard.
+        kind: The text in the picture is a picture. If the picture is moving, it means it's a video.
+        kinds: Select one or more options.
+        published_at: Specify if the content publication date is specified in the source.
+        title: If the title cannot be made automatically, then enter it.
+        url: After entering the URL, we will try to take a screenshot and get the page title.
       post:
         currency: Select the national currency of your country
         description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>
@@ -745,11 +788,18 @@ en:
         displayed_columns: Displayed columns
       entity:
         aliases: Aliases
+        child_ids: Children entities
+        children: Children entities
         id: Id
+        image: Image
+        intro: Intro
         lookups: Lookups
         mentions_count: Mentions
+        parent_ids: Parent entities
+        parents: Parent entities
         picture: Picture
         title: Title
+        topics: Tags
         version: Version
       feed_filter_form:
         displayed_columns: Displayed columns
@@ -767,10 +817,11 @@ en:
         publisher_ext_id: Publisher ext
         screenshot: Screenshot
         sentiment: Sentiment
+        sentiments: Sentiment
         status: Status
         tags: Tags
         title: Page title
-        topics: Topics
+        topics: Tags
         url: Url
         user: User
       post:
@@ -831,7 +882,7 @@ en:
         title: Enter title
       mention:
         topics:
-          title: Enter topics
+          title: Enter tags
       post:
         body: Start writing your post here
         intro: Short introduction. You can use the first paragraph from the post
@@ -851,6 +902,20 @@ en:
     long:
       account:
         currency: Currency
+      entity:
+        created_at: Created at
+        favorite: Favorite
+        id: Entity id
+        image: Image
+        intro: Intro
+        lookups: Lookups
+        lookups_count: Lookups count
+        mentions_count: Mentions count
+        title: Title
+        topics: Tags
+        topics_count: Tags count
+        updated_at: Updated at
+        user_id: User id
       favorite:
         created_at: Created at
       feed:
@@ -889,6 +954,23 @@ en:
         updated_at: Feed updated at
         url: Feed URL
         xml_file_path: Feed local path
+      mention:
+        created_at: Created at
+        entities: Mentioned entities
+        entities_count: Amount of mentioned entites
+        entity_ids: Entity id
+        favorite: Favorites
+        id: Mention id
+        image: Image
+        kinds: Mention kind
+        published_at: Publication date
+        sentiments: Mention sentiment
+        title: Title
+        topics: Mention tags
+        topics_count: Amount of mention tags
+        updated_at: Updated at
+        url: URL
+        user_id: User id
       post:
         amount: Amoun
         created_at: Created at
@@ -905,6 +987,20 @@ en:
         amount: Amount
         currency: Currency
         subjectable_id: Subject
+      entity:
+        created_at: Cr. at
+        favorite: Fav.
+        id: ID
+        image: Image
+        intro: Intro
+        lookups: Lookups
+        lookups_count: Look. cnt.
+        mentions_count: Ment. cnt.
+        title: Title
+        topics: Tags
+        topics_count: Topics cnt.
+        updated_at: Upd. at
+        user_id: User id
       favorite:
         created_at: Created at
       feed:
@@ -943,6 +1039,23 @@ en:
         updated_at: Updated at
         url: URL
         xml_file_path: Xml file path
+      mention:
+        created_at: Created at
+        entities: Entit.
+        entities_count: Entities cnt.
+        entity_ids: Entity ids
+        favorite: Fav.
+        id: ID
+        image: Image
+        kinds: Kinds
+        published_at: Publ. date
+        sentiments: Sentiment
+        title: Title
+        topics: Tags
+        topics_count: Tags cnt.
+        updated_at: Updated at
+        url: URL
+        user_id: User id
       post:
         amount: Amount
         created_at: Created at

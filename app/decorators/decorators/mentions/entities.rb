@@ -11,6 +11,7 @@ module Decorators
             id: entity.id,
             title: entity.title,
             lookups: entity.lookups.reject(&:empty?),
+            topics: entity.topics.reject(&:empty?),
             score: entity._score,
             image: entity.image.presence || ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png')
           }

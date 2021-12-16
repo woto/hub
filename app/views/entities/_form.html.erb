@@ -1,6 +1,7 @@
 <%= simple_form_for(entity,
                     url: @url,
                     html: {
+                      'data-controller': 'scrapper',
                       'data-mention-edit-entity-target': 'form',
                       'data-mention-new-entity-target': 'form',
                       'data-action': 'submit->mention-edit-entity#submitForm submit->mention-new-entity#submitForm'
@@ -9,47 +10,65 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= tag.div class: 'row' do %>
-    <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
-      <div class="card mb-3">
-        <div class="card-body">
-          <div class="form-inputs">
-            <%= f.input :title,
-                        input_html: {
-                          'data-controller': "similar-entities-emitter",
-                          'data-action': 'input->similar-entities-emitter#inputChanged' } %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="form-inputs">
 
-            <%= render 'entities/lookups', f: f %>
+        <div class="row row-deck">
+          <div class="col-lg-6 mb-3">
+            <div class="card">
+              <div class="card-body bg-yellow-lt">
+                <%= f.input :title,
+                            input_html: {
+                              'data-scrapper-target': 'url',
+                              'data-controller': "similar-entities-emitter",
+                              'data-action': 'input->similar-entities-emitter#inputChanged input->scrapper#input' } %>
+                <%= render 'entities/lookups', f: f %>
+              </div>
+            </div>
+          </div>
 
-            <%= render 'entities/image', f: f %>
-
-            <%= render 'entities/intro', f: f %>
-
-            <%= render 'entities/body', f: f %>
-
+          <div class="col-lg-6 mb-3">
+            <div class="card">
+              <div class="card-body bg-azure-lt">
+                <%= render 'entities/image', f: f %>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <%= render 'entities/editorial', f: f %>
+        <%= tag.div 'data-controller': "similar-entities-receiver",
+                    'data-action': 'similar-entities-emitter:invokeReceiver@window->similar-entities-receiver#sendRequest' %>
 
-      <div class="form-actions">
-        <% if @is_modal %>
-          <%= f.button :submit, t("save"),
-                       'data-turbo': false,
-                       class: 'btn btn-primary' %>
-        <% else %>
-          <%= f.button :submit, t('.submit_and_new'), class: 'btn btn-primary' %>
-          <%= f.button :submit, class: 'btn btn-primary' %>
-          <%= link_to t('back'), entities_path, class: "btn btn-white" %>
+        <%= render AccordionComponent.new(accordion_id: 'entity-extra-accordion', css_class: 'mb-3 bg-white') do |accordion_component| %>
+
+          <%= render 'entities/topics_field', f: f, accordion_component: accordion_component %>
+
+          <%= render 'entities/parents_field', f: f, accordion_component: accordion_component %>
+
+          <%= render 'entities/children_field', f: f, accordion_component: accordion_component %>
+
+          <%= render 'entities/intro_field', f: f, accordion_component: accordion_component %>
+
+          <%= render 'entities/body_field', f: f, accordion_component: accordion_component %>
+
         <% end %>
+
       </div>
     </div>
+  </div>
 
-    <div class="col">
-      <%= tag.div 'data-controller': "similar-entities-receiver",
-                  'data-action': 'similar-entities-emitter:invokeReceiver@window->similar-entities-receiver#sendRequest' %>
-    </div>
+  <%= render 'entities/editorial', f: f %>
 
-  <% end %>
+  <div class="form-actions">
+    <% if @is_modal %>
+      <%= f.button :submit, t("save"),
+                   'data-turbo': false,
+                   class: 'btn btn-primary' %>
+    <% else %>
+      <%= f.button :submit, t('.submit_and_new'), class: 'btn btn-primary' %>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('back'), entities_path, class: "btn btn-white" %>
+    <% end %>
+  </div>
 <% end %>

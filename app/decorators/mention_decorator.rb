@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MentionDecorator < ApplicationDecorator
   def status
     h.badge(status: super)
@@ -14,11 +16,11 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def image
-    h.render Mentions::ImageLightboxComponent.new(image_original: super['image_original'],
-                                                  image_thumbnail: super['image_thumbnail'],
-                                                  image_width: object['_source']['image']['width'],
-                                                  image_height: object['_source']['image']['height'],
-                                                  image_class: 'max-height-100 img-thumbnail')
+    h.render Mentions::ImageLightboxComponent.new(
+      **super.symbolize_keys,
+      class: 'img-thumbnail bg-white',
+      size: '100'
+    )
   end
 
   def topics
@@ -26,7 +28,7 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def entities
-    h.render(Mentions::EntityComponent.with_collection(super.zip(object['_source']['entity_ids'])))
+    h.render(Mentions::EntityComponent.with_collection(super))
   end
 
   def published_at
@@ -34,10 +36,10 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def kinds
-    h.render(Mentions::KindTextComponent.with_collection(super))
+    h.render Mentions::KindTextComponent.with_collection(super)
   end
 
-  def sentiment
-    h.render Mentions::SentimentTextComponent.new(sentiment_text: super)
+  def sentiments
+    h.render(Mentions::SentimentTextComponent.with_collection(super))
   end
 end

@@ -10,6 +10,7 @@
 #  lookups_count  :integer          default(0), not null
 #  mentions_count :integer          default(0), not null
 #  title          :string
+#  topics_count   :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  user_id        :bigint           not null
@@ -30,6 +31,8 @@ class Entity < ApplicationRecord
   index_name "#{Rails.env}.entities"
 
   include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
+  include ImageHash
+  include Topicable
 
   belongs_to :user, counter_cache: true
 
@@ -37,6 +40,17 @@ class Entity < ApplicationRecord
 
   has_many :entities_mentions, dependent: :restrict_with_error
   has_many :mentions, through: :entities_mentions, counter_cache: :mentions_count
+
+  has_many :entities_topics, dependent: :destroy
+  has_many :topics, through: :entities_topics
+
+  has_many :children_entities, class_name: 'EntitiesEntity', foreign_key: 'parent_id', dependent: :destroy,
+                               inverse_of: :parent
+  has_many :children, class_name: 'Entity', through: :children_entities, source: :child, inverse_of: :parents
+
+  has_many :parents_entities, class_name: 'EntitiesEntity', foreign_key: 'child_id', dependent: :destroy,
+                              inverse_of: :child
+  has_many :parents, class_name: 'Entity', through: :parents_entities, source: :parent, inverse_of: :children
 
   has_many :lookups, dependent: :destroy
 
@@ -55,7 +69,9 @@ class Entity < ApplicationRecord
       intro: intro,
       lookups: lookups.map(&:to_label),
       lookups_count: lookups_count,
-      image: image ? image.derivation_url(:thumbnail, 100, 100) : '',
+      topics: topics.map(&:to_label),
+      topics_count: topics_count,
+      image: image_hash,
       user_id: user_id,
       created_at: created_at,
       updated_at: updated_at,

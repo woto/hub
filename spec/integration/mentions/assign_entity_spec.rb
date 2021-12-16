@@ -42,7 +42,7 @@ describe MentionsController, type: :system, responsible: :admin do
 
       expect(page).to have_css("#card_entity_#{entity1.id}")
       sleep(0.5)
-      find('.entity-title', text: 'First entity').click
+      click_on("assign-entity-#{entity1.id}")
       expect(page).not_to have_css('.modal')
       expect(page).to have_css("#card_entity_#{entity1.id}")
       expect(page).to have_css("#edit_entity_#{entity1.id}")

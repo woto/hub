@@ -18,7 +18,7 @@ export default class extends Controller {
             success: (data) => {
                 this.modalPlaceholderTarget.innerHTML = data.content;
                 const modal = this.modalPlaceholderTarget.firstElementChild
-                this.#bootstrapModal = new bootstrap.Modal(modal);
+                this.#bootstrapModal = new bootstrap.Modal(modal, {backdrop: 'static', keyboard: false});
                 this.#bootstrapModal.show();
 
                 modal.addEventListener('hidden.bs.modal', (event) => {

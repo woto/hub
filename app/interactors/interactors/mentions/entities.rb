@@ -16,10 +16,18 @@ module Interactors
                   json.type 'bool_prefix'
                   json.fields do
                     json.array! %w[
-                      title
+                      title^20
+                      title.keyword^20
                       title.autocomplete
-                      lookups
+                      lookups^20
+                      lookups.keyword^20
                       lookups.autocomplete
+                      topics^20
+                      topics.keyword^20
+                      topics.autocomplete
+                      intro
+                      intro.keyword^20
+                      intro.autocomplete
                     ]
                   end
                 end

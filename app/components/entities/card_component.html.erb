@@ -1,77 +1,89 @@
 <%= tag.div id: "card_entity_#{@entity_id}",
             'data-controller': 'mention-edit-entity' do %>
 
-  <% options = {} %>
-  <% options['class'] = "#{ 'hoverable-entity' if @assignable } position-relative d-flex bg-white min-height-50 align-items-stretch border border-1 shadow-sm mb-3" %>
-  <% options['data-controller'] = 'mention-detach-entity' %>
-
-  <% if @assignable %>
-    <% options['data-action'] = 'click->mention-new-entity#assignEntity' %>
-    <% options['data-mention-new-entity-card-path-param'] = card_mentions_entity_path(id: @entity_id, form_id: @form_id) %>
-  <% end %>
-
-  <%= tag.div **options do %>
+  <%= tag.div class: 'alert alert-success position-relative d-flex min-height-50 align-items-stretch bg-green-lt shadow-sm mb-3 p-1',
+              'data-controller': 'mention-detach-entity' do %>
 
     <div class="overflow-auto flex-grow-1 d-lg-flex align-items-stretch">
 
       <div class="flex-shrink-0 m-1 d-lg-flex flex-lg-column justify-content-lg-center">
-        <% options = { class: 'mt-2 mt-md-0 mx-auto bg-white img-thumbnail' } %>
-        <% if @image.present? %>
-          <%= image_tag @image, options  %>
-        <% else %>
-          <%= ApplicationController.helpers.image_pack_tag('media/images/icon-404-100.png', options) %>
-        <% end %>
+        <%= render Mentions::ImageLightboxComponent.new(
+          **@image.symbolize_keys,
+          class: 'mt-2 mt-md-0 mx-auto bg-white img-thumbnail',
+          size: '100'
+        ) %>
       </div>
 
       <div class="flex-grow-1 m-2 overflow-auto d-flex flex-column justify-content-center">
         <div>
-          <%= tag.div @title, class: 'entity-title' %>
+          <div class="mb-1">
+            <% if @linkable %>
+                <%= link_to @title, entity_path(@entity_id), target: '_blank', class: 'entity-title text-decoration-none' %>
+              <% else %>
+                <%= tag.div @title, class: 'entity-title' %>
+            <% end %>
+          </div>
 
+          <div class="mb-2">
           <%= tag.small @intro, class: 'entity-intro', class: 'text-secondary' %>
+          </div>
 
           <% if @lookups.present? %>
-            <div class="entity-lookups mt-2">
-              <%= render(TextTagComponent.with_collection(@lookups, linkify: false)) %>
+            <div class="entity-lookups mb-1">
+              <%= render(TextTagComponent.with_collection(@lookups, linkify: false, color: 'azure')) %>
             </div>
           <% end %>
+
+          <% if @topics.present? %>
+            <div class="entity-topics">
+              <%= render(TextTagComponent.with_collection(@topics, linkify: false)) %>
+            </div>
+          <% end %>
+
         </div>
       </div>
 
-      <% if false %>
       <% if @assignable %>
         <div class="flex-shrink-0 m-1 d-lg-flex flex-lg-column justify-content-lg-center">
-          <a href="#" class="stretched-link btn btn-outline-secondary p-1 m-1">
+          <%= link_to '#',
+                      id: "assign-entity-#{@entity_id}",
+                      class: "assign-entity my-2 btn btn-icon btn-green align-self-center p-2 me-2",
+                      'data-action': 'click->mention-new-entity#assignEntity',
+                      'data-mention-new-entity-card-path-param': card_mentions_entity_path(id: @entity_id, form_id: @form_id) do %>
             <i class="fas fa-plus"></i>
-          </a>
+          <% end %>
         </div>
-      <% end %>
       <% end %>
 
     </div>
 
     <% if @controllable %>
-      <div class="flex-shrink-1 m-1 d-flex align-items-center">
+
+      <div class="flex-shrink-1 d-flex flex-column justify-content-center me-1">
+
         <%= hidden_field_tag "mention[related_entities][#{@entity_id}][id]", @entity_id, form: @form_id %>
 
-        <div class="form-check form-switch">
+
+        <%= link_to '#',
+                    id: "remove_entity_#{@entity_id}",
+                    class: 'mb-1 btn btn-icon btn-ghost-danger align-self-center p-2',
+                    'data-action': 'mention-detach-entity#removeEntity' do %>
+          <i class="fas fa-times"></i>
+        <% end %>
+
+
+        <div class="my-2 p-0 form-check form-switch align-self-center">
           <%= hidden_field_tag "mention[related_entities][#{@entity_id}][is_main]", false, form: @form_id %>
-          <%= check_box_tag "mention[related_entities][#{@entity_id}][is_main]", '1', @is_main, class: "form-check-input", form: @form_id %>
+          <%= check_box_tag "mention[related_entities][#{@entity_id}][is_main]", '1', @is_main, class: "form-check-input m-0 p-0", form: @form_id %>
         </div>
 
 
         <%= link_to '#',
                     id: "edit_entity_#{@entity_id}",
-                    class: 'btn btn-icon btn-ghost-warning p-1 m-1',
+                    class: 'mt-1 btn btn-icon btn-ghost-warning align-self-center p-2',
                     'data-action': 'click->mention-edit-entity#openModal',
                     'data-mention-edit-entity-url-param': edit_mentions_entity_path(id: @entity_id, form_id: @form_id) do %>
-          <i class="fas icon fa-pen"></i>
-        <% end %>
-
-        <%= link_to '#',
-                    id: "remove_entity_#{@entity_id}",
-                    class: 'btn btn-icon btn-ghost-danger p-1 m-1',
-                    'data-action': 'mention-detach-entity#removeEntity' do %>
-          <i class="fas icon fa-times"></i>
+          <i class="fas fa-pen"></i>
         <% end %>
 
       </div>

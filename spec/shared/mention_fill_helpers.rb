@@ -35,12 +35,12 @@ RSpec.shared_context 'shared mention fill helpers' do
     end
   end
 
-  def assign_entity(title:)
+  def assign_entity(entity:)
     click_on('Добавить объект')
     within('.modal') do
-      fill_in('Поиск объекта', with: title)
+      fill_in('Поиск объекта', with: entity.title)
       sleep(0.5)
-      find('.entity-title', text: title).click
+      click_on("assign-entity-#{entity.id}")
     end
   end
 
@@ -62,6 +62,7 @@ RSpec.shared_context 'shared mention fill helpers' do
   end
 
   def fill_topics(topics:)
+    find('#heading-mention-topics-item').click
     topics.each do |topic|
       within '.mention_topics' do
         find('.selectize-input').click
@@ -71,11 +72,15 @@ RSpec.shared_context 'shared mention fill helpers' do
     end
   end
 
-  def fill_sentiment(sentiment:)
-    choose('mention_sentiment_positive', allow_label_click: true)
+  def fill_sentiments(sentiments:)
+    find('#heading-mention-sentiments-item').click
+    sentiments.each do |sentiment|
+      check("mention_sentiments_#{sentiment}", allow_label_click: true)
+    end
   end
 
   def fill_kinds(kinds:)
+    find('#heading-mention-kinds-item').click
     kinds.each do |kind|
       check("mention_kinds_#{kind}", allow_label_click: true)
     end

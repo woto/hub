@@ -4,6 +4,7 @@
                             popEventStack@window->shrine-upload#popEventStack' do %>
 
   <%= f.input :image,
+              label: t('.image'),
               as: :hidden,
               wrapper: false,
               error: false,
@@ -13,11 +14,16 @@
               } %>
 
   <%= f.label :image,
-              class: 'width-100 min-height-100 img-thumbnail d-flex align-items-center',
+              class: 'width-100 min-height-100 img-thumbnail d-flex align-items-center position-relative bg-white',
               role: 'button' do %>
 
-    <%= image_tag f.object.image_url || asset_pack_path('media/images/icon-upload.png'),
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <div data-scrapper-target="spinner" class="spinner-border text-indigo my-3 d-none"></div>
+    </div>
+
+    <%= image_tag f.object.image_url.presence || asset_pack_path('media/images/icon-upload.png'),
                   class: 'mx-auto d-block',
+                  'data-scrapper-target': 'imagePreview',
                   'data-shrine-upload-target': 'imagePreview' %>
   <% end %>
 
@@ -25,6 +31,7 @@
               wrapper: false,
               label: false,
               input_html: {
+                'data-scrapper-target': 'inputFile',
                 'data-shrine-upload-target': 'inputFile',
                 class: "d-none"
               } %>

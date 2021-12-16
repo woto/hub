@@ -1,3 +1,7 @@
+.pswp__img {
+  background-color: #fff !important;
+}
+
 @include media-breakpoint-up(sm) {
   .scrollable-mention-search {
     position: absolute;
@@ -6,15 +10,6 @@
   .scrollable-mention-search-parent {
     overflow: auto!important;
     position: relative;
-  }
-}
-
-
-.hoverable-entity {
-  cursor: pointer;
-
-  > :hover {
-    @extend .bg-light;
   }
 }
 

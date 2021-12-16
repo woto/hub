@@ -32,7 +32,7 @@ module Mentions
 
     def new
       @url = mentions_entities_path(form_id: params[:form_id])
-      @entity = current_user.entities.new(title: params[:title], lookups: [Lookup.new])
+      @entity = current_user.entities.new(title: params[:title])
       authorize([:mentions, @entity])
     end
 

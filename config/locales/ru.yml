@@ -32,6 +32,8 @@ ru:
         title: Название объекта
       lookup:
         title: Название синонима
+      mention:
+        entities_mentions: Список объектов упоминания
       widgets/simple:
         body: Описание
         pictures: Изображения
@@ -277,6 +279,12 @@ ru:
   entities:
     body:
       body: Статья
+    body_field:
+      body: Статья
+    children:
+      children: Дочерние объекты
+    children_field:
+      children: Дочерние объекты
     create:
       entity_was_successfully_created: Объект упоминания был успешно создан
     destroy:
@@ -284,13 +292,29 @@ ru:
     editorial:
       editorial: Редактура
     form:
+      body: Статья
+      children: Дочерние объекты
+      intro: Короткое описание
+      parents: Родительские объекты
       submit_and_new: Сохранить и новый
+    image:
+      image: Изображение
     intro:
+      intro: Вступление
+    intro_field:
       intro: Вступление
     lookups:
       add_lookup: Добавить синоним
+    parents:
+      parents: Родительские объекты
+    parents_field:
+      parents: Родительские объекты
     show:
       mentions: Упоминания
+    topics:
+      topics: Теги
+    topics_field:
+      topics: Теги
     update:
       entity_was_successfully_updated: Объект упоминания был успешно изменен
   errors:
@@ -534,19 +558,34 @@ ru:
         editing_entity: Editing entity
     form:
       editorial: Редактура
+    html_field:
+      html: Исходный код страницы
+    image:
+      image: Изображение
     kind_icon_component:
       hints:
         audio: Материал сопровождается звуком.
         image: Фотография или скриншот. Это так же может быть текст на картинке.
         text: Текст, который можно скопировать и вставить в текстовый редактор.
         video: Видео или анимированная картинка.
+    kinds_field:
+      kinds: Тип упоминания
+    published_at_field:
+      published_at: Дата публикации
     sentiment_icon_component:
       hints:
         negative: Отрицательное
         positive: Положительное
         unknown: В случае если по одному объекту положительное, а по другому отрицательное.
+    sentiments_field:
+      sentiments: Настроение
+    title_field:
+      title: Заголовок страницы
     topics:
       add_topic: Добавить тему
+      topics: Теги
+    topics_field:
+      topics: Теги
     update:
       mention_was_successfully_updated: Упоминание было успешно изменено
   navbar_favorite_component:
@@ -672,6 +711,8 @@ ru:
       realm_was_successfully_updated: Площадка была успешно изменена
   save: Сохранить
   search: Искать
+  search_entity_hint: Найдите интересующий объект или добавьте новый, если не удастся.
+  search_entity_title: Поиск объекта
   search_placeholder: Введите текст для поиска...
   settings:
     api_keys:
@@ -706,6 +747,7 @@ ru:
       account_wrapper:
         balance: Balance
         user_balance: 'Счета пользователя: %{user}'
+  similar_entities: Похожие объекты
   simple_form:
     error_notification:
       default_message: Невозможно сохранить. Пожалуйста заполните поля
@@ -718,7 +760,8 @@ ru:
         example: example
       entity:
         image: Щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
-        lookups: Например адрес сайта, адрес профиля в соцсетях, расшифровка аббревиатуры, название на русском языке, кличка, телефон, e-mail.
+        lookups: Расшифровка аббревиатуры, название на русском языке, кличка, другое название.
+        title: Адрес страницы, имя человека, название компании или продукта.
       feed_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
       mention:
@@ -755,11 +798,18 @@ ru:
         displayed_columns: Отображаемые столбцы
       entity:
         aliases: Синонимы
+        child_ids: Дочерние объекты
+        children: Дочерние
         id: ID
+        image: Изображение
+        intro: Вступление
         lookups: Синонимы
         mentions_count: Упоминаний
+        parent_ids: Родительские объекты
+        parents: Родительские
         picture: Изображение
         title: Название
+        topics: Теги
         version: Версия
       feed_filter_form:
         displayed_columns: Отображаемые столбцы
@@ -777,10 +827,11 @@ ru:
         publisher_ext_id: Автор
         screenshot: Скриншот
         sentiment: Настроение
+        sentiments: Настроение
         status: Статус
         tags: Теги
         title: Заголовок страницы
-        topics: Темы
+        topics: Теги
         url: URL
         user: Пользователь
       post:
@@ -841,7 +892,7 @@ ru:
         title: Введите название
       mention:
         topics:
-          title: Введите темы
+          title: Введите теги
       post:
         body: Начните писать свою статью тут
         intro: Короткое вступление. Можно использовать первый параграф из статьи
@@ -861,6 +912,20 @@ ru:
     long:
       account:
         currency: Валюта
+      entity:
+        created_at: Дата создания
+        favorite: Избранное
+        id: ID обекта упоминания
+        image: Изображение
+        intro: Вступление
+        lookups: Синонимы
+        lookups_count: Количество синонимов
+        mentions_count: Количество упоминаний
+        title: Название
+        topics: Теги
+        topics_count: Количество тегов
+        updated_at: Дата обновления
+        user_id: ID пользователя
       favorite:
         created_at: Создано
       feed:
@@ -899,6 +964,23 @@ ru:
         updated_at: Дата изменения фида
         url: URL фида
         xml_file_path: Путь до фида
+      mention:
+        created_at: Дата создания
+        entities: Упомянутые объекты
+        entities_count: Количество упомянутых объектов
+        entity_ids: ID объекта
+        favorite: Избранное
+        id: ID упоминания
+        image: Изображение
+        kinds: Тип упоминания
+        published_at: Дата публикации
+        sentiments: Настроение
+        title: Заголовок
+        topics: Теги
+        topics_count: Количество тегов
+        updated_at: Дата обновления
+        url: URL
+        user_id: ID пользователя
       post:
         amount: Цена
         created_at: Создана
@@ -915,6 +997,20 @@ ru:
         amount: Баланс
         currency: Валюта
         subjectable_id: Субъект
+      entity:
+        created_at: Дата созд.
+        favorite: Избр.
+        id: ID
+        image: Изображение
+        intro: Вступление
+        lookups: Синонимы
+        lookups_count: Кол-во син.
+        mentions_count: Кол-во упом.
+        title: Название
+        topics: Теги
+        topics_count: Кол-во тегов
+        updated_at: Дата обновл.
+        user_id: ID польз.
       favorite:
         created_at: Создано
       feed:
@@ -953,6 +1049,23 @@ ru:
         updated_at: Изменен
         url: URL
         xml_file_path: Путь фида
+      mention:
+        created_at: Дата созд.
+        entities: Объекты
+        entities_count: Кол-во объект.
+        entity_ids: ID объект.
+        favorite: Избр.
+        id: ID
+        image: Изображение
+        kinds: Тип
+        published_at: Дата публ.
+        sentiments: Настроение
+        title: Заголовок
+        topics: Теги
+        topics_count: Кол-во тегов
+        updated_at: Дата обновл.
+        url: URL
+        user_id: ID польз.
       post:
         amount: Цена
         created_at: Создана

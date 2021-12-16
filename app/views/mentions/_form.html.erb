@@ -18,50 +18,53 @@
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-    <%= tag.div 'data-controller': "mention-url", class: 'row' do %>
+    <%= tag.div 'data-controller': "mention-url scrapper", class: 'row' do %>
       <div class="mb-3 col-sm-9 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
         <div class="card mb-3">
           <div class="card-body">
             <div class="form-inputs">
 
-                <%= f.input :url,
-                            as: :string,
-                            input_html: {
-                              "data-mention-url-target": 'url',
-                              "data-action": "input->mention-url#input"
-                            } %>
+              <div class="row row-deck">
+                <div class="col-lg-12 mb-3">
+                  <div class="card">
+                    <div class="card-body bg-yellow-lt">
+                      <%= f.input :url,
+                                  as: :string,
+                                  input_html: {
+                                    "data-mention-url-target": 'url',
+                                    "data-scrapper-target": 'url',
+                                    "data-action": "input->mention-url#input input->scrapper#input"
+                                  } %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12 mb-3">
+                  <div class="card">
+                    <div class="card-body bg-azure-lt">
+                      <%= render 'image', f: f %>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <%= render 'entities', f: f %>
 
-              <%= render 'image', f: f %>
+              <%= render AccordionComponent.new(accordion_id: 'mention-extra-accordion', css_class: 'mb-3 bg-white') do |accordion_component| %>
 
-              <%= f.input :title,
-                          as: :hidden,
-                          input_html: {
-                            "data-mention-url-target": 'title'
-                          } %>
+                <%= render 'title_field', f: f, accordion_component: accordion_component %>
 
-              <%= f.input :html,
-                          as: :hidden,
-                          input_html: {
-                            "data-mention-url-target": 'html'
-                          } %>
+                <%= render 'html_field', f: f, accordion_component: accordion_component %>
 
-              <%= render 'topics', f: f %>
+                <%= render 'topics_field', f: f, accordion_component: accordion_component %>
 
-              <%= f.input :sentiment,
-                          as: :radio_buttons,
-                          collection: Mention.sentiments.keys.map { |key|
-                            [render(Mentions::SentimentIconComponent.new(sentiment: key)), key]
-                          },
-                          wrapper: :radio_button_group %>
+                <%= render 'sentiments_field', f: f, accordion_component: accordion_component %>
 
-              <%= render 'kinds', f: f %>
+                <%= render 'kinds_field', f: f, accordion_component: accordion_component %>
 
-              <%= f.input :published_at, as: :string,
-                          input_html: {
-                            "data-controller": "flatpickr"
-                          } %>
+                <%= render 'published_at_field', f: f, accordion_component: accordion_component %>
+
+              <% end %>
 
             </div>
           </div>

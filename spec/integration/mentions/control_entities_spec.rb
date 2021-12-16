@@ -17,11 +17,11 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'saves form with uniq entities' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
-        fill_sentiment(sentiment: 'positive')
+        fill_sentiments(sentiments: ['positive'])
         fill_kinds(kinds: ['text'])
 
-        assign_entity(title: entity.title)
-        assign_entity(title: entity.title)
+        assign_entity(entity: entity)
+        assign_entity(entity: entity)
 
         expect do
           expect do
@@ -40,10 +40,10 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'creates new mention' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
-        fill_sentiment(sentiment: 'positive')
+        fill_sentiments(sentiments: ['positive'])
         fill_kinds(kinds: ['text'])
 
-        assign_entity(title: entity.title)
+        assign_entity(entity: entity)
 
         expect do
           expect do
@@ -60,7 +60,7 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'saves mention with new entity' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
-        fill_sentiment(sentiment: 'positive')
+        fill_sentiments(sentiments: ['positive'])
         fill_kinds(kinds: ['text'])
 
         create_entity(title: 'new entity')
@@ -82,7 +82,7 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'does not save mention' do
         fill_url(url: '', with_image: false)
 
-        assign_entity(title: entity.title)
+        assign_entity(entity: entity)
 
         expect do
           expect do
@@ -127,7 +127,7 @@ describe MentionsController, type: :system, responsible: :admin do
 
     context 'when assigns new entity and tries to save mention with invalid url (with assigning entity)' do
       it 'does add new entity' do
-        assign_entity(title: entity.title)
+        assign_entity(entity: entity)
         fill_url(url: '', with_image: true)
 
         expect do
@@ -159,7 +159,7 @@ describe MentionsController, type: :system, responsible: :admin do
 
     context 'when assigns same entity again' do
       it 'saves form with uniq entities' do
-        assign_entity(title: mention.entities.first.title)
+        assign_entity(entity: mention.entities.first)
 
         expect do
           expect do
@@ -176,7 +176,7 @@ describe MentionsController, type: :system, responsible: :admin do
       let!(:entity) { create(:entity, title: 'new entity') }
 
       it 'saves mention with appended entity' do
-        assign_entity(title: entity.title)
+        assign_entity(entity: entity)
 
         expect do
           expect do
@@ -215,8 +215,8 @@ describe MentionsController, type: :system, responsible: :admin do
       let!(:entity3) { create(:entity, title: 'entity 3') }
 
       it 'saves form with uniq entities' do
-        assign_entity(title: entity1.title)
-        assign_entity(title: entity3.title)
+        assign_entity(entity: entity1)
+        assign_entity(entity: entity3)
 
         expect do
           expect do

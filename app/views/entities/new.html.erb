@@ -17,4 +17,7 @@
   </li>
 <% end %>
 
-<%= render 'form', entity: @entity %>
+<%= render 'wrapper' do %>
+  <%= render 'form', entity: @entity %>
+<% end %>
+
