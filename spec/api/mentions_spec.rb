@@ -19,9 +19,10 @@ describe API::Mentions, type: :request, responsible: :admin do
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to match([{ 'lookups' => [],
                                                       'id' => entity.id.to_s,
-                                                      'image' => be_a(String),
-                                                      'score' => 2.1507282,
-                                                      'title' => 'test another word' }])
+                                                      'image' => be_a(Hash),
+                                                      'score' => be_a(Numeric),
+                                                      'title' => 'test another word',
+                                                      'topics' => [] }])
       end
     end
 
@@ -37,9 +38,10 @@ describe API::Mentions, type: :request, responsible: :admin do
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to match([{ 'lookups' => %w[first second],
                                                       'id' => entity.id.to_s,
-                                                      'image' => be_a(String),
+                                                      'image' => be_a(Hash),
                                                       'score' => be_a(Numeric),
-                                                      'title' => 'word' }])
+                                                      'title' => 'word',
+                                                      'topics' => [] }])
       end
     end
   end
@@ -57,8 +59,8 @@ describe API::Mentions, type: :request, responsible: :admin do
                                                     'image' => include(
                                                       'width',
                                                       'height',
-                                                      'image_original' => be_a(String),
-                                                      'image_thumbnail' => be_a(String)
+                                                      'original' => be_a(String),
+                                                      'thumbnails' => be_a(Hash)
                                                     ),
                                                     'url' => 'https://example.com?foo=bar',
                                                     'title' => mention.title }])
