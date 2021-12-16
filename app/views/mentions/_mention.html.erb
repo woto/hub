@@ -8,7 +8,9 @@
         size: '500'
       ) %>
 
-      <%= link_to edit_mention_path(mention), class: 'btn btn-sm btn-warning btn-icon m-0 p-0 py-1 position-absolute top-0 end-0 m-2' do %>
+      <%= link_to edit_mention_path(mention),
+                  rel: 'nofollow',
+                  class: 'btn btn-sm btn-warning btn-icon m-0 p-0 py-1 position-absolute top-0 end-0 m-2' do %>
         <i class="fas fa-pencil-alt"></i>
       <% end %>
     </div>
