@@ -3,7 +3,7 @@
             'data-popover-url-value': popover_entity_path(id: @id) do %>
   <%= link_to entity_path(id: @id),
             tabindex: "0",
-            class: "btn btn-sm mb-1 me-1 badge btn-#{@color}",
+            class: "btn btn-sm mb-1 me-1 btn-#{@color}",
             'data-popover-target': 'hoverableElement' do %>
     <% if @direction %>
       <%= tag.icon class: "fas fa-angle-double-#{@direction}" %>&nbsp;
