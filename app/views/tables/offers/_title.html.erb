@@ -2,15 +2,11 @@
 
 <% if @favorite %>
 
-  <% content_for(:seo_title) do %>
-    <%= t('titles.favorite') %>: <%= @favorite.to_label %>
-  <% end %>
+  <% seo.title! "#{t('titles.favorite')}:  #{@favorite.to_label}" %>
 
 <% elsif current_feed_category %>
 
-  <% content_for(:seo_title) do %>
-    <%= t('titles.feed_category') %>: <%= current_feed_category.to_label %>
-  <% end %>
+  <% seo.title! "#{t('titles.feed_category')}: #{current_feed_category.to_label}" %>
 
   <% content_for :star do %>
     <% kind = 'feed_category_id' %>
@@ -23,9 +19,7 @@
 
 <% elsif current_feed %>
 
-  <% content_for(:seo_title) do %>
-    <%= t('titles.feed') %>: <%= current_feed.to_label %>
-  <% end %>
+  <% seo.title! "#{t('titles.feed')}: #{current_feed.to_label}" %>
 
   <% content_for :star do %>
     <% kind = 'feed_id' %>
@@ -38,9 +32,7 @@
 
 <% elsif current_advertiser %>
 
-  <% content_for(:seo_title) do %>
-    <%= t('titles.advertiser') %>: <%= current_advertiser.to_label %>
-  <% end %>
+  <% seo.title! "#{t('titles.advertiser')}: #{current_advertiser.to_label}" %>
 
   <% content_for :star do %>
     <% kind = 'advertiser_id' %>
@@ -51,7 +43,5 @@
       bobber: { class: 'z-index-decreased' }) %>
   <% end %>
 <% else %>
-  <% content_for(:seo_title) do %>
-    <%= t('titles.offers') %>
-  <% end %>
+    <% seo.title! t('titles.offers') %>
 <% end %>

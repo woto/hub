@@ -1,6 +1,4 @@
-<% content_for(:seo_title) do %>
-  <%= @article.title %>
-<% end %>
+<% seo.title! @article.title %>
 
 <% content_for :seo_description do %>
   <%= @article.description %>

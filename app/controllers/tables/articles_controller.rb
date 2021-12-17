@@ -7,32 +7,31 @@ module Tables
 
     include Workspaceable
     include Tableable
-    include Indexable
 
     layout 'website'
     skip_before_action :authenticate_user!
 
     # GET /news
     def index
+      seo.noindex! if params[:page].to_i > 1 || params.keys & %w[q per sort order favorite_id filters columns]
       get_index(required_fields)
-      noindex { params[:page].to_i > 1 || params.keys & %w[q per sort order favorite_id filters columns] }
     end
 
     def by_month
+      seo.noindex!
       month = Time.use_zone('UTC') { Time.zone.parse("#{params[:month]}-01") }
       get_index(required_fields, month: month)
-      noindex
     end
 
     def by_tag
+      seo.noindex!
       get_index(required_fields, tag: params[:tag])
-      noindex
     end
 
     def by_category
+      seo.noindex!
       @post_category = PostCategory.find_by(id: params[:category_id])
       get_index(required_fields, post_category_id: params[:category_id])
-      noindex
     end
 
     # TODO: action?!

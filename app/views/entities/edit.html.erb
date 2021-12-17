@@ -1,6 +1,4 @@
-<% content_for(:seo_title) do %>
-  <%= t("titles.entities") %>
-<% end %>
+<% seo.title! t("titles.entities") %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
@@ -13,7 +11,7 @@
     <%=link_to t('breadcrumbs.entities'), entities_path %>
   </li>
   <li class="breadcrumb-item active">
-    <%=link_to t('breadcrumbs.edit_entity'), edit_entity_path(@entity) %>
+    <%=link_to t('breadcrumbs.edit_entity'), edit_entity_path(@entity), rel: [Seo::NoFollow] %>
   </li>
 <% end %>
 

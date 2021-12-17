@@ -1,3 +1,4 @@
 <% if policy(:mention).new? %>
-  <%= link_to t("buttons.new_mention"), new_mention_path, class: 'align-self-sm-center nav-link btn btn-pink me-0 me-sm-3 mb-3 mb-sm-0' %>
+  <%= link_to t("buttons.new_mention"), new_mention_path, rel: [Seo::NoFollow],
+              class: 'align-self-sm-center nav-link btn btn-pink me-0 me-sm-3 mb-3 mb-sm-0' %>
 <% end %>

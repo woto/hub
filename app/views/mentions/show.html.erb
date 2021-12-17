@@ -1,6 +1,4 @@
-<% content_for(:seo_title) do %>
-  <%= t("titles.mentions") %>
-<% end %>
+<% seo.title! @mention.title %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
@@ -45,7 +43,7 @@
                 <dd class="col-sm-9"> <%= @mention.id %> </dd>
 
                 <dt class="col-sm-3"> <%= t('url', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= link_to @mention.url, @mention.url, rel: 'noreferrer' %> </dd>
+                <dd class="col-sm-9"> <%= link_to @mention.url, @mention.url, rel: [Seo::NoReferrer, Seo::NoFollow, Seo::UGC] %> </dd>
 
                 <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= @mention.title %> </dd>
@@ -105,14 +103,17 @@
 
           <div class="d-flex flex-column flex-sm-row gap-2">
             <%= link_to t('new'), new_mention_path,
-                        class: "btn btn-primary #{'disabled' unless policy(@mention).new? }" %>
+                        class: "btn btn-primary #{'disabled' unless policy(@mention).new? }",
+                        rel: [Seo::NoFollow] %>
             <%= link_to t('edit'), edit_mention_path(@mention),
-                        class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }" %>
+                        class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }",
+                        rel: [Seo::NoFollow] %>
             <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
             <%= link_to t('delete'), mention_path(@mention.id),
                         class: "ms-auto btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
                         'data-turbo-method': :delete,
-                        'data-turbo-confirm': t('are_you_sure') %>
+                        'data-turbo-confirm': t('are_you_sure'),
+                        rel: [Seo::NoFollow] %>
           </div>
 
         </div>

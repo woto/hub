@@ -21,6 +21,8 @@ class TextTagComponent < ViewComponent::Base
   rescue StandardError
     text_tag
   else
-    link_to @text_tag.gsub(/\A(https:\/\/|http:\/\/)/, '').gsub(/\Awww\./, '').gsub(/\/\z/, ''), @text_tag, class: 'text-white', rel: 'noreferrer'
+    link_to @text_tag.gsub(/\A(https:\/\/|http:\/\/)/, '').gsub(/\Awww\./, '').gsub(/\/\z/, ''), @text_tag,
+            class: 'text-white',
+            rel: [Seo::NoReferrer, Seo::NoFollow, Seo::UGC]
   end
 end

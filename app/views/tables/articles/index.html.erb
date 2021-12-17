@@ -1,9 +1,7 @@
-<% content_for(:seo_title) do %>
-  <% if @post_category %>
-    <%= @post_category.to_label %>
-  <% else %>
-    <%= Current.realm.to_label %>
-  <% end %>
+<% if @post_category %>
+  <% seo.title! @post_category.to_label %>
+<% else %>
+  <% seo.title! Current.realm.to_label %>
 <% end %>
 
 <% content_for :breadcrumbs do %>

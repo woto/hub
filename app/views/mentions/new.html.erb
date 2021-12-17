@@ -1,6 +1,4 @@
-<% content_for(:seo_title) do %>
-  <%= t("titles.mentions") %>
-<% end %>
+<% seo.title! t("titles.mentions") %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
@@ -13,7 +11,7 @@
     <%=link_to t('breadcrumbs.mentions'), mentions_path %>
   </li>
   <li class="breadcrumb-item active">
-    <%=link_to t('breadcrumbs.new_mention'), new_mention_path %>
+    <%=link_to t('breadcrumbs.new_mention'), new_mention_path, rel: [Seo::NoFollow] %>
   </li>
 <% end %>
 

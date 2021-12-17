@@ -1,6 +1,4 @@
-<% content_for(:seo_title) do %>
-  <%= @entity.title %>
-<% end %>
+<% seo.title! @entity.title  %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">
@@ -109,9 +107,9 @@
 
           <div class="d-flex flex-column flex-sm-row gap-2">
             <%= link_to t('new'), new_entity_path,
-                        class: "btn btn-primary #{'disabled' unless policy(@entity).new? }" %>
+                        class: "btn btn-primary #{'disabled' unless policy(@entity).new? }", rel: [Seo::NoFollow] %>
             <%= link_to t('edit'), edit_entity_path(@entity),
-                        class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }" %>
+                        class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }", rel: [Seo::NoFollow] %>
             <%= link_to t('back'), entities_path, class: "btn btn-white" %>
             <%= link_to t('delete'), entity_path(@entity.id),
                         class: "ms-auto btn btn-danger #{'disabled' unless policy(@entity).destroy?}",

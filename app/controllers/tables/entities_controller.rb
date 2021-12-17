@@ -12,6 +12,7 @@ module Tables
 
     # GET /entities
     def index
+      seo.noindex!
       get_index(%w[id])
     end
 

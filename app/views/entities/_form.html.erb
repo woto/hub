@@ -75,7 +75,8 @@
       <%= link_to t('delete'), entity_path(@entity.id),
                   class: "ms-auto btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
                   method: :delete,
-                  data: { confirm: t('are_you_sure') } %>
+                  data: { confirm: t('are_you_sure') },
+                  rel: Seo::NoFollow %>
     <% end %>
   </div>
 <% end %>

@@ -46,15 +46,15 @@
         <main class="content">
           <div class="container-xl">
 
-            <% if content_for?(:seo_title) || content_for?(:breadcrumbs) %>
+            <% if seo.title.present? || content_for?(:breadcrumbs) %>
               <div class="page-header pb-0 mb-0">
                 <div class="row align-items-center">
                   <div class="col-12">
 
                     <div class="d-flex">
-                      <% if content_for?(:seo_title) %>
+                      <% if seo.title.present? %>
                         <h1 class="page-title flex-grow-1">
-                          <%= content_for(:seo_title) %>
+                          <%= seo.title %>
                         </h1>
                       <% end %>
                       <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-desktop') %>

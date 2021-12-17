@@ -24,8 +24,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :path_for_switch_language
   helper_method :url_for_search_everywhere
+  helper_method :seo
 
   private
+
+  def seo
+    @seo ||= Seo.new(self)
+  end
 
   def render_404(exception)
     Rails.logger.error [exception.message, *exception.backtrace].join($INPUT_RECORD_SEPARATOR)

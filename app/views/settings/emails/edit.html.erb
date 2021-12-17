@@ -1,8 +1,6 @@
 <% scope = ['devise', 'registrations', 'edit'] %>
 
-<% content_for(:seo_title) do %>
-  <%= t("titles.settings") %>
-<% end %>
+<% seo.title! t("titles.settings") %>
 
 <% content_for :breadcrumbs do %>
   <li class="breadcrumb-item">

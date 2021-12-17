@@ -1,6 +1,4 @@
-<% content_for(:seo_title) do %>
-  <%= t(@settings[:plural], scope: ['titles']) %>
-<% end %>
+<% seo.title! t(@settings[:plural], scope: ['titles']) %>
 
 <%= render 'breadcrumbs' %>
 

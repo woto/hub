@@ -8,6 +8,8 @@ class EntitiesController < ApplicationController
 
   # GET /entities/:id
   def show
+    seo.langs! { |l| entity_url(@entity, locale: l) }
+    seo.canonical! entity_url(@entity)
     authorize(@entity)
 
     @mentions = @entity.mentions.order(id: :desc).includes(:topics, :entities)
@@ -15,6 +17,7 @@ class EntitiesController < ApplicationController
 
   # GET /entities/new
   def new
+    seo.noindex!
     @entity = current_user.entities.new
     @url = url_for(@entity)
     authorize(@entity)
@@ -22,6 +25,7 @@ class EntitiesController < ApplicationController
 
   # GET /entities/:id/edit
   def edit
+    seo.noindex!
     @url = url_for(@entity)
     authorize(@entity)
   end

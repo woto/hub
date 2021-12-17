@@ -1,8 +1,6 @@
 <% render 'breadcrumbs' %>
 
-<% content_for(:seo_title) do %>
-  <%= t("titles.dashboard") %>
-<% end %>
+<% seo.title! t("titles.dashboard") %>
 
 <div class="col">
   <div class="row">

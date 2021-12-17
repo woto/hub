@@ -80,7 +80,8 @@
             <%= link_to t('delete'), mention_path(@mention.id),
                         class: "ms-auto btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
                         'data-turbo-method': :delete,
-                        'data-turbo-confirm': t('are_you_sure') %>
+                        'data-turbo-confirm': t('are_you_sure'),
+                        rel: Seo::NoFollow %>
           <% end %>
         </div>
 

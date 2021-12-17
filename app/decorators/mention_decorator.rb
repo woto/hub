@@ -7,7 +7,7 @@ class MentionDecorator < ApplicationDecorator
 
   def url
     truncated = h.truncate(super, length: 40)
-    link_options = { 'data-turbo' => 'false', rel: 'noreferrer' }
+    link_options = { 'data-turbo' => 'false', rel: Seo::NoReferrer }
     if truncated != super
       link_options['data-bs-toggle'] = 'tooltip'
       link_options['title'] = super

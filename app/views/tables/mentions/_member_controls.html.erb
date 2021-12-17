@@ -10,7 +10,7 @@
     <%= link_to t('buttons.show'), mention_path(mention), class: 'dropdown-item' %>
 
     <% if policy(mention).edit? %>
-      <%= link_to t('buttons.edit'), edit_mention_path(mention), class: 'dropdown-item' %>
+      <%= link_to t('buttons.edit'), edit_mention_path(mention), class: 'dropdown-item', rel: [Seo::NoFollow] %>
     <% end %>
     <% if policy(mention).destroy? %>
       <%= link_to t('buttons.delete'), mention_path(mention), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
@@ -18,7 +18,7 @@
 
     <hr class="dropdown-divider">
 
-    <%= link_to t('.follow'), mention.url, class: 'dropdown-item', rel: 'noreferrer' %>
+    <%= link_to t('.follow'), mention.url, class: 'dropdown-item', rel: [Seo::NoReferrer, Seo::NoFollow, Seo::UGC] %>
 
   </div>
 </div>

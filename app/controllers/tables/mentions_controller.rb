@@ -5,13 +5,14 @@ module Tables
     ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
     REQUIRED_PARAMS = %i[per order sort columns].freeze
     skip_before_action :authenticate_user!, only: [:index]
+    layout 'backoffice'
 
     include Workspaceable
     include Tableable
-    layout 'backoffice'
 
     # GET /checks
     def index
+      seo.noindex!
       get_index(%w[id entity_ids])
     end
 

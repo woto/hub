@@ -7,17 +7,21 @@ class MentionsController < ApplicationController
 
   # GET /mention/:id
   def show
+    seo.langs! { |l| mention_url(@mention, locale: l) }
+    seo.canonical! mention_url(@mention)
     authorize(@mention)
   end
 
   # GET /mentions/new
   def new
+    seo.noindex!
     @mention = current_user.mentions.new(topics: [Topic.new])
     authorize(@mention)
   end
 
   # GET /mentions/:id/edit
   def edit
+    seo.noindex!
     authorize(@mention)
   end
 
