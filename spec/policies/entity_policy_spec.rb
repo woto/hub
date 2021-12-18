@@ -9,7 +9,7 @@ describe EntityPolicy do
     subject { described_class.new(user, nil).permitted_attributes }
 
     let(:permitted_attributes) do
-      [:title, :picture, :image, :intro, :body, { lookups_attributes: %i[id title _destroy] }]
+      [:title, :picture, :image, :intro, :body, { child_ids: [], lookups_attributes: %i[id title _destroy], parent_ids: [], topics_attributes: [] }]
     end
 
     context 'with user' do

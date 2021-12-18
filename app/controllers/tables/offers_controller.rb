@@ -20,7 +20,7 @@ module Tables
     helper_method :current_feed_category
 
     def index
-      seo.noindex! if params.keys & %w[q per sort order favorite_id filters columns]
+      seo.noindex! if (params.keys & %w[q per sort order favorite_id filters columns]).present?
 
       @favorites_store = FavoritesStore.new(current_user)
       @groups_store = GroupsStore.new

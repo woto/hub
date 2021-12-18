@@ -13,7 +13,9 @@ module Tables
 
     # GET /news
     def index
-      seo.noindex! if params[:page].to_i > 1 || params.keys & %w[q per sort order favorite_id filters columns]
+      if params[:page].to_i > 1 || (params.keys & %w[q per sort order favorite_id filters columns]).present?
+        seo.noindex!
+      end
       get_index(required_fields)
     end
 

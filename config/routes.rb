@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   scope constraints: WebsiteConstraint.new do
     root to: 'tables/articles#index', as: :articles
-    get '/robots.txt', to: 'robots#index', as: :robots
+    get '/robots.txt', to: 'robots#index'
 
     scope controller: 'tables/articles', as: :articles do
       get 'month/:month', action: :by_month, as: :by_month
@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     end
     resources :articles, only: :show
   end
+
+  get '/robots.txt', to: 'robots#index'
 
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'

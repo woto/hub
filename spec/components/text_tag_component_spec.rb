@@ -9,7 +9,7 @@ RSpec.describe TextTagComponent, type: :component do
         render_inline(described_class.new(text_tag: 'https://example.com')).to_html
       ).to eq <<~HERE.strip
         <span style="max-width: 200px" class="badge bg-cyan text-truncate user-select-all me-1 mb-1 text-break d-inline-block">
-          <a class="text-white" rel="noreferrer" href="https://example.com">example.com</a>
+          <a class="text-white" rel="noreferrer nofollow ugc" href="https://example.com">example.com</a>
         </span>
       HERE
     end

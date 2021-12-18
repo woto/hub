@@ -3,7 +3,7 @@ class RobotsController < ApplicationController
 
   def index
     render plain: <<~HERE
-      Sitemap: #{File.join(root_url, 'sitemaps', Current.realm.domain, 'sitemap.xml.gz')}
+      Sitemap: #{File.join(root_url(locale: nil), 'sitemaps', Current.realm&.domain.to_s, 'sitemap.xml.gz')}
     HERE
   end
 end
