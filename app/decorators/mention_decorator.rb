@@ -7,7 +7,7 @@ class MentionDecorator < ApplicationDecorator
 
   def url
     truncated = h.truncate(super, length: 40)
-    link_options = { 'data-turbo' => 'false', rel: Seo::NoReferrer }
+    link_options = { 'data-turbo' => 'false', rel: [Seo::NoReferrer, Seo::NoFollow, Seo::UGC] }
     if truncated != super
       link_options['data-bs-toggle'] = 'tooltip'
       link_options['title'] = super
@@ -18,9 +18,13 @@ class MentionDecorator < ApplicationDecorator
   def image
     h.render Mentions::ImageLightboxComponent.new(
       **super.symbolize_keys,
-      class: 'img-thumbnail bg-white',
-      size: '100'
+      class: 'responsive-image img-thumbnail bg-white',
+      size: '200'
     )
+  end
+
+  def title
+    h.tag.span super, class: 'strong responsive-title'
   end
 
   def topics

@@ -91,15 +91,20 @@ class Mention < ApplicationRecord
       user_id: user_id,
       image: image_hash,
       entity_ids: entity_ids,
-      entities: entities_mentions.includes(:entity).map do |entity_mention|
-        {
-          id: entity_mention.entity_id,
-          is_main: entity_mention.is_main,
-          title: entity_mention.entity.title
-        }
-      end,
+      # TODO: Rails 7 in order of
+      entities: entities_hash,
       entities_count: entities_count
     }
+  end
+
+  def entities_hash
+    entities_mentions.includes(:entity).order(is_main: :desc).map do |entity_mention|
+      {
+        'id' => entity_mention.entity_id,
+        'title' => entity_mention.entity.to_label,
+        'is_main' => entity_mention.is_main
+      }
+    end
   end
 
   private

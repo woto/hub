@@ -1,4 +1,4 @@
-<tr>
+<div class="responsive-table-row">
   <% if params[:controller] != 'tables/favorites' %>
     <%= render TableComponent::HeaderComponent.new col_name: GlobalHelper::FAVORITE_COLUMN,
                                                    settings: @settings
@@ -11,7 +11,6 @@
     %>
   <% end %>
 
-  <th>
-
-  </th>
-</tr>
+  <div class="responsive-table-th">
+  </div>
+</div>

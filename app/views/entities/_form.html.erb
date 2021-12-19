@@ -1,3 +1,9 @@
+<% content_for :after_body_open do %>
+  <script type="module">
+      import Trix from 'https://cdn.skypack.dev/trix';
+  </script>
+<% end %>
+
 <%= simple_form_for(entity,
                     url: @url,
                     html: {

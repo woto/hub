@@ -55,14 +55,7 @@
 
                 <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9">
-                  <% collection = @mention.entities_mentions.includes(:entity).map do |entity_mention|
-                    {
-                      'id' => entity_mention.entity_id,
-                      'title' => entity_mention.entity.to_label,
-                      'is_main' => entity_mention.is_main
-                    }
-                  end %>
-                  <%= render(Mentions::EntityComponent.with_collection(collection)) %>
+                  <%= render(Mentions::EntityComponent.with_collection(@mention.entities_hash)) %>
                 </dd>
 
                 <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'mention']) %> </dt>

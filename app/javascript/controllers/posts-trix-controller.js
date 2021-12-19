@@ -1,5 +1,6 @@
 import { Controller } from "stimulus"
-import Trix from "trix";
+// import Trix from "trix";
+// import Trix from 'https://cdn.skypack.dev/trix';
 
 export default class extends Controller {
     static values = { translations: Object }

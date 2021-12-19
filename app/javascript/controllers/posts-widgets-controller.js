@@ -1,5 +1,5 @@
 import { ApplicationController } from 'stimulus-use'
-import Trix from "trix";
+// import Trix from "trix";
 import * as bootstrap from 'bootstrap';
 
 export default class extends ApplicationController {
@@ -28,6 +28,7 @@ export default class extends ApplicationController {
                 // var attachment = new Trix.Attachment({ content: '<span class="mention">@trix</span>' })
                 // this.editorTarget.editor.insertAttachment(attachment)
 
+                // debugger;
                 let embedding = new Trix.Attachment(data);
 
                 that.#trixEditor.editor.insertLineBreak();

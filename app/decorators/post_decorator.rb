@@ -18,7 +18,7 @@ class PostDecorator < ApplicationDecorator
       link_options['data-bs-toggle'] = 'tooltip'
       link_options['title'] = super
     end
-    h.link_to(truncated, h.post_path(_id), **link_options)
+    h.tag.span(h.link_to(truncated, h.post_path(_id), **link_options), class: 'responsive-title')
   end
 
   def intro

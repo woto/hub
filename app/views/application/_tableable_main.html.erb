@@ -19,14 +19,14 @@
     <div class="card-body p-0">
       <%= render 'table_header', rows: rows %>
       <div class="table-responsive" style="min-height: 400px">
-        <table class="table card-table table-vcenter table-hover">
-          <thead>
+        <div class="responsive-table table card-table table-vcenter table-hover">
+          <div class="responsive-table-header">
             <%= render 'tableable_thead' %>
-          </thead>
-          <tbody>
+          </div>
+          <div class="responsive-table-body">
             <%= render 'tableable_tbody', rows: rows %>
-          </tbody>
-        </table>
+          </div>
+        </div>
         <%= render 'empty_page' if rows.empty?  %>
       </div>
     </div>
