@@ -33,6 +33,7 @@ class Seo
 
   def canonical!(href)
     @meta << ApplicationController.helpers.tag(:link, rel: 'canonical', href: href)
+    controller.response.headers['Link'] = %(<#{href}>; rel="canonical")
   end
 
   def tags
