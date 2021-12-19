@@ -14,7 +14,7 @@ class Seo
 
   def noindex!
     @meta << ApplicationController.helpers.tag(:meta, { name: 'robots', content: 'noindex' })
-    controller.response.headers['X-Robots-Tag'] = 'noindex'
+    append_header('X-Robots-Tag', 'noindex')
   end
 
   def title!(title)
@@ -29,14 +29,28 @@ class Seo
     keys.each do |lang:, locale:|
       @meta << ApplicationController.helpers.tag(:link, rel: 'alternate', href: yield(locale), hreflang: lang)
     end
+
+    header = keys.map do |lang:, locale:|
+      %(<#{yield(locale)}>; rel="alternate"; hreflang="#{lang}")
+    end.join(', ')
+
+    append_header('Link', header)
   end
 
   def canonical!(href)
     @meta << ApplicationController.helpers.tag(:link, rel: 'canonical', href: href)
-    controller.response.headers['Link'] = %(<#{href}>; rel="canonical")
+    append_header('Link', %(<#{href}>; rel="canonical"))
   end
 
   def tags
     ApplicationController.helpers.raw(@meta.join("\n"))
+  end
+
+  private
+
+  def append_header(name, value)
+    headers = controller.response.headers[name].to_s.split("\n")
+    headers << value
+    controller.response.headers[name] = headers.join("\n")
   end
 end
