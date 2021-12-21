@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   end
 
   get '/robots.txt', to: 'robots#index'
+  # TODO: to test
+  get "/#{ENV.fetch('INDEX_NOW_KEY')}", to: 'index_now#index', as: :index_now
 
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
