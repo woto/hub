@@ -9,7 +9,7 @@ sitemap.create do
     add(entity_path(entity, locale: nil), {
           lastmod: entity.updated_at,
           alternate: I18n.available_locales.map do |locale|
-                       { hreflang: locale, href: entity_path(entity, locale: locale) }
+                       { hreflang: locale, href: entity_url(entity, locale: locale, host: ENV['DOMAIN_NAME'], protocol: 'https') }
                      end
         })
   end
@@ -18,7 +18,7 @@ sitemap.create do
     add(mention_path(mention, locale: nil), {
           lastmod: mention.updated_at,
           alternate: I18n.available_locales.map do |locale|
-                       { hreflang: locale, href: mention_path(mention, locale: locale) }
+                       { hreflang: locale, href: mention_url(mention, locale: locale, host: ENV['DOMAIN_NAME'], protocol: 'https') }
                      end
         })
   end
