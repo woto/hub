@@ -7,6 +7,18 @@ module API
     prefix :api
 
     resource :tools do
+
+      desc 'Extract metadata from page'
+
+      params do
+        requires :url, type: String, desc: 'Page URL'
+      end
+
+      # TODO: to test
+      get :metadata do
+        ExtractMetadata.call(url: params[:url]).object
+      end
+
       desc 'Detect a language of passed string'
 
       params do
