@@ -13,6 +13,7 @@ services:
         - PUSHGATEWAY_HOST
         - PUSHGATEWAY_PORT
         - DOMAIN_NAME
+        - INDEX_NOW_KEY
     image: app
     command:
       [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
