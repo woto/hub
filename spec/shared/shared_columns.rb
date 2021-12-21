@@ -18,7 +18,7 @@ shared_examples_for 'shared columns visible only to admin', responsible: :admin 
         expect(page).to have_text(select_title)
       end
 
-      within 'table' do
+      within '.table' do
         expect(page).to have_text(column_title)
       end
 
@@ -38,7 +38,7 @@ shared_examples_for 'shared columns visible only to admin', responsible: :admin 
       end
 
       # in the table
-      within 'table' do
+      within '.table' do
         expect(page).to have_no_text(column_title)
       end
 

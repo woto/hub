@@ -140,9 +140,9 @@ RSpec.describe Mention, type: :model do
         entity_ids: mention.entity_ids,
         entities: mention.entities_mentions.map do |entities_mention|
           {
-            id: entities_mention.entity.id,
-            is_main: entities_mention.is_main,
-            title: entities_mention.entity.title
+            'id' => entities_mention.entity.id,
+            'is_main' => entities_mention.is_main,
+            'title' => entities_mention.entity.title
           }
         end,
         entities_count: mention.entities_count,
