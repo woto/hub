@@ -15,7 +15,7 @@ class IndexNow
                    {
                      url: context.url,
                      key: ENV.fetch('INDEX_NOW_KEY'),
-                     keyLocation: index_now_path
+                     keyLocation: index_now_url(host: ENV['DOMAIN_NAME'], protocol: 'https')
                    })
 
     # TODO: rewrite better
