@@ -22,6 +22,11 @@ class Seo
     @meta << ApplicationController.helpers.tag.title("GoodReviews.ru | #{title}")
   end
 
+  def description!(description)
+    @description = description
+    @meta << ApplicationController.helpers.tag(:meta, { name: 'description', content: description })
+  end
+
   def langs!
     keys = I18n.available_locales.map { |locale| { lang: locale, locale: locale } }
     keys << { lang: 'x-default', locale: nil }

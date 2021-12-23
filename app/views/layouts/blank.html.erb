@@ -5,11 +5,8 @@
 
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <%= seo.tags %>
 
-  <% if content_for?(:seo_description) %>
-    <%= tag.meta name: :description, content: content_for(:seo_description)&.strip %>
-  <% end %>
+  <%= seo.tags %>
 
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>

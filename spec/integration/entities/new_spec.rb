@@ -14,6 +14,13 @@ describe EntitiesController, type: :system, responsible: :admin do
   context 'when form loads' do
     it 'shows input fields' do
       expect(page).to have_field(title_placeholder)
+      expect(page).not_to have_field(synonym_placeholder)
+    end
+  end
+
+  context 'when clicks on Добавить синоним' do
+    it 'shows lookup title field' do
+      click_on('Добавить синоним')
       expect(page).to have_field(synonym_placeholder)
     end
   end
