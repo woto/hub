@@ -49,7 +49,7 @@ describe MentionsController, type: :system, responsible: :admin do
           expect do
             expect do
               click_on('Сохранить')
-              expect(page).to have_text('Упоминание было успешно создано')
+              expect(page).to have_text('Упоминание было успешно создано', wait: 5)
             end.to change(Mention, :count).by(1)
           end.not_to change(Entity, :count)
         end.to change(EntitiesMention, :count).by(1)
@@ -69,7 +69,7 @@ describe MentionsController, type: :system, responsible: :admin do
           expect do
             expect do
               click_on('Сохранить')
-              expect(page).to have_text('Упоминание было успешно создано')
+              expect(page).to have_text('Упоминание было успешно создано', wait: 5)
             end.to change(Mention, :count).by(1)
           end.not_to change(Entity, :count)
         end.to change(EntitiesMention, :count).by(1)
@@ -165,7 +165,7 @@ describe MentionsController, type: :system, responsible: :admin do
           expect do
             expect do
               click_on('Сохранить')
-              expect(page).to have_text('Упоминание было успешно изменено')
+              expect(page).to have_text('Упоминание было успешно изменено', wait: 5)
             end.not_to change(Mention, :count)
           end.not_to change(EntitiesMention, :count)
         end.not_to change(Entity, :count)
@@ -222,7 +222,7 @@ describe MentionsController, type: :system, responsible: :admin do
           expect do
             expect do
               click_on('Сохранить')
-              expect(page).to have_text('Упоминание было успешно изменено')
+              expect(page).to have_text('Упоминание было успешно изменено', wait: 5)
             end.not_to change(Mention, :count)
           end.to change(EntitiesMention, :count).by(1)
         end.not_to change(Entity, :count)
