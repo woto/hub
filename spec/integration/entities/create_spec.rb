@@ -22,7 +22,7 @@ describe EntitiesController, type: :system, responsible: :admin do
 
       expect do
         expect do
-          click_on('Сохранить')
+          click_on('Сохранить', exact: true)
           expect(page).to have_text('Объект упоминания был успешно создан')
         end.to change(Entity, :count)
       end.to change(Lookup, :count)

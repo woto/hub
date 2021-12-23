@@ -13,6 +13,7 @@ describe EntitiesController, type: :system, responsible: :admin do
   context 'when removes lookup title and submits form' do
     it 'shows lookup error text' do
       first('[data-controller="nested-form-item"] input[type="text"]').fill_in(with: '')
+      sleep(0.5)
       click_on('Сохранить')
 
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
