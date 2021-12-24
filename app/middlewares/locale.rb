@@ -105,6 +105,6 @@ class Locale
   end
 
   def remove_port(host)
-    host.sub(/:\d+$/, '')
+    host.to_s.sub(/:\d+$/, '')
   end
 end
