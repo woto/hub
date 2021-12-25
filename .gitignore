@@ -41,4 +41,5 @@ __pycache__/
 /data/feeds
 /public/sitemaps
 /config/master.key
+/config/secrets
 /.idea

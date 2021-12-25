@@ -42,8 +42,7 @@ class MentionsController < ApplicationController
     end
 
     if result
-      # TODO: to test
-      IndexNowJob.perform_later(url: mention_url(@mention))
+      BoostIndexing.call(url: mention_url(@mention))
       redirect_to @mention, notice: t('.mention_was_successfully_created')
     else
       render :new, status: :unprocessable_entity
@@ -64,8 +63,7 @@ class MentionsController < ApplicationController
     end
 
     if result
-      # TODO: to test
-      IndexNowJob.perform_later(url: mention_url(@mention))
+      BoostIndexing.call(url: mention_url(@mention))
       redirect_to @mention, notice: t('.mention_was_successfully_updated')
     else
       render :edit, status: :unprocessable_entity

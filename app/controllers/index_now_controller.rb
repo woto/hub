@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: to test
 class IndexNowController < ApplicationController
   skip_before_action :authenticate_user!
 

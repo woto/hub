@@ -122,6 +122,12 @@ gem 'mobility', github: 'shioyama/mobility'
 gem 'sitemap_generator'
 gem 'spreadsheet'
 
+# Google API
+# gem 'google-api-ruby-client'
+# gem 'google-apis-core'
+# gem 'google-auth-library-ruby'
+gem 'google-apis-indexing_v3'
+
 # Grape
 gem 'grape'
 gem 'grape-swagger'
@@ -189,9 +195,9 @@ gem 'dry-struct'
 gem 'dry-validation'
 
 # Image processing
+gem 'fastimage', '~> 2.2'
 gem 'image_processing', '~> 1.11'
 gem 'mini_magick', '~> 4.10'
-gem "fastimage", "~> 2.2"
 
 # Graph visualization
 gem 'ruby-graphviz'

@@ -45,8 +45,7 @@ class EntitiesController < ApplicationController
     end
 
     if result
-      # TODO: to test
-      IndexNowJob.perform_later(url: entity_url(@entity))
+      BoostIndexing.call(url: entity_url(@entity))
       if params['commit'] == t('entities.form.submit_and_new')
         redirect_to new_entity_path, notice: t('.entity_was_successfully_created')
       else
@@ -71,8 +70,7 @@ class EntitiesController < ApplicationController
     end
 
     if result
-      # TODO: to test
-      IndexNowJob.perform_later(url: entity_url(@entity))
+      BoostIndexing.call(url: entity_url(@entity))
       if params['commit'] == t('entities.form.submit_and_new')
         redirect_to new_entity_path, notice: t('.entity_was_successfully_updated')
       else
