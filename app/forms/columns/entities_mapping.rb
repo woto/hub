@@ -10,6 +10,7 @@ module Columns
       { key: 'image',               pg: Entity.columns_hash['image_data'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'user_id',             pg: Entity.columns_hash['user_id'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'title',               pg: Entity.columns_hash['title'], roles: ['guest', 'user', 'manager', 'admin'] },
+      { key: 'hostname',            pg: Entity.columns_hash['hostname_id'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'lookups',             pg: Lookup.columns_hash['title'], roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'topics',              pg: Topic.columns_hash['title'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
       { key: 'topics_count',        pg: Entity.columns_hash['topics_count'], roles: ['guest', 'user', 'manager', 'admin'] },

@@ -9,6 +9,7 @@ module Columns
         { key: 'image',               pg: Mention.columns_hash['image_data'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'user_id',             pg: Mention.columns_hash['user_id'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'url',                 pg: Mention.columns_hash['url'], roles: ['guest', 'user', 'manager', 'admin'] },
+        { key: 'hostname',            pg: Mention.columns_hash['hostname_id'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'title',               pg: Mention.columns_hash['title'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'entities',            pg: Mention.columns_hash['id'], as: :jsonb, roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'entity_ids',          pg: Mention.columns_hash['id'], as: :integer, roles: ['guest', 'user', 'manager', 'admin'] },

@@ -13,15 +13,18 @@
 #  topics_count   :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  hostname_id    :bigint
 #  user_id        :bigint           not null
 #
 # Indexes
 #
-#  index_entities_on_image_data  (image_data) USING gin
-#  index_entities_on_user_id     (user_id)
+#  index_entities_on_hostname_id  (hostname_id)
+#  index_entities_on_image_data   (image_data) USING gin
+#  index_entities_on_user_id      (user_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (hostname_id => hostnames.id)
 #  fk_rails_...  (user_id => users.id)
 #
 require 'rails_helper'
@@ -32,6 +35,7 @@ RSpec.describe Entity, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user).counter_cache(true) }
+    it { is_expected.to belong_to(:hostname).counter_cache(true) }
 
     it { is_expected.to have_many(:entities_mentions).dependent(:restrict_with_error) }
     it { is_expected.to have_many(:mentions).through(:entities_mentions).counter_cache(:mentions_count) }
@@ -85,9 +89,13 @@ RSpec.describe Entity, type: :model do
       end
     end
 
-    let(:entity) { create(:entity, topics: [topic], lookups: [lookup], image: ShrineImage.uploaded_image) }
+    let(:entity) do
+      create(:entity, title: "https://#{hostname.title}", topics: [topic], lookups: [lookup],
+                      image: ShrineImage.uploaded_image)
+    end
     let(:lookup) { create(:lookup, title: 'lookup title') }
     let(:topic) { create(:topic, title: 'topic title') }
+    let(:hostname) { create(:hostname) }
 
     before do
       create(:mention, entities: [entity])
@@ -101,6 +109,7 @@ RSpec.describe Entity, type: :model do
         topics: ['topic title'],
         topics_count: 1,
         title: entity.title,
+        hostname: hostname.title,
         intro: nil,
         image: be_a(Hash),
         user_id: entity.user_id,
@@ -182,6 +191,18 @@ RSpec.describe Entity, type: :model do
       it 'removes two entities_entities' do
         expect { destroy_entity }.to change(EntitiesEntity, :count).by(-2)
       end
+    end
+  end
+
+  describe '#fill_hostname' do
+    it_behaves_like 'shared_hostname_new' do
+      subject { build(:entity) }
+    end
+
+    it_behaves_like 'shared_hostname_existed' do
+      subject { build(:entity, title: "https://#{hostname.title}/foo") }
+
+      let!(:hostname) { create(:hostname) }
     end
   end
 end

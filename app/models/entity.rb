@@ -13,15 +13,18 @@
 #  topics_count   :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  hostname_id    :bigint
 #  user_id        :bigint           not null
 #
 # Indexes
 #
-#  index_entities_on_image_data  (image_data) USING gin
-#  index_entities_on_user_id     (user_id)
+#  index_entities_on_hostname_id  (hostname_id)
+#  index_entities_on_image_data   (image_data) USING gin
+#  index_entities_on_user_id      (user_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (hostname_id => hostnames.id)
 #  fk_rails_...  (user_id => users.id)
 #
 class Entity < ApplicationRecord
@@ -33,6 +36,8 @@ class Entity < ApplicationRecord
   include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
   include ImageHash
   include Topicable
+  include Hostnameable
+  hostnameable attribute_name: :title
 
   belongs_to :user, counter_cache: true
 
@@ -66,6 +71,7 @@ class Entity < ApplicationRecord
     {
       id: id,
       title: title,
+      hostname: hostname.to_label,
       intro: intro,
       lookups: lookups.map(&:to_label),
       lookups_count: lookups_count,

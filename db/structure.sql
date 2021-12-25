@@ -619,7 +619,8 @@ CREATE TABLE public.entities (
     user_id bigint NOT NULL,
     lookups_count integer DEFAULT 0 NOT NULL,
     intro text,
-    topics_count integer DEFAULT 0 NOT NULL
+    topics_count integer DEFAULT 0 NOT NULL,
+    hostname_id bigint
 );
 
 
@@ -935,6 +936,39 @@ ALTER SEQUENCE public.feeds_id_seq OWNED BY public.feeds.id;
 
 
 --
+-- Name: hostnames; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.hostnames (
+    id bigint NOT NULL,
+    title character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    mentions_count integer DEFAULT 0 NOT NULL,
+    entities_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: hostnames_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.hostnames_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hostnames_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.hostnames_id_seq OWNED BY public.hostnames.id;
+
+
+--
 -- Name: identities; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1018,7 +1052,8 @@ CREATE TABLE public.mentions (
     topics_count integer DEFAULT 0 NOT NULL,
     title character varying,
     html text,
-    sentiments jsonb DEFAULT '[]'::jsonb
+    sentiments jsonb DEFAULT '[]'::jsonb,
+    hostname_id bigint
 );
 
 
@@ -1688,6 +1723,13 @@ ALTER TABLE ONLY public.feeds ALTER COLUMN id SET DEFAULT nextval('public.feeds_
 
 
 --
+-- Name: hostnames id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hostnames ALTER COLUMN id SET DEFAULT nextval('public.hostnames_id_seq'::regclass);
+
+
+--
 -- Name: identities id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1951,6 +1993,14 @@ ALTER TABLE ONLY public.feeds
 
 
 --
+-- Name: hostnames hostnames_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hostnames
+    ADD CONSTRAINT hostnames_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: identities identities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2200,6 +2250,13 @@ CREATE INDEX index_entities_mentions_on_mention_id ON public.entities_mentions U
 
 
 --
+-- Name: index_entities_on_hostname_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entities_on_hostname_id ON public.entities USING btree (hostname_id);
+
+
+--
 -- Name: index_entities_on_image_data; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2281,6 +2338,13 @@ CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_
 --
 
 CREATE INDEX index_lookups_on_entity_id ON public.lookups USING btree (entity_id);
+
+
+--
+-- Name: index_mentions_on_hostname_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentions_on_hostname_id ON public.mentions USING btree (hostname_id);
 
 
 --
@@ -2603,6 +2667,14 @@ ALTER TABLE ONLY public.transactions
 
 
 --
+-- Name: mentions fk_rails_471f75b079; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentions
+    ADD CONSTRAINT fk_rails_471f75b079 FOREIGN KEY (hostname_id) REFERENCES public.hostnames(id);
+
+
+--
 -- Name: identities fk_rails_5373344100; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2736,6 +2808,14 @@ ALTER TABLE ONLY public.widgets_simples_pictures
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: entities fk_rails_9b79522bcf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entities
+    ADD CONSTRAINT fk_rails_9b79522bcf FOREIGN KEY (hostname_id) REFERENCES public.hostnames(id);
 
 
 --
@@ -2918,6 +2998,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211214164352'),
 ('20211214164505'),
 ('20211214171330'),
-('20211215150926');
+('20211215150926'),
+('20211222191306'),
+('20211222191317'),
+('20211222201548'),
+('20211224052330'),
+('20211224201618');
 
 

@@ -16,15 +16,18 @@
 #  url            :text
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  hostname_id    :bigint
 #  user_id        :bigint           not null
 #
 # Indexes
 #
-#  index_mentions_on_image_data  (image_data) USING gin
-#  index_mentions_on_user_id     (user_id)
+#  index_mentions_on_hostname_id  (hostname_id)
+#  index_mentions_on_image_data   (image_data) USING gin
+#  index_mentions_on_user_id      (user_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (hostname_id => hostnames.id)
 #  fk_rails_...  (user_id => users.id)
 #
 require 'rails_helper'
@@ -35,6 +38,7 @@ RSpec.describe Mention, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:hostname).counter_cache(true) }
     it { is_expected.to have_many(:entities_mentions).dependent(:destroy) }
     it { is_expected.to have_many(:entities).through(:entities_mentions).counter_cache(:entities_count) }
     it { is_expected.to have_many(:mentions_topics).dependent(:destroy) }
@@ -100,7 +104,7 @@ RSpec.describe Mention, type: :model do
     end
 
     context 'with responsible', responsible: :user do
-      subject { build(:mention) }
+      subject { build(:mention, hostname: create(:hostname)) }
 
       it { is_expected.to validate_uniqueness_of(:url) }
     end
@@ -123,7 +127,8 @@ RSpec.describe Mention, type: :model do
       end
     end
 
-    let(:mention) { create(:mention, title: 'mention title') }
+    let(:mention) { create(:mention, title: 'mention title', url: "https://#{hostname.title}/foo") }
+    let(:hostname) { create(:hostname) }
 
     it 'returns correct result' do
       expect(subject).to match(
@@ -134,6 +139,7 @@ RSpec.describe Mention, type: :model do
         topics: mention.topics.map(&:to_label),
         topics_count: mention.topics_count,
         url: mention.url,
+        hostname: hostname.title,
         title: 'mention title',
         user_id: mention.user_id,
         image: be_a(Hash),
@@ -241,6 +247,20 @@ RSpec.describe Mention, type: :model do
     it 'strips url' do
       subject.save!
       expect(subject.reload.url).to eq('http://example.com')
+    end
+  end
+
+  describe '#fill_hostname' do
+    let!(:entity) { create(:entity) }
+
+    it_behaves_like 'shared_hostname_new' do
+      subject { build(:mention, entities: [entity]) }
+    end
+
+    it_behaves_like 'shared_hostname_existed' do
+      subject { build(:mention, url: "https://#{hostname.title}/foo", entities: [entity]) }
+
+      let!(:hostname) { create(:hostname) }
     end
   end
 end
