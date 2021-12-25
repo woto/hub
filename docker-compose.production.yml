@@ -21,6 +21,7 @@ services:
       - "rails_storage:/app/storage"
       - "rails_sitemaps:/app/public/sitemaps"
       - "rails_uploads:/app/public/uploads"
+      - "rails_secrets:/app/config/secrets/production"
       - "./data:/app/data"
     expose:
       - 9394
@@ -69,6 +70,7 @@ services:
       - "rails_storage:/app/storage"
       - "rails_sitemaps:/app/public/sitemaps"
       - "rails_uploads:/app/public/uploads"
+      - "rails_secrets:/app/config/secrets/production"
       - "./data:/app/data"
     expose:
       - 9394
@@ -261,6 +263,7 @@ volumes:
   rails_storage:
   rails_sitemaps:
   rails_uploads:
+  rails_secrets:
   redis:
   postgres:
   elastic:
