@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Indexing::GoogleJob, type: :job do
-  subject { described_class.perform_now('http://example.com') }
+  subject { described_class.perform_now(url: 'http://example.com') }
 
   it 'works' do
     stub_request(:post, 'https://www.googleapis.com/oauth2/v4/token')

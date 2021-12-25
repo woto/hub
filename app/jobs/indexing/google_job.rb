@@ -6,7 +6,7 @@ module Indexing
   class GoogleJob < ApplicationJob
     include Rails.application.routes.url_helpers
 
-    def perform(url)
+    def perform(url:)
       indexing = ::Google::Apis::IndexingV3::IndexingService.new
       scope = 'https://www.googleapis.com/auth/indexing'
       indexing.authorization = ::Google::Auth::ServiceAccountCredentials.make_creds(

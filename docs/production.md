@@ -1,5 +1,22 @@
 # Production
 
+#### Scrapper shell
+```shell
+docker-compose exec scrapper bash
+```
+
+#### Rails shell
+
+From running container
+```shell
+docker-compose exec rails sh
+```
+
+or from new container
+```shell
+docker-compose run -l "traefik.enable=false" --rm rails sh
+```
+
 #### Rails console
 
 ```shell
@@ -13,6 +30,7 @@ From running container
 ```shell
 docker exec -i -t hub_postgres_1 psql -U hub -d postgres
 ```
+
 or from new container
 ```shell
 docker-compose run -l "traefik.enable=false" --rm postgres psql -U hub -d postgres -h postgres

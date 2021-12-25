@@ -4,7 +4,7 @@ module Indexing
   class YandexJob < ApplicationJob
     include Rails.application.routes.url_helpers
 
-    def perform(url)
+    def perform(url:)
       conn = Faraday.new do |faraday|
         faraday.use FaradayMiddleware::FollowRedirects
         faraday.adapter Faraday.default_adapter
