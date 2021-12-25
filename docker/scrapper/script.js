@@ -99,7 +99,7 @@ app.get('/screenshot', async (request, response) => {
 
     const browser = await puppeteer.launch({
         dumpio: true,
-        defaultViewport: {width: 1920, height: 1080},
+        defaultViewport: {width: 1280, height: 1280},
         // headless: false,
         args: [
             // Required for Docker version of Puppeteer
