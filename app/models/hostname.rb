@@ -11,6 +11,7 @@
 #
 class Hostname < ApplicationRecord
   has_many :mentions, dependent: :restrict_with_error
+  has_many :entities, dependent: :restrict_with_error
 
   def to_label
     title
