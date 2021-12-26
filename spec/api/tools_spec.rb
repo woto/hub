@@ -5,6 +5,47 @@ require 'rails_helper'
 describe API::Tools, type: :request do
   let!(:user) { create(:user) }
 
+  describe 'GET /api/tools/iframely' do
+    it 'returns iframely extracted metadata' do
+      stub_request(:get, 'https://iframe.ly/api/iframely?api_key=iframely_key_value&url=https://example.com')
+        .to_return(status: 200, body: { a: 'b' }.to_json, headers: {})
+
+      get '/api/tools/iframely', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ 'a' => 'b' })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/iframely',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/iframely',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when text is empty' do
+      it 'returns error' do
+        get '/api/tools/detect_language', headers: { 'HTTP_API_KEY' => user.api_key }
+        # TODO: should be 422
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)).to eq('error' => 'text is missing')
+      end
+    end
+  end
+
   describe 'GET /api/tools/detect_language' do
     it 'returns detected language' do
       get '/api/tools/detect_language', headers: { 'HTTP_API_KEY' => user.api_key }, params: { text: 'test' }
