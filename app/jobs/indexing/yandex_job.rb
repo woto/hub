@@ -20,8 +20,7 @@ module Indexing
                    keyLocation: index_now_url(host: ENV['DOMAIN_NAME'], protocol: 'https')
                  })
       rescue Faraday::Error => e
-        Rails.logger.error(status: e.response_status)
-        Rails.logger.error(body: e.response_body)
+        Rails.logger.error(e)
         raise
       end
     end
