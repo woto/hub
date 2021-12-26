@@ -4,20 +4,22 @@
 #
 # Table name: mentions
 #
-#  id             :bigint           not null, primary key
-#  entities_count :integer          default(0), not null
-#  html           :text
-#  image_data     :jsonb
-#  kinds          :jsonb            not null
-#  published_at   :datetime
-#  sentiments     :jsonb
-#  title          :string
-#  topics_count   :integer          default(0), not null
-#  url            :text
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  hostname_id    :bigint
-#  user_id        :bigint           not null
+#  id                :bigint           not null, primary key
+#  entities_count    :integer          default(0), not null
+#  html              :text
+#  image_data        :jsonb
+#  kinds             :jsonb            not null
+#  metadata_iframely :jsonb
+#  metadata_yandex   :jsonb
+#  published_at      :datetime
+#  sentiments        :jsonb
+#  title             :string
+#  topics_count      :integer          default(0), not null
+#  url               :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  hostname_id       :bigint
+#  user_id           :bigint           not null
 #
 # Indexes
 #
@@ -70,7 +72,7 @@ class Mention < ApplicationRecord
     items = items.uniq { |obj| obj['id'] }
     entities_mentions = []
     items.each do |value|
-      entities_mention = EntitiesMention.find_or_initialize_by(mention_id: self.id.to_i, entity_id: value['id'].to_i)
+      entities_mention = EntitiesMention.find_or_initialize_by(mention_id: id.to_i, entity_id: value['id'].to_i)
       entities_mention.is_main = ActiveModel::Type::Boolean.new.cast(value['is_main'])
       entities_mentions << entities_mention
     end

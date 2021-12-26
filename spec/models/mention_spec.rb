@@ -4,20 +4,22 @@
 #
 # Table name: mentions
 #
-#  id             :bigint           not null, primary key
-#  entities_count :integer          default(0), not null
-#  html           :text
-#  image_data     :jsonb
-#  kinds          :jsonb            not null
-#  published_at   :datetime
-#  sentiments     :jsonb
-#  title          :string
-#  topics_count   :integer          default(0), not null
-#  url            :text
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  hostname_id    :bigint
-#  user_id        :bigint           not null
+#  id                :bigint           not null, primary key
+#  entities_count    :integer          default(0), not null
+#  html              :text
+#  image_data        :jsonb
+#  kinds             :jsonb            not null
+#  metadata_iframely :jsonb
+#  metadata_yandex   :jsonb
+#  published_at      :datetime
+#  sentiments        :jsonb
+#  title             :string
+#  topics_count      :integer          default(0), not null
+#  url               :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  hostname_id       :bigint
+#  user_id           :bigint           not null
 #
 # Indexes
 #
