@@ -2,6 +2,8 @@ const express = require('express')
 const puppeteer = require('puppeteer');
 var cors = require('cors');
 // import url from 'url';
+var { Readability } = require('@mozilla/readability');
+var { JSDOM } = require('jsdom');
 
 const app = express()
 app.use(cors())
@@ -18,21 +20,21 @@ function delay(ms) {
 }
 
 async function takeScreenshotWithDelay(page) {
-    await delay(100)
+    await delay(3000)
     try {
         return await page.screenshot({
             encoding: "base64",
             captureBeyondViewport: false
         })
     } catch (e) {
-        throw Error('failed to take a screenshot')
+        throw Error('Failed to take a screenshot')
     }
 }
 
 app.get('/screenshot', async (request, response) => {
 
     const browser = await puppeteer.launch({
-        dumpio: true,
+        // dumpio: true,
         defaultViewport: {width: 1280, height: 1280},
         // headless: false,
         args: [
@@ -64,20 +66,29 @@ app.get('/screenshot', async (request, response) => {
 
         try {
             // await page.goto(urlString);
-            await page.goto(urlString);
-            await page.goto(urlString, {waitUntil: "networkidle2"});
+            // await page.goto(urlString);
+            let response = await page.goto(urlString, {waitUntil: "networkidle2", timeout: 60000});
+            if(!response.ok()) {
+              throw Error('Response is not successfull')
+            }
         } catch (e) {
-            throw Error('unable to goto to the url')
+            throw Error('Unable to goto to the url')
         }
 
         const image = await takeScreenshotWithDelay(page);
         const html = await page.content();
+
+        var doc = new JSDOM(html, {url: urlString});
+        let reader = new Readability(doc.window.document);
+        let article = reader.parse();
+
         const title = await page.title();
 
         response.send({
             image: `data:image/png;base64, ${image}`,
             html: html,
-            title: title
+            title: title,
+            article: article
         })
     } catch (e) {
         console.error(e);
