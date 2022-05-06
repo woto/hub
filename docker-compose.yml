@@ -135,6 +135,7 @@ services:
     environment:
       - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
       - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/volume/
+      - IMGPROXY_ALLOW_ORIGIN=*
     volumes:
       - ./docker/imgproxy:/volume/
     ports:
