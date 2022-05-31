@@ -202,8 +202,11 @@ gem 'mini_magick', '~> 4.10'
 # Graph visualization
 gem 'ruby-graphviz'
 
+
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
+gem "rack-cors"
+
 # Deprecated
 gem 'action-cable-testing'
 gem 'numbers_and_words'
-gem 'rack-cors'
 gem 'rails-controller-testing'
