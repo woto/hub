@@ -1,0 +1,3 @@
+[submodule "docker/iframely"]
+	path = docker/iframely
+	url = https://github.com/itteco/iframely
