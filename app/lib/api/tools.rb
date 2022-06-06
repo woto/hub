@@ -32,14 +32,16 @@ module API
         CLD.detect_language(params[:text]).stringify_keys
       end
 
-      desc 'Extract metadata from the page using iframely.com'
+      desc 'Extract metadata from the page using iframely.com' do
+        security [{ api_key: [] }]
+      end
 
       params do
         requires :url, type: String, desc: 'Page URL'
       end
 
       get :iframely do
-        Extractors::Iframely.call(url: params[:url]).object
+        Extractors::Metadata::Iframely.call(url: params[:url]).object
       end
 
       desc 'Take screenshot of passed website'
