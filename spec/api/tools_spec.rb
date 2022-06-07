@@ -62,7 +62,7 @@ describe API::Tools, type: :request do
 
   describe 'GET /api/tools/iframely' do
     it 'returns iframely extracted metadata' do
-      stub_request(:get, 'https://iframe.ly/api/iframely?api_key=iframely_key_value&url=https://example.com')
+      stub_request(:get, 'http://localhost:8061/iframely?url=https://example.com')
         .to_return(status: 200, body: { a: 'b' }.to_json, headers: {})
 
       get '/api/tools/iframely', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
@@ -185,7 +185,7 @@ describe API::Tools, type: :request do
       it 'returns json response' do
         faraday = Faraday.new
         expect(faraday).to receive(:get).and_raise(Faraday::TimeoutError)
-        expect_any_instance_of(Interactors::Tools::ScrapeWebpage).to receive(:connection).and_return(faraday)
+        expect_any_instance_of(Extractors::Metadata::Scrapper).to receive(:connection).and_return(faraday)
 
         get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'http://ya.ru' }
         expect(JSON.parse(response.body)).to eq({ 'error' => 'timeout' })

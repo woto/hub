@@ -51,9 +51,7 @@ module API
       end
 
       get :scrape_webpage do
-        result = Interactors::Tools::ScrapeWebpage.call(url: params[:url]).object
-        status result[:status]
-        body result[:body]
+        Extractors::Metadata::Scrapper.call(url: params[:url]).object
       end
     end
   end

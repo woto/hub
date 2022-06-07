@@ -5,33 +5,25 @@ var cors = require('cors');
 var { Readability } = require('@mozilla/readability');
 var { JSDOM } = require('jsdom');
 
-const app = express()
-app.use(cors())
-
-// app.get('/', function (req, res) {
-//   console.log(req.body)
-//   res.send('Hello World!')
-// })
-
-function delay(ms) {
-    return new Promise((resolve, reject) => {
-        setTimeout(resolve, ms);
-    });
-}
-
-async function takeScreenshotWithDelay(page) {
-    await delay(3000)
-    try {
-        return await page.screenshot({
-            encoding: "base64",
-            captureBeyondViewport: false
-        })
-    } catch (e) {
-        throw Error('Failed to take a screenshot')
-    }
-}
-
 (async () => {
+
+  const app = express()
+  app.use(cors())
+
+  function delay(ms) {
+      return new Promise((resolve, reject) => {
+          setTimeout(resolve, ms);
+      });
+  }
+
+  async function takeScreenshotWithDelay(page) {
+      await delay(3000);
+
+      return await page.screenshot({
+          encoding: "base64",
+          captureBeyondViewport: false
+      })
+  }
 
   const browser = await puppeteer.launch({
       // dumpio: true,
@@ -50,13 +42,11 @@ async function takeScreenshotWithDelay(page) {
   })
 
   app.get('/screenshot', async (request, response) => {
-
-      const page = await browser.newPage();
+      const context = await browser.createIncognitoBrowserContext();
+      const page = await context.newPage();
 
       try {
           const urlString = request.query.url
-
-          const url = new URL(urlString);
 
           await page.setExtraHTTPHeaders({
               'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
@@ -66,15 +56,10 @@ async function takeScreenshotWithDelay(page) {
               'accept-language': 'en-US,en;q=0.9,en;q=0.8'
           })
 
-          try {
-              let response = await page.goto(urlString);
-              // let response = await page.goto(urlString, {waitUntil: "networkidle2", timeout: 60000});
-              if(!response.ok()) {
-                throw Error('Response is not successfull')
-              }
-          } catch (e) {
-              console.error(e);
-              throw Error('Unable to goto to the url')
+          let result = await page.goto(urlString, {waitUntil: "networkidle2", timeout: 30000});
+
+          if(!result.ok()) {
+            throw Error('Response is not successfull')
           }
 
           const image = await takeScreenshotWithDelay(page);
@@ -95,15 +80,15 @@ async function takeScreenshotWithDelay(page) {
               article: article
           })
       } catch (e) {
-          // console.error(e);
           console.error(`failed ${request.query.url}`);
           response.status(400);
           response.send({error: e.message})
       } finally {
-          await page.close();
+          await context.close();
       }
   })
+
+  app.listen(4000)
 })();
 
 
-app.listen(4000)
