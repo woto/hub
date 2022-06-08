@@ -56,6 +56,18 @@ module API
       get :scrape_webpage do
         Extractors::Metadata::Scrapper.call(url: params[:url]).object
       end
+
+      desc 'Search for npmjs.org' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :npmjs do
+        Extractors::NpmjsCom::Suggestions.call(q: params[:q]).object
+      end
     end
   end
 end

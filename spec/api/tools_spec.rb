@@ -194,4 +194,36 @@ describe API::Tools, type: :request do
       end
     end
   end
+
+  describe 'GET /api/tools/npmjs' do
+    it 'returns npmjs packages list' do
+      stub_request(:get, 'https://www.npmjs.com/search/suggestions?q=npmjs&size=20')
+        .to_return(status: 200, body: { npmjs: 'npmjs' }.to_json, headers: {})
+
+      get '/api/tools/npmjs', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'npmjs' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ 'npmjs' => 'npmjs' })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/npmjs',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/npmjs',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+                                               'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+                                             )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
