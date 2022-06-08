@@ -226,4 +226,37 @@ describe API::Tools, type: :request do
       end
     end
   end
+
+  describe 'GET /api/tools/rubygems' do
+    it 'returns rubygems gems list' do
+      stub_request(:get, 'https://rubygems.org/api/v1/search.json?query=rails')
+        .to_return(status: 200, body: { rails: 'rails' }.to_json, headers: {})
+
+      get '/api/tools/rubygems', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'rails' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ 'rails' => 'rails' })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/rubygems',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/rubygems',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+                                               'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+                                             )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
 end
