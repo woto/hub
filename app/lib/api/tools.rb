@@ -10,6 +10,7 @@ module API
 
       desc 'Extract metadata from the page using yandex.com' do
         consumes ['multipart/form-data']
+        security [{ api_key: [] }]
       end
 
       params do
@@ -19,10 +20,12 @@ module API
       end
 
       post :yandex do
-        Extractors::Yandex.call(url: params[:url], html: params[:html]).object
+        Extractors::Metadata::Yandex.call(url: params[:url], html: params[:html]).object
       end
 
-      desc 'Detect a language of passed string'
+      desc 'Detect a language of passed string' do
+        security [{ api_key: [] }]
+      end
 
       params do
         requires :text, type: String, desc: 'Detected string'
