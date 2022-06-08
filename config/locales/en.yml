@@ -813,6 +813,8 @@ en:
         intro: Intro
         kind: Kind
         kinds: Kinds
+        metadata_iframely: Metadata iframely
+        metadata_yandex: Metadata yandex
         published_at: Published at
         publisher_ext_id: Publisher ext
         screenshot: Screenshot

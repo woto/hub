@@ -2,6 +2,8 @@
 
 # Absolutely all application controllers should inherit from this class!
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :null_session
+
   rescue_from ActiveRecord::RecordNotFound, with: :render_404 unless Rails.env.development?
   rescue_from Pundit::NotAuthorizedError, with: :render_403 unless Rails.env.development?
 

@@ -823,6 +823,8 @@ ru:
         intro: Вступление
         kind: Kind
         kinds: Тип упоминания
+        metadata_iframely: Metadata iframely
+        metadata_yandex: Metadata yandex
         published_at: Дата публикации
         publisher_ext_id: Автор
         screenshot: Скриншот

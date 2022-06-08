@@ -28,7 +28,7 @@ class TurboController < ApplicationController
   end
 
   self.responder = Responder
-  respond_to :html, :turbo_stream
+  respond_to :html, :turbo_stream, :json
 end
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
