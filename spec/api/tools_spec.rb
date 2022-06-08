@@ -220,8 +220,8 @@ describe API::Tools, type: :request do
         get '/api/tools/npmjs',
             headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
         expect(JSON.parse(response.body)).to eq(
-                                               'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-                                             )
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -252,11 +252,10 @@ describe API::Tools, type: :request do
         get '/api/tools/rubygems',
             headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
         expect(JSON.parse(response.body)).to eq(
-                                               'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-                                             )
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
         expect(response).to have_http_status(:unauthorized)
       end
     end
   end
-
 end
