@@ -80,6 +80,18 @@ module API
       get :npmjs do
         Extractors::NpmjsCom::Suggestions.call(q: params[:q]).object
       end
+
+      desc 'Search Google Graph' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :google_graph do
+        Extractors::GoogleCom::Graph.call(q: params[:q]).object
+      end
     end
   end
 end
