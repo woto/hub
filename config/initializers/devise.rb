@@ -13,6 +13,9 @@ class TurboFailureApp < Devise::FailureApp
 end
 
 class TurboController < ApplicationController
+  # protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
+
   class Responder < ActionController::Responder
     def to_turbo_stream
       controller.render(options.merge(formats: :html))

@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   end
 
   scope '(:locale)', constraints: LocalesConstraint.new do
+
     devise_for :users,
                path: 'auth',
                path_names: {

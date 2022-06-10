@@ -29,6 +29,7 @@ module API
     mount Mentions
     mount Posts
     mount Entities
+    mount Me
 
     add_swagger_documentation(
       {
