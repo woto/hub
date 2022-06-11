@@ -324,37 +324,53 @@ describe API::Tools, type: :request do
   end
 
   describe 'GET /api/tools/telegram' do
-    it 'returns data from t.me' do
-      body = <<~HERE
-        <div class="tgme_page">
-          <div class="tgme_page_photo">
-            <a href="tg://resolve?domain=roastme_bot">
-              <img class="tgme_page_photo_image" src="https://example.com/image.png">
-            </a>
+    shared_examples_for 'successful response from t.me' do
+      let(:body) do
+        <<~HERE
+          <div class="tgme_page">
+            <div class="tgme_page_photo">
+              <a href="tg://resolve?domain=roastme_bot">
+                <img class="tgme_page_photo_image" src="https://example.com/image.png">
+              </a>
+            </div>
+            <div class="tgme_page_title">
+              <span dir="auto">roastme.ru</span>
+            </div>
+            <div class="tgme_page_extra">
+              @roastme_bot
+            </div>
+            <div class="tgme_page_description ">Занимаюсь получением и каталогизированием упоминаний.</div>
           </div>
-          <div class="tgme_page_title">
-            <span dir="auto">roastme.ru</span>
-          </div>
-          <div class="tgme_page_extra">
-            @roastme_bot
-          </div>
-          <div class="tgme_page_description ">Занимаюсь получением и каталогизированием упоминаний.</div>
-        </div>
-      HERE
+        HERE
+      end
 
-      stub_request(:get, 'https://t.me/telegram')
-        .to_return(status: 200, body: body, headers: {})
+      it 'returns successful response from t.me' do
+        stub_request(:get, 'https://t.me/telegram')
+          .to_return(status: 200, body: body, headers: {})
 
-      get '/api/tools/telegram', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'telegram' }
+        get '/api/tools/telegram', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: q }
 
-      expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq(
-        'description' => 'Занимаюсь получением и каталогизированием упоминаний.',
-        'image' => 'https://example.com/image.png',
-        'kind' => 'telegram_bot',
-        'label' => 'telegram',
-        'title' => 'roastme.ru'
-      )
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(
+          'description' => 'Занимаюсь получением и каталогизированием упоминаний.',
+          'image' => 'https://example.com/image.png',
+          'kind' => 'telegram_bot',
+          'label' => 'telegram',
+          'title' => 'roastme.ru'
+        )
+      end
+    end
+
+    context 'when requests url' do
+      let(:q) { 'https://t.me/telegram' }
+
+      it_behaves_like 'successful response from t.me'
+    end
+
+    context 'when requests label' do
+      let(:q) { 'telegram' }
+
+      it_behaves_like 'successful response from t.me'
     end
 
     context 'when user is not authorized' do

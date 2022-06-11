@@ -14,7 +14,7 @@ module API
       end
 
       params do
-        requires :q, type: String, desc: 'query string'
+        requires :q, type: String, desc: 'Full url like https://t.me/roastme_bot or roastme_bot'
       end
 
       get :telegram do

@@ -15,7 +15,7 @@ module Extractors
         end
 
         res = begin
-          conn.get("https://t.me/#{context.label}")
+          conn.get("https://t.me/#{label}")
         rescue Faraday::Error => e
           Rails.logger.error(e)
           fail!(message: e.message)
@@ -54,11 +54,21 @@ module Extractors
 
         context.object = {
           **specific_fields,
-          label: context.label,
+          label: label,
           title: title,
           description: description,
           image: image
         }
+      end
+
+      def label
+        uri = URI.parse(context.label)
+
+        if uri.host && %w[http https].include?(uri.scheme)
+          uri.path[1..]
+        else
+          context.label
+        end
       end
     end
   end
