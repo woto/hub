@@ -290,4 +290,36 @@ describe API::Tools, type: :request do
       end
     end
   end
+
+  describe 'GET /api/tools/yandex_xml' do
+    it 'returns data from Yandex XML' do
+      stub_request(:get, 'https://yandex.ru/search/xml?filter=none&groupby=attr=%22%22.mode=flat.groups-on-page=10.docs-in-group=1&key=yandex_xml_key_value&l10n=ru&maxpassages=5&query=yandex-xml&sortby=rlv&user=yandex_xml_user_value')
+        .to_return(status: 200, body: '<yandex_xml>yandex_xml</yandex_xml>', headers: {})
+
+      get '/api/tools/yandex_xml', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'yandex-xml' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ 'yandex_xml' => 'yandex_xml' })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/yandex_xml',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/yandex_xml',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end

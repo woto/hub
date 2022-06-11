@@ -92,6 +92,18 @@ module API
       get :google_graph do
         Extractors::GoogleCom::Graph.call(q: params[:q]).object
       end
+
+      desc 'Search Yandex XML' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :yandex_xml do
+        Extractors::YandexRu::Xml.call(q: params[:q]).object
+      end
     end
   end
 end
