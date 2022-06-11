@@ -3,6 +3,10 @@
 class ImageUploader < Shrine
   plugin :store_dimensions
   plugin :keep_files
+  plugin :data_uri
+  plugin :infer_extension
+  plugin :remote_url, max_size: 20*1024*1024
+
   # plugin :refresh_metadata
   # plugin :atomic_helpers
 
