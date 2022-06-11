@@ -9,6 +9,18 @@ module API
 
     resource :tools do
 
+      desc 'Retrieve data from t.me' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :telegram do
+        Extractors::TMe::ChannelOrChatOrBot.call(label: params[:q]).object
+      end
+
       desc 'Search rubygems.org' do
         security [{ api_key: [] }]
       end

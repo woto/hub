@@ -322,4 +322,59 @@ describe API::Tools, type: :request do
       end
     end
   end
+
+  describe 'GET /api/tools/telegram' do
+    it 'returns data from t.me' do
+      body = <<~HERE
+        <div class="tgme_page">
+          <div class="tgme_page_photo">
+            <a href="tg://resolve?domain=roastme_bot">
+              <img class="tgme_page_photo_image" src="https://example.com/image.png">
+            </a>
+          </div>
+          <div class="tgme_page_title">
+            <span dir="auto">roastme.ru</span>
+          </div>
+          <div class="tgme_page_extra">
+            @roastme_bot
+          </div>
+          <div class="tgme_page_description ">Занимаюсь получением и каталогизированием упоминаний.</div>
+        </div>
+      HERE
+
+      stub_request(:get, 'https://t.me/telegram')
+        .to_return(status: 200, body: body, headers: {})
+
+      get '/api/tools/telegram', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'telegram' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq(
+        'description' => 'Занимаюсь получением и каталогизированием упоминаний.',
+        'image' => 'https://example.com/image.png',
+        'kind' => 'telegram_bot',
+        'label' => 'telegram',
+        'title' => 'roastme.ru'
+      )
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/telegram',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/telegram',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
