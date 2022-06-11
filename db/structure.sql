@@ -1005,6 +1005,39 @@ ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
 
 
 --
+-- Name: images; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.images (
+    id bigint NOT NULL,
+    imageable_type character varying NOT NULL,
+    imageable_id bigint NOT NULL,
+    image_data jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.images_id_seq OWNED BY public.images.id;
+
+
+--
 -- Name: lookups; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1741,6 +1774,13 @@ ALTER TABLE ONLY public.identities ALTER COLUMN id SET DEFAULT nextval('public.i
 
 
 --
+-- Name: images id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images ALTER COLUMN id SET DEFAULT nextval('public.images_id_seq'::regclass);
+
+
+--
 -- Name: lookups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2010,6 +2050,14 @@ ALTER TABLE ONLY public.hostnames
 
 ALTER TABLE ONLY public.identities
     ADD CONSTRAINT identities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT images_pkey PRIMARY KEY (id);
 
 
 --
@@ -2335,6 +2383,13 @@ CREATE INDEX index_feeds_on_advertiser_id ON public.feeds USING btree (advertise
 --
 
 CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_id);
+
+
+--
+-- Name: index_images_on_imageable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_images_on_imageable ON public.images USING btree (imageable_type, imageable_id);
 
 
 --
@@ -3008,6 +3063,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211222201548'),
 ('20211224052330'),
 ('20211224201618'),
-('20211225211808');
+('20211225211808'),
+('20220101091456');
 
 
