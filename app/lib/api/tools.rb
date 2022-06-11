@@ -5,6 +5,7 @@ require_relative 'validations/url'
 module API
   class Tools < ::Grape::API
     prefix :api
+    auth :api_key
 
     resource :tools do
 
@@ -59,7 +60,9 @@ module API
         Extractors::Metadata::Iframely.call(url: params[:url]).object
       end
 
-      desc 'Take screenshot of passed website'
+      desc 'Take screenshot of passed website' do
+        security [{ api_key: [] }]
+      end
 
       params do
         requires :url, type: String, url: true, desc: 'URL of website'

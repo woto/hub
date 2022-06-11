@@ -3,9 +3,12 @@
 module API
   class Mentions < ::Grape::API
     prefix :api
+    auth :api_key
 
     resource :mentions do
-      desc 'Autocomplete entities'
+      desc 'Autocomplete entities' do
+        security [{ api_key: [] }]
+      end
 
       params do
         requires :q, type: String, desc: 'Search string'
@@ -17,7 +20,9 @@ module API
         object
       end
 
-      desc 'Autocomplete urls'
+      desc 'Autocomplete urls' do
+        security [{ api_key: [] }]
+      end
 
       params do
         requires :q, type: String, desc: 'Search string'
@@ -29,7 +34,9 @@ module API
         object
       end
 
-      desc 'Autocomplete topics'
+      desc 'Autocomplete topics' do
+        security [{ api_key: [] }]
+      end
 
       params do
         requires :q, type: String, desc: 'Search string'

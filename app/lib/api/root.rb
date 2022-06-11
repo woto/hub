@@ -23,7 +23,7 @@ module API
     end
 
     Grape::Middleware::Auth::Strategies.add(:api_key, APIKeyMiddleware)
-    auth :api_key
+    # auth :api_key
 
     mount Tools
     mount Mentions
@@ -34,7 +34,6 @@ module API
     add_swagger_documentation(
       {
         security_definitions: { api_key: { type: 'apiKey', name: 'api_key', in: 'header' } },
-        security: [{ api_key: [] }]
       }
     )
   end
