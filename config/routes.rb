@@ -5,6 +5,7 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
   mount API::Root => '/'
+  mount ImageUploader.upload_endpoint(:cache) => '/images/upload'
   mount ImageUploader.derivation_endpoint => '/derivations/image'
 
   # mount Yabeda::Prometheus::Exporter => "/metrics"
