@@ -134,6 +134,9 @@ gem 'grape-swagger'
 # gem 'grape-entity'
 # gem 'grape-swagger'
 
+# Github API
+gem 'octokit'
+
 # Sidekiq
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
@@ -142,7 +145,9 @@ gem 'activejob-uniqueness'
 
 # Views
 gem 'kaminari'
-gem 'redcarpet'
+# gem 'redcarpet'
+# gem 'github-markup'
+# gem 'commonmarker'
 gem 'simple_form'
 gem 'view_component'
 

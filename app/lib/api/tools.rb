@@ -8,13 +8,37 @@ module API
     auth :api_key
 
     resource :tools do
+      desc 'Search github.com' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'Full url like https://github.com/rails/rails or label like rails/rails'
+      end
+
+      get :github do
+        repo = params[:q]
+                 .gsub(/^https:\/\/github.com\//, '')
+                 .gsub(/^http:\/\/github.com\//, '')
+                 .gsub(/^http:\/\/www.github.com\//, '')
+                 .gsub(/^https:\/\/www.github.com\//, '')
+
+        repository = Extractors::GithubCom::Repository.call(repo: repo).object
+        readme = Extractors::GithubCom::Readme.call(repo: repo).object
+        result = Extractors::GithubCom::Absolutize.call(
+          readme_content: readme,
+          base_url: "https://github.com/#{repo}/raw/#{repository.fetch(:default_branch)}/"
+        ).object
+
+        { readme: result.to_s }
+      end
 
       desc 'Retrieve data from t.me' do
         security [{ api_key: [] }]
       end
 
       params do
-        requires :q, type: String, desc: 'Full url like https://t.me/roastme_bot or roastme_bot'
+        requires :q, type: String, desc: 'Full url like https://t.me/BotFather or label like BotFather'
       end
 
       get :telegram do
