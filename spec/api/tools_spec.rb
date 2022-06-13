@@ -393,4 +393,56 @@ describe API::Tools, type: :request do
       end
     end
   end
+
+  describe 'GET /api/tools/github' do
+    it 'returns readme from Github' do
+      stub_request(:get, 'https://api.github.com/repos/rails/rails')
+        .with(
+          headers: {
+            'Accept' => 'application/vnd.github.v3+json',
+            'Authorization' => 'token github_key_value'
+          }
+        )
+        .to_return(body: file_fixture('extractors/github/repository.json'),
+                   headers: { "Content-Type": 'application/json' })
+
+      stub_request(:get, 'https://api.github.com/repos/rails/rails/readme')
+        .with(
+          headers: {
+            'Accept' => 'application/vnd.github.html',
+            'Authorization' => 'token github_key_value'
+          }
+        )
+        .to_return(
+          body: file_fixture('extractors/github/readme.html'),
+          headers: { "Content-Type": 'application/vnd.github.html' }
+        )
+
+      get '/api/tools/github', headers: { 'HTTP_API_KEY' => user.api_key },
+                               params: { q: 'https://github.com/rails/rails' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to match({ 'readme' => include('Welcome to Rails') })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/github',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/github',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end

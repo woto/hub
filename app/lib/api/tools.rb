@@ -17,20 +17,7 @@ module API
       end
 
       get :github do
-        repo = params[:q]
-                 .gsub(/^https:\/\/github.com\//, '')
-                 .gsub(/^http:\/\/github.com\//, '')
-                 .gsub(/^http:\/\/www.github.com\//, '')
-                 .gsub(/^https:\/\/www.github.com\//, '')
-
-        repository = Extractors::GithubCom::Repository.call(repo: repo).object
-        readme = Extractors::GithubCom::Readme.call(repo: repo).object
-        result = Extractors::GithubCom::Absolutize.call(
-          readme_content: readme,
-          base_url: "https://github.com/#{repo}/raw/#{repository.fetch(:default_branch)}/"
-        ).object
-
-        { readme: result.to_s }
+        Extractors::GithubCom::Index.call(label: params[:q]).object
       end
 
       desc 'Retrieve data from t.me' do
