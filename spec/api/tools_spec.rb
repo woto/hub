@@ -352,7 +352,7 @@ describe API::Tools, type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to eq(
-          'description' => 'Занимаюсь получением и каталогизированием упоминаний.',
+          'description' => '<div>Занимаюсь получением и каталогизированием упоминаний.</div>',
           'image' => 'https://example.com/image.png',
           'kind' => 'telegram_bot',
           'label' => 'telegram',

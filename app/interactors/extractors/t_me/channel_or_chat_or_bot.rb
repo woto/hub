@@ -50,7 +50,7 @@ module Extractors
 
         title = doc.css('.tgme_page_title span').text
         description_html = doc.css('.tgme_page_description').to_html
-        description_html = Loofah.fragment(description_html).scrub!(:strip).to_html
+        description_html = Loofah.fragment(description_html).scrub!(:whitewash).to_html
         image = doc.css('.tgme_page_photo_image').attr('src')&.value
 
         context.object = {
