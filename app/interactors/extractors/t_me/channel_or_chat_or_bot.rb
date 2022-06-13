@@ -49,14 +49,15 @@ module Extractors
                           end
 
         title = doc.css('.tgme_page_title span').text
-        description = doc.css('.tgme_page_description').text
+        description_html = doc.css('.tgme_page_description').to_html
+        description_html = Loofah.fragment(description_html).scrub!(:strip).to_html
         image = doc.css('.tgme_page_photo_image').attr('src')&.value
 
         context.object = {
           **specific_fields,
           label: label,
           title: title,
-          description: description,
+          description: description_html,
           image: image
         }
       end
