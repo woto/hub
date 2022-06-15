@@ -19,7 +19,7 @@ module Extractors
 
         # NOTE: https://developers.google.com/youtube/v3/guides/working_with_channel_ids
         context.object = youtube.list_channels(
-          'id,localizations,snippet,statistics,status,topicDetails',
+          'brandingSettings,contentDetails,contentOwnerDetails,id,localizations,snippet,statistics,status,topicDetails',
           for_username: context.for_username,
           id: context.id,
           # type: 'channel',
