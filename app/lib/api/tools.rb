@@ -44,6 +44,18 @@ module API
         Extractors::RubygemsOrg::Search.call(q: params[:q]).object
       end
 
+      desc 'Search youtube.com' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :youtube do
+        Extractors::YoutubeCom::Index.call(q: params[:q]).object
+      end
+
       desc 'Extract metadata from the page using yandex.com' do
         consumes ['multipart/form-data']
         security [{ api_key: [] }]

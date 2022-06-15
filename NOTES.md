@@ -1,3 +1,4 @@
+
 ```ruby
         image = data.delete('image')
         info.assign_attributes(
@@ -145,4 +146,8 @@ shared_examples 'shared_hostname_new' do
     end
   end
 end
+```
+
+```ruby
+h[:images] = [Image.new(image_remote_url: image)] if image
 ```

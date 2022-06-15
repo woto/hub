@@ -127,6 +127,7 @@ gem 'spreadsheet'
 # gem 'google-apis-core'
 # gem 'google-auth-library-ruby'
 gem 'google-apis-indexing_v3'
+gem 'google-apis-youtube_v3'
 
 # Grape
 gem 'grape'
