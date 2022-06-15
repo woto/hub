@@ -7,6 +7,13 @@ module Tableable
     def get_index(additional_columns, **query_class_params)
       authorize(@settings[:singular])
 
+      if params[:favorite_id]
+        @favorite = policy_scope(Favorite.send(@settings[:plural])).find(params[:favorite_id])
+        favorite_ids = @favorite.favorites_items.send(@settings[:plural]).pluck('ext_id')
+        # NOTE: we have to filter out all entries, because none of the items exists in favorite_ids.
+        # Later better do so the query even does not executes in elasticsearch.
+        favorite_ids = favorite_ids.presence || [-1]
+      end
 
       # TODO: security check filters
       context = {
@@ -17,6 +24,7 @@ module Tableable
         from: (@pagination_rule.page - 1) * @pagination_rule.per,
         size: @pagination_rule.per,
         filters: params[:filters] && params[:filters].permit!.to_h,
+        favorite_ids: favorite_ids,
         model: @settings[:singular],
         _source: @settings[:form_class].parsed_columns_for(self, request, current_user && current_user.role) + additional_columns,
       }.merge(query_class_params)

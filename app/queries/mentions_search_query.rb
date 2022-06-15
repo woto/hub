@@ -22,11 +22,19 @@ class MentionsSearchQuery
       json.query do
         json.bool do
           json.filter do
+
             Tables::Filters.call(
               json: json,
               model: context.model,
               filters: context.filters
             ).object
+
+            Tables::Favorites.call(
+              json: json,
+              model: context.model,
+              favorite_ids: context.favorite_ids
+            ).object
+
           end
 
           if context.q.present?

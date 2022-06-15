@@ -17,7 +17,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'offer star' do
@@ -29,7 +30,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
   end
 
@@ -47,7 +49,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'feed star' do
@@ -63,7 +66,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'offer star' do
@@ -75,7 +79,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
   end
 
@@ -93,7 +98,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'feed_category star' do
@@ -109,7 +115,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'offer star' do
@@ -121,7 +128,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
   end
 
@@ -139,7 +147,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'child feed_category star' do
@@ -158,7 +167,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
 
     describe 'offer star' do
@@ -170,7 +180,8 @@ describe Tables::OffersController, type: :system, responsible: :admin do
 
       it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
       it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-      it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites adding favorites_item to new favorite'
+      it_behaves_like 'shared favorites listing only favorites'
     end
   end
 end

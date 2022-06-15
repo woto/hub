@@ -2,6 +2,22 @@
 
 require 'rails_helper'
 
+shared_examples 'shared favorites listing only favorites' do
+  it 'works', focus: true do
+    favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
+    favorites_item = create(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
+
+    other_favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
+
+    login_as(Current.responsible, scope: :user)
+    visit polymorphic_path([favorite_kind], favorite_id: favorite.id)
+    expect(page).to have_button("favorite-#{favorites_item.kind}-#{favorites_item.ext_id}")
+
+    visit polymorphic_path([favorite_kind], favorite_id: other_favorite.id)
+    expect(page).not_to have_button("favorite-#{favorites_item.kind}-#{favorites_item.ext_id}")
+  end
+end
+
 shared_examples 'shared favorites removing favorites_item from exiting favorite' do
   it 'removes favorites_item from exiting favorite' do
     favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
@@ -80,7 +96,7 @@ shared_examples 'shared favorites adding favorites_item to exiting favorite' do
   end
 end
 
-shared_examples 'shared favorites creating adding favorites_item to new favorite' do
+shared_examples 'shared favorites adding favorites_item to new favorite' do
   it 'adds new favorites_item to new favorite' do
     favorite = build(:favorite, user: Current.responsible, kind: favorite_kind)
     favorites_item = build(:favorites_item, ext_id: ext_id, kind: favorites_item_kind)

@@ -14,5 +14,6 @@ describe Tables::ChecksController, type: :system, responsible: :admin do
 
   it_behaves_like 'shared favorites removing favorites_item from exiting favorite'
   it_behaves_like 'shared favorites adding favorites_item to exiting favorite'
-  it_behaves_like 'shared favorites creating adding favorites_item to new favorite'
+  it_behaves_like 'shared favorites adding favorites_item to new favorite'
+  it_behaves_like 'shared favorites listing only favorites'
 end
