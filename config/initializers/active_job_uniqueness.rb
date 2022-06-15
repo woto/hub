@@ -27,7 +27,7 @@ ActiveJob::Uniqueness.configure do |config|
   # Read more at https://github.com/leandromoreira/redlock-rb#redis-client-configuration
   #
   # config.redlock_servers = [ENV.fetch('REDIS_URL', 'redis://localhost:6379')]
-  config.redlock_servers = [Rails.application.config.redis.yield_self do |redis|
+  config.redlock_servers = [Rails.application.config.redis_cache.yield_self do |redis|
     "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
   end]
 

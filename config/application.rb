@@ -37,7 +37,8 @@ module Hub
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.redis = config_for(:redis)
+    config.redis_sidekiq = config_for(:redis_sidekiq)
+    config.redis_cache = config_for(:redis_cache)
     config.elastic = config_for(:elastic)
     config.prometheus = config_for(:prometheus)
     config.global = config_for(:global)
@@ -67,7 +68,7 @@ module Hub
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :redis_cache_store, {
-      url: Rails.application.config.redis.yield_self do |redis|
+      url: Rails.application.config.redis_cache.yield_self do |redis|
         "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
       end
     }

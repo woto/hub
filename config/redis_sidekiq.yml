@@ -1,0 +1,15 @@
+default: &default
+  host: <%= ENV['REDIS_HOST'] %>
+  port: <%= ENV['REDIS_PORT'] %>
+
+development:
+  <<: *default
+  db: 6
+
+test:
+  <<: *default
+  db: 7
+
+production:
+  <<: *default
+  db: 8

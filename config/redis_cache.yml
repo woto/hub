@@ -4,12 +4,12 @@ default: &default
 
 development:
   <<: *default
-  db: 0
+  db: 3
 
 test:
   <<: *default
-  db: 1
+  db: 4
 
 production:
   <<: *default
-  db: 2
+  db: 5
