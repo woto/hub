@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 shared_examples 'shared favorites listing only favorites' do
-  it 'works', focus: true do
+  it 'lists only favorites' do
     favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
     favorites_item = create(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
 
