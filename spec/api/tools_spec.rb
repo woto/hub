@@ -291,6 +291,38 @@ describe API::Tools, type: :request do
     end
   end
 
+  describe 'GET /api/tools/google_custom_search' do
+    it 'returns data from Google Custom Search' do
+      stub_request(:get, 'https://content-customsearch.googleapis.com/customsearch/v1?cx=google_custom_search_cx_key_value&key=google_custom_search_api_key&q=google-custom-search')
+        .to_return(status: 200, body: { 'google-custom-search' => 'google-custom-search' }.to_json, headers: {})
+
+      get '/api/tools/google_custom_search', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'google-custom-search' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ 'google-custom-search' => 'google-custom-search' })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/google_custom_search',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/google_custom_search',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe 'GET /api/tools/yandex_xml' do
     it 'returns data from Yandex XML' do
       stub_request(:get, 'https://yandex.ru/search/xml?filter=none&groupby=attr=%22%22.mode=flat.groups-on-page=10.docs-in-group=1&key=yandex_xml_key_value&l10n=ru&maxpassages=5&query=yandex-xml&sortby=rlv&user=yandex_xml_user_value')

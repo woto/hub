@@ -131,6 +131,18 @@ module API
         Extractors::GoogleCom::Graph.call(q: params[:q]).object
       end
 
+      desc 'Search Google Custom Search' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :google_custom_search do
+        Extractors::GoogleCom::CustomSearch.call(q: params[:q]).object
+      end
+
       format :txt
 
       desc 'Search Yandex XML' do
