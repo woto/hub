@@ -131,8 +131,11 @@ module API
         Extractors::GoogleCom::Graph.call(q: params[:q]).object
       end
 
+      format :txt
+
       desc 'Search Yandex XML' do
         security [{ api_key: [] }]
+        produces ['application/xml']
       end
 
       params do
@@ -140,6 +143,7 @@ module API
       end
 
       get :yandex_xml do
+        header 'Content-Type', 'application/xml'
         Extractors::YandexRu::Xml.call(q: params[:q]).object
       end
     end

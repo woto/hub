@@ -299,7 +299,7 @@ describe API::Tools, type: :request do
       get '/api/tools/yandex_xml', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'yandex-xml' }
 
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq({ 'yandex_xml' => 'yandex_xml' })
+      expect(response.body).to eq('<yandex_xml>yandex_xml</yandex_xml>')
     end
 
     context 'when user is not authorized' do
