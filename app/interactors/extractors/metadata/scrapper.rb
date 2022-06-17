@@ -6,11 +6,16 @@ module Extractors
       include ApplicationInteractor
 
       def call
-        url = URI::HTTP.build([nil, ENV.fetch('SCRAPPER_HOST'), ENV.fetch('SCRAPPER_PORT'),
-                               '/screenshot', "url=#{context.url}", nil])
+        begin
+          url = URI::HTTP.build([nil, ENV.fetch('SCRAPPER_HOST'), ENV.fetch('SCRAPPER_PORT'),
+                                 '/screenshot', "url=#{context.url}", nil])
 
-        result = connection.get(url)
-        context.object = result.body
+          result = connection.get(url)
+          context.object = result.body
+        rescue Faraday::Error => e
+          Rails.logger.error(e)
+          fail!(message: e.message)
+        end
       end
 
       private
