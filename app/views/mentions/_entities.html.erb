@@ -8,7 +8,7 @@
       <%= render Entities::CardComponent.new(
         entity_id: entity_mention.entity.id,
         is_main: entity_mention.is_main,
-        image: entity_mention.entity.image_hash,
+        image: GlobalHelper.image_hash(entity_mention.entity),
         title: entity_mention.entity.title,
         intro: entity_mention.entity.intro,
         lookups: entity_mention.entity.lookups.map(&:to_label),

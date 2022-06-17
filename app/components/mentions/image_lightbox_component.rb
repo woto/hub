@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Mentions::ImageLightboxComponent < ViewComponent::Base
-  def initialize(thumbnails:, original:, width:, height:, class:, size:)
+  def initialize(id:, thumbnails:, original:, width:, height:, class:, size:)
     super
     @thumbnails = thumbnails
     @original = original

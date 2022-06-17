@@ -42,7 +42,6 @@ class Mention < ApplicationRecord
   index_name "#{Rails.env}.mentions"
 
   include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
-  include ImageHash
   include Topicable
   include Hostnameable
   hostnameable attribute_name: :url
@@ -97,7 +96,7 @@ class Mention < ApplicationRecord
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,
-      image: image_hash,
+      image: GlobalHelper.image_hash(self),
       entity_ids: entity_ids,
       # TODO: Rails 7 in order of
       entities: entities_hash,

@@ -90,7 +90,7 @@
                 <dt class="col-sm-3"> <%= t('image') %> </dt>
                 <dd class="col-sm-9">
                   <%= render Mentions::ImageLightboxComponent.new(
-                    **@entity.image_hash,
+                    **GlobalHelper.image_hash(@entity),
                     class: 'img-thumbnail bg-white',
                     size: '100'
                   ) %>

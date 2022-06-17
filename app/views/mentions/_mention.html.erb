@@ -3,7 +3,7 @@
 
     <div class="position-relative">
       <%= render Mentions::ImageLightboxComponent.new(
-        **mention.image_hash,
+        **GlobalHelper.image_hash(mention),
         class: 'card-img-top',
         size: '500'
       ) %>

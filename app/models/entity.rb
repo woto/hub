@@ -36,7 +36,6 @@ class Entity < ApplicationRecord
   index_name "#{Rails.env}.entities"
 
   include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
-  include ImageHash
   include Topicable
   include Hostnameable
   hostnameable attribute_name: :title
@@ -79,7 +78,7 @@ class Entity < ApplicationRecord
       lookups_count: lookups_count,
       topics: topics.map(&:to_label),
       topics_count: topics_count,
-      image: image_hash,
+      image: GlobalHelper.image_hash(self),
       user_id: user_id,
       created_at: created_at,
       updated_at: updated_at,

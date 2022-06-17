@@ -7,6 +7,32 @@ class GlobalHelper
   GROUP_LIMIT = 1000
 
   class << self
+    def image_hash(object)
+      empty_image = {
+        '50' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png'),
+        '100' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-100.png'),
+        '200' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-200.png'),
+        '300' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-300.png'),
+        '500' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-500.png'),
+        '1000' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-1000.png')
+      }
+
+      {
+        id: object.id,
+        original: object.image ? object.image_url : empty_image['50'],
+        thumbnails: {
+          '50' => object.image ? object.image.derivation_url(:thumbnail, 50, 50) : empty_image['50'],
+          '100' => object.image ? object.image.derivation_url(:thumbnail, 100, 100) : empty_image['100'],
+          '200' => object.image ? object.image.derivation_url(:thumbnail, 200, 200) : empty_image['200'],
+          '300' => object.image ? object.image.derivation_url(:thumbnail, 300, 300) : empty_image['300'],
+          '500' => object.image ? object.image.derivation_url(:thumbnail, 500, 500) : empty_image['500'],
+          '1000' => object.image ? object.image.derivation_url(:thumbnail, 1000, 1000) : empty_image['1000']
+        },
+        width: object.image ? object.image.metadata['width'] : 50,
+        height: object.image ? object.image.metadata['height'] : 50
+      }
+    end
+
     def class_configurator(model)
       { singular: model.to_s.singularize.to_sym,
         plural: model.to_s.pluralize.to_sym,
