@@ -5,13 +5,13 @@ require 'rails_helper'
 describe API::Tools, type: :request do
   let!(:user) { create(:user) }
 
-  describe 'GET /api/tools/yandex' do
+  describe 'GET /api/tools/yandex_microdata' do
     context 'with url parameter' do
       it 'returns yandex extracted metadata' do
         stub_request(:get, 'https://validator-api.semweb.yandex.ru/v1.1/url_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true&url=https://example.com')
           .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: {})
 
-        post '/api/tools/yandex', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
+        post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
 
         expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to eq({ 'a' => 'b' })
@@ -23,7 +23,7 @@ describe API::Tools, type: :request do
         stub_request(:post, 'https://validator-api.semweb.yandex.ru/v1.1/document_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true')
           .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: {})
 
-        post '/api/tools/yandex', headers: { 'HTTP_API_KEY' => user.api_key }, params: { html: '<html></html>' }
+        post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key }, params: { html: '<html></html>' }
 
         expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to eq({ 'a' => 'b' })
@@ -32,7 +32,7 @@ describe API::Tools, type: :request do
 
     context 'when user is not authorized' do
       it 'returns error' do
-        get '/api/tools/yandex',
+        get '/api/tools/yandex_microdata',
             headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
         expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
         expect(response).to have_http_status(:unauthorized)
@@ -41,7 +41,7 @@ describe API::Tools, type: :request do
 
     context 'when API key is incorrect' do
       it 'returns error' do
-        get '/api/tools/yandex',
+        get '/api/tools/yandex_microdata',
             headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
         expect(JSON.parse(response.body)).to eq(
           'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'

@@ -56,21 +56,6 @@ module API
         Extractors::YoutubeCom::Index.call(q: params[:q]).object
       end
 
-      desc 'Extract metadata from the page using yandex.com' do
-        consumes ['multipart/form-data']
-        security [{ api_key: [] }]
-      end
-
-      params do
-        optional :html, type: String, desc: 'Html content of the page' #, documentation: { in: 'body' }
-        optional :url, type: String, desc: 'Page URL' #, documentation: { in: 'body' }
-        exactly_one_of :html, :url
-      end
-
-      post :yandex do
-        Extractors::Metadata::Yandex.call(url: params[:url], html: params[:html]).object
-      end
-
       desc 'Detect a language of passed string' do
         security [{ api_key: [] }]
       end
@@ -144,6 +129,21 @@ module API
 
       get :google_custom_search do
         Extractors::GoogleCom::CustomSearch.call(q: params[:q]).object
+      end
+
+      desc 'Extract metadata from the page using yandex.com' do
+        consumes ['multipart/form-data']
+        security [{ api_key: [] }]
+      end
+
+      params do
+        optional :html, type: String, desc: 'Html content of the page'
+        optional :url, type: String, desc: 'Page URL'
+        exactly_one_of :html, :url
+      end
+
+      post :yandex_microdata do
+        Extractors::YandexRu::Microdata.call(url: params[:url], html: params[:html]).object
       end
 
       format :txt

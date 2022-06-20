@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Extractors
-  module Metadata
-    class Yandex
+  module YandexRu
+    class Microdata
       include ApplicationInteractor
       include Rails.application.routes.url_helpers
 
