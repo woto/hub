@@ -17,7 +17,7 @@ module API
       end
 
       get :github do
-        Extractors::GithubCom::Index.call(label: params[:q]).object
+        Extractors::GithubCom::Index.call(q: params[:q]).object
       end
 
       desc 'Retrieve data from t.me' do

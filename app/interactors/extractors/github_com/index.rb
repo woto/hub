@@ -5,27 +5,34 @@ module Extractors
     class Index
       include ApplicationInteractor
 
+      class WrongRepoError < StandardError; end
+
       def call
-        repository = Extractors::GithubCom::Repository.call(repo: label).object
-        readme = Extractors::GithubCom::Readme.call(repo: label).object
+        repository = Extractors::GithubCom::Repository.call(repo: repo).object
+        readme = Extractors::GithubCom::Readme.call(repo: repo).object
         result = Extractors::GithubCom::Absolutize.call(
           readme_content: readme,
-          base_url: "https://github.com/#{label}/raw/#{repository.fetch(:default_branch)}/"
+          base_url: "https://github.com/#{repo}/raw/#{repository.fetch(:default_branch)}/"
         ).object
 
         context.object = { readme: result.to_s }
+      rescue WrongRepoError
+        context.object = { repos: GithubCom::Search.call(q: context.q).object }
       end
 
-      def label
-        uri = URI.parse(context.label)
+      def repo
+        uri = URI.parse(context.q)
 
-        label = if uri.host && %w[http https].include?(uri.scheme)
-                  uri.path[1..]
-                else
-                  context.label
-                end
+        result = if uri.host && %w[http https].include?(uri.scheme)
+                   uri.path[1..]
+                 else
+                   context.q
+                 end
 
-        label.split('/').compact_blank.join('/')
+        result = result.split('/').compact_blank
+        raise WrongRepoError if result.length != 2
+
+        result.join('/')
       end
     end
   end
