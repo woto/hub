@@ -10,12 +10,18 @@ describe Extractors::GithubCom::Index do
 
     before do
       expect(Extractors::GithubCom::Search).to(
-        receive(:call).with(q: 'rails').and_return(repos)
+        receive(:call).with(q: q).and_return(repos)
       )
     end
 
-    context 'when q is rails' do
+    context 'when `q` is a `rails`' do
       let(:q) { 'rails' }
+
+      specify { expect { subject }.not_to raise_error }
+    end
+
+    context 'when `q` is a `ruby on rails`' do
+      let(:q) { 'ruby on rails' }
 
       specify { expect { subject }.not_to raise_error }
     end

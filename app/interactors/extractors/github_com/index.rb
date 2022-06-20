@@ -21,15 +21,20 @@ module Extractors
       end
 
       def repo
-        uri = URI.parse(context.q)
+        begin
+          uri = URI.parse(context.q)
 
-        result = if uri.host && %w[http https].include?(uri.scheme)
-                   uri.path[1..]
-                 else
-                   context.q
-                 end
+          result = if uri.host && %w[http https].include?(uri.scheme)
+                     uri.path[1..]
+                   else
+                     context.q
+                   end
 
-        result = result.split('/').compact_blank
+          result = result.split('/').compact_blank
+        rescue URI::InvalidURIError => e
+          raise WrongRepoError
+        end
+
         raise WrongRepoError if result.length != 2
 
         result.join('/')
