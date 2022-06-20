@@ -189,8 +189,7 @@ describe API::Tools, type: :request do
 
         get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'http://ya.ru' }
         expect(JSON.parse(response.body)).to eq({ 'error' => 'timeout' })
-        # TODO: should be not 5XX status code
-        expect(response).to have_http_status(:internal_server_error)
+        expect(response).to have_http_status(:gateway_timeout)
       end
     end
   end

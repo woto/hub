@@ -12,9 +12,9 @@ module Extractors
 
           result = connection.get(url)
           context.object = result.body
-        rescue Faraday::Error => e
+        rescue Faraday::TimeoutError => e
           Rails.logger.error(e)
-          fail!(message: e.message)
+          fail!(code: 504, message: e.message)
         end
       end
 

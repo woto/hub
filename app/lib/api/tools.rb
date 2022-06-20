@@ -104,7 +104,10 @@ module API
       end
 
       get :scrape_webpage do
-        Extractors::Metadata::Scrapper.call(url: params[:url]).object
+        result = Extractors::Metadata::Scrapper.call(url: params[:url])
+        break result.object if result.success?
+
+        error!({ error: result.message }, result.code)
       end
 
       desc 'Search for npmjs.org' do
