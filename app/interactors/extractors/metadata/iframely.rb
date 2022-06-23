@@ -26,6 +26,9 @@ module Extractors
           conn.get('http://localhost:8061/iframely', {
                      url: context.url
                    })
+        rescue Faraday::ForbiddenError => e
+          Rails.logger.error(e)
+          fail!(code: 403, message: e.message)
         rescue Faraday::Error => e
           Rails.logger.error(e)
           fail!(message: e.message)

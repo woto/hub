@@ -77,7 +77,10 @@ module API
       end
 
       get :iframely do
-        Extractors::Metadata::Iframely.call(url: params[:url]).object
+        result = Extractors::Metadata::Iframely.call(url: params[:url])
+        break result.object if result.success?
+
+        error!({ error: result.message }, result.code)
       end
 
       desc 'Take screenshot of passed website' do
