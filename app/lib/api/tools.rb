@@ -107,6 +107,19 @@ module API
         Extractors::NpmjsCom::Suggestions.call(q: params[:q]).object
       end
 
+      desc 'Search for Duck Duck Go' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :duckduckgo_instant do
+        Extractors::DuckduckgoCom::InstantAnswer.call(q: params[:q]).object
+      end
+
+
       desc 'Search Google Graph' do
         security [{ api_key: [] }]
       end

@@ -5,13 +5,46 @@ require 'rails_helper'
 describe API::Tools, type: :request do
   let!(:user) { create(:user) }
 
+  describe 'GET /api/tools/duckduckgo_instant' do
+    it 'returns data from DuckDuckGo Instant Answers' do
+      stub_request(:get, 'https://api.duckduckgo.com?q=duckduckgo&format=json')
+        .to_return(status: 200, body: { duckduckgo: 'duckduckgo' }.to_json, headers: {})
+
+      get '/api/tools/duckduckgo_instant', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'duckduckgo' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq({ 'duckduckgo' => 'duckduckgo' })
+    end
+
+    context 'when user is not authorized' do
+      it 'returns error' do
+        get '/api/tools/duckduckgo_instant',
+            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when API key is incorrect' do
+      it 'returns error' do
+        get '/api/tools/duckduckgo_instant',
+            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+        expect(JSON.parse(response.body)).to eq(
+          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
+        )
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
   describe 'GET /api/tools/yandex_microdata' do
     context 'with url parameter' do
       it 'returns yandex extracted metadata' do
         stub_request(:get, 'https://validator-api.semweb.yandex.ru/v1.1/url_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true&url=https://example.com')
           .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: {})
 
-        post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
+        post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key },
+                                            params: { url: 'https://example.com' }
 
         expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to eq({ 'a' => 'b' })
@@ -23,7 +56,8 @@ describe API::Tools, type: :request do
         stub_request(:post, 'https://validator-api.semweb.yandex.ru/v1.1/document_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true')
           .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: {})
 
-        post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key }, params: { html: '<html></html>' }
+        post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key },
+                                            params: { html: '<html></html>' }
 
         expect(response).to have_http_status(:created)
         expect(JSON.parse(response.body)).to eq({ 'a' => 'b' })
@@ -295,7 +329,8 @@ describe API::Tools, type: :request do
       stub_request(:get, 'https://content-customsearch.googleapis.com/customsearch/v1?cx=google_custom_search_cx_key_value&key=google_custom_search_api_key&q=google-custom-search')
         .to_return(status: 200, body: { 'google-custom-search' => 'google-custom-search' }.to_json, headers: {})
 
-      get '/api/tools/google_custom_search', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'google-custom-search' }
+      get '/api/tools/google_custom_search', headers: { 'HTTP_API_KEY' => user.api_key },
+                                             params: { q: 'google-custom-search' }
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq({ 'google-custom-search' => 'google-custom-search' })
