@@ -6,22 +6,23 @@ module Extractors
       include ApplicationInteractor
 
       def call
-        begin
-          url = URI::HTTP.build([nil, ENV.fetch('SCRAPPER_HOST'), ENV.fetch('SCRAPPER_PORT'),
-                                 '/screenshot', "url=#{context.url}", nil])
+        url = URI::HTTP.build([nil, ENV.fetch('SCRAPPER_HOST'), ENV.fetch('SCRAPPER_PORT'),
+                               '/screenshot', "url=#{context.url}", nil])
 
-          result = connection.get(url)
-          context.object = result.body
-        rescue Faraday::TimeoutError => e
-          Rails.logger.error(e)
-          fail!(code: 504, message: e.message)
-        end
+        result = connection.get(url)
+        context.object = result.body
+      rescue Faraday::TimeoutError => e
+        Rails.logger.error(e)
+        fail!(code: 504, message: e.message)
+      rescue Faraday::Error => e
+        Rails.logger.error(e)
+        fail!(code: e.response_status, message: e.message)
       end
 
       private
 
       def connection
-        Faraday.new(url: context.url) do |faraday|
+        Faraday.new do |faraday|
           faraday.response :follow_redirects # follow redirects
           faraday.response :raise_error # raises an exception if response is a 4xx or 5xx code
           faraday.request :json # encode req bodies as JSON

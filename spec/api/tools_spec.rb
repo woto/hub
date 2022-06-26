@@ -96,7 +96,7 @@ describe API::Tools, type: :request do
 
   describe 'GET /api/tools/iframely' do
     it 'returns iframely extracted metadata' do
-      stub_request(:get, 'http://localhost:8061/iframely?url=https://example.com')
+      stub_request(:get, 'http://iframely:8061/iframely?url=https://example.com')
         .to_return(status: 200, body: { a: 'b' }.to_json, headers: {})
 
       get '/api/tools/iframely', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
