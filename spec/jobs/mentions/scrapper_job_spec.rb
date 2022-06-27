@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Mentions::ScrapperJob, type: :job do
-  subject { described_class.perform_now(mention: mention, user: user) }
+  subject { described_class.perform_now(mention_id: mention.id, mention_url: mention.url, user_id: user.id) }
 
   let(:user) { create(:user) }
   let(:mention) { create(:mention, url: 'https://example.com/?fake') }

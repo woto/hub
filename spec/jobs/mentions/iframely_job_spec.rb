@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Mentions::IframelyJob, type: :job do
-  subject { described_class.perform_now(mention: mention) }
+  subject { described_class.perform_now(mention_id: mention.id, mention_url: mention.url) }
 
   let(:mention) { create(:mention, url: 'https://example.com/?fake') }
 
@@ -17,7 +17,7 @@ RSpec.describe Mentions::IframelyJob, type: :job do
 
       subject
 
-      expect(mention).to have_attributes(title: 'Example', canonical_url: 'https://example.com')
+      expect(mention.reload).to have_attributes(title: 'Example', canonical_url: 'https://example.com')
     end
   end
 

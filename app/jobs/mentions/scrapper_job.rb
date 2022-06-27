@@ -5,15 +5,18 @@ module Mentions
     queue_as :low
     unique :until_executing, on_conflict: :log
 
-    def perform(mention:, user:)
-      result = Extractors::Metadata::Scrapper.call(url: mention.url)
+    def perform(mention_id:, mention_url:, user_id:)
+      result = Extractors::Metadata::Scrapper.call(url: mention_url)
 
       if result.success?
         object = result.object
 
-        image = Image.create!(image_data_uri: object['image'], user: user)
-        ImagesRelation.create!(image: image, relation: mention, user: user)
+        ActiveRecord::Base.transaction do
+          image = Image.create!(image_data_uri: object['image'], user_id: user_id)
+          ImagesRelation.create!(image: image, relation_id: mention_id, relation_type: 'Mention', user_id: user_id)
+        end
 
+        mention = Mention.find(mention_id)
         mention.__elasticsearch__.send_document_to_elasticsearch
       else
         raise result.message
