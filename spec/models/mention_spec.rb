@@ -60,29 +60,6 @@ RSpec.describe Mention, type: :model do
       it { is_expected.to eq({ entities_mentions: [{ error: :blank }] }) }
     end
 
-    describe '#kinds' do
-      context 'when kinds is valid' do
-        subject { build(:mention, kinds: %w[text image video]) }
-
-        specify do
-          expect(subject).to be_valid
-        end
-      end
-    end
-
-    describe '#validate_kinds_keys' do
-      subject { build(:mention, kinds: kinds) }
-
-      context 'when kinds includes wrong key' do
-        let(:kinds) { %w[fake] }
-
-        specify do
-          expect(subject).to be_invalid
-          expect(subject.errors.details).to eq({ kinds: [{ error: :inclusion }] })
-        end
-      end
-    end
-
     context 'with responsible', responsible: :user do
       subject { build(:mention, hostname: create(:hostname)) }
 
@@ -113,7 +90,6 @@ RSpec.describe Mention, type: :model do
     it 'returns correct result' do
       expect(subject).to match(
         id: mention.id,
-        kinds: mention.kinds,
         published_at: mention.published_at&.utc,
         topics: mention.topics.map(&:to_label),
         topics_count: mention.topics_count,

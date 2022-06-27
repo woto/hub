@@ -10,7 +10,7 @@ class MentionPolicy < ApplicationPolicy
   def permitted_attributes
     attributes = [
       :published_at, :url, :image, :title, :html,
-      { kinds: [], tags: [], advertiser_ext_ids: [], topics_attributes: [],
+      { tags: [], advertiser_ext_ids: [], topics_attributes: [],
         related_entities: %i[id is_main] }
     ]
     attributes.append(:user_id) if user.staff?

@@ -42,7 +42,6 @@ FactoryBot.define do
     entities { [association(:entity)] }
     url { Faker::Internet.url }
     topics { [association(:topic)] }
-    kinds { Mention::KINDS.sample(rand(Mention::KINDS.size) + 1) }
     image_data { ShrineImage.image_data }
   end
 end

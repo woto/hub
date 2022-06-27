@@ -38,9 +38,4 @@ class MentionDecorator < ApplicationDecorator
   def published_at
     decorate_datetime(super)
   end
-
-  def kinds
-    h.render Mentions::KindTextComponent.with_collection(super)
-  end
-
 end

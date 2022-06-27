@@ -61,9 +61,6 @@
                 <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@mention.topics.map(&:to_label))) %> </dd>
 
-                <dt class="col-sm-3"> <%= t('kinds', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= render(Mentions::KindTextComponent.with_collection(@mention.kinds)) %> </dd>
-
                 <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'mention']) %> </dt>
                 <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.published_at) %> </dd>
 

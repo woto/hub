@@ -72,12 +72,5 @@ RSpec.shared_context 'shared mention fill helpers' do
     end
   end
 
-  def fill_kinds(kinds:)
-    find('#heading-mention-kinds-item').click
-    kinds.each do |kind|
-      check("mention_kinds_#{kind}", allow_label_click: true)
-    end
-  end
-
   def fill_published_at; end
 end

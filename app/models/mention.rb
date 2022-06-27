@@ -34,8 +34,6 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Mention < ApplicationRecord
-  KINDS = %w[text image video audio].freeze
-
   has_logidze ignore_log_data: true
 
   include Elasticable
@@ -59,7 +57,6 @@ class Mention < ApplicationRecord
 
   validates :entities_mentions, :url, presence: true
   validates :url, uniqueness: true
-  validate :validate_kinds_keys
 
   # before_destroy :stop_destroy
 
@@ -84,7 +81,6 @@ class Mention < ApplicationRecord
   def as_indexed_json(_options = {})
     {
       id: id,
-      kinds: kinds,
       published_at: published_at,
       topics: topics.map(&:to_label),
       topics_count: topics_count,
@@ -118,14 +114,6 @@ class Mention < ApplicationRecord
   #   errors.add(:base, :undestroyable)
   #   throw :abort
   # end
-
-  # TODO: find gem to avoid manual validation
-  def validate_kinds_keys
-    return if errors.include?(:kinds)
-
-    errors.add(:kinds, :inclusion) unless (kinds - ['', *KINDS]).empty?
-  end
-
 
   def strip_title
     self.title = title&.strip

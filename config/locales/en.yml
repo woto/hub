@@ -552,14 +552,6 @@ en:
       html: Html
     image:
       image: Image
-    kind_icon_component:
-      hints:
-        audio: Материал сопровождается звуком.
-        image: Фотография или скриншот. Это так же может быть текст на картинке.
-        text: Текст, который можно скопировать и вставить в текстовый редактор.
-        video: Видео или анимированная картинка.
-    kinds_field:
-      kinds: Kinds
     published_at_field:
       published_at: Published at
     title_field:
@@ -749,8 +741,6 @@ en:
         displayed_columns: The order in which columns are added affects the display
       mention:
         image: After entering the URL, we will try to take a screenshot. If it fails, then click on the image to download. You can also drag an image here from your computer, from another site, or paste an image from the clipboard.
-        kind: The text in the picture is a picture. If the picture is moving, it means it's a video.
-        kinds: Select one or more options.
         published_at: Specify if the content publication date is specified in the source.
         title: If the title cannot be made automatically, then enter it.
         url: After entering the URL, we will try to take a screenshot and get the page title.
@@ -804,8 +794,6 @@ en:
         entities_count: Entities count
         id: Id
         intro: Intro
-        kind: Kind
-        kinds: Kinds
         published_at: Published at
         publisher_ext_id: Publisher ext
         screenshot: Screenshot
@@ -953,7 +941,6 @@ en:
         favorite: Favorites
         id: Mention id
         image: Image
-        kinds: Mention kind
         published_at: Publication date
         title: Title
         topics: Mention tags
@@ -1037,7 +1024,6 @@ en:
         favorite: Fav.
         id: ID
         image: Image
-        kinds: Kinds
         published_at: Publ. date
         title: Title
         topics: Tags

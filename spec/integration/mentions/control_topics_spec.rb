@@ -34,7 +34,7 @@ describe MentionsController, type: :system, responsible: :admin do
       fill_url(url: 'https://example.com', with_image: true)
       fill_topics(topics: ['new', topic.title])
       assign_entity(entity: entity)
-      fill_kinds(kinds: ['text'])
+
       expect do
         expect do
           expect do
