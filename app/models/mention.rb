@@ -20,6 +20,7 @@
 #  updated_at        :datetime         not null
 #  hostname_id       :bigint
 #  user_id           :bigint           not null
+#  canonical_url          :text
 #
 # Indexes
 #
