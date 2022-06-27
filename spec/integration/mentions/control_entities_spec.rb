@@ -17,7 +17,6 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'saves form with uniq entities' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
-        fill_sentiments(sentiments: ['positive'])
         fill_kinds(kinds: ['text'])
 
         assign_entity(entity: entity)
@@ -40,7 +39,6 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'creates new mention' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
-        fill_sentiments(sentiments: ['positive'])
         fill_kinds(kinds: ['text'])
 
         assign_entity(entity: entity)
@@ -60,7 +58,6 @@ describe MentionsController, type: :system, responsible: :admin do
       it 'saves mention with new entity' do
         fill_url(url: 'https://example.com', with_image: true)
         fill_topics(topics: ['new'])
-        fill_sentiments(sentiments: ['positive'])
         fill_kinds(kinds: ['text'])
 
         create_entity(title: 'new entity')

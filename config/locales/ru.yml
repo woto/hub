@@ -572,13 +572,6 @@ ru:
       kinds: Тип упоминания
     published_at_field:
       published_at: Дата публикации
-    sentiment_icon_component:
-      hints:
-        negative: Отрицательное
-        positive: Положительное
-        unknown: В случае если по одному объекту положительное, а по другому отрицательное.
-    sentiments_field:
-      sentiments: Настроение
     title_field:
       title: Заголовок страницы
     topics:
@@ -823,13 +816,9 @@ ru:
         intro: Вступление
         kind: Kind
         kinds: Тип упоминания
-        metadata_iframely: Metadata iframely
-        metadata_yandex: Metadata yandex
         published_at: Дата публикации
         publisher_ext_id: Автор
         screenshot: Скриншот
-        sentiment: Настроение
-        sentiments: Настроение
         status: Статус
         tags: Теги
         title: Заголовок страницы
@@ -976,7 +965,6 @@ ru:
         image: Изображение
         kinds: Тип упоминания
         published_at: Дата публикации
-        sentiments: Настроение
         title: Заголовок
         topics: Теги
         topics_count: Количество тегов
@@ -1061,7 +1049,6 @@ ru:
         image: Изображение
         kinds: Тип
         published_at: Дата публ.
-        sentiments: Настроение
         title: Заголовок
         topics: Теги
         topics_count: Кол-во тегов

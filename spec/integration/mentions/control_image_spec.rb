@@ -41,7 +41,6 @@ describe MentionsController, type: :system, responsible: :admin do
       fill_url(url: 'https://example.com', with_image: false)
       fill_topics(topics: ['new'])
       assign_entity(entity: entity)
-      fill_sentiments(sentiments: ['positive'])
       fill_kinds(kinds: ['text'])
 
       fill_image(file_name: 'jessa_rhodes.jpg')

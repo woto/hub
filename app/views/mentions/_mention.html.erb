@@ -49,7 +49,6 @@
         <%= render(TextTagComponent.with_collection(mention.topics.map(&:to_label))) %>
       </p>
       <p class="card-text">
-        <%= render Mentions::SentimentTextComponent.with_collection(mention.sentiments) %>
         <%= render Mentions::KindTextComponent.with_collection(mention.kinds) %>
       </p>
       <p class="card-text"><%= GlobalHelper.decorate_datetime(mention.published_at) %></p>

@@ -16,7 +16,6 @@ module Columns
         { key: 'topics',              pg: Topic.columns_hash['title'], as: :string, roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'published_at',        pg: Mention.columns_hash['published_at'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'kinds',               pg: Mention.columns_hash['kinds'], as: :string, roles: %w[guest user manager admin] },
-        { key: 'sentiments',          pg: Mention.columns_hash['sentiments'], as: :string, roles: %w[guest user manager admin] },
         { key: 'entities_count',      pg: Mention.columns_hash['entities_count'], roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'topics_count',        pg: Mention.columns_hash['topics_count'], as: :integer, roles: ['guest', 'user', 'manager', 'admin'] },
         { key: 'created_at',          pg: Mention.columns_hash['created_at'], roles: ['guest', 'user', 'manager', 'admin'] },

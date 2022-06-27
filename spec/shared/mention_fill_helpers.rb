@@ -72,13 +72,6 @@ RSpec.shared_context 'shared mention fill helpers' do
     end
   end
 
-  def fill_sentiments(sentiments:)
-    find('#heading-mention-sentiments-item').click
-    sentiments.each do |sentiment|
-      check("mention_sentiments_#{sentiment}", allow_label_click: true)
-    end
-  end
-
   def fill_kinds(kinds:)
     find('#heading-mention-kinds-item').click
     kinds.each do |kind|

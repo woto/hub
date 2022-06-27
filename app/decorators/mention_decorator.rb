@@ -43,7 +43,4 @@ class MentionDecorator < ApplicationDecorator
     h.render Mentions::KindTextComponent.with_collection(super)
   end
 
-  def sentiments
-    h.render(Mentions::SentimentTextComponent.with_collection(super))
-  end
 end

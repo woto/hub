@@ -562,13 +562,6 @@ en:
       kinds: Kinds
     published_at_field:
       published_at: Published at
-    sentiment_icon_component:
-      hints:
-        negative: Отрицательное
-        positive: Положительное
-        unknown: В случае если по одному объекту положительное, а по другому отрицательное.
-    sentiments_field:
-      sentiments: Sentiments
     title_field:
       title: Title
     topics:
@@ -813,13 +806,9 @@ en:
         intro: Intro
         kind: Kind
         kinds: Kinds
-        metadata_iframely: Metadata iframely
-        metadata_yandex: Metadata yandex
         published_at: Published at
         publisher_ext_id: Publisher ext
         screenshot: Screenshot
-        sentiment: Sentiment
-        sentiments: Sentiment
         status: Status
         tags: Tags
         title: Page title
@@ -966,7 +955,6 @@ en:
         image: Image
         kinds: Mention kind
         published_at: Publication date
-        sentiments: Mention sentiment
         title: Title
         topics: Mention tags
         topics_count: Amount of mention tags
@@ -1051,7 +1039,6 @@ en:
         image: Image
         kinds: Kinds
         published_at: Publ. date
-        sentiments: Sentiment
         title: Title
         topics: Tags
         topics_count: Tags cnt.

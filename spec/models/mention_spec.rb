@@ -70,16 +70,6 @@ RSpec.describe Mention, type: :model do
       end
     end
 
-    describe '#sentiments' do
-      context 'when sentiments is valid' do
-        subject { build(:mention, sentiments: %w[positive]) }
-
-        specify do
-          expect(subject).to be_valid
-        end
-      end
-    end
-
     describe '#validate_kinds_keys' do
       subject { build(:mention, kinds: kinds) }
 
@@ -89,19 +79,6 @@ RSpec.describe Mention, type: :model do
         specify do
           expect(subject).to be_invalid
           expect(subject.errors.details).to eq({ kinds: [{ error: :inclusion }] })
-        end
-      end
-    end
-
-    describe '#validate_sentiments_keys' do
-      subject { build(:mention, sentiments: sentiments) }
-
-      context 'when kinds includes wrong key' do
-        let(:sentiments) { %w[fake] }
-
-        specify do
-          expect(subject).to be_invalid
-          expect(subject.errors.details).to eq({ sentiments: [{ error: :inclusion }] })
         end
       end
     end
@@ -138,7 +115,6 @@ RSpec.describe Mention, type: :model do
         id: mention.id,
         kinds: mention.kinds,
         published_at: mention.published_at&.utc,
-        sentiments: mention.sentiments,
         topics: mention.topics.map(&:to_label),
         topics_count: mention.topics_count,
         url: mention.url,

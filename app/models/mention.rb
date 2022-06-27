@@ -35,7 +35,6 @@
 #
 class Mention < ApplicationRecord
   KINDS = %w[text image video audio].freeze
-  SENTIMENTS = %w[positive negative].freeze
 
   has_logidze ignore_log_data: true
 
@@ -61,7 +60,6 @@ class Mention < ApplicationRecord
   validates :entities_mentions, :url, presence: true
   validates :url, uniqueness: true
   validate :validate_kinds_keys
-  validate :validate_sentiments_keys
 
   # before_destroy :stop_destroy
 
@@ -88,7 +86,6 @@ class Mention < ApplicationRecord
       id: id,
       kinds: kinds,
       published_at: published_at,
-      sentiments: sentiments,
       topics: topics.map(&:to_label),
       topics_count: topics_count,
       hostname: hostname.to_label,
@@ -129,12 +126,6 @@ class Mention < ApplicationRecord
     errors.add(:kinds, :inclusion) unless (kinds - ['', *KINDS]).empty?
   end
 
-  # TODO: find gem to avoid manual validation
-  def validate_sentiments_keys
-    return if errors.include?(:sentiments)
-
-    errors.add(:sentiments, :inclusion) unless (sentiments - ['', *SENTIMENTS]).empty?
-  end
 
   def strip_title
     self.title = title&.strip

@@ -6,6 +6,7 @@ class CreateMentions < ActiveRecord::Migration[6.1]
       t.jsonb :tags, default: []
       t.datetime :published_at
       t.integer :kind, null: false
+      # TODO: remove later
       t.integer :sentiment, null: false
       t.integer :entities_count, default: 0, null: false
 
