@@ -143,24 +143,6 @@ aside {
 //   @extend .bg-cyan-lt;
 // }
 
-// TODO: seems should be reported to tabler
-.search-bar-x {
-  background: white !important;
-}
-
-aside.navbar {
-  .search-bar-x {
-    background: #1f2a36 !important;
-    border-color: #232f3c !important;
-  }
-}
-
-@include media-breakpoint-up(lg) {
-  .search-bar-x {
-    background: white !important;
-    border: 1px solid rgba(101, 109, 119, 0.24) !important;
-  }
-}
 
 // In bootstrap 5 legend floats left and requires the following element
 // to be cleared. In a radio button or checkbox group the element after

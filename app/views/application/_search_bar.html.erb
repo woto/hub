@@ -1,17 +1,14 @@
-<%= tag.div class: "input-group input-group-flat",
-            'data-controller': 'search-base clear-search',
-            'data-search-base-everywhere-url': url_for_search_everywhere do %>
-
-  <%= text_field_tag :q, params[:q],
-                     id: nil,
-                     'data-search-base-target': 'searchText',
-                     'data-clear-search-target': 'searchText',
-                     'data-action': 'keydown->search-base#clickSearchButton',
-                     class: 'search-text form-control',
-                     placeholder: t('search_placeholder') %>
-
-  <%= render Header::ClearSearchComponent.new %>
-
-  <%= render 'button', btn_class: btn_class %>
-
-<% end %>
+<%= tag.div data: {
+  react: 'SearchBar',
+  props: {
+    buttonTitle: t('search'),
+    placeholder: t('search_placeholder'),
+    q: params[:q],
+    items: [ 
+      {
+        title: 'Везде',
+        url: url_for_search_everywhere
+      }
+    ]}
+  } 
+%>
