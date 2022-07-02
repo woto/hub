@@ -2,31 +2,25 @@
 #
 # Table name: topics
 #
-#  id             :bigint           not null, primary key
-#  entities_count :integer          default(0), not null
-#  mentions_count :integer          default(0), not null
-#  title          :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id                     :bigint           not null, primary key
+#  title                  :string
+#  topics_relations_count :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  user_id                :bigint
 #
 # Indexes
 #
-#  index_topics_on_title  (title) UNIQUE
+#  index_topics_on_title    (title) UNIQUE
+#  index_topics_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
   factory :topic do
     title { Faker::Lorem.unique.word }
-
-    factory :topic_with_mentions do
-      transient do
-        mentions_count { 1 }
-      end
-
-      mentions do
-        Array.new(mentions_count) do
-          association(:mention, topics: [instance])
-        end
-      end
-    end
+    user
   end
 end
