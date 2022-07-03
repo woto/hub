@@ -4,11 +4,6 @@ require:
   - rubocop-rspec
 
 AllCops:
+  NewCops: enable
   Exclude:
     - 'node_modules/**/*'
-
-Rspec/ExampleLength:
-  Max: 30
-
-Rspec/MultipleExpectations:
-  Max: 10
