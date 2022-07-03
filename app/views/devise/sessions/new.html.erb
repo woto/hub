@@ -1,60 +1,95 @@
-<div class="text-center mb-4">
-  <%= link_to root_path do %>
-    <%= image_tag(asset_pack_path('media/images/logo.svg'), height: "36") %>
-  <% end %>
-</div>
-
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name),
-                    html: { class: 'card card-md', 'data-turbo': "false" }) do |f| %>
-
-  <div class="card-body">
-
-    <h2 class="mb-4 text-center"><%= t(".sign_in") %></h2>
-
-    <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'danger') %>
-    <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
-
-    <div class="form-inputs">
-      <%= f.input :email,
-                  required: false,
-                  autofocus: true,
-                  input_html: { autocomplete: "email" },
-                  wrapper_html: { class: 'mb-3' } %>
-      <%= f.input :password,
-                  required: false,
-                  input_html: { autocomplete: "current-password" },
-                  wrapper_html: { class: 'mb-3' } %>
-      <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-    </div>
-
-    <div class="form-footer">
-      <%= f.button :submit, t(".sign_in"), class: 'btn btn-primary w-100', id: 'login' %>
-    </div>
-
+<div class="tw-min-h-full tw-flex tw-flex-col tw-justify-center tw-py-12 sm:tw-px-6 lg:tw-px-8">
+  <div class="sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
+    <%= link_to root_path do %>
+      <%= image_tag(asset_pack_path('media/images/logo.svg'), class: 'tw-mx-auto tw-h-12 tw-w-auto') %>
+    <% end %>
   </div>
+  <div class="tw-mt-8 sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
+    <div class="tw-bg-white tw-py-8 tw-px-4 tw-shadow sm:tw-rounded-lg sm:tw-px-10">
 
-  <div class="hr-text">or</div>
+      <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'danger') %>
+      <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
 
-  <div class="card-body">
-    <div class="row">
-      <div class="col d-sm-flex justify-content-around">
-        <%= render SocialButtonComponent.new(
-            type: 'google',
-            link_class: 'btn btn-white w-100',
-            title: 'Login with Google',
-            path: '/users/auth/google_oauth2/'
-        ) %>
-        &nbsp;
-        <%= render SocialButtonComponent.new(
-            type: 'facebook',
-            link_class: 'btn btn-white w-100',
-            title: 'Login with Facebook',
-            path: '/users/auth/facebook/'
-        ) %>
+      <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true, 'data': { turbo: false }, class: '[&:nth-of-type(1)]:tw-space-y-6') do |f| %>
+        
+        <div class="">
+          <label for="user_email" class="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
+            <%= t('email', scope: ['activerecord', 'attributes', 'user'] ) %>
+          </label>
+          <div class="tw-mt-1">
+            <%= f.text_field :email,
+                  id: 'user_email',
+                  required: true,
+                  autofocus: true,
+                  class: 'tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 sm:tw-text-sm', 
+                  autocomplete: "email" %>
+          </div>
+        </div>
+
+        <div class="">
+          <label for="user_password" class="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
+            <%= t('password', scope: ['activerecord', 'attributes', 'user'] ) %>
+          </label>        
+          <div class="tw-mt-1">
+            <%= f.text_field :password,
+                  id: 'user_password',
+                  type: 'password',
+                  required: true,
+                  class: 'tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 sm:tw-text-sm', autocomplete: "current-password",
+                  wrapper_html: {  } %>
+          </div>
+        </div>
+
+        <div class="tw-flex tw-items-center tw-justify-between">
+          <div class="tw-flex tw-items-center">
+            <%= f.check_box :remember_me, id: 'remember_me', class: 'class="tw-h-4 tw-w-4 tw-text-indigo-600 focus:tw-ring-indigo-500 tw-border-gray-300 tw-rounded' if devise_mapping.rememberable? %>
+            <label for="remember_me" class="tw-ml-2 tw-block tw-text-sm tw-text-gray-900"> 
+              <%= t('remember_me', scope: ['activerecord', 'attributes', 'user']) %>
+            </label>
+          </div>
+          <div class="tw-text-sm">
+            <%= link_to new_user_password_path, class: 'tw-font-medium tw-text-indigo-600 hover:tw-text-indigo-500' do %>
+              <%= t('forgot_your_password', scope: ['devise', 'shared', 'links']) %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="">
+          <%= f.button t(".sign_in"), type: :submit, class: 'tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500', id: 'login' %>
+        </div>
+
+      <% end %>
+
+      <div class="tw-mt-6">
+
+        <div class="tw-relative">
+          <div class="tw-absolute tw-inset-0 tw-flex tw-items-center">
+            <div class="tw-w-full tw-border-t tw-border-gray-300"></div>
+          </div>
+          <div class="tw-relative tw-flex tw-justify-center tw-text-sm">
+            <span class="tw-px-2 tw-bg-white tw-text-gray-500"> Or continue with </span>
+          </div>
+        </div>
+
+        <div class="tw-mt-6">
+          <%= render SocialButtonComponent.new(
+              type: 'google',
+              link_class: 'btn btn-white w-100',
+              title: 'Login with Google',
+              path: '/users/auth/google_oauth2/'
+          ) %>
+          &nbsp;
+          <%= render SocialButtonComponent.new(
+              type: 'facebook',
+              link_class: 'btn btn-white w-100',
+              title: 'Login with Facebook',
+              path: '/users/auth/facebook/'
+          ) %>
+        </div>
       </div>
     </div>
+
+    <%= render "devise/shared/links" %>
+
   </div>
-
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
