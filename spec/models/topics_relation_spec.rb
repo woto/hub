@@ -31,6 +31,26 @@ RSpec.describe TopicsRelation, type: :model do
     it { is_expected.to belong_to(:relation) }
   end
 
+  describe 'factory' do
+    describe 'with_entity' do
+      subject { build(:topics_relation, :with_entity) }
+
+      it { is_expected.to be_valid }
+    end
+
+    describe 'with_cite' do
+      subject { build(:topics_relation, :with_cite) }
+
+      it { is_expected.to be_valid }
+    end
+
+    describe 'with_mention' do
+      subject { build(:topics_relation, :with_mention) }
+
+      it { is_expected.to be_valid }
+    end
+  end
+
   describe 'validations' do
     let(:entity) { create(:entity) }
     let(:topic) { create(:topic) }
@@ -52,6 +72,18 @@ RSpec.describe TopicsRelation, type: :model do
       expect do
         2.times { create_topics_relation }
       end.to change(TopicsRelation, :count).from(0).to(1)
+    end
+  end
+
+  context 'when topics_relation removes' do
+    subject!(:topics_relation) { create(:topics_relation, :with_entity) }
+
+    it 'does not remove Topic' do
+      expect { topics_relation.destroy }.not_to change(Topic, :count)
+    end
+
+    it 'does not remove Relation' do
+      expect { topics_relation.destroy }.not_to change(Entity, :count)
     end
   end
 end
