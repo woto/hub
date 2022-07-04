@@ -1,48 +1,50 @@
-<div class="tw-min-h-full tw-flex tw-flex-col tw-justify-center tw-py-12 sm:tw-px-6 lg:tw-px-8">
-  <div class="sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
-    <%= link_to root_path do %>
-      <%= image_tag(asset_pack_path('media/images/logo.svg'), class: 'tw-mx-auto tw-h-12 tw-w-auto') %>
-    <% end %>
-  </div>
-  <div class="tw-mt-8 sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
-    <div class="tw-bg-white tw-py-8 tw-px-4 tw-shadow sm:tw-rounded-lg sm:tw-px-10">
-      <div class="tw-mb-6">
-        <h2 class="tw-text-center tw-text-3xl tw-font-extrabold tw-text-gray-700">
-          <%= t('.resend_confirmation_instructions') %>
-        </h2>
-      </div>
-      <%= form_with(model: resource, as: resource_name, url: confirmation_path(resource_name), local: true, method: :post, 'data': { turbo: false }) do |f| %>
-        <% if f.object.errors.include?(:confirmation_token) %>
-          <%= render TopPageNotifyComponent.new(message: f.object.errors.full_messages_for(:confirmation_token), alert_type: :danger) %>
-        <% else %>
-          <% if f.object.errors.present?  %>
-            <%= render TopPageNotifyComponent.new(message: 'Невозможно сохранить. Пожалуйста заполните поля', alert_type: 'danger') %>
+<div class="tw-flex-auto tw-flex tw-flex-col tw-justify-center">
+  <div class="tw-z-20 tw-min-h-full tw-flex tw-flex-col tw-justify-center tw-py-12 sm:tw-px-6 lg:tw-px-8">
+    <div class="sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
+      <%= link_to root_path do %>
+        <%= image_tag(asset_pack_path('media/images/logo.svg'), class: 'tw-mx-auto tw-h-12 tw-w-auto') %>
+      <% end %>
+    </div>
+    <div class="tw-mt-8 sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
+      <div class="tw-bg-white tw-py-8 tw-px-4 tw-shadow sm:tw-rounded-lg sm:tw-px-10">
+        <div class="tw-mb-6">
+          <h2 class="tw-text-center tw-text-2xl tw-font-extrabold tw-text-gray-700">
+            <%= t('.resend_confirmation_instructions') %>
+          </h2>
+        </div>
+        <%= form_with(model: resource, as: resource_name, url: confirmation_path(resource_name), local: true, method: :post, 'data': { turbo: false }) do |f| %>
+          <% if f.object.errors.include?(:confirmation_token) %>
+            <%= render TopPageNotifyComponent.new(message: f.object.errors.full_messages_for(:confirmation_token), alert_type: :danger) %>
+          <% else %>
+            <% if f.object.errors.present?  %>
+              <%= render TopPageNotifyComponent.new(message: 'Невозможно сохранить. Пожалуйста заполните поля', alert_type: 'danger') %>
+            <% end %>
           <% end %>
-        <% end %>
-        <div class="tw-mt-6">
-          <label for="user_email" class="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
-            <%= t('email', scope: ['activerecord', 'attributes', 'user'] ) %>
-          </label>
-          <div class="tw-mt-1">
-            <%= f.text_field :email,
+          <div class="tw-mt-6">
+            <label for="user_email" class="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
+              <%= t('email', scope: ['activerecord', 'attributes', 'user'] ) %>
+            </label>
+            <div class="tw-mt-1">
+              <%= f.text_field :email,
                   value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
                   id: 'user_email',
                   required: false,
                   autofocus: true,
                   class: 'tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 sm:tw-text-sm',
                   autocomplete: "email" %>
-            <div class="invalid-feedback d-block">
-              <% f.object.errors.full_messages_for(:email).each do |error_message| %>
-                <%= error_message %>.
-              <% end %>
+              <div class="invalid-feedback d-block">
+                <% f.object.errors.full_messages_for(:email).each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="tw-mt-6">
-          <%= f.button t(".resend_confirmation_instructions"), type: :submit, class: 'tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500' %>
-        </div>
-      <% end %>
+          <div class="tw-mt-6">
+            <%= f.button t(".resend_confirmation_instructions"), type: :submit, class: 'tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500' %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <%= render "devise/shared/links" %>
   </div>
 </div>
+<%= render "devise/shared/links" %>
