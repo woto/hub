@@ -110,7 +110,6 @@ describe Users::ConfirmationsController, type: :system do
   context 'when confirmation token is not valid' do
     it 'shows alert' do
       visit user_confirmation_path(confirmation_token: Faker::Alphanumeric.alphanumeric, locale: :ru)
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       expect(page).to have_text('Токен подтверждения имеет неверное значение')
     end
   end

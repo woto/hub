@@ -1,21 +1,21 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_mailbox/engine"
-require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_mailbox/engine'
+require 'action_text/engine'
+require 'action_view/railtie'
+require 'action_cable/engine'
 # require "sprockets/railtie"
-require "rails/test_unit/railtie"
+require 'rails/test_unit/railtie'
 
-require_relative "../app/middlewares/locale"
+require_relative '../app/middlewares/locale'
 # require 'prometheus/middleware/collector'
 
 # Require the gems listed in Gemfile, including any gems
@@ -81,5 +81,8 @@ module Hub
 
     # NOTE: Logidze uses DB functions and triggers, hence you need to use SQL format for a schema dump:
     config.active_record.schema_format = :sql
+
+    ActionView::Base.field_error_proc = proc { |html_tag, _instance| html_tag }
+    config.view_component.preview_paths << "#{Rails.root}/spec/components/previews"
   end
 end

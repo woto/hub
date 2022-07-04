@@ -129,7 +129,6 @@ describe Users::PasswordsController, type: :system do
     it 'shows alert, does not change password' do
       expect do
         change_password('123123', '123123')
-        expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
         expect(page).to have_text('Токен сброса пароля имеет неверное значение')
       end.not_to(change { user.reload.valid_password?('123123') })
     end

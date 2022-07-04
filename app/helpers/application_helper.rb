@@ -1,17 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  # TODO: write article
-  def suppress_default_error_proc
-    default_field_error_proc = ::ActionView::Base.field_error_proc
-    begin
-      ::ActionView::Base.field_error_proc = SimpleForm.field_error_proc
-      yield
-    ensure
-      ::ActionView::Base.field_error_proc = default_field_error_proc
-    end
-  end
-
   def articles_by_month_link(month)
     articles_by_month_path(
       month: month,

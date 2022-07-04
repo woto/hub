@@ -64,7 +64,6 @@ describe Users::UnlocksController, type: :system do
   context 'when token is invalid' do
     it 'shows alert that token is invalid' do
       visit user_unlock_path(unlock_token: Faker::Alphanumeric.alphanumeric, locale: :ru)
-      expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       expect(page).to have_text('Токен разблокировки имеет неверное значение')
     end
   end

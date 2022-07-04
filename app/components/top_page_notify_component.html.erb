@@ -4,7 +4,20 @@
       <i class="fas fa-info-circle fa-lg me-3"></i>
     </div>
     <div>
-      <%= @message %>
+      <% case @message %>
+      <% when String %>
+        <%= @message %>
+      <% when Array %>
+        <% if @message.size == 1 %>
+          <%= @message.first %>
+        <% else %>
+          <% @message.each do |message| %>
+            <li>
+              <%= message %>
+            </li>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
