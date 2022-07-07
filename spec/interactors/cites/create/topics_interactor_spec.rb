@@ -64,6 +64,10 @@ describe Interactors::Cites::Create::TopicsInteractor do
       expect { topics_relation.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
+    it 'does not destroy topic' do
+      expect { interactor }.not_to change(Topic, :count)
+    end
+
     it 'reindexes count of topic' do
       allow(Elasticsearch::IndexJob).to receive(:perform_later)
       interactor
@@ -109,7 +113,7 @@ describe Interactors::Cites::Create::TopicsInteractor do
     end
   end
 
-  context 'when lookups is an empty array' do
+  context 'when topics is an empty array' do
     let(:params) { [] }
 
     it 'does not fail' do

@@ -42,6 +42,10 @@ describe Interactors::Cites::Create::LookupsInteractor do
       expect { interactor }.to change(LookupsRelation, :count).by(-1)
       expect { lookups_relation.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it 'does not destroy lookup' do
+      expect { interactor }.not_to change(Lookup, :count)
+    end
   end
 
   context 'when renames lookup' do
