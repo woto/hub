@@ -3,7 +3,6 @@
 # Table name: entities_mentions
 #
 #  id         :bigint           not null, primary key
-#  is_main    :boolean          default(FALSE), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  entity_id  :bigint           not null
@@ -21,8 +20,8 @@
 #  fk_rails_...  (mention_id => mentions.id)
 #
 class EntitiesMention < ApplicationRecord
-  belongs_to :entity, counter_cache: :mentions_count
-  belongs_to :mention, counter_cache: :entities_count
+  belongs_to :entity, counter_cache: true
+  belongs_to :mention
 
   validates :entity, uniqueness: { scope: :mention }
 end
