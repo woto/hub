@@ -13,15 +13,19 @@ module Interactors
             required(:cite)
             required(:entity)
             required(:user)
-            required(:params).array(:hash) do
-              required(:id)
-              required(:destroy)
-              required(:title)
+            required(:params).maybe do
+              array(:hash) do
+                required(:id)
+                required(:destroy)
+                required(:title)
+              end
             end
           end
         end
 
         def call
+          return if params.nil?
+
           without_ids, with_ids = params.partition { |lookup_params| lookup_params['id'].blank? }
 
           without_ids.each do |lookup_params|

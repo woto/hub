@@ -34,5 +34,6 @@ FactoryBot.define do
   factory :entity do
     user
     title { Faker::Lorem.word }
+    intro { Faker::Lorem.sentence }
   end
 end
