@@ -6,19 +6,19 @@
 #  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  entity_id  :bigint           not null
+#  user_id    :bigint
 #
 # Indexes
 #
-#  index_lookups_on_entity_id  (entity_id)
+#  index_lookups_on_user_id  (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (entity_id => entities.id)
+#  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
   factory :lookup do
-    entity
     title { Faker::Lorem.word }
+    # user
   end
 end

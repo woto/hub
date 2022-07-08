@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: lookups
@@ -6,22 +8,27 @@
 #  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  entity_id  :bigint           not null
+#  user_id    :bigint
 #
 # Indexes
 #
-#  index_lookups_on_entity_id  (entity_id)
+#  index_lookups_on_user_id  (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (entity_id => entities.id)
+#  fk_rails_...  (user_id => users.id)
 #
 class Lookup < ApplicationRecord
-  belongs_to :entity, counter_cache: true
+  belongs_to :user, optional: true
 
   before_validation :strip_title
 
   validates :title, presence: true
+
+  has_many :lookups_relations, dependent: :destroy
+  has_many :entities, through: :lookups_relations, source: :relation, source_type: 'Entity'
+  has_many :mentions, through: :lookups_relations, source: :relation, source_type: 'Mention'
+  has_many :cites, through: :lookups_relations, source: :relation, source_type: 'Cite'
 
   def to_label
     title
