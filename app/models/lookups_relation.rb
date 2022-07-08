@@ -8,7 +8,7 @@
 #  updated_at    :datetime         not null
 #  lookup_id     :bigint           not null
 #  relation_id   :bigint           not null
-#  user_id       :bigint           not null
+#  user_id       :bigint
 #
 # Indexes
 #

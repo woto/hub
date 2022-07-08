@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: lookups_relations
@@ -8,7 +10,7 @@
 #  updated_at    :datetime         not null
 #  lookup_id     :bigint           not null
 #  relation_id   :bigint           not null
-#  user_id       :bigint           not null
+#  user_id       :bigint
 #
 # Indexes
 #
@@ -41,7 +43,7 @@ RSpec.describe LookupsRelation, type: :model do
     it 'does not allow to link same `lookup` and `relation` twice' do
       expect do
         2.times { create_lookups_relation }
-      end.to change(LookupsRelation, :count).from(0).to(1)
+      end.to change(described_class, :count).from(0).to(1)
     end
-  end    
+  end
 end
