@@ -20,6 +20,6 @@
 FactoryBot.define do
   factory :image do
     image_data { ShrineImage.image_data }
-    user
+    # user
   end
 end

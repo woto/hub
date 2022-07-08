@@ -22,4 +22,9 @@ class Image < ApplicationRecord
   include ImageUploader::Attachment(:image)
 
   validates :image, presence: true
+
+  has_many :images_relations, dependent: :destroy
+  has_many :entities, through: :images_relations, source: :relation, source_type: 'Entity'
+  has_many :mentions, through: :images_relations, source: :relation, source_type: 'Mention'
+  has_many :cites, through: :images_relations, source: :relation, source_type: 'Cite'
 end

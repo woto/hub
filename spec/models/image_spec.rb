@@ -3,8 +3,16 @@
 require 'rails_helper'
 
 describe Image do
-  describe 'validations' do
+
+  describe 'associations' do
     it { is_expected.to belong_to(:user).optional }
+    it { is_expected.to have_many(:images_relations) }
+    it { is_expected.to have_many(:entities).through(:images_relations).source(:relation) }
+    it { is_expected.to have_many(:mentions).through(:images_relations).source(:relation) }
+    it { is_expected.to have_many(:cites).through(:images_relations).source(:relation) }
+  end
+
+  describe 'validations' do
     it { is_expected.to validate_presence_of(:image) }
   end
 
