@@ -25,6 +25,18 @@ FactoryBot.define do
   factory :topics_relation do
     topic
     relation { nil }
-    user
+    # user
+
+    trait :with_entity do
+      relation { association :entity }
+    end
+
+    trait :with_mention do
+      relation { association :mention }
+    end
+
+    trait :with_cite do 
+      relation { association :cite }
+    end
   end
 end
