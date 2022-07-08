@@ -177,6 +177,18 @@ module API
         header 'Content-Type', 'application/xml'
         Extractors::YandexRu::Xml.call(q: params[:q]).object
       end
+
+      desc 'Add "tw" prefix to Tailwind classess. https://tailwindcss.com/docs/configuration#prefix' do
+        consumes ['multipart/form-data']
+      end
+
+      params do
+        requires :html, type: String, desc: 'html fragment e.g. <div class="-t-1 hover:t-1 bg-red"></div>'
+      end
+
+      post :prefix_tailwind do
+        ::Tools::PrefixTailwind.call(html: params[:html]).object
+      end
     end
   end
 end

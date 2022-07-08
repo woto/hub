@@ -460,6 +460,16 @@ describe API::Tools, type: :request do
     end
   end
 
+  describe 'GET /api/tools/prefix_tailwind' do
+    it 'returns correct result' do
+      post '/api/tools/prefix_tailwind',
+           headers: { 'HTTP_API_KEY' => user.api_key },
+           params: { html: '<div class="-t-1 hover:t-1 bg-red"></div>' }
+
+      expect(response.body).to eq('<div class="-tw-t-1 hover:tw-t-1 tw-bg-red"></div>')
+    end
+  end
+
   describe 'GET /api/tools/github' do
     it 'returns readme from Github' do
       stub_request(:get, 'https://api.github.com/repos/rails/rails')
