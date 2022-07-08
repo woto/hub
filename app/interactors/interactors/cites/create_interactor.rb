@@ -8,7 +8,7 @@ module Interactors
       delegate :current_user, :params, to: :context
 
       def call
-        fragment = FragmentParser.call(fragment_url: params[:fragment_url])
+        fragment = Fragment::Parser.call(fragment_url: params[:fragment_url])
 
         ActiveRecord::Base.transaction do
           @entity = create_entity
