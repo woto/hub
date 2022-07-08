@@ -5,7 +5,7 @@ class ImageUploader < Shrine
   plugin :keep_files
   plugin :data_uri
   plugin :infer_extension
-  plugin :remote_url, max_size: 20*1024*1024
+  plugin :remote_url, max_size: 30.megabytes
 
   # plugin :refresh_metadata
   # plugin :atomic_helpers
@@ -13,16 +13,28 @@ class ImageUploader < Shrine
   plugin :validation_helpers
 
   Attacher.validate do
-    validate_max_size 30 * 1024 * 1024
-    validate_mime_type %w[image/jpeg image/jpg image/png image/gif]
+    validate_max_size 30.megabytes
+    validate_mime_type %w[image/jpeg image/jpg image/png image/gif image/webp image/vnd.microsoft.icon image/svg+xml]
   end
 
-  plugin :derivation_endpoint, upload: true, prefix: "derivations/image" # matches mount point
+  plugin :derivation_endpoint, upload: true, prefix: 'derivations/image' # matches mount point
 
   derivation :thumbnail do |file, width, height|
+    # ICO
+    # source.download
+    # .coalesce
+
+    # ImageProcessing::MiniMagick
+    #   .source(file)
+    #   .resize_to_limit!(width.to_i, height.to_i)
+    #   .convert('png')
+
     ImageProcessing::MiniMagick
       .source(file)
-      .resize_to_limit!(width.to_i, height.to_i)
+      .resize_to_limit(width.to_i, height.to_i)
+      .loader(page: 0)
+      .convert('png')
+      .call
   end
 
   def generate_location(io, record: nil, derivative: nil, **)
@@ -30,7 +42,7 @@ class ImageUploader < Shrine
 
     table  = record.class.table_name
     id     = record.id
-    prefix = derivative || "original"
+    prefix = derivative || 'original'
 
     "uploads/#{table}/#{id}/#{prefix}-#{super}"
   end
