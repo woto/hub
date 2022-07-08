@@ -8,7 +8,7 @@
 #  updated_at    :datetime         not null
 #  image_id      :bigint           not null
 #  relation_id   :bigint           not null
-#  user_id       :bigint           not null
+#  user_id       :bigint
 #
 # Indexes
 #
@@ -25,6 +25,6 @@ FactoryBot.define do
   factory :images_relation do
     image
     relation { nil }
-    user
+    # user
   end
 end
