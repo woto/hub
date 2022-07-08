@@ -1,0 +1,25 @@
+<div class="tw-mt-6">
+  <div class="tw-relative">
+    <div class="tw-absolute tw-inset-0 tw-flex tw-items-center">
+      <div class="tw-w-full tw-border-t tw-border-gray-300"></div>
+    </div>
+    <div class="tw-relative tw-flex tw-justify-center tw-text-sm">
+      <span class="tw-px-2 tw-bg-white tw-text-gray-500"> Или войти с помощью </span>
+    </div>
+  </div>
+  <div class="tw-mt-6">
+    <%= render SocialButtonComponent.new(
+              type: 'google',
+              link_class: 'btn btn-white w-100',
+              title: 'Login with Google',
+              path: '/users/auth/google_oauth2/'
+          ) %>
+    &nbsp;
+    <%= render SocialButtonComponent.new(
+              type: 'facebook',
+              link_class: 'btn btn-white w-100',
+              title: 'Login with Facebook',
+              path: '/users/auth/facebook/'
+          ) %>
+  </div>
+</div>
