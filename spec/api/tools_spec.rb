@@ -16,28 +16,15 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'duckduckgo' => 'duckduckgo' })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/duckduckgo_instant',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/duckduckgo_instant' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/duckduckgo_instant',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
-  describe 'GET /api/tools/yandex_microdata' do
+  describe 'POST /api/tools/yandex_microdata' do
     context 'with url parameter' do
       it 'returns yandex extracted metadata' do
         stub_request(:get, 'https://validator-api.semweb.yandex.ru/v1.1/url_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true&url=https://example.com')
@@ -64,26 +51,6 @@ describe API::Tools, type: :request do
       end
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/yandex_microdata',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/yandex_microdata',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
     context 'when text is empty' do
       it 'returns error' do
         get '/api/tools/detect_language', headers: { 'HTTP_API_KEY' => user.api_key }
@@ -91,6 +58,13 @@ describe API::Tools, type: :request do
         expect(response).to have_http_status(:bad_request)
         expect(JSON.parse(response.body)).to eq('error' => 'text is missing')
       end
+    end
+
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/yandex_microdata' }
+      let(:http_method) { :post }
+
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -105,26 +79,6 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'a' => 'b' })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/iframely',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/iframely',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
     context 'when text is empty' do
       it 'returns error' do
         get '/api/tools/detect_language', headers: { 'HTTP_API_KEY' => user.api_key }
@@ -132,6 +86,13 @@ describe API::Tools, type: :request do
         expect(response).to have_http_status(:bad_request)
         expect(JSON.parse(response.body)).to eq('error' => 'text is missing')
       end
+    end
+
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/iframely' }
+      let(:http_method) { :get }
+
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -143,26 +104,6 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'code' => 'en', 'name' => 'ENGLISH', 'reliable' => true })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/detect_language',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/detect_language',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
     context 'when text is empty' do
       it 'returns error' do
         get '/api/tools/detect_language', headers: { 'HTTP_API_KEY' => user.api_key }
@@ -170,6 +111,13 @@ describe API::Tools, type: :request do
         expect(response).to have_http_status(:bad_request)
         expect(JSON.parse(response.body)).to eq('error' => 'text is missing')
       end
+    end
+
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/detect_language' }
+      let(:http_method) { :get }
+
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -183,26 +131,6 @@ describe API::Tools, type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq('key' => 'value')
-    end
-
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/scrape_webpage',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/scrape_webpage',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
     end
 
     context 'when url is invalid' do
@@ -226,6 +154,13 @@ describe API::Tools, type: :request do
         expect(response).to have_http_status(:gateway_timeout)
       end
     end
+
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/scrape_webpage' }
+      let(:http_method) { :get }
+
+      it_behaves_like 'protected endpoint'
+    end
   end
 
   describe 'GET /api/tools/npmjs' do
@@ -239,24 +174,11 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'npmjs' => 'npmjs' })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/npmjs',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/npmjs' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/npmjs',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -271,24 +193,11 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'rails' => 'rails' })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/rubygems',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/rubygems' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/rubygems',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -303,24 +212,11 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'google-graph' => 'google-graph' })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/google_graph',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/google_graph' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/google_graph',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -336,24 +232,11 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to eq({ 'google-custom-search' => 'google-custom-search' })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/google_custom_search',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/google_custom_search' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/google_custom_search',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -368,24 +251,11 @@ describe API::Tools, type: :request do
       expect(response.body).to eq('<yandex_xml>yandex_xml</yandex_xml>')
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/yandex_xml',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/yandex_xml' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/yandex_xml',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -439,24 +309,11 @@ describe API::Tools, type: :request do
       it_behaves_like 'successful response from t.me'
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/telegram',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/telegram' }
+      let(:http_method) { :get }
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/telegram',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+      it_behaves_like 'protected endpoint'
     end
   end
 
@@ -480,7 +337,7 @@ describe API::Tools, type: :request do
           }
         )
         .to_return(body: file_fixture('extractors/github/repository.json'),
-                   headers: { "Content-Type": 'application/json' })
+                   headers: { 'Content-Type': 'application/json' })
 
       stub_request(:get, 'https://api.github.com/repos/rails/rails/readme')
         .with(
@@ -491,7 +348,7 @@ describe API::Tools, type: :request do
         )
         .to_return(
           body: file_fixture('extractors/github/readme.html'),
-          headers: { "Content-Type": 'application/vnd.github.html' }
+          headers: { 'Content-Type': 'application/vnd.github.html' }
         )
 
       get '/api/tools/github', headers: { 'HTTP_API_KEY' => user.api_key },
@@ -501,24 +358,12 @@ describe API::Tools, type: :request do
       expect(JSON.parse(response.body)).to match({ 'readme' => include('Welcome to Rails') })
     end
 
-    context 'when user is not authorized' do
-      it 'returns error' do
-        get '/api/tools/github',
-            headers: { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq('error' => 'You need to sign in or sign up before continuing.')
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
 
-    context 'when API key is incorrect' do
-      it 'returns error' do
-        get '/api/tools/github',
-            headers: { 'API-KEY' => '123', 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
-        expect(JSON.parse(response.body)).to eq(
-          'error' => 'Invalid API key. Use API-KEY header or api_key query string parameter.'
-        )
-        expect(response).to have_http_status(:unauthorized)
-      end
+    describe 'protected endpoint' do
+      let(:url) { '/api/tools/github' }
+      let(:http_method) { :get }
+
+      it_behaves_like 'protected endpoint'
     end
   end
 end
