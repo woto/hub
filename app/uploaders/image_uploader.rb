@@ -19,21 +19,18 @@ class ImageUploader < Shrine
 
   plugin :derivation_endpoint, upload: true, prefix: 'derivations/image' # matches mount point
 
+  # R: reliability, :) I mast take a look later in places like Mastodon, Discourse...
   derivation :thumbnail do |file, width, height|
-    # ICO
-    # source.download
-    # .coalesce
-
-    # ImageProcessing::MiniMagick
-    #   .source(file)
-    #   .resize_to_limit!(width.to_i, height.to_i)
-    #   .convert('png')
-
     ImageProcessing::MiniMagick
       .source(file)
+      .coalesce
       .resize_to_limit(width.to_i, height.to_i)
-      .loader(page: 0)
-      .convert('png')
+      .call
+  rescue StandardError
+    ImageProcessing::Vips
+      .source(file)
+      .resize_to_limit(width.to_i, height.to_i)
+      .convert('webp')
       .call
   end
 
