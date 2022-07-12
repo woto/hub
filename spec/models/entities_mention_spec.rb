@@ -4,11 +4,14 @@
 #
 # Table name: entities_mentions
 #
-#  id         :bigint           not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  entity_id  :bigint           not null
-#  mention_id :bigint           not null
+#  id           :bigint           not null, primary key
+#  mention_date :datetime
+#  relevance    :integer
+#  sentiment    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  entity_id    :bigint           not null
+#  mention_id   :bigint           not null
 #
 # Indexes
 #
