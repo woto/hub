@@ -9,14 +9,12 @@
 
 <% content_for :after_body_open do %>
   <style>
-      body {
-          background: url(<%= asset_pack_path 'media/images/world_map.png' %>) no-repeat left !important;
-          text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-          box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+      html {
+          height: 100%;
       }
 
-      .noshadow {
-          text-shadow: none;
+      body {
+          background: url(<%= asset_pack_path 'media/images/world_map.png' %>) no-repeat left !important;;
       }
 
       .nav-link {
@@ -31,75 +29,69 @@
 
 <% content_for :body do %>
 
-  <%= tag.body class: "d-flex h-100 text-white bg-dark",
+  <%= tag.body class: "tw-flex tw-h-full tw-text-white !tw-bg-gray-900
+                       [text-shadow:0_.05rem_.1rem_rgba(0,0,0,.5)]
+                       [box-shadow:inset_0_0_5rem_rgba(0,0,0,.5)]",
                **data_attributes_for_body do %>
 
-  <%= content_for(:after_body_open) %>
+    <%= content_for(:after_body_open) %>
 
-  <div class="container-lg d-flex w-100 h-100 p-3 mx-auto flex-column" style="max-width: 90em">
+    <div class="tw-container tw-flex tw-w-full !tw-max-w-[80em] tw-h-full tw-p-4 tw-mx-auto tw-flex-col">
 
-    <div class="noshadow mb-4">
-      <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
-      <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
-    </div>
-
-    <header class="row mb-auto">
-      <div class="col-lg-5 col-6">
-        <%= image_tag(asset_pack_path('media/images/logo-white.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
+      <div class="[text-shadow:none] tw-mb-8">
+        <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
+        <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
       </div>
-      <div class="col-lg-7 col-6 d-flex">
-        <div class="ms-auto noshadow">
-          <%= render Header::LanguageComponent.new %>
+
+      <header class="tw-grid tw-grid-cols-12 tw-mb-auto">
+        <div class="tw-col-span-6 lg:tw-col-span-5">
+          <%= image_tag(asset_pack_path('media/images/logo-white.svg'), width: "110", height: "32") %>
         </div>
-      </div>
-    </header>
-
-    <main class="align-items-center row">
-
-      <div class="col-lg-5 mb-4">
-        <h1 class="fs-1 my-3"><%= t('.title') %></h1>
-        <p class="fs-5 mb-4"><%= t('.tagline') %></p>
-        <p class="lead">
-          <% if current_user %>
-            <%= link_to t('.dashboard'), dashboard_path, class: 'noshadow btn btn-lg btn-white fw-bold', 'data-turbo': false %>
-          <% else %>
-            <%= link_to t('.link'), offers_path, class: 'noshadow btn btn-lg btn-white fw-bold', 'data-turbo': false %>
-          <% end %>
-        </p>
-      </div>
-
-
-      <div class="ps-lg-4 ps-xxl-5 col-lg-7 d-flex justify-content-center">
-        <div class="ratio ratio-16x9 border border-white border-4" style="max-width: 50em;">
-          <iframe src="https://www.youtube.com/embed/yrwe6NaRgGA" title="Explainer" allowfullscreen></iframe>
-        </div>
-      </div>
-
-    </main>
-
-    <footer class="mt-auto text-white-50">
-      <div class="_container-xl">
-        <div class="row texnot-center align-items-center flex-row-reverse">
-          <div class="col-lg-auto ms-lg-auto">
-            <ul class="list-inline list-inline-dots mb-0 ms-0">
-              <li class="list-inline-item">
-                <a href="https://rubyonrails.org" class="link-secondary">Made with ❤ Ruby on Rails</a>
-              </li>
-            </ul>
+        <div class="tw-col-span-6 lg:tw-col-span-7 tw-flex">
+          <div class="tw-ml-auto [text-shadow:none]">
+            <%= render Header::LanguageComponent.new %>
           </div>
-          <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+        </div>
+      </header>
+
+      <main class="tw-items-center tw-grid tw-grid-cols-12">
+
+        <div class="tw-col-span-12 lg:tw-col-span-5 tw-mb-8">
+          <h1 class="tw-text-xl md:tw-text-4xl tw-font-bold tw-my-3"><%= t('.title') %></h1>
+          <p class="tw-mb-8"><%= t('.tagline') %></p>
+          <p>
+            <% if current_user %>
+              <%= link_to t('.dashboard'), dashboard_path, class: '[text-shadow:none] !tw-no-underline tw-font-semibold tw-inline-flex tw-items-center tw-px-7 tw-py-2 tw-border tw-border-gray-300 tw-shadow-sm tw-text-lg tw-font-medium tw-rounded-md hover:tw-text-gray-700 tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-500' %>
+            <% else %>
+              <%= link_to t('.link'), offers_path, class: '[text-shadow:none]  !tw-no-underline tw-font-semibold tw-inline-flex tw-items-center tw-px-7 tw-py-2 tw-border tw-border-gray-300 tw-shadow-sm tw-text-lg tw-font-medium tw-rounded-md hover:tw-text-gray-700 tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-500' %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="lg:tw-pl-8 xxl:tw-ps-4 tw-col-span-12 lg:tw-col-span-7 tw-flex tw-justify-center">
+          <iframe class="tw-aspect-video tw-w-full tw-relative tw-border-white tw-border-solid tw-border-4 tw-max-w-[40em]" src="https://www.youtube.com/embed/yrwe6NaRgGA" title="Explainer" allowfullscreen></iframe>
+        </div>
+
+      </main>
+
+      <footer class="tw-mt-auto tw-text-sm tw-leading-6 tw-text-white/50">
+        <div class="tw-flex-row-reverse md:tw-flex tw-justify-between">
+          <div class="tw-place-self-end">
+            <a href="https://rubyonrails.org" class="!tw-text-zinc-500 tw-whitespace-nowrap">Made with ❤ Ruby on Rails</a>
+          </div>
+          <div class="tw-mt-4 lg:tw-mt-0">
             Copyright © 2020
-            <a href="/" class="link-secondary">Good Reviews</a>.
+            <a href="/" class="!tw-text-zinc-500 tw-whitespace-nowrap">Good Reviews</a>.
             All rights reserved.
             <br>
-            г. Москва, ул. 8 Марта, д. 8, корп. 2, оф. 83, <a class="link-secondary text-nowrap" href="https://t.me/woto7">+7 (916) 907-27-88</a>
+            г. Москва, ул. 8 Марта, д. 8, корп. 2, оф. 83,
+            <a class="!tw-text-zinc-500 tw-whitespace-nowrap" href="https://t.me/woto7">+7 (916) 907-27-88</a>
           </div>
         </div>
-      </div>
-    </footer>
-  </div>
+      </footer>
+    </div>
 
-  <%= content_for :before_body_close %>
+    <%= content_for :before_body_close %>
 
   <% end %>
 
