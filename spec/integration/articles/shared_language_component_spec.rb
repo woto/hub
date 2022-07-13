@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Tables::ArticlesController shared_language_component', type: :system do
 
-  SELECTOR = "[data-test-class='language_component']"
+  SELECTOR = "[data-test-id='language-component']"
 
   context 'when kind is news' do
     let!(:realm) { create(:realm, locale: :'en-US', kind: :news) }

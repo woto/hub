@@ -1,26 +1,20 @@
-<%= link_to '#', helpers.test_class => 'language_component', class: 'nav-link px-0', 'data-bs-toggle': 'dropdown' do %>
-  <div class="dropdown-item-icon">
-    <i class="fas fa-globe fa-lg"></i>
-  </div>
-  <span class="d-none d-xl-inline">
-    <%= t('.title') %>
-  </span>
-<% end %>
-
-<%= tag.div helpers.test_class => 'language_component', class: 'dropdown-menu dropdown-menu-end' do %>
-  <% I18n.available_locales.each do |locale| %>
-    <% css_class = 'dropdown-item' %>
-    <%= link_to helpers.system_locale_to_human(locale),
-                helpers.path_for_switch_language(locale, Current.realm&.kind) ||
-                  url_for(
-                    Tools::SwitchLanguage.call(
-                      subdomains: request.subdomains,
-                      host: request.host,
-                      locale: locale).object
-                  ),
-                helpers.test_class => 'link',
-                'data-turbo': false,
-                class: css_class %>
-  <% end %>
-<% end %>
-
+<%= render(
+      ReactComponent.new(name: 'Language',
+                         props: {
+                           currentLanguage: '',
+                           title: t('.title'),
+                           languages:
+                             I18n.available_locales.map do |locale|
+                               {
+                                 title: helpers.system_locale_to_human(locale),
+                                 url: helpers.path_for_switch_language(locale, Current.realm&.kind) ||
+                                   url_for(
+                                     Tools::SwitchLanguage.call(
+                                       subdomains: request.subdomains,
+                                       host: request.host,
+                                       locale: locale).object
+                                   )
+                               }
+                             end
+                           }))
+%>
