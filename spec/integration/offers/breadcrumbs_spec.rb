@@ -19,7 +19,7 @@ describe 'Offers breadcrumbs', type: :system do
         'Главная',
         href: root_path(locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -30,7 +30,7 @@ describe 'Offers breadcrumbs', type: :system do
         'Личн. кабинет',
         href: dashboard_path(locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -41,7 +41,7 @@ describe 'Offers breadcrumbs', type: :system do
         'Все офферы',
         href: offers_path(q: name, locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -52,7 +52,7 @@ describe 'Offers breadcrumbs', type: :system do
         advertiser.to_label,
         href: advertiser_offers_path(advertiser_id: advertiser, q: name, locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -63,7 +63,7 @@ describe 'Offers breadcrumbs', type: :system do
         feed.to_label,
         href: feed_offers_path(feed_id: feed, q: name, locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -74,7 +74,7 @@ describe 'Offers breadcrumbs', type: :system do
         parent_feed_category.to_label,
         href: feed_category_offers_path(feed_category_id: parent_feed_category, q: name, locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -85,7 +85,7 @@ describe 'Offers breadcrumbs', type: :system do
         child_feed_category.to_label,
         href: feed_category_offers_path(feed_category_id: child_feed_category, q: name, locale: :ru)
       )
-      link.ancestor(class: ['breadcrumb-item', active_class])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 
@@ -161,7 +161,7 @@ describe 'Offers breadcrumbs', type: :system do
         favorite.to_label,
         href: offers_path(favorite_id: favorite.id, q: name, locale: :ru)
       )
-      link.ancestor(class: %w[breadcrumb-item active])
+      link.ancestor('[data-test-id="breadcrumb-component"]')
     end
   end
 end

@@ -5,25 +5,22 @@
 <% end %>
 
 <% content_for :breadcrumbs do %>
-    <% unless @post_category %>
-      <% css_class = 'active' %>
-    <% end %>
-
+  <%= render BreadcrumbComponent.new do |b| %>
     <% unless current_page?(root_url) %>
-      <%= tag.li class: "breadcrumb-item #{css_class}" do %>
-        <%= link_to t('breadcrumbs.homepage'), root_path %>
+      <%= b.root_item title: t('breadcrumbs.homepage'), url: root_path %>
+    <% end %>
+    <% if params[:tag] %>
+      <%= b.item title: params[:tag], url: articles_by_tag_path(params[:tag]) %>
+    <% end %>
+    <% if params[:month] %>
+      <%= b.item title: params[:month], url: articles_by_month_path(params[:month]) %>
+    <% end %>
+    <% if @post_category %>
+      <% @post_category.path.each do |post_category| %>
+        <% b.item title: post_category.to_label, url: articles_by_category_link(post_category.id) %>
       <% end %>
     <% end %>
-
-    <% @post_category && @post_category.path.each do |post_category| %>
-      <% if @post_category.path.last == post_category %>
-        <% css_class = 'active' %>
-      <% end %>
-
-      <%= tag.li class: "breadcrumb-item #{css_class}" do %>
-        <%= link_to post_category.to_label, articles_by_category_link(post_category.id) %>
-      <% end %>
-    <% end %>
+  <% end %>
 <% end %>
 
 <%= render 'items_summary', rows: rows %>

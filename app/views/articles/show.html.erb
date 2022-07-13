@@ -2,20 +2,11 @@
 <% seo.description! @article.description %>
 
 <% content_for :breadcrumbs do %>
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.homepage'), root_path %>
-  </li>
-
-  <% @article_category.path.each do |post_category| %>
-    <%= tag.li class: "breadcrumb-item" do %>
-      <%= link_to post_category.to_label, articles_by_category_link(post_category.id) %>
+  <%= render BreadcrumbComponent.new do |b| %>
+    <%= b.root_item title: t('breadcrumbs.homepage'), url: root_path %>
+    <% @article_category.path.each do |post_category| %>
+      <%= b.item title: post_category.to_label, url: articles_by_category_link(post_category.id)  %>
     <% end %>
-  <% end %>
-
-  <% if false %>
-  <li class="breadcrumb-item active">
-    <%= link_to @article.title, articles_path(id: @article.id) %>
-  </li>
   <% end %>
 <% end %>
 

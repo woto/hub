@@ -1,0 +1,12 @@
+<div data-test-id="breadcrumb-component">
+  <div class="">
+    <nav class="tw-flex" aria-label="Breadcrumb">
+      <ol role="list" class="tw-flex tw-items-center tw-space-x-4">
+        <%= root_item %>
+        <% items.each do |item| %>
+          <%= item %>
+        <% end %>
+      </ol>
+    </nav>
+  </div>
+</div>

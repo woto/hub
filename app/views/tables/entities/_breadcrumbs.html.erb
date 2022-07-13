@@ -1,11 +1,7 @@
 <% content_for :breadcrumbs do %>
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.homepage'), root_path %>
-  </li>
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
-  </li>
-  <li class="breadcrumb-item active">
-    <%=link_to t('breadcrumbs.entities'), entities_path %>
-  </li>
+  <%= render BreadcrumbComponent.new do |b| %>
+    <%= b.root_item title: t('breadcrumbs.homepage'), url: root_path %>
+    <%= b.item title: t('breadcrumbs.dashboard'), url: dashboard_path %>
+    <%= b.item title: t('breadcrumbs.entities'), url: entities_path %>
+  <% end %>
 <% end %>

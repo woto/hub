@@ -82,10 +82,6 @@ dt {
   background-image: initial;
 }
 
-.breadcrumb-item.active a {
-  pointer-events: initial !important;
-}
-
 .alert a {
   vertical-align: initial !important;
 }
@@ -132,11 +128,6 @@ aside {
   &:hover svg {
     color: white !important;
   }
-}
-
-// This value is deprecated, but I didn't find the replacement for bug that occurs with squeezed arrows in breadcrumb
-.breadcrumb {
-  display: -webkit-inline-box;
 }
 
 // th, .card-header, .card-footer {

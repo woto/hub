@@ -1,47 +1,27 @@
 <% content_for :breadcrumbs do %>
 
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.homepage'), root_path %>
-  </li>
+  <%= render BreadcrumbComponent.new do |b| %>
+    <%= b.root_item(title: t('breadcrumbs.homepage'), url: root_path) %>
+    <%= b.item(title: t('breadcrumbs.dashboard'), url: dashboard_path) %>
+    <%= b.item(title: t('breadcrumbs.offers'), url: offers_path(q: params[:q], per: params[:per])) %>
 
-  <li class="breadcrumb-item">
-    <%= link_to t('breadcrumbs.dashboard'), dashboard_path %>
-  </li>
+    <% if @favorite %>
+      <%= b.item(title: "Избранное: #{@favorite.to_label}",
+                 url: polymorphic_path(@favorite.kind, favorite_id: @favorite.id, q: params[:q], per: params[:per])) %>
+    <% end %>
 
-  <% css_class = 'active' unless current_advertiser || @favorite %>
-  <li class="breadcrumb-item <%= css_class %>">
-    <%= link_to t('breadcrumbs.offers'),
-               offers_path(q: params[:q], per: params[:per]) %>
-  </li>
+    <% if current_advertiser %>
+      <%= b.item(title: current_advertiser.to_label,
+                 url: advertiser_offers_path(advertiser_id: current_advertiser, q: params[:q], per: params[:per])) %>
 
-  <% if @favorite %>
-    <li class="breadcrumb-item active">
-      <%= link_to "Избранное: #{@favorite.to_label}",
-                 polymorphic_path(@favorite.kind, favorite_id: @favorite.id, q: params[:q], per: params[:per]) %>
-    </li>
-  <% end %>
+      <% if current_feed %>
+        <%= b.item(title: current_feed.to_label,
+                   url: feed_offers_path(feed_id: current_feed, q: params[:q], per: params[:per])) %>
 
-  <% if current_advertiser %>
-    <% css_class = 'active' unless current_feed %>
-    <li class="breadcrumb-item <%= css_class %>">
-      <%= link_to current_advertiser.to_label,
-                 advertiser_offers_path(advertiser_id: current_advertiser, q: params[:q], per: params[:per]) %>
-    </li>
-
-    <% if current_feed %>
-      <% css_class = 'active' unless current_feed_category %>
-      <li class="breadcrumb-item <%= css_class %>">
-        <%= link_to current_feed.to_label,
-                   feed_offers_path(feed_id: current_feed, q: params[:q], per: params[:per]) %>
-      </li>
-
-      <% if current_feed_category %>
-        <% current_feed_category.path.each do |el| %>
-          <% css_class = 'active' if el.id == current_feed_category.id %>
-          <%= tag.li class: "breadcrumb-item #{css_class}" do  %>
-            <%= link_to el.to_label,
-                        feed_category_offers_path(feed_category_id: el.id, q: params[:q], per: params[:per]),
-                        class: css_class %>
+        <% if current_feed_category %>
+          <% current_feed_category.path.each do |el| %>
+            <%= b.item(title: el.to_label,
+                       url: feed_category_offers_path(feed_category_id: el.id, q: params[:q], per: params[:per])) %>
           <% end %>
         <% end %>
       <% end %>
