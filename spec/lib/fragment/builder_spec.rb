@@ -24,4 +24,12 @@ describe Fragment::Builder do
       expect(described_class.call(url: 'https://ya.ru')).to eq('https://ya.ru')
     end
   end
+
+  context 'when text_start failed to escape' do
+    # NOTE: I have no idea what should be done to process this correctly. It's just workaround to prevent exception
+    it 'does not raise exception' do
+      expect(described_class.call(url: 'https://ya.ru/', prefix: '', text_start: '\nUrenthttps://urent.ru', suffix: ''))
+        .to eq('https://ya.ru/')
+    end
+  end
 end

@@ -6,10 +6,14 @@ module Fragment
       result = url
 
       fragments = ''
-      fragments += "#{Addressable::URI.escape(prefix)}-," if prefix.present?
-      fragments += Addressable::URI.escape(text_start) if text_start.present?
-      fragments += ",#{Addressable::URI.escape(text_end)}" if text_end.present?
-      fragments += ",-#{Addressable::URI.escape(suffix)}" if suffix.present?
+      begin
+        fragments += "#{Addressable::URI.escape(prefix)}-," if prefix.present?
+        fragments += Addressable::URI.escape(text_start) if text_start.present?
+        fragments += ",#{Addressable::URI.escape(text_end)}" if text_end.present?
+        fragments += ",-#{Addressable::URI.escape(suffix)}" if suffix.present?
+      rescue StandardError
+        # Ignored
+      end
 
       if fragments.present?
         result += '#:~:text='
