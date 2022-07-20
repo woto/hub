@@ -19,7 +19,7 @@
             <% end %>
           </p>
         </div>
-        <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true, method: :post, 'data': { turbo: false }) do |f| %>
+        <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true, method: :post) do |f| %>
           <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'danger') %>
           <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
           <div class="tw-mt-6">

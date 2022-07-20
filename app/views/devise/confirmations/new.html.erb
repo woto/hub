@@ -12,7 +12,7 @@
             <%= t('.resend_confirmation_instructions') %>
           </h2>
         </div>
-        <%= form_with(model: resource, as: resource_name, url: confirmation_path(resource_name), local: true, method: :post, 'data': { turbo: false }) do |f| %>
+        <%= form_with(model: resource, as: resource_name, url: confirmation_path(resource_name), local: true, method: :post) do |f| %>
           <% if f.object.errors.include?(:confirmation_token) %>
             <%= render TopPageNotifyComponent.new(message: f.object.errors.full_messages_for(:confirmation_token), alert_type: :danger) %>
           <% else %>

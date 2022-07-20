@@ -30,6 +30,7 @@ describe Users::SessionsController, type: :system do
     it 'changes failed login attempts' do
       expect do
         send_form(user.email, Faker::Alphanumeric.alphanumeric)
+        expect(page).to have_text('Неправильный Email или пароль.')
       end.to change { user.reload.failed_attempts }.by(1)
     end
   end
@@ -108,6 +109,7 @@ describe Users::SessionsController, type: :system do
       it 'locks account' do
         expect do
           send_form(user.email, Faker::Lorem.word)
+          expect(page).to have_text('Ваша учетная запись заблокирована.')
         end.to change { user.reload.valid_for_authentication? }.from(true).to(false)
       end
 

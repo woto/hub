@@ -12,7 +12,7 @@
             <%= t('.forgot_your_password') %>
           </h2>
         </div>
-        <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), local: true, method: :post, 'data': { turbo: false }) do |f| %>
+        <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), local: true, method: :post) do |f| %>
           <% if f.object.errors.present?  %>
             <%= render TopPageNotifyComponent.new(message: 'Невозможно сохранить. Пожалуйста заполните поля', alert_type: 'danger') %>
           <% end %>
