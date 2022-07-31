@@ -16,7 +16,7 @@ describe Interactors::Cites::Create::ImagesInteractor do
   context 'when entity does not have passed image' do
     let(:params) do
       [{ 'id' => nil, 'destroy' => false,
-         'file' => Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg') }]
+         'json' => Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg') }]
     end
 
     it 'creates new image with correct attributes', aggregate_failures: true do
@@ -70,6 +70,62 @@ describe Interactors::Cites::Create::ImagesInteractor do
 
     it 'does not fail' do
       expect { interactor }.not_to raise_error
+    end
+  end
+
+  describe 'order of new images' do
+    let!(:image) { create(:image) }
+    let(:files) do
+      [
+        { 'id' => nil, 'destroy' => false, 'json' => Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg') },
+        { 'id' => image.id, 'destroy' => false, 'json' => {} },
+        { 'id' => nil, 'destroy' => false, 'json' => Rack::Test::UploadedFile.new('spec/fixtures/files/jessa_rhodes.jpg') }
+      ]
+    end
+
+    before do
+      create(:images_relation, image: image, relation: entity)
+    end
+
+    context 'with forward images order' do
+      let(:params) { [files[0], files[1], files[2]] }
+
+      specify aggregate_failures: true do
+        expect { interactor }.to change(Image, :count).by(2)
+        matcher = [have_attributes(image_data: include('metadata' => include('filename' => 'adriana_chechik.jpg'))),
+                   have_attributes(image_data: include('metadata' => include('filename' => 'test.jpg'))),
+                   have_attributes(image_data: include('metadata' => include('filename' => 'jessa_rhodes.jpg')))]
+        expect(entity.reload.images).to(match(matcher))
+        expect(cite.reload.images).to(match(matcher))
+      end
+    end
+
+    context 'with backward images order' do
+      let(:params) { [files[2], files[1], files[0]] }
+
+      specify aggregate_failures: true do
+        expect { interactor }.to change(Image, :count).by(2)
+        matcher = [have_attributes(image_data: include('metadata' => include('filename' => 'jessa_rhodes.jpg'))),
+                   have_attributes(image_data: include('metadata' => include('filename' => 'test.jpg'))),
+                   have_attributes(image_data: include('metadata' => include('filename' => 'adriana_chechik.jpg')))]
+        expect(entity.reload.images).to(match(matcher))
+        expect(cite.reload.images).to(match(matcher))
+      end
+    end
+  end
+
+  context 'when submits cached image with destroy flag' do
+    let(:params) do
+      [{ 'id' => nil, 'destroy' => true,
+         'json' => Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg') }]
+    end
+
+    it 'does not create ImagesRelation' do
+      expect { interactor }.not_to change(ImagesRelation, :count)
+    end
+
+    it 'does not create Image' do
+      expect { interactor }.not_to change(Image, :count)
     end
   end
 end

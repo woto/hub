@@ -16,7 +16,7 @@ module Interactors
               array(:hash) do
                 required(:id)
                 required(:destroy)
-                required(:file)
+                optional(:json)
               end
             end
           end
@@ -25,26 +25,37 @@ module Interactors
         def call
           return if params.nil?
 
-          without_ids, with_ids = params.partition { |image_params| image_params['id'].blank? }
-
-          without_ids.each do |image_params|
-            image = Image.create!(image: image_params['file'], user: user)
-            ImagesRelation.create!(image: image, relation: cite, user: user)
-            ImagesRelation.create!(image: image, relation: entity, user: user)
-          end
-
-          images = Image.find(with_ids.map { |item| item['id'] })
-
-          with_ids.each do |image_params|
-            matched_image = images.find { |item| item.id == image_params['id'] }
-
-            if image_params['destroy']
-              images_relation = ImagesRelation.find_by(image: matched_image, relation: entity)
-              images_relation.destroy!
+          params.each_with_index do |image_params, index|
+            if image_params['id'].present?
+              process_image_with_id(image_params, index)
             else
-              ImagesRelation.create!(image_id: image_params['id'], relation: cite, user: user)
+              process_image_without_id(image_params, index)
             end
           end
+        end
+
+        def process_image_with_id(image_params, index)
+          image = Image.find(image_params['id'])
+          images_relation = ImagesRelation.find_by!(image: image, relation: entity)
+
+          if image_params['destroy']
+            # TODO: check
+            # return unless images_relation
+            images_relation.destroy!
+          else
+            ImagesRelation.create!(image: image, order: index, relation: cite, user: user)
+            images_relation.update!(order: index)
+          end
+        end
+
+        def process_image_without_id(image_params, index)
+          # TODO: check
+          # return unless image_params['json']
+          return if image_params['destroy']
+
+          image = Image.create!(image: image_params['json'], user: user)
+          ImagesRelation.create!(image: image, order: index, relation: cite, user: user)
+          ImagesRelation.create!(image: image, order: index, relation: entity, user: user)
         end
       end
     end

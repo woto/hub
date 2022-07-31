@@ -60,6 +60,9 @@ class Entity < ApplicationRecord
 
   has_many :lookups, dependent: :destroy
 
+  has_many :images_relations, as: :relation, dependent: :destroy
+  has_many :images, -> { includes(:images_relations).order('images_relations.order') }, through: :images_relations
+
   before_validation :strip_title
   before_validation :strip_intro
 
