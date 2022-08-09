@@ -3,6 +3,8 @@
 # Table name: images_relations
 #
 #  id            :bigint           not null, primary key
+#  dark          :boolean
+#  order         :integer
 #  relation_type :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

@@ -16,6 +16,7 @@ module Interactors
               array(:hash) do
                 required(:id)
                 required(:destroy)
+                optional(:dark)
                 optional(:json)
               end
             end
@@ -43,8 +44,8 @@ module Interactors
             # return unless images_relation
             images_relation.destroy!
           else
-            ImagesRelation.create!(image: image, order: index, relation: cite, user: user)
-            images_relation.update!(order: index)
+            ImagesRelation.create!(image: image, order: index, relation: cite, dark: image_params['dark'], user: user)
+            images_relation.update!(order: index, dark: image_params['dark'])
           end
         end
 
@@ -54,8 +55,8 @@ module Interactors
           return if image_params['destroy']
 
           image = Image.create!(image: image_params['json'], user: user)
-          ImagesRelation.create!(image: image, order: index, relation: cite, user: user)
-          ImagesRelation.create!(image: image, order: index, relation: entity, user: user)
+          ImagesRelation.create!(image: image, order: index, relation: cite, dark: image_params['dark'], user: user)
+          ImagesRelation.create!(image: image, order: index, relation: entity, dark: image_params['dark'], user: user)
         end
       end
     end

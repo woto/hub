@@ -60,7 +60,7 @@ describe Interactors::Cites::Create::ImagesInteractor do
     let!(:images_relation) { create(:images_relation, image: image, relation: entity) }
 
     it 'creates images_relation only for cite', aggregate_failures: true do
-      expect { interactor }.to change(ImagesRelation, :count)
+      expect { interactor }.to change(ImagesRelation, :count).by(1)
       expect(ImagesRelation.last).to have_attributes(image: image, user: user, relation: cite)
     end
   end
@@ -127,5 +127,46 @@ describe Interactors::Cites::Create::ImagesInteractor do
     it 'does not create Image' do
       expect { interactor }.not_to change(Image, :count)
     end
+  end
+
+  shared_examples 'new images respect dark values' do |dark_value|
+    let(:params) do
+      [{ 'id' => nil, 'dark' => dark_value, 'destroy' => false,
+         'json' => Rack::Test::UploadedFile.new('spec/fixtures/files/adriana_chechik.jpg') }]
+    end
+
+    it 'creates 2 images_relation with correct `dark_value`', aggregate_failures: true do
+      expect { interactor }.to change(ImagesRelation, :count).by(2)
+      expect(ImagesRelation.find_by(relation: cite)).to have_attributes(image: Image.last, dark: dark_value)
+      expect(ImagesRelation.find_by(relation: entity)).to have_attributes(image: Image.last, dark: dark_value)
+    end
+  end
+
+  context 'when image creates with `dark` is `true`' do
+    it_behaves_like 'new images respect dark values', true
+  end
+
+  context 'when image creates with `dark` is `false`' do
+    it_behaves_like 'new images respect dark values', false
+  end
+
+  shared_examples 'saved images respect dark values' do |dark_value|
+    let(:image) { create(:image) }
+    let(:params) { [{ 'id' => image.id, 'dark' => dark_value, 'destroy' => false, 'file' => {} }] }
+    let!(:images_relation) { create(:images_relation, image: image, relation: entity) }
+
+    it 'creates images_relation for cite and updates for entity with correct `dark_value`', aggregate_failures: true do
+      expect { interactor }.to change(ImagesRelation, :count).by(1)
+      expect(ImagesRelation.find_by(relation: cite)).to have_attributes(image: Image.last, dark: dark_value)
+      expect(ImagesRelation.find_by(relation: entity)).to have_attributes(image: Image.last, dark: dark_value)
+    end
+  end
+
+  context 'when image updates with `dark` is `true`' do
+    it_behaves_like 'saved images respect dark values', true
+  end
+
+  context 'when image updates with `dark` is `false`' do
+    it_behaves_like 'saved images respect dark values', false
   end
 end
