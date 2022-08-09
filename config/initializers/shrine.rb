@@ -3,6 +3,9 @@
 require 'shrine'
 require 'shrine/storage/file_system'
 
+Shrine.plugin :instrumentation
+Shrine.logger = Rails.logger
+
 Shrine.storages = {
   cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads/cache'), # temporary
   store: Shrine::Storage::FileSystem.new('public', prefix: 'uploads') # permanent
@@ -11,9 +14,19 @@ Shrine.storages = {
 Shrine.plugin :activerecord # or :activerecord
 Shrine.plugin :cached_attachment_data # for retaining the cached file across form redisplays
 Shrine.plugin :restore_cached_data # re-extract metadata when attaching a cached file
-# Shrine.plugin :derivatives # allows storing processed files ("derivatives") alongside the main attached file
-Shrine.plugin :derivation_endpoint, secret_key: Rails.application.secret_key_base
-Shrine.plugin :upload_endpoint
+Shrine.plugin :derivatives
+Shrine.plugin :derivation_endpoint, secret_key: Rails.application.secret_key_base,
+  host: "#{ENV.fetch('RAILS_SCHEMA')}://#{ENV.fetch('DOMAIN_NAME')}:#{ENV.fetch('RAILS_PORT')}",
+  prefix: 'derivations/image'
+Shrine.plugin :upload_endpoint,
+  upload: -> (io, options, request) {
+    ImageUploader.upload(io, :cache, **options)
+  },
+  url: -> (uploaded_file, request) {
+    derivation = uploaded_file.derivation(:thumbnail, 100, 100)
+    derivation.processed
+    derivation.url
+  }
 Shrine.plugin :rack_file
 Shrine.plugin :determine_mime_type
 # Shrine.plugin :presign_endpoint
