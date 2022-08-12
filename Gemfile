@@ -56,8 +56,8 @@ group :development do
   gem 'annotate'
   gem 'i18n-debug'
   gem 'listen', '~> 3.3'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # gem 'spring'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 4.1.0'
   # gem 'rack-mini-profiler', '~> 2.0'
 end
@@ -152,9 +152,10 @@ gem 'kaminari'
 gem 'simple_form'
 gem 'view_component'
 
-# language detect
+# Text processing
 # gem 'whatlanguage'
 gem 'cld'
+gem 'diffy'
 # gem 'stopwords-filter', require: 'stopwords', github: 'woto/stopwords-filter', branch: 'fix_locales'
 
 # Tree structure
@@ -206,6 +207,9 @@ gem 'image_processing', '~> 1.11'
 gem 'mini_magick', '~> 4.10'
 gem 'ruby-vips'
 
+# Video processing
+gem 'streamio-ffmpeg'
+
 # Graph visualization
 gem 'ruby-graphviz'
 
@@ -213,7 +217,12 @@ gem 'ruby-graphviz'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
 
+# Experimental
+gem 'wikipedia-client'
+
 # Deprecated
 gem 'action-cable-testing'
 gem 'numbers_and_words'
 gem 'rails-controller-testing'
+
+gem 'htmlbeautifier'

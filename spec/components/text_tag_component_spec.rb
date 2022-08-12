@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+
 RSpec.describe TextTagComponent, type: :component do
   context 'when alias looks like url' do
     it 'renders badge with link' do

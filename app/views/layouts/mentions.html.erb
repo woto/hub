@@ -1,0 +1,65 @@
+<%= tag.html lang: I18n.locale.downcase, class: 'tw-h-full tw-bg-gray-100' do %>
+  <head>
+    <%= render 'trackers_tawk' %>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+
+    <%= seo.tags %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%#= stylesheet_packs_with_chunks_tag 'react', "data-turbo-track": "reload" %>
+    <%= javascript_packs_with_chunks_tag 'mentions', "data-turbo-track": "reload" %>
+    <%= stylesheet_packs_with_chunks_tag 'mentions', "data-turbo-track": "reload" %>
+    <%= javascript_packs_with_chunks_tag 'turbo', "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "/tailwind.css/?rnd=#{Time.now.to_i}" %>
+
+    <%= render 'trackers_google' %>
+    <%= render 'trackers_yandex' %>
+  </head>
+
+  <body class="tw-h-full">
+  <%= render(
+        ReactComponent.new(name: 'Mentions',
+                           class: "tw-h-[65px] tw-bg-slate-900 lg:tw-bg-slate-100",
+                           props: {
+                             logoSrc: asset_pack_path('media/images/roast-me-fire-blue.svg'),
+                             searchBar: {
+                               buttonTitle: t('header.search.button'),
+                               placeholder: t('header.search.placeholder'),
+                               q: params[:q],
+                               items: [
+                                 {
+                                   title: 'Везде',
+                                   url: url_for_search_everywhere
+                                 }
+                               ]
+                             },
+                             language: serialize_language_attributes,
+                             user: serialize_user_attributes(current_user),
+                             navigation: [
+                               { title: 'Упоминания', url: mentions_path, current: current_page?(mentions_path) },
+                               { title: 'Объекты', url: entities_path, current: current_page?(entities_path) },
+                               { title: 'Тиндер', url: tinder_index_path, current: current_page?(tinder_index_path) }
+                             ] })) %>
+
+  <header class="tw-py-5">
+    <div class="tw-max-w-7xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8">
+      <%= render TitleComponent.new(title: seo.title) %>
+      <!--        <h1 class="tw-text-3xl tw-font-bold tw-text-white">Dashboard</h1>-->
+    </div>
+  </header>
+
+  <main class="">
+    <div class="tw-max-w-7xl tw-mx-auto tw-pb-12 tw-px-4 sm:tw-px-6 lg:tw-px-8">
+      <div class="tw-bg-white sm:tw-rounded-lg sm:tw-shadow sm:tw-px-6 sm:tw-py-6">
+        <%= yield %>
+      </div>
+    </div>
+  </main>
+  </body>
+
+<% end %>

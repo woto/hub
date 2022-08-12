@@ -1,20 +1,6 @@
 <%= render(
       ReactComponent.new(name: 'Language',
-                         props: {
-                           currentLanguage: '',
-                           title: t('.title'),
-                           languages:
-                             I18n.available_locales.map do |locale|
-                               {
-                                 title: helpers.system_locale_to_human(locale),
-                                 url: helpers.path_for_switch_language(locale, Current.realm&.kind) ||
-                                   url_for(
-                                     Tools::SwitchLanguage.call(
-                                       subdomains: request.subdomains,
-                                       host: request.host,
-                                       locale: locale).object
-                                   )
-                               }
-                             end
-                           }))
+                         class: 'tw-h-20 tw-w-20 tw-bg-red-500',
+                         props: helpers.serialize_language_attributes)
+    )
 %>

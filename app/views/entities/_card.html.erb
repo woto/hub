@@ -1,0 +1,178 @@
+<div class="tw-grid tw-grid-cols-1 tw-gap-4">
+  <div class="tw-gap-4">
+
+    <%= render(
+          ReactComponent.new(name: 'Carousel',
+                             class: 'tw-w-full',
+                             props: {
+                               items: GlobalHelper.image_hash(@entity.images).insert(1, { mime_type: 'text', text: @entity.intro })
+                             }))
+    %>
+
+    <%= render (
+                 ReactComponent.new(name: 'EntitiesButtons',
+                                    class: '',
+                                    props: {
+
+                                    })
+               ) %>
+
+    <section aria-labelledby="section-2-title" class="">
+
+      <div class="">
+        <div class="tw-py-5">
+          <div class="tw-flex tw-flex-col tw-gap-5 tw-w-full">
+              <div class="tw-flex tw-flex-wrap tw-gap-1 tw-my-8">
+                <% @entity.topics.each do |topic| %>
+                  <%= render ReactComponent.new(name: 'EntitiesTag',
+                                                class: '',
+                                                props: {
+                                                  tag: topic,
+                                                  textColor: 'tw-text-blue-800',
+                                                  bgColor: 'tw-bg-blue-100'
+                                                }) %>
+                <% end %>
+
+                <% @entity.lookups.each do |topic| %>
+                  <%= render ReactComponent.new(name: 'EntitiesTag',
+                                                class: '',
+                                                props: {
+                                                  tag: topic,
+                                                  textColor: 'tw-text-pink-800',
+                                                  bgColor: 'tw-bg-pink-100',
+                                                  linkify: true
+                                                }) %>
+                <% end %>
+              </div>
+
+              <% if true %>
+              <div class="tw-flex tw-gap-4">
+                <%= render BookmarkComponent.new(favorites_store: @favorites_store, ext_id: @entity.id, favorites_items_kind: 'entities') %>
+
+                <%= render(
+                      ReactComponent.new(name: 'EntitiesTimeline',
+                                         class: '',
+                                         props: { entityId: @entity.id }))
+                %>
+
+                <%= render(
+                      ReactComponent.new(name: 'EntitiesEditLink',
+                                         class: '',
+                                         props: {
+                                           entityId: @entity.id,
+                                         }))
+                %>
+
+
+                <%= render (
+                             ReactComponent.new(name: 'EntitiesReport',
+                                                class: '',
+                                                props: {
+                                                  entityId: @entity.id,
+                                                })
+                           ) %>
+
+              </div>
+              <% end %>
+
+
+            <% if false %>
+
+                <dl class="tw-divide-y tw-divide-gray-200">
+                  <div class="tw-py-2 sm:tw-py-3 sm:tw-grid sm:tw-grid-cols-2 sm:tw-gap-4">
+                    <dt class="!tw-mb-auto tw-text-sm tw-font-medium tw-text-gray-500">
+                      <%= t('updated_at') %>
+                    </dt>
+                    <dd class="tw-mt-1 tw-flex tw-text-sm tw-text-gray-900 sm:tw-mt-0 sm:tw-col-span-1">
+                      <%= render TimeAgoComponent.new(datetime: @entity.updated_at) %>
+                    </dd>
+                  </div>
+                  <div class="tw-py-2 sm:tw-py-3 sm:tw-grid sm:tw-grid-cols-2 sm:tw-gap-4">
+                    <dt class="!tw-mb-auto tw-text-sm tw-font-medium tw-text-gray-500">
+                      <%= t('created_at') %>
+                    </dt>
+                    <dd class="tw-mt-1 tw-flex tw-text-sm tw-text-gray-900 sm:tw-mt-0 sm:tw-col-span-1">
+                      <%= render TimeAgoComponent.new(datetime: @entity.created_at) %>
+                    </dd>
+                  </div>
+                </dl>
+
+              <% end %>
+
+              <% if false %>
+                <div class="position-relative">
+                  <% kind = 'entities' %>
+                  <% favorites_store = FavoritesStore.new(current_user) %>
+                  <% favorites_store.append(@entity.id, kind) %>
+                  <%= render StarFavoriteComponent.new(
+                    is_favorite: favorites_store.find(@entity.id, kind),
+                    ext_id: @entity.id,
+                    favorites_items_kind: kind,
+                    bobber: {
+                      class: 'position-absolute z-index-decreased',
+                      style: 'top: -5px; right: 0px;'
+                    }) %>
+                </div>
+              <% end %>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <% if false %>
+    <div class=" tw-grid tw-grid-cols-1 tw-gap-4">
+      <section aria-labelledby="section-2-title" class="">
+        <h2 class="tw-sr-only" id="section-2-title">Section title</h2>
+        <div class="tw-rounded-lg tw-bg-white tw-overflow-hidden tw-shadow">
+          <div class="tw-p-6">
+            <div class="tw-grid tw-gap-5">
+              <div>
+                <div class="tw-mb-1 tw-text-sm tw-font-medium tw-text-slate-500">
+                  <%= t('parents', scope: ['simple_form', 'labels', 'entity']) %>
+                </div>
+                <div class="">
+                  <% collection = @entity.parents.map do |entity|
+                    {
+                      'id' => entity.id,
+                      'title' => entity.to_label,
+                      'is_main' => false,
+                      'direction' => 'up'
+                    }
+                  end %>
+                  <% if collection.present? %>
+                    <%= render(EntitiesGroupComponent.new(entities_group: collection)) %>
+                  <% else %>
+                    Отсутствуют
+                  <% end %>
+                </div>
+              </div>
+              <div>
+                <div class="tw-mb-1 tw-text-sm tw-font-medium tw-text-slate-500">
+                  <%= t('children', scope: ['simple_form', 'labels', 'entity']) %>
+                </div>
+                <div class="">
+                  <% collection = @entity.children.map do |entity|
+                    {
+                      'id' => entity.id,
+                      'title' => entity.to_label,
+                      'is_main' => false,
+                      'direction' => 'down'
+                    }
+                  end %>
+                  <% if collection.present? %>
+                    <%#= render(Mentions::EntityComponent.with_collection(collection)) %>
+                    <%= render(EntitiesGroupComponent.new(entities_group: collection)) %>
+                  <% else %>
+                    Отсутствуют
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  <% end %>
+</div>

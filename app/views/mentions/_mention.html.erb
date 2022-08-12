@@ -1,54 +1,65 @@
-<div class="col">
-  <div class="card">
-
-    <div class="position-relative">
-      <%= render Mentions::ImageLightboxComponent.new(
-        **GlobalHelper.image_hash(mention),
-        class: 'card-img-top',
+<div class="tw-bg-sky-50 tw-border tw-rounded-xl tw-p-3 tw-mt-8">
+  <div class="tw-flex">
+    <div class="!tw-w-[40%] tw-pr-10">
+      <%= render ImagesLightboxComponent.new(
+        images: GlobalHelper.image_hash(mention.images.slice(0, 1)),
+        class: 'tw-rounded-lg tw-border',
         size: '500'
       ) %>
-
-      <%= link_to edit_mention_path(mention),
-                  rel: [Seo::NoFollow],
-                  class: 'btn btn-sm btn-warning btn-icon m-0 p-0 py-1 position-absolute top-0 end-0 m-2' do %>
-        <i class="fas fa-pencil-alt"></i>
-      <% end %>
     </div>
 
-    <div class="card-body overflow-auto">
-      <h5 class="card-title">
-        <%
-          website = begin
-                      URI(mention.url).host || 'сайт'
-                    rescue StandardError
-                      'сайт'
-                    end
-        %>
+    <div class="!tw-w-[60%]">
+      <%
+        website = begin
+                    URI(mention.url).host || 'сайт'
+                  rescue StandardError
+                    'сайт'
+                  end
+      %>
 
-        <%= link_to mention.url, rel: [Seo::NoFollow, Seo::NoReferrer, Seo::UGC], class: 'text-decoration-none' do %>
-          <%= mention.title %>
-          <% if mention.title.present? %>
-            /
-          <% end %>
-          Подробнее на
-          <%= "#{website}" %>
+      <%= link_to mention, class: 'tw-text-base tw-mb-3 tw-block tw-text-gray-500' do %>
+        <%= "#{website}" %>
+        <% if mention.title.present? %>
+          /
         <% end %>
-      </h5>
+        <%= mention.title %>
+      <% end %>
 
-      <p class="card-text">
+      <div class="tw-my-3">
         <% collection = mention.entities_mentions.includes(:entity).map do |entity_mention|
           {
             'id' => entity_mention.entity_id,
             'title' => entity_mention.entity.to_label,
-            'is_main' => entity_mention.is_main
+            'is_main' => true
           }
         end %>
-        <%= render(Mentions::EntityComponent.with_collection(collection)) %>
-      </p>
-      <p class="card-text">
-        <%= render(TextTagComponent.with_collection(mention.topics.map(&:to_label))) %>
-      </p>
-      <p class="card-text"><%= GlobalHelper.decorate_datetime(mention.published_at) %></p>
+        <%#= render(EntitiesGroupComponent.new(entities_group: collection)) %>
+        <%#= render(Mentions::EntityComponent.with_collection()) %>
+        <%= render(
+              ReactComponent.new(name: 'Carousel',
+                                 class: '',
+                                 props: { items: collection
+                                 }))
+        %>
+      </div>
+
+      <div class="tw-flex tw-flex-wrap tw-gap-1">
+        <% mention.topics.each do |topic| %>
+          <%= render ReactComponent.new(name: 'EntitiesTag',
+                                        class: '',
+                                        props: {
+                                          tag: topic,
+                                          textColor: 'tw-text-blue-800',
+                                          bgColor: 'tw-bg-blue-100'
+                                        }) %>
+        <% end %>
+      </div>
+
+      <div class="tw-mt-3">
+        <%= render TimeAgoComponent.new(datetime: mention.published_at) %>
+      </div>
+
+
     </div>
   </div>
 </div>

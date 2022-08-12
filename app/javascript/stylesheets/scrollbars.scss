@@ -1,0 +1,24 @@
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  background: rgb(245, 245, 245);
+  -webkit-border-radius: 1ex;
+  &:hover {
+    background: rgb(240, 240, 240)
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ddd;
+  -webkit-border-radius: 1ex;
+  &:hover {
+    background: #999;
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background: #eee;
+  &:hover {
+    background: yellow
+  }
+}

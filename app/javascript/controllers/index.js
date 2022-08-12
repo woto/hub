@@ -10,11 +10,11 @@ application.load(definitionsFromContext(context))
 
 import ReadMore from "stimulus-read-more"
 import TextareaAutogrow from "stimulus-textarea-autogrow"
-import CharacterCounter from "stimulus-character-counter"
+// import CharacterCounter from "stimulus-character-counter"
 
 application.register("read-more", ReadMore)
 application.register("textarea-autogrow", TextareaAutogrow)
-application.register("character-counter", CharacterCounter)
+// application.register("character-counter", CharacterCounter)
 
 // import FavoriteController from './favorite-controller';
 // import FavoriteItemController from './favorite-item-controller';
@@ -44,46 +44,6 @@ function teardown() {
         }
     });
 }
-// document.addEventListener('turbo:click', function() {
-//
-// });
-// document.addEventListener('turbo:before-visit', function() {
-//
-// });
-// document.addEventListener('turbo:visit', function() {
-//
-// });
-// document.addEventListener('turbo:submit-start', function() {
-//
-// });
-// document.addEventListener('turbo:before-fetch-response', function() {
-//
-// });
-// document.addEventListener('turbo:before-fetch-request', function() {
-//
-// });
-// document.addEventListener('turbo:submit-end', function() {
-//
-// });
-// document.addEventListener('turbo:before-stream-render', function() {
-//
-// });
 document.addEventListener('turbo:before-cache', function() {
     teardown();
 });
-// document.addEventListener('turbo:before-render', function() {
-//
-// });
-// document.addEventListener('turbo:render', function() {
-//
-// });
-// document.addEventListener('turbo:load', function() {
-//
-// });
-// document.addEventListener('turbo:frame-render', function() {
-//
-// });
-// document.addEventListener('turbo:frame-load', function() {
-//
-// });
-

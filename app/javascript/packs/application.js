@@ -3,13 +3,16 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+import '../react_components/system/initialize';
+
 import "@fortawesome/fontawesome-free/css/all"
 
 // TODO: remove. We can't remove it because `link_to ... method: :destroy` will be broken
 require("@rails/ujs").start()
 
-import { Turbo, cable } from "@hotwired/turbo-rails"
+import { Turbo, cable } from "@hotwired/turbo-rails";
 Turbo.setProgressBarDelay(0)
+// Turbo.start();
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -20,6 +23,7 @@ const imagePath = (name) => images(name, true)
 
 import 'controllers';
 import 'jquery';
+
 //import 'jquery-slim';
 
 // import 'popper.js';

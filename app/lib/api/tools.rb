@@ -5,9 +5,23 @@ require_relative 'validations/url'
 module API
   class Tools < ::Grape::API
     prefix :api
-    auth :api_key
 
     resource :tools do
+
+      auth :api_key
+
+      desc 'Search wikipedia.org' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+      end
+
+      get :wikipedia do
+        Extractors::WikipediaOrg::Search.call(q: params[:q]).object
+      end
+
       desc 'Search github.com' do
         security [{ api_key: [] }]
       end

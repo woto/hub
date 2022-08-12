@@ -33,10 +33,10 @@
                 <dd class="col-sm-9"> <%= @realm.kind %> </dd>
 
                 <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@realm.created_at) %> </dd>
+                <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @realm.created_at) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@realm.updated_at) %> </dd>
+                <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @realm.updated_at) %> </dd>
               </dl>
             </div>
           </div>

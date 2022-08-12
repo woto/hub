@@ -369,9 +369,11 @@ en:
           no_news_yet: There are no news
           no_news_yet_in_your_language: There are no news on your language
   header:
-    language_component:
-      title: Language
+    search:
+      placeholder: Enter text to search...
+      button: Search
     menu:
+      language: Language
       login: Login
       logout: Logout
       restore_permissions: Restore permissions
@@ -496,7 +498,7 @@ en:
       dashboard: Dashboard
       link: Choose offer
       tagline: Content platform through which authors earn money for reviews of products that online stores need to advertise.
-      title: Only good reviews ;)
+      title: Only good reviews
   left_menu:
     accounts: Accounts
     advertisers: Advertisers
@@ -564,7 +566,7 @@ en:
     update:
       mention_was_successfully_updated: Mention was successfully updated
   navbar_favorite_component:
-    title: Favorits
+    title: Favorites
   new: New
   no_results_found: No results found
   offers:
@@ -685,10 +687,8 @@ en:
     update:
       realm_was_successfully_updated: Realm was successfully updated
   save: Save
-  search: Search
   search_entity_hint: Find the object of interest or add a new one if it fails.
   search_entity_title: Entity search
-  search_placeholder: Enters text to search...
   settings:
     api_keys:
       edit:
@@ -739,11 +739,6 @@ en:
         title: The address of the page, the name of the person, the name of the company or product.
       feed_filter_form:
         displayed_columns: The order in which columns are added affects the display
-      mention:
-        image: After entering the URL, we will try to take a screenshot. If it fails, then click on the image to download. You can also drag an image here from your computer, from another site, or paste an image from the clipboard.
-        published_at: Specify if the content publication date is specified in the source.
-        title: If the title cannot be made automatically, then enter it.
-        url: After entering the URL, we will try to take a screenshot and get the page title.
       post:
         currency: Select the national currency of your country
         description: Read more about meta tag "description" on <a href="https://yandex.com/support/webmaster/indexing-options/description.html">Yandex</a> or <a href="https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions">Google</a>
@@ -777,7 +772,7 @@ en:
         image: Image
         intro: Intro
         lookups: Lookups
-        mentions_count: Mentions
+        entities_mentions_count: Mentions
         parent_ids: Parent entities
         parents: Parent entities
         picture: Picture
@@ -889,7 +884,7 @@ en:
         intro: Intro
         lookups: Lookups
         lookups_count: Lookups count
-        mentions_count: Mentions count
+        entities_mentions_count: Mentions count
         title: Title
         topics: Tags
         topics_count: Tags count
@@ -972,7 +967,7 @@ en:
         intro: Intro
         lookups: Lookups
         lookups_count: Look. cnt.
-        mentions_count: Ment. cnt.
+        entities_mentions_count: Ment. cnt.
         title: Title
         topics: Tags
         topics_count: Topics cnt.
@@ -1056,12 +1051,11 @@ en:
       group_more:
         follow_link: Follow link
         offers_in_group: Offers in group
-      search:
-        button:
+      search_bar:
           search_everywhere: Search everywhere
           search_inside_advertiser: 'At the advertiser: "%{name}"'
           search_inside_feed: 'In the price list: "%{name}"'
-          search_inside_feed_category: 'In the category: "%{name}"'
+          search_inside_feed_category: 'In the category: "%{name}"'      
   title: Title
   titles:
     accounts: Accounts

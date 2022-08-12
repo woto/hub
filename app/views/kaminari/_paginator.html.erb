@@ -1,8 +1,8 @@
 <%= paginator.render do %>
   <nav class="tw-my-4">
     <div class="tw-grid tw-grid-cols-4 md:tw-flex tw-gap-4 tw-mx-4 tw-my-4">
-      <%= prev_page_tag unless current_page.first? %>
-      <%= next_page_tag unless current_page.last? %>
+      <%= prev_page_tag %>
+      <%= next_page_tag %>
       <ul class="tw-flex tw-col-span-4 tw-order-2 md:tw-col-span-2 tw-list-none tw-select-none tw-justify-center">
         <% each_page do |page| %>
           <% if page.left_outer? || page.right_outer? || page.inside_window? %>

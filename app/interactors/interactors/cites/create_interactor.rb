@@ -14,6 +14,7 @@ module Interactors
           @entity = create_entity
           @mention = create_mention(fragment, @entity)
           @cite = create_cite(fragment, @mention, @entity)
+          create_entities_mention(@mention, @entity, params[:mention_date])
           create_related_records
 
           after_commit do
@@ -21,6 +22,11 @@ module Interactors
             scrape_webpage
           end
         end
+
+        context.object = {
+          title: @entity.title,
+          url: Rails.application.routes.url_helpers.entity_url(id: @entity, host: 'mentions.lvh.me:3000')
+        }
       end
 
       private
@@ -46,9 +52,13 @@ module Interactors
       def create_mention(fragment, entity)
         mention = Mention.find_by(url: fragment.url)
         mention ||= current_user.mentions.new(url: fragment.url)
-        mention.entities |= [entity]
         mention.save!
         mention
+      end
+
+      def create_entities_mention(mention, entity, mention_date)
+        entities_mention = EntitiesMention.find_or_initialize_by(mention: mention, entity: entity)
+        entities_mention.update!(mention_date: mention_date)
       end
 
       def create_entity
@@ -80,7 +90,8 @@ module Interactors
           relevance: params[:relevance],
           sentiment: params[:sentiment],
 
-          mention: mention
+          mention: mention,
+          mention_date: params[:mention_date]
         )
       end
     end

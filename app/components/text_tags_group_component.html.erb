@@ -1,0 +1,18 @@
+<% visible, invisible = @text_tags_group.partition.with_index { |_, idx| idx < 10 } %>
+
+<%= render TextTagComponent.with_collection(visible, text_color: @text_color, bg_color: @bg_color) %>
+
+<% if invisible.present? %>
+
+  <div class="d-inline-flex">
+    <%= link_to "#text-tags-group-#{@text_tags_group.object_id}", class: 'btn  btn-link border-0 btn-sm mb-1 me-1',
+                'data-bs-toggle': 'collapse', role: 'button' do %>
+      <%= t('.more', count: invisible.count) %>
+    <% end %>
+  </div>
+
+  <%= tag.div class: 'collapse', id: "text-tags-group-#{@text_tags_group.object_id}" do %>
+    <%= render TextTagComponent.with_collection(invisible, text_color: @text_color, bg_color: @bg_color) %>
+  <% end %>
+
+<% end %>

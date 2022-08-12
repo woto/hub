@@ -1,6 +1,68 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+
+  def serialize_user_attributes(user)
+    to_return = {}
+    if user
+      to_return[:user_id] = user.id
+      to_return[:email] = user.email
+
+      to_return[:links] = [
+        {
+          title: t('header.menu.settings'),
+          url: settings_profile_path,
+          method: '',
+          icon: ''
+        },
+        {
+          title: t('header.menu.logout'),
+          url: destroy_user_session_path,
+          method: 'delete',
+          icon: ''
+        }
+      ]
+
+      if user.profile
+        to_return[:name] = user.profile.name
+      end
+    else
+      to_return[:links] = [{
+                  title: t('header.menu.login'),
+                  url: new_user_session_path,
+                  method: 'get',
+                  icon: 'login'
+                }]
+    end
+
+    to_return[:avatar] = if user && user.avatar.present?
+                url_for(user.avatar.variant(resize_to_limit: [200, 200]))
+              else
+                asset_pack_path('media/images/avatar-placeholder.png')
+                         end
+    to_return
+  end
+
+  def serialize_language_attributes
+    {
+      title: t('header.menu.language'),
+      languages:
+        I18n.available_locales.map do |locale|
+          {
+            title: system_locale_to_human(locale),
+            url: path_for_switch_language(locale, Current.realm&.kind) ||
+              url_for(
+                Tools::SwitchLanguage.call(
+                  subdomains: request.subdomains,
+                  host: request.host,
+                  locale: locale
+                ).object
+              )
+          }
+        end
+    }
+  end
+
   def articles_by_month_link(month)
     articles_by_month_path(
       month: month,

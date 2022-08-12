@@ -2,43 +2,43 @@
 
 class FeedDecorator < ApplicationDecorator
   def synced_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def succeeded_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def processing_started_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def processing_finished_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def network_updated_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def advertiser_synced_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def advertiser_created_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def advertiser_updated_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def error_text
-    decorate_text(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def raw
-    decorate_text(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 
   def advertiser_raw

@@ -1,5 +1,4 @@
 <% seo.title! @mention.title %>
-
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbComponent.new do |b| %>
     <%= b.root_item title: t('breadcrumbs.homepage'), url: root_path %>
@@ -9,97 +8,126 @@
   <% end %>
 <% end %>
 
-<div class="col">
-  <div class="row">
-    <div class="col">
-      <div class="row">
-        <div class="col-12 col-xl-8">
-          <div class="card mb-3">
-            <div class="card-body">
-              <dl class="row">
+<p><%= Time.current %></p>
 
-                <div class="position-relative">
-                  <% kind = 'mentions' %>
-                  <% favorites_store = FavoritesStore.new(current_user) %>
-                  <% favorites_store.append(@mention.id, kind) %>
+<turbo-frame id="messages">
+  <p><%= Time.current %></p>
+  <p><%= params[:time] %></p>
 
-                  <%= render StarFavoriteComponent.new(
-                    is_favorite: favorites_store.find(@mention.id, kind),
-                    ext_id: @mention.id,
-                    favorites_items_kind: kind,
-                    bobber: {
-                      class: 'position-absolute z-index-decreased',
-                      style: 'top: -5px; right: 0px;'
-                    }) %>
-                </div>
+  <a href="/ru/mentions/530/?time=foo">
+    Following link will replace this frame.
+  </a>
 
-                <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @mention.id %> </dd>
+  <a href="/messages/1" data-turbo-frame="_top">
+    Following link will replace the whole page, not this frame.
+  </a>
 
-                <dt class="col-sm-3"> <%= t('url', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= link_to @mention.url, @mention.url, rel: [Seo::NoReferrer, Seo::NoFollow, Seo::UGC] %> </dd>
+  <form action="/messages" data-turbo-frame="navigation">
+    Submitting form will replace the navigation frame.
+  </form>
+</turbo-frame>
 
-                <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @mention.title %> </dd>
+<div class="tw-grid tw-grid-cols-1 tw-gap-4 tw-items-start lg:tw-grid-cols-3 lg:tw-gap-8">
+  <!-- Left column -->
+  <div class="tw-grid tw-grid-cols-1 tw-gap-4 lg:tw-col-span-2">
+    <section aria-labelledby="section-1-title" class="">
+      <h2 class="tw-sr-only" id="section-1-title">Section title</h2>
+      <div class="tw-rounded-lg tw-bg-white tw-shadow">
+        <div class="tw-p-6">
 
-                <% if false %>
-                  <dt class="col-sm-3"> <%= t('publisher_ext_id', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                  <dd class="col-sm-9"> <%= @mention.publisher_ext_id %> </dd>
-                <% end %>
+          <pre>
+          -    sort = case params[:sort]
+          -           when 'entities_entities.relevance'
+          -             'entities_entities.relevance'
+          -           when 'entities_entities.created_at'
+          -             'entities_entities.created_at'
+          -           when 'entities.created_at'
+          -             'entities.created_at'
+          -           when 'entities.updated_at'
+          -             'entities.updated_at'
+          -           else
+          -             'entities_entities.relevance'
+          -           end
+          </pre>
 
-                <dt class="col-sm-3"> <%= t('entities', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9">
-                  <%= render(Mentions::EntityComponent.with_collection(@mention.entities_hash)) %>
-                </dd>
+          <%#= render(Mentions::EntityComponent.with_collection(@mention.entities_hash)) %>
 
-                <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@mention.topics.map(&:to_label))) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.published_at) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.created_at) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@mention.updated_at) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('image') %> </dt>
-                <dd class="col-sm-9">
-                  <%= render Mentions::ImageLightboxComponent.new(
-                    **GlobalHelper.image_hash(@mention),
-                    class: 'img-thumbnail bg-white',
-                    size: '300'
-                  ) %>
-                </dd>
-
-                <% if current_user&.staff? %>
-                  <hr class="my-2">
-
-                  <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                  <dd class="col-sm-9"> <%= @mention.user.to_label %> </dd>
-
-                <% end %>
-              </dl>
-            </div>
-          </div>
-
-          <div class="d-flex flex-column flex-sm-row gap-2">
-            <%= link_to t('new'), new_mention_path,
-                        class: "btn btn-primary #{'disabled' unless policy(@mention).new? }",
-                        rel: [Seo::NoFollow] %>
-            <%= link_to t('edit'), edit_mention_path(@mention),
-                        class: "btn btn-primary #{'disabled' unless policy(@mention).edit? }",
-                        rel: [Seo::NoFollow] %>
-            <%= link_to t('back'), mentions_path, class: "btn btn-white" %>
-            <%= link_to t('delete'), mention_path(@mention.id),
-                        class: "ms-auto btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
-                        'data-turbo-method': :delete,
-                        'data-turbo-confirm': t('are_you_sure'),
-                        rel: [Seo::NoFollow] %>
-          </div>
+          <% @entities.each do |entity| %>
+            <%= render entity %>
+          <% end %>
 
         </div>
+      </div>
+    </section>
+  </div>
+  <!-- Right column -->
+  <div class="tw-grid tw-grid-cols-1 tw-gap-4">
+    <section aria-labelledby="section-2-title" class="">
+      <h2 class="tw-sr-only" id="section-2-title">Section title</h2>
+      <div class="tw-rounded-lg tw-bg-white tw-overflow-hidden tw-shadow">
+        <div class="tw-p-6">
+          <div class="position-relative">
+            <%= render BookmarkComponent.new(ext_id: @mention.id, favorites_items_kind: 'mentions', favorites_store: @favorites_store ) %>
+            <%= render ImagesLightboxComponent.new(
+              images: GlobalHelper.image_hash(@mention.images.slice(-1..)),
+              class: 'img-thumbnail bg-white',
+              size: '500'
+            ) %>
+          </div>
+          <div class="tw-mb-1 tw-text-xs tw-font-thin tw-italic tw-text-right tw-text-slate-900">
+            <%= link_to "Источник новости", @mention.url, rel: [Seo::NoReferrer, Seo::NoFollow, Seo::UGC] %>
+          </div>
+          <dl class="tw-mt-5 tw-divide-y tw-divide-gray-200">
+            <div class="tw-py-2 sm:tw-py-3 sm:tw-grid sm:tw-grid-cols-2 sm:tw-gap-4">
+              <dt class="!tw-mb-auto tw-text-sm tw-font-medium tw-text-gray-500">
+                <%= t('published_at', scope: ['simple_form', 'labels', 'mention']) %>
+              </dt>
+              <dd class="tw-mt-1 tw-flex tw-text-sm tw-text-gray-900 sm:tw-mt-0 sm:tw-col-span-1">
+                <%= render TimeAgoComponent.new(datetime: @mention.published_at) %>
+              </dd>
+            </div>
+            <div class="tw-py-2 sm:tw-py-3 sm:tw-grid sm:tw-grid-cols-2 sm:tw-gap-4">
+              <dt class="!tw-mb-auto tw-text-sm tw-font-medium tw-text-gray-500">
+                <%= t('created_at') %>
+              </dt>
+              <dd class="tw-mt-1 tw-flex tw-text-sm tw-text-gray-900 sm:tw-mt-0 sm:tw-col-span-1">
+                <%= render TimeAgoComponent.new(datetime: @mention.created_at) %>
+              </dd>
+            </div>
+
+            <div class="tw-flex tw-flex-wrap tw-gap-1">
+              <% @mention.topics.each do |topic| %>
+                <%= render ReactComponent.new(name: 'EntitiesTag',
+                                              class: '',
+                                              props: {
+                                                tag: topic,
+                                                textColor: 'tw-text-blue-800',
+                                                bgColor: 'tw-bg-blue-100'
+                                              }) %>
+              <% end %>
+            </div>
+
+          </dl>
+          <% if current_user&.staff? %>
+            <hr class="my-2">
+            <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'mention']) %> </dt>
+            <dd class="col-sm-9"> <%= @mention.user.to_label %> </dd>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="col tw-mt-20">
+  <div class="row">
+    <div class="col-12 col-xl-8">
+      <div class="d-flex flex-column flex-sm-row gap-2">
+        <%= link_to t('delete'), mention_path(@mention.id),
+                    class: "ms-auto btn btn-danger #{'disabled' unless policy(@mention).destroy?}",
+                    'data-turbo-method': :delete,
+                    'data-turbo-confirm': t('are_you_sure'),
+                    rel: [Seo::NoFollow] %>
       </div>
     </div>
   </div>

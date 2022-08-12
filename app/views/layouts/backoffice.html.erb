@@ -57,9 +57,11 @@
 
                 <div class="d-flex">
                   <% if seo.title.present? %>
-                    <h1 class="page-title">
-                      <%= seo.title %>
-                    </h1>
+                    <div class="tw-table tw-table-fixed tw-w-full">
+                      <h1 class="tw-table-cell tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden tw-text-xl">
+                        <%= render TitleComponent.new(title: seo.title) %>
+                      </h1>
+                    </div>
                     <%= content_for :star %>
                   <% end %>
                 </div>

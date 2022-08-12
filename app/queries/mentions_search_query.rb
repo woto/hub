@@ -49,10 +49,12 @@ class MentionsSearchQuery
         end
       end
 
-      json.sort do
-        json.array! ['fuck'] do
-          json.set! context.sort do
-            json.order context.order
+      if context.sort
+        json.sort do
+          json.array! ['fuck'] do
+            json.set! context.sort do
+              json.order context.order
+            end
           end
         end
       end

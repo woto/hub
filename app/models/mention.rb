@@ -4,28 +4,22 @@
 #
 # Table name: mentions
 #
-#  id                :bigint           not null, primary key
-#  entities_count    :integer          default(0), not null
-#  html              :text
-#  image_data        :jsonb
-#  kinds             :jsonb            not null
-#  metadata_iframely :jsonb
-#  metadata_yandex   :jsonb
-#  published_at      :datetime
-#  sentiments        :jsonb
-#  title             :string
-#  topics_count      :integer          default(0), not null
-#  url               :text
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  hostname_id       :bigint
-#  user_id           :bigint           not null
-#  canonical_url          :text
+#  id            :bigint           not null, primary key
+#  canonical_url :text
+#  html          :text
+#  kinds         :jsonb            not null
+#  published_at  :datetime
+#  sentiments    :jsonb
+#  title         :string
+#  url           :text
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  hostname_id   :bigint
+#  user_id       :bigint           not null
 #
 # Indexes
 #
 #  index_mentions_on_hostname_id  (hostname_id)
-#  index_mentions_on_image_data   (image_data) USING gin
 #  index_mentions_on_user_id      (user_id)
 #
 # Foreign Keys
@@ -39,23 +33,27 @@ class Mention < ApplicationRecord
   include Elasticable
   index_name "#{Rails.env}.mentions"
 
-  include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
   include Topicable
   include Hostnameable
   hostnameable attribute_name: :url
 
-  belongs_to :user, counter_cache: true
+  belongs_to :user
 
-  has_many :entities_mentions, dependent: :destroy, autosave: true
-  has_many :entities, through: :entities_mentions, counter_cache: :entities_count
+  has_many :cites, dependent: :destroy
 
-  has_many :mentions_topics, dependent: :destroy
-  has_many :topics, through: :mentions_topics, counter_cache: :topics_count
+  has_many :entities_mentions, dependent: :destroy
+  has_many :entities, -> { distinct }, through: :entities_mentions
+
+  has_many :topics_relations, as: :relation, dependent: :destroy
+  has_many :topics, -> { distinct }, through: :topics_relations
+
+  has_many :images_relations, as: :relation, dependent: :destroy
+  has_many :images, -> { distinct }, through: :images_relations
 
   before_validation :strip_title
   before_validation :strip_url
 
-  validates :entities_mentions, :url, presence: true
+  validates :url, presence: true
   validates :url, uniqueness: true
 
   # before_destroy :stop_destroy
@@ -82,28 +80,27 @@ class Mention < ApplicationRecord
     {
       id: id,
       published_at: published_at,
-      topics: topics.map(&:to_label),
-      topics_count: topics_count,
+      topics: topics.map { |topic| { id: topic.id, title: topic.title } },
       hostname: hostname.to_label,
       url: url,
       title: title,
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,
-      image: GlobalHelper.image_hash(self),
-      entity_ids: entity_ids,
+      image: (GlobalHelper.image_hash(images.slice(-1, 1)) if images.exists?),
+      # entity_ids: entity_ids,
       # TODO: Rails 7 in order of
       entities: entities_hash,
-      entities_count: entities_count
     }
   end
 
   def entities_hash
-    entities_mentions.includes(:entity).order(is_main: :desc).map do |entity_mention|
+    # entities_mentions.includes(:entity).order(is_main: :desc).map do |entity_mention|
+    entities_mentions.includes(:entity).map do |entity_mention|
       {
         'id' => entity_mention.entity_id,
         'title' => entity_mention.entity.to_label,
-        'is_main' => entity_mention.is_main
+        # 'is_main' => entity_mention.is_main
       }
     end
   end

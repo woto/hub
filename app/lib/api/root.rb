@@ -25,11 +25,15 @@ module API
     Grape::Middleware::Auth::Strategies.add(:api_key, APIKeyMiddleware)
     # auth :api_key
 
+    mount Uploads
     mount Tools
     mount Mentions
     mount Posts
     mount Entities
+    mount Topics
     mount Me
+    mount Cites
+    mount EntitiesMentions
 
     add_swagger_documentation(
       {

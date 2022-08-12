@@ -23,6 +23,7 @@ module Extractors
 
       def connection
         Faraday.new do |faraday|
+          # faraday.response :logger # log requests and responses to $stdout
           faraday.response :follow_redirects # follow redirects
           faraday.response :raise_error # raises an exception if response is a 4xx or 5xx code
           faraday.request :json # encode req bodies as JSON

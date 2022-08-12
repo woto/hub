@@ -16,26 +16,27 @@ class MentionDecorator < ApplicationDecorator
   end
 
   def image
-    h.render Mentions::ImageLightboxComponent.new(
-      **super.symbolize_keys,
+    h.render ImagesLightboxComponent.new(
+      images: super,
       class: 'responsive-image img-thumbnail bg-white',
       size: '200'
     )
   end
 
   def title
-    h.tag.span super, class: 'strong responsive-title'
+    h.tag.span super, class: 'strong tw-text-lg 2xl:tw-text-sm'
   end
 
   def topics
-    h.render(TextTagComponent.with_collection(super))
+    h.render(TextTagsGroupComponent.new(text_tags_group: super))
   end
 
   def entities
-    h.render(Mentions::EntityComponent.with_collection(super))
+    h.render( ReactComponent.new(name: 'Carousel', class: '', props: { items: super}))
+    # h.render(EntitiesGroupComponent.new(entities_group: super))
   end
 
   def published_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 end

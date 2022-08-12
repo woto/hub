@@ -35,13 +35,13 @@
               </dd>
 
               <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'post']) %> </dt>
-              <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@post.tags)) %> </dd>
+              <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@post.tags, text_color: 'tw-text-blue-800', bg_color: 'tw-bg-blue-100')) %> </dd>
 
               <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-              <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.created_at) %> </dd>
+              <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @post.created_at) %> </dd>
 
               <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-              <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.updated_at) %> </dd>
+              <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @post.updated_at) %> </dd>
 
               <dt class="col-sm-3"> <%= t('status', scope: ['simple_form', 'labels', 'post']) %> </dt>
               <dd class="col-sm-9"> <%= badge(status: @post.status) %> </dd>
@@ -53,7 +53,7 @@
                 <hr class="my-2">
 
                 <dt class="col-sm-3"> <%= t('published_at', scope: ['simple_form', 'labels', 'post']) %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.published_at) %> </dd>
+                <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @post.published_at) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('user', scope: ['simple_form', 'labels', 'post']) %> </dt>
                 <dd class="col-sm-9"> <%= @post.user.to_label %> </dd>

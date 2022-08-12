@@ -12,4 +12,4 @@ describe Header::Profile::UnauthenticatedComponent, type: :component do
   #     "Hello, components!"
   #   )
   # end
-end
+endв

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class EntitiesController < ApplicationController
-  layout 'backoffice'
+  layout 'mentions'
+
   before_action :set_entity, only: %i[show edit update destroy popover]
   around_action :use_logidze_responsible, only: %i[create update]
   skip_before_action :authenticate_user!, only: [:show, :popover]
@@ -11,6 +12,9 @@ class EntitiesController < ApplicationController
     seo.langs! { |l| entity_url(@entity, locale: l) }
     seo.canonical! entity_url(@entity)
     authorize(@entity)
+
+    @favorites_store = FavoritesStore.new(current_user)
+    @favorites_store.append(@entity.id, 'entities')
 
     @mentions = @entity.mentions.order(id: :desc).includes(:topics, :entities)
   end

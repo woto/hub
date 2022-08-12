@@ -29,9 +29,11 @@ class EntityPolicy < ApplicationPolicy
   end
 
   def update?
-    return true if super
+    true
 
-    true if user && context.user == user
+    # return true if super
+    #
+    # true if user && context.user == user
   end
 
   def destroy?

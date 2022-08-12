@@ -3,7 +3,12 @@
 
 <li class="<%= css_class %>">
 
-  <% a_class = ' disabled' if @disabled %>
+  <% a_class = '' %>
+  <% if @disabled %>
+    <% a_class << ' tw-pointer-events-none !tw-text-red-500'  %>
+  <% else %>
+    <% a_class << ' !tw-text-yellow-300' %>
+  <% end %>
 
   <%= link_to(@path, class: "nav-link #{a_class}", **@options) do %>
     <span class="nav-link-icon d-lg-inline-block">

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-shared_examples 'shared favorites listing only favorites' do
+shared_examples 'shared favorites listing only favorites', focus: true do
   it 'lists only favorites' do
     favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
     favorites_item = create(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
@@ -18,7 +18,7 @@ shared_examples 'shared favorites listing only favorites' do
   end
 end
 
-shared_examples 'shared favorites removing favorites_item from exiting favorite' do
+shared_examples 'shared favorites removing favorites_item from exiting favorite', focus: true do
   it 'removes favorites_item from exiting favorite' do
     favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
     favorites_item = create(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
@@ -56,7 +56,7 @@ shared_examples 'shared favorites removing favorites_item from exiting favorite'
   end
 end
 
-shared_examples 'shared favorites adding favorites_item to exiting favorite' do
+shared_examples 'shared favorites adding favorites_item to exiting favorite', focus: true do
   it 'adds new favorites_item to exiting favorite' do
     favorite = create(:favorite, user: Current.responsible, kind: favorite_kind)
     favorites_item = build(:favorites_item, ext_id: ext_id, kind: favorites_item_kind, favorite: favorite)
@@ -96,7 +96,7 @@ shared_examples 'shared favorites adding favorites_item to exiting favorite' do
   end
 end
 
-shared_examples 'shared favorites adding favorites_item to new favorite' do
+shared_examples 'shared favorites adding favorites_item to new favorite', focus: true do
   it 'adds new favorites_item to new favorite' do
     favorite = build(:favorite, user: Current.responsible, kind: favorite_kind)
     favorites_item = build(:favorites_item, ext_id: ext_id, kind: favorites_item_kind)

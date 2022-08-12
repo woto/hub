@@ -1,75 +1,3 @@
-.responsive-title {
-  @include media-breakpoint-down(xxl) {
-    font-size: 120%;
-  }
-}
-
-// <table>
-.responsive-table {
-  @extend .d-xxl-table;
-}
-
-//<tbody>
-.responsive-table-body {
-  @include media-breakpoint-up(xxl) {
-    display: table-row-group;
-  }
-
-  & > {
-    @extend .border-bottom;
-    @extend .border-1;
-  }
-}
-
-// <thead>
-.responsive-table-header {
-  @extend .p-1;
-  @extend .p-xxl-0;
-  @include media-breakpoint-up(xxl) {
-    display: table-header-group;
-  }
-  @extend .bg-light;
-}
-
-//<tr>
-.responsive-table-row {
-  @extend .d-xxl-table-row;
-  &:nth-of-type(even) {
-    @extend .bg-light;
-  }
-}
-
-//<th>
-.responsive-table-th {
-  @extend .d-inline-block;
-  @extend .m-1;
-  @extend .m-xxl-0;
-  @extend .bg-azure-lt;
-
-  @include media-breakpoint-up(xxl) {
-    @extend .d-xxl-table-cell;
-  }
-
-  @include media-breakpoint-down(xxl) {
-    &:last-child {
-      display: none !important;
-    }
-  }
-}
-
-//<td>
-.responsive-table-td {
-  @extend .d-xxl-table-cell;
-  &:empty {
-    display: none !important;
-    padding: 0 !important;
-  }
-}
-
-dt {
-  margin-bottom: 1rem;
-}
-
 .btn .icon {
   color: unset;
 }
@@ -86,15 +14,9 @@ dt {
   vertical-align: initial !important;
 }
 
-.page-item.active {
-  .page-link {
-    color: white !important;
-  }
-}
-
-.page-link {
-  @extend .text-primary;
-}
+//.page-link {
+//  @extend .text-primary;
+//}
 
 .table thead th, .markdown > table thead th {
   text-transform: initial;
@@ -153,7 +75,7 @@ legend ~ div.form-check:first-of-type {
     &:after {
       content: "";
       margin-left: .25rem;
-      color: $red;
+      color: red;
     }
   }
 }

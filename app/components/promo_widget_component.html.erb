@@ -1,0 +1,18 @@
+<div class="tw-flex tw-place-content-center">
+  <%= link_to '#', class: 'tw-group tw-relative' do %>
+    <%= image_tag(asset_pack_path('media/images/extension.png'),
+                    class: 'tw-drop-shadow tw-grayscale group-hover:tw-grayscale-0 tw-brightness-100 group-hover:tw-brightness-75 tw-transition-all') %>
+    <div class="tw-absolute tw-inset-0 tw-rounded tw-transition tw-overflow-hidden">
+
+      <div class="tw-absolute tw-opacity-100 tw-text-center group-hover:tw-opacity-100 tw-inset-0 tw-translate-y-1/2 tw-mx-auto">
+        <button type="button" class="tw-inline-flex tw-items-center tw-px-9 tw-py-3 tw-border tw-border-transparent tw-shadow-md tw-text-base tw-font-medium tw-rounded-full tw-text-indigo-400 tw-bg-indigo-100 hover:tw-bg-indigo-200 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500">
+          Download
+        </button>
+      </div>
+
+      <div class="tw-bg-indigo-600 tw-text-white tw-text-sm tw-absolute -tw-bottom-11 group-hover:tw-bottom-0 tw-transition-all tw-ease-out tw-inset-x-0 tw-text-center tw-p-3">
+        <sup>*</sup>&nbsp;Google Chrome Extension
+      </div>
+    </div>
+  <% end %>
+</div>

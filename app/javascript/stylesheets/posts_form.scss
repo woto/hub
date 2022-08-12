@@ -309,13 +309,15 @@ trix-editor .attachment__metadata .attachment__size {
   position: relative;
   max-width: 100%; }
 .trix-content figure.attachment--preview {
-  @extend .img-thumbnail;
+  // @extend .img-thumbnail;
 //   @extend .bg-cyan-lt;
 }
 .trix-content .attachment__caption {
   text-align: center;
   &:not(:empty) {
-    @extend .mt-1; } }
+    // @extend .mt-1;
+    }
+}
 .trix-content .attachment__caption .attachment__name + .attachment__size::before {
   content: ' · '; }
 .trix-content .attachment--preview {

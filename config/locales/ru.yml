@@ -375,9 +375,11 @@ ru:
           no_news_yet: Нет новостей
           no_news_yet_in_your_language: Новости на вашем языке пока что отсутствуют
   header:
-    language_component:
-      title: Язык
+    search:
+      placeholder: Введите текст для поиска...
+      button: Поиск
     menu:
+      language: Язык
       login: Вход
       logout: Выход
       restore_permissions: Восстановить полномочия
@@ -506,7 +508,7 @@ ru:
       dashboard: Личный кабинет
       link: Выбрать оффер
       tagline: Контент платформа, с помощью которой авторы зарабатывают деньги за обзоры и отзывы на офферы, в рекламе которых нуждаются интернет магазины.
-      title: Only good reviews ;)
+      title: Only good reviews
   left_menu:
     accounts: Счета
     advertisers: Рекламодатели
@@ -695,10 +697,8 @@ ru:
     update:
       realm_was_successfully_updated: Площадка была успешно изменена
   save: Сохранить
-  search: Искать
   search_entity_hint: Найдите интересующий объект или добавьте новый, если не удастся.
   search_entity_title: Поиск объекта
-  search_placeholder: Введите текст для поиска...
   settings:
     api_keys:
       edit:
@@ -749,11 +749,6 @@ ru:
         title: Адрес страницы, имя человека, название компании или продукта.
       feed_filter_form:
         displayed_columns: Порядок добавления столбцов влияет на отображение
-      mention:
-        image: Если скриншот не удастся сделать автоматически, то щелкните по изображению для загрузки. Вы так же можете перетащить изображение сюда с компьютера, с другого сайта или вставить изображение из буфера обмена.
-        published_at: Указывайте, если в источнике указана дата публикации контента.
-        title: Если заголовок не удастся сделать автоматически, то введите его.
-        url: После ввода URL мы попытаемся сделать скриншот и получить заголовк страницы.
       post:
         currency: Выберите национальную валюту вашей страны
         description: Подробнее про метатег description читайте на <a href="https://yandex.ru/support/webmaster/indexing-options/description.html">Яндекс</a> или <a href="https://developers.google.com/search/docs/advanced/appearance/good-titles-snippets?hl=ru#meta-descriptions">Google</a>
@@ -787,7 +782,7 @@ ru:
         image: Изображение
         intro: Вступление
         lookups: Синонимы
-        mentions_count: Упоминаний
+        entities_mentions_count: Упоминаний
         parent_ids: Родительские объекты
         parents: Родительские
         picture: Изображение
@@ -899,7 +894,7 @@ ru:
         intro: Вступление
         lookups: Синонимы
         lookups_count: Количество синонимов
-        mentions_count: Количество упоминаний
+        entities_mentions_count: Количество упоминаний
         title: Название
         topics: Теги
         topics_count: Количество тегов
@@ -982,7 +977,7 @@ ru:
         intro: Вступление
         lookups: Синонимы
         lookups_count: Кол-во син.
-        mentions_count: Кол-во упом.
+        entities_mentions_count: Кол-во упом.
         title: Название
         topics: Теги
         topics_count: Кол-во тегов
@@ -1012,7 +1007,6 @@ ru:
         favorite: Избр.
         id: ID
         is_active: Фид акт.
-        language: Язык
         locked_by_tid: Sidekiq TID
         name: Назв. фида
         offers_count: Офферов
@@ -1066,12 +1060,11 @@ ru:
       group_more:
         follow_link: Follow link
         offers_in_group: Offers in group
-      search:
-        button:
-          search_everywhere: Искать везде
-          search_inside_advertiser: 'У рекламодателя: "%{name}"'
-          search_inside_feed: 'В фиде: "%{name}"'
-          search_inside_feed_category: 'В категории: "%{name}"'
+      search_bar:
+        search_everywhere: Искать везде
+        search_inside_advertiser: 'У рекламодателя: "%{name}"'
+        search_inside_feed: 'В фиде: "%{name}"'
+        search_inside_feed_category: 'В категории: "%{name}"'
   title: Title
   titles:
     accounts: Счета

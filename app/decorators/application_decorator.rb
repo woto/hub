@@ -11,11 +11,11 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   def updated_at
-    decorate_datetime(object['_source']['updated_at'])
+    h.render TimeAgoComponent.new(datetime: object['_source']['updated_at'])
   end
 
   def created_at
-    decorate_datetime(object['_source']['created_at'])
+    h.render TimeAgoComponent.new(datetime: object['_source']['created_at'])
   end
 
   delegate_all
@@ -23,7 +23,7 @@ class ApplicationDecorator < Draper::Decorator
   private
 
   def decorate_datetime(datetime)
-    GlobalHelper.decorate_datetime(datetime)
+    h.render TimeAgoComponent.new(datetime: datetime)
   end
 
   def decorate_text(text)

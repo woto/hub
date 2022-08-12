@@ -7,30 +7,45 @@ class GlobalHelper
   GROUP_LIMIT = 1000
 
   class << self
-    def image_hash(object)
-      empty_image = {
-        '50' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png'),
-        '100' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-100.png'),
-        '200' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-200.png'),
-        '300' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-300.png'),
-        '500' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-500.png'),
-        '1000' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-1000.png')
-      }
+    def image_hash(objects)
 
-      {
-        id: object.id,
-        original: object.image ? object.image_url : empty_image['50'],
-        thumbnails: {
-          '50' => object.image ? object.image.derivation_url(:thumbnail, 50, 50) : empty_image['50'],
-          '100' => object.image ? object.image.derivation_url(:thumbnail, 100, 100) : empty_image['100'],
-          '200' => object.image ? object.image.derivation_url(:thumbnail, 200, 200) : empty_image['200'],
-          '300' => object.image ? object.image.derivation_url(:thumbnail, 300, 300) : empty_image['300'],
-          '500' => object.image ? object.image.derivation_url(:thumbnail, 500, 500) : empty_image['500'],
-          '1000' => object.image ? object.image.derivation_url(:thumbnail, 1000, 1000) : empty_image['1000']
-        },
-        width: object.image ? object.image.metadata['width'] : 50,
-        height: object.image ? object.image.metadata['height'] : 50
-      }
+      objects.map do |object|
+        images_relation = object.images_relations.where(relation_type: 'Entity')
+
+        # empty_image = {
+        #   '50' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-50.png'),
+        #   '100' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-100.png'),
+        #   '200' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-200.png'),
+        #   '300' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-300.png'),
+        #   '500' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-500.png'),
+        #   '1000' => ApplicationController.helpers.asset_pack_path('media/images/icon-404-1000.png')
+        # }
+
+        {
+          'id' => object.id,
+          'original' => object.image ? object.image_url : nil,
+          'images' => {
+            '50' => object.image ? object.image.derivation_url(:image, 50, 50) : nil,
+            '100' => object.image ? object.image.derivation_url(:image, 100, 100) : nil,
+            '200' => object.image ? object.image.derivation_url(:image, 200, 200) : nil,
+            '300' => object.image ? object.image.derivation_url(:image, 300, 300) : nil,
+            '500' => object.image ? object.image.derivation_url(:image, 500, 500) : nil,
+            '1000' => object.image ? object.image.derivation_url(:image, 1000, 1000) : nil
+          },
+          'videos' => {
+            '50' => object.image ? object.image.derivation_url(:video, 50, 50) : nil,
+            '100' => object.image ? object.image.derivation_url(:video, 100, 100) : nil,
+            '200' => object.image ? object.image.derivation_url(:video, 200, 200) : nil,
+            '300' => object.image ? object.image.derivation_url(:video, 300, 300) : nil,
+            '500' => object.image ? object.image.derivation_url(:video, 500, 500) : nil,
+            '1000' => object.image ? object.image.derivation_url(:video, 1000, 1000) : nil
+          },
+          'width' => object.image ? object.image.metadata['width'] : nil,
+          'height' => object.image ? object.image.metadata['height'] : nil,
+          'mime_type' => object.image.mime_type,
+          'dark' => images_relation.exists? && images_relation.first.dark
+        }
+      end
     end
 
     def class_configurator(model)
@@ -80,20 +95,6 @@ class GlobalHelper
       Elastic::CreateIndex.call(index: Elastic::IndexName.pick('topics'))
 
       elastic_client.indices.refresh index: Elastic::IndexName.pick('*').scoped
-    end
-
-    def decorate_datetime(datetime)
-      return ActionController::Base.helpers.tag.span('&nbsp;'.html_safe) if datetime.blank?
-
-      datetime = Time.zone.parse(datetime) if datetime.is_a?(String)
-
-      ActionController::Base.helpers.tag.span(
-        datetime.iso8601,
-        style: 'cursor: pointer',
-        "data-controller": 'timeago',
-        'data-timeago-source-time-value': datetime.iso8601,
-        "data-action": 'click->timeago#toggleSourceTime'
-      )
     end
 
     def decorate_text(text)

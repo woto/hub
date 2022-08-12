@@ -7,7 +7,7 @@
 
   .messenger-invalid-feedback {
     display: block;
-    @extend .invalid-feedback;
+    //@extend .invalid-feedback;
   }
 
   .input-group > :not(:first-child):not(.dropdown-menu) {

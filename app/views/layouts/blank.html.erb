@@ -11,10 +11,33 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_packs_with_chunks_tag 'application' %>
-  <%= javascript_packs_with_chunks_tag 'application' %>
+  <%= stylesheet_packs_with_chunks_tag 'application', "data-turbo-track": "reload" %>
+  <%= javascript_packs_with_chunks_tag 'application', "data-turbo-track": "reload" %>
+  <%= javascript_packs_with_chunks_tag 'turbo', "data-turbo-track": "reload" %>
+
+  <%= stylesheet_link_tag "/tailwind.css/?rnd=#{Time.now.to_i}" %>
 
   <%= content_for(:before_head_close) %>
+
+  <% if current_user&.api_key %>
+    <%= javascript_tag do %>
+      // The ID of the extension we want to talk to.
+      var editorExtensionId = "aofgjcicjlegjpjjalajdbmhdcjjlkgd";
+
+      // Make a simple request:
+      chrome.runtime.sendMessage(
+        editorExtensionId,
+        {
+          message: 'authenticate-user',
+          apiKey: "<%= current_user.api_key %>"
+        },
+        function(response) {
+          if (!response.success) alert('error oops');
+        }
+      );
+    <% end %>
+  <% end %>
+
 </head>
 
 <%= content_for(:body) %>

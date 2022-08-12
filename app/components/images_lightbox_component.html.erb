@@ -1,0 +1,15 @@
+<div data-controller="lightbox">
+  <% @images && @images.each do |image| %>
+    <%= link_to image.fetch('original'),
+                'data-pswp-width': image.fetch('width'),
+                'data-pswp-height': image.fetch('height'),
+                'target': '_blank',
+                class: 'photo-swipe' do %>
+      <%= image_tag image.fetch('images').fetch(@size), class: @class %>
+    <% end %>
+  <% end %>
+</div>
+
+
+<%# <% if [@width.to_i, @height.to_i].max > @size.to_i  %>
+  <%# <%= image_tag @thumbnails[@size], class: @class %>
