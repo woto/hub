@@ -24,6 +24,10 @@ describe Interactors::Cites::CreateInteractor do
       expect(Mentions::ScrapperJob).to receive(:perform_later)
       interactor
     end
+
+    it 'provides correct return data' do
+      expect(interactor).to have_attributes(object: match(url: /http/, title: '1'))
+    end
   end
 
   context 'when it is new entity' do
@@ -124,17 +128,21 @@ describe Interactors::Cites::CreateInteractor do
     let(:fragment_url) { 'http://example.com/#:~:text=Example-,Domain,-This%20domain%20is' }
     let(:params) do
       { title: 'title', intro: 'intro', fragment_url: fragment_url, entity_id: entities_mentions.entity.id,
-        link_url: 'https://example.com', relevance: '1', sentiment: '1' }
+        link_url: 'https://example.com', relevance: '1', sentiment: '1', mention_date: '2001-02-03T00:00:00.000Z' }
     end
     let(:mention) { create(:mention, url: 'http://example.com/') }
     let!(:entities_mentions) { create(:entities_mention, mention: mention) }
 
     it 'creates new cite', aggregate_failures: true do
       expect { interactor }.to change(user.cites.reload, :count)
-      expect(Cite.last).to(have_attributes(
-                             entity: entities_mentions.entity.reload, mention: entities_mentions.mention.reload,
-                             title: 'title', intro: 'intro', text_start: 'Domain', text_end: '', prefix: 'Example',
-                             suffix: 'This domain is', link_url: 'https://example.com', relevance: 1, sentiment: 1))
+      expect(Cite.last).to(
+        have_attributes(
+          entity: entities_mentions.entity.reload, mention: entities_mentions.mention.reload, title: 'title',
+          intro: 'intro', text_start: 'Domain', text_end: '', prefix: 'Example', suffix: 'This domain is',
+          link_url: 'https://example.com', relevance: 1, sentiment: 1,
+          mention_date: Time.zone.parse('2001-02-03T00:00:00.000Z')
+        )
+      )
     end
   end
 end

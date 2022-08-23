@@ -5,7 +5,7 @@
 #  id           :bigint           not null, primary key
 #  mention_date :datetime
 #  relevance    :integer
-#  sentiment    :integer
+#  sentiment    :float
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  entity_id    :bigint           not null

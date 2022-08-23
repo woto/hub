@@ -12,7 +12,7 @@ module Interactors
 
         ActiveRecord::Base.transaction do
           @entity = create_entity
-          @mention = create_mention(fragment, @entity)
+          @mention = create_mention(fragment)
           @cite = create_cite(fragment, @mention, @entity)
           create_related_records
 
@@ -21,6 +21,11 @@ module Interactors
             scrape_webpage
           end
         end
+
+        context.object = {
+          title: @entity.title,
+          url: Rails.application.routes.url_helpers.entity_url(id: @entity, host: 'mentions.lvh.me:3000')
+        }
       end
 
       private
@@ -29,6 +34,7 @@ module Interactors
         Create::ImagesInteractor.call(cite: @cite, entity: @entity, params: params[:images], user: current_user)
         Create::TopicsInteractor.call(cite: @cite, entity: @entity, params: params[:kinds], user: current_user)
         Create::LookupsInteractor.call(cite: @cite, entity: @entity, params: params[:lookups], user: current_user)
+        Create::AggregateInteractor.call(entity: @entity, mention: @mention)
       end
 
       def reindex_records
@@ -43,10 +49,9 @@ module Interactors
                                               user_id: current_user.id)
       end
 
-      def create_mention(fragment, entity)
+      def create_mention(fragment)
         mention = Mention.find_by(url: fragment.url)
         mention ||= current_user.mentions.new(url: fragment.url)
-        mention.entities |= [entity]
         mention.save!
         mention
       end
@@ -68,6 +73,7 @@ module Interactors
 
         current_user.cites.create!(
           entity: entity,
+          mention: mention,
           title: params[:title],
           intro: params[:intro],
 
@@ -77,10 +83,10 @@ module Interactors
           suffix: first_text&.suffix,
 
           link_url: params[:link_url],
+
           relevance: params[:relevance],
           sentiment: params[:sentiment],
-
-          mention: mention
+          mention_date: params[:mention_date]
         )
       end
     end
