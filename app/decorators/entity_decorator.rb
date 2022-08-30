@@ -6,11 +6,23 @@ class EntityDecorator < ApplicationDecorator
   end
 
   def lookups
-    h.render(TextTagComponent.with_collection(super, color: 'azure'))
+    h.render(ReactComponent.new(name: 'MultipleTags',
+                                class: '',
+                                props: {
+                                  tags: super.compact_blank,
+                                  textColor: 'tw-text-pink-800',
+                                  bgColor: 'tw-bg-pink-100'
+                                }))
   end
 
   def topics
-    h.render(TextTagComponent.with_collection(super))
+    h.render(ReactComponent.new(name: 'MultipleTags',
+                                class: '',
+                                props: {
+                                  tags: super.compact_blank,
+                                  textColor: 'tw-text-blue-800',
+                                  bgColor: 'tw-bg-blue-100'
+                                }))
   end
 
   def intro

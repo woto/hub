@@ -35,7 +35,15 @@
               </dd>
 
               <dt class="col-sm-3"> <%= t('tags', scope: ['simple_form', 'labels', 'post']) %> </dt>
-              <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@post.tags)) %> </dd>
+              <dd class="col-sm-9">
+                <%= render(ReactComponent.new(name: 'MultipleTags',
+                                                class: '',
+                                                props: {
+                                                  tags: @post.tags.compact_blank.map { |tag| {title: tag} },
+                                                  textColor: 'tw-text-blue-800',
+                                                  bgColor: 'tw-bg-blue-100'
+                                                })) %>
+               </dd>
 
               <dt class="col-sm-3"> <%= t('created_at') %> </dt>
               <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post.created_at) %> </dd>

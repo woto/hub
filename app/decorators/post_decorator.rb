@@ -30,7 +30,13 @@ class PostDecorator < ApplicationDecorator
   end
 
   def tags
-    h.render(TextTagComponent.with_collection(super))
+    h.render(ReactComponent.new(name: 'MultipleTags',
+                                class: '',
+                                props: {
+                                  tags: super.compact_blank.map { |topic| { title: topic } },
+                                  textColor: 'tw-text-blue-800',
+                                  bgColor: 'tw-bg-blue-100'
+                                }))
   end
 
   def published_at
