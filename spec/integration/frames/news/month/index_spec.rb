@@ -22,7 +22,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
   end
 
   it 'displays only news which matches the filter' do
-    switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+    switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
       visit '/frames/articles/month?order=order&per=per&sort=sort'
     end
 
@@ -35,7 +35,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
   context 'when time is in future' do
     it 'displays only news which matches the filter' do
       travel 2.minutes do
-        switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+        switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
           visit 'frames/articles/month'
         end
 
@@ -52,7 +52,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
   context 'when month is passed in params' do
     it 'highlights the tag' do
-      switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+      switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
         visit 'frames/articles/month?month=2020-05&order=order&per=per&sort=sort'
       end
       expect(page).to have_css('.active', text: "2020 May\n1")
@@ -65,7 +65,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
     it 'shows 3 items' do
       login_as(user, scope: :user)
-      switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+      switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
         visit '/frames/articles/month'
       end
       expect(page).to have_text("2020 March\n1")
@@ -80,7 +80,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
     it 'shows 3 items' do
       login_as(user, scope: :user)
-      switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+      switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
         visit '/frames/articles/month'
       end
       expect(page).to have_text("2020 March\n1")
@@ -91,7 +91,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
   context 'when requested realm with ru local' do
     it 'shows 1 link from' do
-      switch_realm(Realm.pick(locale: 'ru', kind: :news)) do
+      switch_domain(Realm.pick(locale: 'ru', kind: :news).domain) do
         visit 'frames/articles/month'
       end
       expect(page).to have_link(count: 1)

@@ -7,7 +7,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     let!(:article) { create(:post, realm_kind: :news, status: :accrued_post) }
 
     before do
-      switch_realm(article.realm) do
+      switch_domain(article.realm.domain) do
         visit articles_path
       end
     end
@@ -29,7 +29,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     let(:realm) { create(:realm, locale: :ru) }
 
     before do
-      switch_realm(realm) do
+      switch_domain(realm.domain) do
         visit articles_path(per: 1)
       end
     end
@@ -41,7 +41,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   context 'when params is empty' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_path
       end
     end
@@ -55,7 +55,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     before do
       post = create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post)
       create(:post, realm_kind: :news, realm_locale: :ru, status: :accrued_post)
-      switch_realm(post.realm) do
+      switch_domain(post.realm.domain) do
         visit articles_path(per: 1, page: 2, locale: 'ru')
       end
     end
@@ -73,7 +73,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     end
 
     it 'shows pagination' do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_path(per: 1)
       end
       expect(page).to have_css('.pagination')
@@ -84,7 +84,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
     let(:article) { create(:post, realm_kind: :news, published_at: published_at, status: :accrued_post) }
 
     before do
-      switch_realm(article.realm) do
+      switch_domain(article.realm.domain) do
         visit articles_by_month_path(
                 month: ApplicationController.helpers.l(published_at, format: '%Y-%m')
               )
@@ -112,7 +112,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   describe 'articles-by-month turbo-frame' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
       end
     end
@@ -125,7 +125,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   describe 'articles-by-tag turbo-frame' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
       end
     end
@@ -138,7 +138,7 @@ describe 'Tables::ArticlesController#index', type: :system, responsible: :admin 
 
   describe 'articles-by-category turbo-frame' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_path({ order: :asc, per: 5, sort: :created_at, locale: 'ru' })
       end
     end

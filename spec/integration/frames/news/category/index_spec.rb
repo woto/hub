@@ -12,7 +12,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
   context 'when parent category passed in the params' do
     before do
-      switch_realm(realm) do
+      switch_domain(realm.domain) do
         visit frames_articles_category_path(parent_category, order: :order, per: :per, sort: :sort)
       end
     end
@@ -31,7 +31,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
   context 'when child category passed in the params' do
     before do
-      switch_realm(realm) do
+      switch_domain(realm.domain) do
         visit frames_articles_category_path(child_category, order: :order, per: :per, sort: :sort)
       end
     end
@@ -50,7 +50,7 @@ describe 'Frames::Articles::MonthController#index', type: :system, responsible: 
 
   context 'when there is no category in params' do
     it 'shows root categories' do
-      switch_realm(realm) do
+      switch_domain(realm.domain) do
         visit frames_articles_category_path(nil, order: :order, per: :per, sort: :sort)
       end
 

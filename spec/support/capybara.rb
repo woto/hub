@@ -57,9 +57,9 @@ RSpec.configure do |config|
 end
 
 RSpec.configure do |config|
-  def switch_realm(realm)
+  def switch_domain(domain)
     original_app_host = Capybara.app_host
-    Capybara.app_host = "http://#{realm.domain}"
+    Capybara.app_host = "http://#{domain}"
     yield
   ensure
     Capybara.app_host = original_app_host

@@ -15,7 +15,7 @@ describe 'ArticlesController#show', type: :system, responsible: :admin do
   let(:child_post_category) { create(:post_category, realm: ru_realm, parent: parent_post_category) }
 
   before do
-    switch_realm(article.realm) do
+    switch_domain(article.realm.domain) do
       visit article_path(id: article, per: 1, page: 1, sort: :created_at, order: :asc)
     end
   end

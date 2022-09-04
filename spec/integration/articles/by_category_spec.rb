@@ -9,7 +9,7 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
     let(:post_category) { create(:post_category, realm: realm) }
 
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_category_path(category_id: category_id)
       end
     end
@@ -36,7 +36,7 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
     let(:post_category) { create(:post_category) }
 
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_category_path({ category_id: post_category.id, order: :asc, per: 5, sort: :created_at })
       end
     end
@@ -52,7 +52,7 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
     let(:post_category) { create(:post_category) }
 
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_category_path({ category_id: post_category.id, order: :asc, per: 5, sort: :created_at })
       end
     end
@@ -68,7 +68,7 @@ describe 'Tables::ArticlesController#by_category', type: :system, responsible: :
     let(:post_category) { create(:post_category) }
 
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_category_path({ category_id: post_category.id, order: :asc, per: 5, sort: :created_at })
       end
     end

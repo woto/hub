@@ -16,7 +16,7 @@ describe 'Frames::Articles::TagController#index', type: :system, responsible: :a
   end
 
   it 'displays only article which matches the filter' do
-    switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+    switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
       visit '/frames/articles/tag?order=order&per=per&sort=sort'
     end
 
@@ -28,7 +28,7 @@ describe 'Frames::Articles::TagController#index', type: :system, responsible: :a
   context 'when time is in future' do
     it 'displays only articles which matches the filter' do
       travel 2.minutes do
-        switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+        switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
           visit '/frames/articles/tag'
         end
 
@@ -42,7 +42,7 @@ describe 'Frames::Articles::TagController#index', type: :system, responsible: :a
 
   context 'when tag is passed in params' do
     it 'highlights the tag' do
-      switch_realm(Realm.pick(locale: 'en-US', kind: :news)) do
+      switch_domain(Realm.pick(locale: 'en-US', kind: :news).domain) do
         visit '/frames/articles/tag?tag=tag%202&order=order&per=per&sort=sort'
       end
       expect(page).to have_css('.active', text: "tag 2\n2")
@@ -51,7 +51,7 @@ describe 'Frames::Articles::TagController#index', type: :system, responsible: :a
 
   context 'when requested realm with ru local' do
     it 'shows 1 link' do
-      switch_realm(Realm.pick(locale: 'ru', kind: :news)) do
+      switch_domain(Realm.pick(locale: 'ru', kind: :news).domain) do
         visit '/frames/articles/tag?order=order&per=per&sort=sort'
       end
 

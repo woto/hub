@@ -14,7 +14,7 @@ describe 'Tables::ArticlesController#by_month', type: :system, responsible: :adm
     end
 
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_month_path(month: month)
       end
     end
@@ -40,7 +40,7 @@ describe 'Tables::ArticlesController#by_month', type: :system, responsible: :adm
 
   describe 'articles-by-month turbo-frame' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_month_path(month: '2020-04', order: :asc, per: 5, sort: :created_at)
       end
     end
@@ -54,7 +54,7 @@ describe 'Tables::ArticlesController#by_month', type: :system, responsible: :adm
 
   describe 'articles-by-tag turbo-frame' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_month_path({ month: '2020-04', order: :asc, per: 5, sort: :created_at })
       end
     end
@@ -68,7 +68,7 @@ describe 'Tables::ArticlesController#by_month', type: :system, responsible: :adm
 
   describe 'articles-by-category turbo-frame' do
     before do
-      switch_realm(Realm.pick(locale: :ru, kind: :news)) do
+      switch_domain(Realm.pick(locale: :ru, kind: :news).domain) do
         visit articles_by_month_path({ month: '2020-04', order: :asc, per: 5, sort: :created_at })
       end
     end
