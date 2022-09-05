@@ -27,6 +27,7 @@ module API
 
     mount Tools
     mount Mentions
+    mount Complains
     mount Posts
     mount Entities
     mount Me
