@@ -10,7 +10,7 @@ module API
       end
 
       params do
-        requires :text, type: String
+        requires :text, type: String, documentation: { param_type: 'body' }
         optional :data, type: Hash
       end
 

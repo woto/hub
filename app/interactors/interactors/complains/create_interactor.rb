@@ -7,7 +7,8 @@ module Interactors
       delegate :current_user, :params, to: :context
 
       def call
-        Complain.create!(user: current_user, text: params[:text], data: params[:data])
+        complain = Complain.create!(user: current_user, text: params[:text], data: params[:data])
+        context.object = { id: complain.id }
       end
     end
   end
