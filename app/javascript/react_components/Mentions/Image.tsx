@@ -19,6 +19,7 @@ const transition = {
 }
 
 export default function Image(props: { image: any, url: string }) {
+  const [zIndex, setZIndex] = useState<number>(0);
   const [open, setOpen] = useState(false);
   const [blockClick, setBlockClick] = useState(false);
 
@@ -50,10 +51,16 @@ export default function Image(props: { image: any, url: string }) {
   const xConstraint = Math.abs(((width / 2) - screenWidth / 2));
   const yConstraint = Math.abs(((height / 2) - screenHeight / 2));
 
-  const zoomOutImage = () => {
-    setOpen((prevVal) => !prevVal);
+  const zoomImageIn = () => {
+    x.set(0);
+    y.set(0);
+    setOpen(true)
+  }
+
+  const zoomImageOut = () => {
     xSpring.set(0)
     ySpring.set(0)
+    setOpen(false)
   }
 
   useKey('Escape', () => {
@@ -89,7 +96,7 @@ export default function Image(props: { image: any, url: string }) {
             ${open ?
             'tw-pointer-events-auto tw-fixed tw-inset-0 tw-bg-black/30 tw-z-30' : 
             'tw-pointer-events-none'}`}
-        onClick={zoomOutImage}
+        onClick={zoomImageOut}
       />
 
       <motion.img
@@ -102,14 +109,20 @@ export default function Image(props: { image: any, url: string }) {
           data-test-id={open ? `big-image-${props.image?.id}` : `small-image-${props.image?.id}`}
           onLayoutAnimationComplete={() => {
             if(!open) {
+              setZIndex(5)
               x.set(0)
               y.set(0)
             }
           }}
+          onLayoutAnimationStart={() => {
+            if (open) {
+              setZIndex(40)
+            }
+          }}
           className={`tw-m-auto
               ${open ?
-              "tw-z-40 -tw-inset-[1000px] tw-cursor-zoom-out tw-fixed tw-max-w-none tw-rounded-lg tw-p-2 tw-border-2 tw-border-transparent tw-ring-8 tw-ring-black/20 tw-ring-inset" :
-              "tw-z-[5] tw-inset-0 tw-cursor-zoom-in tw-absolute tw-w-full? tw-h-full? tw-max-w-full? tw-max-h-full? tw-shadow-sm tw-border tw-rounded-lg"}
+              "-tw-inset-[1000px] tw-cursor-zoom-out tw-fixed tw-max-w-none tw-rounded-lg tw-p-2 tw-border-2 tw-border-transparent tw-ring-8 tw-ring-black/20 tw-ring-inset" :
+              "tw-inset-0 tw-cursor-zoom-in tw-absolute tw-w-full? tw-h-full? tw-max-w-full? tw-max-h-full? tw-shadow-sm tw-border tw-rounded-lg"}
             `}
           dragConstraints={{
             left: -xConstraint,
@@ -131,13 +144,16 @@ export default function Image(props: { image: any, url: string }) {
           layout
           transition={transition}
           style={{
-            width: width,
-            height: height,
+            zIndex,
+            width: scaledWidth,
+            height: scaledHeight,
             x: open ? x : xSpring,
             y: open ? y : ySpring,
           }}
           onPointerUp={() => {
-            if (!blockClick) zoomOutImage();
+            if (!blockClick) {
+              open ? zoomImageOut() : zoomImageIn();
+            }
             setBlockClick(false);
           }}
           // onMouseOut={() => {
@@ -152,10 +168,10 @@ export default function Image(props: { image: any, url: string }) {
               transition={{delay: 0.2}}
               initial={{opacity: 0, y: 50}}
               animate={{opacity: 1, y: 0}}
-              className={"tw-fixed tw-inset-x-0 tw-bottom-40 tw-z-50 tw-flex"}
+              className={"tw-select-none tw-fixed tw-inset-x-0 tw-bottom-40 tw-z-50 tw-flex"}
             >
               <a href={props.url}
-                 className="tw-block tw-mx-auto tw-flex tw-items-center tw-px-8 tw-py-3 tw-border
+                 className="tw-select-none tw-block tw-mx-auto tw-flex tw-items-center tw-px-8 tw-py-3 tw-border
                       tw-border-transparent tw-shadow-md hover:tw-shadow tw-text-lg tw-font-medium tw-rounded-full
                       tw-text-pink-50 tw-bg-slate-700 hover:tw-bg-slate-600 focus:tw-outline-none
                       focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-700"
