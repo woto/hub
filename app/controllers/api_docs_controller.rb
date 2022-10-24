@@ -1,5 +1,6 @@
 class APIDocsController < ApplicationController
-  layout 'backoffice'
+  layout 'roastme/pages'
+
   skip_before_action :authenticate_user!
 
   def index
