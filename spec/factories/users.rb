@@ -21,7 +21,6 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  locked_at              :datetime
-#  mentions_count         :integer          default(0), not null
 #  posts_count            :integer          default(0), not null
 #  profiles_count         :integer          default(0), not null
 #  remember_created_at    :datetime

@@ -1,5 +1,5 @@
 <%= tag.div test_id => 'link-to-older-article' do %>
-
+  <div class="tw-bg-blue-300">
   <% page = params['page'].to_i %>
 
   <% if page + 1 < @count %>
@@ -14,4 +14,5 @@
       <i class="fas fa-chevron-left"></i>
     <% end %>
   <% end %>
+  </div>
 <% end %>

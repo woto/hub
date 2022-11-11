@@ -30,6 +30,6 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def after_sign_in_path_for(_resource)
-    dashboard_path
+    auth_complete_users_path
   end
 end

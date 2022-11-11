@@ -1,20 +1,20 @@
 // Load all the controllers within this directory and all subdirectories.
 // Controller files must be named *_controller.js.
 
-import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
+import { Application } from 'stimulus';
+import { definitionsFromContext } from 'stimulus/webpack-helpers';
 
-const application = Application.start()
-const context = require.context("controllers", true, /-controller\.js$/)
-application.load(definitionsFromContext(context))
+import ReadMore from 'stimulus-read-more';
+import TextareaAutogrow from 'stimulus-textarea-autogrow';
 
-import ReadMore from "stimulus-read-more"
-import TextareaAutogrow from "stimulus-textarea-autogrow"
-import CharacterCounter from "stimulus-character-counter"
+const application = Application.start();
+const context = require.context('controllers', true, /-controller\.js$/);
+application.load(definitionsFromContext(context));
+// import CharacterCounter from "stimulus-character-counter"
 
-application.register("read-more", ReadMore)
-application.register("textarea-autogrow", TextareaAutogrow)
-application.register("character-counter", CharacterCounter)
+application.register('read-more', ReadMore);
+application.register('textarea-autogrow', TextareaAutogrow);
+// application.register("character-counter", CharacterCounter)
 
 // import FavoriteController from './favorite-controller';
 // import FavoriteItemController from './favorite-item-controller';
@@ -38,52 +38,12 @@ application.register("character-counter", CharacterCounter)
 // application.register('profile-language-controller', ProfileLanguageController)
 
 function teardown() {
-    application.controllers.forEach(function(controller){
-        if(typeof controller.teardown === 'function') {
-            controller.teardown();
-        }
-    });
+  application.controllers.forEach((controller) => {
+    if (typeof controller.teardown === 'function') {
+      controller.teardown();
+    }
+  });
 }
-// document.addEventListener('turbo:click', function() {
-//
-// });
-// document.addEventListener('turbo:before-visit', function() {
-//
-// });
-// document.addEventListener('turbo:visit', function() {
-//
-// });
-// document.addEventListener('turbo:submit-start', function() {
-//
-// });
-// document.addEventListener('turbo:before-fetch-response', function() {
-//
-// });
-// document.addEventListener('turbo:before-fetch-request', function() {
-//
-// });
-// document.addEventListener('turbo:submit-end', function() {
-//
-// });
-// document.addEventListener('turbo:before-stream-render', function() {
-//
-// });
-document.addEventListener('turbo:before-cache', function() {
-    teardown();
+document.addEventListener('turbo:before-cache', () => {
+  teardown();
 });
-// document.addEventListener('turbo:before-render', function() {
-//
-// });
-// document.addEventListener('turbo:render', function() {
-//
-// });
-// document.addEventListener('turbo:load', function() {
-//
-// });
-// document.addEventListener('turbo:frame-render', function() {
-//
-// });
-// document.addEventListener('turbo:frame-load', function() {
-//
-// });
-

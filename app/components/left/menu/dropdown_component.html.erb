@@ -5,7 +5,11 @@
 
   <% aria_expanded = @current_page ? 'true' : 'false' %>
   <% a_class = 'nav-link dropdown-toggle' %>
-  <% a_class << ' disabled' if @disabled %>
+  <% if @disabled %>
+    <% a_class << ' tw-pointer-events-none !tw-text-red-500'  %>
+  <% else %>
+    <% a_class << ' !tw-text-yellow-300' %>
+  <% end %>
 
   <a class="<%= a_class %>" href="#navbar-layout" data-bs-toggle="dropdown" role="button" aria-expanded="<%= aria_expanded %>">
     <span class="nav-link-icon d-lg-inline-block">

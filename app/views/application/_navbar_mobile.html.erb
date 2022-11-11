@@ -1,15 +1,14 @@
 <div class="navbar-nav flex-row d-lg-none">
-
-  <%= tag.div class: 'nav-item dropdown d-flex d-lg-none me-3', **data_attributes_for_navbar_favorite do %>
-    <%= render NavbarFavoriteComponent.new %>
-  <% end %>
+  <div class="nav-item dropdown d-flex d-lg-none me-3">
+    <%= render Header::NewsComponent.new(params[:locale]) %>
+  </div>
 
   <div class="nav-item dropdown d-flex d-lg-none me-3">
     <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-mobile') %>
   </div>
 
-  <div class="nav-item dropdown d-flex d-lg-none me-3">
-    <%= render Header::NewsComponent.new(params[:locale]) %>
+  <div class="nav-item">
+    <%= render Header::UserComponent.new(user: current_user) %>
   </div>
 
   <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-mobile', current_user: current_user, true_user: true_user) %>

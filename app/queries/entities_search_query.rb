@@ -18,6 +18,7 @@ class EntitiesSearchQuery
   end
 
   def call
+    # debugger
     body = Jbuilder.new do |json|
       json.query do
         json.bool do
@@ -49,10 +50,12 @@ class EntitiesSearchQuery
         end
       end
 
-      json.sort do
-        json.array! ['fuck'] do
-          json.set! context.sort do
-            json.order context.order
+      if context.sort
+        json.sort do
+          json.array! ['fuck'] do
+            json.set! context.sort do
+              json.order context.order
+            end
           end
         end
       end

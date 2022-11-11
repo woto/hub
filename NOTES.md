@@ -30,8 +30,8 @@
 ```
 
 ```ruby
-include Hostnameable
-hostnameable attribute_name: :title
+# include Hostnameable
+# hostnameable attribute_name: :title
 
 ...
 

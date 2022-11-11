@@ -5,10 +5,34 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
   mount API::Root => '/'
-  mount ImageUploader.upload_endpoint(:cache) => '/images/upload'
-  mount ImageUploader.derivation_endpoint => '/derivations/image'
+
+  # mount ImageUploader.upload_endpoint(:cache) => '/images/upload'
+  mount ImageUploader.derivation_endpoint => 'derivations/image'
+  # get '/derivations/image/*rest' => 'derivations#image'
 
   # mount Yabeda::Prometheus::Exporter => "/metrics"
+
+  # scope constraints: RoastmeConstraint.new do
+  scope '(:locale)', constraints: LocalesConstraint.new do
+    scope module: 'tables' do
+      resources :mentions, only: %i[index]
+      resources :entities, only: [:index]
+    end
+    resources :mentions, only: %i[index]
+    resources :listings, only: [:show]
+
+    resources :entities, only: %i[index show] do
+      # member do
+      #   get :popover
+      # end
+    end
+
+    root to: 'roastme/homepage#index', as: :roastme_root
+  end
+  # end
+
+  scope constraints: ReviewsConstraint.new do
+  end
 
   scope constraints: WebsiteConstraint.new do
     root to: 'tables/articles#index', as: :articles
@@ -39,12 +63,11 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     Rails.configuration.oauth_providers.each do |provider|
-      get "/users/auth/#{provider}/callback" => 'users/omniauth_callbacks#callback', defaults: { provider: provider }
+      get "/users/auth/#{provider}/callback" => 'users/omniauth_callbacks#callback', defaults: { provider: }
     end
   end
 
   scope '(:locale)', constraints: LocalesConstraint.new do
-
     devise_for :users,
                path: 'auth',
                path_names: {
@@ -67,8 +90,6 @@ Rails.application.routes.draw do
     scope module: 'tables' do
       resources :accounts, only: [:index]
       resources :checks, only: [:index]
-      resources :entities, only: [:index]
-      resources :mentions, only: [:index]
       resources :favorites, only: [:index]
       resources :advertisers, only: [:index] do
         resources :offers, only: [:index]
@@ -101,23 +122,6 @@ Rails.application.routes.draw do
     resources :accounts
     resources :advertisers
     resources :checks
-    resources :entities do
-      member do
-        get :popover
-      end
-    end
-    namespace :mentions do
-      resources :entities, only: %i[edit new create update] do
-        collection do
-          get :assign
-          get :search
-        end
-        member do
-          get :card
-        end
-      end
-    end
-    resources :mentions
     resources :post_categories do
     end
     namespace :post_categories do
@@ -128,8 +132,6 @@ Rails.application.routes.draw do
 
     resources :favorites do
       collection do
-        get :navbar_favorite_list
-        get :dropdown_list
         get :update_star
       end
     end
@@ -137,6 +139,7 @@ Rails.application.routes.draw do
     resources :users do
       post :impersonate, on: :member
       post :stop_impersonating, on: :collection
+      get :auth_complete, on: :collection
     end
 
     # sign_out_via: [*::Devise.sign_out_via, ActiveAdmin.application.logout_link_method].uniq

@@ -1,4 +1,5 @@
 <%= turbo_frame_tag 'articles-latest' do %>
+  <div class="tw-bg-emerald-300">
   <div class="card">
     <div class="d-flex card-header justify-content-between">
       <h3 class="card-title"><%= t('.latest_news') %></h3>
@@ -31,5 +32,6 @@
         <%= render 'frames/articles/latest/newer' %>
       </div>
     <% end %>
+  </div>
   </div>
 <% end %>

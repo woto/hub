@@ -463,7 +463,7 @@ CREATE TABLE public.active_storage_blobs (
     content_type character varying,
     metadata text,
     byte_size bigint NOT NULL,
-    checksum character varying NOT NULL,
+    checksum character varying,
     created_at timestamp without time zone NOT NULL,
     service_name character varying NOT NULL
 );
@@ -605,24 +605,98 @@ ALTER SEQUENCE public.checks_id_seq OWNED BY public.checks.id;
 
 
 --
+-- Name: cites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cites (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    entity_id bigint NOT NULL,
+    title character varying,
+    intro text,
+    text_start character varying,
+    text_end character varying,
+    prefix character varying,
+    suffix character varying,
+    link_url character varying,
+    relevance integer,
+    sentiment integer,
+    mention_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    image_src character varying,
+    mention_date timestamp without time zone
+);
+
+
+--
+-- Name: cites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.cites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: cites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.cites_id_seq OWNED BY public.cites.id;
+
+
+--
+-- Name: complains; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.complains (
+    id bigint NOT NULL,
+    user_id bigint,
+    data jsonb,
+    text text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: complains_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.complains_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: complains_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.complains_id_seq OWNED BY public.complains.id;
+
+
+--
 -- Name: entities; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.entities (
     id bigint NOT NULL,
     title character varying,
-    mentions_count integer DEFAULT 0 NOT NULL,
+    entities_mentions_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
-    image_data jsonb,
     user_id bigint NOT NULL,
     lookups_count integer DEFAULT 0 NOT NULL,
     intro text,
-    topics_count integer DEFAULT 0 NOT NULL,
     hostname_id bigint,
-    metadata_yandex jsonb,
-    metadata_iframely jsonb
+    image_src character varying
 );
 
 
@@ -687,7 +761,9 @@ CREATE TABLE public.entities_mentions (
     mention_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    is_main boolean DEFAULT false NOT NULL
+    mention_date timestamp without time zone,
+    relevance integer,
+    sentiment double precision
 );
 
 
@@ -708,38 +784,6 @@ CREATE SEQUENCE public.entities_mentions_id_seq
 --
 
 ALTER SEQUENCE public.entities_mentions_id_seq OWNED BY public.entities_mentions.id;
-
-
---
--- Name: entities_topics; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.entities_topics (
-    id bigint NOT NULL,
-    entity_id bigint NOT NULL,
-    topic_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: entities_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.entities_topics_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: entities_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.entities_topics_id_seq OWNED BY public.entities_topics.id;
 
 
 --
@@ -789,7 +833,9 @@ CREATE TABLE public.favorites (
     favorites_items integer DEFAULT 0 NOT NULL,
     favorites_items_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_public boolean DEFAULT false,
+    description text
 );
 
 
@@ -912,8 +958,8 @@ CREATE TABLE public.feeds (
     downloaded_file_size bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     locked_by_tid character varying DEFAULT ''::character varying NOT NULL,
+    log_data jsonb,
     languages jsonb DEFAULT '{}'::jsonb
 );
 
@@ -1010,9 +1056,8 @@ ALTER SEQUENCE public.identities_id_seq OWNED BY public.identities.id;
 
 CREATE TABLE public.images (
     id bigint NOT NULL,
-    imageable_type character varying NOT NULL,
-    imageable_id bigint NOT NULL,
     image_data jsonb,
+    user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -1038,15 +1083,51 @@ ALTER SEQUENCE public.images_id_seq OWNED BY public.images.id;
 
 
 --
+-- Name: images_relations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.images_relations (
+    id bigint NOT NULL,
+    image_id bigint NOT NULL,
+    relation_type character varying NOT NULL,
+    relation_id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    "order" integer,
+    dark boolean
+);
+
+
+--
+-- Name: images_relations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.images_relations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: images_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.images_relations_id_seq OWNED BY public.images_relations.id;
+
+
+--
 -- Name: lookups; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.lookups (
     id bigint NOT NULL,
     title character varying NOT NULL,
-    entity_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    user_id bigint
 );
 
 
@@ -1070,6 +1151,40 @@ ALTER SEQUENCE public.lookups_id_seq OWNED BY public.lookups.id;
 
 
 --
+-- Name: lookups_relations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lookups_relations (
+    id bigint NOT NULL,
+    lookup_id bigint NOT NULL,
+    relation_type character varying NOT NULL,
+    relation_id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: lookups_relations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.lookups_relations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lookups_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.lookups_relations_id_seq OWNED BY public.lookups_relations.id;
+
+
+--
 -- Name: mentions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1078,19 +1193,15 @@ CREATE TABLE public.mentions (
     user_id bigint NOT NULL,
     url text,
     published_at timestamp without time zone,
-    entities_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
-    image_data jsonb,
     kinds jsonb DEFAULT '[]'::jsonb NOT NULL,
-    topics_count integer DEFAULT 0 NOT NULL,
     title character varying,
     html text,
     sentiments jsonb DEFAULT '[]'::jsonb,
     hostname_id bigint,
-    metadata_yandex jsonb,
-    metadata_iframely jsonb
+    canonical_url text
 );
 
 
@@ -1111,38 +1222,6 @@ CREATE SEQUENCE public.mentions_id_seq
 --
 
 ALTER SEQUENCE public.mentions_id_seq OWNED BY public.mentions.id;
-
-
---
--- Name: mentions_topics; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.mentions_topics (
-    id bigint NOT NULL,
-    mention_id bigint NOT NULL,
-    topic_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: mentions_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.mentions_topics_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: mentions_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.mentions_topics_id_seq OWNED BY public.mentions_topics.id;
 
 
 --
@@ -1276,11 +1355,11 @@ CREATE TABLE public.realms (
     domain character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     after_head_open text,
     before_head_close text,
     after_body_open text,
-    before_body_close text
+    before_body_close text,
+    log_data jsonb
 );
 
 
@@ -1352,8 +1431,8 @@ CREATE TABLE public.topics (
     title character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    mentions_count integer DEFAULT 0 NOT NULL,
-    entities_count integer DEFAULT 0 NOT NULL
+    topics_relations_count integer,
+    user_id bigint
 );
 
 
@@ -1374,6 +1453,40 @@ CREATE SEQUENCE public.topics_id_seq
 --
 
 ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
+
+
+--
+-- Name: topics_relations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.topics_relations (
+    id bigint NOT NULL,
+    topic_id bigint NOT NULL,
+    relation_type character varying NOT NULL,
+    relation_id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: topics_relations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.topics_relations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: topics_relations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.topics_relations_id_seq OWNED BY public.topics_relations.id;
 
 
 --
@@ -1482,7 +1595,6 @@ CREATE TABLE public.users (
     identities_count integer DEFAULT 0 NOT NULL,
     log_data jsonb,
     api_key character varying,
-    mentions_count integer DEFAULT 0 NOT NULL,
     entities_count integer DEFAULT 0 NOT NULL
 );
 
@@ -1697,6 +1809,20 @@ ALTER TABLE ONLY public.checks ALTER COLUMN id SET DEFAULT nextval('public.check
 
 
 --
+-- Name: cites id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cites ALTER COLUMN id SET DEFAULT nextval('public.cites_id_seq'::regclass);
+
+
+--
+-- Name: complains id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complains ALTER COLUMN id SET DEFAULT nextval('public.complains_id_seq'::regclass);
+
+
+--
 -- Name: entities id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1715,13 +1841,6 @@ ALTER TABLE ONLY public.entities_entities ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.entities_mentions ALTER COLUMN id SET DEFAULT nextval('public.entities_mentions_id_seq'::regclass);
-
-
---
--- Name: entities_topics id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.entities_topics ALTER COLUMN id SET DEFAULT nextval('public.entities_topics_id_seq'::regclass);
 
 
 --
@@ -1781,6 +1900,13 @@ ALTER TABLE ONLY public.images ALTER COLUMN id SET DEFAULT nextval('public.image
 
 
 --
+-- Name: images_relations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images_relations ALTER COLUMN id SET DEFAULT nextval('public.images_relations_id_seq'::regclass);
+
+
+--
 -- Name: lookups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1788,17 +1914,17 @@ ALTER TABLE ONLY public.lookups ALTER COLUMN id SET DEFAULT nextval('public.look
 
 
 --
+-- Name: lookups_relations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups_relations ALTER COLUMN id SET DEFAULT nextval('public.lookups_relations_id_seq'::regclass);
+
+
+--
 -- Name: mentions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentions ALTER COLUMN id SET DEFAULT nextval('public.mentions_id_seq'::regclass);
-
-
---
--- Name: mentions_topics id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.mentions_topics ALTER COLUMN id SET DEFAULT nextval('public.mentions_topics_id_seq'::regclass);
 
 
 --
@@ -1841,6 +1967,13 @@ ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.sub
 --
 
 ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topics_id_seq'::regclass);
+
+
+--
+-- Name: topics_relations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics_relations ALTER COLUMN id SET DEFAULT nextval('public.topics_relations_id_seq'::regclass);
 
 
 --
@@ -1965,6 +2098,22 @@ ALTER TABLE ONLY public.checks
 
 
 --
+-- Name: cites cites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cites
+    ADD CONSTRAINT cites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: complains complains_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complains
+    ADD CONSTRAINT complains_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: entities_entities entities_entities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1986,14 +2135,6 @@ ALTER TABLE ONLY public.entities_mentions
 
 ALTER TABLE ONLY public.entities
     ADD CONSTRAINT entities_pkey PRIMARY KEY (id);
-
-
---
--- Name: entities_topics entities_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.entities_topics
-    ADD CONSTRAINT entities_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -2061,6 +2202,14 @@ ALTER TABLE ONLY public.images
 
 
 --
+-- Name: images_relations images_relations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images_relations
+    ADD CONSTRAINT images_relations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: lookups lookups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2069,19 +2218,19 @@ ALTER TABLE ONLY public.lookups
 
 
 --
+-- Name: lookups_relations lookups_relations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups_relations
+    ADD CONSTRAINT lookups_relations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: mentions mentions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentions
     ADD CONSTRAINT mentions_pkey PRIMARY KEY (id);
-
-
---
--- Name: mentions_topics mentions_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.mentions_topics
-    ADD CONSTRAINT mentions_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -2138,6 +2287,14 @@ ALTER TABLE ONLY public.subjects
 
 ALTER TABLE ONLY public.topics
     ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: topics_relations topics_relations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics_relations
+    ADD CONSTRAINT topics_relations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2267,6 +2424,34 @@ CREATE INDEX index_checks_on_user_id ON public.checks USING btree (user_id);
 
 
 --
+-- Name: index_cites_on_entity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cites_on_entity_id ON public.cites USING btree (entity_id);
+
+
+--
+-- Name: index_cites_on_mention_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cites_on_mention_id ON public.cites USING btree (mention_id);
+
+
+--
+-- Name: index_cites_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cites_on_user_id ON public.cites USING btree (user_id);
+
+
+--
+-- Name: index_complains_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_complains_on_user_id ON public.complains USING btree (user_id);
+
+
+--
 -- Name: index_entities_entities_on_child_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2309,31 +2494,10 @@ CREATE INDEX index_entities_on_hostname_id ON public.entities USING btree (hostn
 
 
 --
--- Name: index_entities_on_image_data; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_entities_on_image_data ON public.entities USING gin (image_data);
-
-
---
 -- Name: index_entities_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_entities_on_user_id ON public.entities USING btree (user_id);
-
-
---
--- Name: index_entities_topics_on_entity_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_entities_topics_on_entity_id ON public.entities_topics USING btree (entity_id);
-
-
---
--- Name: index_entities_topics_on_topic_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_entities_topics_on_topic_id ON public.entities_topics USING btree (topic_id);
 
 
 --
@@ -2386,17 +2550,59 @@ CREATE INDEX index_identities_on_user_id ON public.identities USING btree (user_
 
 
 --
--- Name: index_images_on_imageable; Type: INDEX; Schema: public; Owner: -
+-- Name: index_images_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_images_on_imageable ON public.images USING btree (imageable_type, imageable_id);
+CREATE INDEX index_images_on_user_id ON public.images USING btree (user_id);
 
 
 --
--- Name: index_lookups_on_entity_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_images_relations_on_image_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_lookups_on_entity_id ON public.lookups USING btree (entity_id);
+CREATE INDEX index_images_relations_on_image_id ON public.images_relations USING btree (image_id);
+
+
+--
+-- Name: index_images_relations_on_relation; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_images_relations_on_relation ON public.images_relations USING btree (relation_type, relation_id);
+
+
+--
+-- Name: index_images_relations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_images_relations_on_user_id ON public.images_relations USING btree (user_id);
+
+
+--
+-- Name: index_lookups_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lookups_on_user_id ON public.lookups USING btree (user_id);
+
+
+--
+-- Name: index_lookups_relations_on_lookup_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lookups_relations_on_lookup_id ON public.lookups_relations USING btree (lookup_id);
+
+
+--
+-- Name: index_lookups_relations_on_relation; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lookups_relations_on_relation ON public.lookups_relations USING btree (relation_type, relation_id);
+
+
+--
+-- Name: index_lookups_relations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lookups_relations_on_user_id ON public.lookups_relations USING btree (user_id);
 
 
 --
@@ -2407,31 +2613,10 @@ CREATE INDEX index_mentions_on_hostname_id ON public.mentions USING btree (hostn
 
 
 --
--- Name: index_mentions_on_image_data; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mentions_on_image_data ON public.mentions USING gin (image_data);
-
-
---
 -- Name: index_mentions_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_mentions_on_user_id ON public.mentions USING btree (user_id);
-
-
---
--- Name: index_mentions_topics_on_mention_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mentions_topics_on_mention_id ON public.mentions_topics USING btree (mention_id);
-
-
---
--- Name: index_mentions_topics_on_topic_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mentions_topics_on_topic_id ON public.mentions_topics USING btree (topic_id);
 
 
 --
@@ -2516,6 +2701,34 @@ CREATE UNIQUE INDEX index_subjects_on_identifier ON public.subjects USING btree 
 --
 
 CREATE UNIQUE INDEX index_topics_on_title ON public.topics USING btree (title);
+
+
+--
+-- Name: index_topics_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_on_user_id ON public.topics USING btree (user_id);
+
+
+--
+-- Name: index_topics_relations_on_relation; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_relations_on_relation ON public.topics_relations USING btree (relation_type, relation_id);
+
+
+--
+-- Name: index_topics_relations_on_topic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_relations_on_topic_id ON public.topics_relations USING btree (topic_id);
+
+
+--
+-- Name: index_topics_relations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_relations_on_user_id ON public.topics_relations USING btree (user_id);
 
 
 --
@@ -2694,11 +2907,11 @@ CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH
 
 
 --
--- Name: entities_topics fk_rails_0edeb99da6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: images fk_rails_19cd822056; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.entities_topics
-    ADD CONSTRAINT fk_rails_0edeb99da6 FOREIGN KEY (entity_id) REFERENCES public.entities(id);
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT fk_rails_19cd822056 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2707,6 +2920,14 @@ ALTER TABLE ONLY public.entities_topics
 
 ALTER TABLE ONLY public.mentions
     ADD CONSTRAINT fk_rails_1b711e94aa FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: lookups_relations fk_rails_2d4525a11e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups_relations
+    ADD CONSTRAINT fk_rails_2d4525a11e FOREIGN KEY (lookup_id) REFERENCES public.lookups(id);
 
 
 --
@@ -2742,11 +2963,11 @@ ALTER TABLE ONLY public.identities
 
 
 --
--- Name: entities_topics fk_rails_596ddb687e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: images_relations fk_rails_593ebce63f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.entities_topics
-    ADD CONSTRAINT fk_rails_596ddb687e FOREIGN KEY (topic_id) REFERENCES public.topics(id);
+ALTER TABLE ONLY public.images_relations
+    ADD CONSTRAINT fk_rails_593ebce63f FOREIGN KEY (image_id) REFERENCES public.images(id);
 
 
 --
@@ -2766,11 +2987,11 @@ ALTER TABLE ONLY public.posts
 
 
 --
--- Name: lookups fk_rails_5d72fd5a14; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: cites fk_rails_5f4fbc89c7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.lookups
-    ADD CONSTRAINT fk_rails_5d72fd5a14 FOREIGN KEY (entity_id) REFERENCES public.entities(id);
+ALTER TABLE ONLY public.cites
+    ADD CONSTRAINT fk_rails_5f4fbc89c7 FOREIGN KEY (mention_id) REFERENCES public.mentions(id);
 
 
 --
@@ -2798,11 +3019,11 @@ ALTER TABLE ONLY public.transactions
 
 
 --
--- Name: mentions_topics fk_rails_6984723261; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: cites fk_rails_7175e8766d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.mentions_topics
-    ADD CONSTRAINT fk_rails_6984723261 FOREIGN KEY (mention_id) REFERENCES public.mentions(id);
+ALTER TABLE ONLY public.cites
+    ADD CONSTRAINT fk_rails_7175e8766d FOREIGN KEY (entity_id) REFERENCES public.entities(id);
 
 
 --
@@ -2830,11 +3051,27 @@ ALTER TABLE ONLY public.posts
 
 
 --
--- Name: mentions_topics fk_rails_7ca9edb5c4; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: topics_relations fk_rails_74e8722f31; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.mentions_topics
-    ADD CONSTRAINT fk_rails_7ca9edb5c4 FOREIGN KEY (topic_id) REFERENCES public.topics(id);
+ALTER TABLE ONLY public.topics_relations
+    ADD CONSTRAINT fk_rails_74e8722f31 FOREIGN KEY (topic_id) REFERENCES public.topics(id);
+
+
+--
+-- Name: cites fk_rails_76b9e78668; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cites
+    ADD CONSTRAINT fk_rails_76b9e78668 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: topics fk_rails_7b812cfb44; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics
+    ADD CONSTRAINT fk_rails_7b812cfb44 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2843,6 +3080,14 @@ ALTER TABLE ONLY public.mentions_topics
 
 ALTER TABLE ONLY public.entities_mentions
     ADD CONSTRAINT fk_rails_8012d8e285 FOREIGN KEY (mention_id) REFERENCES public.mentions(id);
+
+
+--
+-- Name: lookups fk_rails_8940ebe5c1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups
+    ADD CONSTRAINT fk_rails_8940ebe5c1 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2878,11 +3123,27 @@ ALTER TABLE ONLY public.entities
 
 
 --
+-- Name: lookups_relations fk_rails_9cbda547d0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lookups_relations
+    ADD CONSTRAINT fk_rails_9cbda547d0 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: post_categories fk_rails_b089ae0cfa; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.post_categories
     ADD CONSTRAINT fk_rails_b089ae0cfa FOREIGN KEY (realm_id) REFERENCES public.realms(id);
+
+
+--
+-- Name: images_relations fk_rails_b23fec7948; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images_relations
+    ADD CONSTRAINT fk_rails_b23fec7948 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2907,6 +3168,14 @@ ALTER TABLE ONLY public.transactions
 
 ALTER TABLE ONLY public.active_storage_attachments
     ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: complains fk_rails_ce94c84ea0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complains
+    ADD CONSTRAINT fk_rails_ce94c84ea0 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2963,6 +3232,14 @@ ALTER TABLE ONLY public.entities_entities
 
 ALTER TABLE ONLY public.transactions
     ADD CONSTRAINT fk_rails_f4dbee2c78 FOREIGN KEY (responsible_id) REFERENCES public.users(id);
+
+
+--
+-- Name: topics_relations fk_rails_f7b5b9dba9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics_relations
+    ADD CONSTRAINT fk_rails_f7b5b9dba9 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -3064,6 +3341,51 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211224052330'),
 ('20211224201618'),
 ('20211225211808'),
-('20220101091456');
+('20220101091456'),
+('20220105091456'),
+('20220117110119'),
+('20220117120221'),
+('20220531142857'),
+('20220619041202'),
+('20220619042952'),
+('20220619043101'),
+('20220619050732'),
+('20220619050841'),
+('20220619051757'),
+('20220625144407'),
+('20220626084806'),
+('20220626102034'),
+('20220626152921'),
+('20220627130458'),
+('20220627130541'),
+('20220627131039'),
+('20220627131203'),
+('20220702222250'),
+('20220702222305'),
+('20220703011719'),
+('20220703111423'),
+('20220703121703'),
+('20220703125323'),
+('20220703141416'),
+('20220703141637'),
+('20220703143617'),
+('20220703195717'),
+('20220703200602'),
+('20220707224928'),
+('20220709013747'),
+('20220709013755'),
+('20220709204615'),
+('20220712015606'),
+('20220712033809'),
+('20220712033824'),
+('20220715202229'),
+('20220715211949'),
+('20220729125912'),
+('20220731102238'),
+('20220823012949'),
+('20220905070147'),
+('20220920130348'),
+('20221022225401'),
+('20221024180121');
 
 

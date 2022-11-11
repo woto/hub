@@ -43,3 +43,6 @@ __pycache__/
 /config/master.key
 /config/secrets
 /.idea
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

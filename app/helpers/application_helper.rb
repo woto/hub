@@ -1,9 +1,29 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def serialize_language_attributes
+    {
+      title: t('header.menu.language'),
+      languages:
+        I18n.available_locales.map do |locale|
+          {
+            title: system_locale_to_human(locale),
+            url: path_for_switch_language(locale, Current.realm&.kind) ||
+              url_for(
+                Tools::SwitchLanguage.call(
+                  subdomains: request.subdomains,
+                  host: request.host,
+                  locale:
+                ).object
+              )
+          }
+        end
+    }
+  end
+
   def articles_by_month_link(month)
     articles_by_month_path(
-      month: month,
+      month:,
       per: params[:per],
       sort: params[:sort],
       order: params[:order]
@@ -12,7 +32,7 @@ module ApplicationHelper
 
   def articles_by_tag_link(tag)
     articles_by_tag_path(
-      tag: tag,
+      tag:,
       per: params[:per],
       sort: params[:sort],
       order: params[:order]
@@ -21,7 +41,7 @@ module ApplicationHelper
 
   def articles_by_category_link(category_id)
     articles_by_category_path(
-      category_id: category_id,
+      category_id:,
       per: params[:per],
       sort: params[:sort],
       order: params[:order]
@@ -38,7 +58,7 @@ module ApplicationHelper
 
   def article_link(id)
     article_path(
-      id: id,
+      id:,
       per: params[:per],
       sort: params[:sort],
       order: params[:order]
@@ -70,20 +90,11 @@ module ApplicationHelper
            @settings[:form_class]
            .all_columns
            .reject { _1[:roles].exclude?(current_user&.role || 'guest') }
-           .map { _1[:key] }
+           .pluck(:key)
 
     keys.compact_blank.map do |k|
       [t(k, scope: [:table, :long, @settings[:singular]]), k]
     end
-  end
-
-  def data_attributes_for_navbar_favorite
-    {
-      'data-controller': 'navbar-favorite',
-      'data-navbar-favorite-dropdown-list-path-value': navbar_favorite_list_favorites_path,
-      'data-navbar-favorite-others-path-value': favorites_path,
-      'data-navbar-favorite-no-favorites-value': t('.no_favorites')
-    }
   end
 
   def test_id
@@ -129,43 +140,43 @@ module ApplicationHelper
     locales = {}
     Rails.configuration.i18n.available_locales.each do |locale|
       locales[locale.downcase] = {
-        attachFiles: I18n.t(:attachFiles, scope: 'trix', locale: locale),
-        bold: I18n.t(:bold, scope: 'trix', locale: locale),
-        bullets: I18n.t(:bullets, scope: 'trix', locale: locale),
-        byte: I18n.t(:byte, scope: 'trix', locale: locale),
-        bytes: I18n.t(:bytes, scope: 'trix', locale: locale),
-        captionPlaceholder: I18n.t(:captionPlaceholder, scope: 'trix', locale: locale),
-        code: I18n.t(:code, scope: 'trix', locale: locale),
-        heading1: I18n.t(:heading1, scope: 'trix', locale: locale),
-        indent: I18n.t(:indent, scope: 'trix', locale: locale),
-        italic: I18n.t(:italic, scope: 'trix', locale: locale),
-        link: I18n.t(:link, scope: 'trix', locale: locale),
-        numbers: I18n.t(:numbers, scope: 'trix', locale: locale),
-        outdent: I18n.t(:outdent, scope: 'trix', locale: locale),
-        quote: I18n.t(:quote, scope: 'trix', locale: locale),
-        redo: I18n.t(:redo, scope: 'trix', locale: locale),
-        remove: I18n.t(:remove, scope: 'trix', locale: locale),
-        strike: I18n.t(:strike, scope: 'trix', locale: locale),
-        undo: I18n.t(:undo, scope: 'trix', locale: locale),
-        unlink: I18n.t(:unlink, scope: 'trix', locale: locale),
-        url: I18n.t(:url, scope: 'trix', locale: locale),
-        urlPlaceholder: I18n.t(:urlPlaceholder, scope: 'trix', locale: locale),
-        GB: I18n.t(:GB, scope: 'trix', locale: locale),
-        KB: I18n.t(:KB, scope: 'trix', locale: locale),
-        MB: I18n.t(:MB, scope: 'trix', locale: locale),
-        PB: I18n.t(:PB, scope: 'trix', locale: locale),
-        TB: I18n.t(:TB, scope: 'trix', locale: locale),
-        embedWidget: I18n.t(:embedWidget, scope: 'trix', locale: locale)
+        attachFiles: I18n.t(:attachFiles, scope: 'trix', locale:),
+        bold: I18n.t(:bold, scope: 'trix', locale:),
+        bullets: I18n.t(:bullets, scope: 'trix', locale:),
+        byte: I18n.t(:byte, scope: 'trix', locale:),
+        bytes: I18n.t(:bytes, scope: 'trix', locale:),
+        captionPlaceholder: I18n.t(:captionPlaceholder, scope: 'trix', locale:),
+        code: I18n.t(:code, scope: 'trix', locale:),
+        heading1: I18n.t(:heading1, scope: 'trix', locale:),
+        indent: I18n.t(:indent, scope: 'trix', locale:),
+        italic: I18n.t(:italic, scope: 'trix', locale:),
+        link: I18n.t(:link, scope: 'trix', locale:),
+        numbers: I18n.t(:numbers, scope: 'trix', locale:),
+        outdent: I18n.t(:outdent, scope: 'trix', locale:),
+        quote: I18n.t(:quote, scope: 'trix', locale:),
+        redo: I18n.t(:redo, scope: 'trix', locale:),
+        remove: I18n.t(:remove, scope: 'trix', locale:),
+        strike: I18n.t(:strike, scope: 'trix', locale:),
+        undo: I18n.t(:undo, scope: 'trix', locale:),
+        unlink: I18n.t(:unlink, scope: 'trix', locale:),
+        url: I18n.t(:url, scope: 'trix', locale:),
+        urlPlaceholder: I18n.t(:urlPlaceholder, scope: 'trix', locale:),
+        GB: I18n.t(:GB, scope: 'trix', locale:),
+        KB: I18n.t(:KB, scope: 'trix', locale:),
+        MB: I18n.t(:MB, scope: 'trix', locale:),
+        PB: I18n.t(:PB, scope: 'trix', locale:),
+        TB: I18n.t(:TB, scope: 'trix', locale:),
+        embedWidget: I18n.t(:embedWidget, scope: 'trix', locale:)
       }
     end
     locales
   end
 
-  def conditional_tag(name, condition, options = nil, &block)
+  def conditional_tag(name, condition, options = nil, &)
     if condition
-      content_tag name, capture(&block), options
+      content_tag name, capture(&), options
     else
-      capture(&block)
+      capture(&)
     end
   end
 

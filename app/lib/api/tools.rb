@@ -1,13 +1,28 @@
 # frozen_string_literal: true
 
-require_relative 'validations/url'
+# require_relative 'validations/url'
 
 module API
   class Tools < ::Grape::API
     prefix :api
-    auth :api_key
 
     resource :tools do
+
+      auth :api_key
+
+      desc 'Search wikipedia.org' do
+        security [{ api_key: [] }]
+      end
+
+      params do
+        requires :q, type: String, desc: 'query string'
+        optional :lang, type: String, desc: 'page language'
+      end
+
+      get :wikipedia do
+        Extractors::WikipediaOrg::Search.call(q: params[:q], page_language: params[:lang]).object
+      end
+
       desc 'Search github.com' do
         security [{ api_key: [] }]
       end
@@ -88,7 +103,8 @@ module API
       end
 
       params do
-        requires :url, type: String, url: true, desc: 'URL of website'
+        # requires :url, type: String, url: true, desc: 'URL of website'
+        requires :url, type: String, desc: 'URL of website'
       end
 
       get :scrape_webpage do

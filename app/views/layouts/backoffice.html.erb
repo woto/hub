@@ -25,7 +25,7 @@
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"  style="width: initial; height: initial;">
         <div class="navbar-brand navbar-brand-autodark">
-          <%= image_tag(asset_pack_path('media/images/logo-white.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
+          <%= image_tag(asset_path('logo-white.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
         </div>
       </button>
 
@@ -57,9 +57,11 @@
 
                 <div class="d-flex">
                   <% if seo.title.present? %>
-                    <h1 class="page-title">
-                      <%= seo.title %>
-                    </h1>
+                    <div class="tw-table tw-table-fixed tw-w-full">
+                      <h1 class="tw-table-cell tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden tw-text-xl">
+                        <%= render TitleComponent.new(title: seo.title) %>
+                      </h1>
+                    </div>
                     <%= content_for :star %>
                   <% end %>
                 </div>

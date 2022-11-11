@@ -4,24 +4,20 @@
 #
 # Table name: entities
 #
-#  id                :bigint           not null, primary key
-#  image_data        :jsonb
-#  intro             :text
-#  lookups_count     :integer          default(0), not null
-#  mentions_count    :integer          default(0), not null
-#  metadata_iframely :jsonb
-#  metadata_yandex   :jsonb
-#  title             :string
-#  topics_count      :integer          default(0), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  hostname_id       :bigint
-#  user_id           :bigint           not null
+#  id                      :bigint           not null, primary key
+#  entities_mentions_count :integer          default(0), not null
+#  image_src               :string
+#  intro                   :text
+#  lookups_count           :integer          default(0), not null
+#  title                   :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  hostname_id             :bigint
+#  user_id                 :bigint           not null
 #
 # Indexes
 #
 #  index_entities_on_hostname_id  (hostname_id)
-#  index_entities_on_image_data   (image_data) USING gin
 #  index_entities_on_user_id      (user_id)
 #
 # Foreign Keys
@@ -35,20 +31,18 @@ class Entity < ApplicationRecord
   include Elasticable
   index_name "#{Rails.env}.entities"
 
-  include ImageUploader::Attachment(:image) # adds an `image` virtual attribute
   include Topicable
   include Hostnameable
   hostnameable attribute_name: :title
 
-  belongs_to :user, counter_cache: true
+  belongs_to :user
 
   has_rich_text :body
 
-  has_many :entities_mentions, dependent: :restrict_with_error
-  has_many :mentions, through: :entities_mentions, counter_cache: :mentions_count
+  has_many :cites, dependent: :destroy
 
-  has_many :entities_topics, dependent: :destroy
-  has_many :topics, through: :entities_topics
+  has_many :entities_mentions, dependent: :destroy
+  has_many :mentions, through: :entities_mentions
 
   has_many :children_entities, class_name: 'EntitiesEntity', foreign_key: 'parent_id', dependent: :destroy,
                                inverse_of: :parent
@@ -58,34 +52,41 @@ class Entity < ApplicationRecord
                               inverse_of: :child
   has_many :parents, class_name: 'Entity', through: :parents_entities, source: :parent, inverse_of: :children
 
-  has_many :lookups, dependent: :destroy
+  has_many :lookups_relations, as: :relation, dependent: :restrict_with_exception
+  has_many :lookups, -> { order(:id).distinct }, through: :lookups_relations
 
-  has_many :images_relations, as: :relation, dependent: :destroy
-  has_many :images, -> { includes(:images_relations).order('images_relations.order') }, through: :images_relations
+  has_many :topics_relations, as: :relation, dependent: :restrict_with_exception
+  has_many :topics, -> { order(:id).distinct }, through: :topics_relations
+
+  has_many :images_relations, -> { order('images_relations.order') }, as: :relation, dependent: :destroy
+  has_many :images, through: :images_relations
 
   before_validation :strip_title
   before_validation :strip_intro
 
-  validates :title, presence: true
-  validates :intro, length: { maximum: 250 }
+  validates :title, :intro, presence: true
+  validates :intro, length: { maximum: 500 }
 
   accepts_nested_attributes_for :lookups, allow_destroy: true, reject_if: :all_blank
 
   def as_indexed_json(_options = {})
     {
-      id: id,
-      title: title,
-      hostname: hostname.to_label,
-      intro: intro,
-      lookups: lookups.map(&:to_label),
-      lookups_count: lookups_count,
-      topics: topics.map(&:to_label),
-      topics_count: topics_count,
-      image: GlobalHelper.image_hash(self),
-      user_id: user_id,
-      created_at: created_at,
-      updated_at: updated_at,
-      mentions_count: mentions_count
+      id:,
+      title:,
+      text_start: cites.map(&:text_start),
+      text_end: cites.map(&:text_end),
+      prefix: cites.map(&:prefix),
+      suffix: cites.map(&:suffix),
+      link_url: cites.map(&:link_url),
+      hostname: hostname&.to_label,
+      intro:,
+      lookups: lookups.map { |lookup| { id: lookup.id, title: lookup.title } },
+      topics: topics.map { |topic| { id: topic.id, title: topic.title } },
+      images: GlobalHelper.image_hash(images_relations),
+      user_id:,
+      created_at:,
+      updated_at:,
+      entities_mentions_count:
     }
   end
 

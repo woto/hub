@@ -67,10 +67,10 @@
                 <dd class="col-sm-9"> <%= @post_category.posts_count %> </dd>
 
                 <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post_category.created_at) %> </dd>
+                <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @post_category.created_at) %> </dd>
 
                 <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@post_category.updated_at) %> </dd>
+                <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @post_category.updated_at) %> </dd>
               </dl>
             </div>
           </div>

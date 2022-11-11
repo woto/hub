@@ -11,8 +11,8 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_packs_with_chunks_tag 'application' %>
-  <%= javascript_packs_with_chunks_tag 'application' %>
+  <%= javascript_include_tag 'application', "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag 'application', "data-turbo-track": "reload" %>
 
   <%= content_for(:before_head_close) %>
 </head>

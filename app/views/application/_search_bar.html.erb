@@ -1,14 +1,14 @@
-<%= tag.div data: {
-  react: 'SearchBar',
-  props: {
-    buttonTitle: t('search'),
-    placeholder: t('search_placeholder'),
-    q: params[:q],
-    items: [ 
-      {
-        title: 'Везде',
-        url: url_for_search_everywhere
-      }
-    ]}
-  } 
+<%= render(
+      ReactComponent.new(name: 'SearchBar',
+            class: 'tw-h-20 tw-w-20 tw-bg-red-500',
+            props: {
+              buttonTitle: t('header.search.button'),
+              placeholder: t('header.search.placeholder'),
+              q: params[:q],
+              items: [
+                {
+                  title: 'Везде',
+                  url: url_for_search_everywhere
+                }
+              ] }))
 %>

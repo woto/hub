@@ -13,8 +13,15 @@
     <% end %>
 
     <% if policy(entity).edit? %>
-      <%= link_to t('buttons.edit'), edit_entity_path(entity), class: 'dropdown-item', rel: [Seo::NoFollow] %>
+      <%= render(
+            ReactComponent.new( name: 'EntitiesEditLink',
+                                class: '',
+                                props: {
+                                  entityId: entity.id,
+                                }))
+      %>
     <% end %>
+
     <% if policy(entity).destroy? %>
       <%= link_to t('buttons.delete'), entity_path(entity), method: :delete, data: { confirm: t('are_you_sure') }, class: 'dropdown-item' %>
     <% end %>

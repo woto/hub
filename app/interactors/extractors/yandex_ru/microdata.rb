@@ -8,6 +8,7 @@ module Extractors
 
       def call
         conn = Faraday.new do |faraday|
+          # faraday.response :logger # log requests and responses to $stdout
           faraday.request :retry # retry transient failures
           faraday.response :follow_redirects # follow redirects
           faraday.response :raise_error # raises an exception if response is a 4xx or 5xx code

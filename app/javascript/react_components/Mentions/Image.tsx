@@ -1,70 +1,50 @@
-import * as React from "react";
-import {useState, useRef, useEffect} from 'react';
+import * as React from 'react';
+import {
+  useState, useEffect, useId, useContext,
+} from 'react';
 import {
   motion,
-  useDomEvent,
-  AnimatePresence,
-  useDragControls,
-  LayoutGroup,
-  useMotionValue,
-  useSpring
-} from "framer-motion";
-import {useKey} from "react-use";
-import {useGesture} from "@use-gesture/react";
+  AnimatePresence, LayoutGroup,
+} from 'framer-motion';
+import { useKey, useWindowSize } from 'react-use';
+import TailwindConfigContext from '../TailwindConfig/TailwindConfigContext';
 
-const transition = {
-  type: 'spring',
-  damping: 50,
-  stiffness: 500
-}
-
-export default function Image(props: { image: any, url: string }) {
-  const [zIndex, setZIndex] = useState<number>(0);
+function Image(props: { image: any, url: string, layoutGroupId: string }) {
+  const { width, height } = useWindowSize();
+  const tailwindConfig = useContext(TailwindConfigContext);
+  // const imageSize = width > parseInt(tailwindConfig.theme.screens['2xl'].slice(0, -2)) ? '300' : '300';
+  // const imageSize = '300';
+  const imageSize = (window.screen.availWidth > 1600 && window.innerWidth > 768) ? '500' : '300';
+  const [imageSrcWithFallback, setImageSrcWithFallback] = useState(props.image?.images[imageSize]);
   const [open, setOpen] = useState(false);
   const [blockClick, setBlockClick] = useState(false);
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const tmpMethodName = (imageIndex) => {
+    const width = props?.image?.width ?? 0;
+    const height = props?.image?.height ?? 0;
 
-  const xSpring = useSpring(x, transition);
-  const ySpring = useSpring(y, transition);
+    const xScale = (width / imageIndex) || 1;
+    const yScale = (height / imageIndex) || 1;
 
-  let width = props?.image?.width ?? 0;
-  let height = props?.image?.height ?? 0;
+    const ratio = (width / height) || 1;
 
-  const imageIndex = open ? 1000 : 300
+    const screenWidth = document.body.clientWidth;
+    const screenHeight = document.body.clientHeight;
 
-  const xScale = (width / imageIndex) || 1
-  const yScale = (height / imageIndex) || 1
+    const scaledWidth = width / xScale;
+    const scaledHeight = height / xScale;
 
-  const ratio = (width / height) || 1
-
-  let scaledWidth = width / xScale
-  let scaledHeight = height / xScale
-
-  width = scaledWidth;
-  height = scaledHeight;
-
-  const screenWidth = document.body.clientWidth;
-  const screenHeight = document.body.clientHeight;
-
-  const xConstraint = Math.abs(((width / 2) - screenWidth / 2));
-  const yConstraint = Math.abs(((height / 2) - screenHeight / 2));
-
-  const zoomImageIn = () => {
-    x.set(0);
-    y.set(0);
-    setOpen(true)
-  }
-
-  const zoomImageOut = () => {
-    xSpring.set(0)
-    ySpring.set(0)
-    setOpen(false)
-  }
+    return {
+      imageSrc: props.image?.images[imageIndex.toString()],
+      xConstraint: Math.abs(((scaledWidth / 2) - screenWidth / 2)),
+      yConstraint: Math.abs(((scaledHeight / 2) - screenHeight / 2)),
+      scaledWidth,
+      scaledHeight,
+    };
+  };
 
   useKey('Escape', () => {
-    setOpen(false)
+    setOpen(false);
   });
 
   useEffect(() => {
@@ -75,113 +55,124 @@ export default function Image(props: { image: any, url: string }) {
     }
 
     if (open) {
-      window.addEventListener('wheel', preventDefault, {passive: false})
-      window.addEventListener('touchmove', preventDefault, {passive: false})
+      window.addEventListener('wheel', preventDefault, { passive: false });
+      window.addEventListener('touchmove', preventDefault, { passive: false });
     }
 
     return () => {
-      window.removeEventListener('wheel', preventDefault)
-      window.removeEventListener('touchmove', preventDefault)
+      window.removeEventListener('wheel', preventDefault);
+      window.removeEventListener('touchmove', preventDefault);
+    };
+  });
+
+  useEffect(() => {
+    if (open) {
+      setImageSrcWithFallback(tmpMethodName(1000).imageSrc);
     }
-  })
+  }, [open]);
+
+  // console.log(tmpMethodName(1000))
 
   return (
+  // <LayoutGroup id={Math.random().toString()}>
     <div
-      className={`tw-flex tw-justify-center? tw-items-center? tw-w-full? tw-p-3`}>
+      className="tw-flex tw-relative tw-flex-grow justify-self-center tw-items-center tw-w-full tw-py-1.5"
+    >
 
       <motion.div
-        animate={{opacity: open ? 1 : 0}}
-        transition={transition}
-        className={`tw-cursor-zoom-out 
-            ${open ?
-            'tw-pointer-events-auto tw-fixed tw-inset-0 tw-bg-black/30 tw-z-30' : 
-            'tw-pointer-events-none'}`}
-        onClick={zoomImageOut}
+        animate={{ opacity: open ? 1 : 0 }}
+        className={`
+        tw-cursor-zoom-out
+        ${open
+          ? 'tw-pointer-events-auto tw-fixed tw-inset-0 tw-bg-slate-500/50 tw-z-40'
+          : 'tw-pointer-events-none'}`}
+        onClick={() => setOpen(false)}
       />
+
+      <AnimatePresence>
+        {open
+            && (
+            <motion.img
+              key={`mention-image-${props.image?.id}-${props.layoutGroupId}`}
+              layoutId={`mention-image-${props.image?.id}-${props.layoutGroupId}`}
+              data-test-id={`big-image-${props.image?.id}`}
+              className={`tw-bg-white tw-m-auto tw-z-40 -tw-inset-[1000px] tw-cursor-zoom-out tw-fixed tw-max-w-none
+                tw-p-2? tw-border-2? tw-border-transparent? tw-ring-2 tw-ring-slate-500/30 tw-ring-inset? tw-rounded`}
+              dragConstraints={{
+                left: -tmpMethodName(1000).xConstraint,
+                right: tmpMethodName(1000).xConstraint,
+                top: -tmpMethodName(1000).yConstraint,
+                bottom: tmpMethodName(1000).yConstraint,
+              }}
+              // dragSnapToOrigin
+              onDragStart={() => {
+                setBlockClick(true);
+              }}
+              drag={open}
+              dragTransition={{
+                power: 0.1,
+                min: 0.1,
+                max: 1,
+                timeConstant: 100,
+              }}
+              layout
+              style={{
+                width: tmpMethodName(1000).scaledWidth,
+                height: tmpMethodName(1000).scaledHeight,
+              }}
+              onMouseUp={() => {
+                if (!blockClick) {
+                  setOpen(false);
+                }
+                setBlockClick(false);
+              }}
+              src={imageSrcWithFallback}
+            />
+            )}
+      </AnimatePresence>
 
       <motion.img
-        className="tw-bg-white tw-m-auto tw-invisible"
-        src={props?.image?.images['300']}
+        layoutId={`mention-image-${props.image?.id}-${props.layoutGroupId}`}
+        layout
+        className={`
+            ${open && 'tw-invisible'}
+            tw-shadow? xl:tw-shadow-md? tw-outline
+            tw-outline-1 xl:tw-outline-1
+            tw-outline-slate-200 tw-rounded-lg
+            tw-bg-white tw-m-auto tw-cursor-zoom-in`}
+        data-test-id={`small-image-${props.image?.id}`}
+        src={props?.image?.images[imageSize]}
+        style={{
+          width: tmpMethodName(imageSize).scaledWidth,
+          height: tmpMethodName(imageSize).scaledHeight,
+        }}
+        onClick={() => setOpen(true)}
       />
 
-      <>
-        <motion.img
-          data-test-id={open ? `big-image-${props.image?.id}` : `small-image-${props.image?.id}`}
-          onLayoutAnimationComplete={() => {
-            if(!open) {
-              setZIndex(5)
-              x.set(0)
-              y.set(0)
-            }
-          }}
-          onLayoutAnimationStart={() => {
-            if (open) {
-              setZIndex(40)
-            }
-          }}
-          className={`tw-m-auto
-              ${open ?
-              "-tw-inset-[1000px] tw-cursor-zoom-out tw-fixed tw-max-w-none tw-rounded-lg tw-p-2 tw-border-2 tw-border-transparent tw-ring-8 tw-ring-black/20 tw-ring-inset" :
-              "tw-inset-0 tw-cursor-zoom-in tw-absolute tw-w-full? tw-h-full? tw-max-w-full? tw-max-h-full? tw-shadow-sm tw-border tw-rounded-lg"}
-            `}
-          dragConstraints={{
-            left: -xConstraint,
-            right: xConstraint,
-            top: -yConstraint,
-            bottom: yConstraint
-          }}
-          // dragSnapToOrigin
-          onDragStart={() => {
-            setBlockClick(true)
-          }}
-          drag={open}
-          dragTransition={{
-            power: 0.1,
-            min: 0.1,
-            max: 1,
-            timeConstant: 100
-          }}
-          layout
-          transition={transition}
-          style={{
-            zIndex,
-            width: scaledWidth,
-            height: scaledHeight,
-            x: open ? x : xSpring,
-            y: open ? y : ySpring,
-          }}
-          onPointerUp={() => {
-            if (!blockClick) {
-              open ? zoomImageOut() : zoomImageIn();
-            }
-            setBlockClick(false);
-          }}
-          // onMouseOut={() => {
-          //   setBlockClick(false);
-          // }}
-          src={props.image?.images[imageIndex.toString()]}
-        />
-
-        <AnimatePresence>
-          {open &&
+      <AnimatePresence>
+        {open
+            && (
             <motion.div
-              transition={{delay: 0.2}}
-              initial={{opacity: 0, y: 50}}
-              animate={{opacity: 1, y: 0}}
-              className={"tw-select-none tw-fixed tw-inset-x-0 tw-bottom-40 tw-z-50 tw-flex"}
+              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="tw-select-none tw-fixed tw-inset-x-0 tw-bottom-40 tw-z-50 tw-flex"
             >
-              <a href={props.url}
-                 className="tw-select-none tw-block tw-mx-auto tw-flex tw-items-center tw-px-8 tw-py-3 tw-border
+              <a
+                href={props.url}
+                className="tw-select-none tw-mx-auto tw-flex tw-items-center tw-px-8 tw-py-3 tw-border
                       tw-border-transparent tw-shadow-md hover:tw-shadow tw-text-lg tw-font-medium tw-rounded-full
                       tw-text-pink-50 tw-bg-slate-700 hover:tw-bg-slate-600 focus:tw-outline-none
-                      focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-700"
+                      tw-ring-2 tw-ring-offset-2 tw-ring-offset-white focus:tw-ring-offset-lime-300 focus:tw-ring-indigo-500 tw-ring-indigo-500"
               >
                 Перейти к материалу
               </a>
             </motion.div>
-          }
-        </AnimatePresence>
-      </>
+            )}
+      </AnimatePresence>
     </div>
-  )
+  // </LayoutGroup>
+  );
 }
+
+export default React.memo(Image);

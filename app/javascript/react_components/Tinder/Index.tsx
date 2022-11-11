@@ -6,7 +6,7 @@ import {
   useTransform,
   AnimatePresence,
   useDomEvent
-} from "framer-motion/dist/framer-motion";
+} from "framer-motion";
 
 import Card from './Card';
 

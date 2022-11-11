@@ -1,69 +1,68 @@
-import { Controller } from "stimulus"
-import { ApplicationController } from 'stimulus-use'
+import { Controller } from 'stimulus';
+import { ApplicationController, useDispatch } from 'stimulus-use';
 import 'selectize/dist/js/selectize.js';
-import { useDispatch } from 'stimulus-use'
 
 export default class extends ApplicationController {
-    #selectize;
-    static values = { realmId: String, isDirty: Boolean }
+  #selectize;
 
-    connect() {
-        useDispatch(this);
-        const that = this;
+  static values = { realmId: String, isDirty: Boolean };
 
-        this.selectize = $(this.element).selectize({
-            plugins: ["remove_button", "restore_on_backspace"],
-            sortField: 'title',
-            valueField: 'title',
-            labelField: 'title',
-            searchField: 'title',
-            create: function(input, callback){
-                // addItem()
-                return callback({ title: input });
-            },
-            load: function(query, callback) {
-                if (!query.length) return callback();
-                $.ajax({
-                    url: '/api/posts/tags',
-                    type: 'GET',
-                    data: {
-                        q: query,
-                        realm_id: that.realmIdValue
-                    },
-                    success: function(res) {
-                        callback(res);
-                    }
-                });
-            },
-            onChange() {
-                const val = this.getValue();
-                that.isDirtyValue = val.length > 0
-            }
-        })
-    }
+  connect() {
+    useDispatch(this);
+    const that = this;
 
-    disconnect() {
-        this.selectize.destroy();
-    }
+    this.selectize = $(this.element).selectize({
+      plugins: ['remove_button', 'restore_on_backspace'],
+      sortField: 'title',
+      valueField: 'title',
+      labelField: 'title',
+      searchField: 'title',
+      create(input, callback) {
+        // addItem()
+        return callback({ title: input });
+      },
+      load(query, callback) {
+        if (!query.length) return callback();
+        $.ajax({
+          url: '/api/posts/tags',
+          type: 'GET',
+          data: {
+            q: query,
+            realm_id: that.realmIdValue,
+          },
+          success(res) {
+            callback(res);
+          },
+        });
+      },
+      onChange() {
+        const val = this.getValue();
+        that.isDirtyValue = val.length > 0;
+      },
+    });
+  }
 
-    get selectize() {
-        return this.#selectize[0].selectize;
-    }
+  disconnect() {
+    this.selectize.destroy();
+  }
 
-    set selectize(value) {
-        this.#selectize = value;
-    }
+  get selectize() {
+    return this.#selectize[0].selectize;
+  }
 
-    isDirtyValueChanged() {
-        const that = this;
-        this.dispatch('setDirty', { isDirty: that.isDirtyValue });
-    }
+  set selectize(value) {
+    this.#selectize = value;
+  }
 
+  isDirtyValueChanged() {
+    const that = this;
+    this.dispatch('setDirty', { isDirty: that.isDirtyValue });
+  }
 
-    postRealmIdChange(event) {
-        this.realmIdValue = event.detail.realmId;
+  postRealmIdChange(event) {
+    this.realmIdValue = event.detail.realmId;
 
-        this.#selectize[0].selectize.setValue();
-        this.#selectize[0].selectize.clearOptions(true);
-    }
+    this.#selectize[0].selectize.setValue();
+    this.#selectize[0].selectize.clearOptions(true);
+  }
 }

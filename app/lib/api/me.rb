@@ -10,7 +10,7 @@ module API
     end
 
     get :me do
-      current_user
+      UserPresenter.call(current_user)
     end
   end
 end

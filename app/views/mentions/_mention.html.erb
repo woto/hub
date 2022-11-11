@@ -1,54 +1,11 @@
-<div class="col">
-  <div class="card">
-
-    <div class="position-relative">
-      <%= render Mentions::ImageLightboxComponent.new(
-        **GlobalHelper.image_hash(mention),
-        class: 'card-img-top',
-        size: '500'
-      ) %>
-
-      <%= link_to edit_mention_path(mention),
-                  rel: [Seo::NoFollow],
-                  class: 'btn btn-sm btn-warning btn-icon m-0 p-0 py-1 position-absolute top-0 end-0 m-2' do %>
-        <i class="fas fa-pencil-alt"></i>
-      <% end %>
-    </div>
-
-    <div class="card-body overflow-auto">
-      <h5 class="card-title">
-        <%
-          website = begin
-                      URI(mention.url).host || 'сайт'
-                    rescue StandardError
-                      'сайт'
-                    end
-        %>
-
-        <%= link_to mention.url, rel: [Seo::NoFollow, Seo::NoReferrer, Seo::UGC], class: 'text-decoration-none' do %>
-          <%= mention.title %>
-          <% if mention.title.present? %>
-            /
-          <% end %>
-          Подробнее на
-          <%= "#{website}" %>
-        <% end %>
-      </h5>
-
-      <p class="card-text">
-        <% collection = mention.entities_mentions.includes(:entity).map do |entity_mention|
-          {
-            'id' => entity_mention.entity_id,
-            'title' => entity_mention.entity.to_label,
-            'is_main' => entity_mention.is_main
-          }
-        end %>
-        <%= render(Mentions::EntityComponent.with_collection(collection)) %>
-      </p>
-      <p class="card-text">
-        <%= render(TextTagComponent.with_collection(mention.topics.map(&:to_label))) %>
-      </p>
-      <p class="card-text"><%= GlobalHelper.decorate_datetime(mention.published_at) %></p>
-    </div>
-  </div>
-</div>
+<%= render(ReactComponent.new(name: 'MentionsCard',
+                              class: '',
+                              props: {
+                                id: mention._id,
+                                url: mention.url,
+                                title: mention.title,
+                                publishedAt: mention.published_at,
+                                topics: mention.topics,
+                                image: mention.image.try(:first),
+                                entities: mention.entities
+                              })) %>

@@ -1,5 +1,5 @@
 require "rails_helper"
-
+f
 RSpec.describe Header::NewsComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 

@@ -1,20 +1,29 @@
 <div class="tw-flex-auto tw-flex tw-flex-col tw-justify-center">
   <div class="tw-z-20 tw-min-h-full tw-flex tw-flex-col tw-justify-center tw-py-12 sm:tw-px-6 lg:tw-px-8">
     <div class="sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
+      <% if false %>
       <%= link_to root_path do %>
-        <%= image_tag(asset_pack_path('media/images/logo.svg'), class: 'tw-mx-auto tw-h-12 tw-w-auto') %>
+        <%= image_tag(asset_path('roast-me-fire-blue.svg'), class: 'tw-mx-auto tw-h-7 tw-w-auto') %>
+      <% end %>
       <% end %>
     </div>
-    <div class="tw-mt-8 sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
+    <div class="sm:tw-mx-auto sm:tw-w-full sm:tw-max-w-md">
       <div class="tw-bg-white tw-py-8 tw-px-4 tw-shadow sm:tw-rounded-lg sm:tw-px-10">
         <div class="tw-mb-6">
           <h2 class="tw-text-center tw-text-2xl tw-font-extrabold tw-text-gray-700">
             <%= t('.forgot_your_password') %>
           </h2>
         </div>
-        <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), local: true, method: :post) do |f| %>
+        <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), local: true, method: :post, data: { turbo: false }) do |f| %>
           <% if f.object.errors.present?  %>
-            <%= render TopPageNotifyComponent.new(message: 'Невозможно сохранить. Пожалуйста заполните поля', alert_type: 'danger') %>
+            <%= render(
+              ReactComponent.new( name: 'Alert',
+                                  class: '',
+                                  props: {
+                                    type: 'danger',
+                                    children: 'Невозможно сохранить. Пожалуйста заполните поля'
+                                  }))
+            %>
           <% end %>
           <div class="tw-mt-6">
             <label for="user_email" class="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
@@ -25,9 +34,9 @@
                     id: 'user_email',
                     required: false,
                     autofocus: true,
-                    class: 'tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 sm:tw-text-sm',
+                    class: 'tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md  tw-placeholder-gray-400 focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 sm:tw-text-sm',
                     autocomplete: "email" %>
-              <div class="invalid-feedback d-block">
+              <div class="tw-text-sm tw-mt-2 tw-text-red-400">
                 <% f.object.errors.full_messages_for(:email).each do |error_message| %>
                   <%= error_message %>.
                 <% end %>
@@ -35,7 +44,7 @@
             </div>
           </div>
           <div class="tw-mt-6">
-            <%= f.button t(".send_me_reset_password_instructions"), type: :submit, class: 'tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500' %>
+            <%= f.button t(".send_me_reset_password_instructions"), type: :submit, class: 'tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md  tw-text-sm tw-font-medium tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500' %>
           </div>
         <% end %>
       </div>

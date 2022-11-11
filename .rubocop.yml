@@ -7,3 +7,6 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'node_modules/**/*'
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 6

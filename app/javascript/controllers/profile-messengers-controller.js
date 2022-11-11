@@ -1,7 +1,7 @@
-import { Controller } from "stimulus"
+import { Controller } from 'stimulus';
 
 export default class extends Controller {
-  static targets = ["newMessengerTemplate", "newMessengerPlaceholder"]
+  static targets = ['newMessengerTemplate', 'newMessengerPlaceholder'];
 
   addMessenger(event) {
     const content = this.newMessengerTemplateTarget.innerHTML.replace(/TEMPLATE/g, Math.ceil(Math.random() * 1000000));

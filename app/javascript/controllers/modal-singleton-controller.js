@@ -1,12 +1,12 @@
-import { Controller } from "stimulus"
+import { Controller } from 'stimulus';
 import * as bootstrap from 'bootstrap';
 
 export default class extends Controller {
-    static targets = [ "contentPlaceholder" ]
+  static targets = ['contentPlaceholder'];
 
-    open(html) {
-        return new Promise((resolve, reject) => {
-            let modalTemplate = `
+  open(html) {
+    return new Promise((resolve, reject) => {
+      const modalTemplate = `
             <div class="modal modal-blur fade" tabindex="-1">
               <div class="modal-dialog modal-md">
                 <div class="modal-content">
@@ -22,27 +22,26 @@ export default class extends Controller {
                   </div>
                 </div>
               </div>
-            </div>`
+            </div>`;
 
-            this.element.insertAdjacentHTML('beforeend', modalTemplate);
-            this.modal = this.element.lastChild;
+      this.element.insertAdjacentHTML('beforeend', modalTemplate);
+      this.modal = this.element.lastChild;
 
+      // let turbo_prevent = function() {
+      //     event.preventDefault();
+      // }
 
-            // let turbo_prevent = function() {
-            //     event.preventDefault();
-            // }
+      this.modal.addEventListener('hide.bs.modal', (event) => {
+        this.modal.remove();
+        // document.removeEventListener('turbo:click', turbo_prevent);
+      });
 
-            this.modal.addEventListener('hide.bs.modal', (event) => {
-                this.modal.remove();
-                // document.removeEventListener('turbo:click', turbo_prevent);
-            })
+      this.modal.addEventListener('show.bs.modal', (event) => {
+        // document.addEventListener('turbo:click', turbo_prevent);
+        resolve();
+      });
 
-            this.modal.addEventListener('show.bs.modal', (event) => {
-                // document.addEventListener('turbo:click', turbo_prevent);
-                resolve();
-            })
-
-            return new bootstrap.Modal(this.modal).show();
-        });
-    }
+      return new bootstrap.Modal(this.modal).show();
+    });
+  }
 }

@@ -4,7 +4,7 @@ module Hostnameable
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :hostname, counter_cache: true
+    belongs_to :hostname, optional: true #, counter_cache: true
     before_validation :fill_hostname
 
     private

@@ -1,0 +1,16 @@
+<!doctype html>
+<%= tag.html lang: I18n.locale.downcase do %>
+  <head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= javascript_include_tag 'application', "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application', "data-turbo-track": "reload" %>
+  </head>
+
+  <body class="tw-flex tw-h-screen">
+    <div class="tw-m-auto">
+      <%= yield %>
+    </div>
+  </body>
+<% end %>

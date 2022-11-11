@@ -1,7 +1,7 @@
 class FavoritePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(favorites: { user: user })
+      scope.where(favorites: { user: user }).or(scope.where({ is_public: true }))
     end
   end
 

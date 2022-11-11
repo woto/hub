@@ -4,24 +4,20 @@
 #
 # Table name: entities
 #
-#  id                :bigint           not null, primary key
-#  image_data        :jsonb
-#  intro             :text
-#  lookups_count     :integer          default(0), not null
-#  mentions_count    :integer          default(0), not null
-#  metadata_iframely :jsonb
-#  metadata_yandex   :jsonb
-#  title             :string
-#  topics_count      :integer          default(0), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  hostname_id       :bigint
-#  user_id           :bigint           not null
+#  id                      :bigint           not null, primary key
+#  entities_mentions_count :integer          default(0), not null
+#  image_src               :string
+#  intro                   :text
+#  lookups_count           :integer          default(0), not null
+#  title                   :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  hostname_id             :bigint
+#  user_id                 :bigint           not null
 #
 # Indexes
 #
 #  index_entities_on_hostname_id  (hostname_id)
-#  index_entities_on_image_data   (image_data) USING gin
 #  index_entities_on_user_id      (user_id)
 #
 # Foreign Keys
@@ -47,6 +43,9 @@ RSpec.describe Entity, type: :model do
     it { is_expected.to have_many(:entities_topics).dependent(:destroy) }
     it { is_expected.to have_many(:topics).through(:entities_topics) }
 
+    it { is_expected.to have_many(:images_relations).dependent(:destroy) }
+    it { is_expected.to have_many(:images).through(:images_relations) }
+
     specify do
       expect(subject).to have_many(:children_entities).dependent(:destroy).class_name('EntitiesEntity')
                                                       .with_foreign_key('parent_id').inverse_of(:parent)
@@ -65,6 +64,22 @@ RSpec.describe Entity, type: :model do
     specify do
       expect(subject).to have_many(:parents).class_name('Entity').through(:parents_entities)
                                             .source(:parent).inverse_of(:children)
+    end
+  end
+
+  describe '#images' do
+    subject(:entity) { create(:entity) }
+
+    let(:image1) { create(:image) }
+    let(:image2) { create(:image) }
+    let(:image3) { create(:image) }
+
+    it 'respects images_relations order' do
+      create(:images_relation, relation: entity, order: 1, image: image1)
+      create(:images_relation, relation: entity, order: 3, image: image2)
+      create(:images_relation, relation: entity, order: 2, image: image3)
+
+      expect(entity.images.reload).to eq([image1, image3, image2])
     end
   end
 

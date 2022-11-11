@@ -19,20 +19,30 @@
       <%= tag.div id: "offers-group-title-#{group[:favorite_item_kind]}-#{group[:ext_id]}",
                   class: "row mt-4 mb-3" do %>
           <div class="col-12">
-            <h2 class="d-flex align-items-center">
+            <h2 class="tw-text-xl tw-flex tw-items-center">
               <% entity = @groups_store.find(group[:ext_id], group[:favorite_item_kind]) %>
 
               <%= link_to "#{t(entity.model_name.to_s.underscore)}: #{entity.to_label }",
                           polymorphic_path([entity, :offers],
                                            q: params[:q],
                                            locale: params[:locale],
-                                           per: params[:per]), 'data-turbo': 'false' %>
+                                           per: params[:per]), 
+                          'data-turbo': 'false', 
+                          class: '!tw-no-underline'
+              %>
 
               <%= render StarFavoriteComponent.new(
                 is_favorite: @favorites_store.find(group[:ext_id], group[:favorite_item_kind]),
                 ext_id: group[:ext_id],
                 favorites_items_kind: group[:favorite_item_kind],
                 bobber: { class: 'z-index-decreased' }) %>
+
+              <%= render BookmarkComponent.new(
+                favorites_store: @favorites_store,
+                ext_id: group[:ext_id],
+                favorites_items_kind: group[:favorite_item_kind])
+              %>
+
             </h2>
           </div>
       <% end %>

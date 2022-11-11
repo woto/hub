@@ -3,24 +3,28 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.5'
+ruby '3.1.2'
 
-gem 'bootsnap', '>= 1.4.4', require: false
-gem 'jbuilder', '~> 2.7'
+gem "bootsnap", require: false
+gem 'jbuilder'
 gem 'pg', '~> 1.2'
 gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 7.0.4'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'webpacker', '~> 5.0'
 # gem "stimulus-rails"
+
+gem 'jsbundling-rails'
+gem "cssbundling-rails", "~> 1.1"
+gem 'sprockets-rails'
 
 # Active Record audit
 gem 'logidze'
 
 group :development, :test do
   # Debug
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  # gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # gem 'pry'
   # gem 'pry-byebug'
 
@@ -45,6 +49,8 @@ group :development, :test do
   gem 'standard'
   gem 'test-prof'
   gem 'webmock'
+  gem 'memory_profiler'
+  gem 'stackprof'
   # gem 'isolator'
   # gem 'aruba'
   # gem 'awesome_print'
@@ -56,10 +62,10 @@ group :development do
   gem 'annotate'
   gem 'i18n-debug'
   gem 'listen', '~> 3.3'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '>= 4.1.0'
-  # gem 'rack-mini-profiler', '~> 2.0'
+  # gem 'spring'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console'
+  # gem 'rack-mini-profiler'
 end
 
 group :development, :test do
@@ -105,6 +111,7 @@ gem 'interactor'
 gem 'rails-erd'
 gem 'rails-i18n'
 gem 'redis'
+gem "kredis"
 # gem 'redis-session-store'
 gem 'eu_central_bank'
 gem 'money'
@@ -121,6 +128,7 @@ gem 'i18n-tasks'
 gem 'mobility', github: 'shioyama/mobility'
 gem 'sitemap_generator'
 gem 'spreadsheet'
+# gem "bcrypt", "~> 3.1.7"
 
 # Google API
 # gem 'google-api-ruby-client'
@@ -152,9 +160,10 @@ gem 'kaminari'
 gem 'simple_form'
 gem 'view_component'
 
-# language detect
+# Text processing
 # gem 'whatlanguage'
 gem 'cld'
+gem 'diffy'
 # gem 'stopwords-filter', require: 'stopwords', github: 'woto/stopwords-filter', branch: 'fix_locales'
 
 # Tree structure
@@ -202,18 +211,26 @@ gem 'dry-validation'
 
 # Image processing
 gem 'fastimage', '~> 2.2'
-gem 'image_processing', '~> 1.11'
+gem 'image_processing'
 gem 'mini_magick', '~> 4.10'
 gem 'ruby-vips'
+
+# Video processing
+gem 'streamio-ffmpeg'
 
 # Graph visualization
 gem 'ruby-graphviz'
 
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
+
+# Experimental
+# gem 'wikipedia-client'
+gem 'yard'
 
 # Deprecated
 gem 'action-cable-testing'
 gem 'numbers_and_words'
 gem 'rails-controller-testing'
+
+gem 'htmlbeautifier'

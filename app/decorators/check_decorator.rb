@@ -12,6 +12,6 @@ class CheckDecorator < ApplicationDecorator
   end
 
   # def payed_at
-  #   decorate_datetime(super)
+  #   h.render TimeAgoComponent.new(datetime: super)
   # end
 end

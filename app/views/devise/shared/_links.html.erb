@@ -1,22 +1,22 @@
-<ul class="tw-sticky tw-p-3 tw-bottom-0 tw-px-3 tw-flex-wrap tw-flex tw-justify-center tw-gap-x-8 tw-list-disc tw-text-white tw-bg-slate-900">
+<ul class="tw-list-none? tw-text-sm tw-sticky tw-p-3 tw-bottom-0 tw-px-3 tw-flex-wrap tw-flex tw-justify-center tw-gap-x-5 tw-text-white tw-bg-slate-700">
   <%- if controller_name != 'sessions' %>
     <li class=""><%= link_to t(".sign_in"), new_user_session_path %></li>
   <% end %>
 
   <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-    <li class=""><%= link_to t(".sign_up"), new_user_registration_path, class: 'hover:tw-text-slate-50' %></li>
+    <li class=""><%= link_to t(".sign_up"), new_user_registration_path, class: 'hover:tw-text-gray-300' %></li>
   <% end %>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-    <li class=""><%= link_to t(".forgot_your_password"), new_user_password_path, class: 'hover:tw-text-slate-50' %></li>
+    <li class=""><%= link_to t(".forgot_your_password"), new_user_password_path, class: 'hover:tw-text-gray-300' %></li>
   <% end %>
 
   <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-    <li class=""><%= link_to t('.didn_t_receive_confirmation_instructions'), new_user_confirmation_path, class: 'hover:tw-text-slate-50' %></li>
+    <li class=""><%= link_to t('.didn_t_receive_confirmation_instructions'), new_user_confirmation_path, class: 'hover:tw-text-gray-300' %></li>
   <% end %>
 
   <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-    <li class=""><%= link_to t('.didn_t_receive_unlock_instructions'), new_user_unlock_path, class: 'hover:tw-text-slate-50' %></li>
+    <li class=""><%= link_to t('.didn_t_receive_unlock_instructions'), new_user_unlock_path, class: 'hover:tw-text-gray-300' %></li>
   <% end %>
 
   <%- if devise_mapping.omniauthable? %>

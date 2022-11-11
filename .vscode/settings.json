@@ -1,0 +1,9 @@
+{
+  "search.exclude": {
+    "**/app/assets/builds": true
+  },
+  "files.watcherExclude": {
+    "**/docker/scrapper/node_modules/*": true,
+    "**/docker/scrapper/node_modules/**": true
+  }
+}

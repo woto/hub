@@ -46,8 +46,8 @@ plugin :tmp_restart
 
 if ENV.fetch('SSL_DEBUG') == 'true'
   ssl_bind 'localhost', '443',
-           key: '/etc/letsencrypt/live/nv6.ru/privkey.pem',
-           cert: '/etc/letsencrypt/live/nv6.ru/fullchain.pem'
+    key: '/home/woto/work/0/rails-app/config/certs/mentions.lvh.me-key.pem',
+    cert: '/home/woto/work/0/rails-app/config/certs/mentions.lvh.me.pem'
 end
 
 activate_control_app

@@ -1,4 +1,5 @@
 <%= turbo_frame_tag 'articles-by-tag' do %>
+  <div class="tw-bg-fuchsia-300">
   <%= tag.div class: 'overflow-auto max-height-450' do %>
     <%= tag.div class: 'list-group bg-white' do %>
       <% @result['aggregations']['group_by_tag']['buckets'].select { |bucket| bucket['key'].present? } .each do |item| %>
@@ -18,4 +19,5 @@
       <% end %>
     <% end %>
   <% end %>
+  </div>
 <% end %>

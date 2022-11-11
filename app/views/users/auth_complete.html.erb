@@ -1,0 +1,32 @@
+<% if current_user&.api_key %>
+  <% content_for(:before_head_close) do %>
+
+    <%= javascript_tag do %>
+
+      function notifyWebsite() {
+        if (window.opener) {
+          window.opener.postMessage('auth-succeeded', '*');
+        }
+      }
+
+      function notifyExtension() {
+        var chrome_extension_id = "<%= ENV.fetch('CHROME_EXTENSION_ID') %>";
+
+        chrome.runtime.sendMessage(
+          chrome_extension_id,
+          {
+            message: 'authenticate-user',
+            apiKey: "<%= current_user.api_key %>"
+          },
+          function(response) {
+            chrome.runtime.sendMessage(chrome_extension_id, { message: 'api-token-obtained' })
+          }
+        );
+      }
+
+      notifyWebsite();
+      notifyExtension();
+
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,5 +1,16 @@
-<% seo.title! @entity.title  %>
+<% seo.title! @entity.title %>
 <% seo.description! @entity.intro %>
+
+<% subtitle = [] %>
+<% @entity.cites.select(:text_start).where.not(text_start: '').distinct.pluck(:text_start).each do |text| %>
+  <% next if text.upcase == @entity.title.upcase %>
+  <% next if text == '#' %>
+  <% subtitle.append text %>
+<% end %>
+
+<% subtitle.append "на сайте с #{l(@entity.created_at, format: :long)}" %>
+
+<% seo.subtitle! subtitle.join(', ') %>
 
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbComponent.new do |b| %>
@@ -10,20 +21,81 @@
   <% end %>
 <% end %>
 
-<div class="col-12">
-  <div class="row">
-    <div class="col">
-      <div class="row">
-        <div class="col-12 col-xl-8">
-          <div class="card mb-3">
-            <div class="card-body">
-              <dl class="row">
+<div class="tw-grid tw-grid-cols-1 tw-gap-4 tw-relative tw-z-30">
+  <div class="tw-gap-4">
 
+    <div class="tw-px-4 tw-mt-4 sm:tw-mt-0 sm:tw-px-0">
+      <% if @entity.images.size > 0 %>
+        <%= render(
+              ReactComponent.new(name: 'Carousel',
+                                 class: 'tw-w-full',
+                                 props: {
+                                   # items: GlobalHelper.image_hash(@entity.images).insert(1, { mime_type: 'text', text: @entity.intro }),
+                                   items: GlobalHelper.image_hash(@entity.images_relations.includes(:image)),
+                                   type: 'single'
+                                 }))
+        %>
+      <% end %>
+    </div>
+
+    <div class="tw-mb-14 tw-relative tw-z-20">
+    <%= render (
+                 ReactComponent.new(name: 'EntitiesButtons',
+                                    class: '',
+                                    props: {
+                                      entityId: @entity.id
+                                    })
+               ) %>
+    </div>
+
+    <% if @entity.topics.present? || @entity.lookups.present? %>
+      <div class="tw-mt-3 tw-mx-4 sm:tw-mx-0 tw-flex tw-flex-wrap tw-gap-1">
+        <% @entity.topics.each do |topic| %>
+          <%= render ReactComponent.new(name: 'SingleTag',
+                                        class: '',
+                                        props: {
+                                          tag: topic,
+                                          textColor: 'tw-text-blue-800',
+                                          bgColor: 'tw-bg-blue-100'
+                                        }) %>
+        <% end %>
+
+        <% @entity.lookups.each do |topic| %>
+          <%= render ReactComponent.new(name: 'SingleTag',
+                                        class: '',
+                                        props: {
+                                          tag: topic,
+                                          textColor: 'tw-text-pink-800',
+                                          bgColor: 'tw-bg-pink-100',
+                                          linkify: true
+                                        }) %>
+        <% end %>
+      </div>
+    <% end %>
+
+
+
+    <div class="tw-mt-4 tw-mx-4 sm:tw-mx-0 tw-text-lg tw-mb-14">
+      <%= @entity.intro %>
+    </div>
+
+    <% if false %>
+      <section aria-labelledby="section-2-title" class="">
+        <div class="">
+          <div class="tw-py-5">
+            <div class="tw-flex tw-flex-col tw-gap-5 tw-w-full">
+              <% if false %>
+                <div class="tw-flex tw-gap-4">
+                  <%= render BookmarkComponent.new(favorites_store: @favorites_store, ext_id: @entity.id, favorites_items_kind: 'entities') %>
+                </div>
+              <% end %>
+
+              <% if false %>
                 <div class="position-relative">
                   <% kind = 'entities' %>
                   <% favorites_store = FavoritesStore.new(current_user) %>
                   <% favorites_store.append(@entity.id, kind) %>
-
+                  1
                   <%= render StarFavoriteComponent.new(
                     is_favorite: favorites_store.find(@entity.id, kind),
                     ext_id: @entity.id,
@@ -32,98 +104,82 @@
                       class: 'position-absolute z-index-decreased',
                       style: 'top: -5px; right: 0px;'
                     }) %>
+                  2
                 </div>
+              <% end %>
 
-                <dt class="col-sm-3"> <%= t('id', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= @entity.id %> </dd>
-
-                <dt class="col-sm-3"> <%= t('title', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= @entity.title %> </dd>
-
-                <dt class="col-sm-3"> <%= t('lookups', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.lookups.map(&:to_label), color: 'azure')) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('parents', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9">
-                  <% collection = @entity.parents.map do |entity|
-                    {
-                      'id' => entity.id,
-                      'title' => entity.to_label,
-                      'is_main' => false,
-                      'direction' => 'up'
-                    }
-                  end %>
-                  <%= render(Mentions::EntityComponent.with_collection(collection)) %>
-                </dd>
-
-                <dt class="col-sm-3"> <%= t('children', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9">
-                  <% collection = @entity.children.map do |entity|
-                    {
-                      'id' => entity.id,
-                      'title' => entity.to_label,
-                      'is_main' => false,
-                      'direction' => 'down'
-                    }
-                  end %>
-                  <%= render(Mentions::EntityComponent.with_collection(collection)) %>
-                </dd>
-
-                <dt class="col-sm-3"> <%= t('topics', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= render(TextTagComponent.with_collection(@entity.topics.map(&:to_label))) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('version', scope: ['simple_form', 'labels', 'entity']) %> </dt>
-                <dd class="col-sm-9"> <%= @entity.log_version %> </dd>
-
-                <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@entity.created_at) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-                <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@entity.updated_at) %> </dd>
-
-                <dt class="col-sm-3"> <%= t('image') %> </dt>
-                <dd class="col-sm-9">
-                  <%= render Mentions::ImageLightboxComponent.new(
-                    **GlobalHelper.image_hash(@entity),
-                    class: 'img-thumbnail bg-white',
-                    size: '100'
-                  ) %>
-                </dd>
-
-                <dt class="col-sm-3"> <%= t('intro', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @entity.intro %> </dd>
-
-                <dt class="col-sm-3"> <%= t('body', scope: ['simple_form', 'labels', 'mention']) %> </dt>
-                <dd class="col-sm-9"> <%= @entity.body %> </dd>
-
-              </dl>
             </div>
           </div>
-
-          <div class="d-flex flex-column flex-sm-row gap-2">
-            <%= link_to t('new'), new_entity_path,
-                        class: "btn btn-primary #{'disabled' unless policy(@entity).new? }", rel: [Seo::NoFollow] %>
-            <%= link_to t('edit'), edit_entity_path(@entity),
-                        class: "btn btn-primary #{'disabled' unless policy(@entity).edit? }", rel: [Seo::NoFollow] %>
-            <%= link_to t('back'), entities_path, class: "btn btn-white" %>
-            <%= link_to t('delete'), entity_path(@entity.id),
-                        class: "ms-auto btn btn-danger #{'disabled' unless policy(@entity).destroy?}",
-                        method: :delete,
-                        data: { confirm: t('are_you_sure') } %>
-          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    <% end %>
+
+    <% if true %>
+      <% links = @entity.cites.select(:link_url).where.not(link_url: '').distinct.pluck(:link_url) %>
+
+      <% @entity.lookups.each do |lookup| %>
+        <% url = begin
+                   URI(lookup.title)
+                 rescue StandardError
+                   next
+                 end %>
+        <% links.append(url) %>
+      <% end %>
+
+      <% if links.size > 0 %>
+        <ul role="list" class="tw-mx-4 sm:tw-mx-0 tw-my-10 tw-grid tw-grid-cols-2 tw-gap-x-4 tw-gap-y-8 sm:tw-grid-cols-3 sm:tw-gap-x-6 lg:tw-grid-cols-4 xl:tw-gap-x-8">
+          <% links.each do |link| %>
+            <li class="tw-relative">
+              <div class="tw-group tw-block tw-w-full [aspect-ratio:10_/_7] tw-rounded-lg tw-bg-gray-100 focus-within:tw-ring-2 focus-within:tw-ring-offset-2 focus-within:tw-ring-offset-gray-100 focus-within:tw-ring-indigo-500 tw-overflow-hidden">
+                <img src="https://mentions.lvh.me/derivations/image/image/1000/1000/eyJpZCI6InVwbG9hZHMvaW1hZ2VzLzc5MDEvb3JpZ2luYWwtYTI3NjJlOTdmMjdlMTIyZjM1ZTkyZTk1MDc0YjkzNDMucG5nIiwic3RvcmFnZSI6InN0b3JlIiwibWV0YWRhdGEiOnsiZmlsZW5hbWUiOm51bGwsIm1pbWVfdHlwZSI6ImltYWdlL3BuZyJ9fQ?signature=9fd1da1be39761530bd6c108d45f4e4787b6f22cbb31a6b83354d0a0c7580538" alt="" class="tw-object-cover tw-pointer-events-none group-hover:tw-opacity-75">
+                <button type="button" class="tw-absolute tw-inset-0 focus:tw-outline-none">
+                  <span class="tw-sr-only">View details for IMG_4985.HEIC</span></button>
+              </div>
+              <p class="tw-mt-2 tw-block tw-text-sm tw-font-medium tw-text-gray-900 tw-truncate tw-pointer-events-none"><%= link %></p>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+
   </div>
 </div>
 
+<div class="tw-relative">
+  <%= render(
+        ReactComponent.new(name: 'MentionsFilter',
+                           class: 'tw-contents',
+                           props: {
+                             entity: @entity.as_indexed_json,
+                             imageSrc: GlobalHelper.image_hash(@entity.images_relations.includes(:image)).dig(0, 'images', '50'),
+                             entityId: @entity.id
+                           }))
+  %>
 
-<div class="col-12 mt-5">
-  <h2 class="mb-4"><%= t('.mentions') %></h2>
+  <%#= paginate @mentions, window: 3 %>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <% @mentions.each do |mention| %>
-      <%= render mention %>
-    <% end %>
-  </div>
+  <% if false %>
+    <div class="tw-space-y-5">
+      <% @entity.images.each do |image| %>
+        <div>
+          <% case image.image.mime_type %>
+          <% when *ImageUploader::IMAGE_TYPES %>
+            <%= image_tag image.image.derivation(:image, 500, 500).url %>
+          <% when *ImageUploader::VIDEO_TYPES %>
+            <%= video_tag image.image.derivation(:video, 500, 500).url,
+                          loop: 'true',
+                          # width: "300",
+                          # height: "300",
+                          autoplay: 'true',
+                          # poster_skip_pipeline: true,
+                          controls: false,
+                          muted: 'true'
+                # autobuffer: true
+                # poster: image.image.derivation(:thumbnail, 100, 100).url
+            %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

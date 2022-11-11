@@ -2,13 +2,14 @@
 
 module Tables
   class EntitiesController < ApplicationController
+    layout 'roastme/pages'
+
     ALLOWED_PARAMS = [:q, :per, :page, :sort, :order, { filters: {} }, { columns: [] }].freeze
     REQUIRED_PARAMS = %i[per order sort columns].freeze
     skip_before_action :authenticate_user!, only: [:index]
 
     include Workspaceable
     include Tableable
-    layout 'backoffice'
 
     # GET /entities
     def index
@@ -18,16 +19,21 @@ module Tables
 
     # TODO: action?!
     def workspace
-      OpenStruct.new(
+      @workspace = OpenStruct.new(
         **workspace_params,
         columns: @settings[:form_class]::DEFAULTS,
-        per: @pagination_rule.per,
-        sort: 'id',
-        order: 'desc'
+        per: @pagination_rule.per
       )
+
+      unless params[:q]
+        @workspace[:sort] = 'updated_at'
+        @workspace[:order] = 'desc'
+      end
+
+      @workspace
     end
 
-      private
+    private
 
     def set_settings
       @settings = GlobalHelper.class_configurator('entity')

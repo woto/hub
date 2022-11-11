@@ -2,7 +2,8 @@
   <div class="container-xl">
 
     <%= link_to params[:controller] == 'dashboard' ? root_path : dashboard_path, class: 'navbar-brand me-3' do %>
-      <%= image_tag(asset_pack_path('media/images/logo.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
+      <%#= image_tag(asset_pack_path('media/images/logo.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
+      <%= image_tag(asset_path('roast-me-blue.svg'), class: "tw-h-5 navbar-brand-image") %>
     <% end %>
 
     <%= render 'desktop_search_wrapper' do %>
@@ -11,16 +12,16 @@
 
     <div class="navbar-nav d-flex ms-auto">
 
-      <%= tag.div class: 'nav-item dropdown me-3', **data_attributes_for_navbar_favorite do %>
-        <%= render NavbarFavoriteComponent.new %>
-      <% end %>
+      <div class="nav-item dropdown me-3">
+        <%= render Header::NewsComponent.new(params[:locale]) %>
+      </div>
 
       <div class="nav-item dropdown me-3">
         <%= render Header::LanguageComponent.new(capybara_browser: 'capybara-desktop') %>
       </div>
 
-      <div class="nav-item dropdown me-3">
-        <%= render Header::NewsComponent.new(params[:locale]) %>
+      <div class="nav-item">
+        <%= render Header::UserComponent.new(user: current_user) %>
       </div>
 
       <%= render Header::ProfileComponent.new(capybara_browser: 'capybara-desktop', current_user: current_user, true_user: true_user) %>

@@ -3,13 +3,12 @@
 require 'rails_helper'
 require_relative '../support/shrine_image'
 
-# NOTE: obsolete? was used in popover
 describe API::Entities, type: :request, responsible: :admin do
   let!(:user) { create(:user) }
 
   describe 'GET /api/entities/{id}' do
     let!(:entity) do
-      create(:entity, image_data: ShrineImage.image_data, lookups: create_list(:lookup, 1))
+      create(:entity, images: create_list(:image, 1), lookups: create_list(:lookup, 1))
     end
 
     it 'autocompletes entities by title' do

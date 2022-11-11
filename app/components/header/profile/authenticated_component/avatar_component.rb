@@ -5,7 +5,7 @@ class Header::Profile::AuthenticatedComponent::AvatarComponent < ViewComponent::
     @avatar_path = if helpers.current_user.avatar.attached?
                      helpers.url_for(@avatar.variant(resize_to_limit: [200, 200]))
                    else
-                     asset_pack_path('media/images/avatar-placeholder.png')
+                     asset_path('avatar-placeholder.png')
                    end
   end
 

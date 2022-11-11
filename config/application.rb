@@ -64,19 +64,6 @@ module Hub
 
     # config.middleware.use Prometheus::Middleware::Collector
 
-    config.action_controller.perform_caching = true
-    config.action_controller.enable_fragment_cache_logging = true
-
-    config.cache_store = :redis_cache_store, {
-      url: Rails.application.config.redis_cache.yield_self do |redis|
-        "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
-      end
-    }
-
-    config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
-    }
-
     config.middleware.insert_after(Rack::Head, ::Locale)
 
     # NOTE: Logidze uses DB functions and triggers, hence you need to use SQL format for a schema dump:

@@ -23,10 +23,10 @@ module Extractors
           when 'a'
             next if child['href'].blank? || (child['href'].start_with?('mailto:') || child['href'].start_with?('#'))
 
-            link = child['href'].delete_prefix('/')
+            link = child['href']&.delete_prefix('/')
             child['href'] = URI.join(context.base_url, "#{link}") rescue ''
           when 'img'
-            link = child['src'].delete_prefix('/')
+            link = child['src']&.delete_prefix('/')
             child['src'] = URI.join(context.base_url, "#{link}") rescue ''
           end
         end

@@ -1,5 +1,5 @@
 <%= tag.div test_id => 'link-to-newer-article' do %>
-
+  <div class="tw-bg-indigo-300">
   <% page = params['page'].to_i %>
 
   <% if page > 0 %>
@@ -14,4 +14,5 @@
       <i class="fas fa-chevron-right"></i>
     <% end %>
   <% end %>
+  </div>
 <% end %>

@@ -24,7 +24,10 @@ module Interactors
 
         context.object = {
           title: @entity.title,
-          url: Rails.application.routes.url_helpers.entity_url(id: @entity, host: 'mentions.lvh.me:3000')
+          url: Rails.application.routes.url_helpers.entity_url(
+            id: @entity,
+            host: "#{ENV.fetch('RAILS_SCHEMA')}://#{ENV.fetch('DOMAIN_NAME')}:#{ENV.fetch('RAILS_PORT')}"
+          )
         }
       end
 

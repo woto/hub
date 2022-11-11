@@ -1,0 +1,60 @@
+@layer components {
+
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+
+    @media screen(sm) {
+      width: 12px;
+      height: 12px;
+    }
+
+    .sidebar-scroll& {
+      width: 4px;
+      height: 4px;
+    }
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply tw-bg-gray-400;
+    @apply tw-border-slate-400;
+    @apply tw-rounded-[10px];
+    @apply tw-border-2;
+    @apply tw-border-solid;
+
+    @media screen(sm) {
+      @apply tw-border-white;
+    }
+
+    &:hover {
+      @apply tw-bg-slate-500 !important;
+    }
+
+    .sidebar-scroll& {
+      @apply tw-bg-gray-100;
+      @apply tw-border-0;
+    }
+
+    .sidebar-scroll:hover& {
+      @apply tw-bg-gray-400;
+    }
+
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply tw-rounded-[10px];
+    @apply tw-bg-white;
+
+    .sidebar-scroll& {
+      @apply tw-bg-gray-100;
+    }
+
+    &:hover {
+      @apply tw-bg-slate-200 !important;
+    }
+  }
+}

@@ -16,7 +16,8 @@ Capybara.test_id = 'data-test-id'
   resolution = item[:resolution]
   # Capybara.server = :puma, { Silent: true }
   Capybara.register_driver name do |app|
-    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "goog:loggingPrefs": { browser: 'ALL' } )
+    # TODO: hm...
+    # capabilities = Selenium::WebDriver::Remote::Capabilities.chrome( "goog:loggingPrefs": { browser: 'ALL' } )
 
     options = Selenium::WebDriver::Chrome::Options.new
     # NOTE: Maybe github actions doesn't have russian locale in Chrome.
@@ -31,7 +32,8 @@ Capybara.test_id = 'data-test-id'
       app,
       # timeout: 60,
       browser: :chrome,
-      desired_capabilities: capabilities,
+      # TODO: hm...
+      # desired_capabilities: capabilities,
       # http_client: client,
       options: options
     ).tap do |driver|

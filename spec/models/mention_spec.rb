@@ -4,28 +4,22 @@
 #
 # Table name: mentions
 #
-#  id                :bigint           not null, primary key
-#  entities_count    :integer          default(0), not null
-#  html              :text
-#  image_data        :jsonb
-#  kinds             :jsonb            not null
-#  metadata_iframely :jsonb
-#  metadata_yandex   :jsonb
-#  published_at      :datetime
-#  sentiments        :jsonb
-#  title             :string
-#  topics_count      :integer          default(0), not null
-#  url               :text
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  hostname_id       :bigint
-#  user_id           :bigint           not null
-#  canonical_url          :text
+#  id            :bigint           not null, primary key
+#  canonical_url :text
+#  html          :text
+#  kinds         :jsonb            not null
+#  published_at  :datetime
+#  sentiments    :jsonb
+#  title         :string
+#  url           :text
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  hostname_id   :bigint
+#  user_id       :bigint           not null
 #
 # Indexes
 #
 #  index_mentions_on_hostname_id  (hostname_id)
-#  index_mentions_on_image_data   (image_data) USING gin
 #  index_mentions_on_user_id      (user_id)
 #
 # Foreign Keys

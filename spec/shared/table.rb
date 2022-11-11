@@ -113,7 +113,7 @@ shared_examples 'shared_table' do |_class_name|
         visit "/ru/#{plural}"
         within(opts[:selector]) do
           fill_in 'Введите текст для поиска...', with: objects.last.id
-          find('[data-react="search-text"]').send_keys :enter
+          find('[data-selector="search-text"]').send_keys :enter
           has_correct_search_path(plural: plural, q: objects.last.id)
         end
       end

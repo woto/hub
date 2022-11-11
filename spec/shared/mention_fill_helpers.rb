@@ -62,7 +62,7 @@ RSpec.shared_context 'shared mention fill helpers' do
   end
 
   def fill_topics(topics:)
-    find('#heading-mention-topics-item').click
+    find('#heading-topics-item').click
     topics.each do |topic|
       within '.mention_topics' do
         find('.selectize-input').click

@@ -23,10 +23,10 @@
         <dd class="col-sm-9"> <%= badge(status: @check.status) %> </dd>
 
         <dt class="col-sm-3"> <%= t('created_at') %> </dt>
-        <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@check.created_at) %> </dd>
+        <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @check.created_at) %> </dd>
 
         <dt class="col-sm-3"> <%= t('updated_at') %> </dt>
-        <dd class="col-sm-9"> <%= GlobalHelper.decorate_datetime(@check.updated_at) %> </dd>
+        <dd class="col-sm-9"> <%= render TimeAgoComponent.new(datetime: @check.updated_at) %> </dd>
 
         <% if current_user.staff? %>
           <hr class="my-2">

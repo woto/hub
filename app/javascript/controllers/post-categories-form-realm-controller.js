@@ -1,55 +1,55 @@
-import { Controller } from "stimulus"
-import { ApplicationController } from 'stimulus-use'
+import { Controller } from 'stimulus';
+import { ApplicationController, useDispatch } from 'stimulus-use';
 import 'selectize/dist/js/selectize.js';
-import { useDispatch } from 'stimulus-use'
 
 export default class extends ApplicationController {
-    #selectize;
-    #dirtyness;
+  #selectize;
 
-    connect() {
-        this.#dirtyness = {};
-        const that = this;
-        const question = this.data.get('realmChangeQuestion');
-        let previousValue = null;
+  #dirtyness;
 
-        this.selectize = $(this.element).selectize({
-            create: false,
-            onChange() {
-                if(!previousValue || !that.#shouldAskConfirmation() || confirm(question)) {
-                    that.#sendPostRealmChangeEvent(this.getValue());
-                } else {
-                    // Silent restore previous value
-                    this.setValue(previousValue, true);
-                }
-            },
-            onFocus() {
-                previousValue = this.getValue();
-            }
-        })
-    }
+  connect() {
+    this.#dirtyness = {};
+    const that = this;
+    const question = this.data.get('realmChangeQuestion');
+    let previousValue = null;
 
-    disconnect() {
-        this.selectize.destroy();
-    }
+    this.selectize = $(this.element).selectize({
+      create: false,
+      onChange() {
+        if (!previousValue || !that.#shouldAskConfirmation() || confirm(question)) {
+          that.#sendPostRealmChangeEvent(this.getValue());
+        } else {
+          // Silent restore previous value
+          this.setValue(previousValue, true);
+        }
+      },
+      onFocus() {
+        previousValue = this.getValue();
+      },
+    });
+  }
 
-    get selectize() {
-        return this.#selectize[0].selectize;
-    }
+  disconnect() {
+    this.selectize.destroy();
+  }
 
-    set selectize(value) {
-        this.#selectize = value;
-    }
+  get selectize() {
+    return this.#selectize[0].selectize;
+  }
 
-    setDirty(event) {
-        Object.assign(this.#dirtyness, {[event.type]: event.detail});
-    }
+  set selectize(value) {
+    this.#selectize = value;
+  }
 
-    #shouldAskConfirmation() {
-        return this.#dirtyness['post-categories-form-empties:setDirty'].isDirty;
-    }
+  setDirty(event) {
+    Object.assign(this.#dirtyness, { [event.type]: event.detail });
+  }
 
-    #sendPostRealmChangeEvent(realmId) {
-        this.dispatch('postRealmIdChange', { realmId: realmId })
-    }
+  #shouldAskConfirmation() {
+    return this.#dirtyness['post-categories-form-empties:setDirty'].isDirty;
+  }
+
+  #sendPostRealmChangeEvent(realmId) {
+    this.dispatch('postRealmIdChange', { realmId });
+  }
 }

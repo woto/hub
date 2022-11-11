@@ -1,0 +1,155 @@
+<%= tag.html lang: I18n.locale.downcase, class: 'tw-h-full tw-bg-white' do %>
+  <head>
+    <%= render 'trackers_tawk' %>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+
+    <%= seo.tags %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= render 'trackers_google' %>
+    <%= render 'trackers_yandex' %>
+
+    <%= javascript_include_tag 'application', "data-turbo-track": "reload", defer: true %>
+    <%= stylesheet_link_tag 'application', "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <% if true %>
+  <body class="tw-h-full tw-overflow-hidden??!! tw-bg-white">
+
+    <div class="tw-h-full? tw-flex tw-max-w-screen-2xl tw-mx-auto tw-bg-white tw-border-x tw-border-gray-200 tw-drop-shadow-lg?">
+
+    <%= render(
+      ReactComponent.new(name: 'Example5',
+                         class: '',
+                         props: UserPresenter.call(current_user)
+      )
+    ) %>
+
+    <%= render(
+          ReactComponent.new(name: 'Example2',
+                              class: 'tw-contents',
+                              props: {
+                                language: serialize_language_attributes,
+                              }))
+    %>
+
+    <%= render(
+          ReactComponent.new(name: 'Example3',
+                              class: 'tw-contents',
+                              props: {
+                                language: serialize_language_attributes,
+                              }))
+    %>
+
+      <div class="tw-flex tw-flex-col tw-min-w-0 tw-flex-1 tw-overflow-hidden??!!">
+
+        <%= render(
+              ReactComponent.new(name: 'Example4',
+                                  class: 'tw-contents',
+                                  props: {
+                                  }))
+        %>
+
+        <div class="lg:tw-ml-72 tw-flex-1 tw-relative tw-z-0 tw-flex tw-overflow-hidden??!!">
+
+          <main
+            id="main"
+            class="tw-flex-1 tw-relative tw-z-0? tw-overflow-y-auto? tw-overflow-y-auto? tw-overflow-x-clip focus:tw-outline-none tw-snap-y? tw-snap-always? tw-snap-mandatory?">
+            <%# {/* Start main area */} %>
+            <div class="tw-absolute??!! tw-relative ??!! tw-inset-0 tw-py-6? tw-px-4? sm:tw-px-6 lg:tw-px-8 xl:tw-px-4 tw-snap-center?">
+
+
+              <%# <div class="tw-h-full tw-border-2 tw-border-gray-200 tw-border-dashed tw-rounded-lg" /> %>
+
+              <% if seo.title %>
+                <header class="tw-py-5">
+                  <%# <div class="tw-max-w-5xl tw-mx-auto 2xl:tw-pb-4 tw-px-4 sm:tw-px-0 2xl:tw-px-0"> %>
+                  <div class="tw-max-w-5xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-2 2xl:tw-pb-4">
+                    <%= render TitleComponent.new(title: seo.title) %>
+                    <div class="tw-leading-7 tw-text-md tw-text-slate-500 tw-mt-1"><%= seo.subtitle %></div>
+                    <!--        <h1 class="tw-text-3xl tw-font-bold tw-text-white">Dashboard</h1>-->
+                  </div>
+                </header>
+              <% end %>
+
+              <div class="tw-max-w-5xl tw-mx-auto tw-pb-12 2xl:tw-px-12?">
+                <div class="tw-bg-white sm:tw-rounded-lg lg:tw-rounded-none 2xl:tw-rounded-lg sm:tw-shadow? lg:tw-shadow-none 2xl:tw-shadow? sm:tw-px-6 lg:tw-px-0 sm:tw-py-6 2xl:tw-px-2">
+                  <%= yield %>
+                </div>
+              </div>
+
+
+            </div>
+            <%# {/* End main area */} %>
+          </main>
+
+          <aside class="tw-hidden tw-relative xl:tw-flex xl:tw-flex-col tw-flex-shrink-0 lg:tw-w-80
+            2xl:tw-w-96 tw-border-l tw-border-gray-200 tw-overflow-y-auto tw-bg-slate-100">
+            <%# {/* Start secondary column (hidden on smaller screens) */} %>
+            <div class="tw-absolute? tw-inset-0? tw-py-12 tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-bg-zinc-700 tw-min-h-screen">
+
+              <%# <div class="tw-h-full tw-border-2 tw-border-gray-200 tw-border-dashed tw-rounded-lg" /> %>
+
+              <div class="tw-h-full?">
+
+<%# [filter:drop-shadow(0_0_30px_rgb(255_255_255_/_0.4))]
+ %>
+
+                <div class="tw-group tw-relative tw-w-64 tw-mx-auto tw-mb-12">
+                  <%= image_tag(asset_path('extension-small.webp'),
+                                class: 'group-hover:[filter:drop-shadow(0_0_30px_rgb(255_255_255_/_0.7))]
+                                        tw-brightness-100 group-hover:tw-brightness-75
+                                        tw-transition-all tw-duration-1000?') %>
+                                <%#  %>
+                  <div class="tw-absolute tw-inset-0 tw-rounded tw-transition tw-overflow-hidden">
+
+                    <div class="tw-absolute tw-text-center tw-inset-0 tw-translate-y-1/2 tw-mx-auto">
+                      <%= link_to 'http://ya.ru', class: "
+                        group-hover:tw-bg-indigo-700
+                        hover:!tw-bg-indigo-500
+                        tw-inline-flex tw-items-center tw-px-8 tw-py-2.5 tw-border tw-border-transparent
+                         hover:tw-shadow tw-text-base tw-font-medium tw-rounded-full tw-text-indigo-50 tw-bg-indigo-500
+                        focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500" do %>
+                          Скачать
+                      <% end %>
+                    </div>
+
+                    <div class="tw-select-none tw-bg-pink-600 tw-text-white tw-text-sm tw-absolute -tw-bottom-11 group-hover:tw-bottom-0 tw-transition-all tw-ease-out tw-inset-x-0 tw-text-center tw-p-3">
+                      <sup>*</sup>&nbsp;Extension для Google Chrome
+                    </div>
+                  </div>
+                </div>
+
+                <%# <div class="tw-mt-3"> %>
+                  <svg class="tw-h-6 tw-w-6 tw-text-white tw-opacity-25? tw-inline tw-m-2? tw-relative -tw-top-3" fill="currentColor" viewbox="0 0 32 32" aria-hidden="true">
+                    <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" class=""></path>
+                  </svg>
+
+                  <div class="tw-inline tw-text-gray-200 tw-leading-7">Разрабатывая это приложение я хотел бы чтобы любой мог найти похожие
+                    инструменты, технологии, техники и приёмы так же легко, как если бы вы искали в Google "Ruby vs ..." или "Awesome Ruby"</div>
+
+                  <div class="tw-font-medium tw-mt-6 tw-text-right tw-text-white">
+                    — Корнев Руслан
+                    <a class="tw-text-blue-300" href="https://twitter.com/woto7">(@woto)</a>
+                  </div>
+
+                <%# </div> %>
+              </div>
+
+
+            </div>
+            <%# {/* End secondary column */} %>
+          </aside>
+
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+  <% end %>
+<% end %>

@@ -15,6 +15,12 @@
       ext_id: current_feed_category.id,
       favorites_items_kind: kind,
       bobber: { class: 'z-index-decreased' }) %>
+
+    <%= render BookmarkComponent.new(
+      favorites_store: @favorites_store,
+      ext_id: current_feed_category.id,
+      favorites_items_kind: 'feed_category_id')
+    %>
   <% end %>
 
 <% elsif current_feed %>
@@ -28,6 +34,13 @@
       ext_id: current_feed.id,
       favorites_items_kind: kind,
       bobber: { class: 'z-index-decreased' }) %>
+
+    <%= render BookmarkComponent.new(
+      favorites_store: @favorites_store,
+      ext_id: current_feed.id,
+      favorites_items_kind: 'feed_id')
+    %>
+
   <% end %>
 
 <% elsif current_advertiser %>
@@ -41,6 +54,12 @@
       ext_id: current_advertiser.id,
       favorites_items_kind: kind,
       bobber: { class: 'z-index-decreased' }) %>
+
+    <%= render BookmarkComponent.new(
+      favorites_store: @favorites_store,
+      ext_id: current_advertiser.id,
+      favorites_items_kind: 'advertiser_id')
+    %>
   <% end %>
 <% else %>
     <% seo.title! t('titles.offers') %>

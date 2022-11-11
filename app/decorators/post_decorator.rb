@@ -18,7 +18,7 @@ class PostDecorator < ApplicationDecorator
       link_options['data-bs-toggle'] = 'tooltip'
       link_options['title'] = super
     end
-    h.tag.span(h.link_to(truncated, h.post_path(_id), **link_options), class: 'responsive-title')
+    h.tag.span(h.link_to(truncated, h.post_path(_id), **link_options), class: 'tw-text-lg 2xl:tw-text-sm')
   end
 
   def intro
@@ -40,6 +40,6 @@ class PostDecorator < ApplicationDecorator
   end
 
   def published_at
-    decorate_datetime(super)
+    h.render TimeAgoComponent.new(datetime: super)
   end
 end

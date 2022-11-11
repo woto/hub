@@ -29,7 +29,10 @@ class Columns::BaseMapping
     def elastic_column(key)
       column = self::all_columns.find { |col| col[:key] == key }
       pg = column[:pg]
-      raise "`pg` key has invalid value in #{self}.all_columns for key `#{column[:key]}`" if pg.nil?
+      if pg.nil?
+        # debugger
+        raise "`pg` key has invalid value in #{self}.all_columns for key `#{column[:key]}`"
+      end
 
       pg_type = column[:as] || pg.type
       PG2ES[pg_type] || raise("Unable to find mapping for `#{key}` with column type `#{pg_type}`")

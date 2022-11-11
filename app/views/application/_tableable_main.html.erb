@@ -19,11 +19,11 @@
     <div class="card-body p-0">
       <%= render 'table_header', rows: rows %>
       <div class="table-responsive" style="min-height: 400px">
-        <div class="responsive-table table card-table table-vcenter table-hover">
-          <div class="responsive-table-header">
+        <div class="2xl:tw-table tw-w-full">
+          <div class="tw-p-1 2xl:tw-p-0 2xl:tw-table-header-group tw-bg-slate-50">
             <%= render 'tableable_thead' %>
           </div>
-          <div class="responsive-table-body">
+          <div class="2xl:tw-table-row-group">
             <%= render 'tableable_tbody', rows: rows %>
           </div>
         </div>

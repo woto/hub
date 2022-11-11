@@ -14,7 +14,7 @@
       }
 
       body {
-          background: url(<%= asset_pack_path 'media/images/world_map.png' %>) no-repeat left !important;;
+          background: url(<%= asset_path 'world_map.png' %>) no-repeat left !important;
       }
 
       .nav-link {
@@ -46,7 +46,7 @@
       <header class="tw-grid tw-grid-cols-12 tw-mb-auto">
         <div class="tw-col-span-6 lg:tw-col-span-5">
           <%#= image_tag(asset_pack_path('media/images/logo-white.svg'), width: "110", height: "32") %>
-          <%= image_tag(asset_pack_path('media/images/roast-me-white.svg'), class: "tw-h-5 !tw-text-black navbar-brand-image") %>
+          <%= image_tag(asset_path('roast-me-white.svg'), class: "tw-h-5 !tw-text-black navbar-brand-image") %>
         </div>
         <div class="tw-col-span-6 lg:tw-col-span-7 tw-flex">
           <div class="tw-ml-auto [text-shadow:none]">
@@ -62,9 +62,9 @@
           <p class="tw-mb-8"><%= t('.tagline') %></p>
           <p>
             <% if current_user %>
-              <%= link_to t('.dashboard'), dashboard_path, class: '[text-shadow:none] !tw-no-underline tw-font-semibold tw-inline-flex tw-items-center tw-px-7 tw-py-2 tw-border tw-border-gray-300 tw-shadow-sm tw-text-lg tw-font-medium tw-rounded-md hover:tw-text-gray-700 tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-500' %>
+              <%= link_to t('.dashboard'), mentions_path, class: '[text-shadow:none] !tw-no-underline tw-font-semibold tw-inline-flex tw-items-center tw-px-7 tw-py-2 tw-border tw-border-gray-300  tw-text-lg tw-font-medium tw-rounded-md hover:tw-text-gray-700 tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-500' %>
             <% else %>
-              <%= link_to t('.link'), offers_path, class: '[text-shadow:none]  !tw-no-underline tw-font-semibold tw-inline-flex tw-items-center tw-px-7 tw-py-2 tw-border tw-border-gray-300 tw-shadow-sm tw-text-lg tw-font-medium tw-rounded-md hover:tw-text-gray-700 tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-500' %>
+              <%= link_to t('.link'), mentions_path, class: '[text-shadow:none]  !tw-no-underline tw-font-semibold tw-inline-flex tw-items-center tw-px-7 tw-py-2 tw-border tw-border-gray-300  tw-text-lg tw-font-medium tw-rounded-md hover:tw-text-gray-700 tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-slate-500' %>
             <% end %>
           </p>
         </div>

@@ -5,7 +5,7 @@ class Seo
   NoReferrer = 'noreferrer'
   UGC = 'ugc'
 
-  attr_accessor :controller, :noindex, :title
+  attr_accessor :controller, :noindex, :title, :subtitle
 
   def initialize(controller)
     @controller = controller
@@ -22,6 +22,10 @@ class Seo
     @meta << ApplicationController.helpers.tag.title("GoodReviews.ru | #{title}")
   end
 
+  def subtitle!(subtitle)
+    @subtitle = subtitle
+  end
+
   def description!(description)
     @description = description
     @meta << ApplicationController.helpers.tag(:meta, { name: 'description', content: description })
@@ -31,11 +35,13 @@ class Seo
     keys = I18n.available_locales.map { |locale| { lang: locale, locale: locale } }
     keys << { lang: 'x-default', locale: nil }
 
-    keys.each do |lang:, locale:|
+    keys.each do |obj|
+      obj in { lang:, locale: }
       @meta << ApplicationController.helpers.tag(:link, rel: 'alternate', href: yield(locale), hreflang: lang)
     end
 
-    header = keys.map do |lang:, locale:|
+    header = keys.map do |obj|
+      obj in { lang:, locale: }
       %(<#{yield(locale)}>; rel="alternate"; hreflang="#{lang}")
     end.join(', ')
 

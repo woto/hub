@@ -10,6 +10,12 @@
       style: 'top: -1px; right: -1px;'
     }) %>
 
+  <%= render BookmarkComponent.new(
+    favorites_store: @favorites_store,
+    ext_id: row._id,
+    favorites_items_kind: '_id')
+  %>
+
   <%= render 'carousel', row: row, offer_idx: row_counter %>
 
   <div class="card-header position-relative mt-auto">

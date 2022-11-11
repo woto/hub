@@ -3,49 +3,85 @@
 module API
   class Mentions < ::Grape::API
     prefix :api
-    auth :api_key
 
     resource :mentions do
-      desc 'Autocomplete entities' do
-        security [{ api_key: [] }]
-      end
-
       params do
-        requires :q, type: String, desc: 'Search string'
+        optional :q, type: String, desc: 'Search string', documentation: { param_type: 'body' }
+        optional :entity_ids, type: Array[Integer]
+        optional :per
+        optional :page
+        optional :sort
       end
 
-      get :entities do
-        object = Interactors::Mentions::Entities.call(q: params[:q]).object
-        object = Decorators::Mentions::Entities.call(object: object).object
-        object
+      post do
+        @pagination_rule = PaginationRules.new(request, 5)
+
+        query = EntityMentionsQuery.call(
+          from: (@pagination_rule.page - 1) * @pagination_rule.per,
+          size: @pagination_rule.per,
+          q: params[:q],
+          entity_ids: params[:entity_ids],
+          sort: params[:sort] || 'entities.mention_date',
+          order: params[:order] || 'desc'
+        ).object
+        result = GlobalHelper.elastic_client.search(query)
+
+        hits = result['hits']
+
+        rows = Kaminari
+               .paginate_array(hits['hits'], total_count: hits['total']['value'])
+               .page(@pagination_rule.page)
+               .per(@pagination_rule.per)
+
+        # .includes(entity: :images)
+        #         'title' => entity_mention.entity.to_label,
+        #         'images' => GlobalHelper.image_hash(entity_mention.entity.images),
+
+        @favorites_store = FavoritesStore.new(current_user)
+
+        entity_ids = Set.new
+        rows.each do |row|
+          row['_source']['entities'].each do |entities_mention|
+            entity_ids.add(entities_mention['entity_id'])
+            @favorites_store.append(entities_mention['entity_id'], 'entities')
+          end
+        end
+
+        query = lambda do |relation_type|
+          Entity.includes(images_relations: :image)
+                .where(id: entity_ids.to_a, images_relations: { relation_type: relation_type })
+        end
+        @entities = query.call('Entity').or(query.call(nil))
+
+        rows.each do |row|
+          row['_source']['entities'].each do |entities_mention|
+            record = @entities.find { |ent| ent.id == entities_mention['entity_id'] }
+            next unless record
+
+            entities_mention['title'] = record.title
+            entities_mention['images'] = GlobalHelper.image_hash(record.images_relations)
+            entities_mention['is_favorite'] = @favorites_store.find(entities_mention['entity_id'], 'entities')
+          end
+        end
+
+        @mentions = MentionDecorator.decorate_collection(rows)
+        {
+          mentions: @mentions.object,
+          pagination: PaginationDecorator.call(collection: @mentions).object
+        }
       end
 
-      desc 'Autocomplete urls' do
-        security [{ api_key: [] }]
-      end
-
-      params do
-        requires :q, type: String, desc: 'Search string'
-      end
-
-      get :urls do
-        object = Interactors::Mentions::Urls.call(q: params[:q]).object
-        object = Decorators::Mentions::Urls.call(object: object).object
-        object
-      end
-
-      desc 'Autocomplete topics' do
-        security [{ api_key: [] }]
-      end
-
-      params do
-        requires :q, type: String, desc: 'Search string'
-      end
-
-      get :topics do
-        Interactors::Mentions::Topics.call(q: params[:q], sort: 'mentions_count', order: 'desc', limit: 10).object
-      end
-
+      # get :entities do
+      #   object = Interactors::Mentions::Entities.call(q: params[:q]).object
+      #   object = Decorators::Mentions::Entities.call(object: object).object
+      #   object
+      # end
+      #
+      # get :urls do
+      #   object = Interactors::Mentions::Urls.call(q: params[:q]).object
+      #   object = Decorators::Mentions::Urls.call(object: object).object
+      #   object
+      # end
     end
   end
 end

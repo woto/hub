@@ -1,13 +1,29 @@
-import * as React from "react";
-import Single from "./Single";
-import {TagObject} from '../system/TypeScript'
+import * as React from 'react';
+import Single from './Single';
+import { TagObject } from '../system/TypeScript';
 
-export default function Multiple(props: { tags: TagObject[], textColor: string, bgColor: string, linkify: boolean }) {
+export default function Multiple(props: {
+  tags: TagObject[],
+  textColor: string,
+  bgColor: string,
+  linkify: boolean,
+  limit: number
+}) {
+  const {
+    textColor, bgColor, linkify, limit, tags,
+  } = props;
+
   return (
-    <div className='tw-flex tw-flex-wrap tw-gap-1'>
-      {props.tags.map((tag) => {
-        return <Single tag={tag} textColor={props.textColor} bgColor={props.bgColor} linkify={props.linkify}></Single>
-      })}
+    <div className="tw-flex tw-flex-wrap tw-gap-1">
+      {tags.slice(0, limit).map((tag) => (
+        <Single
+          tag={tag}
+          key={tag.title}
+          textColor={textColor}
+          bgColor={bgColor}
+          linkify={linkify}
+        />
+      ))}
     </div>
-  )
+  );
 }
