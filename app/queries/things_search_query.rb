@@ -23,15 +23,17 @@ class ThingsSearchQuery
 
           if context[:search_string]
             json.should do
-              json.multi_match do
-                json.query context[:search_string]
-                json.type 'bool_prefix'
-                json.fields do
-                  json.array! %w[
-                    title.autocomplete^2
-                    title.autocomplete._2gram^2
-                    title.autocomplete._3gram^2
-                  ]
+              json.array! ['fuck'] do
+                json.multi_match do
+                  json.query context[:search_string]
+                  json.type 'bool_prefix'
+                  json.fields do
+                    json.array! %w[
+                      title.autocomplete^2
+                      title.autocomplete._2gram^2
+                      title.autocomplete._3gram^2
+                    ]
+                  end
                 end
               end
             end
