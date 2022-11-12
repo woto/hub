@@ -2,26 +2,26 @@
 
 #### Scrapper shell
 ```shell
-docker-compose exec scrapper bash
+docker compose exec scrapper bash
 ```
 
 #### Rails shell
 
 From running container
 ```shell
-docker-compose exec rails sh
+docker compose exec rails sh
 ```
 
 or from new container
 ```shell
-docker-compose run -l "traefik.enable=false" --rm rails sh
+docker compose run -l "traefik.enable=false" --rm rails sh
 ```
 
 #### Rails console
 
 ```shell
-docker-compose run -l "traefik.enable=false" --rm rails rails c
-docker-compose run -l "traefik.enable=false" --rm rails -v /app:/app rails c
+docker compose run -l "traefik.enable=false" --rm rails rails c
+docker compose run -l "traefik.enable=false" --rm rails -v /app:/app rails c
 ```
 
 #### PostgreSQL console
@@ -33,7 +33,7 @@ docker exec -i -t hub_postgres_1 psql -U hub -d postgres
 
 or from new container
 ```shell
-docker-compose run -l "traefik.enable=false" --rm postgres psql -U hub -d postgres -h postgres
+docker compose run -l "traefik.enable=false" --rm postgres psql -U hub -d postgres -h postgres
 ```
 
 #### Reverse ssh tunnel
