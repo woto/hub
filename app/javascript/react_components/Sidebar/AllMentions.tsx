@@ -15,7 +15,7 @@ export default function AllMentions() {
                   ${substr === 'mentions'
         ? 'tw-bg-gray-200 tw-text-gray-900'
         : 'tw-text-gray-600 hover:tw-bg-gray-50 hover:tw-text-gray-900'}
-                  tw-group tw-flex tw-items-center tw-px-2 tw-py-2 tw-text-sm tw-font-medium tw-rounded-md tw-break-all
+                  tw-group tw-flex tw-items-center tw-px-2 tw-py-2 tw-text-base lg:tw-text-sm tw-font-medium tw-rounded-md tw-break-all
                 `}
     >
       <HomeIcon
