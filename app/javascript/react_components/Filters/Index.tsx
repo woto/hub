@@ -8,7 +8,7 @@ import Circles from './Circles';
 import Search from './Search';
 import AddCircle from './AddCircle';
 import EditCircle from './EditCircle';
-import AddEntity from './AddEntity';
+import AddEntity from './FilterEntitiesByTitle';
 import Mentions from '../Mentions/Mentions';
 import Sort from './Sort';
 

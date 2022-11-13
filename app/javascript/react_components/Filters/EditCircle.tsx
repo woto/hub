@@ -83,7 +83,7 @@ export default function EditCircle(props: { imageSrc: string }) {
             <Popover.Panel
               className={`tw-absolute tw-z-10 tw-left-0 tw-mt-[13px]
                tw-ring-1 tw-ring-gray-200
-              tw-grid tw-gap-4 tw-bg-slate-50 tw-px-5 tw-py-6`}
+              tw-grid tw-gap-4 tw-bg-slate-100 tw-px-5 tw-py-6`}
             >
                   <Relevance></Relevance>
                   <Sentiment></Sentiment>
