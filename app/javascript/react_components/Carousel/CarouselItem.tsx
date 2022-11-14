@@ -177,7 +177,7 @@ function CarouselItem({
               `}
           draggable={false}
           src={item.images['500']}
-          // loading="lazy"
+          loading="lazy"
         />
       );
     } if (video_types.includes(item?.mime_type)) {
