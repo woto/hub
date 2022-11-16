@@ -26,7 +26,7 @@ module Interactors
           title: @entity.title,
           url: Rails.application.routes.url_helpers.entity_url(
             id: @entity,
-            host: "#{ENV.fetch('RAILS_SCHEMA')}://#{ENV.fetch('DOMAIN_NAME')}:#{ENV.fetch('RAILS_PORT')}"
+            host: "#{ENV.fetch('PUBLIC_SCHEMA')}://#{ENV.fetch('PUBLIC_DOMAIN')}:#{ENV.fetch('PUBLIC_PORT')}"
           )
         }
       end
