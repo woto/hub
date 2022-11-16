@@ -290,8 +290,9 @@ function CarouselItem({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <FloatingOverlay className="tw-bg-slate-500/50" onClick={() => setOpen(false)} lockScroll />
+                <FloatingOverlay className="tw-relative tw-z-10 tw-bg-slate-500/50" onClick={() => setOpen(false)} lockScroll />
                 <div
+                  className="tw-z-10"
                   ref={floating}
                   style={{
                     position: strategy,

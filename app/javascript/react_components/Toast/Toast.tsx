@@ -33,40 +33,38 @@ export default function Toast(props: {
   }, [showCircle]);
 
   return (
-    <Transition
-      afterEnter={() => { setShowCircle(true); }}
-      appear
-      show={show}
-      as={Fragment}
-      enter="tw-transform tw-ease-out tw-duration-300 tw-transition"
-      enterFrom="tw-translate-y-2 tw-opacity-0 sm:tw-translate-y-0 sm:tw-translate-x-2"
-      enterTo="tw-translate-y-0 tw-opacity-100 sm:tw-translate-x-0"
-      leave="tw-transition tw-ease-in tw-duration-100"
-      leaveFrom="tw-opacity-100"
-      leaveTo="tw-opacity-0"
-    >
-      <div
-        onMouseEnter={() => { controls.stop(); }}
-        onMouseLeave={() => { controls.start('visible'); }}
-        className="tw-max-w-sm tw-w-full tw-bg-white tw-shadow-lg tw-rounded-lg tw-pointer-events-auto
-          tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-overflow-hidden"
+    <AnimatePresence>
+      { show && (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.150, scale: 1, ease: 'easeOut' }}
+        onAnimationComplete={() => setShowCircle(true)}
       >
-        <div className="tw-p-4">
-          <div className="tw-flex tw-items-center">
+        <div
+          onMouseEnter={() => { controls.stop(); }}
+          onMouseLeave={() => { controls.start('visible'); }}
+          className="tw-max-w-sm tw-w-full tw-bg-stone-50 tw-shadow-lg tw-rounded-lg tw-pointer-events-auto
+          tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-overflow-hidden"
+        >
+          <div className="tw-p-4">
+            <div className="tw-flex tw-items-center">
 
-            {props.children}
+              {props.children}
 
-            <div className="tw-ml-4 tw-relative tw-p-1 tw-flex-shrink-0 tw-flex">
-              <button
-                className="tw-bg-white tw-rounded-full tw-inline-flex tw-text-gray-400 hover:tw-text-gray-500
+              <div className="tw-ml-4 tw-relative tw-p-1 tw-flex-shrink-0 tw-flex">
+                <button
+                  type="button"
+                  className="tw-bg-stone-50 tw-rounded-full tw-inline-flex tw-text-gray-400 hover:tw-text-gray-500
                 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
-                onClick={() => {
-                  setShow(false);
-                }}
-              >
+                  onClick={() => {
+                    setShow(false);
+                  }}
+                >
 
-                <AnimatePresence>
-                  {showCircle
+                  <AnimatePresence>
+                    {showCircle
                     && (
                     <svg
                       className="tw-h-16 tw-w-16 tw-absolute tw-left-1/2 -tw-translate-x-1/2 tw-top-1/2 -tw-translate-y-1/2"
@@ -91,15 +89,17 @@ export default function Toast(props: {
                       />
                     </svg>
                     )}
-                </AnimatePresence>
+                  </AnimatePresence>
 
-                <XMarkIcon className="tw-h-5 tw-w-5" aria-hidden="true" />
+                  <XMarkIcon className="tw-h-5 tw-w-5" aria-hidden="true" />
 
-              </button>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Transition>
+      </motion.div>
+      ) }
+    </AnimatePresence>
   );
 }

@@ -12,7 +12,7 @@ function ToastContainer(props: { children: React.ReactNode }) {
   return (
     <div
       aria-live="assertive"
-      className="tw-fixed tw-inset-0 tw-flex tw-items-end tw-px-4 tw-py-6 tw-pointer-events-none sm:tw-p-6 sm:tw-items-start"
+      className="tw-fixed tw-z-20 tw-inset-0 tw-flex tw-items-end tw-px-4 tw-py-6 tw-pointer-events-none sm:tw-p-6 sm:tw-items-start"
     >
       <div className="tw-w-full tw-flex tw-flex-col tw-items-center tw-space-y-4 sm:tw-items-end">
         {props.children}

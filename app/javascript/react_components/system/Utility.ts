@@ -1,21 +1,21 @@
-export const openEditEntity = (entityId: number) => {
-  // The ID of the extension we want to talk to.
-  var editorExtensionId = "aofgjcicjlegjpjjalajdbmhdcjjlkgd";
-
-  // Make a simple request:
+const openEditEntity = (entityId: number) => {
   chrome.runtime.sendMessage(
-    editorExtensionId,
+    process.env.CHROME_EXTENSION_ID,
     {
       message: 'edit-entity',
-      entityId: entityId
+      entityId,
     },
-    function (response) {
-      if (!response.success) alert('error oops');
-    }
+    (response) => {
+      if (!response || !response.success) {
+        throw new Error('An error occurred while sending a message to the extension.');
+      }
+    },
   );
 
   return null;
-}
+};
+
+export default openEditEntity;
 
 // // NOTE: test (seems Firefox supports only this way)
 // const messageContentScript = () => {

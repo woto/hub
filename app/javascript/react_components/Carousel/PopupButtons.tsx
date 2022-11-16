@@ -4,16 +4,19 @@ import { Popover } from '@headlessui/react';
 import { ReferenceType } from '@floating-ui/react-dom';
 import { EyeIcon, PencilIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
-import { openEditEntity } from '../system/Utility';
+import openEditEntity from '../system/Utility';
 import OldBookmark from '../OldBookmark/OldBookmark';
 import DynamicStarIcon from '../DynamicStarIcon';
 import Complain from '../Complain';
+import {useToasts} from '../Toast/ToastManager';
 
 export default function PopupButtons({ data, setIsPopupOpen, setIsComplainOpen }: {
     data: any,
      setIsPopupOpen: React.Dispatch<React.SetStateAction<boolean>>,
      setIsComplainOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const {add} = useToasts();
+
   return (
     <div className="tw-relative tw-z-0 tw-inline-flex tw-shadow-sm? tw-rounded-b-2xl tw-w-full">
       {false
@@ -124,7 +127,11 @@ export default function PopupButtons({ data, setIsPopupOpen, setIsComplainOpen }
 
       <button
         onClick={() => {
-          setTimeout(() => openEditEntity(data?.entity_id), 300);
+          try {
+            openEditEntity(data?.entity_id);
+          } catch (error) {
+            add('Расширение Chrome не ответило вовремя. Проверьте, что оно установлено.');
+          }
         }}
         type="button"
         className="tw-rounded-br-2xl -tw-ml-px tw-border-l tw-border-t tw-border-r tw-border-r-transparent

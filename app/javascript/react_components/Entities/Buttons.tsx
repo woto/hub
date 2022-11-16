@@ -14,11 +14,12 @@ import { Popover } from '@headlessui/react';
 import { ReferenceType } from '@floating-ui/react-dom';
 import TimeAgo from '../TimeAgo';
 import Timeline from './Timeline';
-import { openEditEntity } from '../system/Utility';
+import openEditEntity from '../system/Utility';
 import Complain from '../Complain';
 import OldBookmark from '../OldBookmark/OldBookmark';
 import DynamicStarIcon from '../DynamicStarIcon';
 import Listings from '../Listings/Index';
+import { useToasts } from '../Toast/ToastManager';
 
 // tw-bg-indigo-500' : 'tw-bg-transparent'
 
@@ -59,6 +60,7 @@ import Listings from '../Listings/Index';
 // </button>
 
 export default function Buttons(props: { entityId: number }) {
+  const { add } = useToasts();
   const [hoveredTabIdx, setHoveredTabIdx] = useState<number>();
   const [selectedTabIdx, setSelectedTabIdx] = useState<number>();
 
@@ -136,7 +138,13 @@ export default function Buttons(props: { entityId: number }) {
     {
       name: 'Редактировать',
       icon: <PencilSquareIcon className="tw-w-6 tw-h-6 sm:tw-mr-2 tw-flex-none" />,
-      clickHandler: () => openEditEntity(props.entityId),
+      clickHandler: () => {
+        try {
+          openEditEntity(props.entityId);
+        } catch (error) {
+          add('Расширение Chrome не ответило вовремя. Проверьте, что оно установлено.');
+        }
+      },
       component: (foo: any) => foo,
     },
     {

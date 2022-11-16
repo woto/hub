@@ -39,6 +39,16 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
+    new webpack.DefinePlugin(
+      Object.keys(process.env)
+        .reduce(
+          (result, key) => ({
+            ...result,
+            [`process.env.${key}`]: JSON.stringify(process.env[key]),
+          }),
+          {},
+        ),
+    ),
     ...mode === 'development' ? [new BundleAnalyzerPlugin()] : [],
   ],
   optimization: {
