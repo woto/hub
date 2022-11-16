@@ -1,4 +1,4 @@
-FROM ruby:2.7.5-alpine
+FROM ruby:3.1.2-alpine
 
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
@@ -9,11 +9,11 @@ RUN apk add --no-cache --update build-base \
                                 yarn \
                                 tzdata \
                                 less \
-                                python2 \
                                 graphviz \
                                 ttf-freefont \
-                                imagemagick
-
+                                imagemagick \
+                                vips-dev \
+                                ffmpeg
 
 ENV APP_PATH /app
 WORKDIR $APP_PATH
