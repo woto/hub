@@ -1,13 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
-
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const mode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-// const mode = 'production';
-
-// Extracts CSS into .css file
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   module: {
@@ -43,7 +39,7 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
-    new BundleAnalyzerPlugin(),
+   ... mode === 'development' ? [new BundleAnalyzerPlugin()] : [],
   ],
   optimization: {
     // splitChunks: {
