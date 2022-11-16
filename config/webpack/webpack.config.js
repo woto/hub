@@ -39,7 +39,7 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
-   ... mode === 'development' ? [new BundleAnalyzerPlugin()] : [],
+    ...mode === 'development' ? [new BundleAnalyzerPlugin()] : [],
   ],
   optimization: {
     // splitChunks: {
