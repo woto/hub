@@ -32,33 +32,9 @@ services:
       - "traefik.enable=true"
       # - "traefik.http.routers.rails.rule=PathPrefix(`/`)"
       # - "traefik.http.routers.rails.rule=HostRegexp(`{host:.+}`)"
-      - "traefik.http.routers.goodreviews_ru.rule=Host(`goodreviews.ru`)"
-      - "traefik.http.routers.goodreviews_ru.entrypoints=websecure"
-      - "traefik.http.routers.goodreviews_ru.tls.certresolver=myresolver"
-
-      - "traefik.http.routers.news_russia_goodreviews_ru.rule=Host(`news-russia.goodreviews.ru`)"
-      - "traefik.http.routers.news_russia_goodreviews_ru.entrypoints=websecure"
-      - "traefik.http.routers.news_russia_goodreviews_ru.tls.certresolver=myresolver"
-
-      - "traefik.http.routers.help_russia_goodreviews_ru.rule=Host(`help-russia.goodreviews.ru`)"
-      - "traefik.http.routers.help_russia_goodreviews_ru.entrypoints=websecure"
-      - "traefik.http.routers.help_russia_goodreviews_ru.tls.certresolver=myresolver"
-
-      - "traefik.http.routers.ru_goodreviews_ru.rule=Host(`ru.goodreviews.ru`)"
-      - "traefik.http.routers.ru_goodreviews_ru.entrypoints=websecure"
-      - "traefik.http.routers.ru_goodreviews_ru.tls.certresolver=myresolver"
-
-      - "traefik.http.routers.en_goodreviews_ru.rule=Host(`en.goodreviews.ru`)"
-      - "traefik.http.routers.en_goodreviews_ru.entrypoints=websecure"
-      - "traefik.http.routers.en_goodreviews_ru.tls.certresolver=myresolver"
-
-      - "traefik.http.routers.cpafun_ru.rule=Host(`cpafun.ru`)"
-      - "traefik.http.routers.cpafun_ru.entrypoints=websecure"
-      - "traefik.http.routers.cpafun_ru.tls.certresolver=myresolver"
-
-      - "traefik.http.routers.checkshop_site.rule=Host(`checkshop.site`)"
-      - "traefik.http.routers.checkshop_site.entrypoints=websecure"
-      - "traefik.http.routers.checkshop_site.tls.certresolver=myresolver"
+      - "traefik.http.routers.roastme_ru.rule=Host(`roastme.ru`)"
+      - "traefik.http.routers.roastme_ru.entrypoints=websecure"
+      - "traefik.http.routers.roastme_ru.tls.certresolver=myresolver"
 
   sidekiq:
     env_file:
