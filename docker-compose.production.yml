@@ -97,7 +97,7 @@ services:
     environment:
       - discovery.type=single-node
       - path.repo=/tmp
-      - "ES_JAVA_OPTS=-Xms32767m -Xmx32767m"
+      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
     volumes:
       - elastic:/usr/share/elasticsearch/data
 
