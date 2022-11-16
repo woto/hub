@@ -7,7 +7,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsdom": "^19.0.0",
-    "puppeteer": "^11.0.0"
+    "puppeteer": "^19.2.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.14"
