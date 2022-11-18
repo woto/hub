@@ -82,7 +82,7 @@ class Entity < ApplicationRecord
       intro:,
       lookups: lookups.map { |lookup| { id: lookup.id, title: lookup.title } },
       topics: topics.map { |topic| { id: topic.id, title: topic.title } },
-      images: GlobalHelper.image_hash(images_relations),
+      images: GlobalHelper.image_hash(images_relations, %w[50 100 200 300 500 1000]),
       user_id:,
       created_at:,
       updated_at:,

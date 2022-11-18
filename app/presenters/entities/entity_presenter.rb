@@ -13,7 +13,7 @@ module Entities
         intro: entity.intro,
         lookups: entity.lookups.map { |lookup| { id: lookup.id, title: lookup.title } },
         kinds: entity.topics.map { |topic| { id: topic.id, title: topic.title } },
-        images: GlobalHelper.image_hash(entity.images_relations).map do |image|
+        images: GlobalHelper.image_hash(entity.images_relations, %w[100]).map do |image|
           {
             id: image['id'],
             image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['100'] : nil,

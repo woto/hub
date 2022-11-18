@@ -7,7 +7,7 @@ class GlobalHelper
   GROUP_LIMIT = 1000
 
   class << self
-    def image_hash(images_relations)
+    def image_hash(images_relations, resolutions)
 
       images_relations.map do |images_relation|
         # debugger if object.class != Image
@@ -25,22 +25,24 @@ class GlobalHelper
         {
           'id' => images_relation.image.id,
           'original' => images_relation.image ? images_relation.image.image_url : nil,
-          'images' => {
-            '50' => images_relation.image ? images_relation.image.image.derivation_url(:image, 50, 50) : nil,
-            '100' => images_relation.image ? images_relation.image.image.derivation_url(:image, 100, 100) : nil,
-            '200' => images_relation.image ? images_relation.image.image.derivation_url(:image, 200, 200) : nil,
-            '300' => images_relation.image ? images_relation.image.image.derivation_url(:image, 300, 300) : nil,
-            '500' => images_relation.image ? images_relation.image.image.derivation_url(:image, 500, 500) : nil,
-            '1000' => images_relation.image ? images_relation.image.image.derivation_url(:image, 1000, 1000) : nil
-          },
-          'videos' => {
-            '50' => images_relation.image ? images_relation.image.image.derivation_url(:video, 50, 50) : nil,
-            '100' => images_relation.image ? images_relation.image.image.derivation_url(:video, 100, 100) : nil,
-            '200' => images_relation.image ? images_relation.image.image.derivation_url(:video, 200, 200) : nil,
-            '300' => images_relation.image ? images_relation.image.image.derivation_url(:video, 300, 300) : nil,
-            '500' => images_relation.image ? images_relation.image.image.derivation_url(:video, 500, 500) : nil,
-            '1000' => images_relation.image ? images_relation.image.image.derivation_url(:video, 1000, 1000) : nil
-          },
+          'images' =>
+            resolutions.map do |resolution|
+              [
+                resolution.to_s,
+                images_relation.image ?
+                images_relation.image.image.derivation_url(:image, resolution.to_i, resolution.to_i) :
+                nil
+              ]
+            end.to_h,
+          'videos' =>
+            resolutions.map do |resolution|
+              [
+                resolution.to_s,
+                images_relation.image ?
+                images_relation.image.image.derivation_url(:video, resolution.to_i, resolution.to_i) :
+                nil
+              ]
+            end.to_h,
           'width' => images_relation.image ? images_relation.image.image.metadata['width'] : nil,
           'height' => images_relation.image ? images_relation.image.image.metadata['height'] : nil,
           'mime_type' => images_relation.image.image.mime_type,

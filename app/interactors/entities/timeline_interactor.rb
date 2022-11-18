@@ -65,8 +65,8 @@ module Entities
         # TODO: figure out how to present difference of two arrays
         if true
           operation[:images] = {
-            add: GlobalHelper.image_hash(cur.images_relations - prv.images_relations),
-            remove: GlobalHelper.image_hash(prv.images_relations - cur.images_relations)
+            add: GlobalHelper.image_hash(cur.images_relations - prv.images_relations, %w[50 100 200 300 500 1000]),
+            remove: GlobalHelper.image_hash(prv.images_relations - cur.images_relations, %w[50 100 200 300 500 1000])
           }
         end
 

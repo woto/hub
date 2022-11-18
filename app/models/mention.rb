@@ -88,7 +88,7 @@ class Mention < ApplicationRecord
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,
-      image: (GlobalHelper.image_hash(image_relation) if image_relation),
+      image: (GlobalHelper.image_hash(image_relation, %w[50 100 200 300 500 1000]) if image_relation),
       # entity_ids: entity_ids,
       # TODO: Rails 7 in order of
       entities: entities_hash,

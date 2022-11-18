@@ -54,21 +54,11 @@ class ImageUploader < Shrine
 
     if IMAGE_TYPES.include? source.mime_type
       begin
-        result = ImageProcessing::MiniMagick
+        result = ImageProcessing::Vips
                  .source(file)
                  .coalesce
                  .resize_to_limit(width.to_i, height.to_i)
-                 .call
-
-        next result
-      rescue StandardError => e
-      end
-
-      begin
-        result = ImageProcessing::Vips
-                 .source(file)
-                 .resize_to_limit(width.to_i, height.to_i)
-                 .convert('webp')
+                 .convert('avif')
                  .call
 
         next result

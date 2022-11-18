@@ -59,7 +59,7 @@ module API
             next unless record
 
             entities_mention['title'] = record.title
-            entities_mention['images'] = GlobalHelper.image_hash(record.images_relations)
+            entities_mention['images'] = GlobalHelper.image_hash(record.images_relations, %w[200 300 500 1000])
             entities_mention['is_favorite'] = @favorites_store.find(entities_mention['entity_id'], 'entities')
           end
         end

@@ -31,7 +31,7 @@
                                  class: 'tw-w-full',
                                  props: {
                                    # items: GlobalHelper.image_hash(@entity.images).insert(1, { mime_type: 'text', text: @entity.intro }),
-                                   items: GlobalHelper.image_hash(@entity.images_relations.includes(:image)),
+                                   items: GlobalHelper.image_hash(@entity.images_relations.includes(:image), %w[50 100 200 300 500 1000]),
                                    type: 'single'
                                  }))
         %>
@@ -151,7 +151,7 @@
                            class: 'tw-contents',
                            props: {
                              entity: @entity.as_indexed_json,
-                             imageSrc: GlobalHelper.image_hash(@entity.images_relations.includes(:image)).dig(0, 'images', '50'),
+                             imageSrc: GlobalHelper.image_hash(@entity.images_relations.includes(:image), %w[50]).dig(0, 'images', '50'),
                              entityId: @entity.id
                            }))
   %>
