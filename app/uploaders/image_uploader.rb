@@ -51,14 +51,29 @@ class ImageUploader < Shrine
     next source.download if source.mime_type == 'image/svg+xml'
 
     # R: reliability, :) I mast take a look later in places like Mastodon, Exercism, Discourse...
+    # https://github.com/mastodon/mastodon/blob/main/app/models/concerns/attachmentable.rb
+    # https://github.com/mastodon/mastodon/blob/main/app/models/media_attachment.rb
 
     if IMAGE_TYPES.include? source.mime_type
+
+      if source.mime_type == 'image/gif'
+        begin
+          result = ImageProcessing::MiniMagick
+                  .source(file)
+                  .coalesce
+                  .resize_to_limit(width.to_i, height.to_i)
+                  .call
+
+          next result
+        rescue StandardError => e
+        end
+      end
+
       begin
         result = ImageProcessing::Vips
                  .source(file)
-                 .coalesce
                  .resize_to_limit(width.to_i, height.to_i)
-                 .convert('avif')
+                 .convert('webp')
                  .call
 
         next result
