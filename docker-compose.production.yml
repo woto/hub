@@ -160,22 +160,6 @@ services:
 #    stdin_open: true
 #    tty: true
 
-  imgproxy:
-    image: darthsim/imgproxy:latest
-    environment:
-      - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
-      - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/volume/
-    volumes:
-      - ./docker/imgproxy:/volume/
-    # ports:
-    #   - ${IMGPROXY_PORT}:8080
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.imgproxy.rule=PathPrefix(`/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM`)"
-      - "traefik.http.routers.imgproxy.entrypoints=websecure"
-      - "traefik.http.routers.imgproxy.tls.certresolver=myresolver"
-
-
   prometheus:
     image: prom/prometheus:v2.16.0
     volumes:
