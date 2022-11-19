@@ -139,28 +139,28 @@ services:
 #    stdin_open: true
 #    tty: true
 
-  imgproxy:
-    image: darthsim/imgproxy:latest
-    environment:
-      - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
-      - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/volume/
-      - IMGPROXY_ALLOW_ORIGIN=*
-      - IMGPROXY_IGNORE_SSL_VERIFICATION=true
-      - IMGPROXY_MAX_ANIMATION_FRAMES=1000
-      - IMGPROXY_ENABLE_WEBP_DETECTION=true
-      - IMGPROXY_ENFORCE_WEBP=true
-      - IMGPROXY_LOG_LEVEL=debug
-      - IMGPROXY_MAX_SRC_RESOLUTION=9999
-      - IMGPROXY_MAX_SRC_FILE_SIZE=31457280
-      - IMGPROXY_READ_TIMEOUT=20
-      - IMGPROXY_WRITE_TIMEOUT=20
-      - IMGPROXY_DOWNLOAD_TIMEOUT=10
-      - IMGPROXY_ENABLE_AVIF_DETECTION=true
-      - IMGPROXY_ENFORCE_AVIF=true
-    volumes:
-      - ./docker/imgproxy:/volume/
-    ports:
-      - ${IMGPROXY_PORT}:8080
+# imgproxy:
+#   image: darthsim/imgproxy:latest
+#   environment:
+#     - IMGPROXY_FALLBACK_IMAGE_PATH=/volume/image-not-found.png
+#     - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/volume/
+#     - IMGPROXY_ALLOW_ORIGIN=*
+#     - IMGPROXY_IGNORE_SSL_VERIFICATION=true
+#     - IMGPROXY_MAX_ANIMATION_FRAMES=1000
+#     - IMGPROXY_ENABLE_WEBP_DETECTION=true
+#     - IMGPROXY_ENFORCE_WEBP=true
+#     - IMGPROXY_LOG_LEVEL=debug
+#     - IMGPROXY_MAX_SRC_RESOLUTION=9999
+#     - IMGPROXY_MAX_SRC_FILE_SIZE=31457280
+#     - IMGPROXY_READ_TIMEOUT=20
+#     - IMGPROXY_WRITE_TIMEOUT=20
+#     - IMGPROXY_DOWNLOAD_TIMEOUT=10
+#     - IMGPROXY_ENABLE_AVIF_DETECTION=true
+#     - IMGPROXY_ENFORCE_AVIF=true
+#   volumes:
+#     - ./docker/imgproxy:/volume/
+#   ports:
+#     - ${IMGPROXY_PORT}:8080
 
 #  prometheus:
 #    image: prom/prometheus:v2.16.0
