@@ -155,6 +155,8 @@ services:
       - IMGPROXY_READ_TIMEOUT=20
       - IMGPROXY_WRITE_TIMEOUT=20
       - IMGPROXY_DOWNLOAD_TIMEOUT=10
+      - IMGPROXY_ENABLE_AVIF_DETECTION=true
+      - IMGPROXY_ENFORCE_AVIF=true
     volumes:
       - ./docker/imgproxy:/volume/
     ports:
