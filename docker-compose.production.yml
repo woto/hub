@@ -62,6 +62,14 @@ services:
     expose:
       - 4000
 
+  iframely:
+    env_file:
+      - .env
+    build:
+      context: ./docker/iframely
+      dockerfile: Dockerfile
+    ports:
+      - ${IFRAMELY_PORT}:8061
 
   elastic:
     env_file:
@@ -105,19 +113,19 @@ services:
       - .env
     image: kibana:7.9.2
     # ports:
-    #   - ${KIBANA_PORT}
+    #   - ${KIBANA_PORT}:5601
     environment:
       - ELASTICSEARCH_HOSTS=http://elastic:9200
     labels:
       - "traefik.enable=true"
 
-      - "traefik.http.routers.kibana_goodreviews_ru.rule=Host(`kibana.goodreviews.ru`)"
-      - "traefik.http.routers.kibana_goodreviews_ru.entrypoints=websecure"
-      - "traefik.http.routers.kibana_goodreviews_ru.tls.certresolver=myresolver"
+      - "traefik.http.routers.kibana_roastme_ru.rule=Host(`kibana.roastme.ru`)"
+      - "traefik.http.routers.kibana_roastme_ru.entrypoints=websecure"
+      - "traefik.http.routers.kibana_roastme_ru.tls.certresolver=myresolver"
 
       - "traefik.http.middlewares.kibana-basicauth.basicauth.users=woto:$$2y$$05$$HqJi.DKUM2u10LSnEsCakuB9gjFt/CedJKDv9xG46y7RgUiuZe4bC"
       - "traefik.http.middlewares.kibana-https-chain.chain.middlewares=kibana-basicauth"
-      - "traefik.http.routers.kibana_goodreviews_ru.middlewares=kibana-https-chain"
+      - "traefik.http.routers.kibana_roastme_ru.middlewares=kibana-https-chain"
 
 
   postgres:
