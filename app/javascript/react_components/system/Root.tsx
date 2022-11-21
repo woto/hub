@@ -32,15 +32,15 @@ import MentionsHeader from '../Mentions/Header';
 import Mentions from '../Mentions/Mentions';
 import MentionsFilter from '../Filters/Index';
 import MentionsImage from '../Mentions/Image';
-import MentionsCard from '../Mentions/MentionsCard';
-import Example2 from '../Example2';
-import Example3 from '../Example3';
-import Example4 from '../Example4';
-import Example5 from '../Example5';
+import MentionsCard from '../Mentions/MentionsItem';
+import DesktopSidebar from '../Sidebar/DesktopSidebar';
+import MobileSidebar from '../Sidebar/MobileSidebar';
+import Hamburger from '../Sidebar/Hamburger';
+import SetUser from '../Auth/SetUser';
 import AuthProvider from '../Auth/AuthProvider';
 import SidebarProvider from '../Sidebar/Provider';
 import LanguageProvider from '../Language/LanguageProvider';
-import TailwindConfigProvider from '../TailwindConfig/TailwindConfigProvider';
+import ListingEntities from '../Listings/Entities'
 
 function Portal({ Component, container, ...props }) {
   const [innerHtmlEmptied, setInnerHtmlEmptied] = React.useState(false);
@@ -76,10 +76,10 @@ export default function Root() {
   const tests = document.querySelectorAll('[data-react]');
 
   const components = {
-    Example2,
-    Example3,
-    Example4,
-    Example5,
+    MobileSidebar,
+    DesktopSidebar,
+    Hamburger,
+    SetUser,
     Alert,
     Complain,
     Language,
@@ -106,6 +106,7 @@ export default function Root() {
     MultipleTags,
     Tinder,
     Interaction,
+    ListingEntities,
     MentionsHeader,
     Mentions,
     MentionsImage,
@@ -116,23 +117,21 @@ export default function Root() {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <TailwindConfigProvider>
-          <SidebarProvider>
-            {Array.from(tests).map((element: HTMLElement, index: number) => {
-              // element.className = '';
-              const props = JSON.parse(element.dataset.props);
-              const name = element.dataset.react;
-              const Component = components[name];
+        <SidebarProvider>
+          {Array.from(tests).map((element: HTMLElement, index: number) => {
+            // element.className = '';
+            const props = JSON.parse(element.dataset.props);
+            const name = element.dataset.react;
+            const Component = components[name];
 
-              if (!Component) alert(`Component ${name} not found, check imports in Root.tsx`);
+            if (!Component) alert(`Component ${name} not found, check imports in Root.tsx`);
 
-              return (
-                <Portal key={index} Component={Component} container={element} {...props} />
-                // <Component key={index} {...props}></Component>
-              );
-            })}
-          </SidebarProvider>
-        </TailwindConfigProvider>
+            return (
+              <Portal key={index} Component={Component} container={element} {...props} />
+              // <Component key={index} {...props}></Component>
+            );
+          })}
+        </SidebarProvider>
       </LanguageProvider>
     </AuthProvider>
   );

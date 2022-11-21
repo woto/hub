@@ -1,12 +1,11 @@
 import { HomeIcon } from '@heroicons/react/20/solid';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import * as React from 'react';
-import SidebarContext from './Sidebar/Context';
-import { SidebarInterface } from './system/TypeScript';
+import SidebarContext from './Context';
+import { SidebarInterface } from '../system/TypeScript';
 
-export default function Example4() {
+export default function Hamburger() {
   const sidebarContext = React.useContext<SidebarInterface>(SidebarContext);
-
   return (
     <div className="lg:tw-hidden">
       <div className="tw-flex tw-items-center tw-justify-between tw-bg-gray-50 tw-border-b tw-border-gray-200 tw-px-4 tw-py-1.5">

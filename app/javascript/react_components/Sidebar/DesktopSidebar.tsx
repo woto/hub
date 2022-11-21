@@ -2,21 +2,20 @@ import { XMarkIcon } from '@heroicons/react/20/solid';
 import { Dialog, Transition } from '@headlessui/react';
 import * as React from 'react';
 import { useContext } from 'react';
-import User from './User';
-import Example5 from './Search/Button';
+import User from '../User';
+import Example5 from '../Search/Button';
 import Example7 from './Example7';
-import Language from './Language';
-import Search from './Search/Button';
-import SidebarContext from './Sidebar/Context';
-import { SidebarInterface } from './system/TypeScript';
-import ApiDocs from './ApiDocs';
-import LanguageContext from './Language/LanguageContext';
-import AllMentions from './Sidebar/AllMentions';
+import Language from '../Language';
+import Search from '../Search/Button';
+import SidebarContext from './Context';
+import { SidebarInterface } from '../system/TypeScript';
+import ApiDocs from '../ApiDocs';
+import LanguageContext from '../Language/LanguageContext';
+import AllMentions from './AllMentions';
 
-export default function Example2(props: {language: any}) {
+export default function DesktopSidebar(props: {language: any}) {
   const sidebarContext = React.useContext<SidebarInterface>(SidebarContext);
   const language = useContext(LanguageContext);
-
   return (
     <Transition.Root show={sidebarContext.sidebarOpen} as={React.Fragment}>
       <Dialog as="div" className="tw-fixed tw-inset-0 tw-flex tw-z-40 lg:tw-hidden" onClose={sidebarContext.setSidebarOpen}>
@@ -80,7 +79,7 @@ export default function Example2(props: {language: any}) {
 
                   {sidebarContext.navigation.map((item) => (
                     <a
-                      key={item.name}
+                      key={item.id}
                       href={`${language.path}/listings/${item.id}`}
                       className={`
                         ${item.current

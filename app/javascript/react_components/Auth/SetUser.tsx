@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import useAuth from './Auth/useAuth';
-import { User } from './system/TypeScript';
+import useAuth from './useAuth';
+import { User } from '../system/TypeScript';
 
-export default function Example5(props: User) {
+export default function SetUser(props: User) {
   const auth = useAuth();
 
   useEffect(() => {

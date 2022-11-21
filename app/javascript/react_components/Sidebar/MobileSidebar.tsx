@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import User from './User';
-import Example5 from './Search/Button';
-import Language from './Language';
+import User from '../User';
+import Example5 from '../Search/Button';
+import Language from '../Language';
 import Example7 from './Example7';
-import Search from './Search/Button';
-import SidebarContext from './Sidebar/Context';
-import { SidebarInterface } from './system/TypeScript';
-import ApiDocs from './ApiDocs';
-import LanguageContext from './Language/LanguageContext';
-import AllMentions from './Sidebar/AllMentions';
+import Search from '../Search/Button';
+import SidebarContext from './Context';
+import { SidebarInterface } from '../system/TypeScript';
+import ApiDocs from '../ApiDocs';
+import LanguageContext from '../Language/LanguageContext';
+import AllMentions from './AllMentions';
 
 // Static sidebar for desktop
-export default function Example3(props: {language: any}) {
+export default function MobileSidebar(props: {language: any}) {
   const sidebarContext = React.useContext(SidebarContext);
   const language = useContext(LanguageContext);
 
@@ -40,7 +40,7 @@ export default function Example3(props: {language: any}) {
 
                 {sidebarContext.navigation.map((item) => (
                   <a
-                    key={item.name}
+                    key={item.id}
                     href={`${language.path}/listings/${item.id}`}
                     className={`
                       ${item.current

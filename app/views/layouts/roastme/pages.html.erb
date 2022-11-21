@@ -22,15 +22,16 @@
 
     <div class="tw-h-full? tw-flex tw-max-w-screen-2xl tw-mx-auto tw-bg-white tw-border-x tw-border-gray-200 tw-drop-shadow-lg?">
 
+
     <%= render(
-      ReactComponent.new(name: 'Example5',
+      ReactComponent.new(name: 'SetUser',
                          class: '',
                          props: UserPresenter.call(current_user)
       )
     ) %>
 
     <%= render(
-          ReactComponent.new(name: 'Example2',
+          ReactComponent.new(name: 'MobileSidebar',
                               class: 'tw-contents',
                               props: {
                                 language: serialize_language_attributes,
@@ -38,7 +39,7 @@
     %>
 
     <%= render(
-          ReactComponent.new(name: 'Example3',
+          ReactComponent.new(name: 'DesktopSidebar',
                               class: 'tw-contents',
                               props: {
                                 language: serialize_language_attributes,
@@ -48,7 +49,7 @@
       <div class="tw-flex tw-flex-col tw-min-w-0 tw-flex-1 tw-overflow-hidden??!!">
 
         <%= render(
-              ReactComponent.new(name: 'Example4',
+              ReactComponent.new(name: 'Hamburger',
                                   class: 'tw-contents',
                                   props: {
                                   }))
