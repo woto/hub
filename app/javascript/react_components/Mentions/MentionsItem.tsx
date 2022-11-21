@@ -22,7 +22,7 @@ function MentionsItem(
 ) {
   const [lastKnownHeight, setLastKnownHeight] = useState(300);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { amount: 'some', once: false, margin: '-150px 0px -150px 0px' });
+  const isInView = useInView(ref, { amount: 'some', once: false, margin: '-0px 0px -0px 0px' });
 
   useEffect(() => {
     if (ref.current) {

@@ -25,12 +25,6 @@ export default function Mentions(props: {
 }) {
   const [window, setWindow] = useState<Window>({ page: 0, growing: true });
   const loadMoreRef = useRef<HTMLDivElement>();
-  // const [loadMoref, setLoadMoreRef] = useState<any>({ current: null });
-  // const scrollRef = useRef<HTMLDivElement>();
-
-  // const changeableRef = useCallback((node) => {
-  //   setLoadMoreRef({ current: node });
-  // }, []);
 
   const inView = useInView(loadMoreRef);
 
@@ -55,23 +49,6 @@ export default function Mentions(props: {
       sort: props.sort,
     }).then((res) => res.data),
     {
-      // cacheTime: 1,
-
-      // select: data => {
-      //   let length = data.pages.length;
-      //   let unshiftPages = [];
-      //   let preserve = 2;
-      //   if (length - preserve > 0) {
-      //     unshiftPages = Array(length - preserve)
-      //       .fill({})
-      //       .map((obj, idx) => ({pagination: {current_page: idx}, mentions: []}))
-      //   }
-      //
-      //   return {
-      //     pages: [...unshiftPages, ...data.pages.slice(-preserve)],
-      //     pageParams: data.pageParams,
-      //   }
-      // },
       getPreviousPageParam: (firstPage) => (
         firstPage.pagination.total_pages > 0
         && firstPage.pagination.current_page - 1
@@ -84,8 +61,6 @@ export default function Mentions(props: {
   );
 
   useLayoutEffect(() => {
-    // console.log('inview', inView);
-
     if (inView) {
       if (hasNextPage) {
         fetchNextPage();
