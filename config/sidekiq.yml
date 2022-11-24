@@ -19,10 +19,10 @@ production:
   #   cron: '0 0 * * * *' # Runs every hour
   #   class: SitemapJob
   #   args: ['sitemap_realms.rb']
-  # sitemap_hub:
-  #   cron: '0 0 * * * *' # Runs every hour
-  #   class: SitemapJob
-  #   args: ['sitemap_hub.rb']
+  sitemap_roastme:
+    cron: '0 0 * * * *' # Runs every hour
+    class: SitemapJob
+    args: ['sitemap_roastme.rb']
   sweep:
     cron: '0 0 * * * *' # Runs every hour
     class: Import::SweepJob
