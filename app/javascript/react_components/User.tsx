@@ -91,7 +91,7 @@ export default function User(props: UserInterface) {
           >
             <Menu.Items
               className="tw-z-10 tw-origin-top-right? tw-absolute? tw-right-0 tw-mt-2 tw-w-56 tw-rounded-md
-                tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 focus:tw-outline-none"
+                tw-bg-white tw-ring-2 tw-ring-black tw-ring-opacity-5 focus:tw-outline-none"
             >
               <div className="tw-py-1">
                 <Menu.Item>
