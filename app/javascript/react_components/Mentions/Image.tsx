@@ -7,11 +7,9 @@ import {
   AnimatePresence, LayoutGroup,
 } from 'framer-motion';
 import { useKey, useWindowSize } from 'react-use';
-import TailwindConfigContext from '../TailwindConfig/TailwindConfigContext';
 
 function Image(props: { image: any, url: string, layoutGroupId: string }) {
   const { width, height } = useWindowSize();
-  const tailwindConfig = useContext(TailwindConfigContext);
   // const imageSize = width > parseInt(tailwindConfig.theme.screens['2xl'].slice(0, -2)) ? '300' : '300';
   // const imageSize = '300';
   const imageSize = (window.screen.availWidth > 1600 && window.innerWidth > 768) ? '500' : '300';

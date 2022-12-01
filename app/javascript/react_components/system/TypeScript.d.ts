@@ -62,10 +62,6 @@ export interface AuthInterface {
   setUser: React.Dispatch<React.SetStateAction<User>>,
 }
 
-export interface TailwindConfigInterface {
-  fullConfig: any
-}
-
 export interface SidebarInterface {
   navigation: any
   sidebarOpen: boolean,
