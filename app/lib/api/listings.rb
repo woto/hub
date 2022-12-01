@@ -3,10 +3,12 @@
 module API
   class Listings < ::Grape::API
     prefix :api
-    # auth :api_key
 
     resources :listings do
-      desc 'Returns popular and own listings for sidebar' do
+      desc 'Returns popular and owned listings for sidebar' do
+      end
+
+      params do
       end
 
       get :sidebar do
@@ -85,10 +87,28 @@ module API
                                   favorites_items.kind = #{favorites_items_kind}"))
         end
 
-        @favorites
+        @favorites.map do |favorite|
+          {
+            id: favorite.id,
+            name: favorite.name,
+            description: favorite.description,
+            count: favorite.count,
+            image: GlobalHelper.image_hash([favorite.images_relation].compact, %w[100]).first&.then do |image|
+              {
+                id: image['id'],
+                image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['100'] : nil,
+              }
+            end,
+            is_checked: favorite.is_checked,
+            is_public: favorite.is_public,
+            is_owner: favorite.is_owner,
+          }
+        end
       end
 
-      desc 'TODO' do
+      auth :api_key
+
+      desc 'Creates new listing, with included item' do
         # security [{ api_key: [] }]
       end
 
@@ -97,48 +117,143 @@ module API
         requires :name, type: String
         requires :description, type: String
         requires :is_public, type: Boolean
-        requires :is_checked, type: Boolean
       end
 
       post do
-        favorite = if params[:id]
-                     FavoritePolicy::Scope.new(current_user, Favorite).resolve.find(params[:id])
-                   else
-                     Favorite.new(user: current_user)
-                   end
-
-        unless favorite.update(
-          name: params[:name],
-          description: params[:description],
-          is_public: params[:is_public],
+        favorite = Favorite.create(user: current_user,
+                                   name: params[:name],
+                                   description: params[:description],
+                                   is_public: params[:is_public],
+                                   kind: 'entities')
+        error!({ error: favorite.errors.full_messages }, :unprocessable_entity) unless favorite.persisted?
+        favorites_item = favorite.favorites_items.create(
+          ext_id: params[:ext_id],
           kind: 'entities'
         )
-          return { json: favorite.errors.full_messages, status: :unprocessable_entity }
+
+        if params.dig(:image, :data)
+          favorite.images_relation&.destroy
+          image = Image.create!(image: params[:image][:data], user: current_user)
+          ImagesRelation.create!(image:, relation: favorite, user: current_user)
         end
 
-        is_create = ActiveModel::Type::Boolean.new.cast(params[:is_checked])
-        result = if is_create
-                   favorites_item = favorite.favorites_items.find_or_initialize_by(
-                     ext_id: params[:ext_id],
-                     kind: 'entities'
-                   )
-                   favorites_item.save!
-                   # TODO: check AR status
-                   body = ApplicationController.helpers.t('successfully_added', favorite_name: favorite.name)
-                 else
-                   favorite.favorites_items.destroy_by(
-                     ext_id: params[:ext_id],
-                     kind: 'entities'
-                   )
-                   # TODO: check AR status
-                   body = ApplicationController.helpers.t('successfully_removed', favorite_name: favorite.name)
-                 end
+        if favorites_item.persisted?
+          result = ApplicationController.helpers.t('successfully_added', favorite_name: favorite.name)
+          return { message: result } if result
+        end
 
-        if result
-          return {json: { body: }}
+        head :unprocessable_entity
+      end
+
+      desc 'Removes item from listing'
+
+      params do
+        requires :listing_id, type: Integer
+        requires :ext_id, type: String
+      end
+
+      post 'remove_item' do
+        favorites_items = FavoritesItemPolicy::Scope.new(current_user, FavoritesItem).resolve.destroy_by(
+          favorite_id: params[:listing_id],
+          ext_id: params[:ext_id],
+          kind: 'entities'
+        )
+        favorites_item = favorites_items.first
+        if favorites_item&.destroyed?
+          result = ApplicationController.helpers.t('successfully_removed', favorite_name: favorites_item.favorite.name)
+          return { message: result } if result
         else
-          head :unprocessable_entity
+          result = ApplicationController.helpers.t('unable_to_remove_item')
+          error!({ error: result }, :unprocessable_entity)
         end
+      end
+
+      desc 'Adds item to listing'
+
+      params do
+        requires :listing_id, type: Integer
+        requires :ext_id, type: String
+      end
+
+      post 'add_item' do
+        favorite = FavoritePolicy::Scope.new(current_user, Favorite).resolve.find(params[:listing_id])
+        favorite.favorites_items << FavoritesItem.new(kind: 'entities', ext_id: params[:ext_id])
+        result = ApplicationController.helpers.t('successfully_added')
+        return { message: result } if result
+      end
+
+      desc 'Update listing'
+
+      params do
+        optional :name, type: String, documentation: { param_type: 'body' }
+        optional :description, type: String
+        optional :is_public, type: Boolean
+      end
+
+      patch ':id' do
+        begin
+          favorite = FavoritePolicy::Scope.new(current_user, Favorite).resolve.find(params[:id])
+        rescue StandardError
+          result = ApplicationController.helpers.t('unable_to_find_listing')
+          error!({ error: result }, :not_found) if result
+        end
+
+        hsh = {}
+        hsh[:name] = params[:name] if params.key?(:name)
+        hsh[:description] = params[:description] if params.key?(:description)
+        hsh[:is_public] = params[:is_public] if params.key?(:is_public)
+        hsh[:kind] = 'entities'
+
+        if params.dig(:image, :data)
+          favorite.images_relation&.destroy
+          image = Image.create!(image: params[:image][:data], user: current_user)
+          ImagesRelation.create!(image:, relation: favorite, user: current_user)
+        end
+
+        result = favorite.update(hsh)
+
+        error!({ error: favorite.errors.full_messages }, :unprocessable_entity) unless result
+
+        result = ApplicationController.helpers.t('successfully_updated')
+        return { message: result }
+      end
+
+      desc 'Deletes listing'
+
+      params do
+      end
+
+      delete ':id' do
+        favorite = nil
+
+        begin
+          favorite = FavoritePolicy::Scope.new(current_user, Favorite).resolve.find(params[:id])
+        rescue StandardError
+          result = ApplicationController.helpers.t('unable_to_find_listing')
+          error!({ error: result }, :not_found) if result
+        end
+
+        favorite.destroy
+      end
+
+      desc 'Returns listing entities'
+
+      params do
+        requires :id, type: Integer, desc: 'Listing id'
+      end
+
+      get ':id/entities' do
+        entity_ids = FavoritesItem.where(favorite_id: params[:id]).pluck(:ext_id)
+        query = ListingEntitiesQuery.call(entity_ids:, from: 0, size: 100).object
+        GlobalHelper.elastic_client.search(query)
+      end
+
+      desc 'Returns listing mentions'
+
+      params do
+      end
+
+      get ':id/mentions' do
       end
     end
   end

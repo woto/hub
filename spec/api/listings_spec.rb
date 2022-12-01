@@ -6,6 +6,205 @@ require_relative '../support/shrine_image'
 describe API::Listings, type: :request, responsible: :admin do
   let!(:user) { create(:user) }
 
+  describe 'DELETE /api/listings/:id' do
+    let(:listing) { create(:favorite, name: 'name', kind: 'entities', user:) }
+
+    before do
+      create(:favorites_item, kind: 'entities', favorite: listing)
+    end
+
+    context 'when user deletes own listing' do
+      it 'successfully deletes listing and children favorites_items' do
+        sign_in(user)
+        expect { delete "/api/listings/#{listing.id}" }.to(
+          change(Favorite, :count).by(-1).and(
+            change(FavoritesItem, :count).by(-1)
+          )
+        )
+      end
+    end
+
+    context 'when user is not authenticated' do
+      it 'returns error' do
+        post "/api/listings/#{listing.id}", xhr: true
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
+
+    context 'when listing belongs to another user' do
+      RSpec::Matchers.define_negated_matcher :not_change, :change
+
+      it 'returns error' do
+        another_user = create(:user)
+        sign_in(another_user)
+
+        expect { delete "/api/listings/#{listing.id}" }.to(
+          not_change(Favorite, :count).and(
+            not_change(FavoritesItem, :count)
+          )
+        )
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.parsed_body).to eq(
+          'error' => '<span class="translation_missing" title="translation missing: en.unable_to_find_listing">Unable To Find Listing</span>'
+        )
+      end
+    end
+  end
+
+  describe 'PATCH /api/listings/:id' do
+    let!(:listing) { create(:favorite, name: 'name', kind: 'entities', user:) }
+    let(:params) { { name: 'new name' } }
+
+    context 'when user is not authenticated' do
+      it 'returns error' do
+        patch "/api/listings/#{listing.id}", params: params, xhr: true
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
+
+    context 'when listing belongs to another user' do
+      RSpec::Matchers.define_negated_matcher :not_change, :change
+
+      it 'returns error' do
+        another_user = create(:user)
+        sign_in(another_user)
+
+        expect { patch "/api/listings/#{listing.id}", params: }.to(
+          not_change(Favorite, :count).and(
+            not_change(FavoritesItem, :count)
+          )
+        )
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.parsed_body).to eq(
+          'error' => '<span class="translation_missing" title="translation missing: en.unable_to_find_listing">Unable To Find Listing</span>'
+        )
+      end
+    end
+
+    context 'when passed name' do
+      it 'updates name' do
+        sign_in(user)
+        expect { patch "/api/listings/#{listing.id}", params:, xhr: true }.to(
+          not_change(Favorite, :count).and(
+            not_change(FavoritesItem, :count).and(
+              change { listing.reload.name }.from('name').to('new name')
+            )
+          )
+        )
+      end
+    end
+  end
+
+  describe 'POST /api/listings/add_item' do
+    context 'when favorites already exists' do
+      it 'finds it and adds favorites_item to it' do
+        user = create(:user)
+        sign_in(user)
+        listing = create(:favorite, name: 'name', kind: 'entities', user:)
+
+        params = { listing_id: listing.id, ext_id: 'a1' }
+        action1 = -> { post '/api/listings/add_item', params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.where(ext_id: 'a1', kind: 'entities', favorite: Favorite.last).exists? }
+        expect(&action2).to change(&check2).from(false).to(true)
+      end
+    end
+
+    context 'when favorites_item already exists in listing' do
+      it 'does nothing on attempt to add it again' do
+        favorites_item = create(:favorites_item, kind: 'entities')
+        listing = favorites_item.favorite
+        sign_in(listing.user)
+
+        params = { listing_id: listing.id, ext_id: favorites_item.ext_id }
+        action1 = -> { post '/api/listings/', params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.count }
+        expect(&action2).not_to change(&check2)
+      end
+    end
+  end
+
+  describe 'POST /api/listings/remove_item' do
+    context 'with `is_checked` as false' do
+      it 'destroys favorites_item' do
+        favorites_item = create(:favorites_item, kind: 'entities')
+        ext_id = favorites_item.ext_id
+        kind = favorites_item.kind
+        favorite = favorites_item.favorite
+        sign_in(favorite.user)
+
+        headers = { 'HTTP_API_KEY' => user.api_key }
+
+        params = {
+          listing_id: favorite.id,
+          ext_id: favorites_item.ext_id
+        }
+        action1 = -> { post '/api/listings/remove_item', headers: headers, params: params }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.where(ext_id:, kind:, favorite:).exists? }
+        expect(&action2).to change(&check2).from(true).to(false)
+      end
+    end
+
+    context 'when favorites_item does not exist in listing' do
+      it 'does nothing' do
+        user = create(:user)
+        sign_in(user)
+        listing = create(:favorite, user:, name: 'name', kind: 'entities')
+
+        params = { listing_id: listing.id, ext_id: 'a1' }
+        action1 = -> { post '/api/listings/remove_item', params: params, xhr: true }
+        check1 = -> { Favorite.count }
+        action2 = -> { expect(&action1).not_to change(&check1) }
+        check2 = -> { FavoritesItem.count }
+        expect(&action2).not_to change(&check2)
+      end
+    end
+  end
+
+  describe 'POST /api/listings' do
+    context 'when user is not authenticated' do
+      it 'returns error' do
+        post '/api/listings', xhr: true
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq('You need to sign in or sign up before continuing.')
+      end
+    end
+
+    it 'returns error if favorite params are invalid' do
+      user = create(:user)
+      sign_in(user)
+
+      post '/api/listings', xhr: true
+      expect(response).to have_http_status(:bad_request)
+      expect(response.parsed_body).to eq({
+                                           'error' => 'ext_id is missing, name is missing, description is missing, is_public is missing'
+                                         })
+    end
+
+    context 'when favorites is not exists yet' do
+      it 'creates favorites and add new favorites_item to it' do
+        user = create(:user)
+        sign_in(user)
+        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'entities',
+                   is_checked: true, description: 'description', is_public: true }
+        action1 = -> { post '/api/listings', params: params, xhr: true }
+        check1 = -> { Favorite.where(name: 'name', kind: 'entities', user_id: user.id).exists? }
+        action2 = -> { expect(&action1).to change(&check1).from(false).to(true) }
+        check2 = -> { FavoritesItem.where(ext_id: 'a1', kind: 'entities', favorite: Favorite.last).exists? }
+        expect(&action2).to change(&check2).from(false).to(true)
+      end
+    end
+  end
+
   describe 'GET /api/listings' do
     context 'when user is not authenticated' do
       it 'returns successful response' do
@@ -53,8 +252,16 @@ describe API::Listings, type: :request, responsible: :admin do
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body).to eq(
-            [{ 'count' => 1, 'id' => 1, 'is_checked' => 0, 'is_public' => true, 'name' => 'a1',
-               'description' => nil }]
+            [{
+              'count' => 1,
+              'id' => 1,
+              'image' => nil,
+              'is_checked' => 0,
+              'is_owner' => false,
+              'is_public' => true,
+              'name' => 'a1',
+              'description' => nil
+            }]
           )
         end
       end
@@ -80,8 +287,16 @@ describe API::Listings, type: :request, responsible: :admin do
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body).to eq(
-            [{ 'count' => 1, 'id' => 1, 'is_checked' => 0, 'is_public' => false, 'name' => 'a1',
-               'description' => nil }]
+            [{
+              'count' => 1,
+              'id' => 1,
+              'image' => nil,
+              'is_checked' => 0,
+              'is_owner' => true,
+              'is_public' => false,
+              'name' => 'a1',
+              'description' => nil
+            }]
           )
         end
       end
@@ -133,8 +348,16 @@ describe API::Listings, type: :request, responsible: :admin do
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body).to eq(
-            [{ 'count' => 1, 'id' => 1, 'is_checked' => 0, 'is_public' => false, 'name' => 'a1',
-               'description' => nil }]
+            [{
+              'count' => 1,
+              'id' => 1,
+              'image' => nil,
+              'is_checked' => 0,
+              'is_owner' => true,
+              'is_public' => false,
+              'name' => 'a1',
+              'description' => nil
+            }]
           )
         end
       end
@@ -157,25 +380,33 @@ describe API::Listings, type: :request, responsible: :admin do
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body).to eq(
-            [{ 'count' => 1, 'id' => 1, 'is_checked' => 0, 'is_public' => true, 'name' => 'a1',
-               'description' => nil }]
+            [{
+              'count' => 1,
+              'id' => 1,
+              'image' => nil,
+              'is_checked' => 0,
+              'is_owner' => false,
+              'is_public' => true,
+              'name' => 'a1',
+              'description' => nil
+            }]
           )
         end
       end
     end
 
-    context 'when favorite includes two favorites_items with kind `feeds` and one of them is passed in `ext_id`' do
+    context 'when favorite includes two favorites_items with kind `entities` and one of them is passed in `ext_id`' do
       let!(:favorites_item) do
-        create(:favorites_item, kind: :feeds, ext_id: 'a1', favorite: create(:favorite, kind: :feeds, user:))
+        create(:favorites_item, kind: 'entities', ext_id: 'a1', favorite: create(:favorite, kind: 'entities', user:))
       end
       let!(:not_checked) do
-        create(:favorites_item, kind: :feeds, ext_id: 'a2', favorite: create(:favorite, kind: :feeds, user:))
+        create(:favorites_item, kind: 'entities', ext_id: 'a2', favorite: create(:favorite, kind: 'entities', user:))
       end
-      let!(:empty_favorite) { create(:favorite, kind: :feeds, user:) }
+      let!(:empty_favorite) { create(:favorite, kind: 'entities', user:) }
 
       before do
         # another `user`
-        create(:favorites_item, kind: :feeds, ext_id: 'a2', favorite: create(:favorite, kind: :feeds))
+        create(:favorites_item, kind: 'entities', ext_id: 'a2', favorite: create(:favorite, kind: 'entities'))
         # another `favorite.kind` and `favorites_item.kind`
         create(:favorites_item, kind: :users, ext_id: Faker::Alphanumeric.alphanumeric,
                                 favorite: create(:favorite, kind: :users, user:))
@@ -186,31 +417,37 @@ describe API::Listings, type: :request, responsible: :admin do
 
         get '/api/listings',
             headers: { 'HTTP_API_KEY' => user.api_key },
-            params: { ext_id: 'a1', favorites_items_kind: :feeds }
+            params: { ext_id: 'a1', favorites_items_kind: 'entities' }
 
         expect(response.parsed_body).to(
           contain_exactly(
             {
               'count' => 1,
               'id' => favorites_item.favorite.id,
+              'image' => nil,
               'is_checked' => 1,
               'is_public' => false,
+              'is_owner' => true,
               'name' => favorites_item.favorite.name,
               'description' => nil
             },
             {
               'count' => 1,
               'id' => not_checked.favorite.id,
+              'image' => nil,
               'is_checked' => 0,
               'is_public' => false,
+              'is_owner' => true,
               'name' => not_checked.favorite.name,
               'description' => nil
             },
             {
               'count' => 0,
               'id' => empty_favorite.id,
+              'image' => nil,
               'is_checked' => 0,
               'is_public' => false,
+              'is_owner' => true,
               'name' => empty_favorite.name,
               'description' => nil
             }
@@ -240,9 +477,18 @@ describe API::Listings, type: :request, responsible: :admin do
       shared_examples_for 'includes 4 favorites_items' do
         it 'responses correctly' do
           subject
-          expect(response.parsed_body).to eq([{ 'count' => 4, 'id' => favorite.id,
-                                                'is_checked' => 1, 'is_public' => false, 'name' => favorite.name,
-                                                'description' => nil }])
+          expect(response.parsed_body).to eq(
+            [{
+              'count' => 4,
+              'id' => favorite.id,
+              'image' => nil,
+              'is_checked' => 1,
+              'is_owner' => true,
+              'is_public' => false,
+              'name' => favorite.name,
+              'description' => nil
+            }]
+          )
         end
       end
 
@@ -322,106 +568,6 @@ describe API::Listings, type: :request, responsible: :admin do
           'user_id' => public_favorites_item.favorite.user.id
         )
       )
-    end
-  end
-
-  describe 'POST /api/listings' do
-    context 'when user is not authenticated' do
-      it 'returns error' do
-        post favorites_path, xhr: true
-        expect(response).to have_http_status(:unauthorized)
-        expect(response.body).to eq('You need to sign in or sign up before continuing.')
-      end
-    end
-
-    it 'returns error if favorite params are invalid' do
-      user = create(:user)
-      sign_in(user)
-
-      post favorites_path, xhr: true
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body).to eq(["Name can't be blank", "Kind can't be blank"])
-    end
-
-    context 'when favorites is not exists yet' do
-      it 'creates favorites and add new favorites_item to it' do
-        user = create(:user)
-        sign_in(user)
-        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'feeds', is_checked: true }
-        action1 = -> { post favorites_path, params: params, xhr: true }
-        check1 = -> { Favorite.where(name: 'name', kind: 'feeds', user_id: user.id).exists? }
-        action2 = -> { expect(&action1).to change(&check1).from(false).to(true) }
-        check2 = -> { FavoritesItem.where(ext_id: 'a1', kind: 'feeds', favorite: Favorite.last).exists? }
-        expect(&action2).to change(&check2).from(false).to(true)
-      end
-    end
-
-    context 'when favorites already exists' do
-      it 'finds it and adds favorites_item to it' do
-        user = create(:user)
-        sign_in(user)
-        create(:favorite, user: user, name: 'name', kind: 'feeds')
-
-        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'feeds', is_checked: true }
-        action1 = -> { post favorites_path, params: params, xhr: true }
-        check1 = -> { Favorite.count }
-        action2 = -> { expect(&action1).not_to change(&check1) }
-        check2 = -> { FavoritesItem.where(ext_id: 'a1', kind: 'feeds', favorite: Favorite.last).exists? }
-        expect(&action2).to change(&check2).from(false).to(true)
-      end
-    end
-
-    context 'with `is_checked` as false' do
-      it 'destroys favorites_item' do
-        favorites_item = create(:favorites_item)
-        ext_id = favorites_item.ext_id
-        kind = favorites_item.kind
-        favorite = favorites_item.favorite
-        sign_in(favorite.user)
-
-        params = { name: favorites_item.favorite.name,
-                    ext_id: favorites_item.ext_id,
-                    favorites_items_kind: favorites_item.kind,
-                    is_checked: false }
-        action1 = -> { post favorites_path, params: params, xhr: true }
-        check1 = -> { Favorite.count }
-        action2 = -> { expect(&action1).not_to change(&check1) }
-        check2 = -> { FavoritesItem.where(ext_id: ext_id, kind: kind, favorite: favorite).exists? }
-        expect(&action2).to change(&check2).from(true).to(false)
-      end
-    end
-
-    context 'when favorites_item already exists and passed `is_checked` as true' do
-      it 'does nothing' do
-        favorites_item = create(:favorites_item)
-        favorite = favorites_item.favorite
-        sign_in(favorite.user)
-
-        params = { name: favorites_item.favorite.name,
-                    ext_id: favorites_item.ext_id,
-                    favorites_items_kind: favorites_item.kind,
-                    is_checked: true }
-        action1 = -> { post favorites_path, params: params, xhr: true }
-        check1 = -> { Favorite.count }
-        action2 = -> { expect(&action1).not_to change(&check1) }
-        check2 = -> { FavoritesItem.count }
-        expect(&action2).not_to change(&check2)
-      end
-    end
-
-    context 'when favorites_item does not exist but passed `is_checked` as false' do
-      it 'does nothing' do
-        user = create(:user)
-        sign_in(user)
-        create(:favorite, user: user, name: 'name', kind: 'feeds')
-
-        params = { name: 'name', ext_id: 'a1', favorites_items_kind: 'feeds', is_checked: false }
-        action1 = -> { post favorites_path, params: params, xhr: true }
-        check1 = -> { Favorite.count }
-        action2 = -> { expect(&action1).not_to change(&check1) }
-        check2 = -> { FavoritesItem.count }
-        expect(&action2).not_to change(&check2)
-      end
     end
   end
 end
