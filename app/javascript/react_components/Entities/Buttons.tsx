@@ -18,7 +18,7 @@ import openEditEntity from '../system/Utility';
 import Complain from '../Complain';
 import OldBookmark from '../OldBookmark/OldBookmark';
 import DynamicStarIcon from '../DynamicStarIcon';
-import Listings from '../Listings/Index';
+import ListingsIndex from '../Listings/ListingsIndex';
 import { useToasts } from '../Toast/ToastManager';
 
 // tw-bg-indigo-500' : 'tw-bg-transparent'
@@ -71,7 +71,7 @@ export default function Buttons(props: { entityId: number }) {
       clickHandler: () => { },
       component: (foo: any) => (
         <>
-          <Listings
+          <ListingsIndex
             entityId={props.entityId}
             opened={selectedTabIdx === 0}
             close={() => setSelectedTabIdx(undefined)}

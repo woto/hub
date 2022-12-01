@@ -9,7 +9,7 @@ export default function InplaceEditButton(props: {
   const { onEdit, selectedListing, children } = props;
 
   return (
-    <div className="tw-text-gray-900">
+    <div className="tw-text-gray-700">
       {children}
       { selectedListing?.is_owner
         && (

@@ -1,21 +1,22 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
 
-export default function InplaceActionButtons(props: {
+export default function InplaceActionButton(props: {
   children: ReactNode,
+  isEditing: boolean,
   onCancelEdit: () => void,
   onSave: () => void,
   selectedListing: any
 }) {
   const {
-    selectedListing, onCancelEdit, onSave, children,
+    isEditing, selectedListing, onCancelEdit, onSave, children,
   } = props;
 
   return (
     <div className="tw-w-full">
       {children}
 
-      {selectedListing?.id
+      { (selectedListing?.id && isEditing)
         && (
         <div className="tw-mt-3 tw-text-sm tw-gap-3 tw-flex">
           <button

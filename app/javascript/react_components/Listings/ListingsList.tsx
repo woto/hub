@@ -6,26 +6,32 @@ import {
   CheckIcon,
   ExclamationCircleIcon, ListBulletIcon, MagnifyingGlassIcon, PencilIcon, PlusCircleIcon, PlusIcon, QueueListIcon, UserIcon, UsersIcon,
 } from '@heroicons/react/24/outline';
-import { Dispatch, SetStateAction, useContext } from 'react';
+import {
+  Dispatch, SetStateAction, useCallback, useContext,
+} from 'react';
 import LanguageContext from '../Language/LanguageContext';
 import { Listing } from '../system/TypeScript';
 import Alert from '../Alert';
 
-export default function List(props: {
-  data: any,
-  query: string,
-  setQuery: Dispatch<SetStateAction<string>>,
-  setSelectedListing: Dispatch<SetStateAction<Listing>>,
-  close: () => boolean,
-
-}) {
-  const {
-    data, query, setQuery, setSelectedListing, close,
-  } = props;
-
+export default function ListingsList(
+  {
+    data, query, setQuery, setSelectedListing, close, status,
+  }: {
+    data: any,
+    query: string,
+    setQuery: Dispatch<SetStateAction<string>>,
+    setSelectedListing: Dispatch<SetStateAction<Listing>>,
+    close: () => boolean,
+    status: 'loading' | 'idle' | 'error' | 'success'
+  },
+) {
   const language = useContext(LanguageContext);
 
   return (
+
+  // {status === 'success'
+  //   && (
+
     <Combobox
       onChange={(listing: Listing) => setSelectedListing(listing)}
       value={query}
@@ -54,11 +60,20 @@ export default function List(props: {
       { false && data && data.length === 0 && (
         <div className="tw-p-3">
           <Alert type="info">
-            <p>Данный объект не состоит ни в каких коллекциях. И у вас нет ни одной личной коллекции.
-            Хотите создать новую коллекцию или добавить в чью-нибудь публичную? 🙂</p>
+            <p>
+              Данный объект не состоит ни в каких коллекциях. И у вас нет ни одной личной коллекции.
+              Хотите создать новую коллекцию или добавить в чью-нибудь публичную? 🙂
+
+            </p>
           </Alert>
         </div>
       )}
+
+      {status === 'loading'
+        && <Alert type="info">Загружается...</Alert>}
+
+      {status === 'error'
+        && <Alert type="danger">Ошибка</Alert>}
 
       {data && data.length > 0 && (
       <Combobox.Options static className="tw-max-h-96 tw-scroll-py-3 tw-overflow-y-auto tw-p-3">
@@ -81,7 +96,15 @@ export default function List(props: {
                 >
                   {/* <item.icon className="tw-h-6 tw-w-6 tw-text-white" aria-hidden="true" /> */}
 
-                  <img alt="" src="https://comnplayscience.eu/app/images/notfound.png" className="tw-h-10? tw-w-10?" />
+                  {/* <img alt="" src="" className="tw-h-10? tw-w-10?" /> */}
+
+                  <img
+                    className="tw-w-10 tw-h-10 tw-object-contain tw-border tw-rounded tw-bg-white tw-p-px"
+                    alt=""
+                    src={item.image
+                      ? item.image.image_url
+                      : 'https://comnplayscience.eu/app/images/notfound.png'}
+                  />
                 </div>
 
                 <div className={`

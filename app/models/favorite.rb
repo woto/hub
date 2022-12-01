@@ -32,21 +32,25 @@ class Favorite < ApplicationRecord
 
   belongs_to :user, counter_cache: true
 
+  has_one :images_relation, as: :relation, dependent: :destroy
+  has_one :image, through: :images_relation
+
   has_many :favorites_items, dependent: :destroy
 
   validates :name, :kind, presence: true
   validates :name, length: { maximum: 30 }
+  validates :is_public, inclusion: { in: [true, false] }
 
   def as_indexed_json(_options = {})
     {
-      id: id,
-      favorites_items_count: favorites_items_count,
-      kind: kind,
-      name: name,
-      created_at: created_at,
-      updated_at: updated_at,
-      user_id: user_id,
-      is_public: is_public
+      id:,
+      favorites_items_count:,
+      kind:,
+      name:,
+      created_at:,
+      updated_at:,
+      user_id:,
+      is_public:
     }
   end
 

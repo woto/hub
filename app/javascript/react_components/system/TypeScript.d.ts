@@ -6,6 +6,26 @@ export type TagObject = {
   url: string | undefined
 }
 
+export type Image = {
+  id: number | null,
+  image_url: string | null,
+  file?: File | null,
+  json?: {
+    data: {
+      id: string,
+      storage: string,
+      metadata: {
+        filename: string,
+        size: number,
+        mime_type: string,
+        width: number,
+        height: number
+      },
+    },
+  },
+  destroy: boolean,
+}
+
 export interface Listing {
   id: number,
   name: string,
@@ -14,6 +34,7 @@ export interface Listing {
   is_checked: boolean,
   is_public: boolean,
   is_owner: boolean,
+  image: Image
 }
 
 

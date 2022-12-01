@@ -40,7 +40,7 @@ import SetUser from '../Auth/SetUser';
 import AuthProvider from '../Auth/AuthProvider';
 import SidebarProvider from '../Sidebar/Provider';
 import LanguageProvider from '../Language/LanguageProvider';
-import ListingEntities from '../Listings/Entities'
+import ListingEntities from '../Listings/ListingsEntities'
 
 function Portal({ Component, container, ...props }) {
   const [innerHtmlEmptied, setInnerHtmlEmptied] = React.useState(false);

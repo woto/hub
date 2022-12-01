@@ -1,16 +1,42 @@
 import * as React from 'react';
-import { Fragment, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ShieldExclamationIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useMutation } from 'react-query';
+import axios from '../system/Axios';
+import { useToasts } from '../Toast/ToastManager';
 
-export default function Confirmation(props: {
-  open: boolean,
-  setOpen: Dispatch<SetStateAction<boolean>>
+export default function ListingsConfirmation({
+  confirmationOpen, setConfirmationOpen, closeForm, listingId,
+}: {
+  confirmationOpen: boolean,
+  setConfirmationOpen: Dispatch<SetStateAction<boolean>>,
+  closeForm: () => void,
+  listingId: number
 }) {
-  const {open, setOpen} = props;
+  const { add } = useToasts();
+
+  const deleteMutation = useMutation<unknown, unknown, {
+    id: number
+  }
+  >(async (params) => {
+    axios.delete(
+      `/api/listings/${params.id}`,
+    ).then(() => {
+      add('Листинг успешно удалён');
+      closeForm();
+    });
+  });
+
+  const deleteListing = () => {
+    deleteMutation.mutate({
+      id: listingId,
+    });
+  };
+
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="tw-fixed tw-z-10 tw-inset-0 tw-overflow-y-auto" onClose={setOpen}>
+    <Transition.Root show={confirmationOpen} as={Fragment}>
+      <Dialog as="div" className="tw-fixed tw-z-10 tw-inset-0 tw-overflow-y-auto" onClose={setConfirmationOpen}>
         <div className="tw-flex tw-items-end tw-justify-center tw-min-h-screen tw-pt-4 tw-px-4 tw-pb-20 tw-text-center sm:tw-block sm:tw-p-0">
           <Transition.Child
             as={Fragment}
@@ -46,7 +72,7 @@ export default function Confirmation(props: {
                   type="button"
                   className="tw-bg-white tw-rounded-md tw-text-gray-400 hover:tw-text-gray-500 focus:tw-outline-none
                     focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
-                  onClick={() => setOpen(false)}
+                  onClick={() => setConfirmationOpen(false)}
                 >
                   <span className="tw-sr-only">Close</span>
                   <XMarkIcon className="tw-h-6 tw-w-6" aria-hidden="true" />
@@ -60,12 +86,13 @@ export default function Confirmation(props: {
                 </div>
                 <div className="tw-mt-3 tw-text-center sm:tw-mt-0 sm:tw-ml-4 sm:tw-text-left">
                   <Dialog.Title as="h3" className="tw-text-lg tw-leading-6 tw-font-medium tw-text-gray-900">
-                    Deactivate account
+                    Удаление листинга
                   </Dialog.Title>
                   <div className="tw-mt-2">
                     <p className="tw-text-sm tw-text-gray-500">
-                      Are you sure you want to deactivate your account? All of your data will be permanently removed
-                      from our servers forever. This action cannot be undone.
+                      Вы действительно хотите удалить листинг?
+                      Объекты находящиеся в листинге удалены не будут.
+                      Данная операция необратима.
                     </p>
                   </div>
                 </div>
@@ -76,18 +103,21 @@ export default function Confirmation(props: {
                   className="tw-w-full tw-inline-flex tw-justify-center tw-rounded-md tw-border tw-border-transparent
                    tw-px-4 tw-py-2 tw-bg-red-600 tw-text-base tw-font-medium tw-text-white hover:tw-bg-red-700
                   focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-red-500 sm:tw-ml-3 sm:tw-w-auto sm:tw-text-sm"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    deleteListing();
+                    setConfirmationOpen(false);
+                  }}
                 >
-                  Deactivate
+                  Удалить
                 </button>
                 <button
                   type="button"
                   className="tw-mt-3 tw-w-full tw-inline-flex tw-justify-center tw-rounded-md tw-border tw-border-gray-300
                    tw-px-4 tw-py-2 tw-bg-white tw-text-base tw-font-medium tw-text-gray-700 hover:tw-text-gray-500
                   focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500 sm:tw-mt-0 sm:tw-w-auto sm:tw-text-sm"
-                  onClick={() => setOpen(false)}
+                  onClick={() => setConfirmationOpen(false)}
                 >
-                  Cancel
+                  Отмена
                 </button>
               </div>
             </div>
