@@ -37,8 +37,7 @@ export interface Listing {
   image: Image
 }
 
-
-export type CarouselType = 'one' | 'multiple';
+export type CarouselType = 'single' | 'multiple';
 
 export type DOMRectJSON = {
   x: number;

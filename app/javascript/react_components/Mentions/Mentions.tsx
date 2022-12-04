@@ -17,11 +17,12 @@ type Window = {
   growing: boolean
 }
 
-export default function Mentions(props: {
+export default function Mentions({
+  entityIds, searchString, sort,
+}: {
   entityIds: any[],
   searchString: string,
   sort: string,
-  scrollToFirst: boolean
 }) {
   const [window, setWindow] = useState<Window>({ page: 0, growing: true });
   const loadMoreRef = useRef<HTMLDivElement>();
@@ -41,12 +42,12 @@ export default function Mentions(props: {
     hasPreviousPage,
 
   } = useInfiniteQuery(
-    ['mentions', props.entityIds, props.searchString, props.sort],
+    ['mentions', entityIds, searchString, sort],
     async ({ pageParam = 0 }) => axios.post<MentionResponse>('/api/mentions', {
       page: pageParam,
-      entity_ids: props.entityIds,
-      q: props.searchString,
-      sort: props.sort,
+      entity_ids: entityIds,
+      q: searchString,
+      sort,
     }).then((res) => res.data),
     {
       getPreviousPageParam: (firstPage) => (

@@ -8,7 +8,7 @@ import {
 } from 'framer-motion';
 import { useKey, useWindowSize } from 'react-use';
 
-function Image(props: { image: any, url: string, layoutGroupId: string }) {
+function Image(props: { image: any, url: string }) {
   const { width, height } = useWindowSize();
   // const imageSize = width > parseInt(tailwindConfig.theme.screens['2xl'].slice(0, -2)) ? '300' : '300';
   // const imageSize = '300';
@@ -74,7 +74,7 @@ function Image(props: { image: any, url: string, layoutGroupId: string }) {
   return (
   // <LayoutGroup id={Math.random().toString()}>
     <div
-      className="tw-flex tw-relative tw-flex-grow justify-self-center tw-items-center tw-w-full tw-py-1.5"
+      className="tw-flex tw-relative tw-flex-grow justify-self-center tw-items-center tw-w-full tw-py-1.5 tw-overflow-x-clip"
     >
 
       <motion.div
@@ -82,7 +82,7 @@ function Image(props: { image: any, url: string, layoutGroupId: string }) {
         className={`
         tw-cursor-zoom-out
         ${open
-          ? 'tw-pointer-events-auto tw-fixed tw-inset-0 tw-bg-slate-500/50 tw-z-40'
+          ? 'tw-pointer-events-auto tw-fixed tw-inset-0 tw-bg-slate-400/50 tw-z-40'
           : 'tw-pointer-events-none'}`}
         onClick={() => setOpen(false)}
       />
@@ -91,11 +91,11 @@ function Image(props: { image: any, url: string, layoutGroupId: string }) {
         {open
             && (
             <motion.img
-              key={`mention-image-${props.image?.id}-${props.layoutGroupId}`}
-              layoutId={`mention-image-${props.image?.id}-${props.layoutGroupId}`}
+              key={`mention-image-${props.image?.id}`}
+              layoutId={`mention-image-${props.image?.id}`}
               data-test-id={`big-image-${props.image?.id}`}
               className={`tw-bg-white tw-m-auto tw-z-40 -tw-inset-[1000px] tw-cursor-zoom-out tw-fixed tw-max-w-none
-                tw-p-2? tw-border-2? tw-border-transparent? tw-ring-2 tw-ring-slate-500/30 tw-ring-inset? tw-rounded`}
+                tw-p-2? tw-border-2? tw-border-transparent? tw-ring-4 tw-ring-slate-400/30 tw-ring-inset? tw-rounded-lg`}
               dragConstraints={{
                 left: -tmpMethodName(1000).xConstraint,
                 right: tmpMethodName(1000).xConstraint,
@@ -130,17 +130,22 @@ function Image(props: { image: any, url: string, layoutGroupId: string }) {
       </AnimatePresence>
 
       <motion.img
-        layoutId={`mention-image-${props.image?.id}-${props.layoutGroupId}`}
+        layoutId={`mention-image-${props.image?.id}`}
         layout
         className={`
+            tw-duration-500
+            hover:tw-brightness-95
             ${open && 'tw-invisible'}
             tw-shadow? xl:tw-shadow-md? tw-outline
-            tw-outline-1 xl:tw-outline-1
-            tw-outline-slate-200 tw-rounded-lg
+            tw-outline-4
+            tw-outline-gray-200 tw-rounded-lg
             tw-bg-white tw-m-auto tw-cursor-zoom-in`}
         data-test-id={`small-image-${props.image?.id}`}
         src={props?.image?.images[imageSize]}
         style={{
+          WebkitTransitionProperty: 'filter',
+          MozTransitionProperty: 'filter',
+          msTransitionProperty: 'filter',
           width: tmpMethodName(imageSize).scaledWidth,
           height: tmpMethodName(imageSize).scaledHeight,
         }}

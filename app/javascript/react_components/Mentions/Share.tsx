@@ -23,7 +23,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Share(props: {
+function Share(props: {
   mention: any,
   entities: any[]
 }) {
@@ -80,7 +80,7 @@ export default function Share(props: {
           leaveTo="tw-transform tw-opacity-0 tw-scale-95"
         >
           <Menu.Items
-            className="tw-mt-2? tw-w-56 tw-rounded-md  tw-bg-white tw-ring-1 tw-ring-black
+            className="tw-mt-2? tw-w-56 tw-rounded-md  tw-bg-white tw-ring-2 tw-ring-black
                 tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 focus:tw-outline-none"
           >
             <div className="tw-py-1">
@@ -255,3 +255,5 @@ export default function Share(props: {
     </Menu>
   );
 }
+
+export default React.memo(Share);
