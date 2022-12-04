@@ -47,7 +47,7 @@ export default function Popup({ selectedItem, setIsPopupOpen, setIsComplainOpen 
             className="tw-m-1.5 tw-flex tw-flex-col tw-min-h-[inherit]? tw-h-full tw-grow tw-h-px? tw-overflow-y-auto"
             onClick={() => setIsPopupOpen(false)}
           >
-            <div className="tw-space-y-3.5 tw-min-h-[inherit] tw-h-full tw-max-h-[inherit]">
+            <div className="tw-space-y-5 tw-min-h-[inherit] tw-h-full tw-max-h-[inherit]">
               { data && data.title && (
               <div
                 className="tw-select-none tw-pt-6 tw-text-gray-900 tw-px-4 tw-font-medium tw-text-center tw-text-base"

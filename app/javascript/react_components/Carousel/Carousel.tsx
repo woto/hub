@@ -22,39 +22,27 @@ import Popup from './Popup';
 import ScrollLeftButton from './ScrollLeftButton';
 import ScrollRightButton from './ScrollRightButton';
 
-const useSize = (target: MutableRefObject<HTMLElement>) => {
-  const [size, setSize] = useState<DOMRectJSON>();
-
-  useLayoutEffect(() => {
-    setSize(target.current.getBoundingClientRect());
-  }, [target]);
-
-  // Where the magic happens
-  useResizeObserver(target, (entry) => setSize(entry.contentRect.toJSON()));
-
-  return size;
-};
-
-export default function Carousel(props: {
+function Carousel(props: {
   items: any[],
   type: CarouselType,
-  carouselId: number
 }) {
-  const rootPortalRef = useRef<HTMLDivElement>(null);
-  const ref = useRef<HTMLDivElement>(null);
+  // const [refObj, setRefObj] = useState<HTMLDivElement>(null);
+  // const refCallback = useCallback((node) => {
+  //   setRefObj(node);
+  // }, []);
+  const refObj = useRef();
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [trackMouse, setTrackMouse] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(true);
   const [preventClick, setPreventClick] = useState(false);
   const [showLeftScrollButton, setShowLeftScrollButton] = useState(false);
-  const [showRightScrollButton, setShowRightScrollButton] = useState(false);
-  const [monitorScroll, setMonitorScroll] = useState<number>();
+  const [showRightScrollButton, setShowRightScrollButton] = useState(true);
+  const [monitorScroll, setMonitorScroll] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<any>();
   const [internalSelectedItem, setInternalSelectedItem] = useState<any>();
   const x = useMotionValue<number>(0);
-  const { scrollXProgress } = useScroll({ container: ref });
-  const carouselSize = useSize(ref);
+  const { scrollXProgress } = useScroll({ container: refObj });
   const [initialClickCoordinates, setInitialClickCoordinates] = useState<{x: number, y: number}>({ x: undefined, y: undefined });
 
   const { items } = props;
@@ -78,7 +66,7 @@ export default function Carousel(props: {
   // }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
+    if (!refObj.current) return;
     if (!trackMouse) return;
 
     // if (Math.abs(e.movementX) < 3) return;
@@ -86,15 +74,11 @@ export default function Carousel(props: {
 
     setPreventClick(true);
 
-    const xVal = e.pageX - ref.current.offsetLeft;
+    const xVal = e.pageX - refObj.current.offsetLeft;
     const walk = (xVal - startX) * 1; // scroll-fast
 
     runAnimation(scrollLeft - walk, circOut);
   };
-
-  useEffect(() => {
-    setMonitorScroll(0);
-  }, []);
 
   const runAnimation = (dx: number, ease: Easing) => {
     setAnimationComplete(false);
@@ -104,8 +88,8 @@ export default function Carousel(props: {
       ease,
       // duration: 0.5,
       onUpdate: (val) => {
-        if (!ref.current) return;
-        ref.current.scrollLeft = val;
+        if (!refObj.current) return;
+        refObj.current.scrollLeft = val;
       },
       onComplete: () => {
         setAnimationComplete(true);
@@ -121,14 +105,14 @@ export default function Carousel(props: {
     setInitialClickCoordinates({ x: e.clientX, y: e.clientY });
     setPreventClick(false);
 
-    if (!ref.current) return;
+    if (!refObj.current) return;
 
     setTrackMouse(true);
 
-    const startX = e.pageX - ref.current.offsetLeft;
+    const startX = e.pageX - refObj.current.offsetLeft;
     setStartX(startX);
 
-    const { scrollLeft } = ref.current;
+    const { scrollLeft } = refObj.current;
     setScrollLeft(scrollLeft);
   };
 
@@ -163,34 +147,33 @@ export default function Carousel(props: {
   }, [preventClick]);
 
   useLayoutEffect(() => {
-    setShowLeftScrollButton(ref.current?.scrollLeft !== 0);
-  }, [x.get(), items, ref.current?.scrollLeft]);
+    setShowLeftScrollButton(refObj.current?.scrollLeft !== 0);
+  }, [x.get(), items, refObj, refObj.current?.scrollLeft]);
 
   useLayoutEffect(() => {
-    // NOTE: setTimeout is a dirty bug fix of accidents when right scroll button does not appear
-    setTimeout(() => setShowRightScrollButton(
-      ref.current?.scrollLeft < ref.current?.scrollWidth - ref.current?.clientWidth,
-    ), 300);
-  }, [items, carouselSize?.width, ref.current?.scrollLeft,
-    ref.current?.scrollWidth, ref.current?.clientWidth]);
+    setShowRightScrollButton(
+      refObj.current?.scrollLeft + 1 < refObj.current?.scrollWidth - refObj.current?.clientWidth,
+    );
+  }, [refObj.current?.scrollLeft,
+    refObj.current?.scrollWidth, refObj.current?.clientWidth]);
 
   const scrollButtonClick = (amount: number) => {
     runAnimation(amount, easeInOut);
   };
 
   return (
-    <LayoutGroup id={Math.random().toString()}>
-      <div
-        className={`tw-relative tw-py-1 tw-px-2 tw-bg-slate-100
-        ${(props.type === ('single' as CarouselType)) ? 'tw-rounded-t-lg' : 'tw-rounded-lg'}
+  // <LayoutGroup id={Math.random().toString()}>
+    <div
+      className={`tw-relative tw-py-1 tw-px-2 tw-bg-slate-100
+        ${props.type === 'single' ? 'tw-rounded-t-lg' : 'tw-rounded-lg'}
       `}
-      >
-        <motion.div
-          layoutScroll
-          className={`
+    >
+      <motion.div
+        layoutScroll
+        className={`
           ${trackMouse ? 'tw-cursor-grabbing' : 'tw-cursor-grab'}
-          ${(props.type === ('single' as CarouselType)) ? 'tw-space-x-4' : 'tw-space-x-2'}
-          tw-flex tw-overflow-x-auto tw-pb-1 tw-overflow-y-hidden tw-bg-slate-100
+          ${props.type === 'single' ? 'tw-space-x-3' : 'tw-space-x-2'}
+          tw-flex tw-overflow-x-auto tw-pb-1? tw-overflow-y-hidden? tw-bg-slate-100
           [&::-webkit-scrollbar-thumb]:tw-bg-slate-300
           [&::-webkit-scrollbar]:tw-bg-slate-100
         `}
@@ -198,25 +181,27 @@ export default function Carousel(props: {
           // group-hover:[&::-webkit-scrollbar-thumb]:tw-bg-slate-300
           // sm:[&::-webkit-scrollbar]:tw-bg-transparent
           // group-hover:[&::-webkit-scrollbar]:tw-bg-slate-100
-          ref={ref}
-          onMouseMove={handleMouseMove}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          onScroll={(e) => setMonitorScroll(e.target.scrollLeft)}
-        >
-          <CarouselItems
-            root={rootPortalRef}
-            items={items}
-            selectedItem={selectedItem}
-            handleMouseClick={handleMouseClick}
-            type={props.type}
-          />
-        </motion.div>
+        ref={refObj}
+        onMouseMove={handleMouseMove}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onScroll={(e) => setMonitorScroll(e.target.scrollLeft)}
+      >
+        { true
+          ? (
+            <CarouselItems
+              container={refObj}
+              items={items}
+              selectedItem={selectedItem}
+              handleMouseClick={handleMouseClick}
+              type={props.type}
+            />
+          )
+          : <></>}
+      </motion.div>
 
-        <div ref={rootPortalRef} className="tw-z-50 tw-relative"></div>
-
-        {false
+      {true
           && (
           <AnimatePresence>
             {true && showRightScrollButton && (
@@ -253,18 +238,20 @@ export default function Carousel(props: {
           </AnimatePresence>
           )}
 
-        <ScrollLeftButton
-          showScrollButton={showLeftScrollButton}
-          scrollButtonClick={scrollButtonClick}
-          xRef={ref}
-        />
+      <ScrollLeftButton
+        showScrollButton={showLeftScrollButton}
+        scrollButtonClick={scrollButtonClick}
+        xRef={refObj}
+      />
 
-        <ScrollRightButton
-          showScrollButton={showRightScrollButton}
-          scrollButtonClick={scrollButtonClick}
-          xRef={ref}
-        />
-      </div>
-    </LayoutGroup>
+      <ScrollRightButton
+        showScrollButton={showRightScrollButton}
+        scrollButtonClick={scrollButtonClick}
+        xRef={refObj}
+      />
+    </div>
+  // </LayoutGroup>
   );
 }
+
+export default React.memo(Carousel);

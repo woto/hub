@@ -4,24 +4,21 @@ import {
 } from 'react';
 import { motion } from 'framer-motion';
 import { CarouselType, DOMRectJSON } from '../system/TypeScript';
-import Item from './CarouselItem';
+import CarouselItem from './CarouselItem';
 
 function CarouselItems(props: {
-  root: any,
   items: any[],
   type: CarouselType,
-  selectedItem: any
+  selectedItem: any,
+  container: any,
   handleMouseClick: (e: React.MouseEvent, item: any) => void
 }) {
-  // console.log('Items render');
-
   return (
     <>
       {props.items.map((item: any, index: number) => (
         // TODO: temporary hack used because 'single' carousel also used same component
         // was item?.id
-        <Item
-          root={props.root}
+        <CarouselItem
           key={`index-${index}`}
           selectedItem={props.selectedItem === item ? props.selectedItem : null}
           handleMouseClick={props.handleMouseClick}
