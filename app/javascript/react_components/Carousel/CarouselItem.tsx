@@ -81,10 +81,99 @@ const Option = forwardRef<HTMLDivElement, OptionProps>((
   );
 });
 
+const tmpFunction = (item: any, type) => {
+  const image_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif',
+    'image/webp', 'image/vnd.microsoft.icon', 'image/svg+xml'];
+  const video_types = ['video/mp4', 'video/webm', 'application/mp4', 'video/mp4',
+    'video/quicktime', 'video/avi', 'video/mpeg', 'video/x-mpeg', 'video/x-msvideo',
+    'video/m4v', 'video/x-m4v', 'video/vnd.objectvideo'];
+
+  if (image_types.includes(item?.mime_type)) {
+    return (
+      <img
+        alt=""
+        // layoutId={`image-${item?.id}`}
+        // key={`image-${item?.id}`}
+        // layout
+        className={`
+            tw-bg-white tw-rounded-md tw-shadow-sm? tw-border tw-p-2
+            ${item.dark ? 'tw-bg-slate-800' : 'tw-bg-white'}
+            tw-cursor-pointer? tw-select-none tw-max-h-full tw-object-scale-down tw-w-full
+            ${type === ('single' as CarouselType) ? 'tw-h-[270px]' : 'tw-h-[120px]'}
+            `}
+        draggable={false}
+        src={item.images['200']}
+        loading="lazy"
+      />
+    );
+  } if (video_types.includes(item?.mime_type)) {
+    return (
+      <video
+        className={`
+          tw-bg-white tw-rounded-t-md tw-shadow-sm? tw-border tw-p-2
+          tw-cursor-pointer tw-select-none tw-max-h-full tw-w-full
+          ${type === ('single' as CarouselType) ? 'tw-h-[270px]' : 'tw-h-[120px]'}
+        `}
+        draggable={false}
+        loop
+        autoPlay
+        controls={false}
+        muted
+        src={item.videos['500']}
+      />
+    );
+  } if (item?.mime_type === 'text') {
+    return (
+      <div
+        className={`
+          tw-rounded-md tw-bg-white tw-shadow-sm? tw-border tw-p-4
+          tw-text-lg tw-align-middle tw-select-none tw-text-gray-700 tw-max-h-full tw-h-full
+          tw-justify-self-start tw-self-start tw-line-clamp-[8] tw-w-full
+
+        `}
+        draggable={false}
+      >
+        {item.text}
+      </div>
+    );
+  } if (type === ('single' as CarouselType)) {
+    return tmpFunction({ mime_type: 'image/png', images: { 500: 'https://dummyimage.com/500x500/fff/aaa' } });
+  }
+  // if (item.images && item.images.length > 0) {
+  return (
+    <div className="tw-h-auto tw-transition hover:tw-shadow-sm? tw-rounded-md">
+      <div className={`
+              tw-place-content-center tw-flex
+            `}
+      >
+        {tmpFunction((item && item.images && item.images.length > 0 && item.images[0]) || {
+          mime_type: 'image/png',
+          images: { 500: 'https://dummyimage.com/100x100/fff/aaa' },
+        })}
+      </div>
+      <div className={`
+              ${item.relevance === 0
+        ? 'tw-bg-sky-800 group-hover:tw-bg-sky-900 tw-text-gray-50 group-hover:tw-text-white'
+        : 'tw-bg-white group-hover:tw-bg-slate-100 tw-text-gray-600 group-hover:tw-text-black'}
+              tw-border tw-transition tw-rounded-b-md -tw-mt-1 tw-pt-1
+              tw-px-1 tw-leading-7 tw-text-xs tw-text-center
+              tw-flex tw-place-self-center tw-line-clamp-1 tw-space-x-2
+          `}
+      >
+        { item.sentiment === 0 && <HandThumbUpIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" /> }
+        { item.sentiment === 1 && <HandThumbDownIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" /> }
+        <span>{item && item.title}</span>
+      </div>
+    </div>
+  );
+  // } else {
+  //   return JSON.stringify(item);
+  // }
+};
+
 function CarouselItem({
-  root, item, type, selectedItem, handleMouseClick,
+  item, type, selectedItem, handleMouseClick,
 }: {
-  root: any,
   item: any,
   type: CarouselType,
   selectedItem: any
@@ -158,93 +247,6 @@ function CarouselItem({
   //   ...floatingProps
   // } = getFloatingProps(getListFloatingProps());
 
-  const tmpFunction = (item: any) => {
-    const image_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/vnd.microsoft.icon', 'image/svg+xml'];
-    const video_types = ['video/mp4', 'video/webm', 'application/mp4', 'video/mp4', 'video/quicktime', 'video/avi', 'video/mpeg', 'video/x-mpeg', 'video/x-msvideo', 'video/m4v', 'video/x-m4v', 'video/vnd.objectvideo'];
-
-    if (image_types.includes(item?.mime_type)) {
-      return (
-        <img
-          alt=""
-          // layoutId={`image-${item?.id}`}
-          // key={`image-${item?.id}`}
-          // layout
-          className={`
-              tw-bg-white tw-rounded-md tw-shadow-sm? tw-border tw-p-2
-              ${item.dark ? 'tw-bg-slate-800' : 'tw-bg-white'}
-              tw-cursor-pointer? tw-select-none tw-max-h-full tw-object-scale-down tw-w-full
-              ${type === ('single' as CarouselType) ? 'tw-h-[270px]' : 'tw-h-[120px]'}
-              `}
-          draggable={false}
-          src={item.images['500']}
-          loading="lazy"
-        />
-      );
-    } if (video_types.includes(item?.mime_type)) {
-      return (
-        <video
-          className={`
-            tw-bg-white tw-rounded-t-md tw-shadow-sm? tw-border tw-p-2
-            tw-cursor-pointer tw-select-none tw-max-h-full tw-w-full
-            ${type === ('single' as CarouselType) ? 'tw-h-[270px]' : 'tw-h-[120px]'}
-          `}
-          draggable={false}
-          loop
-          autoPlay
-          controls={false}
-          muted
-          src={item.videos['500']}
-        />
-      );
-    } if (item?.mime_type === 'text') {
-      return (
-        <div
-          className={`
-            tw-rounded-md tw-bg-white tw-shadow-sm? tw-border tw-p-4
-            tw-text-lg tw-align-middle tw-select-none tw-text-gray-700 tw-max-h-full tw-h-full
-            tw-justify-self-start tw-self-start tw-line-clamp-[8] tw-w-full
-
-          `}
-          draggable={false}
-        >
-          {item.text}
-        </div>
-      );
-    } if (type === ('single' as CarouselType)) {
-      return tmpFunction({ mime_type: 'image/png', images: { 500: 'https://dummyimage.com/500x500/fff/aaa' } });
-    }
-    // if (item.images && item.images.length > 0) {
-    return (
-      <div className="tw-h-auto tw-transition hover:tw-shadow-sm? tw-rounded-md">
-        <div className={`
-                tw-place-content-center tw-flex
-              `}
-        >
-          {tmpFunction((item && item.images && item.images.length > 0 && item.images[0]) || {
-            mime_type: 'image/png',
-            images: { 500: 'https://dummyimage.com/100x100/fff/aaa' },
-          })}
-        </div>
-        <div className={`
-                ${item.relevance === 0
-          ? 'tw-bg-sky-800 group-hover:tw-bg-sky-900 tw-text-gray-50 group-hover:tw-text-white'
-          : 'tw-bg-white group-hover:tw-bg-slate-100 tw-text-gray-600 group-hover:tw-text-black'}
-                tw-border tw-transition tw-rounded-b-md -tw-mt-1 tw-pt-1
-                tw-px-1 tw-leading-7 tw-text-xs tw-text-center
-                tw-flex tw-place-self-center tw-line-clamp-1 tw-space-x-2
-            `}
-        >
-          { item.sentiment === 0 && <HandThumbUpIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" /> }
-          { item.sentiment === 1 && <HandThumbDownIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" /> }
-          <span>{item && item.title}</span>
-        </div>
-      </div>
-    );
-    // } else {
-    //   return JSON.stringify(item);
-    // }
-  };
-
   // console.log('Item render');
 
   return (
@@ -276,51 +278,56 @@ function CarouselItem({
             },
           })}
         >
-          {tmpFunction(item)}
+          {/* <div className="tw-bg-slate-500 tw-w-10 tw-h-10"> */}
+          {tmpFunction(item, type)}
         </button>
 
-        <FloatingPortal>
-          <AnimatePresence>
-            {open && (
-            <FloatingFocusManager context={context} initialFocus={1}>
+        <AnimatePresence>
+          {open && (
+            <FloatingPortal>
+              <FloatingFocusManager context={context} initialFocus={1}>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <FloatingOverlay className="tw-relative tw-z-10 tw-bg-slate-500/50" onClick={() => setOpen(false)} lockScroll />
-                <div
-                  className="tw-z-10"
-                  ref={floating}
-                  style={{
-                    position: strategy,
-                    left: x ?? 0,
-                    top: y ?? 0,
-                  }}
-                  aria-labelledby={buttonId}
-                  {...getFloatingProps()}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                 >
-
-                  <div ref={arrowRef} className="tw-absolute tw-bg-slate-50 tw-w-2 tw-h-2 tw-rotate-45" />
-
-                  <div className="tw-bg-white/90 tw-backdrop-blur-lg tw-overflow-hidden? tw-shadow-lg tw-ring tw-ring-slate-100/80 tw-border
-                    tw-border-slate-300 tw-rounded-2xl tw-w-[320px] md:tw-w-[350px] tw-min-h-[300px] tw-max-h-[350px]"
+                  <FloatingOverlay
+                    className="tw-relative tw-z-10 tw-bg-slate-500/50"
+                    onClick={() => setOpen(false)}
+                    lockScroll
+                  />
+                  <div
+                    className="tw-z-10"
+                    ref={floating}
+                    style={{
+                      position: strategy,
+                      left: x ?? 0,
+                      top: y ?? 0,
+                    }}
+                    aria-labelledby={buttonId}
+                    {...getFloatingProps()}
                   >
-                    <Popup
-                      selectedItem={item}
-                      setIsPopupOpen={setOpen}
-                      setIsComplainOpen={setIsComplainOpen}
-                    />
-                  </div>
-                </div>
-              </motion.div>
 
-            </FloatingFocusManager>
-            )}
-          </AnimatePresence>
-        </FloatingPortal>
+                    <div ref={arrowRef} className="tw-absolute tw-bg-slate-50 tw-w-2 tw-h-2 tw-rotate-45" />
+
+                    <div className="tw-bg-white/90 tw-backdrop-blur-lg tw-overflow-hidden? tw-shadow-lg tw-ring tw-ring-slate-100/80 tw-border
+                    tw-border-slate-300 tw-rounded-2xl tw-w-[320px] md:tw-w-[350px] tw-min-h-[300px] tw-max-h-[350px]"
+                    >
+                      <Popup
+                        selectedItem={item}
+                        setIsPopupOpen={setOpen}
+                        setIsComplainOpen={setIsComplainOpen}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+
+              </FloatingFocusManager>
+            </FloatingPortal>
+          )}
+        </AnimatePresence>
 
         {item.is_favorite
         && (
@@ -330,15 +337,18 @@ function CarouselItem({
         )}
       </motion.div>
 
-      <Complain
-        entityId={item.entity_id}
-        mentionId={item.mention_id}
-        entitiesMentionId={item.id}
-        opened={isComplainOpen}
-        close={() => {
-          setIsComplainOpen(false);
-        }}
-      />
+      { isComplainOpen
+        && (
+        <Complain
+          entityId={item.entity_id}
+          mentionId={item.mention_id}
+          entitiesMentionId={item.id}
+          opened={isComplainOpen}
+          close={() => {
+            setIsComplainOpen(false);
+          }}
+        />
+        )}
     </>
   );
 }
