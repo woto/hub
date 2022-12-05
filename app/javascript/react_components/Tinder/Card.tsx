@@ -77,7 +77,7 @@ export default function Card(props) {
       }}
     >
       <motion.div
-        className="tw-bg-white tw-p-4 tw-border-4 tw-border-indigo-500 tw-flex tw-flex-col tw-rounded-2xl tw-gap-2 tw-items-center tw-justify-around"
+        className="tw-bg-white tw-p-4 tw-border-4 tw-border-slate-400 tw-flex tw-flex-col tw-rounded-2xl tw-gap-2 tw-items-center tw-justify-around"
         style={{
           width: 300,
           height: 300,
@@ -105,6 +105,15 @@ export default function Card(props) {
         </div>
 
         <div className="tw-line-clamp-2 tw-text-slate-700 tw-text-xs tw-text-left tw-leading-5">{data && data.intro}</div>
+
+        <a
+          href={`/entities/${data && data.entity_id}`}
+          className="tw-inline-flex tw-items-center tw-px-2.5 tw-py-1.5 tw-border tw-border-transparent tw-text-xs tw-font-medium
+                   tw-rounded tw-shadow-sm tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none
+                   focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
+        >
+          перейти
+        </a>
 
       </motion.div>
     </motion.div>

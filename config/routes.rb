@@ -27,7 +27,9 @@ Rails.application.routes.draw do
       # end
     end
 
-    root to: 'roastme/homepage#index', as: :roastme_root
+    get 'tinder' => 'roastme/tinder#index'
+
+    root to: 'tables/mentions#index', as: :roastme_root
   end
   # end
 
