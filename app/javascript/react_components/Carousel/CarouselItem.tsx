@@ -84,6 +84,7 @@ function objectSize(item: any, type: 'single' | 'multiple') {
 function Image({ item, type }: {item: any, type: CarouselType}) {
   return (
     <img
+      style={objectSize(item, type)}
       data-width={item.width}
       data-height={item.height}
       alt=""
@@ -91,9 +92,10 @@ function Image({ item, type }: {item: any, type: CarouselType}) {
       // key={`image-${item?.id}`}
       // layout
       className={`
-          tw-border tw-p-2 tw-rounded-t-md tw-h-full tw-w-full
+          tw-border tw-p-2 tw-h-full tw-w-full
           ${item.dark ? 'tw-bg-slate-800' : 'tw-bg-white'}
           tw-select-none tw-object-scale-down
+          ${type === 'single' ? 'tw-rounded-md' : 'tw-rounded-t-md'}
       `}
       draggable={false}
       src={type === 'single' ? item.images['300'] : item.images['200']}
@@ -105,12 +107,14 @@ function Image({ item, type }: {item: any, type: CarouselType}) {
 function Video({ item, type }: {item: any, type: CarouselType}) {
   return (
     <video
+      style={objectSize(item, type)}
       data-width={item.width}
       data-height={item.height}
       className={`
-        tw-border tw-p-2 tw-rounded-t-md tw-h-full tw-w-full
+        tw-border tw-p-2 tw-h-full tw-w-full
         ${item.dark ? 'tw-bg-slate-800' : 'tw-bg-white'}
         tw-select-none tw-object-scale-down
+        ${type === 'single' ? 'tw-rounded-md' : 'tw-rounded-t-md'}
       `}
       draggable={false}
       loop
@@ -248,10 +252,9 @@ function CarouselItem({
         draggable={false}
         style={{ content: 'strict' }}
         className={`
-        tw-isolate tw-relative tw-flow-root
-        tw-select-none tw-grid? tw-grid-cols-1? tw-grow-0? tw-basis-auto? tw-shrink-0? tw-group
-        tw-justify-items-stretch? tw-justify-center? tw-items-stretch?
-        ${type === 'multiple' && 'tw-pb-9'}
+        tw-isolate tw-relative
+        tw-select-none tw-flex tw-group
+        ${type === 'multiple' && 'tw-mb-8'}
       `}
       >
 

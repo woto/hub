@@ -164,7 +164,7 @@ function Carousel(props: {
   return (
   // <LayoutGroup id={Math.random().toString()}>
     <div
-      className={`tw-relative tw-py-1 tw-px-2 tw-bg-slate-100
+      className={`tw-relative tw-py-0.5 tw-px-2 tw-bg-slate-100
         ${props.type === 'single' ? 'tw-rounded-t-lg' : 'tw-rounded-lg'}
       `}
     >
@@ -173,7 +173,7 @@ function Carousel(props: {
         className={`
           ${trackMouse ? 'tw-cursor-grabbing' : 'tw-cursor-grab'}
           ${props.type === 'single' ? 'tw-space-x-3' : 'tw-space-x-2'}
-          tw-flex tw-overflow-x-auto tw-pb-1? tw-overflow-y-hidden? tw-bg-slate-100
+          tw-flex tw-overflow-x-auto tw-py-1.5 tw-overflow-y-hidden tw-bg-slate-100
           [&::-webkit-scrollbar-thumb]:tw-bg-slate-300
           [&::-webkit-scrollbar]:tw-bg-slate-100
         `}

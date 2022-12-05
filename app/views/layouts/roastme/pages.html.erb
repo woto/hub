@@ -1,27 +1,21 @@
-<%= tag.html lang: I18n.locale.downcase, class: 'tw-h-full tw-bg-white' do %>
-  <head>
-    <%= render 'trackers_tawk' %>
+<%= content_for(:after_body_open) do %>
+  <%= render 'trackers_tawk' %>
+<% end %>
 
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<% content_for(:before_head_close) do %>
+  <%= render 'trackers_google' %>
+  <%= render 'trackers_yandex' %>
+<% end %>
 
-    <%= seo.tags %>
+<% @html_attributes = { class: 'tw-h-full tw-bg-white' } %>
+<% @body_attributes = { class: 'tw-h-full tw-bg-white' } %>
 
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<% content_for :body do %>
 
-    <%= render 'trackers_google' %>
-    <%= render 'trackers_yandex' %>
-
-    <%= javascript_include_tag 'application', "data-turbo-track": "reload", defer: true %>
-    <%= stylesheet_link_tag 'application', "data-turbo-track": "reload", defer: true %>
-  </head>
-
-  <% if true %>
-  <body class="tw-h-full tw-overflow-hidden??!! tw-bg-white">
+    <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
+    <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
 
     <div class="tw-h-full? tw-flex tw-max-w-screen-2xl tw-mx-auto tw-bg-white tw-border-x tw-border-gray-200 tw-drop-shadow-lg?">
-
 
     <%= render(
       ReactComponent.new(name: 'SetUser',
@@ -59,7 +53,7 @@
 
           <main
             id="main"
-            class="tw-flex-1 tw-relative tw-z-0? tw-overflow-y-auto? tw-overflow-y-auto? tw-overflow-x-clip focus:tw-outline-none tw-snap-y? tw-snap-always? tw-snap-mandatory?">
+            class="tw-flex-1 tw-relative tw-z-0? tw-overflow-y-auto? tw-overflow-y-auto? tw-overflow-x-clip? focus:tw-outline-none tw-snap-y? tw-snap-always? tw-snap-mandatory?">
             <%# {/* Start main area */} %>
             <div class="tw-absolute??!! tw-relative ??!! tw-inset-0 tw-py-6? tw-px-4? sm:tw-px-6 lg:tw-px-8 xl:tw-px-4 tw-snap-center?">
 
@@ -97,8 +91,8 @@
 
               <div class="tw-h-full?">
 
-<%# [filter:drop-shadow(0_0_30px_rgb(255_255_255_/_0.4))]
- %>
+              <%# [filter:drop-shadow(0_0_30px_rgb(255_255_255_/_0.4))]
+              %>
 
                 <div class="tw-group tw-relative tw-w-64 tw-mx-auto tw-mb-12">
                   <%= image_tag(asset_path('extension.webp'),
@@ -152,6 +146,7 @@
       </div>
 
     </div>
-  </body>
-  <% end %>
+
 <% end %>
+
+<%= render template: 'layouts/blank' %>

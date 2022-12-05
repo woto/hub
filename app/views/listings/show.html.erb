@@ -1,1 +1,15 @@
-1
+<%= render ReactComponent.new(name: 'ListingEntities',
+                              class: '',
+                              props: {  }) do |component| %>
+
+<% end %>
+
+<div class="tw-relative">
+  <%= render(
+        ReactComponent.new(name: 'Mentions',
+                           class: 'tw-contents',
+                           props: {
+                             entityIds: Favorite.find(params[:id]).favorites_items.pluck(:ext_id)
+                           }))
+  %>
+</div>
