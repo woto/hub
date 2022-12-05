@@ -133,19 +133,14 @@ function Image(props: { image: any, url: string }) {
         layoutId={`mention-image-${props.image?.id}`}
         layout
         className={`
-            tw-duration-500
-            hover:tw-brightness-95
             ${open && 'tw-invisible'}
             tw-shadow? xl:tw-shadow-md? tw-outline
-            tw-outline-4
-            tw-outline-gray-200 tw-rounded-lg
+            tw-outline-1
+            tw-outline-gray-200 tw-ring-8 tw-ring-transparent tw-ring-offset-2 tw-ring-offset-slate-100 tw-rounded-lg
             tw-bg-white tw-m-auto tw-cursor-zoom-in`}
         data-test-id={`small-image-${props.image?.id}`}
         src={props?.image?.images[imageSize]}
         style={{
-          WebkitTransitionProperty: 'filter',
-          MozTransitionProperty: 'filter',
-          msTransitionProperty: 'filter',
           width: tmpMethodName(imageSize).scaledWidth,
           height: tmpMethodName(imageSize).scaledHeight,
         }}
