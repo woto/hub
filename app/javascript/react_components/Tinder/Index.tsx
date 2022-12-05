@@ -65,7 +65,7 @@ export default function Tinder() {
       >
         <ChevronDoubleLeftIcon className="tw-inline? tw-h-4 tw-w-4" />
         <div className="tw-px-4">
-          Перетащите карточку
+          Потяните карточку
         </div>
         <ChevronDoubleRightIcon className="tw-inline? tw-h-4 tw-w-4" />
       </div>
