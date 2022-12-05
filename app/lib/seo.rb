@@ -19,7 +19,7 @@ class Seo
 
   def title!(title)
     @title = title
-    @meta << ApplicationController.helpers.tag.title("GoodReviews.ru | #{title}")
+    @meta << ApplicationController.helpers.tag.title("RoastMe.ru | #{title}")
   end
 
   def subtitle!(subtitle)
