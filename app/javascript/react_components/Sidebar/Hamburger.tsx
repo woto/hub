@@ -12,7 +12,7 @@ export default function Hamburger() {
         <div>
           <img
             className="tw-h-8 tw-w-auto"
-            src="/assets/roastme-fire"
+            src="/roastme-fire.svg"
             alt="RoastMe.ru (logo)"
           />
         </div>

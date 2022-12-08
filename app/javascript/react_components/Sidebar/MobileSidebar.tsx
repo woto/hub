@@ -65,7 +65,7 @@ export default function DesktopSidebar(props: {language: any}) {
               <div className="tw-flex-shrink-0 tw-flex tw-items-center tw-px-4">
                 <img
                   className="tw-h-7 tw-w-auto"
-                  src="/assets/roastme-full"
+                  src="/roastme-full.svg"
                   alt="RoastMe.ru (logo)"
                 />
               </div>
