@@ -56,7 +56,7 @@ class ImageUploader < Shrine
 
     if IMAGE_TYPES.include? source.mime_type
 
-      if source.mime_type == 'image/gif'
+      if ['image/gif', 'image/vnd.microsoft.icon', 'image/x-icon'].include? source.mime_type
         begin
           result = ImageProcessing::MiniMagick
                   .source(file)
