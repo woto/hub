@@ -131,17 +131,6 @@
         disabled: !user_signed_in?
     ) %>
 
-    <%= render Left::Menu::ItemComponent.new(
-      options: { 'data-turbo': false },
-      title: t('left_menu.favorites'),
-      path: { controller: '/tables/favorites', action: 'index' },
-      current_page: request.path.yield_self do |p|
-        (p.include?('offers') && params[:favorite_id]) || p.include?('favorites')
-      end,
-      icon: '<i class="far fa-star"></i>',
-      disabled: !user_signed_in?
-    ) %>
-
     <% help_realm = Realm.help.find_by(locale: locale) %>
 
     <% if help_realm %>

@@ -3,7 +3,7 @@
 
     <%= link_to params[:controller] == 'dashboard' ? root_path : dashboard_path, class: 'navbar-brand me-3' do %>
       <%#= image_tag(asset_pack_path('media/images/logo.svg'), width: "110", height: "32", class: "navbar-brand-image") %>
-      <%= image_tag(asset_path('roast-me-blue.svg'), class: "tw-h-5 navbar-brand-image") %>
+      <%= image_tag('/roastme-full.svg', class: "tw-h-5 navbar-brand-image") %>
     <% end %>
 
     <%= render 'desktop_search_wrapper' do %>
