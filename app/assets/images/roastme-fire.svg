@@ -14,6 +14,7 @@
    inkscape:export-filename="../4e8a0cba/roast-me-fire-blue.svg"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +28,16 @@
    inkscape:pageopacity="0.0"
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
-   showgrid="false" />
+   showgrid="false"
+   inkscape:zoom="49.258206"
+   inkscape:cx="-0.60903558"
+   inkscape:cy="3.8673759"
+   inkscape:window-width="1920"
+   inkscape:window-height="1016"
+   inkscape:window-x="0"
+   inkscape:window-y="27"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="g28" />
 <style
    type="text/css"
    id="style18">
@@ -42,7 +52,7 @@
    class="st0"
    d="M 25.325029,43.019892 H 11.28047 C 5.0799469,43.019892 0,37.939945 0,31.739422 V 17.694863 C 0,11.494342 5.0799469,6.4143968 11.28047,6.4143968 h 13.969854 c 6.275229,0 11.355175,5.0799452 11.355175,11.2804662 v 13.969854 c 0,6.275228 -5.079946,11.355175 -11.28047,11.355175 z"
    id="path20"
-   style="fill:#9955ff;stroke-width:0.747051"
+   style="fill:#f24337;stroke-width:0.747051;fill-opacity:1"
    inkscape:export-filename="../4e8a0cba/path20.svg"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96" />

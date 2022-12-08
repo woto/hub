@@ -12,8 +12,8 @@ export default function Hamburger() {
         <div>
           <img
             className="tw-h-8 tw-w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
+            src="/assets/roastme-fire"
+            alt="RoastMe.ru (logo)"
           />
         </div>
         <div>

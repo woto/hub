@@ -25,9 +25,9 @@ export default function MobileSidebar(props: {language: any}) {
           <div className="tw-flex-1 tw-flex tw-flex-col tw-pt-5 tw-pb-4 tw-overflow-y-scroll sidebar-scroll">
             <div className="tw-flex tw-items-center tw-flex-shrink-0 tw-px-4">
               <img
-                className="tw-h-8 tw-w-auto"
-                src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-900-text.svg"
-                alt="Workflow"
+                className="tw-h-7 tw-w-auto"
+                src="/assets/roastme-full"
+                alt="RoastMe.ru (logo)"
               />
             </div>
             <nav className="tw-mt-5 tw-flex-1" aria-label="Sidebar">
