@@ -18,6 +18,7 @@ module Interactors
 
           after_commit do
             reindex_records
+            ping_crawlers
             scrape_webpage
           end
         end
@@ -32,6 +33,15 @@ module Interactors
       end
 
       private
+
+      def ping_crawlers
+        BoostIndexing.call(
+          url: Rails.application.routes.url_helpers.entity_url(
+            id: @entity,
+            host: "#{ENV.fetch('PUBLIC_SCHEMA')}://#{ENV.fetch('PUBLIC_DOMAIN')}:#{ENV.fetch('PUBLIC_PORT')}"
+          )
+        )
+      end
 
       def create_related_records
         Create::ImagesInteractor.call(cite: @cite, entity: @entity, params: params[:images], user: current_user)
