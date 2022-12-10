@@ -10,7 +10,7 @@ module Extractors
         # youtube = ::Google::Apis::YoutubeV3::YouTubeService.new
         # scope = 'https://www.googleapis.com/auth/youtube'
         # youtube.authorization = ::Google::Auth::ServiceAccountCredentials.make_creds(
-        #   json_key_io: File.open(Rails.root.join("config/secrets/#{Rails.env}/goodreviews-ru-f91ce835b425.json")),
+        #   json_key_io: File.open(Rails.root.join("config/secrets/#{Rails.env}/goodreviews-ru-246d2654c10a.json")),
         #   scope: scope
         # )
         #
