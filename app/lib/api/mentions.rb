@@ -47,9 +47,12 @@ module API
           end
         end
 
+        # NOTE: About order of images. I thought that having order in images_relations of Entity model affects this query
+        # but it does not. So I've added additional order statement. Not sure that it's ok. But at least it works. 
         query = lambda do |relation_type|
           Entity.includes(images_relations: :image)
                 .where(id: entity_ids.to_a, images_relations: { relation_type: relation_type })
+                .order('images_relations.order')
         end
         @entities = query.call('Entity').or(query.call(nil))
 
