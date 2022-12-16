@@ -5,6 +5,7 @@
 module Indexing
   class GoogleJob < ApplicationJob
     include Rails.application.routes.url_helpers
+    unique :until_executed, on_conflict: :log
 
     def perform(url:)
       indexing = ::Google::Apis::IndexingV3::IndexingService.new
