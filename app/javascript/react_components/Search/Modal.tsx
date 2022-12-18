@@ -1,13 +1,16 @@
-import { Fragment, useRef, useState, } from 'react';
-import { Combobox, Dialog, Transition, } from '@headlessui/react';
+import { Fragment, useRef, useState } from 'react';
+import { Combobox, Dialog, Transition } from '@headlessui/react';
 import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import * as React from 'react';
 import { useQuery } from 'react-query';
 import { useLocalStorage } from 'react-use';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import axios from '../system/Axios';
 import Multiple from '../Tags/Multiple';
 import NothingFound from './NothingFound';
 import RandomAdvice from './RandomAdvice';
+import Searching from './Searching';
+import Error from './Error';
 
 export default function Modal(props: {
   open: boolean,
@@ -58,7 +61,7 @@ export default function Modal(props: {
 
   return (
     <Transition.Root show={open} as={Fragment} afterLeave={() => setQuery(preservedQuery)}>
-      <Dialog as="div" className="tw-fixed tw-inset-0 tw-z-50 tw-p-5 sm:tw-p-10 tw-overflow-hidden" onClose={setOpen}>
+      <Dialog as="div" className="tw-fixed tw-inset-0 tw-z-50 tw-p-2 sm:tw-p-10 tw-overflow-hidden" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="tw-ease-out tw-duration-300"
@@ -82,15 +85,15 @@ export default function Modal(props: {
         >
           <Combobox
             as="div"
-            className="tw-mx-auto tw-max-w-4xl tw-transform tw-divide-y tw-divide-gray-100
+            className="tw-mx-auto tw-max-w-5xl tw-transform tw-divide-y tw-divide-gray-100
               tw-overflow-hidden tw-rounded-xl tw-shadow-2xl tw-ring-1
-              tw-ring-black tw-ring-opacity-5 tw-transition-all tw-bg-white"
+              tw-ring-black tw-ring-opacity-5 tw-transition-all tw-bg-white tw-h-full tw-flex tw-flex-col"
             onChange={(item) => {
               const url = new URL(`/entities/${item.entity_id}`, window.location.origin);
               if (query) url.searchParams.set('q', query);
               setRecent((data) => unionBy([item], data.slice(0, 49), ((x) => x.entity_id)));
               // Turbo.visit(url.toString());
-              window.location.assign(url.toString())
+              window.location.assign(url.toString());
             }}
             value={query}
           >
@@ -116,19 +119,29 @@ export default function Modal(props: {
                     }}
                     // ref={inputRef}
                   />
+                  <div className="tw-absolute tw-inset-y-0 tw-right-2 tw-flex tw-py-1.5 tw-pr-0.5">
+                    <button
+                      tabIndex={-1}
+                      type="button"
+                      onClick={() => setOpen(false)}
+                      className="tw-inline-flex tw-items-center tw-rounded tw-px-1.5 tw-text-gray-400 hover:tw-text-gray-600"
+                    >
+                      <XMarkIcon className="tw-h-7 tw-w-7" aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
 
-                {(!query || (data && data.length > 0)) && (
+                {!isFetching && (!query || (data && data.length > 0)) && (
                   <Combobox.Options
                     as="div"
                     static
                     hold
-                    className="tw-flex tw-divide-x tw-transition-all tw-divide-gray-100 tw-h-[calc(100vh-10rem)]? tw-max-h-[calc(100vh-10rem)]"
+                    className="tw-flex tw-divide-x tw-transition-all tw-divide-gray-100 tw-h-full tw-overflow-auto"
                   >
                     { (recent.length > 0 || (data && data.length > 0)) && (
                     <div
                       className={`
-                        tw-min-w-0 tw-flex-auto tw-scroll-py-4 tw-overflow-y-auto tw-px-6 tw-py-4
+                        tw-min-w-0 tw-flex-auto tw-scroll-py-4 tw-overflow-y-auto tw-px-4 sm:tw-px-6 tw-py-4
                       `}
                     >
                       {!query && recent.length > 0 && (
@@ -155,7 +168,7 @@ export default function Modal(props: {
                                       ? item.images[0].image_url
                                       : 'https://comnplayscience.eu/app/images/notfound.png'}
                                     alt=""
-                                    className="tw-object-contain tw-h-6 tw-w-6 tw-flex-none tw-rounded-full"
+                                    className="tw-object-contain tw-h-14 tw-w-14 tw-flex-none tw-rounded tw-bg-white tw-border tw-p-1"
                                   />
 
                                   <span className="tw-ml-3 tw-flex-auto tw-truncate">{item.title}</span>
@@ -175,25 +188,29 @@ export default function Modal(props: {
                     )}
 
                     {activeOption && (
-                      <div className="tw-hidden tw-w-2/5 tw-flex-none tw-flex-col tw-divide-y tw-divide-gray-100 tw-overflow-y-auto sm:tw-flex">
+                      <div className="tw-hidden tw-w-1/2 tw-flex-none tw-flex-col tw-divide-y tw-divide-gray-100 tw-overflow-y-auto sm:tw-flex">
                         <div className="tw-flex-none tw-p-6 tw-text-center">
+
                           <img
                             src={activeOption.images && activeOption.images.length > 0
                               ? activeOption.images[0].image_url
                               : 'https://comnplayscience.eu/app/images/notfound.png'}
                             alt=""
-                            className="tw-object-contain tw-mx-auto tw-max-h-[100px] tw-max-w-[100px] tw-rounded-full?"
+                            className="tw-object-scale-down tw-mx-auto tw-h-[200px] tw-w-[200px] tw-box-content tw-p-3 tw-border tw-rounded-md"
                           />
 
-                          <h2 className="tw-mt-3 tw-font-semibold tw-text-gray-900">{activeOption.title}</h2>
                         </div>
 
                         <div className="tw-text-base tw-leading-6? tw-text-gray-500 tw-p-6">
+
+                          <h2 className="tw-mb-4 tw-font-semibold tw-text-gray-900">{activeOption.title}</h2>
+
                           {activeOption && activeOption.kinds && activeOption.kinds.length > 0 && (
-                            <div className="tw-pb-5">
+                            <div className="tw-mb-4">
                               <Multiple tags={activeOption.kinds} limit={10} textColor="tw-text-blue-800" bgColor="tw-bg-blue-100" linkify={false} />
                             </div>
                           )}
+
                           {activeOption.intro}
                         </div>
                       </div>
@@ -201,7 +218,15 @@ export default function Modal(props: {
                   </Combobox.Options>
                 )}
 
-                {query && (data && data.length === 0) && (
+                {isFetching && (
+                  <Searching />
+                )}
+
+                {!isFetching && error && (
+                  <Error />
+                )}
+
+                {!isFetching && query && (data && data.length === 0) && (
                   <NothingFound />
                 )}
 

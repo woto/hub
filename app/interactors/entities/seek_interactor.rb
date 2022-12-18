@@ -28,8 +28,8 @@ module Entities
           images: entity['_source']['images'].map do |image|
             {
               id: image['id'],
-              image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['100'] : nil,
-              video_url: ImageUploader::VIDEO_TYPES.include?(image['mime_type']) ? image['videos']['100'] : nil,
+              image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['200'] : nil,
+              video_url: ImageUploader::VIDEO_TYPES.include?(image['mime_type']) ? image['videos']['200'] : nil,
               dark: image['dark']
             }
           end,

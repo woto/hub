@@ -180,7 +180,7 @@ export default function ListingsList(
       )}
 
       {query !== '' && data && data.length === 0 && (
-      <div className="tw-py-14 tw-px-6 tw-text-center tw-text-sm sm:tw-px-14">
+      <div className="tw-py-14 tw-px-6 tw-text-center tw-text-sm sm:tw-px-14 tw-grow">
         <ExclamationCircleIcon
           type="outline"
           name="exclamation-circle"
