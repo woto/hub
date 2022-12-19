@@ -123,7 +123,12 @@ export default function Modal(props: {
                     <button
                       tabIndex={-1}
                       type="button"
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setQuery('');
+                        if (!query) {
+                          setOpen(false);
+                        }
+                      }}
                       className="tw-inline-flex tw-items-center tw-rounded tw-px-1.5 tw-text-gray-400 hover:tw-text-gray-600"
                     >
                       <XMarkIcon className="tw-h-7 tw-w-7" aria-hidden="true" />
