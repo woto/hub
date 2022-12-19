@@ -15,7 +15,7 @@ module API
         scope = Favorite.where(kind: :entities)
 
         private = current_user ? scope.where(user: current_user) : []
-        public = scope.where(is_public: true).order(favorites_items_count: :desc).limit(5)
+        public = scope.where(is_public: true).order(favorites_items_count: :desc).limit(10)
 
         Set.new([private, public].flatten).map do |favorite|
           {
