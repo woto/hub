@@ -255,31 +255,30 @@ function CarouselItem({
         tw-isolate tw-relative
         tw-select-none tw-flex tw-group
         ${type === 'multiple' && 'tw-mb-8'}
+        ${open ? 'tw-brightness-95' : ''}
       `}
       >
 
-        <button
-          type="button"
+        <a
+          href={`/entities/${item.entity_id}`}
           ref={reference}
           id={buttonId}
-          // style={{
-          //   outline: open ? '2px solid blue' : '',
-          // }}
+          draggable={false}
+          // eslint-disable-next-line react/jsx-props-no-spreading
           {...getReferenceProps({
             onClick(e) {
+              e.preventDefault();
+
               if (handleMouseClick(e, item)) {
                 setOpen(true);
               }
             },
           })}
         >
-          {/* <div className="tw-bg-slate-500 tw-w-10 tw-h-10"> */}
-
           <div style={objectSize(type === 'single' ? item : item && item.images && item.images.length > 0 && item.images[0], type)}>
             {tmpFunction(item, type)}
           </div>
-
-        </button>
+        </a>
 
         <AnimatePresence>
           {open && (
