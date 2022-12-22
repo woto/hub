@@ -104,5 +104,5 @@ Rails.application.configure do
 
   config.action_mailbox.ingress = :sendgrid
   config.i18n.available_locales = %w[en ru]
-  config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], protocol: 'https' }
+  config.action_mailer.default_url_options = { host: ENV.fetch('PUBLIC_DOMAIN') }
 end

@@ -24,6 +24,7 @@ module API
           sort: params[:sort] || 'entities.mention_date',
           order: params[:order] || 'desc'
         ).object
+
         result = GlobalHelper.elastic_client.search(query)
 
         hits = result['hits']
@@ -64,6 +65,9 @@ module API
             entities_mention['title'] = record.title
             entities_mention['images'] = GlobalHelper.image_hash(record.images_relations, %w[200 300 500 1000])
             entities_mention['is_favorite'] = @favorites_store.find(entities_mention['entity_id'], 'entities')
+            entities_mention['link'] = Rails.application.routes.url_helpers.entity_url(
+              record, host: GlobalHelper.host, locale: nil
+            )
           end
         end
 

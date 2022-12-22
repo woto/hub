@@ -17,7 +17,7 @@ module Indexing
         conn.get('https://yandex.com/indexnow', {
                    url: url,
                    key: ENV.fetch('INDEX_NOW_KEY'),
-                   keyLocation: index_now_url(host: ENV['DOMAIN_NAME'], protocol: 'https')
+                   keyLocation: index_now_url(host: ENV.fetch('PUBLIC_DOMAIN'), protocol: 'https')
                  })
       rescue Faraday::Error => e
         Rails.logger.error(e)

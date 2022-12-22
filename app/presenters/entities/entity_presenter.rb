@@ -22,7 +22,7 @@ module Entities
           }
         end,
         entities_mentions_count: entity.entities_mentions_count,
-        link: Rails.application.routes.url_helpers.entity_path(entity)
+        link: Rails.application.routes.url_helpers.entity_url(entity, host: GlobalHelper.host, locale: nil)
       }
     end
   end

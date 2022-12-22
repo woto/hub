@@ -7,6 +7,10 @@ class GlobalHelper
   GROUP_LIMIT = 1000
 
   class << self
+    def host
+      "#{ENV.fetch('PUBLIC_SCHEMA')}://#{ENV.fetch('PUBLIC_DOMAIN')}:#{ENV.fetch('PUBLIC_PORT')}"
+    end
+
     def image_hash(images_relations, resolutions)
 
       images_relations.map do |images_relation|

@@ -27,7 +27,7 @@ module Interactors
           title: @entity.title,
           url: Rails.application.routes.url_helpers.entity_url(
             id: @entity,
-            host: "#{ENV.fetch('PUBLIC_SCHEMA')}://#{ENV.fetch('PUBLIC_DOMAIN')}:#{ENV.fetch('PUBLIC_PORT')}"
+            host: GlobalHelper.host
           )
         }
       end
@@ -38,7 +38,7 @@ module Interactors
         BoostIndexing.call(
           url: Rails.application.routes.url_helpers.entity_url(
             id: @entity,
-            host: "#{ENV.fetch('PUBLIC_SCHEMA')}://#{ENV.fetch('PUBLIC_DOMAIN')}:#{ENV.fetch('PUBLIC_PORT')}"
+            host: GlobalHelper.host
           )
         )
       end

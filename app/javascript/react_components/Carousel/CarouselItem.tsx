@@ -260,7 +260,7 @@ function CarouselItem({
       >
 
         <a
-          href={`/entities/${item.entity_id}`}
+          href={item.link}
           ref={reference}
           id={buttonId}
           draggable={false}
