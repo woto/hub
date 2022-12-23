@@ -37,6 +37,7 @@ import { autoPlacement } from '@floating-ui/core';
 import { CarouselType, DOMRectJSON } from '../system/TypeScript';
 import Popup from './Popup';
 import Complain from '../Complain';
+import ListingsIndex from '../Listings/ListingsIndex';
 
 const imageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif',
   'image/webp', 'image/vnd.microsoft.icon', 'image/svg+xml'];
@@ -175,6 +176,7 @@ function CarouselItem({
 }) {
   const [open, setOpen] = useState(false);
   const [isComplainOpen, setIsComplainOpen] = useState(false);
+  const [isListingsOpen, setIsListingsOpen] = useState(false);
 
   // const [placement, setPlacement] = useState<Placement | null>(null);
   const arrowRef = useRef(null);
@@ -317,6 +319,7 @@ function CarouselItem({
                         selectedItem={item}
                         setIsPopupOpen={setOpen}
                         setIsComplainOpen={setIsComplainOpen}
+                        setIsListingsOpen={setIsListingsOpen}
                       />
                     </div>
                   </div>
@@ -334,6 +337,12 @@ function CarouselItem({
         />
         )}
       </motion.div>
+
+      <ListingsIndex
+        entityId={item.entity_id}
+        opened={isListingsOpen}
+        close={() => { setIsListingsOpen(false); }}
+      />
 
       { isComplainOpen
         && (
