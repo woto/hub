@@ -32,15 +32,18 @@ export default function InputsAccess(
     selectedListing,
     patchListing,
     setSelectedListing,
+    isEditing,
+    setIsEditing,
   }: {
     selectedListing: Listing,
     patchListing: (params: any) => void,
     setSelectedListing: Dispatch<SetStateAction<Listing>>,
+    isEditing: boolean,
+    setIsEditing: Dispatch<SetStateAction<boolean>>
   },
 ) {
   const inputId = useId();
   const [isPublic, setIsPublic] = useState<boolean>(selectedListing.is_public);
-  const [isEditing, setIsEditing] = useState(false);
 
   // setSelectedListing((prevVal) => ({ ...prevVal, is_public: e.target.value === 'true' }))
 

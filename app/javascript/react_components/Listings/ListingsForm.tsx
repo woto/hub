@@ -37,6 +37,11 @@ export default function ListingsForm(
 ) {
   const imageId = useId();
 
+  const [isEditingImage, setIsEditingImage] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [isEditingAccess, setIsEditingAccess] = useState(false);
+
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const { add } = useToasts();
 
@@ -139,6 +144,9 @@ export default function ListingsForm(
     patchListingMutation.mutate(params);
   };
 
+  const isSavingDisabled = isEditingImage || isEditingName
+   || isEditingDescription || isEditingAccess;
+
   return (
     <Dialog.Panel>
       <Dialog.Title
@@ -199,24 +207,32 @@ export default function ListingsForm(
           patchListing={patchListing}
           selectedListing={selectedListing}
           setSelectedListing={setSelectedListing}
+          isEditing={isEditingImage}
+          setIsEditing={setIsEditingImage}
         />
 
         <InputsName
           patchListing={patchListing}
           selectedListing={selectedListing}
           setSelectedListing={setSelectedListing}
+          isEditing={isEditingName}
+          setIsEditing={setIsEditingName}
         />
 
         <InputsDescription
           patchListing={patchListing}
           selectedListing={selectedListing}
           setSelectedListing={setSelectedListing}
+          isEditing={isEditingDescription}
+          setIsEditing={setIsEditingDescription}
         />
 
         <InputsAccess
           patchListing={patchListing}
           selectedListing={selectedListing}
           setSelectedListing={setSelectedListing}
+          isEditing={isEditingAccess}
+          setIsEditing={setIsEditingAccess}
         />
 
       </div>
@@ -225,9 +241,10 @@ export default function ListingsForm(
         <div className="sm:tw-col-start-2 sm:tw-col-span-4 tw-flex tw-flex-col sm:tw-flex-row tw-gap-4">
 
           <button
+            disabled={isSavingDisabled}
             type="button"
             className="tw-w-full tw-flex-1 tw-inline-flex tw-justify-center tw-rounded-md tw-border tw-border-transparent
-               tw-px-4 tw-py-2.5 tw-bg-indigo-600 tw-text-sm tw-font-medium tw-text-white  hover:tw-bg-indigo-700
+               tw-px-4 tw-py-2.5 tw-bg-indigo-600 disabled:tw-bg-gray-400 tw-text-sm tw-font-medium tw-text-white  hover:tw-bg-indigo-700
               focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-300 sm:tw-w-auto?"
             onClick={selectedListing.is_checked
               ? removeItem
@@ -252,7 +269,7 @@ export default function ListingsForm(
           { selectedListing.id
             && (
               <button
-                disabled={!!(!selectedListing.is_owner && selectedListing.id)}
+                disabled={isSavingDisabled || !!(!selectedListing.is_owner && selectedListing.id)}
                 onClick={() => {
                   filterOutListing(selectedListing);
                   setConfirmationOpen(true);
@@ -260,6 +277,7 @@ export default function ListingsForm(
                 type="button"
                 className={`
                 ${!selectedListing.is_owner && selectedListing.id ? 'tw-bg-gray-400' : 'tw-bg-red-600 hover:tw-bg-red-700 focus:tw-ring-red-500'}
+                disabled:tw-bg-gray-400
                 tw-w-full tw-flex-1? tw-inline-flex tw-justify-center tw-rounded-md tw-border tw-border-transparent
                  tw-px-4 tw-py-2.5 tw-text-sm tw-font-medium tw-text-white
                 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 sm:tw-w-auto`}

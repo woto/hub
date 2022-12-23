@@ -14,15 +14,18 @@ export default function InputsImage(
     selectedListing,
     patchListing,
     setSelectedListing,
+    isEditing,
+    setIsEditing,
   }: {
     selectedListing: Listing,
     patchListing: (params: any) => void,
     setSelectedListing: Dispatch<SetStateAction<Listing>>,
+    isEditing: boolean,
+    setIsEditing: Dispatch<SetStateAction<boolean>>
   },
 ) {
   const inputId = useId();
   const [image, setImage] = useState<Image>(selectedListing.image || undefined);
-  const [isEditing, setIsEditing] = useState(false);
   const { add } = useToasts();
 
   const cleanInputFile = (e: any) => {

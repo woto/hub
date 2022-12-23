@@ -12,15 +12,18 @@ export default function InputsDescription(
     selectedListing,
     patchListing,
     setSelectedListing,
+    isEditing,
+    setIsEditing,
   }: {
     selectedListing: Listing,
     patchListing: (params: any) => void,
     setSelectedListing: Dispatch<SetStateAction<Listing>>,
+    isEditing: boolean,
+    setIsEditing: Dispatch<SetStateAction<boolean>>
   },
 ) {
   const inputId = useId();
   const [description, setDescription] = useState<string>(selectedListing.description || '');
-  const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div className="sm:tw-grid sm:tw-grid-cols-4 sm:tw-gap-4 sm:tw-items-center">
