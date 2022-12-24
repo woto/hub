@@ -9,11 +9,15 @@ require 'active_support'
 require 'faraday/multipart'
 require "httpx/adapters/faraday"
 
-require_relative 'session'
+require_relative 'telegram_session'
 
 ActiveRecord::Base.establish_connection(
   adapter: 'postgresql',
-  database: 'hub_development'
+  database: 'hub_development',
+  username: 'hub',
+  password: 'Vet:orget5',
+  host: 'localhost',
+  port: 5432
 )
 
 logger = Logger.new(STDOUT)
@@ -22,7 +26,7 @@ token = '5251009905:AAHXhcvxODSLy-d-TVVvBs4XwGSvpfQmmig'
 
 Faraday.default_adapter = Faraday::Adapter::HTTPX
 
-class SessionParser
+class TelegramSessionParser
   def self.call(text: )
     uuid, query = text.split(': ')
     {
@@ -67,15 +71,19 @@ end
 Telegram::Bot::Client.run(token, logger: logger) do |bot|
   bot.listen do |message|
 
+  p message
   p URI.decode_www_form_component(message.to_s)
-  # debugger
+  debugger
+  p 1
 
   case message
 
     when Telegram::Bot::Types::InlineQuery
-      result = SessionParser.call(text: message.query)
+      debugger
+
+      result = TelegramSessionParser.call(text: message.query)
       begin
-        session = Session.find(result[:uuid])
+        session = TelegramSession.find(result[:uuid])
       rescue StandardError => e
         next
       end
@@ -93,9 +101,8 @@ Telegram::Bot::Client.run(token, logger: logger) do |bot|
           description: arr[2],
           input_message_content: Telegram::Bot::Types::InputTextMessageContent.new(
             parse_mode: '',
-            message_text: session.url,
-            # message_text: "*#{arr[1]}* #{arr[2]}"
-            # message_text: %(Объект "#{arr[1]}" успешно привязан к статье по адресу #{fragment[:scheme]}://#{fragment[:host]}#{fragment[:path]}#{fragment[:query]}),
+            # parse_mode: 'MarkdownV2',
+            message_text: %(Объект "#{arr[1]}" успешно привязан к статье по адресу #{fragment[:scheme]}://#{fragment[:host]}#{fragment[:path]}#{fragment[:query]}),
             disable_web_page_preview: true
           ),
           url: '',
@@ -118,18 +125,24 @@ Telegram::Bot::Client.run(token, logger: logger) do |bot|
 
       case message.text
       when '/start'
-        bot.api.send_message(chat_id: message.chat.id, text: 'Здравствуйте, рады что вы решили присоединиться к нашему проекту. Если вы не знакомы с нашим ботом, рекомендуем ознакомиться тут roastme.ru/telegram Бот готов принимать упоминания.')
+        bot.api.send_message(chat_id: message.chat.id, text: 'Здравствуйте, рады что вы решили присоединиться к нашему проекту. Если вы не знакомы с нашим ботом, рекомендуем ознакомиться тут https://roastme.ru/telegram Бот готов принимать упоминания.')
       else
         begin
           joint_fragment = JointFragmentParser.call(joint_fragment_url: message.text)
-          fragment = FragmentParser.call(fragment_url: joint_fragment[:url]).first
+          fragment = FragmentParser.call(
+            fragment_url: joint_fragment[:url]
+          ).first
           raise 'Fragment start was not found' if fragment[:text_start].to_s == '#'
 
         rescue StandardError => e
-          bot.api.send_message(chat_id: message.chat.id, text: 'Упс, похоже вы прислали не то, что мы ожидали. Возможно вам необходимо ознакомиться со справкой roastme.ru/telegram')
+          bot.api.send_message(chat_id: message.chat.id, text: 'Упс, похоже вы прислали не то, что мы ожидали. Возможно вам необходимо ознакомиться со справкой https://roastme.ru/telegram')
         else
           generated_uuid = SecureRandom.uuid
-          Session.create!(id: generated_uuid, text: joint_fragment[:text], url: joint_fragment[:url])
+          TelegramSession.create!(
+            id: generated_uuid,
+            text: joint_fragment[:text],
+            url: joint_fragment[:url]
+          )
           kb = [
             Telegram::Bot::Types::InlineKeyboardButton.new(
               text: 'Выбрать',
@@ -148,4 +161,3 @@ Telegram::Bot::Client.run(token, logger: logger) do |bot|
     end
   end
 end
-
