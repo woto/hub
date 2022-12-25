@@ -15,9 +15,9 @@ module Indexing
 
       begin
         conn.get('https://yandex.com/indexnow', {
-                   url: url,
+                   url:,
                    key: ENV.fetch('INDEX_NOW_KEY'),
-                   keyLocation: index_now_url(host: ENV.fetch('PUBLIC_DOMAIN'))
+                   keyLocation: index_now_url(host: GlobalHelper.host)
                  })
       rescue Faraday::Error => e
         Rails.logger.error(e)
