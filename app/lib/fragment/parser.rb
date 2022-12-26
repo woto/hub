@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# For parsing urls that looks like
+# 'http://foo/#:~:text=This%20domain,examples&text=in%20literature&text=More%20information...'
+
 module Fragment
   class Parser
     def self.call(fragment_url: '')
