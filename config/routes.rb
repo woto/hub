@@ -195,4 +195,6 @@ Rails.application.routes.draw do
 
     get 'landing1', to: 'landing1#index'
   end
+
+  get '*page', to: 'pages#show'
 end

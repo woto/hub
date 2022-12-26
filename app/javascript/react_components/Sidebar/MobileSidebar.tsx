@@ -108,6 +108,13 @@ export default function DesktopSidebar(props: {language: any}) {
                     <Tinder />
                   </div>
 
+                  <hr className="!tw-my-4 tw-h-px tw-bg-gray-200 tw-border-0 dark:tw-bg-gray-700" />
+
+                  <div className="tw-space-y-2.5">
+                    <a className="tw-px-2 tw-py-1 tw-text-gray-500 hover:tw-text-gray-700 tw-text-sm tw-block" href="/privacy-policy">политика конфиденциальности</a>
+                    <a className="tw-px-2 tw-py-1 tw-text-gray-500 hover:tw-text-gray-700 tw-text-sm tw-block" href="/user-agreement">пользовательское соглашение</a>
+                  </div>
+
                 </div>
               </nav>
             </div>

@@ -154,9 +154,9 @@ gem 'activejob-uniqueness'
 
 # Views
 gem 'kaminari'
-# gem 'redcarpet'
-# gem 'github-markup'
-# gem 'commonmarker'
+gem 'redcarpet'
+gem 'github-markup'
+gem 'commonmarker'
 gem 'simple_form'
 gem 'view_component'
 
