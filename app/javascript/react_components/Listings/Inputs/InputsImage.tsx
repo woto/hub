@@ -48,7 +48,7 @@ export default function InputsImage(
 
   const handleInputFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setIsEditing(true);
+      if (selectedListing.id) setIsEditing(true);
 
       const inputFile = e.target.files[0];
       const result = await sendForm(inputFile);
