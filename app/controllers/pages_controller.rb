@@ -11,7 +11,7 @@ class PagesController < ApplicationController
     # TODO: ask somebody about security
     begin
       markdown = File.read(absolute_file_path)
-      @html = CommonMarker.render_html(markdown)
+      @html = Commonmarker.to_html(markdown)
     rescue Errno::ENOENT
       raise ActionController::RoutingError, 'Not Found'
     end

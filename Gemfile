@@ -156,7 +156,7 @@ gem 'activejob-uniqueness'
 gem 'kaminari'
 gem 'redcarpet'
 gem 'github-markup'
-gem 'commonmarker'
+gem 'commonmarker', '~> 1.0.0.pre'
 gem 'simple_form'
 gem 'view_component'
 
