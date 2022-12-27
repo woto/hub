@@ -13,7 +13,11 @@ services:
         - PUSHGATEWAY_HOST
         - PUSHGATEWAY_PORT
         - DOMAIN_NAME
+        - PUBLIC_SCHEMA
+        - PUBLIC_PORT
+        - PUBLIC_DOMAIN
         - INDEX_NOW_KEY
+        - CHROME_EXTENSION_ID
     image: app
     command:
       [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
@@ -134,8 +138,8 @@ services:
     build:
       context: ./docker/postgres
       dockerfile: Dockerfile
-    ports:
-      - ${POSTGRES_PORT}:5432
+    # ports:
+    #   - ${POSTGRES_PORT}:5432
     volumes:
       - "postgres:/var/lib/postgresql/data"
 
