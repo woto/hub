@@ -230,6 +230,7 @@ GEM
       elasticsearch-transport (= 7.4.0)
     elasticsearch-api (7.4.0)
       multi_json
+    elasticsearch-dsl (0.1.10)
     elasticsearch-model (7.2.1)
       activesupport (> 3)
       elasticsearch (~> 7)
@@ -760,6 +761,7 @@ DEPENDENCIES
   draper
   dry-struct
   dry-validation
+  elasticsearch-dsl
   elasticsearch-model (~> 7.2.1)
   eu_central_bank
   factory_bot_rails
