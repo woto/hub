@@ -10,7 +10,7 @@ class TelegramBot::TmpClass3
       text: <<~TEXT.squish
         Здравствуйте, рады что вы решили присоединиться к нашему проекту.
         Если вы не знакомы с нашим ботом, рекомендуем ознакомиться тут
-        https://roastme.ru/telegram Бот готов принимать упоминания.
+        https://roastme.ru/telegram-bot Бот готов принимать упоминания.
       TEXT
     )
   end

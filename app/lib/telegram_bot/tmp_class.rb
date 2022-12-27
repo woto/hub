@@ -20,7 +20,7 @@ class TelegramBot::TmpClass
         Упс, похоже вы прислали не то, что мы ожидали.
         "#{e.message}"
         Возможно вам необходимо ознакомиться со справкой
-        https://roastme.ru/telegram
+        https://roastme.ru/telegram-bot
       TEXT
     )
   end
