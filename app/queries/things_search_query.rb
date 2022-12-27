@@ -45,7 +45,24 @@ class ThingsSearchQuery
                 json.multi_match do
                   json.query context[:search_string]
                   json.fields %w[title intro lookups.title text_start text_end prefix suffix link_url]
-                  json.boost 2
+                  json.boost 5
+                end
+              end
+            end
+          end
+
+          if context[:fragment]
+            set = [[:text_start, 5]]
+            set.each do |field, boost|
+              next if !first_text || first_text[field].blank?
+
+              json.set! :should do
+                json.array! ['fuck'] do
+                  json.multi_match do
+                    json.query first_text[field]
+                    json.fields %w[title intro lookups.title text_start]
+                    json.boost boost
+                  end
                 end
               end
             end
@@ -69,13 +86,32 @@ class ThingsSearchQuery
             end
           end
 
+          # begin
+            if context[:link_url].present?
+              uri = URI.parse(context[:link_url])
+
+              json.set! :should do
+                json.array! ['fuck'] do
+
+                  json.multi_match do
+                    json.query "#{uri.host.split(/\W/).join(' ')} #{uri.path.split(/\W/).join(' ')} #{uri.query.to_s.split(/\W/).join(' ')}"
+                    json.fields %w[link_url]
+                    json.boost 3
+                    json.fuzziness 'AUTO'
+                  end
+                end
+              end
+            end
+          # rescue StandardError
+          # end
+
           if context[:link_url].present?
             json.set! :should do
               json.array! ['fuck'] do
                 json.multi_match do
                   json.query context[:link_url]
                   json.fields %w[link_url]
-                  json.boost 0.1
+                  json.boost 3
                 end
               end
             end
@@ -87,7 +123,7 @@ class ThingsSearchQuery
                 json.multi_match do
                   json.query context[:link_url]
                   json.fields %w[title intro lookups.title text_start text_end prefix suffix link_url]
-                  json.boost 5
+                  json.boost 3
                 end
               end
             end

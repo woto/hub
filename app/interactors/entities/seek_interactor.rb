@@ -16,6 +16,8 @@ module Entities
         size: context.pagination_rule.per
       ).object
 
+      Rails.logger.info(query.to_json)
+
       @entities = GlobalHelper.elastic_client.search(query)
 
       context.object = @entities['hits']['hits'].map do |entity|

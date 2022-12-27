@@ -1,3 +1,4 @@
+<% if false %>
 <% if ActiveModel::Type::Boolean.new.cast(ENV['TRACKERS_ENABLED']) %>
   <script>
       window.$_Tawk = undefined;
@@ -12,4 +13,5 @@
           s0.parentNode.insertBefore(s1, s0);
       })();
   </script>
+<% end %>
 <% end %>

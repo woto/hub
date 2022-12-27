@@ -1,38 +1,61 @@
 version: "3.7"
 services:
 
-#  rails:
-#    env_file:
-#      - .env
-#    build:
-#      context: .
-#      args:
-#        - RAILS_ENV=${HUB_ENV}
-#        - NODE_ENV=${HUB_ENV}
-#        - SECRET_KEY_BASE
-#    image: app
-#    command:
-#      [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
-#    volumes:
-#      - "rails_storage:/app/storage"
-#    expose:
-#      - 9394
-#    ports:
-#      - 19395:9394
-#      - ${RAILS_PORT}:3000
-#
-#  sidekiq:
-#    env_file:
-#      - .env
-#    image: app
-#    command:
-#      [ "bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml" ]
-#    volumes:
-#      - "rails_storage:/app/storage"
-#    expose:
-#      - 9394
-#    ports:
-#      - 19394:9394
+  rails:
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - RAILS_ENV=${HUB_ENV}
+        - NODE_ENV=${HUB_ENV}
+        - SECRET_KEY_BASE
+        - PUSHGATEWAY_HOST
+        - PUSHGATEWAY_PORT
+        - DOMAIN_NAME
+        - PUBLIC_SCHEMA
+        - PUBLIC_PORT
+        - PUBLIC_DOMAIN
+        - INDEX_NOW_KEY
+        - CHROME_EXTENSION_ID
+    image: app
+    command:
+      [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+    volumes:
+      - "rails_storage:/app/storage"
+      - "rails_sitemaps:/app/public/sitemaps"
+      - "rails_uploads:/app/public/uploads"
+      - "rails_secrets:/app/config/secrets/production"
+      - "./data:/app/data"
+    expose:
+      - 9394
+    ports:
+      - 19395:9394
+      - ${RAILS_PORT}:3000
+    labels:
+      - "traefik.enable=true"
+      # - "traefik.http.routers.rails.rule=PathPrefix(`/`)"
+      # - "traefik.http.routers.rails.rule=HostRegexp(`{host:.+}`)"
+      - "traefik.http.routers.roastme_ru.rule=Host(`roastme.ru`)"
+      - "traefik.http.routers.roastme_ru.entrypoints=websecure"
+      - "traefik.http.routers.roastme_ru.tls.certresolver=myresolver"
+
+  sidekiq:
+    env_file:
+      - .env
+    image: app
+    command:
+      [ "bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml" ]
+    volumes:
+      - "rails_storage:/app/storage"
+      - "rails_sitemaps:/app/public/sitemaps"
+      - "rails_uploads:/app/public/uploads"
+      - "rails_secrets:/app/config/secrets/production"
+      - "./data:/app/data"
+    expose:
+      - 9394
+    ports:
+      - 19394:9394
 
   scrapper:
     env_file:
@@ -40,10 +63,8 @@ services:
     build:
       context: ./docker/scrapper
       dockerfile: Dockerfile
-    ports:
-      - ${SCRAPPER_PORT}:4000
-    volumes:
-      - "./docker/scrapper:/app"
+    expose:
+      - 4000
 
   iframely:
     env_file:
@@ -58,12 +79,13 @@ services:
     env_file:
       - .env
     image: elasticsearch:7.10.1
-    ports:
-      - ${ELASTIC_REST_PORT}:9200
-      - ${ELASTIC_CLUSTER_PORT}:9300
+    # ports:
+    #   - ${ELASTIC_REST_PORT}:9200
+    #   - ${ELASTIC_CLUSTER_PORT}:9300
     environment:
       - discovery.type=single-node
       - path.repo=/tmp
+      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
     volumes:
       - elastic:/usr/share/elasticsearch/data
 
@@ -94,10 +116,21 @@ services:
     env_file:
       - .env
     image: kibana:7.9.2
-    ports:
-      - ${KIBANA_PORT}:5601
+    # ports:
+    #   - ${KIBANA_PORT}:5601
     environment:
       - ELASTICSEARCH_HOSTS=http://elastic:9200
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.kibana_roastme_ru.rule=Host(`kibana.roastme.ru`)"
+      - "traefik.http.routers.kibana_roastme_ru.entrypoints=websecure"
+      - "traefik.http.routers.kibana_roastme_ru.tls.certresolver=myresolver"
+
+      - "traefik.http.middlewares.kibana-basicauth.basicauth.users=woto:$$2y$$05$$HqJi.DKUM2u10LSnEsCakuB9gjFt/CedJKDv9xG46y7RgUiuZe4bC"
+      - "traefik.http.middlewares.kibana-https-chain.chain.middlewares=kibana-basicauth"
+      - "traefik.http.routers.kibana_roastme_ru.middlewares=kibana-https-chain"
+
 
   postgres:
     env_file:
@@ -105,8 +138,8 @@ services:
     build:
       context: ./docker/postgres
       dockerfile: Dockerfile
-    ports:
-      - ${POSTGRES_PORT}:5432
+    # ports:
+    #   - ${POSTGRES_PORT}:5432
     volumes:
       - "postgres:/var/lib/postgresql/data"
 
@@ -114,8 +147,8 @@ services:
     env_file:
       - .env
     image: redis
-    ports:
-      - ${REDIS_PORT}:6379
+    volumes:
+      - "redis:/data"
 
   mailcatcher:
     env_file:
@@ -139,40 +172,70 @@ services:
 #    stdin_open: true
 #    tty: true
 
-#  prometheus:
-#    image: prom/prometheus:v2.16.0
-#    volumes:
-#      - ./docker/prometheus:/etc/prometheus/
-#    command:
-#      - "--config.file=/etc/prometheus/prometheus.yml"
-#      - "--storage.tsdb.path=/prometheus"
-#    ports:
-#      - ${PROMETHEUS_PORT}:9090
-#
-#  alertmanager:
-#    image: prom/alertmanager:v0.12.0
-#    ports:
-#      - 9093:9093
-#    volumes:
-#      - ./docker/alertmanager/:/etc/alertmanager/
-#    restart: always
-#    command:
-#      - '-config.file=/etc/alertmanager/config.yml'
-#      - '-storage.path=/alertmanager'
-#    deploy:
-#      mode: global
-#
-#  grafana:
-#    image: grafana/grafana:7.1.5
-#    ports:
-#      - ${GRAFANA_PORT}:3000
-#
-#  pushgateway:
-#    image: prom/pushgateway
-#    ports:
-#      - ${PUSHGATEWAY_PORT}:9091
+  prometheus:
+    image: prom/prometheus:v2.16.0
+    volumes:
+      - ./docker/prometheus:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - ${PROMETHEUS_PORT}:9090
+
+  alertmanager:
+    image: prom/alertmanager:v0.12.0
+    ports:
+      - 9093:9093
+    volumes:
+      - ./docker/alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - '-config.file=/etc/alertmanager/config.yml'
+      - '-storage.path=/alertmanager'
+    deploy:
+      mode: global
+
+  grafana:
+    image: grafana/grafana:7.1.5
+    ports:
+      - ${GRAFANA_PORT}:3000
+
+  pushgateway:
+    image: prom/pushgateway
+    ports:
+      - ${PUSHGATEWAY_PORT}:9091
+
+  traefik:
+    image: traefik:v2.4
+    command: 
+      - "--accesslog=true"
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=oganer@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
 volumes:
-#  rails_storage:
+  rails_storage:
+  rails_sitemaps:
+  rails_uploads:
+  rails_secrets:
+  redis:
   postgres:
   elastic:

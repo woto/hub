@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+
+# https://developers.google.com/knowledge-graph/reference/rest/v1
+# https://developers.google.com/knowledge-graph
+
 module Extractors
   module GoogleCom
     class Graph
@@ -21,7 +25,7 @@ module Extractors
                      key: ENV.fetch('GOOGLE_GRAPH_KEY'),
                      limit: 10,
                      indent: true,
-                     languages: 'ru'
+                     'languages': 'en',
                    })
         rescue Faraday::Error => e
           Rails.logger.error(e)

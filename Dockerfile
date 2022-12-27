@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-alpine
+FROM ruby:3.1.3-alpine
 
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \
@@ -13,7 +13,8 @@ RUN apk add --no-cache --update build-base \
                                 ttf-freefont \
                                 imagemagick \
                                 vips-dev \
-                                ffmpeg
+                                ffmpeg \
+                                gcompat
 
 ENV APP_PATH /app
 WORKDIR $APP_PATH
@@ -35,6 +36,9 @@ ARG SECRET_KEY_BASE
 ARG PUSHGATEWAY_HOST
 ARG PUSHGATEWAY_PORT
 ARG DOMAIN_NAME
+ARG PUBLIC_SCHEMA
+ARG PUBLIC_PORT
+ARG PUBLIC_DOMAIN
 ARG SSL_DEBUG
 ARG INDEX_NOW_KEY
 ARG CHROME_EXTENSION_ID
