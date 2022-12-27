@@ -6,14 +6,11 @@ class TelegramBot
 
   def self.call
     # Rails.logger = Logger.new($stdout)
-    Rails.logger.level = :debug
+    # Rails.logger.level = :debug
     # Faraday.default_adapter = Faraday::Adapter::HTTPX
 
     Telegram::Bot::Client.run(ENV.fetch('TELEGRAM_BOT_TOKEN'), logger: Rails.logger) do |bot|
       bot.listen do |message|
-        # Rails.logger.debug(message)
-        # debugger
-
         case message
 
         when Telegram::Bot::Types::CallbackQuery
