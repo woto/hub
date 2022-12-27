@@ -11,18 +11,19 @@ production:
   - active_storage_analysis
   - active_storage_purge
 
-:schedule:
-  # prometheus:
-  #   cron: '0 * * * * *'   # Runs once per minute
-  #   class: PrometheusJob
-  # sitemap_realms:
-  #   cron: '0 0 * * * *' # Runs every hour
-  #   class: SitemapJob
-  #   args: ['sitemap_realms.rb']
-  sitemap_roastme:
-    cron: '0 0 * * * *' # Runs every hour
-    class: SitemapJob
-    args: ['sitemap_roastme.rb']
-  sweep:
-    cron: '0 0 * * * *' # Runs every hour
-    class: Import::SweepJob
+:scheduler:
+  :schedule:
+    # prometheus:
+    #   cron: '0 * * * * *'   # Runs once per minute
+    #   class: PrometheusJob
+    # sitemap_realms:
+    #   cron: '0 0 * * * *' # Runs every hour
+    #   class: SitemapJob
+    #   args: ['sitemap_realms.rb']
+    sitemap_roastme:
+      cron: '0 0 * * * *' # Runs every hour
+      class: SitemapJob
+      args: ['sitemap_roastme.rb']
+    sweep:
+      cron: '0 0 * * * *' # Runs every hour
+      class: Import::SweepJob

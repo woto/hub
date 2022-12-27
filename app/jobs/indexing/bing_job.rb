@@ -6,8 +6,8 @@ module Indexing
 
     def perform(url:)
       conn = Faraday.new do |faraday|
-        faraday.use FaradayMiddleware::FollowRedirects
         faraday.adapter Faraday.default_adapter
+        faraday.response :follow_redirects
         faraday.response :raise_error
         faraday.request :json
         faraday.response :json

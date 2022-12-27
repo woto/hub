@@ -13,7 +13,11 @@ services:
         - PUSHGATEWAY_HOST
         - PUSHGATEWAY_PORT
         - DOMAIN_NAME
+        - PUBLIC_SCHEMA
+        - PUBLIC_PORT
+        - PUBLIC_DOMAIN
         - INDEX_NOW_KEY
+        - CHROME_EXTENSION_ID
     image: app
     command:
       [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
@@ -53,14 +57,27 @@ services:
     ports:
       - 19394:9394
 
+  telegram:
+    env_file:
+      - .env
+    image: app
+    command:
+      [ "bundle", "exec", "rake", "hub:telegram" ]
+    volumes:
+      - "rails_storage:/app/storage"
+      - "rails_sitemaps:/app/public/sitemaps"
+      - "rails_uploads:/app/public/uploads"
+      - "rails_secrets:/app/config/secrets/production"
+      - "./data:/app/data"
+
   scrapper:
     env_file:
       - .env
     build:
       context: ./docker/scrapper
       dockerfile: Dockerfile
-    expose:
-      - 4000
+    # ports:
+    #   - ${SCRAPPER_PORT}:4000
 
   iframely:
     env_file:
@@ -134,8 +151,8 @@ services:
     build:
       context: ./docker/postgres
       dockerfile: Dockerfile
-    ports:
-      - ${POSTGRES_PORT}:5432
+    # ports:
+    #   - ${POSTGRES_PORT}:5432
     volumes:
       - "postgres:/var/lib/postgresql/data"
 
@@ -143,6 +160,8 @@ services:
     env_file:
       - .env
     image: redis
+    # ports:
+    #   - ${REDIS_PORT}:6379
     volumes:
       - "redis:/data"
 
