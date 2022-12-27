@@ -99,8 +99,9 @@ gem 'nokogiri'
 # gem "ox", "~> 2.13"
 
 # Faraday
-gem 'faraday'
-gem 'faraday_middleware'
+gem 'faraday', '~> 2'
+gem 'faraday-retry'
+# gem 'faraday_middleware'
 # gem 'faraday-detailed_logger'
 # gem 'faraday_curl'
 
@@ -111,7 +112,7 @@ gem 'interactor'
 gem 'rails-erd'
 gem 'rails-i18n'
 gem 'redis'
-gem "kredis"
+gem 'kredis'
 # gem 'redis-session-store'
 gem 'eu_central_bank'
 gem 'money'
@@ -177,15 +178,15 @@ gem 'ancestry', github: 'stefankroes/ancestry'
 # gem 'rails_admin'
 
 # Elasticsearch family
-gem 'elasticsearch'
-gem 'elasticsearch-api'
-# gem 'elasticsearch-dsl', github: 'woto/elasticsearch-ruby', branch: 'highlight_for_collapse'
-gem 'elasticsearch-dsl'
-gem 'elasticsearch-model'
-gem 'elasticsearch-persistence'
-gem 'elasticsearch-rails'
-gem 'elasticsearch-ruby'
-gem 'elasticsearch-transport'
+# gem 'elasticsearch'
+# gem 'elasticsearch-api'
+# # gem 'elasticsearch-dsl', github: 'woto/elasticsearch-ruby', branch: 'highlight_for_collapse'
+# gem 'elasticsearch-dsl'
+gem 'elasticsearch-model', '~> 7.2.1'
+# gem 'elasticsearch-persistence'
+# gem 'elasticsearch-rails', '~> 7.2.1'
+# gem 'elasticsearch-ruby'
+# gem 'elasticsearch-transport'
 # gem 'elasticsearch-extensions'
 
 # Authentication
@@ -226,7 +227,15 @@ gem "rack-cors"
 
 # Experimental
 # gem 'wikipedia-client'
+gem 'gemoji'
 gem 'yard'
+
+# Telegram bot
+gem "telegram-bot-ruby"
+gem "faraday-multipart", "~> 1.0"
+gem "typhoeus", "~> 1.4"
+gem "faraday-typhoeus", "~> 0.2.0"
+gem "httpx", "~> 0.19.8"
 
 # Deprecated
 gem 'action-cable-testing'

@@ -9,7 +9,7 @@ module Entities
       fragment = Fragment::Parser.call(fragment_url: context.fragment_url)
 
       query = ThingsSearchQuery.call(
-        fragment: fragment,
+        fragment:,
         search_string: context.search_string,
         link_url: context.link_url,
         from: (context.pagination_rule.page - 1) * context.pagination_rule.per,
