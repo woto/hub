@@ -19,7 +19,6 @@
 
 
 ```ruby
-        faraday.use FaradayMiddleware::FollowRedirects
         faraday.adapter Faraday.default_adapter
 ```
 

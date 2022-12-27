@@ -178,16 +178,15 @@ gem 'ancestry', github: 'stefankroes/ancestry'
 # gem 'rails_admin'
 
 # Elasticsearch family
-# gem 'elasticsearch'
-# gem 'elasticsearch-api'
-# # gem 'elasticsearch-dsl', github: 'woto/elasticsearch-ruby', branch: 'highlight_for_collapse'
+gem 'elasticsearch'
+gem 'elasticsearch-api'
 gem 'elasticsearch-dsl'
 gem 'elasticsearch-model', '~> 7.2.1'
-# gem 'elasticsearch-persistence'
-# gem 'elasticsearch-rails', '~> 7.2.1'
-# gem 'elasticsearch-ruby'
-# gem 'elasticsearch-transport'
-# gem 'elasticsearch-extensions'
+gem 'elasticsearch-persistence'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-ruby'
+gem 'elasticsearch-transport'
+gem 'elasticsearch-extensions'
 
 # Authentication
 gem 'devise'

@@ -4,8 +4,8 @@ module PostCategories
   class YandexMarketImportJob < ApplicationJob
     def perform(realm, url)
       connection = Faraday.new(url: url) do |faraday|
-        faraday.use FaradayMiddleware::FollowRedirects
         faraday.adapter Faraday.default_adapter
+        faraday.response :follow_redirects
       end
       response = connection.get(url)
       # TODO: how to skip step with converting string to io?
