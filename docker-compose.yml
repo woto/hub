@@ -57,6 +57,19 @@ services:
     ports:
       - 19394:9394
 
+  telegram:
+    env_file:
+      - .env
+    image: app
+    command:
+      [ "bundle", "exec", "rake", "hub:telegram" ]
+    volumes:
+      - "rails_storage:/app/storage"
+      - "rails_sitemaps:/app/public/sitemaps"
+      - "rails_uploads:/app/public/uploads"
+      - "rails_secrets:/app/config/secrets/production"
+      - "./data:/app/data"
+
   scrapper:
     env_file:
       - .env
