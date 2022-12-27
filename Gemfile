@@ -101,7 +101,7 @@ gem 'nokogiri'
 # Faraday
 gem 'faraday', '~> 2'
 gem 'faraday-retry'
-# gem 'faraday_middleware'
+gem 'faraday-follow_redirects'
 # gem 'faraday-detailed_logger'
 # gem 'faraday_curl'
 
