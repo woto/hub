@@ -2,7 +2,7 @@
 /erd.pdf
 /public/uploads
 /docker
-
+/docker-compose.yml
 
 /.env
 /.env.test

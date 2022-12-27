@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 services:
 
   rails:
@@ -69,6 +69,7 @@ services:
       - "rails_uploads:/app/public/uploads"
       - "rails_secrets:/app/config/secrets/production"
       - "./data:/app/data"
+    restart: on-failure
 
   scrapper:
     env_file:
