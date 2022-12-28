@@ -69,6 +69,7 @@ services:
       - "rails_uploads:/app/public/uploads"
       - "rails_secrets:/app/config/secrets/production"
       - "./data:/app/data"
+    restart: always
 
   scrapper:
     env_file:
