@@ -5,6 +5,21 @@ require 'rails_helper'
 describe Extractors::YoutubeCom::Index do
   subject { described_class.call(q: title) }
 
+  describe 'https://youtu.be' do
+    context 'with url "https://youtu.be/xZgZLOq1JKU"' do
+      let(:title) { 'https://youtu.be/xZgZLOq1JKU' }
+
+      before do
+        expect(Extractors::YoutubeCom::ListVideos).to(
+          receive(:call).with(id: 'xZgZLOq1JKU').and_return(OpenStruct.new(object: {}))
+        )
+      end
+
+      it { expect { subject }.not_to raise_error }
+    end
+  end
+
+
   describe '/watch' do
     context 'with url "https://www.youtube.com/watch?v=aircAruvnKk"' do
       let(:title) { 'https://www.youtube.com/watch?v=aircAruvnKk' }

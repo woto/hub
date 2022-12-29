@@ -19,6 +19,17 @@ module Extractors
         }
 
         ###
+        youtu_be = lambda {
+          uri.domain == 'youtu.be' && parts.second
+        }
+
+        if youtu_be.call
+          result = Extractors::YoutubeCom::ListVideos.call(id: youtu_be.call).object.to_h
+          context.object[:video] = result
+          channel_id = result.dig(:items, 0, :snippet, :channel_id)
+        end
+
+        ###
         watch = lambda {
           parts.second == 'watch' && query_values['v']
         }
