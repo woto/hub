@@ -28,16 +28,18 @@ jobs:
       DB_PASSWORD: 'Vet:orget5'
     executor: ruby/default
     steps:
+      - run: ruby --version
+      - run: node --version
+      - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client libvips libvips-tools libvips-dev
-      - checkout
       - run: gem update bundler
       - run: yarn install --pure-lockfile
 #      - run:
 #          name: Which bundler?
 #          command: bundle -v
       - ruby/bundle-install
-      - run: bundle exec rake webpacker:compile
+      - run: bundle exec rake assets:precompile
       - run:
           name: Setup PostgreSQL test database
           command: bin/rails db:test:prepare RAILS_ENV=test
