@@ -43,6 +43,12 @@ jobs:
 
     steps:
 
+    - name: Update Ubuntu repositories
+      run: sudo apt-get update
+
+    - name: Install libvips
+      run: sudo apt-get install libvips libvips-tools libvips-dev
+
     - uses: actions/checkout@v3
 
     - name: Set up Ruby
