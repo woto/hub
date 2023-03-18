@@ -43,7 +43,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -64,7 +64,7 @@ jobs:
         bundle install --jobs 4 --retry 3
 
     - name: Setup Node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 18.12.1
 
@@ -84,7 +84,7 @@ jobs:
         yarn install --pure-lockfile
 
     - name: Compile assets
-      run: bundle exec rake webpacker:compile
+      run: bundle exec rake assets:precompile
 
     - name: Setup DB
       run: bin/rails db:create db:schema:load
