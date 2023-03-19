@@ -9,7 +9,7 @@ module Entities
         entity = Entity.find(context.id)
       else
         # TODO: optimize
-        entity = Entity.order("RANDOM()").first
+        entity = Entity.order('RANDOM()').first
       end
 
       context.object = EntityPresenter.call(entity: entity).object

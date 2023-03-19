@@ -2,18 +2,16 @@
 
 require 'rails_helper'
 
-describe Roastme::HomepageController, type: :system do
-  # NOTE: non deterministic test. May fail
+describe Roastme::TinderController, type: :system do
 
   before do
-    create_list(:entity, 10)
-    switch_domain('mentions.lvh.me') do
-      visit roastme_root_path
-    end
+    first, second, third = create_list(:entity, 3)
+    allow(Entity).to receive(:order).with('RANDOM()').and_return([first], [second], [third])
+    visit '/tinder'
   end
 
   def cards_ids
-    all("[data-test-class='card']", count: 2) { |el| el['data-entity-id'] =~ /\d+/ }.map { |el| el['data-entity-id'] }
+    page.all('a', text: 'перейти').pluck(:href)
   end
 
   def tinder
@@ -27,9 +25,11 @@ describe Roastme::HomepageController, type: :system do
 
   it 'does not swipe away if dragged a little bit' do
     expect { action(50) }.not_to(change { cards_ids })
+    expect(Entity).to have_received(:order).twice
   end
 
   it 'swipes away if dragged more' do
     expect { action(150) }.to(change { cards_ids })
+    expect(Entity).to have_received(:order).thrice
   end
 end
