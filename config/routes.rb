@@ -92,7 +92,6 @@ Rails.application.routes.draw do
     scope module: 'tables' do
       resources :accounts, only: [:index]
       resources :checks, only: [:index]
-      resources :favorites, only: [:index]
       resources :advertisers, only: [:index] do
         resources :offers, only: [:index]
       end
@@ -131,12 +130,6 @@ Rails.application.routes.draw do
     end
     resources :realms
     resources :posts
-
-    resources :favorites do
-      collection do
-        get :update_star
-      end
-    end
 
     resources :users do
       post :impersonate, on: :member

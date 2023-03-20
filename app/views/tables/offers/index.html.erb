@@ -31,12 +31,6 @@
                           class: '!tw-no-underline'
               %>
 
-              <%= render StarFavoriteComponent.new(
-                is_favorite: @favorites_store.find(group[:ext_id], group[:favorite_item_kind]),
-                ext_id: group[:ext_id],
-                favorites_items_kind: group[:favorite_item_kind],
-                bobber: { class: 'z-index-decreased' }) %>
-
               <%= render BookmarkComponent.new(
                 favorites_store: @favorites_store,
                 ext_id: group[:ext_id],

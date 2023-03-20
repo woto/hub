@@ -1,15 +1,6 @@
 <%= render 'tables/offers/card_wrapper' do %>
 
   <% kind = '_id' %>
-  <%= render StarFavoriteComponent.new(
-    is_favorite: @favorites_store.find(row._id, kind),
-    ext_id: row._id,
-    favorites_items_kind: kind,
-    bobber: {
-      class: 'bg-white border border position-absolute py-2 z-index-decreased',
-      style: 'top: -1px; right: -1px;'
-    }) %>
-
   <%= render BookmarkComponent.new(
     favorites_store: @favorites_store,
     ext_id: row._id,
