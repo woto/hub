@@ -57,7 +57,7 @@ function OldBookmark(props: { foo: any, ext_id: string, favorites_items_kind: st
             </Popover.Button>
             )}
 
-          {props.foo(reference)}
+          {props.foo && props.foo(reference)}
 
           <div
             ref={floating}
