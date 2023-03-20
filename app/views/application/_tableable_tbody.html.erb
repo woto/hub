@@ -5,11 +5,6 @@
       <%= tag.div class: '2xl:tw-table-cell tw-align-middle tw-p-2',
                   id: "tr_#{row.id}_td_favorite" do %>
         <% kind = @settings[:favorites_items_kind] %>
-          <%= render StarFavoriteComponent.new(
-            is_favorite: @favorites_store.find(row._id, kind),
-            ext_id: row.id,
-            favorites_items_kind: kind,
-            bobber: { class: 'z-index-decreased' }) %>
 
         <%= render BookmarkComponent.new(
           favorites_store: @favorites_store,
