@@ -10,12 +10,6 @@
 
   <% content_for :star do %>
     <% kind = 'feed_category_id' %>
-    <%= render StarFavoriteComponent.new(
-      is_favorite: @favorites_store.find(current_feed_category.id, kind),
-      ext_id: current_feed_category.id,
-      favorites_items_kind: kind,
-      bobber: { class: 'z-index-decreased' }) %>
-
     <%= render BookmarkComponent.new(
       favorites_store: @favorites_store,
       ext_id: current_feed_category.id,
@@ -29,12 +23,6 @@
 
   <% content_for :star do %>
     <% kind = 'feed_id' %>
-    <%= render StarFavoriteComponent.new(
-      is_favorite: @favorites_store.find(current_feed.id, kind),
-      ext_id: current_feed.id,
-      favorites_items_kind: kind,
-      bobber: { class: 'z-index-decreased' }) %>
-
     <%= render BookmarkComponent.new(
       favorites_store: @favorites_store,
       ext_id: current_feed.id,
@@ -49,12 +37,6 @@
 
   <% content_for :star do %>
     <% kind = 'advertiser_id' %>
-    <%= render StarFavoriteComponent.new(
-      is_favorite: @favorites_store.find(current_advertiser.id, kind),
-      ext_id: current_advertiser.id,
-      favorites_items_kind: kind,
-      bobber: { class: 'z-index-decreased' }) %>
-
     <%= render BookmarkComponent.new(
       favorites_store: @favorites_store,
       ext_id: current_advertiser.id,

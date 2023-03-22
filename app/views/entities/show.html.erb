@@ -89,25 +89,6 @@
                   <%= render BookmarkComponent.new(favorites_store: @favorites_store, ext_id: @entity.id, favorites_items_kind: 'entities') %>
                 </div>
               <% end %>
-
-              <% if false %>
-                <div class="position-relative">
-                  <% kind = 'entities' %>
-                  <% favorites_store = FavoritesStore.new(current_user) %>
-                  <% favorites_store.append(@entity.id, kind) %>
-                  1
-                  <%= render StarFavoriteComponent.new(
-                    is_favorite: favorites_store.find(@entity.id, kind),
-                    ext_id: @entity.id,
-                    favorites_items_kind: kind,
-                    bobber: {
-                      class: 'position-absolute z-index-decreased',
-                      style: 'top: -5px; right: 0px;'
-                    }) %>
-                  2
-                </div>
-              <% end %>
-
             </div>
           </div>
         </div>
