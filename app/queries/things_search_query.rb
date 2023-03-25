@@ -22,7 +22,7 @@ class ThingsSearchQuery
         json.bool do
 
           if context[:search_string]
-            json.should do
+            json.set! :should do
               json.array! ['fuck'] do
                 json.multi_match do
                   json.query context[:search_string]
