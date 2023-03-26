@@ -19,7 +19,7 @@ import axios from '../system/Axios';
 import Entity from './Entity';
 import AddCircleContent from './AddCircleContent';
 
-export default function AddCircle(props: {entityIds: number[], entityTitle: string, q: string}) {
+export default function AddCircle(props: {entityIds: number[], entityTitle: string, searchString: string}) {
   return (
     <Popover className="tw-z-0 tw-relative?">
       {({ open }) => (
@@ -54,7 +54,7 @@ export default function AddCircle(props: {entityIds: number[], entityTitle: stri
               <AddCircleContent
                 entityIds={props.entityIds}
                 entityTitle={props.entityTitle}
-                q={props.q}
+                searchString={props.searchString}
               />
             </Popover.Panel>
           </Transition>

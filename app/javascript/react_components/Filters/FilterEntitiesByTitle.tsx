@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-export default function FilterEntitiesByTitle() {
+export default function FilterEntitiesByTitle({
+  entityTitle, setEntityTitle,
+}: {
+      entityTitle: string,
+      setEntityTitle: React.Dispatch<React.SetStateAction<string>>,
+  }) {
   return (
     <div className="mt-1">
       <input
@@ -8,6 +13,8 @@ export default function FilterEntitiesByTitle() {
         className=" focus:tw-ring-indigo-300 focus:tw-border-indigo-300
           tw-block tw-w-full sm:tw-text-sm? tw-border-gray-300 tw-px-4 tw-rounded-full"
         placeholder="Введите строку для поиска..."
+        value={entityTitle}
+        onChange={(event) => setEntityTitle(event.target.value)}
       />
     </div>
   );

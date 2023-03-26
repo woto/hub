@@ -4,25 +4,42 @@ module Entities
   class EntityPresenter
     include ApplicationInteractor
 
-    delegate :entity, to: :context
+    # delegate :entity, to: :context
+
+    contract do
+      params do
+        required(:id).filled(:integer)
+        required(:entity_url).filled(:string)
+        required(:title).maybe(:string)
+        required(:intro).maybe(:string)
+        required(:lookups)
+        required(:kinds)
+        required(:images).maybe do
+          array(:hash) do
+            required(:id).filled(:integer)
+            required(:image_url).maybe(:string)
+            required(:video_url).maybe(:string)
+            required(:width).maybe(:integer)
+            required(:height).maybe(:integer)
+            required(:dark).maybe(:bool)
+          end
+        end
+        required(:entities_mentions_count)
+        required(:links).maybe { array? { each { string? } } }
+      end
+    end
 
     def call
       context.object = {
-        entity_id: entity.id,
-        title: entity.title,
-        intro: entity.intro,
-        lookups: entity.lookups.map { |lookup| { id: lookup.id, title: lookup.title } },
-        kinds: entity.topics.map { |topic| { id: topic.id, title: topic.title } },
-        images: GlobalHelper.image_hash(entity.images_relations, %w[200]).map do |image|
-          {
-            id: image['id'],
-            image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['200'] : nil,
-            video_url: ImageUploader::VIDEO_TYPES.include?(image['mime_type']) ? image['videos']['200'] : nil,
-            dark: image['dark']
-          }
-        end,
-        entities_mentions_count: entity.entities_mentions_count,
-        link: Rails.application.routes.url_helpers.entity_url(entity, host: GlobalHelper.host, locale: nil)
+        entity_id: context.id,
+        entity_url: context.entity_url,
+        title: context.title,
+        intro: context.intro,
+        lookups: context.lookups,
+        kinds: context.kinds,
+        images: context.images,
+        entities_mentions_count: context.entities_mentions_count,
+        links: context.links
       }
     end
   end

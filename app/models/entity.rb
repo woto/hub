@@ -69,6 +69,35 @@ class Entity < ApplicationRecord
 
   accepts_nested_attributes_for :lookups, allow_destroy: true, reject_if: :all_blank
 
+  settings index: { number_of_shards: 1, number_of_replicas: 0 } do
+    mapping do
+      indexes :entities_mentions_count, type: 'long'
+      indexes :hostname, type: 'text'
+      indexes :id, type: 'long'
+      indexes :intro, type: 'text'
+      indexes :link_url, type: 'text'
+      indexes :lookups do
+        indexes :id, type: 'long'
+        indexes :title, type: 'text'
+      end
+      indexes :prefix, type: 'text'
+      indexes :suffix, type: 'text'
+      indexes :text_start, type: 'text'
+      indexes :text_end, type: 'text'
+      indexes :title, type: 'text' do
+        indexes :autocomplete, type: 'search_as_you_type'
+        indexes :keyword, type: 'keyword'
+      end
+      indexes :topics do
+        indexes :id, type: 'long'
+        indexes :title, type: 'text'
+      end
+      indexes :user_id, type: 'long'
+      indexes :created_at, type: 'date'
+      indexes :updated_at, type: 'date'
+    end
+  end
+
   def as_indexed_json(_options = {})
     {
       id:,
@@ -77,7 +106,7 @@ class Entity < ApplicationRecord
       text_end: cites.map(&:text_end),
       prefix: cites.map(&:prefix),
       suffix: cites.map(&:suffix),
-      link_url: cites.map(&:link_url),
+      link_url: cites.map(&:link_url).compact,
       hostname: hostname&.to_label,
       intro:,
       lookups: lookups.map { |lookup| { id: lookup.id, title: lookup.title } },

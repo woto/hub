@@ -30,7 +30,7 @@
 class Mention < ApplicationRecord
   has_logidze ignore_log_data: true
 
-  include Elasticable
+  include Elasticsearch::Model
   index_name "#{Rails.env}.mentions"
 
   include Topicable
@@ -74,6 +74,34 @@ class Mention < ApplicationRecord
 
   def to_param
     [id, title&.parameterize].join('-')
+  end
+
+  settings index: { number_of_shards: 1, number_of_replicas: 0 } do
+    mapping do
+      indexes :id, type: 'long'
+      indexes :entities, type: 'nested' do
+        indexes :id, type: 'long'
+        indexes :entity_id, type: 'long'
+        indexes :created_at, type: 'date'
+        indexes :mention_date, type: 'date'
+        indexes :relevance, type: 'long'
+        indexes :sentiment, type: 'float'
+      end
+      indexes :title, type: 'text' do
+        indexes :autocomplete, type: 'search_as_you_type'
+        indexes :keyword, type: 'keyword'
+      end
+      indexes :hostname, type: 'text'
+      indexes :topics do
+        indexes :id, type: 'long'
+        indexes :title, type: 'text'
+      end
+      indexes :url, type: 'text'
+      indexes :user_id, type: 'long'
+      indexes :created_at, type: 'date'
+      indexes :updated_at, type: 'date'
+      indexes :published_at, type: 'date'
+    end
   end
 
   def as_indexed_json(_options = {})

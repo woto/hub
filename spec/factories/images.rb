@@ -2,11 +2,12 @@
 #
 # Table name: images
 #
-#  id         :bigint           not null, primary key
-#  image_data :jsonb
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint
+#  id          :bigint           not null, primary key
+#  image_data  :jsonb
+#  youtube_url :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint
 #
 # Indexes
 #

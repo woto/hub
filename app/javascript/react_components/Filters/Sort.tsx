@@ -12,7 +12,7 @@ const sortOptions = [
 export default function Sort() {
   return (
     <Menu as="div" className="tw-z-10 tw-inline-block tw-text-left">
-      <div>
+      <div className="tw-flex">
         <Menu.Button className="tw-rounded-sm tw-ring-offset-2 tw-group tw-inline-flex tw-justify-center
         tw-text-gray-700 hover:tw-text-gray-900 focus:tw-ring-indigo-300 focus:tw-ring-2 tw-outline-none"
         >

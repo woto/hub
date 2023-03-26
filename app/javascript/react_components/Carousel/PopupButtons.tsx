@@ -121,7 +121,7 @@ export default function PopupButtons({
       </button>
 
       <a
-        href={data?.link}
+        href={data?.entity_url}
         className="-tw-ml-px tw-border-l tw-border-t tw-border-r tw-border-r-transparent
         tw-select-none tw-basis-full tw-justify-center tw-relative tw-inline-flex tw-items-center tw-px-4 tw-py-3
         tw-border-slate-200 tw-bg-gradient-to-b tw-from-gray-50 tw-to-slate-100 tw-text-sm tw-font-medium tw-text-gray-500 hover:tw-text-gray-900

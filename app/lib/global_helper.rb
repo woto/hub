@@ -12,7 +12,6 @@ class GlobalHelper
     end
 
     def image_hash(images_relations, resolutions)
-
       images_relations.map do |images_relation|
         # debugger if object.class != Image
         # images_relation = object.images_relations#.where(relation_type: 'Entity')
@@ -33,18 +32,18 @@ class GlobalHelper
             resolutions.map do |resolution|
               [
                 resolution.to_s,
-                images_relation.image ?
-                images_relation.image.image.derivation_url(:image, resolution.to_i, resolution.to_i) :
-                nil
+                if images_relation.image
+                  images_relation.image.image.derivation_url(:image, resolution.to_i, resolution.to_i)
+                end
               ]
             end.to_h,
           'videos' =>
             resolutions.map do |resolution|
               [
                 resolution.to_s,
-                images_relation.image ?
-                images_relation.image.image.derivation_url(:video, resolution.to_i, resolution.to_i) :
-                nil
+                if images_relation.image
+                  images_relation.image.image.derivation_url(:video, resolution.to_i, resolution.to_i)
+                end
               ]
             end.to_h,
           'width' => images_relation.image ? images_relation.image.image.metadata['width'] : nil,
@@ -56,10 +55,17 @@ class GlobalHelper
     end
 
     def class_configurator(model)
+      form_class = case model
+                   when 'mention', 'entity'
+                     nil
+                   else
+                     "Columns::#{model.to_s.pluralize.camelize}Mapping".constantize
+                   end
+
       { singular: model.to_s.singularize.to_sym,
         plural: model.to_s.pluralize.to_sym,
         model_class: model.to_s.singularize.camelize.safe_constantize,
-        form_class: "Columns::#{model.to_s.pluralize.camelize}Mapping".constantize,
+        form_class:,
         query_class: "#{model.to_s.pluralize.camelize}SearchQuery".constantize,
         decorator_class: "#{model.to_s.singularize.camelize}Decorator".constantize,
         favorites_kind: model.to_s.pluralize.to_sym,

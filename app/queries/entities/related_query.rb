@@ -16,28 +16,26 @@ module Entities
       body = Jbuilder.new do |json|
         json.query do
           json.bool do
-            if context.entity_ids.present?
-              context.entity_ids.each do |entity_id|
-                json.filter do
-                  json.array! ['fuck'] do
-                    json.nested do
-                      json.path 'entities'
-                      json.query do
-                        json.term do
-                          json.set! 'entities.entity_id', entity_id
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-
-            if context.q.present?
-              json.must do
+            json.filter do
+              if context.q.present?
                 json.array! ['fuck'] do
                   json.query_string do
                     json.query context.q
+                  end
+                end
+              end
+
+              json.array! ['fuck'] do
+                if context.entity_ids.present?
+                  json.nested do
+                    json.path "entities"
+                    json.query do
+                      json.array! ['fuck!'] do
+                        json.terms do
+                          json.set! "entities.entity_id", context.entity_ids
+                        end
+                      end
+                    end
                   end
                 end
               end
@@ -52,34 +50,9 @@ module Entities
             end
             json.aggs do
               json.group do
-                json.filter do
-                  json.bool do
-                    json.filter do
-                      json.array! ['fuck'] do
-                        if context.entity_title.present?
-                          json.multi_match do
-                            json.query context.entity_title
-                            json.type 'bool_prefix'
-                            json.fields do
-                              json.array! %w[
-                                entities.title.autocomplete
-                                entities.title.autocomplete._2gram
-                                entities.title.autocomplete._3gram
-                              ]
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-                json.aggs do
-                  json.group do
-                    json.terms do
-                      json.field 'entities.entity_id'
-                      json.size 50
-                    end
-                  end
+                json.terms do
+                  json.field 'entities.entity_id'
+                  json.size context.size
                 end
               end
             end

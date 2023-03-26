@@ -14,9 +14,11 @@ module Elastic
     def call
       Rails.logger.info(message: 'Creating elasticsearch index', index: context.index.scoped)
       model = context.index.name.singularize.camelize.constantize
-      form = "Columns::#{context.index.name.camelize}Mapping".constantize
-
-      model.setup_index(form)
+      unless %w[Entity Mention].include? model
+        mapping_name = "Columns::#{context.index.name.camelize}Mapping"
+        form = mapping_name.constantize
+        model.setup_index(form)
+      end
       create_index(context.index, model)
     end
 

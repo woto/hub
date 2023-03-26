@@ -25,11 +25,11 @@ function classNames(...classes) {
 export default function Filters(props: {
   imageSrc: string,
   entityId: number,
-  q: string,
+  searchString: string,
   entityTitle: string
 }) {
   const [entities, setEntities] = useState<any[]>();
-  const [searchString, setSearchString] = useState('');
+  const [searchString, setSearchString] = useState(props.searchString);
   const [scrollToFirst, setScrollToFirst] = useState(false);
 
   return (
@@ -42,7 +42,7 @@ export default function Filters(props: {
             <div className="tw-flex tw-items-center tw-justify-around">
               <div className="tw-flex tw-items-center tw-space-x-2">
                 <EditCircle imageSrc={props.imageSrc} />
-                <AddCircle entityIds={[props.entityId]} q={props.q} entityTitle={props.entityTitle} />
+                <AddCircle entityIds={[props.entityId]} searchString={searchString} entityTitle={props.entityTitle} />
               </div>
               <Search setSearchString={setSearchString} setScrollToFirst={setScrollToFirst} />
               <Sort />

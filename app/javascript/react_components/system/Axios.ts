@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MetaHTMLAttributes } from 'react';
 
 const instance = axios.create({
   headers: {
@@ -9,9 +10,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const csrfToken = document.getElementsByName('csrf-token')[0].content;
-    config.headers['X-CSRF-Token'] = csrfToken;
-
+    const meta = (document.getElementsByName('csrf-token')[0] as HTMLMetaElement);
+    if (meta) {
+      const csrfToken = meta.content;
+      config.headers['X-CSRF-Token'] = csrfToken;
+    }
     return config;
   },
   (error) =>
