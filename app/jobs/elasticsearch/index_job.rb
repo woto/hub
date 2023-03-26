@@ -5,7 +5,8 @@ module Elasticsearch
     queue_as :low
 
     def perform(record)
-      record.__elasticsearch__.send_document_to_elasticsearch
+      record.__elasticsearch__.index_document
+      record.class.__elasticsearch__.refresh_index!
     end
   end
 end
