@@ -3,7 +3,7 @@
 module Import
   class LockFeed
     include ApplicationInteractor
-    # include Sidekiq::Util
+    include Sidekiq::Component
 
     def call
       ActiveRecord::Base.transaction do
