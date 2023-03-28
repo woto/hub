@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'sidekiq/component'
+
 module Import
   class LockFeed
     include ApplicationInteractor

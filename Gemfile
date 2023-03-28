@@ -228,6 +228,7 @@ gem "rack-cors"
 # gem 'wikipedia-client'
 gem 'gemoji'
 gem 'yard'
+gem "ruby-openai"
 
 # Telegram bot
 gem "telegram-bot-ruby"
