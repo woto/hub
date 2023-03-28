@@ -73,7 +73,8 @@ module Sync
           advertiser.raw = adv
           attach_picture(advertiser, adv['image'])
           advertiser.synced_at = Time.current
-          advertiser.save!
+          # TODO: send errors to monitoring if the record cannot be saved
+          advertiser.save
           yield(advertiser, adv['feeds_info'])
         end
       end
