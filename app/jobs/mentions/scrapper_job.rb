@@ -17,7 +17,8 @@ module Mentions
         end
 
         mention = Mention.find(mention_id)
-        mention.__elasticsearch__.send_document_to_elasticsearch
+        mention.__elasticsearch__.index_document
+        mention.class.__elasticsearch__.refresh_index!
       else
         raise result.message
       end

@@ -17,7 +17,9 @@ shared_examples 'elasticable' do
   it 'index newly created documents' do
     Current.set(responsible: create(:user)) do
       record = build(model)
-      expect(record).to receive(:send_document_to_elasticsearch).at_least(:once)
+
+      expect(record.__elasticsearch__).to receive(:index_document).at_least(:once)
+      expect(record.class.__elasticsearch__).to receive(:refresh_index!).at_least(:once)
       record.save!
     end
   end
@@ -25,7 +27,8 @@ shared_examples 'elasticable' do
   it 'index changed documents' do
     Current.set(responsible: create(:user)) do
       record = create(model)
-      expect(record).to receive(:send_document_to_elasticsearch).at_least(:once)
+      expect(record.__elasticsearch__).to receive(:index_document).at_least(:once)
+      expect(record.class.__elasticsearch__).to receive(:refresh_index!).at_least(:once)
       record.touch
     end
   end
@@ -34,7 +37,8 @@ shared_examples 'elasticable' do
     it 'does not index document' do
       Current.set(responsible: create(:user, role: :admin)) do
         record = create(model)
-        expect(record).not_to receive(:send_document_to_elasticsearch)
+        expect(record.__elasticsearch__).not_to receive(:index_document)
+        expect(record.class.__elasticsearch__).not_to receive(:refresh_index!)
         record.save!
       end
     end
@@ -50,7 +54,8 @@ shared_examples 'elasticable' do
         Current.set(responsible: create(:user, role: :admin)) do
           record = create(model)
           record.id_will_change!
-          expect(record).to receive(:send_document_to_elasticsearch)
+          expect(record.__elasticsearch__).to receive(:index_document).at_least(:once)
+          expect(record.class.__elasticsearch__).to receive(:refresh_index!).at_least(:once)
           record.save!
         end
       end
