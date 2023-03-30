@@ -400,6 +400,7 @@ GEM
     minitest (5.18.0)
     money (6.16.0)
       i18n (>= 0.6.4, <= 2)
+    mqtt (0.6.0)
     msgpack (1.6.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -823,6 +824,7 @@ DEPENDENCIES
   mini_magick (~> 4.10)
   mobility!
   money
+  mqtt
   newrelic_rpm
   nokogiri
   numbers_and_words
@@ -885,7 +887,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.1.3p185
+   ruby 3.2.1p31
 
 BUNDLED WITH
    2.2.30

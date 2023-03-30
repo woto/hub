@@ -1,4 +1,4 @@
-FROM ruby:3.1.3-alpine
+FROM ruby:3.2.1-alpine
 
 # Minimal requirements to run a Rails app
 RUN apk add --no-cache --update build-base \

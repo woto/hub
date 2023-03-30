@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.3'
+ruby '3.2.1'
 
 gem "bootsnap", require: false
 gem 'jbuilder'
@@ -228,7 +228,8 @@ gem "rack-cors"
 # gem 'wikipedia-client'
 gem 'gemoji'
 gem 'yard'
-gem "ruby-openai"
+gem 'ruby-openai'
+gem 'mqtt'
 
 # Telegram bot
 gem "telegram-bot-ruby"
