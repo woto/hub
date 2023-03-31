@@ -5,9 +5,7 @@ module Chatgpt
     include ApplicationInteractor
 
     PROMPT = <<~HERE.squish
-      I want you act as a SEO copywriter.
-      I will provide you a product title and links to the product photos.
-      The response must be in Russian language.
+      Write SEO description of the product in the language of origin:
     HERE
 
     def call
@@ -15,10 +13,32 @@ module Chatgpt
         config.access_token = ENV.fetch('OPENAI_ACCESS_TOKEN')
       end
 
-      query = Offers::RandomQuery.call.object
+      client = OpenAI::Client.new
 
-      result = GlobalHelper.elastic_client.search(query).then do |res|
-        pp res
+      loop do
+        query = Offers::RandomQuery.call.object
+
+        offer = GlobalHelper.elastic_client.search(query)
+
+        title = offer['hits']['hits'][0]['_source']['name'][0]['#']
+
+        result = client.chat(
+          parameters: {
+            model: 'gpt-3.5-turbo',
+            messages: [{ role: 'user', content: "#{PROMPT} #{title}" }],
+            temperature: 0.7
+          }
+        )
+
+        description = result['choices'][0]['message']['content']
+
+        Description.create!(
+          advertiser_id: offer['hits']['hits'][0]['_source']['advertiser_id'],
+          feed_id: offer['hits']['hits'][0]['_source']['feed_id'],
+          offer_id: offer['hits']['hits'][0]['_id'],
+          title:,
+          description:
+        )
       end
     end
   end

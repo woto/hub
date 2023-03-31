@@ -682,6 +682,41 @@ ALTER SEQUENCE public.complains_id_seq OWNED BY public.complains.id;
 
 
 --
+-- Name: descriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.descriptions (
+    id bigint NOT NULL,
+    advertiser_id integer NOT NULL,
+    feed_id integer NOT NULL,
+    offer_id character varying NOT NULL,
+    title text NOT NULL,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: descriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.descriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: descriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.descriptions_id_seq OWNED BY public.descriptions.id;
+
+
+--
 -- Name: entities; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1824,6 +1859,13 @@ ALTER TABLE ONLY public.complains ALTER COLUMN id SET DEFAULT nextval('public.co
 
 
 --
+-- Name: descriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.descriptions ALTER COLUMN id SET DEFAULT nextval('public.descriptions_id_seq'::regclass);
+
+
+--
 -- Name: entities id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2112,6 +2154,14 @@ ALTER TABLE ONLY public.cites
 
 ALTER TABLE ONLY public.complains
     ADD CONSTRAINT complains_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: descriptions descriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.descriptions
+    ADD CONSTRAINT descriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -3388,6 +3438,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220920130348'),
 ('20221022225401'),
 ('20221024180121'),
-('20221229084712');
+('20221229084712'),
+('20230328181427'),
+('20230328190909');
 
 
