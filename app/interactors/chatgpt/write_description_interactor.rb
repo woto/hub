@@ -39,6 +39,8 @@ module Chatgpt
           title:,
           description:
         )
+      rescue Net::ReadTimeout
+        retry
       end
     end
   end
