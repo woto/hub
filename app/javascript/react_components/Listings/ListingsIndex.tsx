@@ -34,7 +34,13 @@ export default function ListingsIndex({ opened, close, entityId }: {
     queryKey,
     () => axios
       .get(`/api/listings/?${queryString}`)
-      .then((res) => res.data),
+      .then((res) => res.data)
+      .then((data) => (
+        data.sort((a, b) => {
+          if (a.is_checked > b.is_checked) return -1;
+          if (a.is_checked < b.is_checked) return 1;
+          return 0;
+        }))),
     {
       enabled: opened,
     },
