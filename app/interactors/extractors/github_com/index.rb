@@ -22,12 +22,12 @@ module Extractors
 
       def repo
         begin
-          uri = URI.parse(context.q)
+          uri = URI.parse(context.q.strip)
 
           result = if uri.host && %w[http https].include?(uri.scheme)
                      uri.path[1..]
                    else
-                     context.q
+                     context.q.strip
                    end
 
           result = result.split('/').compact_blank
