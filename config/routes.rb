@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       resources :mentions, only: %i[index]
       resources :entities, only: [:index]
     end
-    resources :mentions, only: %i[index]
+    resources :mentions, only: %i[index show]
     resources :listings, only: [:show]
 
     resources :entities, only: %i[index show] do

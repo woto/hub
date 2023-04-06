@@ -91,6 +91,7 @@ class Mention < ApplicationRecord
         indexes :autocomplete, type: 'search_as_you_type'
         indexes :keyword, type: 'keyword'
       end
+      indexes :slug, type: 'keyword'
       indexes :hostname, type: 'text'
       indexes :topics do
         indexes :id, type: 'long'
@@ -113,6 +114,7 @@ class Mention < ApplicationRecord
       hostname: hostname.to_label,
       url: url,
       title: title,
+      slug: to_param,
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,

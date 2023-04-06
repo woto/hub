@@ -36,16 +36,19 @@ function Share(props: {
     // placement: 'left',
     // whileElementsMounted: autoUpdate,
     // Or, pass options. Ensure the cleanup function is returned.
-    whileElementsMounted: (reference, floating, update) =>
-      autoUpdate(reference, floating, update, {
-        ancestorScroll: false,
-        animationFrame: false,
-        ancestorResize: false,
-        // elementResize: false
-        // animationFrame: true,
-      }),
+    whileElementsMounted: (reference, floating, update) => autoUpdate(reference, floating, update, {
+      ancestorScroll: false,
+      animationFrame: false,
+      ancestorResize: false,
+      // elementResize: false
+      // animationFrame: true,
+    }),
     middleware: [flip(), shift({ padding: 10 }), offset(5)],
   });
+
+  const mentionUrl = (mention) => (
+    `${window.location.host}/mentions/${mention.slug}`
+  );
 
   return (
     <Menu as="div" className="tw-relative tw-inline-block tw-text-left">
@@ -89,7 +92,7 @@ function Share(props: {
                   <button
                     type="button"
                     onClick={(e) => {
-                      copyToClipboard(props.mention.url);
+                      copyToClipboard(mentionUrl(props.mention));
                       add('Ссылка успешно скопирована');
                     }}
                     className={classNames(
@@ -112,7 +115,7 @@ function Share(props: {
               <Menu.Item>
                 {({ active }) => (
                   <EmailShareButton
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     className="tw-w-full"
                     subject="subject"
                     body="body"
@@ -135,7 +138,7 @@ function Share(props: {
                 {({ active }) => (
                   <VKShareButton
                     className="tw-w-full"
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     title={props.mention.title}
                     image={props.mention.image.images['500']}
                     noParse={false}
@@ -156,7 +159,7 @@ function Share(props: {
                 {({ active }) => (
                   <TelegramShareButton
                     className="tw-w-full"
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     title={props.mention.title}
                   >
                     <div className={classNames(
@@ -174,7 +177,7 @@ function Share(props: {
                 {({ active }) => (
                   <WhatsappShareButton
                     className="tw-w-full"
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     title={props.mention.title}
                   >
                     <div className={classNames(
@@ -192,7 +195,7 @@ function Share(props: {
                 {({ active }) => (
                   <LinkedinShareButton
                     className="tw-w-full"
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     title={props.mention.title}
                     summary="summary"
                     source="source"
@@ -212,7 +215,7 @@ function Share(props: {
                 {({ active }) => (
                   <FacebookShareButton
                     className="tw-w-full"
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     quote={props.mention.title}
                     hashtag={props.entities.map((entity) => `#${entity.title}`).join(' ')}
                   >
@@ -231,7 +234,7 @@ function Share(props: {
                 {({ active }) => (
                   <TwitterShareButton
                     className="tw-w-full"
-                    url={props.mention.url}
+                    url={mentionUrl(props.mention)}
                     title={props.mention.title}
                     // via="woto7"
                     hashtags={props.entities.map((entity) => entity.title)}

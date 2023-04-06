@@ -43,7 +43,7 @@ function Icon() {
 
 function MentionsSubItem(
   {
-    url, title, publishedAt, topics, image, entities, mentionId,
+    url, title, publishedAt, topics, image, entities, mentionId, slug,
   }:
   {
     url: string,
@@ -52,7 +52,8 @@ function MentionsSubItem(
     topics: any[],
     image: any,
     entities: any[],
-    mentionId: string
+    mentionId: string,
+    slug: string,
   },
 ) {
   return (
@@ -86,7 +87,7 @@ function MentionsSubItem(
 
         <Interaction
           mention={{
-            id: mentionId, url, title, image,
+            id: mentionId, url, title, image, slug,
           }}
           entities={entities.slice(0, 1)}
         />

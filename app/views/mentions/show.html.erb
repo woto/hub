@@ -1,0 +1,15 @@
+<%= render ReactComponent.new(name: 'ListingEntities',
+                              class: '',
+                              props: {  }) do |component| %>
+
+<% end %>
+
+<div class="tw-relative">
+  <%= render(
+        ReactComponent.new(name: 'Mentions',
+                           class: 'tw-contents',
+                           props: {
+                             entityIds: Mention.find(params[:id]).entities.pluck(:id)
+                           }))
+  %>
+</div>

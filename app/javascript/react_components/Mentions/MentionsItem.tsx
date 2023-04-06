@@ -9,7 +9,7 @@ import MentionsSubItem from './MentionsSubItem';
 
 function MentionsItem(
   {
-    url, title, publishedAt, topics, image, entities, mentionId,
+    url, title, publishedAt, topics, image, entities, mentionId, slug
   } : {
     url: string,
     title: string,
@@ -18,6 +18,7 @@ function MentionsItem(
     image: any,
     entities: any[],
     mentionId: string,
+    slug: string
   },
 ) {
   const [lastKnownHeight, setLastKnownHeight] = useState(300);
@@ -53,6 +54,7 @@ function MentionsItem(
               image={image}
               entities={entities}
               mentionId={mentionId}
+              slug={slug}
             />
           </div>
         ) : (

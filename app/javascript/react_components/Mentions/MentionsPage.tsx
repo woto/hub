@@ -21,6 +21,7 @@ function MentionsPage({
       entities={mention._source.entities}
       topics={mention._source.topics}
       publishedAt={mention._source.published_at}
+      slug={mention._source.slug}
     />
   ));
 }
