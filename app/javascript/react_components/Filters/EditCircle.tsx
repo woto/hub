@@ -73,17 +73,17 @@ export default function EditCircle(props: { imageSrc: string }) {
 
           <Transition
             as={Fragment}
-            enter="tw-transition tw-ease-out tw-duration-300"
-            enterFrom="tw-opacity-0 tw-translate-y-1"
-            enterTo="tw-opacity-100 tw-translate-y-0"
-            leave="tw-transition tw-ease-in tw-duration-150"
-            leaveFrom="tw-opacity-100 tw-translate-y-0"
-            leaveTo="tw-opacity-0 tw-translate-y-1"
+            enter="tw-transition tw-ease-out tw-duration-100"
+            enterFrom="tw-transform tw-opacity-0 tw-scale-95"
+            enterTo="tw-transform tw-opacity-100 tw-scale-100"
+            leave="tw-transition tw-ease-in tw-duration-75"
+            leaveFrom="tw-transform tw-opacity-100 tw-scale-100"
+            leaveTo="tw-transform tw-opacity-0 tw-scale-95"
           >
             <Popover.Panel
               className={`tw-absolute tw-z-10 tw-left-0 tw-mt-[13px]
                tw-ring-1 tw-ring-gray-200
-              tw-grid tw-gap-4 tw-bg-neutral-100 tw-px-5 tw-py-6`}
+              tw-grid tw-gap-4 tw-bg-slate-100 tw-px-5 tw-py-6`}
             >
                   <Relevance></Relevance>
                   <Sentiment></Sentiment>

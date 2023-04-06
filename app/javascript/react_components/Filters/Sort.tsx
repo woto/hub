@@ -33,7 +33,7 @@ export default function Sort() {
         leaveTo="tw-transform tw-opacity-0 tw-scale-95"
       >
         <Menu.Items className="tw-origin-top-right tw-absolute tw-right-0 tw-z-10 tw-mt-[21px] tw-w-48
-        tw-bg-neutral-100 tw-ring-1 tw-ring-gray-200 focus:tw-outline-none"
+        tw-bg-slate-100 tw-ring-1 tw-ring-gray-200 focus:tw-outline-none"
         >
           <div className="tw-py-1">
             {sortOptions.map((option) => (
