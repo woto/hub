@@ -25,12 +25,12 @@ module API
       # debugger
 
       image = lambda do
-        image_uploader.derivation(:image, 100, 100).tap(&:processed).url
+        image_uploader.derivation(:image, 200, 200).tap(&:processed).url
       end
 
       video = lambda do
         if ImageUploader::VIDEO_TYPES.include?(image_uploader.mime_type)
-          image_uploader.derivation(:video, 100, 100).tap(&:processed).url
+          image_uploader.derivation(:video, 200, 200).tap(&:processed).url
         end
       end
 
@@ -86,4 +86,3 @@ module API
     end
   end
 end
-
