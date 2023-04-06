@@ -17,6 +17,12 @@ or from new container
 docker compose run -l "traefik.enable=false" --rm rails sh
 ```
 
+### Rails migrations
+
+```shell
+docker compose run -l "traefik.enable=false" --rm rails rake db:migrate
+```
+
 #### Rails console
 
 ```shell
