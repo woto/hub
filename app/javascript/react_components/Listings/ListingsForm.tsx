@@ -151,7 +151,7 @@ export default function ListingsForm(
     <Dialog.Panel>
       <Dialog.Title
         as="h3"
-        className="tw-flex tw-justify-between tw-font-medium tw-text-gray-400 tw-border-b tw-border-b-slate-100 tw-pb-4"
+        className="tw-flex tw-justify-between tw-font-medium tw-text-gray-400 tw-border-b tw-border-b-slate-100 tw-pb-2"
       >
         <div className="tw-absolute? tw-top-0 tw-left-0 tw-pt-4 tw-pl-4">
           <button

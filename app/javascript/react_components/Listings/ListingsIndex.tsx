@@ -124,6 +124,7 @@ export default function ListingsIndex({ opened, close, entityId }: {
                 )
                 : (
                   <motion.div
+                    className="tw-divide-y tw-divide-gray-100"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
