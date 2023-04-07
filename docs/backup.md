@@ -28,6 +28,10 @@ docker exec -i hub_postgres_1 psql -U hub -d hub_development < ~/backup/db.dump
 User.find_by(email: 'admin@example.com').update(role: 'admin')
 User.find_by(email: 'admin@example.com').update(password: 'password')
 
+# NOTE: temporary workaround until it will be fixed
+# TODO: limit writing error_text to Feed model
+Feed.update_all(error_text: nil)
+
 reload!
 indexes = %w[users feeds posts favorites accounts transactions checks post_categories
              exchange_rates realms mentions entities topics]
