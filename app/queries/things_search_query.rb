@@ -45,31 +45,14 @@ class ThingsSearchQuery
                 json.multi_match do
                   json.query context[:search_string]
                   json.fields %w[title intro lookups.title text_start text_end prefix suffix link_url]
-                  json.boost 5
+                  json.boost 0.2
                 end
               end
             end
           end
 
           if context[:fragment]
-            set = [[:text_start, 5]]
-            set.each do |field, boost|
-              next if !first_text || first_text[field].blank?
-
-              json.set! :should do
-                json.array! ['fuck'] do
-                  json.multi_match do
-                    json.query first_text[field]
-                    json.fields %w[title intro lookups.title text_start]
-                    json.boost boost
-                  end
-                end
-              end
-            end
-          end
-
-          if context[:fragment]
-            set = [[:text_end, 0.8], [:prefix, 0.8], [:suffix, 0.8], [:text_start, 0.8]]
+            set = [[:prefix, 0.2], [:text_start, 0.2], [:text_end, 0.2], [:suffix, 0.2]]
             set.each do |field, boost|
               next if !first_text || first_text[field].blank?
 
@@ -86,32 +69,23 @@ class ThingsSearchQuery
             end
           end
 
-          # begin
-            if context[:link_url].present?
-              uri = URI.parse(context[:link_url])
-
-              json.set! :should do
-                json.array! ['fuck'] do
-
-                  json.multi_match do
-                    json.query "#{uri.host.split(/\W/).join(' ')} #{uri.path.split(/\W/).join(' ')} #{uri.query.to_s.split(/\W/).join(' ')}"
-                    json.fields %w[link_url]
-                    json.boost 3
-                    json.fuzziness 'AUTO'
-                  end
-                end
-              end
-            end
-          # rescue StandardError
-          # end
-
           if context[:link_url].present?
+            uri = URI.parse(context[:link_url])
+
             json.set! :should do
               json.array! ['fuck'] do
+
                 json.multi_match do
-                  json.query context[:link_url]
+                  json.query [
+                    uri.host.split(/\W/),
+                    uri.path.split(/\W/),
+                    uri.query.to_s.split(/\W/)]
+                    .flatten
+                    .select { |chunk| chunk.size > 3 }
+                    .compact_blank.join(' ')
                   json.fields %w[link_url]
-                  json.boost 3
+                  json.boost 0.5
+                  json.fuzziness 'AUTO'
                 end
               end
             end
@@ -122,8 +96,7 @@ class ThingsSearchQuery
               json.array! ['fuck'] do
                 json.multi_match do
                   json.query context[:link_url]
-                  json.fields %w[title intro lookups.title text_start text_end prefix suffix link_url]
-                  json.boost 3
+                  json.fields %w[link_url]
                 end
               end
             end
