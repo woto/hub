@@ -43,6 +43,18 @@ class ThingsSearchQuery
             json.set! :should do
               json.array! ['fuck'] do
                 json.multi_match do
+                  json.query context.search_string
+                  json.fields %w[title lookups.title text_start]
+                  json.boost 1
+                end
+              end
+            end
+          end
+
+          if context[:search_string].present?
+            json.set! :should do
+              json.array! ['fuck'] do
+                json.multi_match do
                   json.query context[:search_string]
                   json.fields %w[title intro lookups.title text_start text_end prefix suffix link_url]
                   json.boost 0.2
