@@ -32,7 +32,7 @@ module API
     mount Posts
     mount Entities
     mount Topics
-    mount Me
+    mount User
     mount Listings
     mount Cites
     mount EntitiesMentions
