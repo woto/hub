@@ -13,7 +13,6 @@ class EntitiesController < ApplicationController
   def show
     seo.langs! { |l| entity_url(@entity, locale: l) }
     seo.canonical! entity_url(@entity)
-    authorize(@entity)
 
     @favorites_store = FavoritesStore.new(current_user)
     @favorites_store.append(@entity.id, 'entities')
@@ -23,7 +22,7 @@ class EntitiesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_entity
-    @entity = policy_scope(Entity).with_log_data.find(params[:id])
+    @entity = Entity.find(params[:id])
   end
 
   # def use_logidze_responsible(&block)

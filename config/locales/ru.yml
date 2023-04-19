@@ -36,8 +36,8 @@ ru:
         entities_mentions: Список объектов упоминания
       user:
         email: Email
-        password: Password
-        remember_me: Remember me
+        password: Пароль
+        remember_me: Запомнить на этом компьютере
       widgets/simple:
         body: Описание
         pictures: Изображения
