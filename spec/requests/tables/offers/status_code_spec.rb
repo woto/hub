@@ -53,9 +53,20 @@ describe Tables::OffersController, type: :request do
   end
 
   describe 'GET /feed_categories/:feed_category_id/offers' do
-    let(:path) { ->(params) { feed_category_offers_path(params.merge(feed_category_id: feed_category.id)) } }
+    context 'when there are no children categories' do
+      let(:path) { ->(params) { feed_category_offers_path(params.merge(feed_category_id: feed_category.id)) } }
 
-    it_behaves_like 'multi'
+      it_behaves_like 'multi'
+    end
+
+    context 'when there are children categories' do
+      let!(:parent) { create(:feed_category) }
+      let!(:feed_category) { create(:feed_category, feed: parent.feed, parent:) }
+
+      let(:path) { ->(params) { feed_category_offers_path(params.merge(feed_category_id: feed_category.id)) } }
+
+      it_behaves_like 'multi'
+    end
   end
 
   describe 'GET /offers?favorite_id=:id' do

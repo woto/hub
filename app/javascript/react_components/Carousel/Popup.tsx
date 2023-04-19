@@ -9,7 +9,7 @@ import {
   AnimatePresence,
   LayoutGroup,
 } from 'framer-motion';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ArrowPathIcon, StarIcon } from '@heroicons/react/24/outline';
 import axios from '../system/Axios';
 import { CarouselType, DOMRectJSON } from '../system/TypeScript';
@@ -30,7 +30,7 @@ export default function Popup({
 }) {
   const {
     isLoading, error, data, isFetching,
-  } = useQuery(`popup:${selectedItem?.entity_id}`, () => {
+  } = useQuery(['popup', selectedItem?.entity_id], () => {
     if (selectedItem?.id) {
       return axios
         .get(`/api/entities/${selectedItem?.entity_id}`)

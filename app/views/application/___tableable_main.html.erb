@@ -1,0 +1,28 @@
+<% seo.title! t(@settings[:plural], scope: ['titles']) %>
+
+<%= tag.div class: 'col-12',
+            "data-controller": 'table-workspace-form table-columns-form' do %>
+
+  <%= tag.div class: 'd-none',
+              "data-table-columns-form-target": "form" do %>
+    <%= render 'table/columns_form' %>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <%= render 'table_header', rows: rows %>
+      <div class="table-responsive" style="min-height: 400px">
+        <div class="2xl:tw-table tw-w-full">
+          <div class="tw-p-1 2xl:tw-p-0 2xl:tw-table-header-group tw-bg-slate-50">
+            <%= render 'tableable_thead' %>
+          </div>
+          <div class="2xl:tw-table-row-group">
+            <%= render 'tableable_tbody', rows: rows %>
+          </div>
+        </div>
+        <%= render 'empty_page' if rows.empty?  %>
+      </div>
+    </div>
+    <%= render 'table_footer', rows: rows %>
+  </div>
+<% end %>

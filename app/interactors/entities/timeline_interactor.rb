@@ -23,8 +23,8 @@ module Entities
           id: cur.id,
           user_name: cur.user&.profile&.name || 'Имя не указано',
           user_path: '/404',
-          user_image: if cur.user.avatar.attached?
-                        cur.user.avatar.variant(resize_to_limit: [200, 200])
+          user_image: if cur.user.avatar
+                        GlobalHelper.image_hash([cur.user.avatar_relation], %w[200]).first['images']['200']
                       else
                         'https://media.istockphoto.com/photos/businessman-silhouette-as-avatar-or-default-profile-picture-picture-id476085198?b=1&k=20&m=476085198&s=170667a&w=0&h=Ct4e1kIOdCOrEgvsQg4A1qeuQv944pPFORUQcaGw4oI='
                       end,

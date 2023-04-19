@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import { Combobox, Dialog, Transition } from '@headlessui/react';
 import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import * as React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLocalStorage } from 'react-use';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import axios from '../system/Axios';

@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ClockIcon } from '@heroicons/react/24/solid';
@@ -16,7 +16,7 @@ const tabs = [
 export default function Timeline(props: { entityId: number, opened: boolean, close: () => any }) {
   const {
     isLoading, error, data, isFetching,
-  } = useQuery(`cites:${props.entityId}`, () => {
+  } = useQuery(['cites', props.entityId], () => {
     const query = new URLSearchParams({
       entity_id: props.entityId.toString(),
     });

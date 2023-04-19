@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe OfferCreator do
   subject do
-    described_class.call(params)
+    described_class.call(**params)
   end
 
   describe 'detected_language' do

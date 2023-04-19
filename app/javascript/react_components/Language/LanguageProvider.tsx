@@ -2,7 +2,7 @@ import React, {
   useState, useEffect, ReactNode, useMemo,
 } from 'react';
 import { User } from '../system/TypeScript';
-import AuthContext from './LanguageContext';
+import LanguageContext from './LanguageContext';
 import Auth from './useAuth';
 
 export default function LanguageProvider({ children }: {children: ReactNode}) {
@@ -25,8 +25,8 @@ export default function LanguageProvider({ children }: {children: ReactNode}) {
   }, []);
 
   return (
-    <AuthContext.Provider value={language}>
+    <LanguageContext.Provider value={language}>
       {children}
-    </AuthContext.Provider>
+    </LanguageContext.Provider>
   );
 }

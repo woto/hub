@@ -5,101 +5,104 @@ default: &default
 
   # https://util.unicode.org/UnicodeJsps/languageid.jsp
   locales:
-    -
-      locale: 'en-GB'
-      title: 'English United Kingdom'
-    -
-      locale: 'en-US'
-      title: 'English United States'
+    # -
+    #   locale: 'en-GB'
+    #   title: 'English United Kingdom'
+    # -
+    #   locale: 'en-US'
+    #   title: 'English United States'
     -
       locale: 'en'
       title: 'English'
-    -
-      locale: 'zh'
-      title: 'Chinese'
-    -
-      locale: 'zh-CN'
-      title: 'Chinese China'
-    -
-      locale: 'zh-TW'
-      title: 'Chinese Taiwan'
-    -
-      locale: 'ja'
-      title: 'Japanese'
-    -
-      locale: 'es'
-      title: 'Spanish'
-    -
-      locale: 'de'
-      title: 'German'
-    -
-      locale: 'fr'
-      title: 'French'
-    -
-      locale: 'ko'
-      title: 'Korean'
-    -
-      locale: 'pt'
-      title: 'Portuguese'
-    -
-      locale: 'it'
-      title: 'Italian'
+    # -
+    #   locale: 'zh'
+    #   title: 'Chinese'
+    # -
+    #   locale: 'zh-CN'
+    #   title: 'Chinese China'
+    # -
+    #   locale: 'zh-TW'
+    #   title: 'Chinese Taiwan'
+    # -
+    #   locale: 'ja'
+    #   title: 'Japanese'
+    # -
+    #   locale: 'es'
+    #   title: 'Spanish'
+    # -
+    #   locale: 'de'
+    #   title: 'German'
+    # -
+    #   locale: 'fr'
+    #   title: 'French'
+    # -
+    #   locale: 'ko'
+    #   title: 'Korean'
+    # -
+    #   locale: 'pt'
+    #   title: 'Portuguese'
+    # -
+    #   locale: 'it'
+    #   title: 'Italian'
     -
       locale: 'ru'
       title: 'Russian'
-    -
-      locale: 'nl'
-      title: 'Dutch'
-    -
-      locale: 'tr'
-      title: 'Turkish'
-    -
-      locale: 'fi'
-      title: 'Finnish'
-    -
-      locale: 'uk'
-      title: 'Ukrainian'
-    -
-      locale: 'ar'
-      title: 'Arabic'
-    -
-      locale: 'he'
-      title: 'Hebrew'
-    -
-      locale: 'th'
-      title: 'Thai'
-    -
-      locale: 'cs'
-      title: 'Czech'
-    -
-      locale: 'pl'
-      title: 'Polish'
-    -
-      locale: 'sv'
-      title: 'Swedish'
-    -
-      locale: 'da'
-      title: 'Danish'
-    -
-      locale: 'mk'
-      title: 'Macedonian'
-    -
-      locale: 'sl'
-      title: 'Slovenian'
-    -
-      locale: 'bg'
-      title: 'Bulgarian'
-    -
-      locale: 'be'
-      title: 'Belarusian'
-    -
-      locale: 'sr'
-      title: 'Serbian'
-    -
-      locale: 'un'
-      title: 'Unknown'
+    # -
+    #   locale: 'nl'
+    #   title: 'Dutch'
+    # -
+    #   locale: 'tr'
+    #   title: 'Turkish'
+    # -
+    #   locale: 'fi'
+    #   title: 'Finnish'
+    # -
+    #   locale: 'uk'
+    #   title: 'Ukrainian'
+    # -
+    #   locale: 'ar'
+    #   title: 'Arabic'
+    # -
+    #   locale: 'he'
+    #   title: 'Hebrew'
+    # -
+    #   locale: 'th'
+    #   title: 'Thai'
+    # -
+    #   locale: 'cs'
+    #   title: 'Czech'
+    # -
+    #   locale: 'pl'
+    #   title: 'Polish'
+    # -
+    #   locale: 'sv'
+    #   title: 'Swedish'
+    # -
+    #   locale: 'da'
+    #   title: 'Danish'
+    # -
+    #   locale: 'mk'
+    #   title: 'Macedonian'
+    # -
+    #   locale: 'sl'
+    #   title: 'Slovenian'
+    # -
+    #   locale: 'bg'
+    #   title: 'Bulgarian'
+    # -
+    #   locale: 'be'
+    #   title: 'Belarusian'
+    # -
+    #   locale: 'sr'
+    #   title: 'Serbian'
+    # -
+    #   locale: 'un'
+    #   title: 'Unknown'
 
   messengers:
+    -
+      short: website
+      long: Website
     -
       short: whatsapp
       long: WhatsApp

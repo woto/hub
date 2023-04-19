@@ -1,12 +1,3 @@
-<%= content_for(:after_body_open) do %>
-  <%= render 'trackers_tawk' %>
-<% end %>
-
-<% content_for(:before_head_close) do %>
-  <%= render 'trackers_google' %>
-  <%= render 'trackers_yandex' %>
-<% end %>
-
 <% content_for :body do %>
 
   <%= tag.body class: 'tw-antialiased tw-flex tw-flex-col tw-min-h-screen tw-bg-neutral-100',

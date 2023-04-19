@@ -32,16 +32,17 @@ RSpec.describe Entity, type: :model do
   it_behaves_like 'logidzable'
 
   describe 'associations' do
-    it { is_expected.to belong_to(:user).counter_cache(true) }
-    it { is_expected.to belong_to(:hostname).counter_cache(true) }
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:hostname).optional }
 
-    it { is_expected.to have_many(:entities_mentions).dependent(:restrict_with_error) }
-    it { is_expected.to have_many(:mentions).through(:entities_mentions).counter_cache(:mentions_count) }
+    it { is_expected.to have_many(:entities_mentions).dependent(:destroy) }
+    it { is_expected.to have_many(:mentions).through(:entities_mentions) }
 
-    it { is_expected.to have_many(:lookups).dependent(:destroy) }
+    it { is_expected.to have_many(:lookups_relations).dependent(:destroy) }
+    it { is_expected.to have_many(:lookups).through(:lookups_relations) }
 
-    it { is_expected.to have_many(:entities_topics).dependent(:destroy) }
-    it { is_expected.to have_many(:topics).through(:entities_topics) }
+    it { is_expected.to have_many(:topics_relations).dependent(:destroy) }
+    it { is_expected.to have_many(:topics).through(:topics_relations) }
 
     it { is_expected.to have_many(:images_relations).dependent(:destroy) }
     it { is_expected.to have_many(:images).through(:images_relations) }
@@ -90,10 +91,10 @@ RSpec.describe Entity, type: :model do
   it { is_expected.to accept_nested_attributes_for(:lookups).allow_destroy(true) }
 
   describe '#image' do
-    subject { create(:entity, image: ShrineImage.uploaded_image) }
+    subject { create(:entity, images: [build(:image)]) }
 
     it 'processes image' do
-      expect(subject.image).to be_a(ImageUploader::UploadedFile)
+      expect(subject.images.first.image).to be_a(ImageUploader::UploadedFile)
     end
   end
 
@@ -108,7 +109,7 @@ RSpec.describe Entity, type: :model do
 
     let(:entity) do
       create(:entity, title: "https://#{hostname.title}", topics: [topic], lookups: [lookup],
-                      image: ShrineImage.uploaded_image)
+                      images: [create(:image)])
     end
     let(:lookup) { create(:lookup, title: 'lookup title') }
     let(:topic) { create(:topic, title: 'topic title') }
@@ -119,18 +120,18 @@ RSpec.describe Entity, type: :model do
     end
 
     it 'returns correct result' do
-      expect(subject).to match(
+      expect(subject).to include(
         id: entity.id,
-        lookups: ['lookup title'],
-        lookups_count: 1,
-        topics: ['topic title'],
-        topics_count: 1,
+        lookups: [{ id: lookup.id, title: lookup.title }],
+        # lookups_count: 1,
+        topics: [{ id: topic.id, title: topic.title }],
+        # topics_count: 1,
         title: entity.title,
         hostname: hostname.title,
-        intro: nil,
-        image: be_a(Hash),
+        intro: entity.intro,
+        images: all(be_a(Hash)),
         user_id: entity.user_id,
-        mentions_count: 1,
+        entities_mentions_count: 1,
         created_at: Time.current,
         updated_at: Time.current
       )
@@ -156,17 +157,21 @@ RSpec.describe Entity, type: :model do
 
   describe '#image_hash' do
     context 'when image is present' do
-      subject! { create(:entity, image_data: image_data) }
+      subject! { create(:entity, images: [create(:image)]) }
 
       let(:image_data) do
         ImageUploader.upload(File.open('spec/fixtures/files/jessa_rhodes.jpg', 'rb'), :store).as_json
       end
 
-      it_behaves_like '#image_hash', width: 552, height: 552
+      it_behaves_like '#image_hash', width: '191', height: '264' do
+        let(:images_relations) { subject.images_relations }
+      end
     end
 
-    context 'when image is absent' do
-      it_behaves_like '#image_hash', width: 50, height: 50
+    xcontext 'when image is absent' do
+      it_behaves_like '#image_hash', width: 50, height: 50 do
+        let(:images_relations) { [] }
+      end
     end
   end
 

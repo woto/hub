@@ -1,12 +1,3 @@
-<%= content_for(:after_body_open) do %>
-  <%= render 'trackers_tawk' %>
-<% end %>
-
-<% content_for(:before_head_close) do %>
-  <%= render 'trackers_google' %>
-  <%= render 'trackers_yandex' %>
-<% end %>
-
 <% @html_attributes = { class: 'tw-h-full tw-bg-white' } %>
 <% @body_attributes = { class: 'tw-h-full tw-bg-white' } %>
 
@@ -17,7 +8,7 @@
 
     <div class="tw-h-full? tw-flex tw-max-w-screen-2xl tw-mx-auto tw-bg-white tw-border-x tw-border-gray-200 tw-drop-shadow-lg?">
 
-    <%= render(
+    <%# <%= render(
       ReactComponent.new(name: 'SetUser',
                          class: '',
                          props: UserPresenter.call(current_user)

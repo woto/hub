@@ -7,18 +7,31 @@ describe API::Entities, type: :request, responsible: :admin do
   let!(:user) { create(:user) }
 
   describe 'GET /api/entities/{id}' do
-    let!(:entity) do
-      create(:entity, images: create_list(:image, 1), lookups: create_list(:lookup, 1))
+    let(:mention) { create(:mention) }
+    let(:image) { create(:image) }
+    let(:lookup) { create(:lookup) }
+    let(:entity) do
+      create(:entity, title: 'foo', images: [image], lookups: [lookup], topics: [topic])
+    end
+    let(:topic) { create(:topic) }
+
+    before do
+      create(:cite, mention:, entity:, link_url: 'https://example.com')
     end
 
     it 'autocompletes entities by title' do
       get "/api/entities/#{entity.id}", headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'another' }
 
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to include(
-        'id' => entity.id,
-        'image' => be_a(String),
-        'lookups' => entity.lookups.map(&:to_label),
+      expect(JSON.parse(response.body)).to match(
+        'entity_id' => entity.id,
+        'entity_url' => "https://public.ru/entities/#{entity.id}-foo",
+        'images' => contain_exactly(include('id' => image.id)),
+        'entities_mentions_count' => 0,
+        'intro' => entity.intro,
+        'kinds' => [match('id' => topic.id, 'title' => topic.title)],
+        'links' => ['https://example.com'],
+        'lookups' => [match('id' => lookup.id, 'title' => lookup.title)],
         'title' => entity.title
       )
     end

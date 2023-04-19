@@ -14,7 +14,7 @@ module Extractors
           faraday.request :json # encode req bodies as JSON
           # faraday.response :json # decode response bodies as JSON
           # NOTE: duckduckgo disrespect standards
-          faraday.response :json, content_type: /application\/x-javascript/
+          faraday.response :json, content_type: %r{application/x-javascript}
         end
 
         res = begin

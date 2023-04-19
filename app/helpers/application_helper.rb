@@ -200,17 +200,6 @@ module ApplicationHelper
     end
   end
 
-  def landing1_widgets
-    sql = <<~SQL
-      SELECT widgets.*
-      FROM (SELECT *, unnest(posts) post_id FROM widgets) widgets
-               JOIN posts ON posts.id = post_id AND posts.status = '4'
-      ORDER BY id DESC
-      LIMIT 4;
-    SQL
-    Widget.find_by_sql(sql)
-  end
-
   # TODO: add proposal on adding this feature. The problem is that the blobs may be not attached to records.
   # https://stackoverflow.com/questions/61893089/get-metadata-of-active-storage-variant
   # https://stackoverflow.com/questions/3332237/image-resizing-algorithm

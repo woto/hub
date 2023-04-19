@@ -52,13 +52,13 @@ class Entity < ApplicationRecord
                               inverse_of: :child
   has_many :parents, class_name: 'Entity', through: :parents_entities, source: :parent, inverse_of: :children
 
-  has_many :lookups_relations, as: :relation, dependent: :restrict_with_exception
+  has_many :lookups_relations, as: :relation, dependent: :destroy
   has_many :lookups, -> { order(:id).distinct }, through: :lookups_relations
 
-  has_many :topics_relations, as: :relation, dependent: :restrict_with_exception
+  has_many :topics_relations, as: :relation, dependent: :destroy
   has_many :topics, -> { order(:id).distinct }, through: :topics_relations
 
-  has_many :images_relations, -> { order('images_relations.order') }, as: :relation, dependent: :destroy
+  has_many :images_relations, -> { order('images_relations.order') }, as: :relation, dependent: :destroy, inverse_of: :relation
   has_many :images, through: :images_relations
 
   before_validation :strip_title

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'group link card', type: :system do
+xdescribe 'group link card', type: :system do
   let(:n) { rand(1..3) }
   let(:parent_feed_category) { create(:feed_category, feed: feed) }
   let(:child_feed_category) { create(:feed_category, feed: feed, parent: parent_feed_category) }

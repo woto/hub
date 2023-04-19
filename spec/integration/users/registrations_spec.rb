@@ -22,7 +22,7 @@ describe Users::RegistrationsController, type: :system do
       expect do
         send_form(user.email, user.password, user.password)
         expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-        expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email уже существует')
+        expect(page).to have_text('Email уже существует')
       end.not_to change(User, :count)
     end
   end
@@ -31,8 +31,7 @@ describe Users::RegistrationsController, type: :system do
     it 'signs up successfully' do
       send_form(user.email, user.password, user.password)
       expect(page).to have_text('Добро пожаловать! Вы успешно зарегистрировались.')
-      expect_dashboard
-      expect_authenticated
+      expect(page).to have_current_path('/ru/users/auth_complete')
     end
 
     it 'sends confirmation instructions' do
@@ -46,9 +45,9 @@ describe Users::RegistrationsController, type: :system do
     it 'shows errors' do
       send_form('', '', '')
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не может быть пустым')
-      expect(page).to have_css('#user_password ~ .invalid-feedback', text: 'Пароль не может быть пустым')
-      expect(page).to have_css('#user_password_confirmation ~ .invalid-feedback', text: '')
+      expect(page).to have_text('Email не может быть пустым')
+      expect(page).to have_text('Пароль не может быть пустым')
+      expect(page).to have_text('')
     end
   end
 
@@ -56,9 +55,9 @@ describe Users::RegistrationsController, type: :system do
     it 'shows errors' do
       send_form('email', '1', 'confirmation')
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email имеет неверное значение')
-      expect(page).to have_css('#user_password ~ .invalid-feedback', text: 'Пароль недостаточной длины (не может быть меньше 6 символов)')
-      expect(page).to have_css('#user_password_confirmation ~ .invalid-feedback', text: 'Подтверждение пароля не совпадает со значением поля Пароль')
+      expect(page).to have_text('Email имеет неверное значение')
+      expect(page).to have_text('Пароль недостаточной длины (не может быть меньше 6 символов)')
+      expect(page).to have_text('Подтверждение пароля не совпадает со значением поля Пароль')
     end
   end
 end

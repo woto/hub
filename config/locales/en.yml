@@ -366,9 +366,6 @@ en:
           no_news_yet: There are no news
           no_news_yet_in_your_language: There are no news on your language
   header:
-    search:
-      placeholder: Enter text to search...
-      button: Search
     menu:
       language: Language
       login: Login
@@ -377,6 +374,9 @@ en:
       settings: Settings
     news_component:
       title: News
+    search:
+      button: Search
+      placeholder: Enter text to search...
   helpers:
     page_entries_info:
       entry:
@@ -461,11 +461,11 @@ en:
         ж: zh
         з: z
         и: i
-        й: y
+        й: "y"
         к: k
         л: l
         м: m
-        н: n
+        н: "n"
         о: o
         п: p
         р: r
@@ -479,7 +479,7 @@ en:
         ш: sh
         щ: Shch
         ъ: "\""
-        ы: y
+        ы: "y"
         ь: "'"
         э: e
         ю: yu
@@ -763,11 +763,11 @@ en:
         aliases: Aliases
         child_ids: Children entities
         children: Children entities
+        entities_mentions_count: Mentions
         id: Id
         image: Image
         intro: Intro
         lookups: Lookups
-        entities_mentions_count: Mentions
         parent_ids: Parent entities
         parents: Parent entities
         picture: Picture
@@ -873,13 +873,13 @@ en:
         currency: Currency
       entity:
         created_at: Created at
+        entities_mentions_count: Mentions count
         favorite: Favorite
         id: Entity id
         image: Image
         intro: Intro
         lookups: Lookups
         lookups_count: Lookups count
-        entities_mentions_count: Mentions count
         title: Title
         topics: Tags
         topics_count: Tags count
@@ -956,13 +956,13 @@ en:
         subjectable_id: Subject
       entity:
         created_at: Cr. at
+        entities_mentions_count: Ment. cnt.
         favorite: Fav.
         id: ID
         image: Image
         intro: Intro
         lookups: Lookups
         lookups_count: Look. cnt.
-        entities_mentions_count: Ment. cnt.
         title: Title
         topics: Tags
         topics_count: Topics cnt.
@@ -1047,10 +1047,10 @@ en:
         follow_link: Follow link
         offers_in_group: Offers in group
       search_bar:
-          search_everywhere: Search everywhere
-          search_inside_advertiser: 'At the advertiser: "%{name}"'
-          search_inside_feed: 'In the price list: "%{name}"'
-          search_inside_feed_category: 'In the category: "%{name}"'
+        search_everywhere: Search everywhere
+        search_inside_advertiser: 'At the advertiser: "%{name}"'
+        search_inside_feed: 'In the price list: "%{name}"'
+        search_inside_feed_category: 'In the category: "%{name}"'
   title: Title
   titles:
     accounts: Accounts

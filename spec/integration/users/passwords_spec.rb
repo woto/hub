@@ -15,7 +15,7 @@ describe Users::PasswordsController, type: :system do
     it 'shows errors' do
       send_form('')
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не может быть пустым')
+      expect(page).to have_text('Email не может быть пустым')
     end
   end
 
@@ -23,7 +23,7 @@ describe Users::PasswordsController, type: :system do
     it 'shows errors' do
       send_form(Faker::Internet.email)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не найден')
+      expect(page).to have_text('Email не найден')
     end
   end
 
@@ -102,7 +102,7 @@ describe Users::PasswordsController, type: :system do
         expect do
           change_password('', '')
           expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-          expect(page).to have_css('#user_password ~ .invalid-feedback', text: 'Пароль не может быть пустым')
+          expect(page).to have_text('Пароль не может быть пустым')
         end.not_to(change { user.reload.valid_password?('123123') })
       end
     end
@@ -113,9 +113,9 @@ describe Users::PasswordsController, type: :system do
           change_password('1', '2')
           expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
           text = 'Пароль недостаточной длины (не может быть меньше 6 символов)'
-          expect(page).to have_css('#user_password ~ .invalid-feedback', text: text)
+          expect(page).to have_text(text)
           text = 'Подтверждение пароля не совпадает со значением поля Пароль'
-          expect(page).to have_css('#user_password_confirmation ~ .invalid-feedback', text: text)
+          expect(page).to have_text(text)
         end.not_to(change { user.reload.valid_password?('123123') })
       end
     end

@@ -372,9 +372,6 @@ ru:
           no_news_yet: Нет новостей
           no_news_yet_in_your_language: Новости на вашем языке пока что отсутствуют
   header:
-    search:
-      placeholder: Введите текст для поиска...
-      button: Поиск
     menu:
       language: Язык
       login: Вход / Регистрация
@@ -383,6 +380,9 @@ ru:
       settings: Настройки
     news_component:
       title: Новости
+    search:
+      button: Поиск
+      placeholder: Введите текст для поиска...
   helpers:
     page_entries_info:
       entry:
@@ -471,11 +471,11 @@ ru:
         ж: zh
         з: z
         и: i
-        й: y
+        й: "y"
         к: k
         л: l
         м: m
-        н: n
+        н: "n"
         о: o
         п: p
         р: r
@@ -489,7 +489,7 @@ ru:
         ш: sh
         щ: Shch
         ъ: "\""
-        ы: y
+        ы: "y"
         ь: "'"
         э: e
         ю: yu
@@ -773,11 +773,11 @@ ru:
         aliases: Синонимы
         child_ids: Дочерние объекты
         children: Дочерние
+        entities_mentions_count: Упоминаний
         id: ID
         image: Изображение
         intro: Вступление
         lookups: Синонимы
-        entities_mentions_count: Упоминаний
         parent_ids: Родительские объекты
         parents: Родительские
         picture: Изображение
@@ -883,13 +883,13 @@ ru:
         currency: Валюта
       entity:
         created_at: Дата создания
+        entities_mentions_count: Количество упоминаний
         favorite: Избранное
         id: ID обекта упоминания
         image: Изображение
         intro: Вступление
         lookups: Синонимы
         lookups_count: Количество синонимов
-        entities_mentions_count: Количество упоминаний
         title: Название
         topics: Теги
         topics_count: Количество тегов
@@ -966,13 +966,13 @@ ru:
         subjectable_id: Субъект
       entity:
         created_at: Дата созд.
+        entities_mentions_count: Кол-во упом.
         favorite: Избр.
         id: ID
         image: Изображение
         intro: Вступление
         lookups: Синонимы
         lookups_count: Кол-во син.
-        entities_mentions_count: Кол-во упом.
         title: Название
         topics: Теги
         topics_count: Кол-во тегов

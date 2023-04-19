@@ -9,7 +9,7 @@ describe ImageUploader do
     let(:image) { Image.create(image: File.open("spec/fixtures/files/formats/#{file_name}", 'rb')) }
 
     it 'processes derivation' do
-      expect { shrine_image.derivation(:thumbnail, 100, 100).processed }.not_to raise_error
+      expect { shrine_image.derivation(:image, 100, 100).processed }.not_to raise_error
     end
   end
 

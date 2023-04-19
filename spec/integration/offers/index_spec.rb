@@ -2,5 +2,5 @@
 
 require 'rails_helper'
 
-describe Tables::OffersController, type: :system do
+xdescribe Tables::OffersController, type: :system do
 end

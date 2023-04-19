@@ -55,6 +55,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
+  has_one :avatar_relation, as: :relation, dependent: :destroy, class_name: 'ImagesRelation'
+  has_one :avatar, through: :avatar_relation, source: :image
+
   # TODO: decide later how to implement "cancel my account"
   has_one :profile, dependent: :restrict_with_exception
   has_many :posts, dependent: :restrict_with_exception
@@ -69,8 +72,6 @@ class User < ApplicationRecord
   has_many :cites, dependent: :restrict_with_exception
   has_many :images, dependent: :restrict_with_exception
   has_many :lookups, dependent: :restrict_with_exception
-
-  has_one_attached :avatar
 
   def as_indexed_json(_options = {})
     {

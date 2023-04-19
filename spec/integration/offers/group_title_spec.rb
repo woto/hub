@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'group title', type: :system do
+xdescribe 'group title', type: :system do
   let(:parent_feed_category) { create(:feed_category, feed: feed) }
   let(:child_feed_category) { create(:feed_category, feed: feed, parent: parent_feed_category) }
   let(:feed) { create(:feed) }

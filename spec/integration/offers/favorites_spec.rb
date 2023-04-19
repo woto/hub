@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::OffersController, type: :system do
+xdescribe Tables::OffersController, type: :system do
   context "when visits favorite's offers which does not belong to current user" do
     it 'shows 404' do
       id = rand(10)

@@ -1,7 +1,0 @@
-<% content_for :breadcrumbs do %>
-  <%= render BreadcrumbComponent.new do |b| %>
-    <%= b.root_item title: t('breadcrumbs.homepage'), url: root_path %>
-    <%= b.item title: t('breadcrumbs.dashboard'), url: dashboard_path %>
-    <%= b.item title: t('breadcrumbs.transactions'), url: transactions_path %>
-  <% end %>
-<% end %>

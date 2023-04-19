@@ -71,9 +71,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def establish_avatar(oauth, user)
-    return if user.avatar.attached?
+    return if user.avatar
 
-    downloaded_image = URI.open(oauth.info[:image])
-    user.avatar.attach(io: downloaded_image, filename: 'avatar.jpg')
+    ActiveRecord::Base.transaction do
+      image = Image.create(image_remote_url: oauth.info[:image], user:)
+      ImagesRelation.create!(image:, relation: user, user:)
+    end
   end
 end

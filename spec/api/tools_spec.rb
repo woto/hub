@@ -8,7 +8,8 @@ describe API::Tools, type: :request do
   describe 'GET /api/tools/duckduckgo_instant' do
     it 'returns data from DuckDuckGo Instant Answers' do
       stub_request(:get, 'https://api.duckduckgo.com?q=duckduckgo&format=json')
-        .to_return(status: 200, body: { duckduckgo: 'duckduckgo' }.to_json, headers: {})
+        .to_return(status: 200, body: { duckduckgo: 'duckduckgo' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                                       'CONTENT_TYPE' => 'application/x-javascript' })
 
       get '/api/tools/duckduckgo_instant', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'duckduckgo' }
 
@@ -28,7 +29,8 @@ describe API::Tools, type: :request do
     context 'with url parameter' do
       it 'returns yandex extracted metadata' do
         stub_request(:get, 'https://validator-api.semweb.yandex.ru/v1.1/url_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true&url=https://example.com')
-          .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: {})
+          .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                           'CONTENT_TYPE' => 'application/json' })
 
         post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key },
                                             params: { url: 'https://example.com' }
@@ -41,7 +43,8 @@ describe API::Tools, type: :request do
     context 'with html parameter' do
       it 'returns yandex extracted metadata' do
         stub_request(:post, 'https://validator-api.semweb.yandex.ru/v1.1/document_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true')
-          .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: {})
+          .to_return(status: 200, body: { 'a' => 'b' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                           'CONTENT_TYPE' => 'application/json' })
 
         post '/api/tools/yandex_microdata', headers: { 'HTTP_API_KEY' => user.api_key },
                                             params: { html: '<html></html>' }
@@ -71,7 +74,8 @@ describe API::Tools, type: :request do
   describe 'GET /api/tools/iframely' do
     it 'returns iframely extracted metadata' do
       stub_request(:get, 'http://iframely:8061/iframely?url=https://example.com')
-        .to_return(status: 200, body: { a: 'b' }.to_json, headers: {})
+        .to_return(status: 200, body: { a: 'b' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                     'CONTENT_TYPE' => 'application/json' })
 
       get '/api/tools/iframely', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://example.com' }
 
@@ -125,7 +129,8 @@ describe API::Tools, type: :request do
     # TODO: create separate test file with separate services' tests
     it 'returns scrapped data' do
       stub_request(:get, 'http://scrapper:4000/screenshot?url=https://ya.ru')
-        .to_return(status: 200, body: { key: 'value' }.to_json, headers: {})
+        .to_return(status: 200, body: { key: 'value' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                           'CONTENT_TYPE' => 'application/json' })
 
       get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'https://ya.ru' }
 
@@ -135,11 +140,15 @@ describe API::Tools, type: :request do
 
     context 'when url is invalid' do
       it 'returns scrapped data' do
+        stub_request(:get, 'http://scrapper:4000/screenshot?url=foo')
+          .to_return(status: 400, headers: { 'ACCEPT' => 'application/json',
+                                             'CONTENT_TYPE' => 'application/json' })
+
         get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'foo' }
 
         # TODO: change response code to 422
         expect(response).to have_http_status(:bad_request)
-        expect(JSON.parse(response.body)).to eq({ 'error' => 'url must be url, e.g. https://ya.ru' })
+        expect(JSON.parse(response.body)).to eq({ 'error' => 'the server responded with status 400' })
       end
     end
 
@@ -166,7 +175,7 @@ describe API::Tools, type: :request do
   describe 'GET /api/tools/npmjs' do
     it 'returns npmjs packages list' do
       stub_request(:get, 'https://www.npmjs.com/search/suggestions?q=npmjs&size=20')
-        .to_return(status: 200, body: { npmjs: 'npmjs' }.to_json, headers: {})
+        .to_return(status: 200, body: { npmjs: 'npmjs' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       get '/api/tools/npmjs', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'npmjs' }
 
@@ -185,7 +194,8 @@ describe API::Tools, type: :request do
   describe 'GET /api/tools/rubygems' do
     it 'returns rubygems gems list' do
       stub_request(:get, 'https://rubygems.org/api/v1/search.json?query=rails')
-        .to_return(status: 200, body: { rails: 'rails' }.to_json, headers: {})
+        .to_return(status: 200, body: { rails: 'rails' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                             'CONTENT_TYPE' => 'application/json' })
 
       get '/api/tools/rubygems', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'rails' }
 
@@ -203,8 +213,9 @@ describe API::Tools, type: :request do
 
   describe 'GET /api/tools/google_graph' do
     it 'returns data from Google Graph' do
-      stub_request(:get, 'https://kgsearch.googleapis.com/v1/entities:search?query=google-graph&key=google_graph_key_value&limit=10&indent=true&languages=ru')
-        .to_return(status: 200, body: { 'google-graph' => 'google-graph' }.to_json, headers: {})
+      stub_request(:get, 'https://kgsearch.googleapis.com/v1/entities:search?query=google-graph&key=google_graph_key_value&limit=10&indent=true&languages=en')
+        .to_return(status: 200, body: { 'google-graph' => 'google-graph' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                                               'CONTENT_TYPE' => 'application/json' })
 
       get '/api/tools/google_graph', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'google-graph' }
 
@@ -223,7 +234,8 @@ describe API::Tools, type: :request do
   describe 'GET /api/tools/google_custom_search' do
     it 'returns data from Google Custom Search' do
       stub_request(:get, 'https://content-customsearch.googleapis.com/customsearch/v1?cx=google_custom_search_cx_key_value&key=google_custom_search_api_key&q=google-custom-search')
-        .to_return(status: 200, body: { 'google-custom-search' => 'google-custom-search' }.to_json, headers: {})
+        .to_return(status: 200, body: { 'google-custom-search' => 'google-custom-search' }.to_json, headers: { 'ACCEPT' => 'application/json',
+                                                                                                               'CONTENT_TYPE' => 'application/json' })
 
       get '/api/tools/google_custom_search', headers: { 'HTTP_API_KEY' => user.api_key },
                                              params: { q: 'google-custom-search' }
@@ -282,9 +294,9 @@ describe API::Tools, type: :request do
 
       it 'returns successful response from t.me' do
         stub_request(:get, 'https://t.me/telegram')
-          .to_return(status: 200, body: body, headers: {})
+          .to_return(status: 200, body:, headers: {})
 
-        get '/api/tools/telegram', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: q }
+        get '/api/tools/telegram', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: }
 
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to eq(
@@ -357,7 +369,6 @@ describe API::Tools, type: :request do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to match({ 'readme' => include('Welcome to Rails') })
     end
-
 
     describe 'protected endpoint' do
       let(:url) { '/api/tools/github' }

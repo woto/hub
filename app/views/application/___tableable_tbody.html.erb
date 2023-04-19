@@ -1,0 +1,15 @@
+<% rows.each do |row| %>
+  <%= tag.div id: "table_#{@settings[:singular]}_#{row.id}", class: "2xl:tw-table-row [&:nth-of-type(even)]:tw-bg-slate-100 table_#{@settings[:singular]}" do %>
+    <% @settings[:form_class].parsed_columns_for(controller, request, current_user&.role).each do |col_name| %>
+      <%= tag.div class: '2xl:tw-table-cell tw-align-middle tw-p-2',
+                  id: "tr_#{row.id}_td_#{col_name}" do %>
+        <%= row.public_send(col_name) %>
+      <% end %>
+    <% end %>
+
+    <%= tag.div class: '2xl:tw-table-cell tw-align-middle tw-p-2' do %>
+      <%= render 'member_controls', row: row %>
+    <% end %>
+
+  <% end %>
+<% end %>

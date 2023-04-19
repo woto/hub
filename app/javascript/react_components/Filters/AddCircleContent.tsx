@@ -12,7 +12,7 @@ import {
   ShieldCheckIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Fragment, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Entities from './Entities';

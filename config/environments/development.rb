@@ -24,11 +24,6 @@ Rails.application.configure do
     config.action_controller.enable_fragment_cache_logging = true
 
     # config.cache_store = :memory_store
-    config.cache_store = :redis_cache_store, {
-      url: Rails.application.config.redis_cache.yield_self do |redis|
-        "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
-      end
-    }
 
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
@@ -36,7 +31,7 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
 
-    config.cache_store = :null_store
+    # config.cache_store = :null_store
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
@@ -91,6 +86,6 @@ Rails.application.configure do
   # NOTE: specially changed to random time zone in order to not miss datetime conversions.
   config.time_zone = 'UTC'
 
-  config.i18n.available_locales = %w[en en-US ru]
+  config.i18n.available_locales = %w[en ru]
   config.action_mailer.default_url_options = { host: 'localhost', protocol: 'http', port: 3000 }
 end

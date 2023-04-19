@@ -8,6 +8,8 @@ describe 'EntitiesController#show', type: :system do
   let!(:images_relation) { create(:images_relation, relation: mention) }
 
   before do
+    mention.__elasticsearch__.index_document
+    Mention.__elasticsearch__.refresh_index!
     visit entity_path(id: entity)
   end
 

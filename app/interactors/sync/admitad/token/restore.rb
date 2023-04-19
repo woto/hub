@@ -11,7 +11,7 @@ module Sync
         def call
           token = Rails.cache.read(TOKEN_KEY)
           context.fail! unless token
-          Rails.logger.debug("Found token #{token}")
+          Rails.logger.debug { "Found token #{token}" }
 
           context.token = token
         end

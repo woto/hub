@@ -1,0 +1,11 @@
+<%= render ReactComponent.new(name: 'Tabs',
+                              class: '',
+                              props: {
+                                available_languages:
+                                  Rails.application.config.global[:locales].map { |locale| [locale[:title], locale[:locale]] }.
+                                    sort { |left, right| left.first <=> right.first },
+                                available_time_zones: ActiveSupport::TimeZone.all.map { |z| [ z.to_s, z.name ] },
+                                available_messengers: Rails.application.config.global[:messengers].map { |messenger| messenger[:long] }
+                               }) do |component| %>
+
+<% end %>

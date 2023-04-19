@@ -47,8 +47,11 @@ class Mention < ApplicationRecord
   has_many :topics_relations, as: :relation, dependent: :destroy
   has_many :topics, -> { distinct }, through: :topics_relations
 
-  has_many :images_relations, as: :relation, dependent: :destroy
-  has_many :images, -> { distinct }, through: :images_relations
+  # has_many :images_relations, as: :relation, dependent: :destroy
+  # has_many :images, -> { distinct }, through: :images_relations
+
+  has_one :image_relation, as: :relation, dependent: :destroy, class_name: 'ImagesRelation'
+  has_one :image, through: :image_relation, source: :image
 
   before_validation :strip_title
   before_validation :strip_url
@@ -106,7 +109,7 @@ class Mention < ApplicationRecord
   end
 
   def as_indexed_json(_options = {})
-    image_relation = images_relations.slice(-1, 1)
+    # image_relation = images_relations.slice(-1, 1)
     {
       id: id,
       published_at: published_at,
@@ -118,7 +121,7 @@ class Mention < ApplicationRecord
       created_at: created_at,
       updated_at: updated_at,
       user_id: user_id,
-      image: (GlobalHelper.image_hash(image_relation, %w[50 100 200 300 500 1000]) if image_relation),
+      image: (GlobalHelper.image_hash([image_relation], %w[50 100 200 300 500 1000]) if image_relation),
       # entity_ids: entity_ids,
       # TODO: Rails 7 in order of
       entities: entities_hash,

@@ -28,7 +28,7 @@ describe FeedCategoriesCache do
     let(:attempt_uuid) { SecureRandom.uuid }
 
     before do
-      subject.append_or_update(item.to_h)
+      subject.append_or_update(**item.to_h)
     end
 
     context 'when same attempt_uuid' do

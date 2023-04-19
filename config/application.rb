@@ -62,6 +62,13 @@ module Hub
     #   ActionText::ContentHelper.allowed_tags << "iframe"
     # end
 
+    config.cache_store = :redis_cache_store, {
+      url: Rails.application.config.redis_cache.yield_self do |redis|
+        "redis://#{redis[:host]}:#{redis[:port]}/#{redis[:db]}"
+      end
+    }
+
+
     # config.middleware.use Prometheus::Middleware::Collector
 
     config.middleware.insert_after(Rack::Head, ::Locale)

@@ -96,8 +96,10 @@ class Locale
 
     locales.reverse_each do |locale|
       val = I18n.available_locales.find { |al| match?(al, locale) }
-      break val if val
+      return val if val
     end
+
+    nil
   end
 
   def match?(s1, s2)

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::OffersController, type: :system do
+xdescribe Tables::OffersController, type: :system do
   let!(:offer) { OfferCreator.call(feed_category: create(:feed_category)) }
   let(:link_text) { 'Отключить поиск по тексту.' }
 

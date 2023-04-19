@@ -1,9 +1,0 @@
-<% content_for :modal_body do %>
-  <%= render 'form' %>
-<% end %>
-
-<%= content_for :modal_title do %>
-  <%= t(params[:filter_form][:column], scope: [:table, :long, @settings[:singular]]) %>
-<% end %>
-
-<%= render template: 'table/filters/modal_wrapper' %>

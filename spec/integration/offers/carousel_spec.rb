@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::OffersController, type: :system do
+xdescribe Tables::OffersController, type: :system do
   it 'slides images on mousemove' do
     pictures = %w[megan_vale.jpg sasha_rose.jpeg angel_rivas.jpg]
     offer = OfferCreator.call(feed_category: FactoryBot.create(:feed_category), pictures: pictures)

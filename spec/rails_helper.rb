@@ -59,7 +59,6 @@ RSpec.configure do |config|
   # https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html
   config.include ActiveSupport::Testing::TimeHelpers
 
-  config.include SystemHelpers, type: :system
   config.include MailerHelpers, type: :mailer
 
   # Warden

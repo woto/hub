@@ -47,12 +47,16 @@ export default function User(props: UserInterface) {
                 className={`
                   tw-h-10 tw-w-10
                   lg:tw-h-9 lg:tw-w-9
-                  tw-inline-block tw-rounded-full`}
-                src={user.avatar}
+                  tw-inline-block tw-rounded-full
+                  tw-border
+                `}
+                src={user.avatar?.image_url
+                  ? user.avatar?.image_url
+                  : 'https://comnplayscience.eu/app/images/notfound.png'}
                 alt=""
               />
             </div>
-            <div className="tw-ml-3">
+            <div className="tw-ml-3 tw-text-left">
               <p className={`
                 tw-text-base
                 lg:tw-text-sm
@@ -62,7 +66,7 @@ export default function User(props: UserInterface) {
               </p>
               <p className={`
                 tw-text-sm
-                lg:tw-text-xs'
+                lg:tw-text-xs
                 tw-font-medium tw-text-gray-500 group-hover:tw-text-gray-700 `}
               >
                 {user.name}
@@ -98,7 +102,6 @@ export default function User(props: UserInterface) {
                   {({ active }) => (
                     <a
                       href={`${language.path}/settings/profile`}
-                      // data-turbo-method={link.method}
                       className={`
                         ${active ? 'tw-bg-gray-100 tw-text-gray-900' : 'tw-text-gray-500'}
                         tw-text-left tw-w-full tw-block tw-px-4 tw-py-2 tw-text-sm !tw-no-underline hover:!tw-text-gray-400
@@ -163,6 +166,8 @@ export default function User(props: UserInterface) {
   //   #             method: 'get',
   //   #             icon: 'login'
   //   #           }]
+
+  console.log('User component');
 
   return (
     <div className={`

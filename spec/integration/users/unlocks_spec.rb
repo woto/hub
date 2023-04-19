@@ -34,7 +34,7 @@ describe Users::UnlocksController, type: :system do
     it 'shows alert that account is not locked' do
       send_form(user.email)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не заблокирован')
+      expect(page).to have_text('Email не заблокирован')
     end
   end
 
@@ -42,7 +42,7 @@ describe Users::UnlocksController, type: :system do
     it 'shows alert that email is not found' do
       send_form(Faker::Internet.email)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не найден')
+      expect(page).to have_text('Email не найден')
     end
   end
 

@@ -26,31 +26,65 @@ describe Locale do
   end
 
   context 'when locale in params' do
-    it 'sets session locale' do
-      expect(I18n).to receive(:with_locale).with('pt').and_call_original
-      get '/pt'
-      expect(cookies[:locale]).to eq('pt')
-      expect(response.get_header('Content-Language')).to eq('pt')
+    it 'sets session ru locale' do
+      expect(I18n).to receive(:with_locale).with('ru').and_call_original
+      get '/ru'
+      expect(cookies[:locale]).to eq('ru')
+      expect(response.get_header('Content-Language')).to eq('ru')
+    end
+
+    it 'sets session en locale' do
+      expect(I18n).to receive(:with_locale).with('en').and_call_original
+      get '/en'
+      expect(cookies[:locale]).to eq('en')
+      expect(response.get_header('Content-Language')).to eq('en')
     end
   end
 
   context 'when locale in cookies' do
-    it 'preserves session locale' do
-      get '/zh-CN'
-      expect(cookies[:locale]).to eq('zh-CN')
-      expect(I18n).to receive(:with_locale).with('zh-CN').and_call_original
+    it 'preserves ru session locale' do
+      get '/ru'
+      expect(cookies[:locale]).to eq('ru')
+      expect(I18n).to receive(:with_locale).with('ru').and_call_original
       get '/'
-      expect(cookies[:locale]).to eq('zh-CN')
-      expect(response.get_header('Content-Language')).to eq('zh-CN')
+      expect(cookies[:locale]).to eq('ru')
+      expect(response.get_header('Content-Language')).to eq('ru')
+    end
+
+    it 'preserves en session locale' do
+      get '/en'
+      expect(cookies[:locale]).to eq('en')
+      expect(I18n).to receive(:with_locale).with('en').and_call_original
+      get '/'
+      expect(cookies[:locale]).to eq('en')
+      expect(response.get_header('Content-Language')).to eq('en')
     end
   end
 
-  context 'when locale present in Accept-Language' do
+  context 'when ru locale present in Accept-Language' do
     specify do
-      expect(I18n).to receive(:with_locale).with('en-US').and_call_original
+      expect(I18n).to receive(:with_locale).with('ru').and_call_original
       headers = { 'Accept-Language' => 'ru-RU, ru;q=0.9, en-US;q=1, en;q=0.7, fr;q=0.6' }
       get '/', headers: headers
-      expect(response.get_header('Content-Language')).to eq('en-US')
+      expect(response.get_header('Content-Language')).to eq('ru')
+    end
+  end
+
+  context 'when en locale present in Accept-Language' do
+    specify do
+      expect(I18n).to receive(:with_locale).with('en').and_call_original
+      headers = { 'Accept-Language' => 'en, ru;q=0.9, en-US;q=1, en;q=0.7, fr;q=0.6' }
+      get '/', headers: headers
+      expect(response.get_header('Content-Language')).to eq('en')
+    end
+  end
+
+  context 'when only fr and de locales present in Accept-Language' do
+    it 'sets default en locale' do
+      expect(I18n).to receive(:with_locale).with('en').and_call_original
+      headers = { 'Accept-Language' => 'fr-CH, fr;q=0.9, de;q=0.7, *;q=0.5' }
+      get '/', headers: headers
+      expect(response.get_header('Content-Language')).to eq('en')
     end
   end
 
@@ -63,11 +97,19 @@ describe Locale do
     end
   end
 
-  context 'when requests en-GB locale (differs from en)' do
+  context 'when requests en locale' do
     specify do
-      expect(I18n).to receive(:with_locale).with('en-GB').and_call_original
-      get '/en-GB'
-      expect(response.get_header('Content-Language')).to eq('en-GB')
+      expect(I18n).to receive(:with_locale).with('en').and_call_original
+      get '/en'
+      expect(response.get_header('Content-Language')).to eq('en')
+    end
+  end
+
+  context 'when requests ru locale' do
+    specify do
+      expect(I18n).to receive(:with_locale).with('ru').and_call_original
+      get '/ru'
+      expect(response.get_header('Content-Language')).to eq('ru')
     end
   end
 end

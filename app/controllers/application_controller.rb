@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   # Time zone
 
   def set_time_zone(&block)
-    Time.use_zone(current_user&.profile&.time_zone, &block)
+    Time.use_zone(current_user&.profile&.time_zone.presence || 'UTC', &block)
   end
 
   def detect_device_format

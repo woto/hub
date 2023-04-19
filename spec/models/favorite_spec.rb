@@ -64,6 +64,7 @@ describe Favorite, type: :model do
 
         expect(favorite.as_indexed_json).to match(
           id: favorite.id,
+          is_public: false,
           favorites_items_count: 2,
           kind: 'offers',
           name: 'Some name',

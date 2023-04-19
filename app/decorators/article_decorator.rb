@@ -1,2 +1,0 @@
-class ArticleDecorator < ApplicationDecorator
-end

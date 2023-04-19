@@ -39,6 +39,19 @@ class Topic < ApplicationRecord
     title
   end
 
+  settings index: { number_of_shards: 1, number_of_replicas: 0 } do
+    mapping do
+      indexes :id, type: 'long'
+      indexes :title, type: 'text' do
+        indexes :autocomplete, type: 'search_as_you_type'
+        indexes :keyword, type: 'keyword'
+      end
+      indexes :topics_relations_count, type: 'long'
+      indexes :created_at, type: 'date'
+      indexes :updated_at, type: 'date'
+    end
+  end
+
   def as_indexed_json(_options = {})
     {
       id: id,

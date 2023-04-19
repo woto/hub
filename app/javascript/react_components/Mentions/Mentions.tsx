@@ -5,7 +5,7 @@ import {
 import {
   AnimatePresence, LayoutGroup, motion, useInView,
 } from 'framer-motion';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from '../system/Axios';
 import MentionsCard from './MentionsItem';
 import Alert from '../Alert';

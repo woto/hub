@@ -11,12 +11,14 @@ module Mentions
       if result.success?
         object = result.object
 
+        mention = Mention.find(mention_id)
+
         ActiveRecord::Base.transaction do
-          image = Image.create!(image_data_uri: object['image'], user_id: user_id)
-          ImagesRelation.create!(image: image, relation_id: mention_id, relation_type: 'Mention', user_id: user_id)
+          base64 = JSON.parse(object)['image']
+          image = Image.create!(image_data_uri: base64, user_id:)
+          ImagesRelation.create!(image:, relation: mention, user_id:)
         end
 
-        mention = Mention.find(mention_id)
         mention.__elasticsearch__.index_document
         mention.class.__elasticsearch__.refresh_index!
       else

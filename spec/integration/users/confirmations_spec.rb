@@ -30,7 +30,7 @@ describe Users::ConfirmationsController, type: :system do
       send_form(user.email)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       text = 'Email уже подтверждён. Пожалуйста, попробуйте войти в систему'
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: text)
+      expect(page).to have_text(text)
     end
   end
 
@@ -59,7 +59,7 @@ describe Users::ConfirmationsController, type: :system do
     it 'shows alert' do
       send_form(Faker::Internet.email)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не найден')
+      expect(page).to have_text('Email не найден')
     end
   end
 
@@ -67,7 +67,7 @@ describe Users::ConfirmationsController, type: :system do
     it 'shows alert' do
       send_form('')
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: 'Email не может быть пустым')
+      expect(page).to have_text('Email не может быть пустым')
     end
   end
 
@@ -103,7 +103,7 @@ describe Users::ConfirmationsController, type: :system do
       visit user_confirmation_path(confirmation_token: user.confirmation_token, locale: :ru)
       expect(page).to have_text('Невозможно сохранить. Пожалуйста заполните поля')
       text = 'Email должен быть подтвержден в течение 3 дня, пожалуйста, повторите запрос на подтверждение'
-      expect(page).to have_css('#user_email ~ .invalid-feedback', text: text)
+      expect(page).to have_text(text)
     end
   end
 

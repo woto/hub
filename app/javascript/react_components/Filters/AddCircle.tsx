@@ -13,7 +13,7 @@ import {
   ShieldCheckIcon,
   UsersIcon,
 } from '@heroicons/react/24/outline';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import Entities from './Entities';
 import axios from '../system/Axios';
 import Entity from './Entity';

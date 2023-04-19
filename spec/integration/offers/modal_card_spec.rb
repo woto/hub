@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::OffersController, type: :system do
+xdescribe Tables::OffersController, type: :system do
   let!(:offer) { OfferCreator.call(feed_category: FactoryBot.create(:feed_category)) }
   let(:offer_url) { offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY] }
 

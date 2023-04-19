@@ -3,7 +3,7 @@ import {
   Fragment, useCallback, useContext, useEffect, useMemo, useState,
 } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import axios from '../system/Axios';
 import ListingsForm from './ListingsForm';
@@ -98,7 +98,7 @@ export default function ListingsIndex({ opened, close, entityId }: {
           leaveFrom="tw-opacity-100 tw-scale-100"
           leaveTo="tw-opacity-0 tw-scale-95"
         >
-          <div className="tw-mx-auto tw-max-w-xl tw-transform tw-divide-y tw-divide-gray-100 tw-overflow-hidden tw-rounded-xl
+          <div className="tw-mx-auto tw-max-w-xl tw-transform tw-overflow-hidden tw-rounded-xl
                 tw-bg-white tw-shadow-2xl tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-transition-all"
           >
 

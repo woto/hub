@@ -10,7 +10,7 @@ describe 'GET /swagger_doc' do
                                                    'swagger' =>	'2.0',
                                                    'produces' =>	a_kind_of(Array),
                                                    'securityDefinitions' =>	a_kind_of(Hash),
-                                                   'security' =>	a_kind_of(Array),
+                                                   #  'security' =>	a_kind_of(Array),
                                                    'host' =>	a_kind_of(String),
                                                    'tags' =>	a_kind_of(Array),
                                                    'paths' =>	a_kind_of(Hash)

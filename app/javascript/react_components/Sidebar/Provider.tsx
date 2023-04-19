@@ -4,21 +4,24 @@ import React, {
 import {
   HomeIcon, MagnifyingGlassCircleIcon, CalendarIcon, MegaphoneIcon, MapIcon, UserIcon, UsersIcon,
 } from '@heroicons/react/24/outline';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import SidebarContext from './Context';
 import axios from '../system/Axios';
 import LanguageContext from '../Language/LanguageContext';
 import { AuthInterface } from '../system/TypeScript';
-import AuthContext from '../Auth/AuthContext';
+import useAuth from '../Auth/useAuth';
+// import AuthContext from '../Auth/AuthContext';
 
 export default function Provider({ children }: { children: ReactNode }) {
-  const [example, setExample] = useState([]);
-  const { user } = useContext<AuthInterface>(AuthContext);
+  // const [example, setExample] = useState([]);
+  // const { user } = useContext<AuthInterface>(AuthContext);
+
+  const {user} = useAuth();
 
   const {
     isLoading, error, data, isFetching,
   } = useQuery(
-    ['sidebar', user],
+    ['sidebar', user?.id],
     () => axios
       .get('/api/listings/sidebar')
       .then((res) => res.data)
@@ -36,17 +39,17 @@ export default function Provider({ children }: { children: ReactNode }) {
             is_public: item.is_public,
           });
         });
-        setExample(result);
+        return result;
       }),
   );
 
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
   const value = useMemo(() => ({
-    navigation: example,
+    navigation: data || [],
     sidebarOpen,
     setSidebarOpen,
-  }), [example, sidebarOpen]);
+  }), [data, sidebarOpen, setSidebarOpen]);
 
   // const [user, setUser] = useState<User>();
   // const value = useMemo(() => ({ user, setUser }), [user, setUser]);

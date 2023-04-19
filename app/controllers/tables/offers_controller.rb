@@ -22,40 +22,38 @@ module Tables
     def index
       seo.noindex! if (params.keys & %w[q per sort order favorite_id filters columns]).present?
 
-      @favorites_store = FavoritesStore.new(current_user)
+      # @favorites_store = FavoritesStore.new(current_user)
       @groups_store = GroupsStore.new
       filters = {}
       results = []
       total_count = 0
       actual_count = 0
 
-      if params[:favorite_id]
-        @favorite = policy_scope(Favorite.offers).find(params[:favorite_id])
+      if false
+        # filter_ids = @favorite.favorites_items._id.pluck('ext_id')
+        # unless filter_ids.empty?
+        #   filters[:a] = {
+        #     filter_by: '_id',
+        #     filter_id: filter_ids,
+        #     results: []
+        #   }
+        # end
 
-        filter_ids = @favorite.favorites_items._id.pluck('ext_id')
-        unless filter_ids.empty?
-          filters[:a] = {
-            filter_by: '_id',
-            filter_id: filter_ids,
-            results: []
-          }
-        end
-
-        filter_ids = @favorite.favorites_items.not__id.pluck('ext_id', 'kind').map do |ext_id, kind|
-          "#{kind}:#{ext_id}"
-        end
-        unless filter_ids.empty?
-          filters[:b] = {
-            group_by: 'favorite_ids.keyword',
-            # group_model: '',
-            filter_by: 'favorite_ids.keyword',
-            filter_id: filter_ids,
-            include: filter_ids,
-            results: []
-          }
-        end
+        # filter_ids = @favorite.favorites_items.not__id.pluck('ext_id', 'kind').map do |ext_id, kind|
+        #   "#{kind}:#{ext_id}"
+        # end
+        # unless filter_ids.empty?
+        #   filters[:b] = {
+        #     group_by: 'favorite_ids.keyword',
+        #     # group_model: '',
+        #     filter_by: 'favorite_ids.keyword',
+        #     filter_id: filter_ids,
+        #     include: filter_ids,
+        #     results: []
+        #   }
+        # end
       elsif params[:advertiser_id]
-        @favorites_store.append(current_advertiser.id, :advertiser_id)
+        # @favorites_store.append(current_advertiser.id, :advertiser_id)
 
         filters[:b] = {
           group_by: 'feed_id',
@@ -66,7 +64,7 @@ module Tables
           favorite_item_kind: :feed_id
         }
       elsif params[:feed_id]
-        @favorites_store.append(current_feed.id, :feed_id)
+        # @favorites_store.append(current_feed.id, :feed_id)
 
         filters[:b] = {
           group_by: 'feed_category_id_0',
@@ -77,7 +75,7 @@ module Tables
           favorite_item_kind: :feed_category_id
         }
       elsif params[:feed_category_id]
-        @favorites_store.append(current_feed_category.id, :feed_category_id)
+        # @favorites_store.append(current_feed_category.id, :feed_category_id)
 
         if current_feed_category.children.none?
           filters[:a] = {
@@ -124,9 +122,9 @@ module Tables
 
           actual_count += 1
 
-          products.each do |product|
-            @favorites_store.append(product['_id'], '_id')
-          end
+          # products.each do |product|
+          #   @favorites_store.append(product['_id'], '_id')
+          # end
         end
 
         total_count += (result['hits']['total']['value'].to_f / GlobalHelper::MULTIPLICATOR).ceil
@@ -162,11 +160,7 @@ module Tables
             count: group['doc_count']
           }
 
-          @favorites_store.append(ext_id, favorite_item_kind)
           @groups_store.append(ext_id, favorite_item_kind)
-          products.each do |product|
-            @favorites_store.append(product['_id'], '_id')
-          end
         end
 
         total_count += result['aggregations'][GlobalHelper::GROUP_NAME.to_s]['buckets'].count
@@ -178,6 +172,8 @@ module Tables
                  .per(@pagination_rule.per)
 
       self.status = :not_found if @results.empty?
+
+      render json: JSON.pretty_generate(@results)
     end
 
     # TODO: action?!
@@ -268,7 +264,7 @@ module Tables
     end
 
     def preserved_params
-      request.params.slice(:order, :per, :sort, :columns, :favorite_id)
+      request.params.slice(:order, :per, :sort, :columns)
     end
   end
 end

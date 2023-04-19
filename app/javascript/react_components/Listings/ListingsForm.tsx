@@ -7,7 +7,7 @@ import {
   PencilIcon, PlusCircleIcon, TrashIcon, UserIcon, XMarkIcon,
 } from '@heroicons/react/24/outline';
 import * as React from 'react';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import {
   Dispatch, SetStateAction, useId, useState,
 } from 'react';

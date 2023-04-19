@@ -53,7 +53,7 @@ describe User, type: :model do
   it { is_expected.to have_db_index(:reset_password_token).unique }
   it { is_expected.to have_db_index(:unlock_token).unique }
   it { expect(subject).to define_enum_for(:role).with_values(%i[user manager admin]) }
-  it { is_expected.to have_one_attached(:avatar) }
+  it { is_expected.to have_one(:avatar) }
   it { is_expected.to have_one(:profile).dependent(:restrict_with_exception) }
   it { is_expected.to have_many(:posts).dependent(:restrict_with_exception) }
   it { is_expected.to have_many(:identities).dependent(:restrict_with_exception) }

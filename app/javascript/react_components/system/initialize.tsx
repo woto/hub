@@ -29,8 +29,12 @@ import * as React from 'react';
 import {
   QueryClient,
   QueryClientProvider,
-} from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+} from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from 'react-router-dom';
 import Root from './Root';
 
 import { ToastProvider } from '../Toast/ToastManager';
@@ -62,13 +66,20 @@ const queryClient = new QueryClient({
   },
 });
 
+const router = createBrowserRouter([
+  {
+    path: '*',
+    element: <Root />,
+  },
+]);
+
 const render = () => {
   root.render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <ToastProvider>
-          <Root />
-          <ReactQueryDevtools initialIsOpen />
+          <RouterProvider router={router} />
+          { process.env.REACT_QUERY_DEVTOOLS === 'true' && <ReactQueryDevtools initialIsOpen /> }
         </ToastProvider>
       </QueryClientProvider>
     </React.StrictMode>,

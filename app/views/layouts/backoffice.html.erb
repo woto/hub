@@ -1,12 +1,3 @@
-<% content_for(:before_head_close) do %>
-  <%= render 'trackers_google' %>
-  <%= render 'trackers_yandex' %>
-<% end %>
-
-<%= content_for(:after_body_open) do %>
-  <%= render 'trackers_tawk' %>
-<% end %>
-
 <% content_for(:body) do %>
 
   <%= tag.body class: "antialiased",
@@ -29,13 +20,6 @@
         </div>
       </button>
 
-      <%= render 'navbar_mobile' %>
-      <%= render 'navbar_menu' %>
-
-      <%= render 'mobile_search_wrapper' do %>
-        <%= render 'search_bar', btn_class: 'btn-secondary' %>
-      <% end %>
-
       <div class="w-100"></div>
 
       <%= content_for :left_menu %>
@@ -44,8 +28,6 @@
   </aside>
 
   <section class="page">
-
-    <%= render 'desktop_header' %>
 
     <main class="content">
 

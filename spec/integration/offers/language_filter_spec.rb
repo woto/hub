@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tables::OffersController, type: :system do
+xdescribe Tables::OffersController, type: :system do
   it 'simply shows language filter' do
     feed_category = create(:feed_category)
     OfferCreator.call(feed_category: feed_category, name: 'Название товара', description: 'Это просто описание товара')

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ShieldExclamationIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import axios from '../system/Axios';
 import { useToasts } from '../Toast/ToastManager';
 

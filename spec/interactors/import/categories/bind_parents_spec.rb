@@ -72,7 +72,7 @@ describe Import::Categories::BindParents do
         .with({ feed_id: feed.id, message: 'Unable to update child category' }, { by: 1 })
       subject
       expect(child).to be_invalid
-      expect(child.errors.to_h).to eq({ base: 'Feedcategory cannot be a descendant of itself.' })
+      expect(child.errors.details).to eq({ base: [{error: 'Feedcategory cannot be a descendant of itself.'}] })
     end
   end
 

@@ -17,7 +17,7 @@ describe API::Mentions, type: :request, responsible: :admin do
         get '/api/topics', headers: { 'HTTP_API_KEY' => user.api_key }, params: { q: 'secon' }
 
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)).to match([{ 'title' => 'second' }])
+        expect(JSON.parse(response.body)).to match([{ 'count' => nil, 'id' => 2, 'title' => 'second' }])
       end
     end
   end

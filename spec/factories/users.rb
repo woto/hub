@@ -71,9 +71,7 @@ FactoryBot.define do
     end
 
     trait(:with_avatar) do
-      after(:create) do |user|
-        user.avatar.attach(io: File.open(Rails.root.join('spec/fixtures/files/avatar.png')), filename: 'avatar.png')
-      end
+      avatar { association(:image) }
     end
   end
 end

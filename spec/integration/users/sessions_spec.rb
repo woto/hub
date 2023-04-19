@@ -15,8 +15,7 @@ describe Users::SessionsController, type: :system do
   context 'when user enters correct login and password' do
     it 'signs in successfully' do
       send_form(user.email, user.password)
-      expect_dashboard
-      expect_authenticated
+      expect(page).to have_current_path('/ru/users/auth_complete')
       expect(page).to have_text('Вход в систему выполнен.')
     end
   end
@@ -38,10 +37,10 @@ describe Users::SessionsController, type: :system do
   context 'when user clicks on logout' do
     it 'signs out successfully' do
       login_as(user, scope: :user)
-      visit '/ru/dashboard'
-      find('.authenticated_component .capybara-desktop').click
-      click_link 'logout'
-      expect(page).to have_text('Выход из системы выполнен.')
+      visit('/')
+      click_button user.email
+      click_button 'Выход'
+      expect(page).to have_text('Вход / Регистрация')
     end
   end
 
@@ -55,8 +54,7 @@ describe Users::SessionsController, type: :system do
 
   it 'tests warden #login_as helper' do
     login_as(user, scope: :user)
-    visit '/dashboard'
-    expect_authenticated
+    visit '/'
   end
 
   describe 'access with unconfirmed email' do
@@ -82,8 +80,7 @@ describe Users::SessionsController, type: :system do
 
       it 'logs in' do
         send_form(user.email, user.password)
-        expect_dashboard
-        expect_authenticated
+        expect(page).to have_current_path('/ru/users/auth_complete')
         expect(page).to have_text('Вход в систему выполнен.')
       end
     end
@@ -99,8 +96,7 @@ describe Users::SessionsController, type: :system do
     context 'when user enters correct login and password' do
       it 'logs in' do
         send_form(user.email, user.password)
-        expect_dashboard
-        expect_authenticated
+        expect(page).to have_current_path('/ru/users/auth_complete')
         expect(page).to have_text('Вход в систему выполнен.')
       end
     end

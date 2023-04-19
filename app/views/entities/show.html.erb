@@ -12,15 +12,6 @@
 
 <% seo.subtitle! subtitle.join(', ') %>
 
-<% content_for :breadcrumbs do %>
-  <%= render BreadcrumbComponent.new do |b| %>
-    <%= b.root_item title: t('breadcrumbs.homepage'), url: root_path %>
-    <%= b.item title: t('breadcrumbs.dashboard'), url: dashboard_path %>
-    <%= b.item title: t('breadcrumbs.entities'), url: entities_path %>
-    <%= b.item title: t('breadcrumbs.show_entity'), url: entity_path(@entity) %>
-  <% end %>
-<% end %>
-
 <div class="tw-grid tw-grid-cols-1 tw-gap-4 tw-relative tw-z-30">
   <div class="tw-gap-4">
 
@@ -78,22 +69,6 @@
     <div class="tw-mt-4 tw-mx-4 sm:tw-mx-0 tw-text-lg tw-mb-14">
       <%= @entity.intro %>
     </div>
-
-    <% if false %>
-      <section aria-labelledby="section-2-title" class="">
-        <div class="">
-          <div class="tw-py-5">
-            <div class="tw-flex tw-flex-col tw-gap-5 tw-w-full">
-              <% if false %>
-                <div class="tw-flex tw-gap-4">
-                  <%= render BookmarkComponent.new(favorites_store: @favorites_store, ext_id: @entity.id, favorites_items_kind: 'entities') %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </section>
-    <% end %>
 
     <% if true %>
       <% links = @entity.cites.select(:link_url).where.not(link_url: '').distinct.pluck(:link_url) %>

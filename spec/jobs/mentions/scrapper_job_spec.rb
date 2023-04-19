@@ -18,7 +18,7 @@ RSpec.describe Mentions::ScrapperJob, type: :job do
 
       expect { subject }
         .to change(Image, :count)
-        .and(change { mention.images.count })
+        .and(change { mention.reload.image })
 
       expect(Image.last.user).to eq(user)
       expect(ImagesRelation.last.user).to eq(user)

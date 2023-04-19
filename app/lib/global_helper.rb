@@ -67,7 +67,7 @@ class GlobalHelper
         model_class: model.to_s.singularize.camelize.safe_constantize,
         form_class:,
         query_class: "#{model.to_s.pluralize.camelize}SearchQuery".constantize,
-        decorator_class: "#{model.to_s.singularize.camelize}Decorator".constantize,
+        # decorator_class: "#{model.to_s.singularize.camelize}Decorator".constantize,
         favorites_kind: model.to_s.pluralize.to_sym,
         favorites_items_kind: model.to_s.pluralize.to_sym }
     end
@@ -94,15 +94,7 @@ class GlobalHelper
       Elastic::CreateTokenizerIndex.call
 
       Elastic::CreateIndex.call(index: Elastic::IndexName.pick('users'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('feeds'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('posts'))
       Elastic::CreateIndex.call(index: Elastic::IndexName.pick('favorites'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('accounts'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('transactions'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('checks'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('post_categories'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('exchange_rates'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('realms'))
       Elastic::CreateIndex.call(index: Elastic::IndexName.pick('mentions'))
       Elastic::CreateIndex.call(index: Elastic::IndexName.pick('entities'))
       Elastic::CreateIndex.call(index: Elastic::IndexName.pick('topics'))

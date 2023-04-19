@@ -16,12 +16,12 @@ Rails.application.routes.draw do
   scope '(:locale)', constraints: LocalesConstraint.new do
     scope module: 'tables' do
       resources :mentions, only: %i[index]
-      resources :entities, only: [:index]
+      # resources :entities, only: [:index]
     end
     resources :mentions, only: %i[index show]
     resources :listings, only: [:show]
 
-    resources :entities, only: %i[index show] do
+    resources :entities, only: %i[show] do
       # member do
       #   get :popover
       # end
@@ -33,26 +33,23 @@ Rails.application.routes.draw do
   end
   # end
 
-  scope constraints: ReviewsConstraint.new do
-  end
-
   scope constraints: WebsiteConstraint.new do
-    root to: 'tables/articles#index', as: :articles
+  #   root to: 'tables/articles#index', as: :articles
     get '/robots.txt', to: 'robots#index'
 
-    scope controller: 'tables/articles', as: :articles do
-      get 'month/:month', action: :by_month, as: :by_month
-      get 'tag/:tag', action: :by_tag, as: :by_tag, constraints: { tag: %r{[^/]*} }
-      get 'category/:category_id', action: :by_category, as: :by_category
-    end
-    namespace :frames do
-      namespace :articles do
-        get 'month(/:month)', to: 'month#index', as: :month
-        get 'tag(/:tag)', to: 'tag#index', as: :tag, constraints: { tag: %r{[^/]*} }
-        get 'category(/:category_id)', to: 'category#index', as: :category
-      end
-    end
-    resources :articles, only: :show
+  #   scope controller: 'tables/articles', as: :articles do
+  #     get 'month/:month', action: :by_month, as: :by_month
+  #     get 'tag/:tag', action: :by_tag, as: :by_tag, constraints: { tag: %r{[^/]*} }
+  #     get 'category/:category_id', action: :by_category, as: :by_category
+  #   end
+  #   namespace :frames do
+  #     namespace :articles do
+  #       get 'month(/:month)', to: 'month#index', as: :month
+  #       get 'tag(/:tag)', to: 'tag#index', as: :tag, constraints: { tag: %r{[^/]*} }
+  #       get 'category(/:category_id)', to: 'category#index', as: :category
+  #     end
+  #   end
+  #   resources :articles, only: :show
   end
 
   get '/robots.txt', to: 'robots#index'
@@ -161,18 +158,7 @@ Rails.application.routes.draw do
       resource :filters, only: %i[create update], path_names: { create: '' }
     end
 
-    namespace 'settings' do
-      devise_scope :user do
-        scope path_names: { edit: '' } do
-          resource 'profile'
-          resource 'email'
-          resource 'password'
-          resource 'avatar'
-          resource 'danger_zone'
-          resource 'api_key'
-        end
-      end
-    end
+    get 'settings(/*tab)', to: 'settings#show'
 
     namespace :ajax do
       namespace :post_categories do
@@ -181,13 +167,8 @@ Rails.application.routes.draw do
       resources :users, controller: 'users', only: %i[index]
     end
 
-    get 'dashboard', to: 'dashboard#index'
     get 'api_docs', to: 'api_docs#index'
 
     root to: 'homepage#index'
-
-    get 'landing1', to: 'landing1#index'
   end
-
-  get '*page', to: 'pages#show'
 end

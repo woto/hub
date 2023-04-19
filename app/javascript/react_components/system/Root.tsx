@@ -2,12 +2,11 @@ import { Fragment } from 'react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import { Outlet } from 'react-router-dom';
 import Alert from '../Alert';
 import Complain from '../Complain';
 import Carousel from '../Carousel/Carousel';
-import SearchBar from '../SearchBar';
 import Language from '../Language';
-import OldBookmark from '../OldBookmark/OldBookmark';
 import EntitiesBadge from '../Entities/Badge';
 // import EntitiesCircles from '../Entities/Circles'
 import EntitiesButtons from '../Entities/Buttons';
@@ -28,7 +27,6 @@ import SingleTag from '../Tags/Single';
 import MultipleTags from '../Tags/Multiple';
 import Tinder from '../Tinder/Index';
 import Interaction from '../Mentions/Interaction';
-import MentionsHeader from '../Mentions/Header';
 import Mentions from '../Mentions/Mentions';
 import MentionsFilter from '../Filters/Index';
 import MentionsImage from '../Mentions/Image';
@@ -36,11 +34,12 @@ import MentionsCard from '../Mentions/MentionsItem';
 import DesktopSidebar from '../Sidebar/DesktopSidebar';
 import MobileSidebar from '../Sidebar/MobileSidebar';
 import Hamburger from '../Sidebar/Hamburger';
-import SetUser from '../Auth/SetUser';
+// import SetUser from '../Auth/SetUser';
 import AuthProvider from '../Auth/AuthProvider';
 import SidebarProvider from '../Sidebar/Provider';
 import LanguageProvider from '../Language/LanguageProvider';
-import ListingEntities from '../Listings/ListingsEntities'
+import ListingEntities from '../Listings/ListingsEntities';
+import Tabs from '../User/Tabs';
 
 function Portal({ Component, container, ...props }) {
   const [innerHtmlEmptied, setInnerHtmlEmptied] = React.useState(false);
@@ -79,12 +78,10 @@ export default function Root() {
     MobileSidebar,
     DesktopSidebar,
     Hamburger,
-    SetUser,
+    // SetUser,
     Alert,
     Complain,
     Language,
-    SearchBar,
-    OldBookmark,
     EntitiesBadge,
     // EntitiesCircles,
     Carousel,
@@ -107,11 +104,11 @@ export default function Root() {
     Tinder,
     Interaction,
     ListingEntities,
-    MentionsHeader,
     Mentions,
     MentionsImage,
     MentionsCard,
     MentionsFilter,
+    Tabs,
   };
 
   return (

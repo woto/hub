@@ -1,8 +1,0 @@
-<%= simple_form_for '', url: settings_api_key_path, method: :put, html: { id: 'form' } do |f| %>
-
-  <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'success') %>
-
-  <%= f.input :api_key, input_html: { value: current_user.api_key, readonly: true } %>
-
-  <%= f.button :submit, t('.generate') %>
-<% end %>

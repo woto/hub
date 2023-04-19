@@ -12,7 +12,8 @@ RSpec.describe Mentions::IframelyJob, type: :job do
       url = 'http://iframely:8061/iframely?url=https://example.com/?fake'
       stub_request(:get, url).to_return(
         status: 200,
-        body: { meta: { canonical: 'https://example.com', title: 'Example' } }.to_json
+        body: { meta: { canonical: 'https://example.com', title: 'Example' }}.to_json,
+        headers: { 'Content-Type' => 'application/json' }
       )
 
       subject

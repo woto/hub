@@ -23,9 +23,11 @@ module ShrineImage
     # # for performance we skip metadata extraction and assign test metadata
     uploaded_file = Shrine.upload(file, :store, metadata: false)
     uploaded_file.metadata.merge!(
-      'size' => File.size(file.path),
+      'size' => '1751',
       'mime_type' => 'image/jpeg',
-      'filename' => 'test.jpg'
+      'filename' => 'test.jpg',
+      'width' => '191',
+      'height' => '264'
     )
 
     uploaded_file

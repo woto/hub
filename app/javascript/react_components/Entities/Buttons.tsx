@@ -16,8 +16,6 @@ import TimeAgo from '../TimeAgo';
 import Timeline from './Timeline';
 import openEditEntity from '../system/Utility';
 import Complain from '../Complain';
-import OldBookmark from '../OldBookmark/OldBookmark';
-import DynamicStarIcon from '../DynamicStarIcon';
 import ListingsIndex from '../Listings/ListingsIndex';
 import { useToasts } from '../Toast/ToastManager';
 

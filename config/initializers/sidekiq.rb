@@ -19,4 +19,4 @@ end
 
 # https://github.com/woto/sidekiq_backtrace/commit/b40efadc14013ffc5607ecc4c2d25c1c988fe061#diff-ae13acc8819c30684b141a36c3994f78d0cef31e9a029931f472009f1d0b79bd
 # NOTE: commented out after updating gems
-# Sidekiq.default_worker_options = { 'backtrace' => true }
+Sidekiq.default_job_options = { 'backtrace' => true }

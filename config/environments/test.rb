@@ -25,7 +25,7 @@ Rails.application.configure do
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
-  config.cache_store = :null_store
+  # config.cache_store = :null_store
 
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
@@ -59,6 +59,6 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
-  config.i18n.available_locales = %w[en en-US en-GB ru zh-CN pt]
+  config.i18n.available_locales = %w[en ru]
   config.action_mailer.default_url_options = { host: 'example.com' }
 end

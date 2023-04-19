@@ -1,7 +1,0 @@
-<%= render ReactComponent.new(name: 'TimeAgo',
-                              class: '',
-                              props: { datetime: @datetime.iso8601 }) do |component| %>
-  <%= component.draft do %>
-    <%= @datetime.iso8601 %>
-  <% end %>
-<% end %>

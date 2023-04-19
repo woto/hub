@@ -10,7 +10,7 @@ import {
   useDomEvent,
   useSpring,
 } from 'framer-motion';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from '../system/Axios';
 
 import SingleTag from '../Tags/Single';
@@ -27,7 +27,7 @@ export default function Card(props) {
 
   const {
     isLoading, error, data, isFetching,
-  } = useQuery(`card:${props.useQueryKey}`, () => axios
+  } = useQuery(['card', props.useQueryKey], () => axios
     .get('/api/entities/random')
     .then((res) => res.data));
 
@@ -91,7 +91,7 @@ export default function Card(props) {
               && (
               <img
                 alt=""
-                className="tw-rounded-md tw-object-contain tw-pointer-events-none tw-select-none"
+                className="tw-rounded-md tw-object-contain tw-pointer-events-none tw-select-none tw-aspect-square tw-h-24"
                 src={data.images[0].image_url}
               />
               )}
