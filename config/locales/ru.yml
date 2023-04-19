@@ -34,6 +34,10 @@ ru:
         title: Название синонима
       mention:
         entities_mentions: Список объектов упоминания
+      user:
+        email: Email
+        password: Password
+        remember_me: Remember me
       widgets/simple:
         body: Описание
         pictures: Изображения
@@ -1002,6 +1006,7 @@ ru:
         favorite: Избр.
         id: ID
         is_active: Фид акт.
+        language: Lang.
         locked_by_tid: Sidekiq TID
         name: Назв. фида
         offers_count: Офферов

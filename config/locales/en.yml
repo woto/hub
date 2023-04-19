@@ -34,6 +34,10 @@ en:
         title: Название синонима
       mention:
         entities_mentions: Список объектов упоминания
+      user:
+        email: Email
+        password: Password
+        remember_me: Remember me
       widgets/simple:
         body: Description
         pictures: Pictures
