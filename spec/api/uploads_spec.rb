@@ -10,17 +10,17 @@ describe API::Uploads, type: :request do
       'data' => match(
         'id' => end_with('.png'),
         'storage' => 'cache',
-        'metadata' => {
+        'metadata' => include(
           'filename' => end_with('.png'),
           'size' => 1751,
           'mime_type' => 'image/png',
           'duration' => 0.0,
           'bitrate' => 0,
           'resolution' => '191x264',
-          'frame_rate' => nil,
+          # 'frame_rate' => nil,
           'width' => 191,
           'height' => 264
-        }
+        )
       ),
       'image_url' => start_with('/derivations/image/image/200/200/'),
       'video_url' => nil

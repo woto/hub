@@ -104,17 +104,17 @@ describe Feeds::Parse do
 
       it 'calls Feeds::Offers#append 1 time' do
         expect(feeds_offers).to receive(:append).and_call_original
-        expect { subject }.to raise_error
+        expect { subject }.to raise_error(Import::Process::OffersLimitError)
       end
 
       it 'calls Feeds::Offers#flush 1 time' do
         expect(feeds_offers).to receive(:flush)
-        expect { subject }.to raise_error
+        expect { subject }.to raise_error(Import::Process::OffersLimitError)
       end
 
       it 'updates feed with 1 offer' do
         freeze_time do
-          conditions = raise_error
+          conditions = raise_error(Import::Process::OffersLimitError)
                        .and(change { feed.reload.operation }.to('success'))
                        .and(change { feed.reload.categories_count }.to(7))
                        .and(change { feed.reload.offers_count }.to(1))

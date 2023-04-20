@@ -12,9 +12,9 @@ describe Entities::GetInteractor do
   let!(:cite) { create(:cite, entity:, link_url: 'https://cite.ru') }
   let!(:entity) { create(:entity, title: 'title', intro: 'intro', lookups: [lookup], topics: [topic]) }
 
-  before do
-    puts Entity.count
-  end
+  # before do
+  #   puts Entity.count
+  # end
 
   it 'conforms result format' do
     expect(interactor).to have_attributes(

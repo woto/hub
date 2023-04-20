@@ -11,13 +11,13 @@ describe Import::AggregateLanguage do
     let(:params) { { feed: feed_category.feed } }
 
     before do
-      OfferCreator.call(feed_category: feed_category, name: 'Название товара на русском языке',
+      OfferCreator.call(feed_category:, name: 'Название товара на русском языке',
                         description: 'Длинный текст чтобы язык был надежно определен')
-      OfferCreator.call(feed_category: feed_category, name: 'Название товара на русском языке',
+      OfferCreator.call(feed_category:, name: 'Название товара на русском языке',
                         description: 'Длинный текст чтобы язык был надежно определен')
-      OfferCreator.call(feed_category: feed_category, name: 'Product name in English language',
+      OfferCreator.call(feed_category:, name: 'Product name in English language',
                         description: 'Long text so that the language is reliably determined')
-      OfferCreator.call(feed_category: feed_category, name: 'Не надежно', description: 'Not reliable')
+      OfferCreator.call(feed_category:, name: 'Не надежно', description: 'Not reliable')
     end
 
     it 'calls AggregateLanguageQuery.call and sets feed language' do
@@ -40,7 +40,7 @@ describe Import::AggregateLanguage do
     let(:params) { {} }
 
     it 'raises error' do
-      expect { subject }.to raise_error
+      expect { subject }.to raise_error(StandardError, { feed: ['is missing'] }.to_json)
     end
   end
 
@@ -48,7 +48,7 @@ describe Import::AggregateLanguage do
     let(:params) { { feed: feed_category.feed, a: 'b' } }
 
     it 'raises error' do
-      expect { subject }.to raise_error
+      expect { subject }.to raise_error(StandardError, { a: ['is not allowed'] }.to_json)
     end
   end
 end
