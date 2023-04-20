@@ -100,6 +100,8 @@ services:
       - discovery.type=single-node
       - path.repo=/tmp
       - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
+      - xpack.security.enabled=false
+      - action.destructive_requires_name=false
     volumes:
       - elastic:/usr/share/elasticsearch/data
 
@@ -239,7 +241,7 @@ services:
 
   traefik:
     image: traefik:v2.4
-    command: 
+    command:
       - "--accesslog=true"
       - "--log.level=DEBUG"
       - "--api.insecure=true"

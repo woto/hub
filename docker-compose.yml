@@ -22,7 +22,7 @@ services:
   elastic:
     env_file:
       - .env
-    image: elasticsearch:7.17.0
+    image: elasticsearch:8.7.0
     ports:
       - ${ELASTIC_REST_PORT}:9200
       - ${ELASTIC_CLUSTER_PORT}:9300
@@ -30,13 +30,15 @@ services:
       - discovery.type=single-node
       - path.repo=/tmp
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - action.destructive_requires_name=false
     volumes:
       - elastic:/usr/share/elasticsearch/data
 
   kibana:
     env_file:
       - .env
-    image: kibana:7.17.0
+    image: kibana:8.7.0
     ports:
       - ${KIBANA_PORT}:5601
     environment:

@@ -39,7 +39,9 @@ jobs:
         ports: ['9200:9200', '9300:9300']
         env:
           discovery.type: single-node
-        image: elasticsearch:7.10.1
+          xpack.security.enabled: false
+          action.destructive_requires_name: false
+        image: elasticsearch:8.7.0
 
     steps:
 
