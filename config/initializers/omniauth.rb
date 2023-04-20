@@ -12,6 +12,8 @@
 
 OmniAuth.config.path_prefix = '/users/auth'
 
+OmniAuth.config.logger = Rails.logger
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   # https://developer.twitter.com/en/apps
   # provider :twitter, ENV['TWITTER_ID'], ENV['TWITTER_SECRET'], callback_path: '/users/auth/twitter/callback'

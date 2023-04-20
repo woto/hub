@@ -8,25 +8,25 @@ describe AggregateLanguageQuery do
   let(:feed) { create(:feed) }
 
   context 'when params are valid' do
-    let(:params) { { feed: feed } }
+    let(:params) { { feed: } }
 
     it 'builds correct query' do
       expect(subject).to have_attributes(
         object: {
           body: {
-            "query": {
-              "bool": {
-                "filter": [
-                  { "term": { "feed_id": feed.id } }
+            query: {
+              bool: {
+                filter: [
+                  { term: { feed_id: feed.id } }
                   # { "term": { "detected_language.reliable": true } }
                 ]
               }
             },
-            "aggs": {
-              "group": {
-                "terms": {
-                  "field": "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword",
-                  "size": 1
+            aggs: {
+              group: {
+                terms: {
+                  field: "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword",
+                  size: 1
                 }
               }
             }
@@ -43,7 +43,7 @@ describe AggregateLanguageQuery do
     let(:params) { {} }
 
     it 'raises error' do
-      expect { subject }.to raise_error
+      expect { subject }.to raise_error(StandardError, { feed: ['is missing'] }.to_json)
     end
   end
 end
