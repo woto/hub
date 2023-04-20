@@ -32,7 +32,7 @@ jobs:
       - run: node --version
       - checkout
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client libvips libvips-tools libvips-dev
+      - run: sudo apt-get install postgresql-client libvips libvips-tools libvips-dev ffmpeg
       - run: gem update bundler
       - run: yarn install --pure-lockfile
 #      - run:

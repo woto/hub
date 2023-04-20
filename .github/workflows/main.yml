@@ -47,7 +47,7 @@ jobs:
       run: sudo apt-get update
 
     - name: Install libvips
-      run: sudo apt-get install libvips libvips-tools libvips-dev
+      run: sudo apt-get install libvips libvips-tools libvips-dev ffmpeg
 
     - uses: actions/checkout@v3
 
