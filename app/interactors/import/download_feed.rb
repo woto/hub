@@ -11,7 +11,7 @@ module Import
       url = context.feed.url
 
       conn = Faraday.new do |faraday|
-        faraday.response :logger # log requests and responses to $stdout
+        # faraday.response :logger # log requests and responses to $stdout
         faraday.request :json # encode req bodies as JSON
         faraday.request :retry # retry transient failures
         faraday.response :follow_redirects # follow redirects
