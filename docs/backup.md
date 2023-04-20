@@ -3,8 +3,8 @@
 ```bash
 cd /app && \
 docker compose exec postgres pg_dump -d hub_production -U hub > /backup/db.dump && \
-cp -R /var/lib/docker/volumes/app_rails_storage/ /backup/ && \
-cp -R /var/lib/docker/volumes/app_rails_uploads/ /backup/
+rsync -avz /var/lib/docker/volumes/app_rails_storage /backup/ && \
+rsync -avz /var/lib/docker/volumes/app_rails_uploads /backup/
 ```
 
 #### Developer machine
