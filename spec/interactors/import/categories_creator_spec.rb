@@ -36,17 +36,37 @@ describe Import::CategoriesCreator do
       end
     end
 
+    # context 'when processed category already exists and its attributes differ' do
+    #   let!(:feed_category) { create(:feed_category, feed:, ext_id: 'abc') }
+
+    #   it 'updates its name' do
+    #     expect { subject.append(doc) }.to(
+    #       change { feed_category.reload.name }.and(
+    #         not_change(FeedCategory, :count)
+    #     ))
+    #   end
+
+    #   it 'updates its ext_parent_id' do
+    #     # lambda = -> { expect {  } }
+    #     expect { subject.append(doc) }.to(
+    #       change { feed_category.reload.ext_parent_id }.and(
+    #         not_change(FeedCategory, :count)
+    #       )
+    #     )
+    #   end
+    # end
+
     context 'when processed category already exists and its attributes differ' do
       let!(:feed_category) { create(:feed_category, feed: feed, ext_id: 'abc') }
 
       it 'updates its name' do
         lambda = -> { expect { subject.append(doc) }.not_to change(FeedCategory, :count) }
-        expect(lambda).to(change { feed_category.reload.name })
+        expect { lambda.call }.to(change { feed_category.reload.name })
       end
 
       it 'updates its ext_parent_id' do
         lambda = -> { expect { subject.append(doc) }.not_to change(FeedCategory, :count) }
-        expect(lambda).to(change { feed_category.reload.ext_parent_id })
+        expect { lambda.call }.to(change { feed_category.reload.ext_parent_id })
       end
     end
 
