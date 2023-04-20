@@ -28,6 +28,9 @@ Capybara.test_id = 'data-test-id'
     # options.add_argument("--lang=ru")
     options.headless! if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
 
+    # # NOTE: trying to fix github actions
+    # options.add_argument('--disable-gpu')
+
     Capybara::Selenium::Driver.new(
       app,
       # timeout: 60,
