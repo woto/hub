@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe Roastme::TinderController, type: :system do
-
   before do
     first, second, third = create_list(:entity, 3)
     allow(Entity).to receive(:order).with('RANDOM()').and_return([first], [second], [third])
@@ -11,7 +10,7 @@ describe Roastme::TinderController, type: :system do
   end
 
   def cards_ids
-    page.all('a', text: 'перейти').pluck(:href)
+    page.all('a', text: 'перейти', count: 2).pluck(:href)
   end
 
   def tinder
