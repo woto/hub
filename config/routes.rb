@@ -170,5 +170,6 @@ Rails.application.routes.draw do
     get 'api_docs', to: 'api_docs#index'
 
     root to: 'homepage#index'
+    get '*page', to: 'pages#show'
   end
 end
