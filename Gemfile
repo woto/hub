@@ -178,10 +178,10 @@ gem 'ancestry', github: 'stefankroes/ancestry'
 # gem 'rails_admin'
 
 # Elasticsearch family
-gem 'elasticsearch'
+gem 'elasticsearch', '~> 8.7.0'
 gem 'elasticsearch-api'
 gem 'elasticsearch-dsl'
-gem 'elasticsearch-model', '~> 7.2.1'
+gem 'elasticsearch-model'
 gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-ruby'
