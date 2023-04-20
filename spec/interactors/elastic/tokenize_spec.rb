@@ -12,7 +12,7 @@ describe Elastic::Tokenize do
     subject { described_class.call }
 
     it 'raises error' do
-      expect { subject }.to raise_error
+      expect { subject }.to raise_error(StandardError, { q: ['is missing'] }.to_json)
     end
   end
 

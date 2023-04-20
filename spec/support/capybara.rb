@@ -26,7 +26,9 @@ Capybara.test_id = 'data-test-id'
     # predictable results instead of relying on Chrome configuration.
     # options.add_option('prefs', 'intl.accept_languages' => 'ru')
     # options.add_argument("--lang=ru")
-    options.headless! if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
+
+    # WARN Selenium [DEPRECATION] [:headless] `Options#headless!` is deprecated. Use `Options#add_argument('--headless=new')` instead.
+    options.add_argument('--headless=new') if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CAPYBARA_HEADLESS'))
 
     # # NOTE: trying to fix github actions
     # options.add_argument('--disable-gpu')

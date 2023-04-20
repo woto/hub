@@ -8,7 +8,7 @@ describe Elastic::CheckIndexExists do
   context 'when input params does not include index_name' do
     let(:params) { {} }
 
-    it { expect { subject }.to raise_error }
+    it { expect { subject }.to raise_error(StandardError, { index: ['is missing'] }.to_json) }
   end
 
   context 'when index does not exist' do
@@ -26,7 +26,7 @@ describe Elastic::CheckIndexExists do
   end
 
   describe '#allow_no_indices' do
-    let(:params) { { index: index, allow_no_indices: allow_no_indices } }
+    let(:params) { { index:, allow_no_indices: } }
     let(:index) { Elastic::IndexName.pick("#{rand}*") }
 
     # NOTE: I do not have idea why this feature needed. Because it erroneously

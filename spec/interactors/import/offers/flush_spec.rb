@@ -48,7 +48,7 @@ describe Import::Offers::Flush do
 
         subject
 
-      end.to raise_error Import::Process::ElasticResponseError
+      end.to raise_error(Import::Process::ElasticResponseError)
     end
   end
 end

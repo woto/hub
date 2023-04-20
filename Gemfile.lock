@@ -137,10 +137,6 @@ GEM
     choice (0.2.0)
     cld (0.12.0)
       ffi
-    commonmarker (1.0.0.pre9-aarch64-linux)
-    commonmarker (1.0.0.pre9-arm64-darwin)
-    commonmarker (1.0.0.pre9-x64-mingw-ucrt)
-    commonmarker (1.0.0.pre9-x86_64-darwin)
     commonmarker (1.0.0.pre9-x86_64-linux)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.0)
@@ -381,7 +377,7 @@ GEM
       activerecord (>= 5.0)
       railties (>= 5.0)
       ruby-next-core (~> 0.9)
-    loofah (2.19.1)
+    loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.8.1)
@@ -396,7 +392,6 @@ GEM
     method_source (1.0.0)
     mini_magick (4.12.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
     minitest (5.18.0)
     money (6.16.0)
       i18n (>= 0.6.4, <= 2)
@@ -419,9 +414,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     newrelic_rpm (9.0.0)
-    nio4r (2.5.8)
-    nokogiri (1.14.2)
-      mini_portile2 (~> 2.8.0)
+    nio4r (2.5.9)
+    nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
     numbers_and_words (0.11.11)
       i18n (<= 2)
@@ -750,7 +744,7 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   action-cable-testing
@@ -881,4 +875,4 @@ RUBY VERSION
    ruby 3.2.1p31
 
 BUNDLED WITH
-   2.2.30
+   2.4.12
