@@ -79,7 +79,7 @@ const render = () => {
       <QueryClientProvider client={queryClient}>
         <ToastProvider>
           <RouterProvider router={router} />
-          { process.env.REACT_QUERY_DEVTOOLS === 'true' && <ReactQueryDevtools initialIsOpen /> }
+          {/* { "process.env.REACT_QUERY_DEVTOOLS === 'true'" && <ReactQueryDevtools initialIsOpen /> } */}
         </ToastProvider>
       </QueryClientProvider>
     </React.StrictMode>,
