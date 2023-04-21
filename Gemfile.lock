@@ -30,14 +30,14 @@ GIT
 
 GIT
   remote: https://github.com/woto/elasticsearch-rails.git
-  revision: 19eedb6c1b529863d80304ec37f5ae2b2f09835b
+  revision: 36b7e2a1a7b66133446518fbb0bc8804cd42a977
   branch: main
   specs:
     elasticsearch-rails (7.2.1)
 
 GIT
   remote: https://github.com/woto/elasticsearch-rails.git
-  revision: 19eedb6c1b529863d80304ec37f5ae2b2f09835b
+  revision: 36b7e2a1a7b66133446518fbb0bc8804cd42a977
   branch: main
   glob: elasticsearch-model/*.gemspec
   specs:
