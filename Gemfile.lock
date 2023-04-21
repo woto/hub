@@ -30,20 +30,20 @@ GIT
 
 GIT
   remote: https://github.com/woto/elasticsearch-rails.git
-  revision: 36b7e2a1a7b66133446518fbb0bc8804cd42a977
+  revision: 79c2094ed48932f04534bae51454435f99a00e5b
   branch: main
   specs:
     elasticsearch-rails (7.2.1)
 
 GIT
   remote: https://github.com/woto/elasticsearch-rails.git
-  revision: 36b7e2a1a7b66133446518fbb0bc8804cd42a977
+  revision: 79c2094ed48932f04534bae51454435f99a00e5b
   branch: main
   glob: elasticsearch-model/*.gemspec
   specs:
     elasticsearch-model (8.7.0)
       activesupport (> 3)
-      elasticsearch (~> 8)
+      elasticsearch (~> 8.7.0)
       hashie
 
 GEM
