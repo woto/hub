@@ -14,7 +14,7 @@ module Mentions
         mention = Mention.find(mention_id)
 
         ActiveRecord::Base.transaction do
-          base64 = JSON.parse(object)['image']
+          base64 = object['image']
           image = Image.create!(image_data_uri: base64, user_id:)
           ImagesRelation.create!(image:, relation: mention, user_id:)
         end

@@ -13,7 +13,8 @@ RSpec.describe Mentions::ScrapperJob, type: :job do
       url = 'http://scrapper:4000/screenshot?url=https://example.com/?fake'
       stub_request(:get, url).to_return(
         status: 200,
-        body: { image: Base64Helpers.image }.to_json
+        body: { image: Base64Helpers.image }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
       )
 
       expect { subject }
