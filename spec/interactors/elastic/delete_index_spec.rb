@@ -48,7 +48,7 @@ describe Elastic::DeleteIndex do
       let(:params) { { index: index, ignore_unavailable: false } }
 
       it 'raises error because of absence of index' do
-        expect { subject }.to raise_error(Elasticsearch::Transport::Transport::Errors::NotFound)
+        expect { subject }.to raise_error(Elastic::Transport::Transport::Errors::NotFound)
       end
     end
 
