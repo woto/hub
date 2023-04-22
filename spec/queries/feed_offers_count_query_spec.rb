@@ -36,7 +36,7 @@ describe FeedOffersCountQuery do
     end
 
     it 'counts offers correctly' do
-      expect(subject).to include('count' => 1)
+      expect(subject).to have_attributes(body: include('count' => 1))
     end
   end
 end
