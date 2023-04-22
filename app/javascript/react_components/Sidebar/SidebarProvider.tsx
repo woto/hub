@@ -12,11 +12,11 @@ import { AuthInterface } from '../system/TypeScript';
 import useAuth from '../Auth/useAuth';
 // import AuthContext from '../Auth/AuthContext';
 
-export default function Provider({ children }: { children: ReactNode }) {
+export default function SidebarProvider({ children }: { children: ReactNode }) {
   // const [example, setExample] = useState([]);
   // const { user } = useContext<AuthInterface>(AuthContext);
 
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   const {
     isLoading, error, data, isFetching,

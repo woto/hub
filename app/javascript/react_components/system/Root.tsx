@@ -36,7 +36,7 @@ import MobileSidebar from '../Sidebar/MobileSidebar';
 import Hamburger from '../Sidebar/Hamburger';
 // import SetUser from '../Auth/SetUser';
 import AuthProvider from '../Auth/AuthProvider';
-import SidebarProvider from '../Sidebar/Provider';
+import SidebarProvider from '../Sidebar/SidebarProvider';
 import LanguageProvider from '../Language/LanguageProvider';
 import ListingEntities from '../Listings/ListingsEntities';
 import Tabs from '../User/Tabs';
