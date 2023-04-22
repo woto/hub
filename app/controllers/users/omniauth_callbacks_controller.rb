@@ -62,6 +62,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
+  def after_sign_in_path_for(_resource)
+    auth_complete_users_path
+  end
+
   def establish_profile(oauth, user)
     return if user.profile.present?
 
