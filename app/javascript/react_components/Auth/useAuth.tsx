@@ -37,7 +37,7 @@ export default function useAuth() {
     // const { data: user } = getProfile();
 
     const handleSuccessResponse = (e) => {
-      console.log('message', e.data);
+      // console.log('message', e.data);
       if (e.data === 'auth-succeeded') {
         refetchUser();
         e.source.close();

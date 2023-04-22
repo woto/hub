@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  forwardRef, LegacyRef, MutableRefObject, useCallback, useEffect, useLayoutEffect, useRef, useState,
+  forwardRef, LegacyRef, MutableRefObject, useCallback, useDeferredValue, useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 import {
   AnimatePresence, checkTargetForNewValues, motion, useInView,
@@ -9,7 +9,7 @@ import MentionsSubItem from './MentionsSubItem';
 
 function MentionsItem(
   {
-    url, title, publishedAt, topics, image, entities, mentionId, slug
+    url, title, publishedAt, topics, image, entities, mentionId, slug,
   } : {
     url: string,
     title: string,
@@ -21,18 +21,17 @@ function MentionsItem(
     slug: string
   },
 ) {
-  const [lastKnownHeight, setLastKnownHeight] = useState(300);
+  const [lastKnownHeight, setLastKnownHeight] = useState(500);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { amount: 'some', once: false, margin: '-0px 0px -0px 0px' });
+  const reactiveIsInView = useInView(ref, { amount: 'some', once: false, margin: '300px 0px 300px 0px' });
+  const deferredIsInView = useDeferredValue(reactiveIsInView);
 
-  useEffect(() => {
-    if (ref.current) {
-      setLastKnownHeight((prevVal) => {
-        const newVal = prevVal > ref.current.clientHeight ? prevVal : ref.current.clientHeight;
-        return newVal;
-      });
-    }
-  }, [isInView, ref]);
+  useLayoutEffect(() => {
+    setLastKnownHeight((prevVal) => {
+      const newVal = prevVal > ref.current.clientHeight ? prevVal : ref.current.clientHeight;
+      return newVal;
+    });
+  }, [deferredIsInView]);
 
   return (
     <div
@@ -41,7 +40,7 @@ function MentionsItem(
       //   background: `rgb(${255 * Math.random()}, ${255 * Math.random()}, ${255 * Math.random()}, 1)`,
       // }}
     >
-      { isInView
+      { deferredIsInView
         ? (
           <div
             ref={ref}
@@ -63,7 +62,7 @@ function MentionsItem(
             ref={ref}
             style={{ height: lastKnownHeight }}
           />
-        ) }
+        )}
     </div>
   );
 }

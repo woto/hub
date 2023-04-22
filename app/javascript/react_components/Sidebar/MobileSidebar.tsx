@@ -18,8 +18,6 @@ export default function DesktopSidebar(props: {language: any}) {
   const sidebarContext = React.useContext<SidebarInterface>(SidebarContext);
   const language = useContext(LanguageContext);
 
-  console.log(sidebarContext);
-
   return (
     <Transition.Root show={sidebarContext.sidebarOpen} as={React.Fragment}>
       <Dialog as="div" className="tw-fixed tw-inset-0 tw-flex tw-z-40 lg:tw-hidden" onClose={sidebarContext.setSidebarOpen}>

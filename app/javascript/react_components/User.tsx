@@ -167,8 +167,6 @@ export default function User(props: UserInterface) {
   //   #             icon: 'login'
   //   #           }]
 
-  console.log('User component');
-
   return (
     <div className={`
       lg:tw-w-full

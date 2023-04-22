@@ -1,5 +1,5 @@
 import * as React from 'react';
-import MentionsItem from './MentionsItem';
+import MentionsItem from './MentionsItem1';
 
 function MentionsPage({
   page, pageIdx,

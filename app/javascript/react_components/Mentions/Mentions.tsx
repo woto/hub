@@ -7,7 +7,7 @@ import {
 } from 'framer-motion';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from '../system/Axios';
-import MentionsCard from './MentionsItem';
+import MentionsCard from './MentionsItem1';
 import Alert from '../Alert';
 import { MentionResponse } from '../system/TypeScript';
 import MentionsPage from './MentionsPage';
@@ -27,7 +27,7 @@ export default function Mentions({
   const [window, setWindow] = useState<Window>({ page: 0, growing: true });
   const loadMoreRef = useRef<HTMLDivElement>();
 
-  const inView = useInView(loadMoreRef);
+  const inView = useInView(loadMoreRef, { amount: 'some', once: false, margin: '0px 0px 1000px 0px' });
 
   const {
     status,
