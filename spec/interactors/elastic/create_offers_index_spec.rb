@@ -15,13 +15,15 @@ describe Elastic::CreateOffersIndex do
     described_class.call
     expect(exists?).to be_truthy
     expect(GlobalHelper.elastic_client.indices.get(index: Elastic::IndexName.pick('offers').scoped)).to(
-      include(
-        Elastic::IndexName.pick('offers').scoped => include(
-          'settings' => include(
-            'index' => include(
-              'refresh_interval' => '-1',
-              'number_of_shards' => '10',
-              'number_of_replicas' => '1'
+      have_attributes(
+        body: include(
+          Elastic::IndexName.pick('offers').scoped => include(
+            'settings' => include(
+              'index' => include(
+                'refresh_interval' => '-1',
+                'number_of_shards' => '10',
+                'number_of_replicas' => '1'
+              )
             )
           )
         )
