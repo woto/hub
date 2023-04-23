@@ -34,6 +34,13 @@ describe Users::OmniauthCallbacksController, type: :request do
     end
   end
 
+  RSpec.shared_examples 'it confirms user email' do
+    specify do
+      make
+      expect(User.last).to be_confirmed
+    end
+  end
+
   RSpec.shared_examples 'it updates identity auth attribute' do
     specify do
       expect { make }.to(change { identity.reload.auth })
@@ -80,7 +87,7 @@ describe Users::OmniauthCallbacksController, type: :request do
     end
 
     context 'when identity is new' do
-      include_examples "it doesn't confirm user email"
+      include_examples 'it confirms user email'
       include_examples 'it creates new user'
       include_examples 'it creates new identity'
 
@@ -93,10 +100,10 @@ describe Users::OmniauthCallbacksController, type: :request do
     context 'when identity already exists' do
       let!(:user) { create(:user, :unconfirmed) }
       let!(:identity) do
-        create(:identity, uid: facebook_oauth[:uid], provider: facebook_oauth[:provider], user: user)
+        create(:identity, uid: facebook_oauth[:uid], provider: facebook_oauth[:provider], user:)
       end
 
-      include_examples "it doesn't confirm user email"
+      include_examples 'it confirms user email'
       include_examples "it doesn't create new user"
       include_examples "it doesn't create new identity"
       include_examples 'it updates identity auth attribute'

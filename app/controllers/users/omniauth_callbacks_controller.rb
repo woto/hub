@@ -23,6 +23,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       establish_avatar(oauth, user)
       establish_profile(oauth, user)
+      user.confirm
     end
 
     if user.persisted?
