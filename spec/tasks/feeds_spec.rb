@@ -6,6 +6,6 @@ describe 'hub:feeds' do
   after { subject.execute }
 
   describe 'hub:feeds:sweep' do
-    it { expect(Import::Sweep).to receive(:call) }
+    it { expect(Import::SweepInteractor).to receive(:call) }
   end
 end

@@ -6,7 +6,7 @@ module Mentions
     unique :until_executing, on_conflict: :log
 
     def perform(mention_id:, mention_url:, user_id:)
-      result = Extractors::Metadata::Scrapper.call(url: mention_url)
+      result = Extractors::Metadata::ScrapperInteractor.call(url: mention_url)
 
       if result.success?
         object = result.object

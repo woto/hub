@@ -3,7 +3,7 @@
 require 'rails_helper'
 require_relative '../support/shrine_image'
 
-describe API::Mentions, type: :request, responsible: :admin do
+describe API::Topics, type: :request, responsible: :admin do
   let!(:user) { create(:user) }
 
   context 'when search string is present' do

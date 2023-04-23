@@ -144,8 +144,8 @@ namespace :hub do
         description: 'Descrizione'
       )
 
-      Elastic::RefreshOffersIndex.call
-      Feed.find_each { |feed| Import::AggregateLanguage.call(feed: feed) }
+      Elastic::RefreshOffersIndexInteractor.call
+      Feed.find_each { |feed| Import::AggregateLanguageInteractor.call(feed: feed) }
     end
 
     desc 'First graph visualization'

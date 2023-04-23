@@ -6,7 +6,7 @@ describe Sync::GdeslonJob, type: :job do
   subject { described_class.perform_now }
 
   it 'receives interactor call' do
-    expect(Sync::Gdeslon::Sync).to receive(:call)
+    expect(Sync::Gdeslon::SyncInteractor).to receive(:call)
     subject
   end
 end

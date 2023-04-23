@@ -23,7 +23,7 @@ describe TransactionGroup, type: :model do
       transaction_group = instance_double(TransactionGroup)
       expect(described_class).to receive(:create!).with(kind: 'accounting/main/change_status').and_return(transaction_group)
       expect(transaction_group).to receive(:tap).and_return(transaction_group)
-      described_class.start(Accounting::Main::ChangeStatus, &block)
+      described_class.start(Accounting::Main::ChangeStatusInteractor, &block)
     end
   end
 end

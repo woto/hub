@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Extractors::YandexRu::Microdata do
+describe Extractors::YandexRu::MicrodataInteractor do
   context 'with url parameter' do
     it 'proxies request to yandex.com' do
       stub_request(:get, 'https://validator-api.semweb.yandex.ru/v1.1/url_parser?apikey=yandex_microdata_key_value&id=&lang=ru&only_errors=false&pretty=true&url=https://example.com')

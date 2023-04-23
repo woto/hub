@@ -59,17 +59,17 @@ shared_examples 'compare feed' do |name:, ext_id:, url:|
   end
 end
 
-describe Sync::Admitad::Sync do
+describe Sync::Admitad::SyncInteractor do
   let(:limit) { 1 }
   let(:token) { Faker::Alphanumeric.alphanumeric }
 
   before do
     stub_const('ENV', { 'ADMITAD_WEBSITE' => 34_787 })
-    stub_const('Sync::Admitad::Sync::LIMIT', limit)
+    stub_const('Sync::Admitad::SyncInteractor::LIMIT', limit)
   end
 
   it { expect(ENV['ADMITAD_WEBSITE']).to eq(34_787) }
-  it { expect(Sync::Admitad::Sync::LIMIT).to eq(limit) }
+  it { expect(Sync::Admitad::SyncInteractor::LIMIT).to eq(limit) }
 
   context 'whith stubbed responses' do
     def run_sync

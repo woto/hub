@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::DownloadFeed, :cleanup_feeds do
+describe Import::DownloadFeedInteractor, :cleanup_feeds do
   subject { described_class.call(feed: feed) }
 
   let(:feed) { create(:feed, url: 'http://example.com') }
@@ -53,23 +53,23 @@ describe Import::DownloadFeed, :cleanup_feeds do
   end
 
   context 'when got Net::HTTPServerException' do
-    it 'raises Import::Process::HTTPServerException' do
+    it 'raises Import::ProcessInteractor::HTTPServerException' do
       stub_request(:get, 'http://example.com').to_raise(Net::HTTPServerException.new('', :net_http_not_found))
-      expect { subject }.to raise_error(Import::Process::HTTPServerException)
+      expect { subject }.to raise_error(Import::ProcessInteractor::HTTPServerException)
     end
   end
 
   context 'when got Net::ReadTimeout' do
-    it 'raises Import::Process::ReadTimeout' do
+    it 'raises Import::ProcessInteractor::ReadTimeout' do
       stub_request(:get, 'http://example.com').to_raise(Net::ReadTimeout)
-      expect { subject }.to raise_error(Import::Process::ReadTimeout)
+      expect { subject }.to raise_error(Import::ProcessInteractor::ReadTimeout)
     end
   end
 
   context 'when got Faraday::BadRequestError' do
-    it 'raises Import::Process::BadRequestError' do
+    it 'raises Import::ProcessInteractor::BadRequestError' do
       stub_request(:get, 'http://example.com').to_raise(Faraday::BadRequestError)
-      expect { subject }.to raise_error(Import::Process::BadRequestError)
+      expect { subject }.to raise_error(Import::ProcessInteractor::BadRequestError)
     end
   end
 end

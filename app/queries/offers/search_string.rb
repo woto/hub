@@ -21,7 +21,7 @@ module Offers
 
     def _search_string
       if context.q.present?
-        tokens = Elastic::Tokenize.call(q: context.q).object
+        tokens = Elastic::TokenizeInteractor.call(q: context.q).object
         string = tokens.join(' ')
       end
 
@@ -31,9 +31,9 @@ module Offers
             json.multi_match do
               json.query string
               json.fields %W[
-                name.#{Import::Offers::Hashify::HASH_BANG_KEY}^30
+                name.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}^30
                 feed_category_name
-                description.#{Import::Offers::Hashify::HASH_BANG_KEY}
+                description.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}
               ]
             end
           end
@@ -44,9 +44,9 @@ module Offers
             json.multi_match do
               json.query string
               json.fields %W[
-                name.#{Import::Offers::Hashify::HASH_BANG_KEY}
+                name.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}
                 feed_category_name
-                description.#{Import::Offers::Hashify::HASH_BANG_KEY}
+                description.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}
               ]
               json.fuzziness 'auto'
               json.minimum_should_match tokens.count

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Sweep do
+describe Import::SweepInteractor do
   let(:identity1) { Faker::Lorem.word }
   let(:identity2) { Faker::Lorem.word }
   let(:tid1) { Faker::Lorem.word }

@@ -79,15 +79,15 @@ module Tables
 
         if current_feed_category.children.none?
           filters[:a] = {
-            filter_by: Import::Offers::Category::CATEGORY_ID_KEY.to_s,
+            filter_by: Import::Offers::CategoryInteractor::CATEGORY_ID_KEY.to_s,
             filter_id: [params[:feed_category_id]],
             results: []
           }
         else
           filters[:b] = {
-            group_by: "#{Import::Offers::Category::CATEGORY_ID_KEY}_#{current_feed_category.ancestry_depth + 1}",
+            group_by: "#{Import::Offers::CategoryInteractor::CATEGORY_ID_KEY}_#{current_feed_category.ancestry_depth + 1}",
             group_model: 'FeedCategory',
-            filter_by: "#{Import::Offers::Category::CATEGORY_ID_KEY}_#{current_feed_category.ancestry_depth}",
+            filter_by: "#{Import::Offers::CategoryInteractor::CATEGORY_ID_KEY}_#{current_feed_category.ancestry_depth}",
             filter_id: [params[:feed_category_id]],
             results: [],
             favorite_item_kind: :feed_category_id

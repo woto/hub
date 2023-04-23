@@ -83,7 +83,7 @@ describe EntitiesController, type: :system, responsible: :user do
       visit entity_path(entity)
       click_on('Репорт')
       fill_in('text', with: 'text')
-      allow(Interactors::Complains::CreateInteractor).to receive(:call).and_raise(StandardError)
+      allow(Complains::CreateInteractor).to receive(:call).and_raise(StandardError)
       click_on('Отправить')
       expect(page).to have_text('Произошла непредвиденная ошибка')
     end

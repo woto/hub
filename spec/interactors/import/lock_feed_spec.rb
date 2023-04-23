@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::LockFeed do
+describe Import::LockFeedInteractor do
   subject { described_class.call(params) }
 
   context 'with feed argument' do

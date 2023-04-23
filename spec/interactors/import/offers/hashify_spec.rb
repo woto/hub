@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Offers::Hashify do
+describe Import::Offers::HashifyInteractor do
   subject { described_class.call(doc) }
 
   let(:doc) { Nokogiri::XML(xml).children.first }
@@ -25,18 +25,18 @@ describe Import::Offers::Hashify do
     it 'works' do
       expect(subject).to eq(
         {
-          Import::Offers::Hashify::SELF_NAME_KEY => {
+          Import::Offers::HashifyInteractor::SELF_NAME_KEY => {
             'attribute1' => '123',
             'attribute2' => 'abc'
           },
-          'categoryId' => [{ Import::Offers::Hashify::HASH_BANG_KEY => 'category 1' }],
+          'categoryId' => [{ Import::Offers::HashifyInteractor::HASH_BANG_KEY => 'category 1' }],
           'description' => [{ '#' => 'Description' }],
           'param' => [
             {
-              Import::Offers::Hashify::HASH_BANG_KEY => 'white',
+              Import::Offers::HashifyInteractor::HASH_BANG_KEY => 'white',
               '@name' => 'color'
             },
-            { Import::Offers::Hashify::HASH_BANG_KEY => 'male',
+            { Import::Offers::HashifyInteractor::HASH_BANG_KEY => 'male',
               '@name' => 'sex' }
           ],
           'picture' => [
@@ -60,7 +60,7 @@ describe Import::Offers::Hashify do
     end
 
     it 'does not able to process tags like this for now' do
-      expect { subject }.to raise_error(Import::Process::ElasticUnexpectedNestingError)
+      expect { subject }.to raise_error(Import::ProcessInteractor::ElasticUnexpectedNestingError)
     end
   end
 

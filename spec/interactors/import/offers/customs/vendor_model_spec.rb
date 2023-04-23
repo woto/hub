@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Import::Offers::Customs::VendorModel do
+describe Import::Offers::Customs::VendorModelInteractor do
   skip
 end

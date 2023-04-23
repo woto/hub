@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Import::Offers::Customs::Aliexpress do
+describe Import::Offers::Customs::AliexpressInteractor do
   skip
 end

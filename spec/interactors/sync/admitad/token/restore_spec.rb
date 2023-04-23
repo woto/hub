@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Sync::Admitad::Token::Restore do
+describe Sync::Admitad::Token::RestoreInteractor do
   it 'finishes with success if it founds token in the cache' do
     Rails.cache.write(Sync::Admitad::Token::TOKEN_KEY, '123')
     expect(described_class.call).to be_success

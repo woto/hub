@@ -79,7 +79,7 @@ class Check < ApplicationRecord
   def create_transactions
     # Any exception that is not ActiveRecord::Rollback or ActiveRecord::RecordInvalid
     # will be re-raised by Rails after the callback chain is halted.
-    Accounting::Main::ChangeStatus.call(record: self)
+    Accounting::Main::ChangeStatusInteractor.call(record: self)
   rescue ActiveRecord::ActiveRecordError => e
     logger.error e.backtrace
     raise e.message

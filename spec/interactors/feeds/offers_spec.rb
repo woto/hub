@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Feeds::Offers do
+describe Feeds::OffersInteractor do
   subject do
     described_class.new(OpenStruct.new(feed: feed))
   end
@@ -156,51 +156,51 @@ describe Feeds::Offers do
 
     describe '#append' do
       it 'calls Import::Offers::Hashify with correct argument' do
-        expect(Import::Offers::Hashify).to receive(:call).with(
+        expect(Import::Offers::HashifyInteractor).to receive(:call).with(
           doc
         ).and_call_original
         subject.append(doc)
       end
 
       it 'calls Import::Offers::Customs::Aliexpress' do
-        expect(Import::Offers::Customs::Aliexpress).to receive(:call).with(
+        expect(Import::Offers::Customs::AliexpressInteractor).to receive(:call).with(
           instance_of(Hash),
           feed
         ).and_call_original
         subject.append(doc)
       end
 
-      it 'calls Import::Offers::Customs::VendorModel' do
-        expect(Import::Offers::Customs::VendorModel).to receive(:call).with(
+      it 'calls Import::Offers::Customs::VendorModelInteractor' do
+        expect(Import::Offers::Customs::VendorModelInteractor).to receive(:call).with(
           instance_of(Hash)
         ).and_call_original
         subject.append(doc)
       end
 
-      it 'calls Import::Offers::Category with correct argument' do
-        expect(Import::Offers::Category).to receive(:call).with(
+      it 'calls Import::Offers::CategoryInteractor with correct argument' do
+        expect(Import::Offers::CategoryInteractor).to receive(:call).with(
           include('categoryId' => [include('#' => 'category 1')]), feed, FeedCategoriesCache.new(feed)
         ).and_call_original
         subject.append(doc)
       end
 
-      it 'calls Import::Offers::StandardAttributes with correct argument' do
-        expect(Import::Offers::StandardAttributes).to receive(:call).with(
+      it 'calls Import::Offers::StandardAttributesInteractor with correct argument' do
+        expect(Import::Offers::StandardAttributesInteractor).to receive(:call).with(
           instance_of(Hash),
           feed
         ).and_call_original
         subject.append(doc)
       end
 
-      it 'calls Import::Offers::DetectLanguage with correct argument' do
-        expect(Import::Offers::DetectLanguage).to receive(:call).with(
+      it 'calls Import::Offers::DetectLanguageInteractor with correct argument' do
+        expect(Import::Offers::DetectLanguageInteractor).to receive(:call).with(
           include('description' => [include('#' => include('Отличный подарок для любителей венских вафель.'))])
         ).and_call_original
         subject.append(doc)
       end
 
-      it 'calls Import::Offers::FavoriteIds with correct arguments' do
-        expect(Import::Offers::FavoriteIds).to receive(:call).with(
+      it 'calls Import::Offers::FavoriteIdsInteractor with correct arguments' do
+        expect(Import::Offers::FavoriteIdsInteractor).to receive(:call).with(
           include('feed_category_ids' => [feed_category.id]),
           advertiser,
           feed
@@ -246,7 +246,7 @@ describe Feeds::Offers do
     describe '#flush' do
       it 'calls Import::Offers::Flush with correct arguments' do
         offers = subject.append(doc)
-        expect(Import::Offers::Flush).to receive(:call).with(
+        expect(Import::Offers::FlushInteractor).to receive(:call).with(
           offers,
           advertiser,
           feed

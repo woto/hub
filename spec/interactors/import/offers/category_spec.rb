@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-describe Import::Offers::Category do
+describe Import::Offers::CategoryInteractor do
   subject { described_class.call(offer, feed, categories) }
 
   RSpec.shared_examples 'hash categories error values' do
     it "sets surrogate category's values to offer" do
-      expect(Import::Offers::SurrogateCategory).to(
+      expect(Import::Offers::SurrogateCategoryInteractor).to(
         receive(:call).with(feed, categories).and_return(
           FeedCategoriesCache::Item.new(id: 'id', path_ids: 'path_ids', ext_id: 'ext_id')
         )
@@ -38,8 +38,8 @@ describe Import::Offers::Category do
   context 'when offer has multiple categoryId' do
     let(:offer) do
       { 'categoryId' => [
-        { Import::Offers::Hashify::HASH_BANG_KEY => 1 },
-        { Import::Offers::Hashify::HASH_BANG_KEY => 'a' }
+        { Import::Offers::HashifyInteractor::HASH_BANG_KEY => 1 },
+        { Import::Offers::HashifyInteractor::HASH_BANG_KEY => 'a' }
       ] }
     end
 
@@ -57,7 +57,7 @@ describe Import::Offers::Category do
   end
 
   context 'when offer includes categoryId' do
-    let(:offer) { { 'categoryId' => [{ Import::Offers::Hashify::HASH_BANG_KEY => ext_id }] } }
+    let(:offer) { { 'categoryId' => [{ Import::Offers::HashifyInteractor::HASH_BANG_KEY => ext_id }] } }
     let(:ext_id) { Faker::Lorem.word }
 
     it_behaves_like 'hash categories error values'
@@ -105,7 +105,7 @@ describe Import::Offers::Category do
         )
         expect(FeedCategory.last).to have_attributes(
           feed_id: feed.id,
-          ext_id: "#{non_leaf_category.ext_id}#{Import::Offers::Category::SURROGATE_KEY}",
+          ext_id: "#{non_leaf_category.ext_id}#{Import::Offers::CategoryInteractor::SURROGATE_KEY}",
           ext_parent_id: non_leaf_category.ext_id.to_s,
           attempt_uuid: feed.attempt_uuid,
           ancestry: "#{root_category.id}/#{non_leaf_category.id}",

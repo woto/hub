@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::ReleaseFeed do
+describe Import::ReleaseFeedInteractor do
   subject { described_class.call(param) }
 
   let(:feed) do

@@ -6,7 +6,7 @@ xdescribe Tables::OffersController, type: :system do
   it 'simply shows language filter' do
     feed_category = create(:feed_category)
     OfferCreator.call(feed_category: feed_category, name: 'Название товара', description: 'Это просто описание товара')
-    Import::AggregateLanguage.call(feed: feed_category.feed)
+    Import::AggregateLanguageInteractor.call(feed: feed_category.feed)
     visit offers_path
 
     expect(page).to have_css('label#feeds-language-filter-ru')

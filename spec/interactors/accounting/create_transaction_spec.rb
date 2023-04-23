@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
-describe Accounting::CreateTransaction do
+describe Accounting::CreateTransactionInteractor do
   subject do
     described_class.call(credit: credit, debit: debit, group: group, amount: amount, obj: obj, currency: obj_currency)
   end

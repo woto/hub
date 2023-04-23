@@ -11,7 +11,7 @@
   <% end %>
 
   <div class="my-3">
-    <% name = @offer._source.dig('name', 0, Import::Offers::Hashify::HASH_BANG_KEY).to_s %>
+    <% name = @offer._source.dig('name', 0, Import::Offers::HashifyInteractor::HASH_BANG_KEY).to_s %>
     <strong><%= simple_format name %></strong>
   </div>
 
@@ -20,7 +20,7 @@
               'data-read-more-more-text-value': t('.read_more'),
               'data-read-more-less-text-value': t('.read_less') do %>
 
-    <% description = @offer._source.dig('description', 0, Import::Offers::Hashify::HASH_BANG_KEY).to_s %>
+    <% description = @offer._source.dig('description', 0, Import::Offers::HashifyInteractor::HASH_BANG_KEY).to_s %>
 
     <div data-read-more-target="content">
       <%= simple_format truncate(description, length: 200) %>
@@ -39,8 +39,8 @@
 
   <div class="my-3">
     <strong><%= t('.price') %>:</strong>
-    <%= @offer._source.dig('price', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
-    <%= @offer._source.dig('currencyId', 0, Import::Offers::Hashify::HASH_BANG_KEY) %>
+    <%= @offer._source.dig('price', 0, Import::Offers::HashifyInteractor::HASH_BANG_KEY) %>
+    <%= @offer._source.dig('currencyId', 0, Import::Offers::HashifyInteractor::HASH_BANG_KEY) %>
   </div>
 
   <div class="my-3">

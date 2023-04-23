@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Interactors::Cites::Create::AggregateInteractor do
+describe Cites::Create::AggregateInteractor do
   subject(:interactor) { described_class.call(entity: entity, mention: mention) }
 
   let(:entity) { create(:entity) }

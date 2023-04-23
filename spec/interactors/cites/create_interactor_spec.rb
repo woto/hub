@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Interactors::Cites::CreateInteractor do
+describe Cites::CreateInteractor do
   subject(:interactor) { described_class.call(current_user: user, params: params) }
 
   let(:user) { create(:user) }
@@ -16,9 +16,9 @@ describe Interactors::Cites::CreateInteractor do
     end
 
     it 'runs nested interactors', aggegate_failures: true do
-      expect(Interactors::Cites::Create::ImagesInteractor).to receive(:call)
-      expect(Interactors::Cites::Create::TopicsInteractor).to receive(:call)
-      expect(Interactors::Cites::Create::LookupsInteractor).to receive(:call)
+      expect(Cites::Create::ImagesInteractor).to receive(:call)
+      expect(Cites::Create::TopicsInteractor).to receive(:call)
+      expect(Cites::Create::LookupsInteractor).to receive(:call)
       expect(Elasticsearch::IndexJob).to receive(:perform_later).exactly(3).times
       expect(Mentions::IframelyJob).to receive(:perform_later)
       expect(Mentions::ScrapperJob).to receive(:perform_later)

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Sync::Gdeslon::Sync do
+describe Sync::Gdeslon::SyncInteractor do
   before do
     stub_request(:get, "https://www.gdeslon.ru/api/users/shops.xml?api_token=#{ENV.fetch('GDESLON_TOKEN')}")
       .to_return(

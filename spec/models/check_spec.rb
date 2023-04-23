@@ -156,8 +156,8 @@ describe Check, type: :model do
     context 'when check is not persisted yet' do
       subject { build(:check, status: described_class.statuses.keys.sample) }
 
-      it 'calls `Accounting::Main::ChangeStatus` with correct params' do
-        expect(Accounting::Main::ChangeStatus).to receive(:call).with(record: subject)
+      it 'calls `Accounting::Main::ChangeStatusInteractor` with correct params' do
+        expect(Accounting::Main::ChangeStatusInteractor).to receive(:call).with(record: subject)
         expect(subject.save).to be_truthy
       end
     end
@@ -168,15 +168,15 @@ describe Check, type: :model do
       let(:user) { create(:user) }
       let(:status) { described_class.statuses.keys.excluding(subject.status).sample }
 
-      it 'calls `Accounting::Main::ChangeStatus` with correct params' do
-        expect(Accounting::Main::ChangeStatus).to receive(:call).with(record: subject)
+      it 'calls `Accounting::Main::ChangeStatusInteractor` with correct params' do
+        expect(Accounting::Main::ChangeStatusInteractor).to receive(:call).with(record: subject)
         expect(subject.update(status: status)).to be_truthy
       end
     end
 
     context 'when `ActiveRecord::ActiveRecordError` occurs' do
       it 're-raises error to break transaction' do
-        expect(Accounting::Main::ChangeStatus).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
+        expect(Accounting::Main::ChangeStatusInteractor).to receive(:call).and_raise(ActiveRecord::ActiveRecordError, 'aaa')
         expect(Rails.logger).to receive(:error)
         expect { create(:check) }.to raise_error(StandardError, 'aaa')
       end

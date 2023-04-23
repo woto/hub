@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-describe Elastic::CreateOffersIndex do
+describe Elastic::CreateOffersIndexInteractor do
   def exists?
-    Elastic::CheckIndexExists.call(index: Elastic::IndexName.pick('offers')).object
+    Elastic::CheckIndexExistsInteractor.call(index: Elastic::IndexName.pick('offers')).object
   end
 
   it 'creates offers index with specific settings' do

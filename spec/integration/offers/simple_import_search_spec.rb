@@ -5,7 +5,7 @@ xdescribe 'Offers page', type: :system do
 
   before do
     Feeds::Parse.call(feed: feed)
-    Elastic::RefreshOffersIndex.call
+    Elastic::RefreshOffersIndexInteractor.call
   end
 
   it 'imports feed and searches offers' do

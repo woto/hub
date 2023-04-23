@@ -156,7 +156,7 @@ describe API::Tools, type: :request do
       it 'returns json response' do
         faraday = Faraday.new
         expect(faraday).to receive(:get).and_raise(Faraday::TimeoutError)
-        expect_any_instance_of(Extractors::Metadata::Scrapper).to receive(:connection).and_return(faraday)
+        expect_any_instance_of(Extractors::Metadata::ScrapperInteractor).to receive(:connection).and_return(faraday)
 
         get '/api/tools/scrape_webpage', headers: { 'HTTP_API_KEY' => user.api_key }, params: { url: 'http://ya.ru' }
         expect(JSON.parse(response.body)).to eq({ 'error' => 'timeout' })

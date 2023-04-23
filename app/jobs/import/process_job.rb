@@ -5,7 +5,7 @@ module Import
     queue_as :low
 
     def perform(feed = nil)
-      Import::Process.call(feed: feed)
+      Import::ProcessInteractor.call(feed: feed)
     end
   end
 end

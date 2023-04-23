@@ -6,10 +6,10 @@
 
 <div class="tw-relative">
   <%= render(
-        ReactComponent.new(name: 'Mentions',
+        ReactComponent.new(name: 'ListingMentions',
                            class: 'tw-contents',
                            props: {
-                             entityIds: Favorite.find(params[:id]).favorites_items.pluck(:ext_id)
+                             listing_id: params[:id]
                            }))
   %>
 </div>

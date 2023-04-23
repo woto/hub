@@ -17,6 +17,6 @@ class TransactionGroup < ApplicationRecord
   has_many :transactions
 
   def self.start(kind, &block)
-    self.create!(kind: kind.name.underscore).tap(&block)
+    self.create!(kind: kind.name.underscore.delete_suffix('_interactor')).tap(&block)
   end
 end

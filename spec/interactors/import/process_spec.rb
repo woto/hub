@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Process do
+describe Import::ProcessInteractor do
   subject { described_class.call(params) }
 
   describe 'simple success flow' do
@@ -15,15 +15,15 @@ describe Import::Process do
     end
 
     it 'calls nested interactors with correct arguments' do
-      expect(Import::LockFeed).to receive(:call).with(feed: feed).and_call_original
-      expect(Import::DownloadFeed).to receive(:call).with(feed: feed)
-      expect(Import::DetectFileType).to receive(:call).with(feed: feed)
-      expect(Import::Preprocess).to receive(:call).with(feed: feed)
-      expect(Feeds::Parse).to receive(:call).with(feed: feed)
-      expect(Import::DeleteOldOffers).to receive(:call).with(feed: feed)
-      expect(Import::ReleaseFeed).to receive(:call).with(feed: feed, error: nil)
-      expect(Elastic::RefreshOffersIndex).to receive(:call).with(no_args)
-      expect(Import::AggregateLanguage).to receive(:call).with(feed: feed)
+      expect(Import::LockFeedInteractor).to receive(:call).with(feed: feed).and_call_original
+      expect(Import::DownloadFeedInteractor).to receive(:call).with(feed: feed)
+      expect(Import::DetectFileTypeInteractor).to receive(:call).with(feed: feed)
+      expect(Import::PreprocessInteractor).to receive(:call).with(feed: feed)
+      expect(Feeds::ParseInteractor).to receive(:call).with(feed: feed)
+      expect(Import::DeleteOldOffersInteractor).to receive(:call).with(feed: feed)
+      expect(Import::ReleaseFeedInteractor).to receive(:call).with(feed: feed, error: nil)
+      expect(Elastic::RefreshOffersIndexInteractor).to receive(:call).with(no_args)
+      expect(Import::AggregateLanguageInteractor).to receive(:call).with(feed: feed)
       subject
     end
   end

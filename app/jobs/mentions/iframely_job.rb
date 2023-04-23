@@ -6,7 +6,7 @@ module Mentions
     unique :until_executing, on_conflict: :log
 
     def perform(mention_id:, mention_url:)
-      result = Extractors::Metadata::Iframely.call(url: mention_url)
+      result = Extractors::Metadata::IframelyInteractor.call(url: mention_url)
 
       if result.success?
         object = result.object

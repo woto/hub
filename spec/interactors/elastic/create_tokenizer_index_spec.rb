@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe Elastic::CreateTokenizerIndex do
+describe Elastic::CreateTokenizerIndexInteractor do
   subject { described_class.call }
 
   def exists?
-    Elastic::CheckIndexExists.call(index: Elastic::IndexName.pick('tokenizer')).object
+    Elastic::CheckIndexExistsInteractor.call(index: Elastic::IndexName.pick('tokenizer')).object
   end
 
   context 'when index already exists' do

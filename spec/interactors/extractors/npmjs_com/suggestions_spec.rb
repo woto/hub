@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Extractors::NpmjsCom::Suggestions do
+describe Extractors::NpmjsCom::SuggestionsInteractor do
   it 'proxies request to npmjs' do
     stub_request(:get, 'https://www.npmjs.com/search/suggestions?q=foo&size=20')
       .to_return(status: 200, body: { a: 'b' }.to_json, headers: { 'Content-Type' => 'application/json' })

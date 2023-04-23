@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-describe Elastic::RefreshOffersIndex do
+describe Elastic::RefreshOffersIndexInteractor do
   subject { described_class.call }
 
   let(:feed) { create(:feed) }
   let(:offer) { create(:offer, feed_id: feed.id, refresh: false) }
 
-  context 'without Elastic::RefreshOffersIndex.call' do
+  context 'without Elastic::RefreshOffersIndexInteractor.call' do
     # does not change because index offers refresh_interval setting is -1
     # and because factory creates without force_refresh
     it 'does not change offers count' do
@@ -18,7 +18,7 @@ describe Elastic::RefreshOffersIndex do
     end
   end
 
-  context 'with Elastic::RefreshOffersIndex.call' do
+  context 'with Elastic::RefreshOffersIndexInteractor.call' do
     it 'changes offers count' do
       expect do
         offer
@@ -28,6 +28,6 @@ describe Elastic::RefreshOffersIndex do
   end
 
   def count
-    Elastic::FeedOffersCount.call(feed: feed).object
+    Elastic::FeedOffersCountInteractor.call(feed: feed).object
   end
 end

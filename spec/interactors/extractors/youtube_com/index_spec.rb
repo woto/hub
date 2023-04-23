@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Extractors::YoutubeCom::Index do
+describe Extractors::YoutubeCom::IndexInteractor do
   subject { described_class.call(q: title) }
 
   describe 'https://youtu.be' do
@@ -10,7 +10,7 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://youtu.be/xZgZLOq1JKU' }
 
       before do
-        expect(Extractors::YoutubeCom::ListVideos).to(
+        expect(Extractors::YoutubeCom::ListVideosInteractor).to(
           receive(:call).with(id: 'xZgZLOq1JKU').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -25,7 +25,7 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://www.youtube.com/watch?v=aircAruvnKk' }
 
       before do
-        expect(Extractors::YoutubeCom::ListVideos).to(
+        expect(Extractors::YoutubeCom::ListVideosInteractor).to(
           receive(:call).with(id: 'aircAruvnKk').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -37,10 +37,10 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://www.youtube.com/watch?v=zUHRNLVpoIE&list=PL3mtAHT_eRewFew2hKdiWkk5Jmhb_gw6e' }
 
       before do
-        expect(Extractors::YoutubeCom::ListVideos).to(
+        expect(Extractors::YoutubeCom::ListVideosInteractor).to(
           receive(:call).with(id: 'zUHRNLVpoIE').and_return(OpenStruct.new(object: {}))
         )
-        expect(Extractors::YoutubeCom::ListPlaylists).to(
+        expect(Extractors::YoutubeCom::ListPlaylistsInteractor).to(
           receive(:call).with(id: 'PL3mtAHT_eRewFew2hKdiWkk5Jmhb_gw6e').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -52,7 +52,7 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://www.youtube.com/watch?v=JIviltfpul0&feature=youtu.be&t=2987' }
 
       before do
-        expect(Extractors::YoutubeCom::ListVideos).to(
+        expect(Extractors::YoutubeCom::ListVideosInteractor).to(
           receive(:call).with(id: 'JIviltfpul0').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -66,11 +66,11 @@ describe Extractors::YoutubeCom::Index do
       end
 
       before do
-        expect(Extractors::YoutubeCom::ListVideos).to(
+        expect(Extractors::YoutubeCom::ListVideosInteractor).to(
           receive(:call).with(id: '26uABexmOX4')
         ).and_return(OpenStruct.new(object: {}))
 
-        expect(Extractors::YoutubeCom::ListPlaylists).to(
+        expect(Extractors::YoutubeCom::ListPlaylistsInteractor).to(
           receive(:call).with(id: 'PLRqwX-V7Uu6YPSwT06y_AEYTqIwbeam3y').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -84,7 +84,7 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://www.youtube.com/channel/UCXmseTCR4w5q36pupOJKegw' }
 
       before do
-        expect(Extractors::YoutubeCom::ListChannels).to(
+        expect(Extractors::YoutubeCom::ListChannelsInteractor).to(
           receive(:call).with(id: 'UCXmseTCR4w5q36pupOJKegw').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -98,7 +98,7 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://www.youtube.com/playlist?list=PLLvvXm0q8zUbiNdoIazGzlENMXvZ9bd3x' }
 
       before do
-        expect(Extractors::YoutubeCom::ListPlaylists).to(
+        expect(Extractors::YoutubeCom::ListPlaylistsInteractor).to(
           receive(:call).with(id: 'PLLvvXm0q8zUbiNdoIazGzlENMXvZ9bd3x').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -112,7 +112,7 @@ describe Extractors::YoutubeCom::Index do
       let(:title) { 'https://www.youtube.com/user/LinusTechTips' }
 
       before do
-        expect(Extractors::YoutubeCom::ListChannels).to(
+        expect(Extractors::YoutubeCom::ListChannelsInteractor).to(
           receive(:call).with(for_username: 'LinusTechTips').and_return(OpenStruct.new(object: {}))
         )
       end
@@ -123,13 +123,13 @@ describe Extractors::YoutubeCom::Index do
 
   describe '/c' do
     before do
-      expect(Extractors::Metadata::Iframely).to(
+      expect(Extractors::Metadata::IframelyInteractor).to(
         receive(:call).with(url: title).and_return(
           OpenStruct.new(object: { 'meta' => { 'canonical' => 'https://youtube.com/channel/canonical' } })
         )
       )
 
-      expect(Extractors::YoutubeCom::ListChannels).to(
+      expect(Extractors::YoutubeCom::ListChannelsInteractor).to(
         receive(:call).with(id: 'canonical').and_return(OpenStruct.new(object: {}))
       )
     end

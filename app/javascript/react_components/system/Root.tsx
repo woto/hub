@@ -38,7 +38,8 @@ import Hamburger from '../Sidebar/Hamburger';
 import AuthProvider from '../Auth/AuthProvider';
 import SidebarProvider from '../Sidebar/SidebarProvider';
 import LanguageProvider from '../Language/LanguageProvider';
-import ListingEntities from '../Listings/ListingsEntities';
+import ListingEntities from '../Listings/ListingEntities';
+import ListingMentions from '../Listings/ListingMentions';
 import Tabs from '../User/Tabs';
 
 function Portal({ Component, container, ...props }) {
@@ -104,6 +105,7 @@ export default function Root() {
     Tinder,
     Interaction,
     ListingEntities,
+    ListingMentions,
     Mentions,
     MentionsImage,
     MentionsCard,

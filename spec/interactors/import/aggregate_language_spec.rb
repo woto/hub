@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::AggregateLanguage do
+describe Import::AggregateLanguageInteractor do
   subject { described_class.call(params) }
 
   let(:feed_category) { create(:feed_category) }

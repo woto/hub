@@ -96,12 +96,12 @@ module API
             image: GlobalHelper.image_hash([favorite.images_relation].compact, %w[100]).first&.then do |image|
               {
                 id: image['id'],
-                image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['100'] : nil,
+                image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['100'] : nil
               }
             end,
             is_checked: favorite.is_checked,
             is_public: favorite.is_public,
-            is_owner: favorite.is_owner,
+            is_owner: favorite.is_owner
           }
         end
       end
@@ -117,6 +117,7 @@ module API
         requires :name, type: String
         requires :description, type: String
         requires :is_public, type: Boolean
+        optional :image, type: Hash
       end
 
       post do
@@ -188,6 +189,7 @@ module API
         optional :name, type: String, documentation: { param_type: 'body' }
         optional :description, type: String
         optional :is_public, type: Boolean
+        optional :image, type: Hash
       end
 
       patch ':id' do
@@ -254,6 +256,12 @@ module API
       end
 
       get ':id/mentions' do
+        ::Listings::MentionsInteractor.call(
+          id: params[:id],
+          params:,
+          current_user:,
+          request:
+        ).object
       end
     end
   end

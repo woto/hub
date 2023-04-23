@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-describe Import::DetectFileType do
+describe Import::DetectFileTypeInteractor do
   subject { described_class.call(feed: feed) }
 
   context 'when downloaded file does not exist' do
     let(:feed) { create(:feed) }
 
     it 'raises error' do
-      expect { subject }.to raise_error(Import::Process::DetectFileTypeError, /cannot open/)
+      expect { subject }.to raise_error(Import::ProcessInteractor::DetectFileTypeError, /cannot open/)
     end
   end
 

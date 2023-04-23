@@ -5,7 +5,7 @@ module Sync
     queue_as :default
 
     def perform(*_args)
-      Sync::Gdeslon::Sync.call
+      Sync::Gdeslon::SyncInteractor.call
     end
   end
 end

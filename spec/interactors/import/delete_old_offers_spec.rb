@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::DeleteOldOffers do
+describe Import::DeleteOldOffersInteractor do
   subject { described_class.call(feed: feed) }
 
   let(:feed) { create(:feed) }
@@ -14,13 +14,13 @@ describe Import::DeleteOldOffers do
 
     it 'equals num after executing interactor' do
       # one offer in index initially always
-      expect(Elastic::FeedOffersCount.call(feed: feed).object).to eq(1)
+      expect(Elastic::FeedOffersCountInteractor.call(feed: feed).object).to eq(1)
       subject
       # one offer after deleting (without index refreshing)
-      expect(Elastic::FeedOffersCount.call(feed: feed).object).to eq(1)
-      Elastic::RefreshOffersIndex.call(feed: feed)
+      expect(Elastic::FeedOffersCountInteractor.call(feed: feed).object).to eq(1)
+      Elastic::RefreshOffersIndexInteractor.call(feed: feed)
       # should be equal actual offers amount
-      expect(Elastic::FeedOffersCount.call(feed: feed).object).to eq(num)
+      expect(Elastic::FeedOffersCountInteractor.call(feed: feed).object).to eq(num)
     end
   end
 

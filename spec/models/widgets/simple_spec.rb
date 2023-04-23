@@ -30,7 +30,7 @@ RSpec.describe Widgets::Simple, type: :model do
     let!(:offer) { OfferCreator.call(feed_category: create(:feed_category)) }
 
     context 'with url of existing offer' do
-      let(:url) { offer['url'][0][Import::Offers::Hashify::HASH_BANG_KEY] }
+      let(:url) { offer['url'][0][Import::Offers::HashifyInteractor::HASH_BANG_KEY] }
 
       it 'does not have error on url field' do
         expect(subject).to be_valid

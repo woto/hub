@@ -6,7 +6,7 @@ describe Import::SweepJob, type: :job do
   subject { described_class.perform_now }
 
   specify do
-    expect(Import::Sweep).to receive(:call)
+    expect(Import::SweepInteractor).to receive(:call)
     subject
   end
 end

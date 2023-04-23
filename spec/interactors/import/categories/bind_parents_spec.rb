@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Categories::BindParents do
+describe Import::Categories::BindParentsInteractor do
   subject { described_class.call(feed: feed) }
 
   let(:feed) { create(:feed) }

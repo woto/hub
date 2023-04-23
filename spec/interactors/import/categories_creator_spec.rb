@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::CategoriesCreator do
+describe Import::CategoriesCreatorInteractor do
   subject do
     described_class.new(OpenStruct.new(feed: feed))
   end

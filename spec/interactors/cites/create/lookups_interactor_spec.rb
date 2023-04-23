@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Interactors::Cites::Create::LookupsInteractor do
+describe Cites::Create::LookupsInteractor do
   subject(:interactor) { described_class.call(cite: cite, entity: entity, user: user, params: params) }
 
   let(:cite) do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Extractors::Metadata::Iframely do
+describe Extractors::Metadata::IframelyInteractor do
   it 'proxies request to iframely' do
     # stub_request(:get, 'https://iframe.ly/api/iframely?api_key=iframely_key_value&url=https://example.com')
     stub_request(:get, 'http://iframely:8061/iframely?url=https://example.com')

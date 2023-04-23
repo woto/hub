@@ -33,7 +33,7 @@ class AggregateLanguageQuery
       json.aggs do
         json.group do
           json.terms do
-            json.field "#{Import::Offers::DetectLanguage::LANGUAGE_KEY}.code.keyword"
+            json.field "#{Import::Offers::DetectLanguageInteractor::LANGUAGE_KEY}.code.keyword"
             json.size 1
           end
         end

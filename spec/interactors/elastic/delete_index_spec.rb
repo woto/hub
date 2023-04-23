@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-describe Elastic::DeleteIndex do
+describe Elastic::DeleteIndexInteractor do
   subject { described_class.call(params) }
 
   def exists?(index)
-    Elastic::CheckIndexExists.call(index: index, allow_no_indices: false).object
+    Elastic::CheckIndexExistsInteractor.call(index: index, allow_no_indices: false).object
   end
 
   context 'when index_name param has particular name' do

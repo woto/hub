@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Elastic::FeedOffersCount do
+describe Elastic::FeedOffersCountInteractor do
   subject { described_class.call(feed: feed) }
 
   let(:feed) { create(:feed) }

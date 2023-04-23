@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Import::Offers::StandardAttributes do
+describe Import::Offers::StandardAttributesInteractor do
   subject { described_class.call(offer, feed) }
 
   let(:feed) { create(:feed) }

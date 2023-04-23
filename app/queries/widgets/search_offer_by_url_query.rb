@@ -13,7 +13,7 @@ class Widgets::SearchOfferByUrlQuery
     body = Jbuilder.new do |json|
       json.query do
         json.term do
-          json.set! "url.#{Import::Offers::Hashify::HASH_BANG_KEY}.keyword", context.url
+          json.set! "url.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}.keyword", context.url
         end
       end
     end

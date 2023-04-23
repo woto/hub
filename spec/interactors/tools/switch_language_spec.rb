@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tools::SwitchLanguage do
+describe Tools::SwitchLanguageInteractor do
   subject do
     described_class.call(
       subdomains: request.subdomains,

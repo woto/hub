@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Interactors::Cites::Create::ImagesInteractor do
+describe Cites::Create::ImagesInteractor do
   subject(:interactor) { described_class.call(cite: cite, entity: entity, user: user, params: params) }
 
   let(:cite) do

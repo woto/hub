@@ -24,8 +24,8 @@ class OfferCreator
       h['indexed_at'] = Time.current
       h['feed_category_id'] = feed_category.id
       h['feed_category_ids'] = feed_category.path_ids
-      h['picture'] = pictures.map { |pic| { Import::Offers::Hashify::HASH_BANG_KEY => "local:///fixtures/#{pic}" } }
-      h['detected_language'] = Import::Offers::DetectLanguage.call(h)
+      h['picture'] = pictures.map { |pic| { Import::Offers::HashifyInteractor::HASH_BANG_KEY => "local:///fixtures/#{pic}" } }
+      h['detected_language'] = Import::Offers::DetectLanguageInteractor.call(h)
 
       feed_category.path.each_with_index do |fc, i|
         h["feed_category_id_#{i}"] = fc.id
@@ -40,7 +40,7 @@ class OfferCreator
       end
     end
     offer = FactoryBot.create(:offer, offer)
-    Import::AggregateLanguage.call(feed: feed)
+    Import::AggregateLanguageInteractor.call(feed: feed)
     offer
   end
 end

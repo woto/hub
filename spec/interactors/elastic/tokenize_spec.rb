@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe Elastic::Tokenize do
+describe Elastic::TokenizeInteractor do
   before do
     # TODO: think about refactoring. Code creating index should be moved to spec/support?
-    Elastic::CreateTokenizerIndex.call
+    Elastic::CreateTokenizerIndexInteractor.call
   end
 
   context 'when q param is missed' do

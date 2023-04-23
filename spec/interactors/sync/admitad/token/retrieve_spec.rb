@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Sync::Admitad::Token::Retrieve do
+describe Sync::Admitad::Token::RetrieveInteractor do
   let(:body) do
     {
       client_id: '7d2aa22417cce0f405a1fd72fe16cb',

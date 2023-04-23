@@ -5,7 +5,7 @@ module Import
     queue_as :default
 
     def perform
-      Import::Sweep.call
+      Import::SweepInteractor.call
     end
   end
 end

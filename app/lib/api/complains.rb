@@ -15,7 +15,7 @@ module API
       end
 
       post do
-        Interactors::Complains::CreateInteractor.call(params: params, current_user: current_user).object
+        ::Complains::CreateInteractor.call(params: params, current_user: current_user).object
       end
     end
   end

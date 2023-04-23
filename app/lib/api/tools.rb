@@ -32,7 +32,7 @@ module API
       end
 
       get :github do
-        Extractors::GithubCom::Index.call(q: params[:q]).object
+        Extractors::GithubCom::IndexInteractor.call(q: params[:q]).object
       end
 
       desc 'Retrieve data from t.me' do
@@ -44,7 +44,7 @@ module API
       end
 
       get :telegram do
-        Extractors::TMe::ChannelOrChatOrBot.call(label: params[:q]).object
+        Extractors::TMe::ChannelOrChatOrBotInteractor.call(label: params[:q]).object
       end
 
       desc 'Search rubygems.org' do
@@ -56,7 +56,7 @@ module API
       end
 
       get :rubygems do
-        Extractors::RubygemsOrg::Search.call(q: params[:q]).object
+        Extractors::RubygemsOrg::SearchInteractor.call(q: params[:q]).object
       end
 
       desc 'Search youtube.com' do
@@ -68,7 +68,7 @@ module API
       end
 
       get :youtube do
-        Extractors::YoutubeCom::Index.call(q: params[:q]).object
+        Extractors::YoutubeCom::IndexInteractor.call(q: params[:q]).object
       end
 
       desc 'Detect a language of passed string' do
@@ -92,7 +92,7 @@ module API
       end
 
       get :iframely do
-        result = Extractors::Metadata::Iframely.call(url: params[:url])
+        result = Extractors::Metadata::IframelyInteractor.call(url: params[:url])
         break result.object if result.success?
 
         error!({ error: result.message }, result.code)
@@ -108,7 +108,7 @@ module API
       end
 
       get :scrape_webpage do
-        result = Extractors::Metadata::Scrapper.call(url: params[:url])
+        result = Extractors::Metadata::ScrapperInteractor.call(url: params[:url])
         break result.object if result.success?
 
         error!({ error: result.message }, result.code)
@@ -123,7 +123,7 @@ module API
       end
 
       get :npmjs do
-        Extractors::NpmjsCom::Suggestions.call(q: params[:q]).object
+        Extractors::NpmjsCom::SuggestionsInteractor.call(q: params[:q]).object
       end
 
       desc 'Search for Duck Duck Go' do
@@ -135,7 +135,7 @@ module API
       end
 
       get :duckduckgo_instant do
-        Extractors::DuckduckgoCom::InstantAnswer.call(q: params[:q]).object
+        Extractors::DuckduckgoCom::InstantAnswerInteractor.call(q: params[:q]).object
       end
 
 
@@ -148,7 +148,7 @@ module API
       end
 
       get :google_graph do
-        Extractors::GoogleCom::Graph.call(q: params[:q]).object
+        Extractors::GoogleCom::GraphInteractor.call(q: params[:q]).object
       end
 
       desc 'Search Google Custom Search' do
@@ -160,7 +160,7 @@ module API
       end
 
       get :google_custom_search do
-        Extractors::GoogleCom::CustomSearch.call(q: params[:q]).object
+        Extractors::GoogleCom::CustomSearchInteractor.call(q: params[:q]).object
       end
 
       desc 'Extract metadata from the page using yandex.com' do
@@ -175,7 +175,7 @@ module API
       end
 
       post :yandex_microdata do
-        Extractors::YandexRu::Microdata.call(url: params[:url], html: params[:html]).object
+        Extractors::YandexRu::MicrodataInteractor.call(url: params[:url], html: params[:html]).object
       end
 
       format :txt
@@ -191,7 +191,7 @@ module API
 
       get :yandex_xml do
         header 'Content-Type', 'application/xml'
-        Extractors::YandexRu::Xml.call(q: params[:q]).object
+        Extractors::YandexRu::XmlInteractor.call(q: params[:q]).object
       end
 
       desc 'Add "tw" prefix to Tailwind classess. https://tailwindcss.com/docs/configuration#prefix' do
@@ -203,7 +203,7 @@ module API
       end
 
       post :prefix_tailwind do
-        ::Tools::PrefixTailwind.call(html: params[:html]).object
+        ::Tools::PrefixTailwindInteractor.call(html: params[:html]).object
       end
     end
   end

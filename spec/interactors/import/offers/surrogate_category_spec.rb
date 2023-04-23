@@ -59,7 +59,7 @@ shared_examples 'surrogate category does not exist yet' do
   end
 end
 
-describe Import::Offers::SurrogateCategory do
+describe Import::Offers::SurrogateCategoryInteractor do
   let(:feed) { create(:feed) }
   let(:categories_cache) { FeedCategoriesCache.new(feed) }
   let(:offer) { create(:offer) }
@@ -71,7 +71,7 @@ describe Import::Offers::SurrogateCategory do
 
     context 'when surrogate category already exists' do
       let!(:surrogate_category) do
-        create(:feed_category, feed: feed, ext_id: "#{parent.ext_id}#{Import::Offers::Category::SURROGATE_KEY}",
+        create(:feed_category, feed: feed, ext_id: "#{parent.ext_id}#{Import::Offers::CategoryInteractor::SURROGATE_KEY}",
                                ext_parent_id: parent.ext_id, parent: parent)
       end
 
@@ -88,7 +88,7 @@ describe Import::Offers::SurrogateCategory do
           attempt_uuid: feed.attempt_uuid,
           name: nil,
           raw: nil,
-          ext_id: "#{parent.ext_id}#{Import::Offers::Category::SURROGATE_KEY}",
+          ext_id: "#{parent.ext_id}#{Import::Offers::CategoryInteractor::SURROGATE_KEY}",
           ext_parent_id: parent.ext_id,
           feed_id: feed.id
         )
@@ -105,7 +105,7 @@ describe Import::Offers::SurrogateCategory do
 
     context 'when surrogate category already exists' do
       let!(:surrogate_category) do
-        create(:feed_category, feed: feed, ext_id: Import::Offers::Category::SURROGATE_KEY)
+        create(:feed_category, feed: feed, ext_id: Import::Offers::CategoryInteractor::SURROGATE_KEY)
       end
 
       it_behaves_like 'surrogate category already exists'
@@ -121,7 +121,7 @@ describe Import::Offers::SurrogateCategory do
           attempt_uuid: feed.attempt_uuid,
           name: nil,
           raw: nil,
-          ext_id: Import::Offers::Category::SURROGATE_KEY,
+          ext_id: Import::Offers::CategoryInteractor::SURROGATE_KEY,
           ext_parent_id: nil,
           feed_id: feed.id
         )

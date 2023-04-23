@@ -10,7 +10,7 @@ module ApplicationHelper
             title: system_locale_to_human(locale),
             url: path_for_switch_language(locale, Current.realm&.kind) ||
               url_for(
-                Tools::SwitchLanguage.call(
+                Tools::SwitchLanguageInteractor.call(
                   subdomains: request.subdomains,
                   host: request.host,
                   locale:

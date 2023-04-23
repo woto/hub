@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-describe Import::Offers::Flush do
+describe Import::Offers::FlushInteractor do
   subject { described_class.call(offers, advertiser, feed) }
 
   let(:offer_id) { Faker::Lorem.word }
-  let(:offers) { [{ Import::Offers::Hashify::SELF_NAME_KEY => { 'id' => offer_id } }] }
+  let(:offers) { [{ Import::Offers::HashifyInteractor::SELF_NAME_KEY => { 'id' => offer_id } }] }
   let(:advertiser) { create(:advertiser) }
   let(:feed) { create(:feed) }
 
@@ -27,7 +27,7 @@ describe Import::Offers::Flush do
           index: {
             _id: "#{offer_id}-#{feed.id}",
             data: {
-              Import::Offers::Hashify::SELF_NAME_KEY => {
+              Import::Offers::HashifyInteractor::SELF_NAME_KEY => {
                 'id' => offer_id
               },
               :advertiser_id => advertiser.id,
@@ -48,7 +48,7 @@ describe Import::Offers::Flush do
 
         subject
 
-      end.to raise_error(Import::Process::ElasticResponseError)
+      end.to raise_error(Import::ProcessInteractor::ElasticResponseError)
     end
   end
 end

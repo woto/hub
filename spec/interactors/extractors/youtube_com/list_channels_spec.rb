@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Extractors::YoutubeCom::ListChannels do
+describe Extractors::YoutubeCom::ListChannelsInteractor do
   subject { described_class.call(id: 'channels') }
 
   before do

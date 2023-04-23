@@ -28,9 +28,9 @@ describe Offers::SearchString do
           {
             multi_match: {
               fields: %W[
-                name.#{Import::Offers::Hashify::HASH_BANG_KEY}
+                name.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}
                 feed_category_name
-                description.#{Import::Offers::Hashify::HASH_BANG_KEY}
+                description.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}
               ],
               fuzziness: 'auto',
               minimum_should_match: 6,
@@ -42,9 +42,9 @@ describe Offers::SearchString do
           {
             multi_match: {
               fields: %W[
-                name.#{Import::Offers::Hashify::HASH_BANG_KEY}^30
+                name.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}^30
                 feed_category_name
-                description.#{Import::Offers::Hashify::HASH_BANG_KEY}
+                description.#{Import::Offers::HashifyInteractor::HASH_BANG_KEY}
               ],
               query: 'english sentence это предложение русском языке'
             }

@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-describe Extractors::GithubCom::Index do
+describe Extractors::GithubCom::IndexInteractor do
   subject { described_class.call(q: q) }
 
   context 'when q is a search string' do
     let(:repos) { OpenStruct.new({}) }
 
     before do
-      expect(Extractors::GithubCom::Search).to(
+      expect(Extractors::GithubCom::SearchInteractor).to(
         receive(:call).with(q: q).and_return(repos)
       )
     end
@@ -32,10 +32,10 @@ describe Extractors::GithubCom::Index do
     let(:readme) { OpenStruct.new({}) }
 
     before do
-      expect(Extractors::GithubCom::Repository).to(
+      expect(Extractors::GithubCom::RepositoryInteractor).to(
         receive(:call).with(repo: 'rails/rails').and_return(repository)
       )
-      expect(Extractors::GithubCom::Readme).to(
+      expect(Extractors::GithubCom::ReadmeInteractor).to(
         receive(:call).with(repo: 'rails/rails').and_return(readme)
       )
     end

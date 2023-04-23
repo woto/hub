@@ -15,9 +15,11 @@ module API
 
       get do
         if params[:q].present?
-          Interactors::Topics::Elasticsearch.call(q: params[:q]).object
+          ::Topics::ElasticsearchInteractor.call(q: params[:q]).object
         else
-          Interactors::Topics::Postgresql.call(q: params[:q]).object
+          # TODO: check this. Seems not used anymore.
+          # I simple have to figure out how to send request to Elastic with empty :q
+          ::Topics::PostgresqlInteractor.call(q: params[:q]).object
         end
       end
     end

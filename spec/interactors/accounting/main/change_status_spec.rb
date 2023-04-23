@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Accounting::Main::ChangeStatus do
+describe Accounting::Main::ChangeStatusInteractor do
   let(:admin) { create(:user, role: 'admin') }
   let(:transaction_group) { create(:transaction_group, kind: 'accounting/main/change_status') }
 
@@ -13,14 +13,14 @@ describe Accounting::Main::ChangeStatus do
   context 'when record is a new post' do
     let(:post) { build(:post) }
 
-    it 'calls `Accounting::CreateTransaction.call` with correct params' do
-      allow(Accounting::CreateTransaction).to receive(:call)
+    it 'calls `Accounting::CreateTransactionInteractor.call` with correct params' do
+      allow(Accounting::CreateTransactionInteractor).to receive(:call)
 
       Current.set(responsible: admin) do
         post.save
       end
 
-      expect(Accounting::CreateTransaction).to have_received(:call)
+      expect(Accounting::CreateTransactionInteractor).to have_received(:call)
         .with(
           credit: Account.for_subject(:hub, post.status, post.currency),
           debit: Account.for_user(post.user, post.status, post.currency),
@@ -39,8 +39,8 @@ describe Accounting::Main::ChangeStatus do
       end
     end
 
-    it 'calls `Accounting::CreateTransaction.call` with correct params twice' do
-      allow(Accounting::CreateTransaction).to receive(:call)
+    it 'calls `Accounting::CreateTransactionInteractor.call` with correct params twice' do
+      allow(Accounting::CreateTransactionInteractor).to receive(:call)
 
       from_user = post.user
       from_status = post.status
@@ -56,7 +56,7 @@ describe Accounting::Main::ChangeStatus do
         )
       end
 
-      expect(Accounting::CreateTransaction).to have_received(:call)
+      expect(Accounting::CreateTransactionInteractor).to have_received(:call)
         .with(
           credit: Account.for_user(from_user, from_status, from_currency),
           debit: Account.for_subject(:hub, from_status, from_currency),
@@ -66,7 +66,7 @@ describe Accounting::Main::ChangeStatus do
           obj: { id: post.id, type: post.class.name }
         )
 
-      expect(Accounting::CreateTransaction).to have_received(:call)
+      expect(Accounting::CreateTransactionInteractor).to have_received(:call)
         .with(
           credit: Account.for_subject(:hub, post.status, post.currency),
           debit: Account.for_user(post.user, post.status, post.currency),

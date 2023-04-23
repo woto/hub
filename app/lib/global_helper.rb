@@ -90,14 +90,14 @@ class GlobalHelper
     def create_elastic_indexes
       elastic_client
 
-      Elastic::CreateOffersIndex.call
-      Elastic::CreateTokenizerIndex.call
+      Elastic::CreateOffersIndexInteractor.call
+      Elastic::CreateTokenizerIndexInteractor.call
 
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('users'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('favorites'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('mentions'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('entities'))
-      Elastic::CreateIndex.call(index: Elastic::IndexName.pick('topics'))
+      Elastic::CreateIndexInteractor.call(index: Elastic::IndexName.pick('users'))
+      Elastic::CreateIndexInteractor.call(index: Elastic::IndexName.pick('favorites'))
+      Elastic::CreateIndexInteractor.call(index: Elastic::IndexName.pick('mentions'))
+      Elastic::CreateIndexInteractor.call(index: Elastic::IndexName.pick('entities'))
+      Elastic::CreateIndexInteractor.call(index: Elastic::IndexName.pick('topics'))
 
       elastic_client.indices.refresh index: Elastic::IndexName.pick('*').scoped
     end

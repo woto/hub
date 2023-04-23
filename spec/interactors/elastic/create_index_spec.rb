@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-describe Elastic::CreateIndex do
+describe Elastic::CreateIndexInteractor do
   pending "add some examples to (or delete) #{__FILE__}"
 end

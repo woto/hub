@@ -6,6 +6,6 @@ describe 'hub:elastic' do
   after { subject.execute }
 
   describe 'hub:elastic:clean' do
-    it { expect(Elastic::DeleteIndex).to receive(:call).with(index: Elastic::IndexName.pick('*')) }
+    it { expect(Elastic::DeleteIndexInteractor).to receive(:call).with(index: Elastic::IndexName.pick('*')) }
   end
 end

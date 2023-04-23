@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Elastic::CheckIndexExists do
+describe Elastic::CheckIndexExistsInteractor do
   subject { described_class.call(params) }
 
   context 'when input params does not include index_name' do

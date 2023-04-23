@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import {
   Dialog, Disclosure, Menu, Popover, Transition,
 } from '@headlessui/react';
@@ -9,8 +9,10 @@ import Search from './Search';
 import AddCircle from './AddCircle';
 import EditCircle from './EditCircle';
 import AddEntity from './FilterEntitiesByTitle';
-import Mentions from '../Mentions/Mentions';
+import MentionsCore from '../Mentions/MentionsCore';
 import Sort from './Sort';
+import axios from '../system/Axios';
+import { MentionResponse } from '../system/TypeScript';
 
 const sortOptions = [
   { name: 'Релевантность', href: '#' },
@@ -32,6 +34,15 @@ export default function Filters(props: {
   const [searchString, setSearchString] = useState(props.searchString);
   const [scrollToFirst, setScrollToFirst] = useState(false);
 
+  const fetchFunction = useCallback(({
+    entityIds, searchString, sort, pageParam,
+  }: { entityIds?: any[], searchString?: string, sort?: string, pageParam?: number, listingId?: number }) => axios.post<MentionResponse>('/api/mentions', {
+    page: pageParam,
+    entity_ids: entityIds,
+    q: searchString,
+    sort,
+  }), []);
+
   return (
     <>
       <div
@@ -42,7 +53,11 @@ export default function Filters(props: {
             <div className="tw-flex tw-items-center tw-justify-around">
               <div className="tw-flex tw-items-center tw-space-x-2">
                 <EditCircle imageSrc={props.imageSrc} />
-                <AddCircle entityIds={[props.entityId]} searchString={searchString} entityTitle={props.entityTitle} />
+                <AddCircle
+                  entityIds={[props.entityId]}
+                  searchString={searchString}
+                  entityTitle={props.entityTitle}
+                />
               </div>
               <Search setSearchString={setSearchString} setScrollToFirst={setScrollToFirst} />
               <Sort />
@@ -50,7 +65,12 @@ export default function Filters(props: {
           </section>
         </div>
       </div>
-      <Mentions searchString={searchString} entityIds={[props.entityId]} scrollToFirst={scrollToFirst} />
+      <MentionsCore
+        searchString={searchString}
+        entityIds={[props.entityId]}
+        scrollToFirst={scrollToFirst}
+        fetchFunction={fetchFunction}
+      />
     </>
   );
 }

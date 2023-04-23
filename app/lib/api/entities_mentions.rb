@@ -16,7 +16,7 @@ module API
       end
 
       get :find_by_url_and_entity do
-        result = Interactors::EntitiesMentions::FindByUrlAndEntity.call(params: params)
+        result = ::EntitiesMentions::FindByUrlAndEntityInteractor.call(params: params)
         break result.object if result.success?
 
         error!({ error: result.message }, result.code)
