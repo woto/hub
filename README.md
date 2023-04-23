@@ -33,35 +33,41 @@ That's it. More docs available at [docs](/docs).
 
 [![Github](https://github.com/woto/hub/actions/workflows/main.yml/badge.svg)](https://github.com/woto/hub/actions)
 
+# Tests
+
+```shell
+bundle exec rspec
+```
+
 ### Screenshots
 
-Dashboard page  
+Dashboard page
 
 ![Dashboard page](./docs/images/dashboard_page.png)
 
-Feeds page  
-![Feeds page](./docs/images/feeds_page.png)  
+Feeds page
+![Feeds page](./docs/images/feeds_page.png)
 
-Filter results  
+Filter results
 ![Filter results](./docs/images/filter_results.png)
 
-Offers page  
+Offers page
 ![Filter results](./docs/images/offers_page.png)
 
-Profile edit  
+Profile edit
 ![Profile edit](./docs/images/profile_edit.png)
 
-Realm  
+Realm
 ![Realm](./docs/images/realm.png)
 
-Widget  
+Widget
 ![Widget](./docs/images/widget.png)
 
-Widget modal  
+Widget modal
 ![Widget modal](./docs/images/widget_modal.png)
 
-Workspaces  
+Workspaces
 ![Workspaces](./docs/images/workspaces.png)
 
-Writing article  
+Writing article
 ![Writing article](./docs/images/writing_article.png)
