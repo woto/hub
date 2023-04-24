@@ -81,12 +81,12 @@ export default function Messenger({
         <div>
           <button
             type="button"
-            className="tw-inline-flex tw-items-center tw-px-2.5 tw-py-1.5 tw-border tw-border-transparent tw-text-xs tw-font-medium tw-rounded tw-text-indigo-700 tw-bg-indigo-100 hover:tw-bg-indigo-200 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
+            className="tw-inline-flex tw-items-center tw-px-2.5 tw-py-1.5 tw-border tw-border-transparent tw-text-xs tw-font-medium tw-rounded
+             tw-text-sky-500 tw-bg-indigo-100 hover:tw-bg-indigo-200 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
             onClick={() => {
               append({ type: '', value: '' });
             }}
           >
-            <PlusIcon className="-tw-ml-0.5 tw-mr-2 tw-h-4 tw-w-4" aria-hidden="true" />
             Добавить...
           </button>
         </div>
