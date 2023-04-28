@@ -5,8 +5,9 @@
 ```shell
 docker-compose up -d
 ./bin/setup
-./bin/webpack-dev-server
 ./bin/rails s
+gem install foreman
+foreman start -f ./Procfile.dev
 ```
 
 The following addresses available after project start up:

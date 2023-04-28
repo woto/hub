@@ -37,7 +37,7 @@ indexes = %w[users feeds posts favorites accounts transactions checks post_categ
              exchange_rates realms mentions entities topics]
 indexes.each do |index_name|
     Elastic::DeleteIndexInteractor.call(index: Elastic::IndexName.pick(index_name), ignore_unavailable: true)
-    Elastic::CreateIndex.call(index: Elastic::IndexName.pick(index_name))
+    Elastic::CreateIndexInteractor.call(index: Elastic::IndexName.pick(index_name))
     index_name.singularize.camelize.constantize.__elasticsearch__.import && nil
 end
 ```
