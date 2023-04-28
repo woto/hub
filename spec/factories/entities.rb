@@ -31,5 +31,13 @@ FactoryBot.define do
     user
     title { Faker::Lorem.word }
     intro { Faker::Lorem.sentence }
+
+    transient do
+      index { true }
+    end
+
+    after(:create) do |entity, evaluator|
+      entity.__elasticsearch__.index_document if evaluator.index
+    end
   end
 end

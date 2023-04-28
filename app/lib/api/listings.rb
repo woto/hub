@@ -238,18 +238,6 @@ module API
         favorite.destroy
       end
 
-      desc 'Returns listing entities'
-
-      params do
-        requires :id, type: Integer, desc: 'Listing id'
-      end
-
-      get ':id/entities' do
-        entity_ids = FavoritesItem.where(favorite_id: params[:id]).pluck(:ext_id)
-        query = ListingEntitiesQuery.call(entity_ids:, from: 0, size: 100).object
-        GlobalHelper.elastic_client.search(query)
-      end
-
       desc 'Returns listing mentions'
 
       params do

@@ -43,10 +43,6 @@ module API
         # security [{ api_key: [] }]
       end
 
-      # desc 'Search mentions' do
-      #   security [{ api_key: [] }]
-      # end
-
       params do
         requires :fragment_url, type: String, documentation: { param_type: 'body' }, desc: 'Highlighted fragment url'
         optional :search_string, type: String, desc: 'Manually crafted search string'
@@ -58,6 +54,24 @@ module API
           search_string: params[:search_string],
           link_url: params[:link_url],
           pagination_rule: PaginationRules.new(request)
+        ).object
+      end
+
+      desc 'List entities'
+
+      params do
+        optional :entity_ids, type: Array[Integer], documentation: { param_type: 'body' }
+        optional :listing_id, type: Integer
+        optional :mention_id, type: Integer
+      end
+
+      post 'list' do
+        ::Entities::IndexInteractor.call(
+          mention_id: params[:mention_id]&.to_i,
+          listing_id: params[:listing_id]&.to_i,
+          entity_ids: params[:entity_ids]&.map(&:to_i),
+          current_user:,
+          request:
         ).object
       end
 

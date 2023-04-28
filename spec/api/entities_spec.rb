@@ -3,7 +3,7 @@
 require 'rails_helper'
 require_relative '../support/shrine_image'
 
-describe API::Entities, type: :request, responsible: :admin do
+describe API::Entities, responsible: :admin, type: :request do
   let!(:user) { create(:user) }
 
   describe 'GET /api/entities/{id}' do
@@ -33,6 +33,17 @@ describe API::Entities, type: :request, responsible: :admin do
         'links' => ['https://example.com'],
         'lookups' => [match('id' => lookup.id, 'title' => lookup.title)],
         'title' => entity.title
+      )
+    end
+  end
+
+  describe 'GET /api/entities/list' do
+    let(:entity) { create(:entity) }
+
+    it 'returns entities list' do
+      post '/api/entities/list', params: { entity_ids: [entity.id] }
+      expect(response.parsed_body).to contain_exactly(
+        include('entity_id' => entity.id)
       )
     end
   end
