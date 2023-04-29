@@ -100,6 +100,7 @@ RSpec.describe Mention, type: :model do
             "mention_id"=>entities_mention.mention_id,
             "relevance"=>nil,
             "sentiment"=>nil,
+            "title" => entities_mention.entity.title
           }
           # 'id' => entities_mention.entity.id,
           # 'is_main' => entities_mention.is_main,
