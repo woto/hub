@@ -40,6 +40,10 @@ FactoryBot.define do
       index { true }
     end
 
+    trait(:with_image) do
+      image { association(:image) }
+    end
+
     after(:create) do |mention, evaluator|
       mention.__elasticsearch__.index_document if evaluator.index
     end

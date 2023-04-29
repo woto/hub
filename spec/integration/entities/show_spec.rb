@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 describe 'EntitiesController#show', type: :system do
-  subject!(:entity) { create(:entity, title: 'title', intro: 'intro') }
-  let!(:mention) { create(:mention, entities: [entity]) }
-  let!(:images_relation) { create(:images_relation, relation: mention) }
+  subject!(:entity) { create(:entity, :with_image, title: 'title', intro: 'intro') }
+
+  let!(:mention) { create(:mention, :with_image, entities: [entity]) }
 
   before do
     mention.__elasticsearch__.index_document
@@ -27,16 +27,16 @@ describe 'EntitiesController#show', type: :system do
   end
 
   it "shows mention's thumbnail" do
-    expect(page).to have_css("[data-test-id='small-image-#{images_relation.image.id}']")
+    expect(page).to have_css("[data-test-id='small-image-#{mention.image.id}']")
   end
 
   context "when clicks on the mention's thumbnail" do
     before do
-      find("[data-test-id='small-image-#{images_relation.image.id}']").click
+      find("[data-test-id='small-image-#{mention.image.id}']").click
     end
 
     it "shows larger mention's screenshot" do
-      expect(page).to have_css("[data-test-id='big-image-#{images_relation.image.id}']")
+      expect(page).to have_css("[data-test-id='big-image-#{mention.image.id}']")
     end
 
     it "mention's modal screenshot has link" do
