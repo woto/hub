@@ -89,6 +89,10 @@ class Mention < ApplicationRecord
         indexes :mention_date, type: 'date'
         indexes :relevance, type: 'long'
         indexes :sentiment, type: 'float'
+        indexes :title, type: 'text' do
+          indexes :autocomplete, type: 'search_as_you_type'
+          indexes :keyword, type: 'keyword'
+        end
       end
       indexes :title, type: 'text' do
         indexes :autocomplete, type: 'search_as_you_type'
@@ -135,6 +139,7 @@ class Mention < ApplicationRecord
       .map do |entity_mention|
       {
         'id' => entity_mention.id,
+        'title' => entity_mention.entity.title,
         'entity_id' => entity_mention.entity_id,
         'mention_id' => entity_mention.mention_id,
         'relevance' => entity_mention.relevance,
