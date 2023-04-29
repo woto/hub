@@ -22,20 +22,20 @@ module API
       end
 
       desc 'related entities' do
-        security [{ api_key: [] }]
+        # security [{ api_key: [] }]
       end
 
       params do
-        optional :q, type: String, desc: 'query string', documentation: { param_type: 'body' }
+        optional :mentions_search_string, type: String, desc: 'Mentions search string', documentation: { param_type: 'body' }
+        optional :entities_search_string, type: String, desc: 'Entities search string'
         optional :entity_ids, type: Array[Integer], desc: 'related entities ids'
-        optional :entity_title, type: String, desc: 'title of searched entity'
       end
 
       post 'related' do
         ::Entities::RelatedInteractor.call(
-          q: params[:q],
-          entity_ids: params[:entity_ids],
-          entity_title: params[:entity_title]
+          mentions_search_string: params[:mentions_search_string],
+          entities_search_string: params[:entities_search_string],
+          entity_ids: params[:entity_ids]
         ).object
       end
 

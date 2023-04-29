@@ -25,7 +25,7 @@ describe API::Entities, responsible: :admin, type: :request do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to match(
         'entity_id' => entity.id,
-        'entity_url' => "https://public.ru/entities/#{entity.id}-foo",
+        'entity_url' => "/entities/#{entity.id}-foo",
         'images' => contain_exactly(include('id' => image.id)),
         'entities_mentions_count' => 0,
         'intro' => entity.intro,
@@ -33,6 +33,26 @@ describe API::Entities, responsible: :admin, type: :request do
         'links' => ['https://example.com'],
         'lookups' => [match('id' => lookup.id, 'title' => lookup.title)],
         'title' => entity.title
+      )
+    end
+  end
+
+  describe 'POST /api/entities/related' do
+    let(:entity1) { create(:entity) }
+    let(:entity2) { create(:entity) }
+
+    before do
+      create(:mention, entities: [entity1, entity2])
+
+      Entity.__elasticsearch__.refresh_index!
+      Mention.__elasticsearch__.refresh_index!
+    end
+
+    it 'returns related entities' do
+      post '/api/entities/related', params: { entity_ids: [entity1.id] }
+      expect(response.parsed_body).to contain_exactly(
+        include('entity_id' => entity1.id),
+        include('entity_id' => entity2.id)
       )
     end
   end

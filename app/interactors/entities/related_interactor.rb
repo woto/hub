@@ -6,60 +6,48 @@ module Entities
 
     contract do
       params do
-        optional(:q)
         optional(:entity_ids)
-        optional(:entity_title)
+        optional(:entities_search_string)
+        optional(:mentions_search_string)
       end
     end
 
     def call
       query = RelatedQuery.call(
         entity_ids: context.entity_ids,
-        q: context.q,
-        from: 0,
+        mentions_search_string: context.mentions_search_string,
+        entities_search_string: context.entities_search_string,
         size: 50
       ).object
 
-      popular_filtered_entities = GlobalHelper.elastic_client.search(query).then do |res|
-        res['aggregations']['group']['group']['buckets']
+      # puts JSON.pretty_generate(query)
+
+      grouped_entities = GlobalHelper.elastic_client.search(query).then do |res|
+        res['aggregations']['group']['group']['group']['buckets'].map do |bucket|
+          {
+            entity_id: bucket['key'],
+            count: bucket['doc_count']
+          }
+        end
       end
 
-      query = AutocompleteQuery.call(
-        entity_ids: popular_filtered_entities.pluck('key'),
-        q: context.entity_title,
-        from: 0,
-        size: 50
+      query = IndexQuery.call(
+        entity_ids: grouped_entities.pluck(:entity_id)
       ).object
 
-      matched_entities = GlobalHelper.elastic_client.search(query)
-      sorted_matched_entities = matched_entities['hits']['hits'].sort_by do |entity|
-        popular_filtered_entities.pluck('key').index(entity['_id'].to_i)
-      end
+      # puts JSON.pretty_generate(query)
 
-      context.object = sorted_matched_entities.map do |entity|
-        EntityPresenter.call(
-          id: entity['_id'],
-          title: entity['_source']['title'],
-          intro: entity['_source']['intro'],
-          lookups: entity['_source']['lookups'],
-          kinds: entity['_source']['topics'],
-          images: entity['_source']['images'].map do |image|
-            {
-              id: image['id'],
-              image_url: ImageUploader::IMAGE_TYPES.include?(image['mime_type']) ? image['images']['200'] : nil,
-              video_url: ImageUploader::VIDEO_TYPES.include?(image['mime_type']) ? image['videos']['200'] : nil,
-              width: image['width'],
-              height: image['height'],
-              dark: image['dark']
-            }
-          end,
-          created_at: entity['_source']['created_at'],
-          entities_mentions_count: entity['_source']['entities_mentions_count'],
-          entity_url: Rails.application.routes.url_helpers.entity_url(
-            entity['_id'], host: GlobalHelper.host, locale: nil
-          ),
-          links: entity['_source']['link_url'].uniq.compact
-        ).object
+      entities = GlobalHelper.elastic_client.search(query)
+
+      # context.object = result['hits']['hits'].map do |entity|
+      #   ElasticEntityPresenter.call(entity: entity).object
+      # end
+
+      context.object = grouped_entities.map do |group|
+        entity = entities['hits']['hits'].find { |item| item['_id'].to_i == group[:entity_id] }
+        count = group[:count]
+
+        ElasticEntityPresenter.call(entity:, count:).object
       end
     end
   end
