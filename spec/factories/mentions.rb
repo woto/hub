@@ -35,5 +35,13 @@ FactoryBot.define do
     user
     entities { [association(:entity)] }
     url { Faker::Internet.url }
+
+    transient do
+      index { true }
+    end
+
+    after(:create) do |mention, evaluator|
+      mention.__elasticsearch__.index_document if evaluator.index
+    end
   end
 end
