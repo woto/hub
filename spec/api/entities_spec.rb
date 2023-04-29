@@ -60,6 +60,11 @@ describe API::Entities, responsible: :admin, type: :request do
   describe 'GET /api/entities/list' do
     let(:entity) { create(:entity) }
 
+    before do
+      Entity.__elasticsearch__.refresh_index!
+      Mention.__elasticsearch__.refresh_index!
+    end
+
     it 'returns entities list' do
       post '/api/entities/list', params: { entity_ids: [entity.id] }
       expect(response.parsed_body).to contain_exactly(
