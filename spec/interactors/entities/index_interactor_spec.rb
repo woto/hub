@@ -10,11 +10,11 @@ describe Entities::IndexInteractor do
   end
 
   context 'when :entity_ids passed' do
-    subject(:interactor) { described_class.call(entity_ids: [entity.id]) }
+    subject(:interactor) { described_class.call(params: { entity_ids: [entity.id] }, current_user: create(:user) ) }
 
     let!(:entity) { create(:entity) }
 
-    it 'returns list of entities' do
+    it 'returns entities' do
       expect(interactor).to have_attributes(
         object: contain_exactly(
           include(entity_id: entity.id)
@@ -24,12 +24,12 @@ describe Entities::IndexInteractor do
   end
 
   context 'when :listing_id passed' do
-    subject(:interactor) { described_class.call(listing_id: favorites_item.favorite.id) }
+    subject(:interactor) { described_class.call(params: { listing_id: favorites_item.favorite.id }, current_user: create(:user)) }
 
     let!(:favorites_item) { create(:favorites_item, ext_id: entity.id, kind: 'entities') }
     let!(:entity) { create(:entity) }
 
-    it 'returns listing entities' do
+    it "returns listing's entities" do
       expect(interactor).to have_attributes(
         object: contain_exactly(
           include(entity_id: entity.id)
@@ -39,12 +39,12 @@ describe Entities::IndexInteractor do
   end
 
   context 'when :mention_id passed' do
-    subject(:interactor) { described_class.call(mention_id: mention.id) }
+    subject(:interactor) { described_class.call(params: { mention_id: mention.id }, current_user: create(:user)) }
 
     let!(:mention) { create(:mention, entities: [entity]) }
     let!(:entity) { create(:entity) }
 
-    it 'returns mention entities' do
+    it "returns mention's entities" do
       expect(interactor).to have_attributes(
         object: contain_exactly(
           include(entity_id: entity.id)

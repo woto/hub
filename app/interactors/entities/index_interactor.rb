@@ -6,16 +6,21 @@ module Entities
 
     contract do
       params do
-        optional(:entity_ids)
-        optional(:listing_id)
-        optional(:mention_id)
+        required(:params).maybe do
+          hash do
+            optional(:entity_ids)
+            optional(:listing_id)
+            optional(:mention_id)
+          end
+        end
+        required(:current_user)
       end
     end
 
     def call
-      entity_ids = context.entity_ids
-      entity_ids = Favorite.find(context.listing_id).favorites_items.pluck(:ext_id) if context.listing_id
-      entity_ids = Mention.find(context.mention_id).entities.pluck(:id) if context.mention_id
+      entity_ids = context.params[:entity_ids]
+      entity_ids = Favorite.find(context.params[:listing_id]).favorites_items.pluck(:ext_id) if context.params[:listing_id]
+      entity_ids = Mention.find(context.params[:mention_id]).entities.pluck(:id) if context.params[:mention_id]
 
       query = IndexQuery.call(
         entity_ids:
