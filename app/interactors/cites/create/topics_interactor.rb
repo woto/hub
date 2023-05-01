@@ -4,7 +4,7 @@ module Cites
   module Create
     class TopicsInteractor
       include ApplicationInteractor
-      delegate :cite, :entity, :user, :params, to: :context
+      delegate :params, to: :context
 
       contract do
         params do
@@ -24,26 +24,26 @@ module Cites
       def call
         return if params.nil?
 
-        without_ids, with_ids = params.partition { |topic_params| topic_params['id'].blank? }
+        without_ids, with_ids = params.partition { |topic_params| topic_params[:id].blank? }
 
         without_ids.each do |topic_params|
-          topic = Topic.create_with(user:).find_or_create_by!(title: topic_params['title'])
-          TopicsRelation.create!(user:, topic:, relation: cite)
-          TopicsRelation.create!(user:, topic:, relation: entity)
+          topic = Topic.create_with(user: context.user).find_or_create_by!(title: topic_params[:title])
+          TopicsRelation.create!(user: context.user, topic:, relation: context.cite)
+          TopicsRelation.create!(user: context.user, topic:, relation: context.entity)
           Elasticsearch::IndexJob.perform_later(topic)
         end
 
-        topics = Topic.find(with_ids.map { |item| item['id'] })
+        topics = Topic.find(with_ids.map { |item| item[:id] })
 
         with_ids.each do |topic_params|
-          matched_topic = topics.find { |item| item.id == topic_params['id'] }
+          matched_topic = topics.find { |item| item.id == topic_params[:id] }
 
-          if topic_params['destroy']
-            topics_relation = TopicsRelation.find_by(topic: matched_topic, relation: entity)
+          if topic_params[:destroy]
+            topics_relation = TopicsRelation.find_by(topic: matched_topic, relation: context.entity)
             topics_relation&.destroy!
           else
-            TopicsRelation.create!(user:, topic: matched_topic, relation: cite)
-            TopicsRelation.create(user:, topic: matched_topic, relation: entity)
+            TopicsRelation.create!(user: context.user, topic: matched_topic, relation: context.cite)
+            TopicsRelation.create(user: context.user, topic: matched_topic, relation: context.entity)
           end
           Elasticsearch::IndexJob.perform_later(matched_topic)
         end

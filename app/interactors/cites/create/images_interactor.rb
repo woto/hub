@@ -4,7 +4,6 @@ module Cites
   module Create
     class ImagesInteractor
       include ApplicationInteractor
-      delegate :cite, :entity, :user, :params, to: :context
 
       contract do
         params do
@@ -23,10 +22,10 @@ module Cites
       end
 
       def call
-        return if params.nil?
+        return if context.params.nil?
 
-        params.each_with_index do |image_params, index|
-          if image_params['id'].present?
+        context.params.each_with_index do |image_params, index|
+          if image_params[:id].present?
             process_image_with_id(image_params, index)
           else
             process_image_without_id(image_params, index)
@@ -35,27 +34,27 @@ module Cites
       end
 
       def process_image_with_id(image_params, index)
-        image = Image.find(image_params['id'])
-        images_relation = ImagesRelation.find_by!(image:, relation: entity)
+        image = Image.find(image_params[:id])
+        images_relation = ImagesRelation.find_by!(image:, relation: context.entity)
 
-        if image_params['destroy']
+        if image_params[:destroy]
           # TODO: check
           # return unless images_relation
           images_relation.destroy!
         else
-          ImagesRelation.create!(image:, order: index, relation: cite, dark: image_params['dark'], user:)
-          images_relation.update!(order: index, dark: image_params['dark'])
+          ImagesRelation.create!(image:, order: index, relation: context.cite, dark: image_params[:dark], user: context.user)
+          images_relation.update!(order: index, dark: image_params[:dark])
         end
       end
 
       def process_image_without_id(image_params, index)
         # TODO: check
-        # return unless image_params['json']
-        return if image_params['destroy']
+        # return unless image_params[:json]
+        return if image_params[:destroy]
 
-        image = Image.create!(image: image_params['json'], user:)
-        ImagesRelation.create!(image:, order: index, relation: cite, dark: image_params['dark'], user:)
-        ImagesRelation.create!(image:, order: index, relation: entity, dark: image_params['dark'], user:)
+        image = Image.create!(image: image_params[:json], user: context.user)
+        ImagesRelation.create!(image:, order: index, relation: context.cite, dark: image_params[:dark], user: context.user)
+        ImagesRelation.create!(image:, order: index, relation: context.entity, dark: image_params[:dark], user: context.user)
       end
     end
   end

@@ -4,7 +4,6 @@ module Cites
   module Create
     class LookupsInteractor
       include ApplicationInteractor
-      delegate :cite, :entity, :user, :params, to: :context
 
       contract do
         params do
@@ -23,34 +22,34 @@ module Cites
       end
 
       def call
-        return if params.nil?
+        return if context.params.nil?
 
-        without_ids, with_ids = params.partition { |lookup_params| lookup_params['id'].blank? }
+        without_ids, with_ids = context.params.partition { |lookup_params| lookup_params[:id].blank? }
 
         without_ids.each do |lookup_params|
-          next if lookup_params['title'].blank?
+          next if lookup_params[:title].blank?
 
-          lookup = Lookup.create!(title: lookup_params['title'], user:)
-          LookupsRelation.create!(lookup:, relation: cite, user:)
-          LookupsRelation.create!(lookup:, relation: entity, user:)
+          lookup = Lookup.create!(title: lookup_params[:title], user: context.user)
+          LookupsRelation.create!(lookup:, relation: context.cite, user: context.user)
+          LookupsRelation.create!(lookup:, relation: context.entity, user: context.user)
         end
 
-        lookups = Lookup.find(with_ids.map { |item| item['id'] })
+        lookups = Lookup.find(with_ids.map { |item| item[:id] })
 
         with_ids.each do |lookup_params|
-          matched_lookup = lookups.find { |item| item.id == lookup_params['id'] }
+          matched_lookup = lookups.find { |item| item.id == lookup_params[:id] }
 
-          if lookup_params['destroy']
-            lookups_relation = LookupsRelation.find_by(lookup: matched_lookup, relation: entity)
+          if lookup_params[:destroy]
+            lookups_relation = LookupsRelation.find_by(lookup: matched_lookup, relation: context.entity)
             lookups_relation.destroy!
-          elsif matched_lookup.title != lookup_params['title']
-            lookups_relation = LookupsRelation.find_by(lookup: matched_lookup, relation: entity)
+          elsif matched_lookup.title != lookup_params[:title]
+            lookups_relation = LookupsRelation.find_by(lookup: matched_lookup, relation: context.entity)
             lookups_relation.destroy!
-            replaced_lookup = Lookup.create!(title: lookup_params['title'], user:)
-            LookupsRelation.create!(lookup: replaced_lookup, relation: cite, user:)
-            LookupsRelation.create!(lookup: replaced_lookup, relation: entity, user:)
+            replaced_lookup = Lookup.create!(title: lookup_params[:title], user: context.user)
+            LookupsRelation.create!(lookup: replaced_lookup, relation: context.cite, user: context.user)
+            LookupsRelation.create!(lookup: replaced_lookup, relation: context.entity, user: context.user)
           else
-            LookupsRelation.create!(lookup: matched_lookup, relation: cite, user:)
+            LookupsRelation.create!(lookup: matched_lookup, relation: context.cite, user: context.user)
           end
         end
       end
