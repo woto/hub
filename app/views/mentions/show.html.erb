@@ -6,10 +6,16 @@
 
 <div class="tw-relative">
   <%= render(
-        ReactComponent.new(name: 'Mentions',
-                           class: 'tw-contents',
-                           props: {
-                             entityIds: Mention.find(params[:id]).entities.pluck(:id)
-                           }))
-  %>
+    ReactComponent.new(name: 'Mentions',
+                        class: 'tw-contents',
+                        props: {
+                          mentionId: params[:id]
+                        })) do |component| %>
+
+      <%= component.draft do %>
+        <% @draft[:mentions].each do |mention| %>
+          <%= render(MentionComponent.new(mention: mention)) %>
+        <% end %>
+      <% end %>
+    <% end %>
 </div>
