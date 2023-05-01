@@ -6,10 +6,16 @@
 
 <div class="tw-relative">
   <%= render(
-        ReactComponent.new(name: 'ListingMentions',
-                           class: 'tw-contents',
-                           props: {
-                             listing_id: params[:id]
-                           }))
-  %>
+    ReactComponent.new(name: 'ListingMentions',
+                        class: 'tw-contents',
+                        props: {
+                          listingId: params[:id]
+                        })) do |component| %>
+
+      <%= component.draft do %>
+        <% @draft[:mentions].each do |mention| %>
+          <%= render(MentionComponent.new(mention: mention)) %>
+        <% end %>
+      <% end %>
+    <% end %>
 </div>
