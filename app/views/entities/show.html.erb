@@ -103,14 +103,44 @@
 
 <div class="tw-relative">
   <%= render(
-        ReactComponent.new(name: 'MentionsFilter',
+      ReactComponent.new(name: 'EntityPanel',
                            class: 'tw-contents',
                            props: {
-                             entity: @entity.as_indexed_json,
-                             imageSrc: GlobalHelper.image_hash(@entity.images_relations.includes(:image), %w[50]).dig(0, 'images', '50'),
-                             entityId: @entity.id
-                           }))
-  %>
+                             entity: Entities::PostgresEntityPresenter.call(
+                              entity: @entity
+                            ).object
+                           })) do |component| %>
+
+          <% component.draft do %>
+            <% @draft[:mentions].each do |mention| %>
+              <div class="tw-bg-slate-100 tw-my-16 tw-p-5 tw-rounded-2xl">
+                <h2 class="tw-text-4xl tw-font-black tw-mb-10">
+                  <%= link_to "/mentions/#{mention['_source']['slug']}" do %>
+                    <%= mention['_source']['title'] %>
+                  <% end %>
+                </h2>
+                <% val = mention['_source'].dig('image', 0, 'images', '500') %>
+                <%= image_tag val if val %>
+                <div class="tw-bg-lime-50? tw-space-y-5 tw-mt-5 tw-p-3?">
+                  <% mention['_source']['entities'].each do |entity| %>
+                    <div class="tw-bg-yellow-100? tw-p-3?">
+                      <h3 class="tw-text-2xl tw-font-bold tw-mb-3">
+                        <%= link_to entity['title'], entity['link'] %>
+                      </h3>
+                      <div class="tw-flex tw-gap-5">
+                        <% entity['images'].each do |image| %>
+                          <%= image_tag image['images'].dig('200'),
+                            alt: entity['title'],
+                            class: 'tw-object-contain tw-w-[120px] tw-max-w-[120px] tw-bg-lime-50 tw-border tw-rounded-lg tw-p-3' %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
 
   <%#= paginate @mentions, window: 3 %>
 

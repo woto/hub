@@ -4,7 +4,6 @@ class EntitiesController < ApplicationController
   layout 'roastme/pages'
 
   before_action :set_entity, only: %i[show]
-  # around_action :use_logidze_responsible, only: %i[create update]
   skip_before_action :authenticate_user!, only: [:show]
 
   # GET /entities/:id
@@ -12,8 +11,10 @@ class EntitiesController < ApplicationController
     seo.langs! { |l| entity_url(@entity, locale: l) }
     seo.canonical! entity_url(@entity)
 
-    @favorites_store = FavoritesStore.new(current_user)
-    @favorites_store.append(@entity.id, 'entities')
+    @draft = ::Mentions::IndexInteractor.call(
+      current_user:,
+      params: { entity_ids: [params[:id]] }
+    ).object
   end
 
   private
@@ -22,8 +23,4 @@ class EntitiesController < ApplicationController
   def set_entity
     @entity = Entity.find(params[:id])
   end
-
-  # def use_logidze_responsible(&block)
-  #   Logidze.with_responsible(Current.responsible.id, transactional: false, &block)
-  # end
 end
