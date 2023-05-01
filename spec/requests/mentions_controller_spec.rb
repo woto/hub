@@ -10,12 +10,25 @@ describe MentionsController do
     Mention.__elasticsearch__.refresh_index!
   end
 
-  it 'includes static html of mention and entity' do
-    get mention_path(mention)
-    expect(response).to have_http_status(:ok)
-    expect(response.body).to include(mention_path(mention))
-    expect(response.body).to include('Mention title')
-    expect(response.body).to include(entity_path(entity))
-    expect(response.body).to include(entity.title)
+  context 'when requested :show action' do
+    it 'includes static html of mention and entity' do
+      get mentions_path
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(mention_path(mention))
+      expect(response.body).to include('Mention title')
+      expect(response.body).to include(entity_path(entity))
+      expect(response.body).to include(entity.title)
+    end
+  end
+
+  context 'when requested :index action' do
+    it 'includes static html of mention and entity' do
+      get mention_path(mention)
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(mention_path(mention))
+      expect(response.body).to include('Mention title')
+      expect(response.body).to include(entity_path(entity))
+      expect(response.body).to include(entity.title)
+    end
   end
 end

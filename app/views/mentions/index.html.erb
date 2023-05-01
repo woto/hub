@@ -1,0 +1,14 @@
+<div class="tw-relative">
+  <%= render(
+        ReactComponent.new(name: 'Mentions',
+                           class: 'tw-contents',
+                           props: {})) do |component| %>
+
+          <%= component.draft do %>
+            <% @draft[:mentions].each do |mention| %>
+              <%= render(MentionComponent.new(mention: mention)) %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+</div>

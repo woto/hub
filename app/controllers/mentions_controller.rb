@@ -4,7 +4,7 @@ class MentionsController < ApplicationController
   layout 'roastme/pages'
 
   before_action :set_mention, only: %i[show]
-  skip_before_action :authenticate_user!, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show, :index]
 
   # GET /mention/:id
   def show
@@ -14,6 +14,16 @@ class MentionsController < ApplicationController
     @draft = ::Mentions::IndexInteractor.call(
       current_user:,
       params: { mention_id: params[:id] }
+    ).object
+  end
+
+  # GET /mentions
+  def index
+    # seo.noindex!
+
+    @draft = ::Mentions::IndexInteractor.call(
+      current_user:,
+      params: {}
     ).object
   end
 
