@@ -2,7 +2,6 @@ import { Fragment } from 'react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Outlet } from 'react-router-dom';
 import Alert from '../Alert';
 import Complain from '../Complain';
 import Carousel from '../Carousel/Carousel';

@@ -102,16 +102,6 @@ class GlobalHelper
       elastic_client.indices.refresh index: Elastic::IndexName.pick('*').scoped
     end
 
-    def decorate_text(text)
-      ActionController::Base.helpers.link_to(
-        I18n.t('view'),
-        '#',
-        'data-controller': 'modal-static-opener',
-        'data-action': 'modal-static-opener#open',
-        'data-modal-static-opener-text-value': text
-      )
-    end
-
     def decorate_money(amount, currency)
       c = Money::Currency.new(currency)
       ActionController::Base.helpers.number_to_currency(amount,

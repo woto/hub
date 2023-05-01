@@ -21,6 +21,6 @@ class MentionsController < ApplicationController
 
   # # Use callbacks to share common setup or constraints between actions.
   def set_mention
-    @mention = policy_scope(Mention).find(params[:id])
+    @mention = Mention.find(params[:id])
   end
 end
