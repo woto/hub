@@ -3,8 +3,6 @@
 class EntitiesController < ApplicationController
   layout 'roastme/pages'
 
-  include Paginatable
-
   before_action :set_entity, only: %i[show]
   # around_action :use_logidze_responsible, only: %i[create update]
   skip_before_action :authenticate_user!, only: [:show]

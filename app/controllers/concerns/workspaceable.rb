@@ -2,7 +2,6 @@
 
 module Workspaceable
   extend ActiveSupport::Concern
-  include Paginatable
 
   included do
     before_action :set_settings
