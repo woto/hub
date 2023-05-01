@@ -9,7 +9,7 @@ describe Cites::CreateInteractor do
   let(:fragment_url) { 'http://example.com/#:~:text=Example-,Domain,-This%20domain%20is' }
 
   context 'with minimal required params' do
-    let(:params) { { title: '1', intro: '1' } }
+    let(:params) { { title: 'title', intro: 'intro' } }
 
     it 'does not raise exception' do
       expect { interactor }.not_to raise_error
@@ -26,7 +26,7 @@ describe Cites::CreateInteractor do
     end
 
     it 'provides correct return data' do
-      expect(interactor).to have_attributes(object: match(url: /http/, title: '1'))
+      expect(interactor).to have_attributes(object: match(url: start_with('/entities/'), title: 'title'))
     end
   end
 

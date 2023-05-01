@@ -24,7 +24,7 @@ module Cites
 
       context.object = {
         title: @entity.title,
-        url: Rails.application.routes.url_helpers.entity_url(
+        url: Rails.application.routes.url_helpers.entity_path(
           id: @entity,
           host: GlobalHelper.host
         )
@@ -35,7 +35,7 @@ module Cites
 
     def ping_crawlers
       BoostIndexingInteractor.call(
-        url: Rails.application.routes.url_helpers.entity_url(
+        url: Rails.application.routes.url_helpers.entity_path(
           id: @entity,
           host: GlobalHelper.host
         )
