@@ -20,6 +20,14 @@ module Tables
     helper_method :current_feed_category
 
     def index
+      @pagination_rule = PaginationRules.new(
+        page: params[:page],
+        per: params[:per],
+        default_per: 12,
+        max_per: 80,
+        per_variants: [2, 3, 4, 6, 8, 9, 10, 12, 21, 30, 33, 42, 80]
+      )
+
       seo.noindex! if (params.keys & %w[q per sort order favorite_id filters columns]).present?
 
       # @favorites_store = FavoritesStore.new(current_user)
@@ -236,12 +244,6 @@ module Tables
 
     def set_settings
       @settings = GlobalHelper.class_configurator('offer')
-    end
-
-    def set_pagination_rule
-      @pagination_rule = PaginationRules.new(
-        request, 12, 80, [2, 3, 4, 6, 8, 9, 10, 12, 21, 30, 33, 42, 80]
-      )
     end
 
     def url_for_search_everywhere
