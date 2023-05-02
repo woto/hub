@@ -7,13 +7,14 @@ module Entities
     def call
       # sleep 0.5
       fragment = Fragment::Parser.call(fragment_url: context.fragment_url)
+      pagination_rule = PaginationRules.new(page: context.page, per: context.per)
 
       query = ThingsSearchQuery.call(
         fragment:,
         search_string: context.search_string,
         link_url: context.link_url,
-        from: (context.pagination_rule.page - 1) * context.pagination_rule.per,
-        size: context.pagination_rule.per
+        from: pagination_rule.from,
+        size: pagination_rule.per
       ).object
 
       Rails.logger.info(query.to_json)

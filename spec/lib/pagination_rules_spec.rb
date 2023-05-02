@@ -4,20 +4,26 @@ require 'rails_helper'
 
 describe PaginationRules do
   subject do
-    described_class.new(request, default_per, max_per, per_variants)
+    described_class.new(
+      page:,
+      per:,
+      default_per:,
+      max_per:,
+      per_variants:
+    )
   end
 
   before do
     stub_const('PaginationRules::PER_VARIANTS', per_variants)
   end
 
-  let(:request) do
-    ActionDispatch::TestRequest.create.tap do |r|
-      r.params[:per] = per
-      r.params[:page] = page
-      r.params[:controller] = model
-    end
-  end
+  # let(:request) do
+  #   ActionDispatch::TestRequest.create.tap do |r|
+  #     r.params[:per] = per
+  #     r.params[:page] = page
+  #     r.params[:controller] = model
+  #   end
+  # end
 
   let(:per_variants) do
     [5, 10, 20, 30, 50, 100]
@@ -74,6 +80,13 @@ describe PaginationRules do
       it { expect(subject.page).to eq(1) }
       it { expect(subject.per).to eq(per) }
     end
+  end
+
+  describe 'from' do
+    let(:page) { 4 }
+    let(:per) { 5 }
+
+    it { expect(subject.from).to eq(15) }
   end
 
   describe 'per' do

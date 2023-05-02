@@ -113,7 +113,7 @@ module Tables
       if filters[:a]
         result = exec_query(
           filters[:a].merge(
-            from: (@pagination_rule.page - 1) * (@pagination_rule.per * GlobalHelper::MULTIPLICATOR),
+            from: @pagination_rule.from * GlobalHelper::MULTIPLICATOR,
             size: @pagination_rule.per * GlobalHelper::MULTIPLICATOR
           )
         )
@@ -146,7 +146,7 @@ module Tables
           )
         )
 
-        from = (@pagination_rule.page - 1) * @pagination_rule.per
+        from = @pagination_rule.from
         from = [from - total_count, 0].max
         to = @pagination_rule.per - actual_count
         sliced = result['aggregations'][GlobalHelper::GROUP_NAME.to_s]['buckets'].slice(from, to)

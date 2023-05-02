@@ -21,7 +21,7 @@ module Tableable
         locale: I18n.locale,
         sort: params[:sort] || workspace.sort,
         order: params[:order] || workspace.order,
-        from: (@pagination_rule.page - 1) * @pagination_rule.per,
+        from: @pargination_rule.from,
         size: @pagination_rule.per,
         filters: params[:filters] && params[:filters].permit!.to_h,
         favorite_ids: favorite_ids,
