@@ -23,15 +23,15 @@ describe Entities::SeekInteractor do
     expect(interactor).to have_attributes(
       object: contain_exactly(
         include(
-          entity_id: '1',
-          entity_url: 'https://public.ru/entities/1',
+          entity_id: 1,
+          entity_url: '/entities/1',
           title: 'title',
           intro: 'intro',
           entities_mentions_count: 0,
           images: [],
-          kinds: [{ 'id' => 1, 'title' => 'topic' }],
+          kinds: [{ id: 1, title: 'topic' }],
           links: ['https://cite.ru'],
-          lookups: [{ 'id' => 1, 'title' => 'lookup' }]
+          lookups: [{ id: 1, title: 'lookup' }]
         )
       )
     )
