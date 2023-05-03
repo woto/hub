@@ -47,7 +47,10 @@ class Locale
   end
 
   def locale_from_realm(host)
-    locale = Realm.find_by(domain: remove_port(host))&.locale
+    domain = remove_port(host)
+    locale = Rails.cache.fetch(domain) do
+      Realm.find_by(domain:)&.locale
+    end
     I18n.available_locales.find { |al| match?(al, locale) }
   end
 

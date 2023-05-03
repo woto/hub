@@ -112,4 +112,11 @@ describe Locale do
       expect(response.get_header('Content-Language')).to eq('ru')
     end
   end
+
+  it ':locale_from_realm uses cached value' do
+    expect do
+      get '/ru'
+      get '/ru'
+    end.not_to exceed_query_limit(1).with(/^SELECT "realms"."id".*FROM "realms"/)
+  end
 end
