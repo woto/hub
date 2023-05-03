@@ -36,8 +36,16 @@ FactoryBot.define do
       index { true }
     end
 
-    trait(:with_image) do
+    trait(:with_images) do
       images { [association(:image)] }
+    end
+
+    trait(:with_lookups) do
+      lookups { [association(:lookup)] }
+    end
+
+    trait(:with_topics) do
+      topics { [association(:topic)] }
     end
 
     after(:create) do |entity, evaluator|

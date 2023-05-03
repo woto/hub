@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
 class FavoritesStore
-  def initialize(current_user)
-    @current_user = current_user
+  def initialize(user: nil, listing: nil, listing_id: nil)
+    @user = user
+    @listing = listing
+    @listing_id = if listing
+                    listing.id
+                  else
+                    listing_id
+                  end
     @searched_items = []
     super()
   end
 
   def append(ext_id, favorite_item_kind)
-    @searched_items << { ext_id: ext_id, favorite_item_kind: favorite_item_kind }
+    @searched_items << { ext_id:, favorite_item_kind: }
   end
 
   def find(needle_id, needle_favorite_item_kind)
@@ -26,7 +32,8 @@ class FavoritesStore
 
     @execute_query = []
     grouped_items = @searched_items.group_by { |item| item[:favorite_item_kind] }
-    relation = FavoritesItemPolicy::Scope.new(@current_user, FavoritesItem).resolve
+    relation = FavoritesItemPolicy::Scope.new(@user, FavoritesItem).resolve
+    relation = relation.where(favorite_id: @listing_id) if @listing_id
 
     # NOTE: We group by favorites_items.ext_id and favorites_items.kind for getting know if requested ext_id at
     # least exists in one favorite list. That means that we will highlight it's star.
@@ -35,7 +42,7 @@ class FavoritesStore
     wheres = grouped_items.map do |favorite_item_kind, ext_ids|
       {
         kind: favorite_item_kind,
-        ext_id: ext_ids.map { _1[:ext_id] }
+        ext_id: ext_ids.pluck(:ext_id)
       }
     end
 

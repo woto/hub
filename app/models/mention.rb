@@ -116,14 +116,14 @@ class Mention < ApplicationRecord
     # image_relation = images_relations.slice(-1, 1)
     {
       id: id,
-      published_at: published_at,
+      published_at: published_at&.iso8601,
       topics: topics.map { |topic| { id: topic.id, title: topic.title } },
       hostname: hostname.to_label,
       url: url,
       title: title,
       slug: to_param,
-      created_at: created_at,
-      updated_at: updated_at,
+      created_at: created_at.iso8601,
+      updated_at: updated_at.iso8601,
       user_id: user_id,
       image: (GlobalHelper.image_hash([image_relation], %w[50 100 200 300 500 1000]) if image_relation),
       # entity_ids: entity_ids,
@@ -139,13 +139,16 @@ class Mention < ApplicationRecord
       .map do |entity_mention|
       {
         'id' => entity_mention.id,
+        # TODO: Create a job, which will reindex mentions where corresponding entity includes.
+        # Otherwise autocomplete for related entities will work with errors (using old entities titles).
         'title' => entity_mention.entity.title,
         'entity_id' => entity_mention.entity_id,
         'mention_id' => entity_mention.mention_id,
         'relevance' => entity_mention.relevance,
         'sentiment' => entity_mention.sentiment,
-        'mention_date' => entity_mention.mention_date,
-        'created_at' => entity_mention.created_at
+        'mention_date' => entity_mention.mention_date&.iso8601,
+        'created_at' => entity_mention.created_at.iso8601,
+        'updated_at' => entity_mention.updated_at.iso8601
       }
     end
   end
