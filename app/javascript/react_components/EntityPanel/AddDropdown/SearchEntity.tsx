@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-export default function FilterEntitiesByTitle({
-  entityTitle, setEntityTitle,
+export default function SearchEntity({
+  entitiesSearchString, setEntitiesSearchString,
 }: {
-      entityTitle: string,
-      setEntityTitle: React.Dispatch<React.SetStateAction<string>>,
+      entitiesSearchString: string,
+      setEntitiesSearchString: React.Dispatch<React.SetStateAction<string>>,
   }) {
   return (
     <div className="mt-1">
@@ -13,8 +13,8 @@ export default function FilterEntitiesByTitle({
         className=" focus:tw-ring-indigo-300 focus:tw-border-indigo-300
           tw-block tw-w-full sm:tw-text-sm? tw-border-gray-300 tw-px-4 tw-rounded-full"
         placeholder="Введите строку для поиска..."
-        value={entityTitle}
-        onChange={(event) => setEntityTitle(event.target.value)}
+        value={entitiesSearchString}
+        onChange={(event) => setEntitiesSearchString(event.target.value)}
       />
     </div>
   );

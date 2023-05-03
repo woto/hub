@@ -27,9 +27,8 @@ import MultipleTags from '../Tags/Multiple';
 import Tinder from '../Tinder/Index';
 import Interaction from '../Mentions/Interaction';
 import Mentions from '../Mentions/Mentions';
-import MentionsFilter from '../Filters/Index';
+import EntityPanel from '../EntityPanel/EntityPanel';
 import MentionsImage from '../Mentions/Image';
-import MentionsCard from '../Mentions/MentionsItem1';
 import DesktopSidebar from '../Sidebar/DesktopSidebar';
 import MobileSidebar from '../Sidebar/MobileSidebar';
 import Hamburger from '../Sidebar/Hamburger';
@@ -107,8 +106,7 @@ export default function Root() {
     ListingMentions,
     Mentions,
     MentionsImage,
-    MentionsCard,
-    MentionsFilter,
+    EntityPanel,
     Tabs,
   };
 

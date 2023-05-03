@@ -1,7 +1,9 @@
 class FavoritesItemPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.joins(:favorite).where(favorites: { user: user })
+      s = scope.joins(:favorite)
+      s = s.where(favorites: { user: }) if user
+      s
     end
   end
 end

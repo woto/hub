@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'backoffice'
+  layout 'blank'
   before_action :set_user, only: %i[show edit update destroy impersonate]
 
   # TODO: authorize
@@ -19,5 +19,4 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
-
 end

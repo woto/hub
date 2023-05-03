@@ -5,29 +5,26 @@ module API
     prefix :api
 
     resource :mentions do
+      desc 'List mentions'
+
       params do
-        optional :q, type: String, desc: 'Search string', documentation: { param_type: 'body' }
-        optional :entity_ids, type: Array[Integer]
-        optional :per
-        optional :page
-        optional :sort
+        optional :entity_ids, type: Array[Integer], documentation: { param_type: 'body' }
+        optional :listing_id, type: Integer
+        optional :mention_id, type: Integer
+        optional :mentions_search_string, type: String, desc: 'Search string'
+        optional :sort, type: String
+        optional :page, type: Integer
+        optional :per, type: Integer
+        optional :page, type: Integer
       end
 
-      post do
+      post 'list' do
         ::Mentions::IndexInteractor.call(
-          params: params,
-          current_user: current_user,
-          request: request,
-          entity_ids: params[:entity_ids]
+          current_user:,
+          params:
         ).object
       end
 
-      # get :entities do
-      #   object = Mentions::EntitiesInteractor.call(q: params[:q]).object
-      #   object = Decorators::Mentions::Entities.call(object: object).object
-      #   object
-      # end
-      #
       # get :urls do
       #   object = Mentions::UrlsInteractor.call(q: params[:q]).object
       #   object = Decorators::Mentions::Urls.call(object: object).object

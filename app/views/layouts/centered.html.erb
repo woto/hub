@@ -1,7 +1,6 @@
 <% content_for :body do %>
 
-  <%= tag.body class: 'tw-antialiased tw-flex tw-flex-col tw-min-h-screen tw-bg-neutral-100',
-               **data_attributes_for_body do  %>
+  <%= tag.body class: 'tw-antialiased tw-flex tw-flex-col tw-min-h-screen tw-bg-neutral-100' do  %>
 
     <%= content_for(:after_body_open) %>
 
@@ -19,4 +18,4 @@
 
 <% end %>
 
-<%= render template: 'layouts/blank' %>
+<%= render template: 'layouts/base' %>

@@ -30,7 +30,7 @@ module Tables
 
       seo.noindex! if (params.keys & %w[q per sort order favorite_id filters columns]).present?
 
-      # @favorites_store = FavoritesStore.new(current_user)
+      # @favorites_store = FavoritesStore.new(user: current_user)
       @groups_store = GroupsStore.new
       filters = {}
       results = []

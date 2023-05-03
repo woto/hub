@@ -2,19 +2,20 @@ import * as React from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
-export default function Search(props: {
-  setSearchString: React.Dispatch<React.SetStateAction<string>>,
+export default function SearchMentions(props: {
   setScrollToFirst: React.Dispatch<React.SetStateAction<boolean>>,
+  mentionsSearchString: string,
+  setMentionsSearchString: React.Dispatch<React.SetStateAction<string>>
 }) {
-  const [searchString, setSearchString] = useState('');
+  const { mentionsSearchString, setMentionsSearchString, setScrollToFirst } = props;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.stopPropagation();
 
     if (['Enter'].includes(e.key)) {
       e.preventDefault();
-      props.setScrollToFirst(true);
-      props.setSearchString(e.target.value);
+      setScrollToFirst(true);
+      setMentionsSearchString(e.target.value);
       e.target.blur();
     }
   };
@@ -33,15 +34,15 @@ export default function Search(props: {
         type="text"
         className={`
         focus:tw-border-indigo-300
-        ${searchString
+        ${mentionsSearchString
           ? 'tw-w-full tw-border-gray-300 tw-cursor-text'
           : 'tw-w-0 focus:tw-w-full tw-cursor-pointer'}
         focus:tw-cursor-text tw-pl-7 tw-pr-0 tw-block
         tw-border-0 tw-border-b-2 tw-border-transparent tw-bg-transparent
         focus:tw-ring-0 sm:tw-text-sm`}
-        value={searchString}
+        value={mentionsSearchString}
         onChange={(e) => {
-          setSearchString(e.target.value);
+          setMentionsSearchString(e.target.value);
         }}
         onKeyDown={handleKeyDown}
         placeholder="Поиск"

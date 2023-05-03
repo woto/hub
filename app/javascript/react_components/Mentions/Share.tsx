@@ -27,6 +27,9 @@ function Share(props: {
   mention: any,
   entities: any[]
 }) {
+
+  const {entities, mention} = props;
+
   const [state, copyToClipboard] = useCopyToClipboard();
   const { add } = useToasts();
 
@@ -92,7 +95,7 @@ function Share(props: {
                   <button
                     type="button"
                     onClick={(e) => {
-                      copyToClipboard(mentionUrl(props.mention));
+                      copyToClipboard(mentionUrl(mention));
                       add('Ссылка успешно скопирована');
                     }}
                     className={classNames(
@@ -115,7 +118,7 @@ function Share(props: {
               <Menu.Item>
                 {({ active }) => (
                   <EmailShareButton
-                    url={mentionUrl(props.mention)}
+                    url={mentionUrl(mention)}
                     className="tw-w-full"
                     subject="subject"
                     body="body"
@@ -138,9 +141,9 @@ function Share(props: {
                 {({ active }) => (
                   <VKShareButton
                     className="tw-w-full"
-                    url={mentionUrl(props.mention)}
-                    title={props.mention.title}
-                    image={props.mention.image.images['500']}
+                    url={mentionUrl(mention)}
+                    title={mention.title}
+                    image={mention?.image?.images?.['500']}
                     noParse={false}
                     noVkLinks={false}
                   >
@@ -159,8 +162,8 @@ function Share(props: {
                 {({ active }) => (
                   <TelegramShareButton
                     className="tw-w-full"
-                    url={mentionUrl(props.mention)}
-                    title={props.mention.title}
+                    url={mentionUrl(mention)}
+                    title={mention.title}
                   >
                     <div className={classNames(
                       active ? 'tw-bg-gray-100 tw-text-gray-900' : 'tw-text-gray-700',
@@ -177,8 +180,8 @@ function Share(props: {
                 {({ active }) => (
                   <WhatsappShareButton
                     className="tw-w-full"
-                    url={mentionUrl(props.mention)}
-                    title={props.mention.title}
+                    url={mentionUrl(mention)}
+                    title={mention.title}
                   >
                     <div className={classNames(
                       active ? 'tw-bg-gray-100 tw-text-gray-900' : 'tw-text-gray-700',
@@ -195,8 +198,8 @@ function Share(props: {
                 {({ active }) => (
                   <LinkedinShareButton
                     className="tw-w-full"
-                    url={mentionUrl(props.mention)}
-                    title={props.mention.title}
+                    url={mentionUrl(mention)}
+                    title={mention.title}
                     summary="summary"
                     source="source"
                   >
@@ -215,9 +218,9 @@ function Share(props: {
                 {({ active }) => (
                   <FacebookShareButton
                     className="tw-w-full"
-                    url={mentionUrl(props.mention)}
-                    quote={props.mention.title}
-                    hashtag={props.entities.map((entity) => `#${entity.title}`).join(' ')}
+                    url={mentionUrl(mention)}
+                    quote={mention.title}
+                    hashtag={entities.map((entity) => `#${entity.title}`).join(' ')}
                   >
                     <div className={classNames(
                       active ? 'tw-bg-gray-100 tw-text-gray-900' : 'tw-text-gray-700',
@@ -234,10 +237,10 @@ function Share(props: {
                 {({ active }) => (
                   <TwitterShareButton
                     className="tw-w-full"
-                    url={mentionUrl(props.mention)}
-                    title={props.mention.title}
+                    url={mentionUrl(mention)}
+                    title={mention.title}
                     // via="woto7"
-                    hashtags={props.entities.map((entity) => entity.title)}
+                    hashtags={entities.map((entity) => entity.title)}
                     // related={['related']}
                   >
                     <div className={classNames(

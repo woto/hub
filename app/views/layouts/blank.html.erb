@@ -1,35 +1,18 @@
-<!doctype html>
-<%= tag.html lang: I18n.locale.downcase, **(@html_attributes || {}) do %>
+<% content_for :body do %>
 
-  <head>
-    <%= content_for(:after_head_open) %>
+  <%= tag.body do  %>
 
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-
-    <%= seo.tags %>
-
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= javascript_include_tag 'application', "data-turbo-track": "reload", defer: true %>
-    <%= stylesheet_link_tag 'application', "data-turbo-track": "reload", defer: true %>
-
-    <link rel="shortcut icon" type="image/x-icon" sizes="16x16" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <meta name="theme-color" content="#475569">
-
-    <%= content_for(:before_head_close) %>
-  </head>
-
-
-  <%= tag.body **(@body_attributes || {}) do %>
     <%= content_for(:after_body_open) %>
-    <%= content_for(:body) %>
-    <%= content_for(:before_body_close) %>
+
+    <%= render TopPageNotifyComponent.new(message: alert, alert_type: 'warning') %>
+    <%= render TopPageNotifyComponent.new(message: notice, alert_type: 'primary') %>
+
+    <%= yield %>
+
+    <%= content_for :before_body_close %>
+
   <% end %>
 
 <% end %>
+
+<%= render template: 'layouts/base' %>

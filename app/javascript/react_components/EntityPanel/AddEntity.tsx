@@ -14,15 +14,21 @@ import {
   UsersIcon,
 } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
-import Entities from './Entities';
 import axios from '../system/Axios';
-import Entity from './Entity';
-import AddCircleContent from './AddCircleContent';
+import Entity from '../EntitiesDropdown/Entity';
+import AddCircleContent from './AddDropdown/DropdownContent';
 
-export default function AddCircle(props: {entityIds: number[], entityTitle: string, searchString: string}) {
+export default function AddEntity(props:
+  {
+    entities: any[], dispatchEntities: any, mentionsSearchString: string
+  }) {
+  const { entities, dispatchEntities, mentionsSearchString } = props;
+
+  // console.log('AddEntity', entities);
+
   return (
     <Popover className="tw-z-0 tw-relative?">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           <Popover.Button
             className="tw-relative tw-rounded-full focus:tw-ring-indigo-300 focus:tw-ring tw-outline-none"
@@ -52,9 +58,10 @@ export default function AddCircle(props: {entityIds: number[], entityTitle: stri
                 tw-text-left`}
             >
               <AddCircleContent
-                entityIds={props.entityIds}
-                entityTitle={props.entityTitle}
-                searchString={props.searchString}
+                close={close}
+                entities={entities}
+                dispatchEntities={dispatchEntities}
+                mentionsSearchString={mentionsSearchString}
               />
             </Popover.Panel>
           </Transition>

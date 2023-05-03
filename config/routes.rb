@@ -14,10 +14,10 @@ Rails.application.routes.draw do
 
   # scope constraints: RoastmeConstraint.new do
   scope '(:locale)', constraints: LocalesConstraint.new do
-    scope module: 'tables' do
-      resources :mentions, only: %i[index]
-      # resources :entities, only: [:index]
-    end
+    # scope module: 'tables' do
+    #   resources :mentions, only: %i[index]
+    #   # resources :entities, only: [:index]
+    # end
     resources :mentions, only: %i[index show]
     resources :listings, only: [:show]
 
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
     get 'tinder' => 'roastme/tinder#index'
 
-    root to: 'tables/mentions#index', as: :roastme_root
+    root to: 'mentions#index', as: :roastme_root
   end
   # end
 
@@ -169,7 +169,7 @@ Rails.application.routes.draw do
 
     get 'api_docs', to: 'api_docs#index'
 
-    root to: 'homepage#index'
+    root to: 'mentions#index'
     get '*page', to: 'pages#show'
   end
 end

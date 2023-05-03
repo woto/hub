@@ -42,7 +42,7 @@ module Tableable
       raise 'favorites_kind' unless @settings.key?(:favorites_kind)
       raise 'favorites_items_kind' unless @settings.key?(:favorites_items_kind)
 
-      @favorites_store = FavoritesStore.new(current_user)
+      @favorites_store = FavoritesStore.new(user: current_user)
       @favorites_store.append(rows.map { |ent| ent['_id'] }, @settings[:favorites_items_kind])
 
       @rows = @settings[:decorator_class].decorate_collection(rows)

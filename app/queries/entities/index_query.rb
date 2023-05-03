@@ -6,7 +6,7 @@ module Entities
 
     contract do
       params do
-        required(:entity_ids).filled { array? { each { string? } } }
+        required(:entity_ids).maybe { array? { each { string? } } }
       end
     end
 

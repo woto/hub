@@ -2,25 +2,32 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import MentionsCore from '../Mentions/MentionsCore';
 import axios from '../system/Axios';
-import { MentionResponse } from '../system/TypeScript';
+import { MentionResponse, MentionsParamsType } from '../system/TypeScript';
 
 export default function Mentions(
-  {
-    listing_id,
-  }: {
-    listing_id: number,
-  },
+  { mentionId, searchString, sort }: MentionsParamsType,
 ) {
   const fetchFunction = useCallback(({
-    entityIds, searchString, sort, pageParam,
-  }: { entityIds?: any[], searchString?: string, sort?: string, pageParam?: number, listingId?: number }) => axios.post<MentionResponse>('/api/mentions', {
-    page: pageParam,
-    entity_ids: entityIds,
-    q: searchString,
-    sort,
-  }), []);
+    mentionIdParam, mentionsSearchStringParam, sortParam, pageParam,
+  }: {
+    mentionIdParam?: number,
+    mentionsSearchStringParam?: string,
+    sortParam?: string,
+    pageParam?: number,
+     }) => axios.post<MentionResponse>('/api/mentions/list', {
+       mention_id: mentionIdParam,
+       page: pageParam,
+       mentions_search_string: mentionsSearchStringParam,
+       sort: sortParam,
+     }), []);
 
   return (
-    <MentionsCore listingId={listing_id} fetchFunction={fetchFunction} />
+    <MentionsCore
+      kind="mentions"
+      mentionId={mentionId}
+      fetchFunction={fetchFunction}
+      sort={sort}
+      searchString={searchString}
+    />
   );
 }

@@ -7,9 +7,10 @@ import {
 } from 'framer-motion';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from '../system/Axios';
-import MentionsCard from './MentionsItem1';
 import Alert from '../Alert';
-import { MentionResponse } from '../system/TypeScript';
+import {
+  EntityMentions, ListingMentionsParamsType, MentionResponse, MentionsParamsType,
+} from '../system/TypeScript';
 import MentionsPage from './MentionsPage';
 
 type Window = {
@@ -17,15 +18,38 @@ type Window = {
   growing: boolean
 }
 
-export default function MentionsCore({
-  entityIds, searchString, sort, listingId, fetchFunction,
-}: {
-  entityIds?: any[],
-  searchString?: string,
-  sort?: string,
-  listingId?: number,
-  fetchFunction: any
-}) {
+type OneOfMentionsType = ListingMentionsParamsType | MentionsParamsType | EntityMentions
+
+const getValues = (params: OneOfMentionsType) => {
+  const { kind } = params;
+
+  const commonParams = {
+    fetchFunction: params.fetchFunction,
+    mentionsSearchStringParam: params.mentionsSearchString,
+    sortParam: params.sort,
+  };
+
+  switch (kind) {
+    case 'listingMentions': {
+      return { ...commonParams, listingIdParam: params.listingId };
+    }
+    case 'mentions': {
+      return { ...commonParams, mentionIdParam: params.mentionId };
+    }
+    case 'entitiesMentions': {
+      return { ...commonParams, entityIdsParam: params.entityIds };
+    }
+    default:
+      throw new Error('wrong kind');
+  }
+};
+
+export default function MentionsCore(params: OneOfMentionsType) {
+  const {
+    mentionsSearchStringParam, sortParam, mentionIdParam,
+    listingIdParam, entityIdsParam, fetchFunction,
+  } = getValues(params);
+
   const [window, setWindow] = useState<Window>({ page: 0, growing: true });
   const loadMoreRef = useRef<HTMLDivElement>();
 
@@ -44,9 +68,14 @@ export default function MentionsCore({
     hasPreviousPage,
 
   } = useInfiniteQuery(
-    ['mentions', entityIds, searchString, sort],
+    ['mentions', entityIdsParam, listingIdParam, mentionIdParam, mentionsSearchStringParam, sortParam],
     async ({ pageParam = 0 }) => fetchFunction({
-      entityIds, searchString, sort, listingId, pageParam,
+      entityIdsParam,
+      listingIdParam,
+      mentionIdParam,
+      mentionsSearchStringParam,
+      sortParam,
+      pageParam,
     })
       .then((res) => res.data),
     {

@@ -9,6 +9,7 @@ module Entities
     contract do
       params do
         required(:entity)
+        optional(:count)
       end
     end
 

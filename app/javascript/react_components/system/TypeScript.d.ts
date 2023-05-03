@@ -138,7 +138,32 @@ type PaginationType = {
     'last_page': boolean
 }
 
-type MentionResponse = {
+export type MentionResponse = {
   mentions: MentionType[]
   pagination: PaginationType
+}
+
+interface MentionsCorePramsType {
+  fetchFunction: any
+}
+
+export interface ListingMentionsParamsType extends MentionsCorePramsType {
+  kind: 'listingMentions'
+  listingId: number
+  searchString: string,
+  sort: string
+}
+
+export interface MentionsParamsType extends MentionsCorePramsType {
+  kind: 'mentions'
+  mentionId?: number,
+  searchString: string
+  sort: string
+}
+
+export interface EntityMentions extends MentionsCorePramsType {
+  kind: 'entitiesMentions'
+  entityIds: number[]
+  searchString: string
+  sort: string
 }

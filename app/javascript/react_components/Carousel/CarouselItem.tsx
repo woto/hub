@@ -82,7 +82,7 @@ function objectSize(item: any, type: 'single' | 'multiple') {
   }
 }
 
-function Image({ item, type }: {item: any, type: CarouselType}) {
+function Image({ item, type }: { item: any, type: CarouselType }) {
   return (
     <img
       style={objectSize(item, type)}
@@ -105,7 +105,7 @@ function Image({ item, type }: {item: any, type: CarouselType}) {
   );
 }
 
-function Video({ item, type }: {item: any, type: CarouselType}) {
+function Video({ item, type }: { item: any, type: CarouselType }) {
   return (
     <video
       style={objectSize(item, type)}
@@ -127,17 +127,17 @@ function Video({ item, type }: {item: any, type: CarouselType}) {
   );
 }
 
-function Multiple({ item, type }: {item: any, type: CarouselType}) {
+function Multiple({ item, type }: { item: any, type: CarouselType }) {
   return (
     <div className="tw-transition hover:tw-shadow-sm? tw-rounded-md hover:tw-brightness-95">
       <div className="tw-place-content-center? tw-flex-grow? tw-flex-shrink?">
         {tmpFunction((item && item.images && item.images.length > 0 && item.images[0])
-            || {
-              mime_type: 'image/png',
-              images: {
-                200: 'https://dummyimage.com/100x100/fff/aaa',
-              },
-            }, 'multiple')}
+          || {
+            mime_type: 'image/png',
+            images: {
+              200: 'https://dummyimage.com/100x100/fff/aaa',
+            },
+          }, 'multiple')}
       </div>
 
       <div className={`
@@ -148,8 +148,8 @@ function Multiple({ item, type }: {item: any, type: CarouselType}) {
               tw-w-full
           `}
       >
-        { item.sentiment === 0 && <HandThumbUpIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" /> }
-        { item.sentiment === 1 && <HandThumbDownIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" /> }
+        {item.sentiment === 0 && <HandThumbUpIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" />}
+        {item.sentiment === 1 && <HandThumbDownIcon className="tw-w-3 tw-h-3 tw-inline-block tw-align-text-bottom" />}
         <span>{item && item.title}</span>
       </div>
 
@@ -331,11 +331,16 @@ function CarouselItem({
         </AnimatePresence>
 
         {item.is_favorite
-        && (
-        <StarIcon
-          className="tw-drop-shadow-sm? tw-absolute tw-stroke-white tw-fill-yellow-300 tw-w-3 tw-h-3 tw-top-3 tw-right-3"
-        />
-        )}
+          && (
+            <button
+              type="button"
+              onClick={() => setIsListingsOpen(true)}
+            >
+              <StarIcon
+                className="tw-drop-shadow-sm tw-fill-amber-300 hover:tw-scale-125 tw-duration-200 tw-stroke-yellow-600 tw-cursor-pointer tw-absolute tw-w-5 tw-h-5 tw-top-1.5 tw-right-1.5"
+              />
+            </button>
+          )}
       </motion.div>
 
       <ListingsIndex
@@ -344,17 +349,17 @@ function CarouselItem({
         close={() => { setIsListingsOpen(false); }}
       />
 
-      { isComplainOpen
+      {isComplainOpen
         && (
-        <Complain
-          entityId={item.entity_id}
-          mentionId={item.mention_id}
-          entitiesMentionId={item.id}
-          opened={isComplainOpen}
-          close={() => {
-            setIsComplainOpen(false);
-          }}
-        />
+          <Complain
+            entityId={item.entity_id}
+            mentionId={item.mention_id}
+            entitiesMentionId={item.id}
+            opened={isComplainOpen}
+            close={() => {
+              setIsComplainOpen(false);
+            }}
+          />
         )}
     </>
   );

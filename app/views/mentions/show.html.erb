@@ -9,7 +9,7 @@
     ReactComponent.new(name: 'Mentions',
                         class: 'tw-contents',
                         props: {
-                          mentionId: params[:id]
+                          mentionId: params[:id].to_i
                         })) do |component| %>
 
       <%= component.draft do %>

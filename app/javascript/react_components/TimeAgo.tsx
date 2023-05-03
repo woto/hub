@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react'
-import {Fragment} from 'react'
-import {Popover, Transition} from '@headlessui/react'
-import {FireIcon, StarIcon} from "@heroicons/react/24/solid";
+import { useEffect, useState } from 'react'
+import { Fragment } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { FireIcon, StarIcon } from "@heroicons/react/24/solid";
 
 import * as dayjs from 'dayjs';
 // import utc from 'dayjs/plugin/utc';
@@ -29,7 +29,7 @@ export default function TimeAgo(props: { datetime: Date }) {
     <span
       onClick={() => setBeautifiedDate((prevVal) => !prevVal)}
       className="tw-cursor-pointer tw-text-sm">
-      { beautifiedDate ? beautifyDate(props.datetime) : props.datetime.toString() }
+      {beautifiedDate ? beautifyDate(props.datetime) : props.datetime.toString()}
     </span>
   )
 }

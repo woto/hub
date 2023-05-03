@@ -8,6 +8,8 @@ class TopicsSearchQuery
       required(:q).maybe(:str?)
       required(:from).filled(:integer)
       required(:size).filled(:integer)
+      optional(:order)
+      optional(:sort)
     end
   end
 

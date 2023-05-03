@@ -33,7 +33,7 @@ export default function Tabs(
   const { user: data } = useAuth();
 
   return (
-    <div>
+    <div className="tw-p-4">
       <div className="sm:tw-hidden">
         <label htmlFor="tabs" className="tw-sr-only">
           Select a tab

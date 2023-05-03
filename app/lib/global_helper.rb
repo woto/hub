@@ -67,7 +67,6 @@ class GlobalHelper
         model_class: model.to_s.singularize.camelize.safe_constantize,
         form_class:,
         query_class: "#{model.to_s.pluralize.camelize}SearchQuery".constantize,
-        # decorator_class: "#{model.to_s.singularize.camelize}Decorator".constantize,
         favorites_kind: model.to_s.pluralize.to_sym,
         favorites_items_kind: model.to_s.pluralize.to_sym }
     end

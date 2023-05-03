@@ -106,9 +106,10 @@
       ReactComponent.new(name: 'EntityPanel',
                            class: 'tw-contents',
                            props: {
-                             entity: Entities::PostgresEntityPresenter.call(
+                            entity: Entities::PostgresEntityPresenter.call(
                               entity: @entity
-                            ).object
+                            ).object,
+                            mentionsSearchString: ''
                            })) do |component| %>
 
           <% component.draft do %>

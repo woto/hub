@@ -52,7 +52,7 @@ module API
       end
 
       post do
-        Cites::CreateInteractor.call(params: params, current_user: current_user).object
+        Cites::CreateInteractor.call(params:, current_user:).object
       end
     end
   end

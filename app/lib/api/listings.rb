@@ -78,7 +78,7 @@ module API
         if params[:search_string].present?
           @favorites = @favorites.where(favorites: { user: current_user })
                                  .or(@favorites.where({ is_public: true }))
-          @favorites = @favorites.where('name LIKE ?', "%#{params[:search_string]}%")
+          @favorites = @favorites.where('name ILIKE ?', "%#{params[:search_string]}%")
         else
           @favorites = @favorites.where(favorites: { user: current_user })
                                  .or(@favorites.where("
@@ -236,20 +236,6 @@ module API
         end
 
         favorite.destroy
-      end
-
-      desc 'Returns listing mentions'
-
-      params do
-      end
-
-      get ':id/mentions' do
-        ::Listings::MentionsInteractor.call(
-          id: params[:id],
-          params:,
-          current_user:,
-          request:
-        ).object
       end
     end
   end

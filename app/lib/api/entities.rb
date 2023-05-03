@@ -46,6 +46,8 @@ module API
       params do
         requires :fragment_url, type: String, documentation: { param_type: 'body' }, desc: 'Highlighted fragment url'
         optional :search_string, type: String, desc: 'Manually crafted search string'
+        optional :page
+        optional :per
       end
 
       post :seek do
@@ -53,7 +55,8 @@ module API
           fragment_url: params[:fragment_url],
           search_string: params[:search_string],
           link_url: params[:link_url],
-          pagination_rule: PaginationRules.new(request)
+          page: params[:page],
+          per: params[:per]
         ).object
       end
 
@@ -67,11 +70,8 @@ module API
 
       post 'list' do
         ::Entities::IndexInteractor.call(
-          mention_id: params[:mention_id]&.to_i,
-          listing_id: params[:listing_id]&.to_i,
-          entity_ids: params[:entity_ids]&.map(&:to_i),
           current_user:,
-          request:
+          params:
         ).object
       end
 

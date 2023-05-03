@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'EntitiesController#show', type: :system do
-  subject!(:entity) { create(:entity, :with_image, title: 'title', intro: 'intro') }
+  subject!(:entity) { create(:entity, :with_images, title: 'title', intro: 'intro') }
 
   let!(:mention) { create(:mention, :with_image, entities: [entity]) }
 
