@@ -83,7 +83,7 @@ RSpec.describe Mention, type: :model do
     it 'returns correct result' do
       expect(subject).to include(
         id: mention.id,
-        published_at: mention.published_at&.utc,
+        published_at: mention.published_at&.iso8601,
         topics: mention.topics.map(&:to_label),
         # topics_count: mention.topics_count,
         url: mention.url,
@@ -93,7 +93,8 @@ RSpec.describe Mention, type: :model do
         # entity_ids: mention.entity_ids,
         entities: mention.entities_mentions.map do |entities_mention|
           {
-            "created_at"=>entities_mention.created_at,
+            "created_at"=>entities_mention.created_at.iso8601,
+            "updated_at"=>entities_mention.updated_at.iso8601,
             "entity_id"=>entities_mention.entity_id,
             "id"=>entities_mention.id,
             "mention_date"=>nil,
@@ -107,8 +108,8 @@ RSpec.describe Mention, type: :model do
           # 'title' => entities_mention.entity.title
         end,
         # entities_count: mention.entities_count,
-        created_at: Time.current,
-        updated_at: Time.current,
+        created_at: Time.current.iso8601,
+        updated_at: Time.current.iso8601,
         slug: "#{mention.id}-mention-title"
       )
     end

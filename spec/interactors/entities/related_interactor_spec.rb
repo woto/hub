@@ -59,56 +59,59 @@ describe Entities::RelatedInteractor do
       Mention.__elasticsearch__.refresh_index!
     end
 
-    context 'when searches :entity2' do
-      let(:entity_ids) { [entity2.id] }
+    context 'when searches :entity02' do
+      let(:entity_ids) { [entity02.id] }
 
-      it 'returns entities which occurs in mentions with :entity2' do
+      it 'returns entities which occurs in mentions with :entity02' do
         expect(interactor).to have_attributes(
           object: contain_exactly(
-            include(entity_id: entity1.id, count: 2),
-            include(entity_id: entity2.id, count: 5),
-            include(entity_id: entity3.id, count: 2),
-            include(entity_id: entity4.id, count: 1)
+            include(entity_id: entity01.id, count: 2),
+            include(entity_id: entity02.id, count: 5),
+            include(entity_id: entity03.id, count: 2),
+            include(entity_id: entity04.id, count: 1),
+            include(entity_id: entity20.id, count: 5)
           )
         )
       end
     end
 
-    context 'when searches :entity2 with entities_search_string' do
-      let(:entity_ids) { [entity2.id] }
+    context 'when searches :entity02 with entities_search_string' do
+      let(:entity_ids) { [entity02.id] }
       let(:entities_search_string) { 'Angel' }
 
-      it 'returns entities which occurs in mentions with :entity2 and which titles starts with Angel' do
+      it 'returns entities which occurs in mentions with :entity02 and which titles starts with Angel' do
         expect(interactor).to have_attributes(
           object: contain_exactly(
-            include(entity_id: entity3.id, count: 2)
+            include(entity_id: entity03.id, count: 2)
           )
         )
       end
     end
 
-    context 'when searches :entity2 with mentions_search_string' do
-      let(:entity_ids) { [entity2.id] }
+    context 'when searches :entity02 with mentions_search_string' do
+      let(:entity_ids) { [entity02.id] }
       let(:mentions_search_string) { 'Mia Khalifa' }
 
       it 'returns entities that occur in mentions which matched the mentions_search_string' do
         expect(interactor).to have_attributes(
           object: contain_exactly(
-            include(entity_id: entity1.id),
-            include(entity_id: entity2.id)
+            include(entity_id: entity01.id),
+            include(entity_id: entity02.id),
+            include(entity_id: entity20.id)
           )
         )
       end
     end
 
-    context 'when search :entity2 and :entity4' do
-      let(:entity_ids) { [entity2.id, entity4.id] }
+    context 'when search :entity02 and :entity04' do
+      let(:entity_ids) { [entity02.id, entity04.id] }
 
       it 'returns entities that occur in the same mention' do
         expect(interactor).to have_attributes(
           object: contain_exactly(
-            include(entity_id: entity2.id),
-            include(entity_id: entity4.id)
+            include(entity_id: entity02.id),
+            include(entity_id: entity04.id),
+            include(entity_id: entity20.id)
           )
         )
       end

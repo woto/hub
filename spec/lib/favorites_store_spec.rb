@@ -65,7 +65,7 @@ describe FavoritesStore do
   end
 
   describe 'different `listing`' do
-    let(:listing) { create(:favorite) }
+    let(:listing) { create(:favorite, kind: 'entities') }
 
     before do
       subject.append(favorites_item.ext_id, favorites_item.kind)
