@@ -45,7 +45,7 @@ class ThingsSearchQuery
                 json.multi_match do
                   json.query context.search_string
                   json.fields %w[title lookups.title text_start]
-                  json.boost 1
+                  json.boost 2
                 end
               end
             end
