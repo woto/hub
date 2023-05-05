@@ -35,7 +35,7 @@ module Cites
 
     def ping_crawlers
       BoostIndexingInteractor.call(
-        url: Rails.application.routes.url_helpers.entity_path(
+        url: Rails.application.routes.url_helpers.entity_url(
           id: @entity,
           host: GlobalHelper.host
         )
