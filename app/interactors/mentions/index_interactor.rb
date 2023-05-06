@@ -26,57 +26,67 @@ module Mentions
     end
 
     def call
-      required_entity_ids = context.params[:entity_ids]
+      key = [
+        context.params[:mentions_search_string],
+        context.params[:mention_id],
+        context.params[:listing_id],
+        context.params[:entity_ids],
+        context.params[:per],
+        context.params[:page]
+      ]
 
-      # rubocop:disable Style/IfUnlessModifier
-      if context.params[:listing_id]
-        optional_entity_ids = Favorite.find(context.params[:listing_id]).favorites_items.pluck(:ext_id)
+      cached = Rails.cache.fetch(key, expires_in: 10.seconds) do
+        required_entity_ids = context.params[:entity_ids]
+
+        if context.params[:listing_id]
+          optional_entity_ids = Favorite.find(context.params[:listing_id]).favorites_items.pluck(:ext_id)
+        end
+
+        if context.params[:mention_id]
+          optional_entity_ids = Mention.find(context.params[:mention_id]).entities.pluck(:id)
+        end
+        pagination_rule = PaginationRules.new(
+          page: context.params[:page],
+          per: context.params[:per],
+          default_per: 5
+        )
+
+        query = IndexQuery.call(
+          from: pagination_rule.from,
+          size: pagination_rule.per,
+          mentions_search_string: context.params[:mentions_search_string],
+          optional_entity_ids:,
+          required_entity_ids:,
+          mention_id: context.params[:mention_id]
+          # sort: context.params[:sort] || 'entities.mention_date',
+          # order: context.params[:order] || 'desc'
+        ).object
+
+        # puts JSON.pretty_generate(query)
+
+        result = GlobalHelper.elastic_client.search(query)
+
+        context.rows = Kaminari
+               .paginate_array(result['hits']['hits'], total_count: result['hits']['total']['value'])
+                       .page(pagination_rule.page)
+                       .per(pagination_rule.per)
+
+        # .includes(entity: :images)
+        #         'title' => entity_mention.entity.to_label,
+        #         'images' => GlobalHelper.image_hash(entity_mention.entity.images),
+
+        favorites_store
+        entity_ids
+        entities
+        enrich_rows
+
+        next {
+          mentions: context.rows,
+          pagination: PaginationPresenter.call(collection: context.rows).object
+        }
       end
 
-      if context.params[:mention_id]
-        optional_entity_ids = Mention.find(context.params[:mention_id]).entities.pluck(:id)
-      end
-      # rubocop:enable Style/IfUnlessModifier
-
-      pagination_rule = PaginationRules.new(
-        page: context.params[:page],
-        per: context.params[:per],
-        default_per: 5
-      )
-
-      query = IndexQuery.call(
-        from: pagination_rule.from,
-        size: pagination_rule.per,
-        mentions_search_string: context.params[:mentions_search_string],
-        optional_entity_ids:,
-        required_entity_ids:,
-        mention_id: context.params[:mention_id],
-        # sort: context.params[:sort] || 'entities.mention_date',
-        # order: context.params[:order] || 'desc'
-      ).object
-
-      # puts JSON.pretty_generate(query)
-
-      result = GlobalHelper.elastic_client.search(query)
-
-      context.rows = Kaminari
-             .paginate_array(result['hits']['hits'], total_count: result['hits']['total']['value'])
-             .page(pagination_rule.page)
-             .per(pagination_rule.per)
-
-      # .includes(entity: :images)
-      #         'title' => entity_mention.entity.to_label,
-      #         'images' => GlobalHelper.image_hash(entity_mention.entity.images),
-
-      favorites_store
-      entity_ids
-      entities
-      enrich_rows
-
-      context.object = {
-        mentions: context.rows,
-        pagination: PaginationPresenter.call(collection: context.rows).object
-      }
+      context.object = cached
     end
 
     private
