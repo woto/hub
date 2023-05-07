@@ -6,46 +6,48 @@
 
 /letsencrypt
 
+# Ignore entity-relationship diagram
 /erd.pdf
-/public/uploads
 
 # Ignore bundler config.
 /.bundle
 /vendor/bundle
 
-# Ignore all logfiles and tempfiles.
+# Ignore all logfiles.
 /log/*
-/tmp/*
 !/log/.keep
+
+# Ignore tempfiles.
+/tmp/*
 !/tmp/.keep
 
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
+/public/uploads
 
+# Ignore node.js artefacts.
 /node_modules
 /yarn-error.log
 
-.byebug_history
+/data/feeds
+/public/sitemaps
 
+# Ignore secrets
+/config/master.key
+/config/secrets
+/.env.production
+
+# Ignore IDEs configs.
+/.idea
+/.vscode
+
+# Ignore assets in development.
 /public/packs
 /public/packs-test
 /public/assets
-coverage
-
-# Gitlab runner directory
-/builds
-
-# Python tools (remove later)
-/docker/feeder/feeds
-__pycache__/
-*.py[cod]
-
-/data/feeds
-/public/sitemaps
-/config/master.key
-/config/secrets
-/.idea
-
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Ignore simplecov artefacts.
+/coverage
