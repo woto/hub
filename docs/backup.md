@@ -8,6 +8,11 @@ docker compose exec postgres pg_dump -d hub_production -U hub > /backup/db.dump
 ## Developer machine
 
 ```bash
+cd ~/work/hub/ && \
+rsync -avz root@5.101.180.153:/app/.env.production .
+```
+
+```bash
 cd ~/work/hub/public/uploads && \
 rsync -avz root@5.101.180.153:/var/lib/docker/volumes/app_rails_uploads/_data/ .
 
