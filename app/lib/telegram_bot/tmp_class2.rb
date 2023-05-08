@@ -51,7 +51,7 @@ class TelegramBot::TmpClass2
           url: ''
         )
       ]
-      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: [kb])
 
       Telegram::Bot::Types::InlineQueryResultArticle.new(
         id:,
