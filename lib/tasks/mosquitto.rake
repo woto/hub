@@ -1,6 +1,6 @@
-require 'mqtt'
-
 # frozen_string_literal: true
+
+require 'mqtt'
 
 namespace :hub do
   desc "Test mosquitto task"
