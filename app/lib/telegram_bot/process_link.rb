@@ -42,11 +42,11 @@ class TelegramBot::TmpClass
     )
   end
 
-  def run()
+  def run
     get_fragment
   rescue StandardError => e
     wrong_command(e)
   else
-    send_proceed()
+    send_proceed
   end
 end
