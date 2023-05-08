@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 namespace :hub do
-  desc 'TODO'
+  desc 'Runs telegram bot daemon to handle creation of cites'
   task telegram: :environment do
-    TelegramBot.call
+    TelegramBot::Index.call
   end
 end
