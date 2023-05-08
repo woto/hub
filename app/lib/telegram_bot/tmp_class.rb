@@ -34,7 +34,7 @@ class TelegramBot::TmpClass
         switch_inline_query_current_chat: "#{emoji_key.raw} : #{@first_text[:text_start]}"
       )
     ]
-    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: [kb])
     @bot.api.send_message(
       chat_id: @message.chat.id,
       text: 'Отлично! Теперь выберите упоминаемый объект.',
