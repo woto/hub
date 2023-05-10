@@ -168,14 +168,6 @@ services:
     volumes:
       - "redis:/data"
 
-  mailcatcher:
-    env_file:
-      - .env
-    image: schickling/mailcatcher
-    ports:
-      - ${MAILCATCHER_WEB_PORT}:1080
-      - ${MAILCATCHER_SMTP_PORT}:1025
-
   # To get into docker-compose network and for example
   # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
   # domain name passes from .env* files
