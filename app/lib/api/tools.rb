@@ -7,7 +7,6 @@ module API
     prefix :api
 
     resource :tools do
-
       auth :api_key
 
       desc 'Search wikipedia.org' do
@@ -20,7 +19,7 @@ module API
       end
 
       get :wikipedia do
-        Extractors::WikipediaOrg::Search.call(q: params[:q], page_language: params[:lang]).object
+        Extractors::WikipediaOrg::SearchInteractor.call(q: params[:q], page_language: params[:lang]).object
       end
 
       desc 'Search github.com' do
@@ -137,7 +136,6 @@ module API
       get :duckduckgo_instant do
         Extractors::DuckduckgoCom::InstantAnswerInteractor.call(q: params[:q]).object
       end
-
 
       desc 'Search Google Graph' do
         security [{ api_key: [] }]
