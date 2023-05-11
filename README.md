@@ -44,8 +44,6 @@ The following addresses available after project start up:
 Some services run in development mode as a separated processes, but in production all services run in Docker containers.
 You may check differences in development and production files respectivly: docker-compose.yml, docker-compose.production
 
-Also check https://github.com/woto/extension for Chrome extension which is used as the only one instrument to add citations to website.
-
 You also may want to view Procfile.dev and modify them as you wish. For example you may want to comment rails and run it separatly if you want for example to debug interactively.
 
 
@@ -65,8 +63,9 @@ That's it. More docs available at [docs](/docs).
 bundle exec rspec
 ```
 
-# Hub
-https://github.com/woto/hub
+## Google Chrome extension
+Check https://github.com/woto/extension. It is the only one way to add new citations to https://roastme.ru.
+![Widget](./docs/images/widget.png)
 
 ## Mentions list
 ![Mentions](./docs/images/mentions.png)
@@ -80,65 +79,27 @@ https://github.com/woto/hub
 ## Related entities
 ![Show entity](./docs/images/related_entities.png)
 
-# Google chrome Extenstion
-https://github.com/woto/extension
+## Multiple related entities
+![Multiple related entities](./docs/images/multiple_related.png)
 
-## Context menu
-![Context menu](./docs/images/context_menu.png)
+## Collections popup
+![Collections popup](./docs/images/collections_popup.png)
 
-## Wikipedia
-![Wikipedia](./docs/images/wikipedia_extractor.png)
+## Collection edit
+![Collection edit](./docs/images/collection_edit.png)
 
-## Google Graph
-![Google Graph](./docs/images/google_graph_extractor.png)
+## Edit entity
+![Edit entity](./docs/images/edit_entity.png)
+Editing entity is also done through https://github.com/woto/extension
 
-## Duck Duck Go
-![Duck Duck Go](./docs/images/duckduckgo_extractor.png)
+## Entity changes log
+![Entity changes log](./docs/images/changes_log.png)
 
-## Yandex
-![Yandex](./docs/images/yandex_search_extractor.png)
+## Complains
+![Complains](./docs/images/complains.png)
 
-## Google
-![Google](./docs/images/google_custom_search_extractor.png)
+## OAuth / email authentication
+![Authentication](./docs/images/authentication.png)
 
-## RDFa, Microdata, JSON-LD
-![RDFa, Microdata, JSON-LD](./docs/images/iframely_extractor.png)
-
-## Scrape
-![Scrape](./docs/images/scrape_extractor.png)
-
-## Screenshot
-![Screenshot](./docs/images/screenshot_extractor.png)
-
-## Github
-![Github](./docs/images/github_extractor.png)
-
-## Rubygems
-![Github](./docs/images/rubygems_extractor.png)
-
-## NPM
-![NPM](./docs/images/npm_extractor.png)
-
-## Youtube
-![Youtube](./docs/images/youtube_extractor.png)
-
-## Telegram
-![Telegram](./docs/images/telegram_extractor.png)
-
-## Raw metadata
-![Raw metadata](./docs/images/raw_metadata_extractor.png)
-
-## Sentiment
-![Sentiment](./docs/images/sentiment.png)
-
-## Synonyms
-![Synonyms](./docs/images/synonyms.png)
-
-## Tags
-![Tags](./docs/images/tags.png)
-
-## Publication date
-![Publication date](./docs/images/publication_date.png)
-
-## Priority
-![Priority](./docs/images/priority.png)
+## Profile edit
+![Profile edit](./docs/images/profile_edit.png)
