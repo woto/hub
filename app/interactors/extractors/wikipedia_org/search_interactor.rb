@@ -16,8 +16,8 @@ module Extractors
         end
 
         page_language = case context.page_language
-                        when 'und'
-                          'ru'
+                        when nil, '', 'und'
+                          'en'
                         else
                           context.page_language
                         end
