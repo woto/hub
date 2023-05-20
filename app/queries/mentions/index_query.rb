@@ -9,6 +9,7 @@ module Mentions
         config.validate_keys = true
 
         required(:mentions_search_string)
+        optional(:page_url).maybe(:str?)
         required(:optional_entity_ids).maybe { array? { each { integer? } } }
         required(:required_entity_ids).maybe { array? { each { integer? } } }
         optional(:mention_id).maybe(:int?)
@@ -22,13 +23,21 @@ module Mentions
     def call
       body = Jbuilder.new do |json|
         json.query do
-          if context.required_entity_ids.present? || context.optional_entity_ids.present?
+          if context.page_url.present? || context.required_entity_ids.present? || context.optional_entity_ids.present?
             json.bool do
               json.filter do
                 if context.mentions_search_string.present?
                   json.array! ['fuck!'] do
                     json.match do
                       json.set! 'title', context.mentions_search_string
+                    end
+                  end
+                end
+
+                if context.page_url.present?
+                  json.array! ['fuck'] do
+                    json.term do
+                      json.set! 'url.keyword', context.page_url
                     end
                   end
                 end

@@ -135,6 +135,22 @@ describe Mentions::IndexInteractor do
     end
   end
 
+  describe ':page_url' do
+    subject(:interactor) do
+      described_class.call(params: { page_url: 'http://example.com/1-title' })
+    end
+
+    it 'returns mention which match :page_url' do
+      expect(interactor).to have_attributes(
+        object: include(
+          mentions: contain_exactly(
+            include('_id' => mention10.id.to_s)
+          )
+        )
+      )
+    end
+  end
+
   context 'favorite' do
     before do
       Mention.__elasticsearch__.refresh_index!

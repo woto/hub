@@ -9,6 +9,7 @@ module API
 
       params do
         optional :entity_ids, type: Array[Integer], documentation: { param_type: 'body' }
+        optional :page_url, type: String
         optional :listing_id, type: Integer
         optional :mention_id, type: Integer
         optional :mentions_search_string, type: String, desc: 'Search string'

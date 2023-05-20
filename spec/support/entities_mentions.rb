@@ -72,12 +72,12 @@ shared_context 'with some entities/mentions structure' do
   end
   let!(:mention10) do
     travel_to(4.days.ago) do
-      create(:mention, entities: [entity05, entity20], title: 'Julia Ann')
+      create(:mention, entities: [entity05, entity20], title: 'Julia Ann', url: 'http://example.com/1-title')
     end
   end
   let!(:mention11) do
     travel_to(0.days.ago) do
-      create(:mention, entities: [entity07, entity20], title: 'Cherie DeVille')
+      create(:mention, entities: [entity07, entity20], title: 'Cherie DeVille', url: 'http://example.com/2-title')
     end
   end
   let!(:mention12) do

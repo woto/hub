@@ -11,6 +11,7 @@ module Mentions
         required(:params).maybe do
           hash do
             optional(:mentions_search_string).maybe(:str?)
+            optional(:page_url).maybe(:str?)
             optional(:mention_id).maybe(Types::ForceInteger)
             optional(:listing_id).maybe(Types::ForceInteger)
             # optional(:entity_ids).maybe { array(:integer).each(Types::ForceInteger) }
@@ -28,6 +29,7 @@ module Mentions
     def call
       key = [
         context.params[:mentions_search_string],
+        context.params[:page_url],
         context.params[:mention_id],
         context.params[:listing_id],
         context.params[:entity_ids],
@@ -55,6 +57,7 @@ module Mentions
           from: pagination_rule.from,
           size: pagination_rule.per,
           mentions_search_string: context.params[:mentions_search_string],
+          page_url: context.params[:page_url],
           optional_entity_ids:,
           required_entity_ids:,
           mention_id: context.params[:mention_id]

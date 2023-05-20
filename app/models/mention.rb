@@ -104,7 +104,9 @@ class Mention < ApplicationRecord
         indexes :id, type: 'long'
         indexes :title, type: 'text'
       end
-      indexes :url, type: 'text'
+      indexes :url, type: 'text' do
+        indexes :keyword, type: 'keyword'
+      end
       indexes :user_id, type: 'long'
       indexes :created_at, type: 'date'
       indexes :updated_at, type: 'date'
