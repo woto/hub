@@ -82,6 +82,7 @@ module Mentions
         entity_ids
         entities
         enrich_rows
+        set_screenshot
 
         next {
           mentions: context.rows,
@@ -155,6 +156,30 @@ module Mentions
           entities_mention['is_favorite'] = favorites_store.find(entities_mention['entity_id'], 'entities')
           entities_mention['link'] = Rails.application.routes.url_helpers.entity_path(record)
         end
+      end
+    end
+
+    def set_screenshot
+      context.rows.each do |row|
+        next unless row['_source']['image'].nil?
+
+        mention = Mention.where(url: 'https://system').first_or_create! do |m|
+          m.build_user(email: 'system@system', password: rand)
+        end
+
+        unless mention.image
+          ImagesRelation.create!(
+            relation: mention,
+            image: Image.create!(
+              image: File.open('./app/assets/images/chrome-mac-light.png', 'rb')
+            )
+          )
+          mention.reload
+        end
+
+        row['_source']['image'] = GlobalHelper.image_hash(
+          [mention.image_relation], %w[50 100 200 300 500 1000]
+        )
       end
     end
   end

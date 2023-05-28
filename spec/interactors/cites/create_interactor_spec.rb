@@ -9,7 +9,7 @@ describe Cites::CreateInteractor do
   let(:fragment_url) { 'http://example.com/#:~:text=Example-,Domain,-This%20domain%20is' }
 
   context 'with minimal required params' do
-    let(:params) { { title: 'title', intro: 'intro' } }
+    let(:params) { { title: 'entity title', intro: 'intro' } }
 
     it 'does not raise exception' do
       expect { interactor }.not_to raise_error
@@ -19,14 +19,22 @@ describe Cites::CreateInteractor do
       expect(Cites::Create::ImagesInteractor).to receive(:call)
       expect(Cites::Create::TopicsInteractor).to receive(:call)
       expect(Cites::Create::LookupsInteractor).to receive(:call)
-      expect(Elasticsearch::IndexJob).to receive(:perform_later).exactly(3).times
+      expect(Elasticsearch::IndexJob).to receive(:perform_later).exactly(2).times
+      expect(Elasticsearch::IndexJob).to receive(:perform_now).exactly(1).time
       expect(Mentions::IframelyJob).to receive(:perform_later)
       expect(Mentions::ScrapperJob).to receive(:perform_later)
       interactor
     end
 
     it 'provides correct return data' do
-      expect(interactor).to have_attributes(object: match(url: start_with('/entities/'), title: 'title'))
+      expect(interactor).to have_attributes(object: match(
+        url: start_with('/entities/'),
+        entity_url: start_with('/entities/'),
+        title: 'entity title',
+        entity_title: 'entity title',
+        mention_title: nil,
+        mention_url: start_with('/mentions/')
+      ))
     end
   end
 

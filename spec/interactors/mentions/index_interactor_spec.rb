@@ -292,4 +292,28 @@ describe Mentions::IndexInteractor do
       )
     end
   end
+
+  describe 'when screenshot is absent' do
+    subject(:interactor) { described_class.call(params: { mention_id: mention21.id }) }
+
+    # before do
+    #   create(:mention, :with_image, url: Rails.application.config.global[:system_screenshot])
+    # end
+
+    it 'shows screenshot of fake mention' do
+      expect(interactor).to have_attributes(
+        object: include(
+          mentions: contain_exactly(
+            include(
+              '_source' => include(
+                'image' => contain_exactly(
+                  include('id')
+                )
+              )
+            )
+          )
+        )
+      )
+    end
+  end
 end

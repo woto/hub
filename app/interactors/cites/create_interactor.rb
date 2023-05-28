@@ -23,11 +23,23 @@ module Cites
       end
 
       context.object = {
+        # DEPRECATED: remove later (after publishing new version of extension)
         title: @entity.title,
+        # DEPRECATED: remove later (after publishing new version of extension)
+        entity_title: @entity.title,
+        mention_title: @mention.title,
         url: Rails.application.routes.url_helpers.entity_path(
           id: @entity,
           host: GlobalHelper.host
-        )
+        ),
+        entity_url: Rails.application.routes.url_helpers.entity_path(
+          id: @entity,
+          host: GlobalHelper.host
+        ),
+        mention_url: Rails.application.routes.url_helpers.mention_path(
+          id: @mention,
+          host: GlobalHelper.host
+        ),
       }
     end
 
@@ -52,7 +64,7 @@ module Cites
     def reindex_records
       Elasticsearch::IndexJob.perform_later(@cite)
       Elasticsearch::IndexJob.perform_later(@entity)
-      Elasticsearch::IndexJob.perform_later(@mention)
+      Elasticsearch::IndexJob.perform_now(@mention)
     end
 
     def scrape_webpage
