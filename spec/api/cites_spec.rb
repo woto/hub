@@ -10,7 +10,7 @@ describe API::Cites, type: :request do
       post '/api/cites',
            headers: { 'HTTP_API_KEY' => user.api_key },
            params: {
-             title: 'title',
+             title: 'entity title',
              intro: 'intro',
              fragment_url: 'https://example.com/#:~:text=Example,-Domain',
              link_url: ''
@@ -18,8 +18,12 @@ describe API::Cites, type: :request do
 
       expect(response).to have_http_status(:created)
       expect(response.parsed_body).to eq(
-        'title' => 'title',
-        'url' => entity_path(Entity.last)
+        'title' => 'entity title',
+        'url' => entity_path(Entity.last),
+        'entity_title' => 'entity title',
+        'entity_url' => entity_path(Entity.last),
+        'mention_title' => nil,
+        'mention_url' => mention_path(Mention.last)
       )
     end
   end
