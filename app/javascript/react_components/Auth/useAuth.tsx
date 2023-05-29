@@ -2,10 +2,10 @@ import React, {
   useState, useEffect, useContext, useCallback,
 } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import axios from '../system/Axios';
 import { AuthInterface } from '../system/TypeScript';
 import AuthContext from './AuthContext';
-import { AxiosError } from 'axios';
 
 export default function useAuth() {
   // const { user, refetchUser } = useContext<AuthInterface>(AuthContext);
@@ -17,10 +17,9 @@ export default function useAuth() {
     queryKey: ['profile'],
     queryFn: () => axios
       .get('/api/user/me')
-      .then((res) => {
-        console.log('refetched');
-        return res.data;
-      }),
+      .then((res) =>
+        // console.log('refetched');
+        res.data),
     retry: (_: any, err: AxiosError) => {
       if (err.response.status === 401) return false;
       return true;
@@ -28,7 +27,7 @@ export default function useAuth() {
   });
 
   const refetchUser = useCallback(() => {
-    console.log('refetching user');
+    // console.log('refetching user');
     queryClient.refetchQueries({ queryKey: ['profile'] });
     // queryClient.removeQueries({ queryKey: ['profile'] });
   }, [queryClient]);

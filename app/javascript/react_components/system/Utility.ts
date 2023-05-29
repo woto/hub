@@ -1,4 +1,6 @@
 const openEditEntity = (entityId: number) => {
+  // console.log('openEditEntity');
+
   chrome.runtime.sendMessage(
     process.env.CHROME_EXTENSION_ID,
     {

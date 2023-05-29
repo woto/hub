@@ -51,11 +51,11 @@ function MentionsItem(
 
   const onScroll = useCallback((e) => {
     if (isInView) {
-      console.log('removing', url);
+      // console.log('removing', url);
       clearTimeout(timeoutId.current);
       // setScrollFinished(false);
     } else {
-      console.log('scheduling', url);
+      // console.log('scheduling', url);
       clearTimeout(timeoutId.current);
       timeoutId.current = setTimeout(() => {
         setIsVisible(false);
@@ -67,7 +67,7 @@ function MentionsItem(
   useLayoutEffect(() => {
     setIsVisible(true);
     // if (isInView) {
-    console.log('settled on', url);
+    // console.log('settled on', url);
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {

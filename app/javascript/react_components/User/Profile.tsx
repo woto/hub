@@ -39,7 +39,7 @@ export default function Profile({
     resolver: yupResolver(schema),
   });
 
-  console.debug(errors);
+  // console.debug(errors);
 
   const updateProfileMutation = useMutation<unknown, unknown, {}>({
     mutationFn: (async (params) => {

@@ -17,7 +17,7 @@ export default function EditEntity(props: {
   const [referenceElement, setReferenceElement] = useState();
   const [popperElement, setPopperElement] = useState();
 
-  console.log(entity);
+  // console.log(entity);
   // let { styles, attributes } = usePopper(referenceElement, popperElement, {
   //   // strategy: 'fixed',
   //   placement: "bottom-start",

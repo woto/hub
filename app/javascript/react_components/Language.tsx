@@ -3,7 +3,7 @@ import { Disclosure, Transition } from '@headlessui/react';
 import { GlobeAltIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
-export default function Example7(props: {
+export default function Language(props: {
   languages: any
  }) {
   return (

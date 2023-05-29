@@ -28,7 +28,7 @@ export default function InputsImage(
   const [image, setImage] = useState<Image>(selectedListing.image || undefined);
   const { add } = useToasts();
 
-  console.log(image);
+  // console.log(image);
 
   const cleanInputFile = (e: any) => {
     const container = new DataTransfer();
