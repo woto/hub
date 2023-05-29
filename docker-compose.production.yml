@@ -29,9 +29,10 @@ services:
       - "./data:/app/data"
     expose:
       - 9394
+      - 3000
     ports:
       - 19395:9394
-      - ${RAILS_PORT}:3000
+      # - ${RAILS_PORT}:3000
     labels:
       - "traefik.enable=true"
       # - "traefik.http.routers.rails.rule=PathPrefix(`/`)"
