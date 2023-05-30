@@ -112,9 +112,11 @@
                             mentionsSearchString: ''
                            })) do |component| %>
 
-          <% component.draft do %>
-            <% @draft[:mentions].each do |mention| %>
-              <%= render(MentionComponent.new(mention: mention)) %>
+          <% if false %>
+            <% component.draft do %>
+              <% @draft[:mentions].each do |mention| %>
+                <%= render(MentionComponent.new(mention: mention)) %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>

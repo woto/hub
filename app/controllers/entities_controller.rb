@@ -11,10 +11,10 @@ class EntitiesController < ApplicationController
     seo.langs! { |l| entity_url(@entity, locale: l) }
     seo.canonical! entity_url(@entity)
 
-    @draft = ::Mentions::IndexInteractor.call(
-      current_user:,
-      params: { entity_ids: [params[:id]] }
-    ).object
+    # @draft = ::Mentions::IndexInteractor.call(
+    #   current_user:,
+    #   params: { entity_ids: [params[:id]] }
+    # ).object
   end
 
   private

@@ -11,20 +11,20 @@ class MentionsController < ApplicationController
     seo.langs! { |l| mention_url(@mention, locale: l) }
     seo.canonical! mention_url(@mention)
 
-    @draft = ::Mentions::IndexInteractor.call(
-      current_user:,
-      params: { mention_id: params[:id] }
-    ).object
+    # @draft = ::Mentions::IndexInteractor.call(
+    #   current_user:,
+    #   params: { mention_id: params[:id] }
+    # ).object
   end
 
   # GET /mentions
   def index
     # seo.noindex!
 
-    @draft = ::Mentions::IndexInteractor.call(
-      current_user:,
-      params: {}
-    ).object
+    # @draft = ::Mentions::IndexInteractor.call(
+    #   current_user:,
+    #   params: {}
+    # ).object
   end
 
   private
