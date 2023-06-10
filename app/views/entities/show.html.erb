@@ -85,14 +85,14 @@
       <% if links.size > 0 %>
         <ul role="list" class="tw-mx-4 sm:tw-mx-0 tw-my-10 tw-grid tw-grid-cols-2 tw-gap-x-4 tw-gap-y-8 sm:tw-grid-cols-3 sm:tw-gap-x-6 lg:tw-grid-cols-4 xl:tw-gap-x-8">
           <% links.each do |link| %>
-            <li class="tw-relative">
-              <div class="tw-group tw-block tw-w-full [aspect-ratio:10_/_7] tw-rounded-lg tw-bg-gray-100 focus-within:tw-ring-2 focus-within:tw-ring-offset-2 focus-within:tw-ring-offset-gray-100 focus-within:tw-ring-indigo-500 tw-overflow-hidden">
-                <img src="https://mentions.lvh.me/derivations/image/image/1000/1000/eyJpZCI6InVwbG9hZHMvaW1hZ2VzLzc5MDEvb3JpZ2luYWwtYTI3NjJlOTdmMjdlMTIyZjM1ZTkyZTk1MDc0YjkzNDMucG5nIiwic3RvcmFnZSI6InN0b3JlIiwibWV0YWRhdGEiOnsiZmlsZW5hbWUiOm51bGwsIm1pbWVfdHlwZSI6ImltYWdlL3BuZyJ9fQ?signature=9fd1da1be39761530bd6c108d45f4e4787b6f22cbb31a6b83354d0a0c7580538" alt="" class="tw-object-cover tw-pointer-events-none group-hover:tw-opacity-75">
-                <button type="button" class="tw-absolute tw-inset-0 focus:tw-outline-none">
-                  <span class="tw-sr-only">View details for IMG_4985.HEIC</span></button>
-              </div>
-              <p class="tw-mt-2 tw-block tw-text-sm tw-font-medium tw-text-gray-900 tw-truncate tw-pointer-events-none"><%= link %></p>
-            </li>
+            <%= render(
+              ReactComponent.new(name: 'EntitiesLink',
+                                  class: '',
+                                  props: {
+                                  link: link
+                                  })
+              )
+            %>
           <% end %>
         </ul>
       <% end %>

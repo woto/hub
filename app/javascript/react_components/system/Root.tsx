@@ -13,6 +13,7 @@ import TimeAgo from '../TimeAgo';
 import User from '../User';
 import EntitiesEditLink from '../Entities/EditLink';
 import EntitiesTimeline from '../Entities/Timeline';
+import EntitiesLink from '../Entities/Link';
 import TimelineMentionDate from '../Timeline/Inline/MentionDate';
 import TimelineRelevance from '../Timeline/Inline/Relevance';
 import TimelineSentiment from '../Timeline/Inline/Sentiment';
@@ -88,6 +89,7 @@ export default function Root() {
     TimeAgo,
     User,
     EntitiesEditLink,
+    EntitiesLink,
     EntitiesTimeline,
     TimelineMentionDate,
     TimelineRelevance,
