@@ -37,7 +37,8 @@ module Entities
         links: entity.cites.map(&:link_url).uniq.compact,
         entity_url: Rails.application.routes.url_helpers.entity_path(
           entity, host: GlobalHelper.host, locale: nil
-        )
+        ),
+        perfect_match: nil
       ).object
 
       context.object[:count] = context.count if context.count
