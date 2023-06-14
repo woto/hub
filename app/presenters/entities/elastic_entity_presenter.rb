@@ -37,7 +37,8 @@ module Entities
         links: entity['_source']['link_url'].uniq.compact,
         entity_url: Rails.application.routes.url_helpers.entity_path(
           entity['_id'], host: GlobalHelper.host, locale: nil
-        )
+        ),
+        perfect_match: entity['_score'] > Rails.application.config.global[:perfect_match_score_threshold]
       ).object
 
       context.object[:count] = context.count if context.count

@@ -26,6 +26,7 @@ module Entities
         end
         required(:entities_mentions_count)
         required(:links).maybe { array? { each { string? } } }
+        required(:perfect_match)
       end
     end
 
@@ -39,7 +40,8 @@ module Entities
         kinds: context.kinds,
         images: context.images,
         entities_mentions_count: context.entities_mentions_count,
-        links: context.links
+        links: context.links,
+        perfect_match: context.perfect_match
       }
     end
   end

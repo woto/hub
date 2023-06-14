@@ -1,4 +1,7 @@
 default: &default
+  perfect_match_score_threshold: 10000
+  perfect_match_score_boost: 100000
+
   blank_messenger:
     short: select ...
     long: Select ...

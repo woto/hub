@@ -106,9 +106,11 @@ class ThingsSearchQuery
           if context[:link_url].present?
             json.set! :should do
               json.array! ['fuck'] do
-                json.multi_match do
-                  json.query context[:link_url]
-                  json.fields %w[link_url]
+                json.term do
+                  json.set! "link_url.keyword" do
+                    json.value context[:link_url]
+                    json.boost Rails.application.config.global[:perfect_match_score_boost]
+                  end
                 end
               end
             end

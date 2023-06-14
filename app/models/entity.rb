@@ -75,7 +75,9 @@ class Entity < ApplicationRecord
       indexes :hostname, type: 'text'
       indexes :id, type: 'long'
       indexes :intro, type: 'text'
-      indexes :link_url, type: 'text'
+      indexes :link_url, type: 'text' do
+        indexes :keyword, type: 'keyword'
+      end
       indexes :lookups do
         indexes :id, type: 'long'
         indexes :title, type: 'text'
