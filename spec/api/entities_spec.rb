@@ -32,7 +32,8 @@ describe API::Entities, responsible: :admin, type: :request do
         'kinds' => [match('id' => topic.id, 'title' => topic.title)],
         'links' => ['https://example.com'],
         'lookups' => [match('id' => lookup.id, 'title' => lookup.title)],
-        'title' => entity.title
+        'title' => entity.title,
+        'perfect_match' => nil,
       )
     end
   end

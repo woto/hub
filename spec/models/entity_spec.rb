@@ -99,7 +99,7 @@ RSpec.describe Entity, type: :model do
   end
 
   describe '#as_indexed_json', responsible: :user do
-    subject { entity.as_indexed_json }
+    subject { entity.reload.as_indexed_json }
 
     around do |example|
       freeze_time do
@@ -109,14 +109,16 @@ RSpec.describe Entity, type: :model do
 
     let(:entity) do
       create(:entity, title: "https://#{hostname.title}", topics: [topic], lookups: [lookup],
-                      images: [create(:image)])
+                      images: [create(:image)], index: false)
     end
     let(:lookup) { create(:lookup, title: 'lookup title') }
     let(:topic) { create(:topic, title: 'topic title') }
     let(:hostname) { create(:hostname) }
 
+    let!(:mention) { create(:mention, entities: [entity]) }
+
     before do
-      create(:mention, entities: [entity])
+      create(:cite, mention:, entity:, link_url: 'https://cite.link/')
     end
 
     it 'returns correct result' do
@@ -133,7 +135,8 @@ RSpec.describe Entity, type: :model do
         user_id: entity.user_id,
         entities_mentions_count: 1,
         created_at: Time.current,
-        updated_at: Time.current
+        updated_at: Time.current,
+        link_url: ['https://cite.link']
       )
     end
   end

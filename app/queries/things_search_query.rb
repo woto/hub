@@ -108,7 +108,7 @@ class ThingsSearchQuery
               json.array! ['fuck'] do
                 json.term do
                   json.set! "link_url.keyword" do
-                    json.value context[:link_url]
+                    json.value context[:link_url]&.chomp('/')
                     json.boost Rails.application.config.global[:perfect_match_score_boost]
                   end
                 end

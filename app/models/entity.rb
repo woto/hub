@@ -108,7 +108,7 @@ class Entity < ApplicationRecord
       text_end: cites.map(&:text_end),
       prefix: cites.map(&:prefix),
       suffix: cites.map(&:suffix),
-      link_url: cites.map(&:link_url).compact,
+      link_url: cites.filter_map { _1.link_url&.chomp('/') },
       hostname: hostname&.to_label,
       intro:,
       lookups: lookups.map { |lookup| { id: lookup.id, title: lookup.title } },

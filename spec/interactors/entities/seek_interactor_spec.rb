@@ -31,7 +31,8 @@ describe Entities::SeekInteractor do
           images: [],
           kinds: [{ id: 1, title: 'topic' }],
           links: ['https://cite.ru'],
-          lookups: [{ id: 1, title: 'lookup' }]
+          lookups: [{ id: 1, title: 'lookup' }],
+          perfect_match: false
         )
       )
     )
