@@ -95,8 +95,8 @@ class ThingsSearchQuery
                     .flatten
                     .select { |chunk| chunk.size > 3 }
                     .compact_blank.join(' ')
-                  json.fields %w[link_url]
-                  json.boost 0.5
+                  json.fields %w[title lookups.title text_start]
+                  json.boost 3
                   json.fuzziness 'AUTO'
                 end
               end
