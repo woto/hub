@@ -173,6 +173,7 @@ export default function Modal(props: {
                                       ? item.images[0].image_url
                                       : 'https://comnplayscience.eu/app/images/notfound.png'}
                                     alt=""
+                                    loading="lazy"
                                     className="tw-object-contain tw-h-14 tw-w-14 tw-flex-none tw-rounded tw-bg-white tw-border tw-p-1"
                                   />
 
