@@ -3,7 +3,7 @@ import { Combobox, Dialog, Transition } from '@headlessui/react';
 import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import * as React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useLocalStorage } from 'react-use';
+import { useDebounce, useLocalStorage } from 'react-use';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import axios from '../system/Axios';
 import Multiple from '../Tags/Multiple';
@@ -19,13 +19,22 @@ export default function Modal(props: {
   const { open, setOpen } = props;
   const preservedQuery = new URLSearchParams(window.location.search).get('q');
   const [query, setQuery] = useState(preservedQuery);
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   // const inputRef = useRef<HTMLInputElement>();
   // const [randomAdvice, setRandomAdvice] = useState(0);
 
   const params = {
-    search_string: query,
+    search_string: debouncedQuery,
     fragment_url: '',
   };
+
+  useDebounce(
+    () => {
+      setDebouncedQuery(query);
+    },
+    500,
+    [query],
+  );
 
   const {
     isLoading, error, data, isFetching,
@@ -35,7 +44,7 @@ export default function Modal(props: {
       .post('/api/entities/seek', params)
       .then((res) => res.data),
     {
-      enabled: !!query,
+      enabled: !!debouncedQuery,
     },
   );
 
@@ -100,6 +109,11 @@ export default function Modal(props: {
             {({ activeOption }) => (
               <>
                 <div className="tw-relative">
+                  {query !== debouncedQuery
+                      && (
+                        <div className="tw-absolute tw-h-1 tw-inset-0 tw-from-indigo-500 tw-via-lime-400 tw-to-indigo-500 tw-bg-gradient-to-r tw-bg-orange-400" />
+                      )}
+
                   <MagnifyingGlassIcon
                     className="tw-pointer-events-none tw-absolute tw-top-4 tw-left-4 tw-h-7 tw-w-7 tw-text-gray-400"
                     aria-hidden="true"
