@@ -63,6 +63,22 @@ class ThingsSearchQuery
             end
           end
 
+          if context[:search_string].present?
+            json.set! :should do
+              json.array! ['fuck'] do
+                json.multi_match do
+                  json.query context[:search_string]
+                    .split(/\W/)
+                    .flatten
+                    .select { |chunk| chunk.size > 3 }
+                    .compact_blank.join(' ')
+                  json.fields %w[title intro lookups.title text_start text_end prefix suffix link_url]
+                  json.boost 2.5
+                end
+              end
+            end
+          end
+
           if context[:fragment]
             set = [[:prefix, 0.2], [:text_start, 0.2], [:text_end, 0.2], [:suffix, 0.2]]
             set.each do |field, boost|
