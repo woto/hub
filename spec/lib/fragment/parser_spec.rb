@@ -30,4 +30,17 @@ describe Fragment::Parser do
       expect(described_class.call(fragment_url: fragment_url)).to(eq(fragment_struct))
     end
   end
+
+  context 'when fragment does not contain host' do
+    let(:fragment_url) do
+      'wrong_fragment_url'
+    end
+
+    it 'sets the fragment url to an empty string' do
+      texts = [Fragment::Text.new(text_start: '#', text_end: '', prefix: '', suffix: '')]
+      fragment_struct = Fragment::Struct.new(url: '', texts: texts)
+
+      expect(described_class.call(fragment_url: fragment_url)).to(eq(fragment_struct))
+    end
+  end
 end

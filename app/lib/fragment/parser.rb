@@ -11,7 +11,7 @@ module Fragment
       regexp = /^(?:(.+?)-,)?(?:(.+?))(?:,([^-]+?))?(?:,-(.+?))?$/
       Fragment::Struct.new(
         {
-          url: "#{uri.scheme}://#{uri.host}#{uri.path}#{uri.query ? "?#{uri.query}" : ''}",
+          url: uri.host ? "#{uri.scheme}://#{uri.host}#{uri.path}#{uri.query ? "?#{uri.query}" : ''}" : "",
           texts: chunks.map do |chunk|
                    Fragment::Text.new(
                      prefix: URI.decode_www_form_component(chunk.gsub(regexp, '\1')),
