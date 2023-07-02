@@ -9,7 +9,7 @@ describe Cites::CreateInteractor do
   let(:fragment_url) { 'http://example.com/#:~:text=Example-,Domain,-This%20domain%20is' }
 
   context 'with minimal required params' do
-    let(:params) { { title: 'entity title', intro: 'intro' } }
+    let(:params) { { fragment_url:, title: 'entity title', intro: 'intro' } }
 
     it 'does not raise exception' do
       expect { interactor }.not_to raise_error
