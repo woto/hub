@@ -45,6 +45,18 @@ RSpec.describe Mention, type: :model do
     # it { is_expected.to validate_presence_of(:entities_mentions) }
     it { is_expected.to validate_presence_of(:url) }
 
+    context 'when url is valid' do
+      subject { build(:mention, url: 'http://example.com') }
+
+      it { is_expected.to be_valid }
+    end
+
+    context 'when url is not valid' do
+      subject { build(:mention, url: 'invalid url') }
+
+      it { is_expected.to has_errors(:url, 'invalid_url') }
+    end
+
     # https://github.com/thoughtbot/shoulda-matchers/issues/1007
     # it { is_expected.to validate_length_of(:entities).is_at_least(1) }
     xdescribe '#entities minimal length' do

@@ -59,6 +59,16 @@ class Mention < ApplicationRecord
   validates :url, presence: true
   validates :url, uniqueness: true
 
+  validate do |mention|
+    begin
+      URI.parse(mention.url).tap do |uri|
+        raise 'invalid_url' unless uri.host && %w[http https].include?(uri.scheme)
+      end
+    rescue
+      errors.add(:url, 'invalid_url')
+    end
+  end
+
   # before_destroy :stop_destroy
 
   # # NOTE: it's used for mention form this life hack raised
