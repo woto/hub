@@ -11,7 +11,7 @@ module Cites
 
       ActiveRecord::Base.transaction do
         @entity = create_entity
-        @mention = create_mention(fragment)
+        @mention = create_mention(fragment) if fragment.url.present?
         @cite = create_cite(fragment, @mention, @entity)
         create_related_records
 
@@ -27,7 +27,7 @@ module Cites
         title: @entity.title,
         # DEPRECATED: remove later (after publishing new version of extension)
         entity_title: @entity.title,
-        mention_title: @mention.title,
+        mention_title: @mention&.title,
         url: Rails.application.routes.url_helpers.entity_path(
           id: @entity,
           host: GlobalHelper.host
@@ -36,7 +36,7 @@ module Cites
           id: @entity,
           host: GlobalHelper.host
         ),
-        mention_url: Rails.application.routes.url_helpers.mention_path(
+        mention_url: @mention && Rails.application.routes.url_helpers.mention_path(
           id: @mention,
           host: GlobalHelper.host
         ),
@@ -58,16 +58,18 @@ module Cites
       Create::ImagesInteractor.call(cite: @cite, entity: @entity, params: params[:images], user: current_user)
       Create::TopicsInteractor.call(cite: @cite, entity: @entity, params: params[:kinds], user: current_user)
       Create::LookupsInteractor.call(cite: @cite, entity: @entity, params: params[:lookups], user: current_user)
-      Create::AggregateInteractor.call(entity: @entity, mention: @mention)
+      Create::AggregateInteractor.call(entity: @entity, mention: @mention) if @mention
     end
 
     def reindex_records
       Elasticsearch::IndexJob.perform_later(@cite)
       Elasticsearch::IndexJob.perform_later(@entity)
-      Elasticsearch::IndexJob.perform_now(@mention)
+      Elasticsearch::IndexJob.perform_now(@mention) if @mention
     end
 
     def scrape_webpage
+      return unless @mention
+
       ::Mentions::IframelyJob.perform_later(mention_id: @mention.id, mention_url: @mention.url)
       ::Mentions::ScrapperJob.perform_later(mention_id: @mention.id, mention_url: @mention.url,
                                             user_id: current_user.id)

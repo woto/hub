@@ -19,7 +19,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  entity_id    :bigint           not null
-#  mention_id   :bigint           not null
+#  mention_id   :bigint
 #  user_id      :bigint           not null
 #
 # Indexes

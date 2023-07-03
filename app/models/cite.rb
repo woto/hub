@@ -19,7 +19,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  entity_id    :bigint           not null
-#  mention_id   :bigint           not null
+#  mention_id   :bigint
 #  user_id      :bigint           not null
 #
 # Indexes
@@ -38,7 +38,7 @@
 class Cite < ApplicationRecord
   belongs_to :user
   belongs_to :entity
-  belongs_to :mention
+  belongs_to :mention, optional: true
 
   has_many :lookups_relations, as: :relation, dependent: :destroy
   has_many :lookups, -> { order(:id).distinct }, through: :lookups_relations

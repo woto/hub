@@ -621,7 +621,7 @@ CREATE TABLE public.cites (
     link_url character varying,
     relevance integer,
     sentiment integer,
-    mention_id bigint NOT NULL,
+    mention_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     image_src character varying,
@@ -3439,7 +3439,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221022225401'),
 ('20221024180121'),
 ('20221229084712'),
-('20230328181427'),
-('20230328190909');
+('20230328190909'),
+('20230630195424');
 
 
