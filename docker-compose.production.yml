@@ -40,6 +40,7 @@ services:
       - "traefik.http.routers.roastme_ru.rule=Host(`roastme.ru`)"
       - "traefik.http.routers.roastme_ru.entrypoints=websecure"
       - "traefik.http.routers.roastme_ru.tls.certresolver=myresolver"
+    restart: always
 
   sidekiq:
     env_file:
@@ -57,6 +58,7 @@ services:
       - 9394
     ports:
       - 19394:9394
+    restart: always
 
   telegram:
     env_file:
@@ -80,6 +82,7 @@ services:
       dockerfile: Dockerfile
     # ports:
     #   - ${SCRAPPER_PORT}:4000
+    restart: always
 
   iframely:
     env_file:
@@ -89,6 +92,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - ${IFRAMELY_PORT}:8061
+    restart: always
 
   elastic:
     env_file:
@@ -105,6 +109,7 @@ services:
       - action.destructive_requires_name=false
     volumes:
       - elastic:/usr/share/elasticsearch/data
+    restart: always
 
 #  es01:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
@@ -147,6 +152,7 @@ services:
       - "traefik.http.middlewares.kibana-basicauth.basicauth.users=woto:$$2y$$05$$HqJi.DKUM2u10LSnEsCakuB9gjFt/CedJKDv9xG46y7RgUiuZe4bC"
       - "traefik.http.middlewares.kibana-https-chain.chain.middlewares=kibana-basicauth"
       - "traefik.http.routers.kibana_roastme_ru.middlewares=kibana-https-chain"
+    restart: always
 
 
   postgres:
@@ -159,6 +165,7 @@ services:
     #   - ${POSTGRES_PORT}:5432
     volumes:
       - "postgres:/var/lib/postgresql/data"
+    restart: always
 
   redis:
     env_file:
@@ -168,6 +175,7 @@ services:
     #   - ${REDIS_PORT}:6379
     volumes:
       - "redis:/data"
+    restart: always
 
   # To get into docker-compose network and for example
   # execute `docker-compose run --rm alpine sh -c "curl https://\$DOMAIN_NAME"
@@ -197,6 +205,7 @@ services:
       - "traefik.http.routers.imgproxy.rule=PathPrefix(`/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM`)"
       - "traefik.http.routers.imgproxy.entrypoints=websecure"
       - "traefik.http.routers.imgproxy.tls.certresolver=myresolver"
+    restart: always
 
 
   prometheus:
@@ -208,6 +217,7 @@ services:
       - "--storage.tsdb.path=/prometheus"
     ports:
       - ${PROMETHEUS_PORT}:9090
+    restart: always
 
   alertmanager:
     image: prom/alertmanager:v0.12.0
@@ -215,22 +225,24 @@ services:
       - 9093:9093
     volumes:
       - ./docker/alertmanager/:/etc/alertmanager/
-    restart: always
     command:
       - '-config.file=/etc/alertmanager/config.yml'
       - '-storage.path=/alertmanager'
     deploy:
       mode: global
+    restart: always
 
   grafana:
     image: grafana/grafana:7.1.5
     ports:
       - ${GRAFANA_PORT}:3000
+    restart: always
 
   pushgateway:
     image: prom/pushgateway
     ports:
       - ${PUSHGATEWAY_PORT}:9091
+    restart: always
 
   traefik:
     image: traefik:v2.4
@@ -257,6 +269,7 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: always
 
 volumes:
   rails_storage:
