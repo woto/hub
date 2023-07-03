@@ -29,41 +29,41 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 CREATE FUNCTION public.logidze_compact_history(log_data jsonb, cutoff integer DEFAULT 1) RETURNS jsonb
     LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    merged jsonb;
-  BEGIN
-    LOOP
-      merged := jsonb_build_object(
-        'ts',
-        log_data#>'{h,1,ts}',
-        'v',
-        log_data#>'{h,1,v}',
-        'c',
-        (log_data#>'{h,0,c}') || (log_data#>'{h,1,c}')
-      );
-
-      IF (log_data#>'{h,1}' ? 'm') THEN
-        merged := jsonb_set(merged, ARRAY['m'], log_data#>'{h,1,m}');
-      END IF;
-
-      log_data := jsonb_set(
-        log_data,
-        '{h}',
-        jsonb_set(
-          log_data->'h',
-          '{1}',
-          merged
-        ) - 0
-      );
-
-      cutoff := cutoff - 1;
-
-      EXIT WHEN cutoff <= 0;
-    END LOOP;
-
-    return log_data;
-  END;
+    AS $$
+  DECLARE
+    merged jsonb;
+  BEGIN
+    LOOP
+      merged := jsonb_build_object(
+        'ts',
+        log_data#>'{h,1,ts}',
+        'v',
+        log_data#>'{h,1,v}',
+        'c',
+        (log_data#>'{h,0,c}') || (log_data#>'{h,1,c}')
+      );
+
+      IF (log_data#>'{h,1}' ? 'm') THEN
+        merged := jsonb_set(merged, ARRAY['m'], log_data#>'{h,1,m}');
+      END IF;
+
+      log_data := jsonb_set(
+        log_data,
+        '{h}',
+        jsonb_set(
+          log_data->'h',
+          '{1}',
+          merged
+        ) - 0
+      );
+
+      cutoff := cutoff - 1;
+
+      EXIT WHEN cutoff <= 0;
+    END LOOP;
+
+    return log_data;
+  END;
 $$;
 
 
@@ -73,30 +73,30 @@ $$;
 
 CREATE FUNCTION public.logidze_filter_keys(obj jsonb, keys text[], include_columns boolean DEFAULT false) RETURNS jsonb
     LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    res jsonb;
-    key text;
-  BEGIN
-    res := '{}';
-
-    IF include_columns THEN
-      FOREACH key IN ARRAY keys
-      LOOP
-        IF obj ? key THEN
-          res = jsonb_insert(res, ARRAY[key], obj->key);
-        END IF;
-      END LOOP;
-    ELSE
-      res = obj;
-      FOREACH key IN ARRAY keys
-      LOOP
-        res = res - key;
-      END LOOP;
-    END IF;
-
-    RETURN res;
-  END;
+    AS $$
+  DECLARE
+    res jsonb;
+    key text;
+  BEGIN
+    res := '{}';
+
+    IF include_columns THEN
+      FOREACH key IN ARRAY keys
+      LOOP
+        IF obj ? key THEN
+          res = jsonb_insert(res, ARRAY[key], obj->key);
+        END IF;
+      END LOOP;
+    ELSE
+      res = obj;
+      FOREACH key IN ARRAY keys
+      LOOP
+        res = res - key;
+      END LOOP;
+    END IF;
+
+    RETURN res;
+  END;
 $$;
 
 
@@ -106,153 +106,153 @@ $$;
 
 CREATE FUNCTION public.logidze_logger() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    changes jsonb;
-    version jsonb;
-    snapshot jsonb;
-    new_v integer;
-    size integer;
-    history_limit integer;
-    debounce_time integer;
-    current_version integer;
-    merged jsonb;
-    iterator integer;
-    item record;
-    columns text[];
-    include_columns boolean;
-    ts timestamp with time zone;
-    ts_column text;
-  BEGIN
-    ts_column := NULLIF(TG_ARGV[1], 'null');
-    columns := NULLIF(TG_ARGV[2], 'null');
-    include_columns := NULLIF(TG_ARGV[3], 'null');
-
-    IF TG_OP = 'INSERT' THEN
-      -- always exclude log_data column
-      changes := to_jsonb(NEW.*) - 'log_data';
-
-      IF columns IS NOT NULL THEN
-        snapshot = logidze_snapshot(changes, ts_column, columns, include_columns);
-      ELSE
-        snapshot = logidze_snapshot(changes, ts_column);
-      END IF;
-
-      IF snapshot#>>'{h, -1, c}' != '{}' THEN
-        NEW.log_data := snapshot;
-      END IF;
-
-    ELSIF TG_OP = 'UPDATE' THEN
-
-      IF OLD.log_data is NULL OR OLD.log_data = '{}'::jsonb THEN
-        -- always exclude log_data column
-        changes := to_jsonb(NEW.*) - 'log_data';
-
-        IF columns IS NOT NULL THEN
-          snapshot = logidze_snapshot(changes, ts_column, columns, include_columns);
-        ELSE
-          snapshot = logidze_snapshot(changes, ts_column);
-        END IF;
-
-        IF snapshot#>>'{h, -1, c}' != '{}' THEN
-          NEW.log_data := snapshot;
-        END IF;
-        RETURN NEW;
-      END IF;
-
-      history_limit := NULLIF(TG_ARGV[0], 'null');
-      debounce_time := NULLIF(TG_ARGV[4], 'null');
-
-      current_version := (NEW.log_data->>'v')::int;
-
-      IF ts_column IS NULL THEN
-        ts := statement_timestamp();
-      ELSE
-        ts := (to_jsonb(NEW.*)->>ts_column)::timestamp with time zone;
-        IF ts IS NULL OR ts = (to_jsonb(OLD.*)->>ts_column)::timestamp with time zone THEN
-          ts := statement_timestamp();
-        END IF;
-      END IF;
-
-      IF NEW = OLD THEN
-        RETURN NEW;
-      END IF;
-
-      IF current_version < (NEW.log_data#>>'{h,-1,v}')::int THEN
-        iterator := 0;
-        FOR item in SELECT * FROM jsonb_array_elements(NEW.log_data->'h')
-        LOOP
-          IF (item.value->>'v')::int > current_version THEN
-            NEW.log_data := jsonb_set(
-              NEW.log_data,
-              '{h}',
-              (NEW.log_data->'h') - iterator
-            );
-          END IF;
-          iterator := iterator + 1;
-        END LOOP;
-      END IF;
-
-      changes := '{}';
-
-      IF (coalesce(current_setting('logidze.full_snapshot', true), '') = 'on') THEN
-        changes = hstore_to_jsonb_loose(hstore(NEW.*));
-      ELSE
-        changes = hstore_to_jsonb_loose(
-          hstore(NEW.*) - hstore(OLD.*)
-        );
-      END IF;
-
-      changes = changes - 'log_data';
-
-      IF columns IS NOT NULL THEN
-        changes = logidze_filter_keys(changes, columns, include_columns);
-      END IF;
-
-      IF changes = '{}' THEN
-        RETURN NEW;
-      END IF;
-
-      new_v := (NEW.log_data#>>'{h,-1,v}')::int + 1;
-
-      size := jsonb_array_length(NEW.log_data->'h');
-      version := logidze_version(new_v, changes, ts);
-
-      IF (
-        debounce_time IS NOT NULL AND
-        (version->>'ts')::bigint - (NEW.log_data#>'{h,-1,ts}')::text::bigint <= debounce_time
-      ) THEN
-        -- merge new version with the previous one
-        new_v := (NEW.log_data#>>'{h,-1,v}')::int;
-        version := logidze_version(new_v, (NEW.log_data#>'{h,-1,c}')::jsonb || changes, ts);
-        -- remove the previous version from log
-        NEW.log_data := jsonb_set(
-          NEW.log_data,
-          '{h}',
-          (NEW.log_data->'h') - (size - 1)
-        );
-      END IF;
-
-      NEW.log_data := jsonb_set(
-        NEW.log_data,
-        ARRAY['h', size::text],
-        version,
-        true
-      );
-
-      NEW.log_data := jsonb_set(
-        NEW.log_data,
-        '{v}',
-        to_jsonb(new_v)
-      );
-
-      IF history_limit IS NOT NULL AND history_limit <= size THEN
-        NEW.log_data := logidze_compact_history(NEW.log_data, size - history_limit + 1);
-      END IF;
-    END IF;
-
-    return NEW;
-  END;
+    AS $$
+  DECLARE
+    changes jsonb;
+    version jsonb;
+    snapshot jsonb;
+    new_v integer;
+    size integer;
+    history_limit integer;
+    debounce_time integer;
+    current_version integer;
+    merged jsonb;
+    iterator integer;
+    item record;
+    columns text[];
+    include_columns boolean;
+    ts timestamp with time zone;
+    ts_column text;
+  BEGIN
+    ts_column := NULLIF(TG_ARGV[1], 'null');
+    columns := NULLIF(TG_ARGV[2], 'null');
+    include_columns := NULLIF(TG_ARGV[3], 'null');
+
+    IF TG_OP = 'INSERT' THEN
+      -- always exclude log_data column
+      changes := to_jsonb(NEW.*) - 'log_data';
+
+      IF columns IS NOT NULL THEN
+        snapshot = logidze_snapshot(changes, ts_column, columns, include_columns);
+      ELSE
+        snapshot = logidze_snapshot(changes, ts_column);
+      END IF;
+
+      IF snapshot#>>'{h, -1, c}' != '{}' THEN
+        NEW.log_data := snapshot;
+      END IF;
+
+    ELSIF TG_OP = 'UPDATE' THEN
+
+      IF OLD.log_data is NULL OR OLD.log_data = '{}'::jsonb THEN
+        -- always exclude log_data column
+        changes := to_jsonb(NEW.*) - 'log_data';
+
+        IF columns IS NOT NULL THEN
+          snapshot = logidze_snapshot(changes, ts_column, columns, include_columns);
+        ELSE
+          snapshot = logidze_snapshot(changes, ts_column);
+        END IF;
+
+        IF snapshot#>>'{h, -1, c}' != '{}' THEN
+          NEW.log_data := snapshot;
+        END IF;
+        RETURN NEW;
+      END IF;
+
+      history_limit := NULLIF(TG_ARGV[0], 'null');
+      debounce_time := NULLIF(TG_ARGV[4], 'null');
+
+      current_version := (NEW.log_data->>'v')::int;
+
+      IF ts_column IS NULL THEN
+        ts := statement_timestamp();
+      ELSE
+        ts := (to_jsonb(NEW.*)->>ts_column)::timestamp with time zone;
+        IF ts IS NULL OR ts = (to_jsonb(OLD.*)->>ts_column)::timestamp with time zone THEN
+          ts := statement_timestamp();
+        END IF;
+      END IF;
+
+      IF NEW = OLD THEN
+        RETURN NEW;
+      END IF;
+
+      IF current_version < (NEW.log_data#>>'{h,-1,v}')::int THEN
+        iterator := 0;
+        FOR item in SELECT * FROM jsonb_array_elements(NEW.log_data->'h')
+        LOOP
+          IF (item.value->>'v')::int > current_version THEN
+            NEW.log_data := jsonb_set(
+              NEW.log_data,
+              '{h}',
+              (NEW.log_data->'h') - iterator
+            );
+          END IF;
+          iterator := iterator + 1;
+        END LOOP;
+      END IF;
+
+      changes := '{}';
+
+      IF (coalesce(current_setting('logidze.full_snapshot', true), '') = 'on') THEN
+        changes = hstore_to_jsonb_loose(hstore(NEW.*));
+      ELSE
+        changes = hstore_to_jsonb_loose(
+          hstore(NEW.*) - hstore(OLD.*)
+        );
+      END IF;
+
+      changes = changes - 'log_data';
+
+      IF columns IS NOT NULL THEN
+        changes = logidze_filter_keys(changes, columns, include_columns);
+      END IF;
+
+      IF changes = '{}' THEN
+        RETURN NEW;
+      END IF;
+
+      new_v := (NEW.log_data#>>'{h,-1,v}')::int + 1;
+
+      size := jsonb_array_length(NEW.log_data->'h');
+      version := logidze_version(new_v, changes, ts);
+
+      IF (
+        debounce_time IS NOT NULL AND
+        (version->>'ts')::bigint - (NEW.log_data#>'{h,-1,ts}')::text::bigint <= debounce_time
+      ) THEN
+        -- merge new version with the previous one
+        new_v := (NEW.log_data#>>'{h,-1,v}')::int;
+        version := logidze_version(new_v, (NEW.log_data#>'{h,-1,c}')::jsonb || changes, ts);
+        -- remove the previous version from log
+        NEW.log_data := jsonb_set(
+          NEW.log_data,
+          '{h}',
+          (NEW.log_data->'h') - (size - 1)
+        );
+      END IF;
+
+      NEW.log_data := jsonb_set(
+        NEW.log_data,
+        ARRAY['h', size::text],
+        version,
+        true
+      );
+
+      NEW.log_data := jsonb_set(
+        NEW.log_data,
+        '{v}',
+        to_jsonb(new_v)
+      );
+
+      IF history_limit IS NOT NULL AND history_limit <= size THEN
+        NEW.log_data := logidze_compact_history(NEW.log_data, size - history_limit + 1);
+      END IF;
+    END IF;
+
+    return NEW;
+  END;
 $$;
 
 
@@ -262,27 +262,27 @@ $$;
 
 CREATE FUNCTION public.logidze_snapshot(item jsonb, ts_column text DEFAULT NULL::text, columns text[] DEFAULT NULL::text[], include_columns boolean DEFAULT false) RETURNS jsonb
     LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    ts timestamp with time zone;
-  BEGIN
-    IF ts_column IS NULL THEN
-      ts := statement_timestamp();
-    ELSE
-      ts := coalesce((item->>ts_column)::timestamp with time zone, statement_timestamp());
-    END IF;
-
-    IF columns IS NOT NULL THEN
-      item := logidze_filter_keys(item, columns, include_columns);
-    END IF;
-
-    return json_build_object(
-      'v', 1,
-      'h', jsonb_build_array(
-              logidze_version(1, item, ts)
-            )
-      );
-  END;
+    AS $$
+  DECLARE
+    ts timestamp with time zone;
+  BEGIN
+    IF ts_column IS NULL THEN
+      ts := statement_timestamp();
+    ELSE
+      ts := coalesce((item->>ts_column)::timestamp with time zone, statement_timestamp());
+    END IF;
+
+    IF columns IS NOT NULL THEN
+      item := logidze_filter_keys(item, columns, include_columns);
+    END IF;
+
+    return json_build_object(
+      'v', 1,
+      'h', jsonb_build_array(
+              logidze_version(1, item, ts)
+            )
+      );
+  END;
 $$;
 
 
@@ -292,23 +292,23 @@ $$;
 
 CREATE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with time zone) RETURNS jsonb
     LANGUAGE plpgsql
-    AS $$
-  DECLARE
-    buf jsonb;
-  BEGIN
-    buf := jsonb_build_object(
-              'ts',
-              (extract(epoch from ts) * 1000)::bigint,
-              'v',
-              v,
-              'c',
-              data
-              );
-    IF coalesce(current_setting('logidze.meta', true), '') <> '' THEN
-      buf := jsonb_insert(buf, '{m}', current_setting('logidze.meta')::jsonb);
-    END IF;
-    RETURN buf;
-  END;
+    AS $$
+  DECLARE
+    buf jsonb;
+  BEGIN
+    buf := jsonb_build_object(
+              'ts',
+              (extract(epoch from ts) * 1000)::bigint,
+              'v',
+              v,
+              'c',
+              data
+              );
+    IF coalesce(current_setting('logidze.meta', true), '') <> '' THEN
+      buf := jsonb_insert(buf, '{m}', current_setting('logidze.meta')::jsonb);
+    END IF;
+    RETURN buf;
+  END;
 $$;
 
 
@@ -993,8 +993,8 @@ CREATE TABLE public.feeds (
     downloaded_file_size bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     locked_by_tid character varying DEFAULT ''::character varying NOT NULL,
+    log_data jsonb,
     languages jsonb DEFAULT '{}'::jsonb
 );
 
@@ -1027,6 +1027,7 @@ CREATE TABLE public.hostnames (
     title character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    mentions_count integer DEFAULT 0 NOT NULL,
     entities_count integer DEFAULT 0 NOT NULL
 );
 
@@ -1231,8 +1232,10 @@ CREATE TABLE public.mentions (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb,
+    kinds jsonb DEFAULT '[]'::jsonb NOT NULL,
     title character varying,
     html text,
+    sentiments jsonb DEFAULT '[]'::jsonb,
     hostname_id bigint,
     canonical_url text
 );
@@ -1388,11 +1391,11 @@ CREATE TABLE public.realms (
     domain character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb,
     after_head_open text,
     before_head_close text,
     after_body_open text,
-    before_body_close text
+    before_body_close text,
+    log_data jsonb
 );
 
 
@@ -3357,6 +3360,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211122133902'),
 ('20211122141402'),
 ('20211123163619'),
+('20211123171513'),
+('20211123185427'),
+('20211123190815'),
+('20211123194815'),
 ('20211126083813'),
 ('20211126105427'),
 ('20211126183417'),
@@ -3365,6 +3372,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211128164812'),
 ('20211201000905'),
 ('20211201000937'),
+('20211201001238'),
 ('20211201032640'),
 ('20211207005258'),
 ('20211207072249'),
@@ -3374,6 +3382,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211212174925'),
 ('20211213094908'),
 ('20211214072816'),
+('20211214164352'),
+('20211214164505'),
+('20211214171330'),
 ('20211215150926'),
 ('20211222191306'),
 ('20211222191317'),
@@ -3418,6 +3429,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220712015606'),
 ('20220712033809'),
 ('20220712033824'),
+('20220715202229'),
 ('20220715211949'),
 ('20220729125912'),
 ('20220731102238'),
