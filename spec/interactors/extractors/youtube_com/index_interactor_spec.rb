@@ -123,14 +123,14 @@ describe Extractors::YoutubeCom::IndexInteractor do
 
   describe '/c' do
     before do
-      expect(Extractors::Metadata::IframelyInteractor).to(
+      expect(Extractors::YoutubeCom::GetChannelIdFromUrlInteractor).to(
         receive(:call).with(url: title).and_return(
-          OpenStruct.new(object: { 'meta' => { 'canonical' => 'https://youtube.com/channel/canonical' } })
+          OpenStruct.new(object: 'channel_id')
         )
       )
 
       expect(Extractors::YoutubeCom::ListChannelsInteractor).to(
-        receive(:call).with(id: 'canonical').and_return(OpenStruct.new(object: {}))
+        receive(:call).with(id: 'channel_id').and_return(OpenStruct.new(object: {}))
       )
     end
 
@@ -160,6 +160,12 @@ describe Extractors::YoutubeCom::IndexInteractor do
 
     context 'with url "https://www.youtube.com/c/%D0%A7%D0%B8%D0%BA%D0%B5%D0%BD%D0%9A%D0%B0%D1%80%D1%80%D0%B8"' do
       let(:title) { 'https://www.youtube.com/c/%D0%A7%D0%B8%D0%BA%D0%B5%D0%BD%D0%9A%D0%B0%D1%80%D1%80%D0%B8' }
+
+      it { expect { subject }.not_to raise_error }
+    end
+
+    context 'with url "https://www.youtube.com/@CodeAesthetic"' do
+      let(:title) { 'https://www.youtube.com/@CodeAesthetic' }
 
       it { expect { subject }.not_to raise_error }
     end

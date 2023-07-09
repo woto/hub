@@ -62,14 +62,13 @@ module Extractors
         end
 
         ###
-        c = lambda {
-          context.q if parts.second == 'c'
+        c_character_or_at_sign = lambda {
+          return context.q if parts.second == 'c'
+          return context.q if parts.second.starts_with?('@')
         }
 
-        if c.call
-          result = Extractors::Metadata::IframelyInteractor.call(url: c.call).object
-          canonical = result['meta']['canonical']
-          channel_id = Addressable::URI.parse(canonical).path.split('/').third
+        if c_character_or_at_sign.call
+          channel_id = GetChannelIdFromUrlInteractor.call(url: context.q).object
         end
 
         ###
