@@ -20,7 +20,6 @@ class ThingsSearchQuery
     body = Jbuilder.new do |json|
       json.query do
         json.bool do
-
           if context[:search_string]
             json.set! :should do
               json.array! ['fuck'] do
@@ -102,12 +101,12 @@ class ThingsSearchQuery
 
             json.set! :should do
               json.array! ['fuck'] do
-
                 json.multi_match do
                   json.query [
                     uri.host.split(/\W/),
                     uri.path.split(/\W/),
-                    uri.query.to_s.split(/\W/)]
+                    uri.query.to_s.split(/\W/)
+                  ]
                     .flatten
                     .select { |chunk| chunk.size > 3 }
                     .compact_blank.join(' ')
@@ -123,7 +122,7 @@ class ThingsSearchQuery
             json.set! :should do
               json.array! ['fuck'] do
                 json.term do
-                  json.set! "link_url.keyword" do
+                  json.set! 'link_url.keyword' do
                     json.value context[:link_url]&.chomp('/')
                     json.boost Rails.application.config.global[:perfect_match_score_boost]
                   end
