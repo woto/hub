@@ -68,7 +68,7 @@ module API
         optional :mention_id, type: Integer
       end
 
-      post 'list' do
+      post 'index' do
         ::Entities::IndexInteractor.call(
           current_user:,
           params:

@@ -61,7 +61,7 @@ export default function EntityPanel(props: {
     mentionsSearchStringParam?: string,
     sortParam?: string,
     pageParam?: number
-  }) => axios.post<MentionResponse>('/api/mentions/list', {
+  }) => axios.post<MentionResponse>('/api/mentions/index', {
     page: pageParam,
     entity_ids: entityIdsParam,
     mentions_search_string: mentionsSearchStringParam,

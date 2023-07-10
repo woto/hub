@@ -58,7 +58,7 @@ describe API::Entities, responsible: :admin, type: :request do
     end
   end
 
-  describe 'GET /api/entities/list' do
+  describe 'GET /api/entities/index' do
     let(:entity) { create(:entity) }
 
     before do
@@ -67,7 +67,7 @@ describe API::Entities, responsible: :admin, type: :request do
     end
 
     it 'returns entities list' do
-      post '/api/entities/list', params: { entity_ids: [entity.id] }
+      post '/api/entities/index', params: { entity_ids: [entity.id] }
       expect(response.parsed_body).to contain_exactly(
         include('entity_id' => entity.id)
       )

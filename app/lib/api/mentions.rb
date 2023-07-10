@@ -19,7 +19,7 @@ module API
         optional :page, type: Integer
       end
 
-      post 'list' do
+      post 'index' do
         ::Mentions::IndexInteractor.call(
           current_user:,
           params:

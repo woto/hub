@@ -14,7 +14,7 @@ export default function Mentions(
     mentionsSearchStringParam?: string,
     sortParam?: string,
     pageParam?: number,
-     }) => axios.post<MentionResponse>('/api/mentions/list', {
+     }) => axios.post<MentionResponse>('/api/mentions/index', {
        mention_id: mentionIdParam,
        page: pageParam,
        mentions_search_string: mentionsSearchStringParam,
