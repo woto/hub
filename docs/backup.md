@@ -25,7 +25,7 @@ rsync -avz root@5.101.180.153:/backup/db.dump .
 cd ~/work/hub && \
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rake db:drop && \
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rake db:create && \
-docker exec -i hub_postgres_1 psql -U hub -d hub_development < ~/backup/db.dump
+docker exec -i hub-postgres-1 psql -U hub -d hub_development < ~/backup/db.dump
 
 ./bin/rails c
 User.find_by(email: 'admin@example.com').update(role: 'admin')
