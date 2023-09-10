@@ -34,7 +34,6 @@ The following addresses available after project start up:
 - Imgproxy used for proxying images. To be more specific for displaying image on the same host to pass CORS while uploading images with "drag and drop" or "copy paste".
 - Kibana used as UI for Elasticsearch. http://localhost:5601
 - Mailcatcher used as a mock service for emails sent from website. http://localhost:1080
-- Mosquitto used for experiments with MQTT.
 - Postgresql used as a main database.
 - Redis used for rails caching, storing some identifiers in telegram bot, etc...
 - Scrapper is a custom Node.js script used for making screenshots.

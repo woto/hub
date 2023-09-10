@@ -95,15 +95,6 @@ services:
     ports:
       - ${IMGPROXY_PORT}:8080
 
-  mosquitto:
-    env_file:
-      - .env
-    image: eclipse-mosquitto
-    volumes:
-      - ./docker/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-    ports:
-      - ${MOSQUITTO_PORT}:1883
-
 volumes:
   redis:
   postgres:
