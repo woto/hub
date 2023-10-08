@@ -7,9 +7,7 @@
 #  id            :bigint           not null, primary key
 #  canonical_url :text
 #  html          :text
-#  kinds         :jsonb            not null
 #  published_at  :datetime
-#  sentiments    :jsonb
 #  title         :string
 #  url           :text
 #  created_at    :datetime         not null
