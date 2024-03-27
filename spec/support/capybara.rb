@@ -33,6 +33,11 @@ Capybara.test_id = 'data-test-id'
     # # NOTE: trying to fix github actions
     # options.add_argument('--disable-gpu')
 
+    options.add_extension(
+      Rails.root.join('data', 'extension', 'dist.crx')
+    )
+
+
     Capybara::Selenium::Driver.new(
       app,
       # timeout: 60,
