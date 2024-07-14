@@ -10,15 +10,6 @@ services:
     ports:
       - ${SCRAPPER_PORT}:4000
 
-  iframely:
-    env_file:
-      - .env
-    build:
-      context: ./docker/iframely
-      dockerfile: Dockerfile
-    ports:
-      - ${IFRAMELY_PORT}:8061
-
   elastic:
     env_file:
       - .env

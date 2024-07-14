@@ -84,16 +84,6 @@ services:
     #   - ${SCRAPPER_PORT}:4000
     restart: always
 
-  iframely:
-    env_file:
-      - .env
-    build:
-      context: ./docker/iframely
-      dockerfile: Dockerfile
-    ports:
-      - ${IFRAMELY_PORT}:8061
-    restart: always
-
   elastic:
     env_file:
       - .env
