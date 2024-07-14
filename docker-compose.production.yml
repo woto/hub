@@ -40,6 +40,9 @@ services:
       - "traefik.http.routers.roastme_ru.rule=Host(`roastme.ru`)"
       - "traefik.http.routers.roastme_ru.entrypoints=websecure"
       - "traefik.http.routers.roastme_ru.tls.certresolver=myresolver"
+    networks:
+      - default
+      - traefik
     restart: always
 
   sidekiq:
@@ -197,7 +200,6 @@ services:
       - "traefik.http.routers.imgproxy.tls.certresolver=myresolver"
     restart: always
 
-
   prometheus:
     image: prom/prometheus:v2.16.0
     volumes:
@@ -234,33 +236,6 @@ services:
       - ${PUSHGATEWAY_PORT}:9091
     restart: always
 
-  traefik:
-    image: traefik:v2.4
-    command:
-      - "--accesslog=true"
-      - "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.myresolver.acme.email=oganer@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - "./letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    restart: always
-
 volumes:
   rails_storage:
   rails_sitemaps:
@@ -269,3 +244,7 @@ volumes:
   redis:
   postgres:
   elastic:
+
+networks:
+  traefik:
+    external: true
